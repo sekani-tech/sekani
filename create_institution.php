@@ -68,7 +68,7 @@
                       <div class="col-md-4">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Phone</label>
-                                <input type="tel" name="office_phone" class="form-control" id="">
+                                <input type="text" name="office_phone" class="form-control" id="">
                             </div>
                         </div>
                     </div>
