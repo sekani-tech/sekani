@@ -3,6 +3,7 @@
     include("header.php");
 
 ?>
+<?php include("functions/connect.php")?>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -19,6 +20,10 @@
                   <div class="table-responsive">
                     <table class="table">
                       <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM institutions";
+                        $result = mysqli_query($connection, $query);
+                      ?>
                         <!-- <th>
                           ID
                         </th> -->
@@ -38,12 +43,20 @@
                         <th>Phone</th>
                       </thead>
                       <tbody>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                          <th><?php echo $row["int_name"]; ?></th>
+                          <th><?php echo $row["rcn"]; ?></th>
+                          <th><?php echo $row["int_state"]; ?></th>
+                          <th><?php echo $row["lga"]; ?></th>
+                          <th><?php echo $row["pc_surname"]; ?></th>
+                          <th><?php echo $row["pc_phone"]; ?></th>
+                          <?php }
+                          }
+                          else {
+                            echo "0 Document";
+                          }
+                          ?>
                       </tbody>
                     </table>
                   </div>
