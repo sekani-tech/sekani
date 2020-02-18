@@ -30,9 +30,9 @@
                         $query = "SELECT * FROM institutions";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <th>
+                        <!-- <th>
                           ID
-                        </th>
+                        </th> -->
                         <th>
                           Name
                         </th>
@@ -52,7 +52,7 @@
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
-                          <th><?php echo $row["int_id"]; ?></th>
+                          <?php $row["int_id"]; ?>
                           <th><?php echo $row["int_name"]; ?></th>
                           <th><?php echo $row["rcn"]; ?></th>
                           <th><?php echo $row["int_state"]; ?></th>
