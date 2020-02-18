@@ -60,7 +60,7 @@
                           <th><?php echo $row["pc_surname"]; ?></th>
                           <th><?php echo $row["pc_phone"]; ?></th>
                           <td><a href="manage_institution.php?edit=<?php echo $row["int_id"];?>" class="btn btn-info">Edit</a></td>
-                          <td><a href="functions/delete_institution.php?sn=<?php echo $row["int_id"]; ?>" class="btn btn-danger">Delete</a></td>
+                          <td><a href="functions/delete_institution.php?edit=<?php echo $row["int_id"]; ?>" class="btn btn-danger">Delete</a></td>
                         </tr>
                           <?php }
                           }
