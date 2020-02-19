@@ -164,9 +164,10 @@
                     <img class="img" src="assets/img/faces/marc.jpg" />
                   </a>
                 </div>
+                <?php $fullname = $_SESSION["fullname"] ?>
                 <div class="card-body">
                   <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                  <h4 class="card-title">Alec Thompson</h4>
+                  <h4 class="card-title"> <?php echo $fullname?></h4>
                   <p class="card-description">
                     Sekani Systems
                   </p>
