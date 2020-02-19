@@ -1,7 +1,6 @@
 <?php
 
     include("header.php");
-
 ?>
 <!-- Content added here -->
     <div class="content">
@@ -132,9 +131,10 @@
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->
+                <?php $fullname = $_SESSION["fullname"] ?>
                 <div class="card-body">
                   <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                  <h4 class="card-title">Alec Thompson</h4>
+                  <h4 class="card-title"> <?php echo $fullname?></h4>
                   <p class="card-description">
                     Sekani Systems
                   </p>

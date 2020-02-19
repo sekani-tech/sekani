@@ -1,7 +1,7 @@
 <?php
 
     include("header.php");
-
+    // start session
 ?>
 <?php include("functions/connect.php")?>
 <!-- Content added here -->

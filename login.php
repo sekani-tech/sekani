@@ -5,7 +5,7 @@ session_start();
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
   if($_SESSION["usertype"] == "super_admin"){
-    header("location: index.php");
+    header("location: create_institution.php");
     exit;
   } 
   elseif($_SESSION["usertype"] == "admin"){
