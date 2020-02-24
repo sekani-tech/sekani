@@ -13,18 +13,18 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     exit;
   }
   elseif($_SESSION["usertype"] == "staff"){
-    header("location: ./modules/staff/dashboard.php");
+    header("location: institutions/index.php");
     exit;
   }
 }
  
 // Include config file
 require_once "functions/config.php";
- 
+
 // Define variables and initialize with empty values
 $username = $password = "";
 $username_err = $password_err = "";
- 
+
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
@@ -45,7 +45,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT id, int_id, username, fullname, usertype, password FROM users WHERE username = ?";
+        $sql = "SELECT users.id, users.int_id, users.username, users.fullname, users.usertype, users.password, org_role, display_name FROM staff JOIN users ON users.id = staff.user_id WHERE users.username = ?";
+        // $sqlj = "SELECT users.id, users.int_id, users.username, users.fullname, users.usertype, users.password, org_role, display_name FROM staff JOIN users ON users.id = staff.user_id WHERE users.username = "sam"";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -62,7 +63,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Check if username exists, if yes then verify password
                 if(mysqli_stmt_num_rows($stmt) == 1){                    
                     // Bind result variables
-                    mysqli_stmt_bind_result($stmt, $id, $int_id, $username, $fullname, $usertype, $hashed_password);
+                    mysqli_stmt_bind_result($stmt, $id, $int_id, $username, $fullname, $usertype, $hashed_password, $org_role, $display_name);
                     if(mysqli_stmt_fetch($stmt)){
                         if(password_verify($password, $hashed_password)){
                             // Password is correct, so start a new session
@@ -76,6 +77,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["username"] = $username;
                             $_SESSION["usertype"] = $usertype;
                             $_SESSION["fullname"] = $fullname;
+                            $_SESSION["org_role"] = $org_role;
                             // $_SESSION["lastname"] = $lastname;
                             session_write_close();                            
                             
@@ -83,11 +85,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             if ($stmt->num_rows ==1 && $_SESSION["usertype"] =="super_admin") {
                               header("location: index.php");
                             }elseif ($stmt->num_rows ==1 && $_SESSION["usertype"]=="admin"){
-                              header("location: ./modules/admin/dashboard.php");
+                              header("location: ./insitution/admin/dashboard.php");
                             }
                             elseif ($stmt->num_rows ==1 && $_SESSION["usertype"]=="staff") {
-                              header("location: ./modules/staff/dashboard.php");
+                              header("location: institutions/index.php");
                             }
+                            elseif ($stmt->num_rows ==1 && $_SESSION["usertype"]=="super_staff") {
+                                header("location: ./modules/staff/dashboard.php");
+                              }
                         } else{
                             // Display an error message if password is not valid
                             $password_err = "The password you entered was not valid.";

@@ -26,7 +26,7 @@
                           First Name
                         </th>
                         <th>
-                          Lasr Name
+                          Last Name
                         </th>
                         <th>
                           Loan officer

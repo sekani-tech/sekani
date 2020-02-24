@@ -3,7 +3,6 @@
     include("header.php");
 
 ?>
-<?php include("functions/connect.php")?>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -164,12 +163,21 @@
                     <img class="img" src="assets/img/faces/marc.jpg" />
                   </a>
                 </div>
-                <?php $fullname = $_SESSION["fullname"] ?>
+                <?php
+                $fullname = $_SESSION["fullname"];
+                $sessint_id = $_SESSION["int_id"];
+                $org_role = $_SESSION["org_role"];
+                $inq = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$sessint_id'");
+                if (count([$inq]) == 1) {
+                  $n = mysqli_fetch_array($inq);
+                  $int_name = $n['int_name'];
+                }
+                ?>
                 <div class="card-body">
-                  <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                  <h4 class="card-title"> <?php echo $fullname?></h4>
+                  <h6 class="card-category text-gray"><?php echo $org_role ?></h6>
+                  <h4 class="card-title"> <?php echo $fullname ?></h4>
                   <p class="card-description">
-                    Sekani Systems
+                  <?php echo $int_name ?>
                   </p>
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>

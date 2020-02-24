@@ -3,7 +3,16 @@
           <nav class="float-left">
             <ul>
               <li>
-                <a href="#"><?php echo "instituion name"; ?></a>
+              <?php $sessint_id = $_SESSION["int_id"] ?>
+              <!-- for getting name with query -->
+              <?php
+                $inq = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$sessint_id'");
+                if (count([$inq]) == 1) {
+                  $n = mysqli_fetch_array($inq);
+                  $int_name = $n['int_name'];
+                }
+              ?>
+                <a href="#"><?php echo $int_name; ?></a>
               </li>
             </ul>
           </nav>
