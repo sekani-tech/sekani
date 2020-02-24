@@ -1,7 +1,6 @@
 <?php
 
     include("header.php");
-
 ?>
 <!-- Content added here -->
     <div class="content">
@@ -15,7 +14,7 @@
                   <p class="card-category">Create New institution profile</p>
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form action="functions/institution_data.php" method="post">
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
@@ -40,7 +39,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">State</label>
-                          <input type="text" class="form-control" name="state">
+                          <input type="text" class="form-control" name="int_state">
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -54,7 +53,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Office Address</label>
-                          <input type="text" class="form-control" name="address">
+                          <input type="text" class="form-control" name="office_address">
                         </div>
                       </div>
                     </div>
@@ -68,7 +67,7 @@
                       <div class="col-md-4">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Phone</label>
-                                <input type="tel" name="phone" class="form-control" id="">
+                                <input type="text" name="office_phone" class="form-control" id="">
                             </div>
                         </div>
                     </div>
@@ -76,7 +75,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Title</label>
-                                <select name="pct" class="form-control" id="">
+                                <select name="pc_title" class="form-control" id="">
                                     <option value="Mr">Mr</option>
                                     <option value="Mrs">Mrs</option>
                                     <option value="Miss">Miss</option>
@@ -88,20 +87,20 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Primary Contact Surname</label>
-                                <input type="text" name="pcsurname" class="form-control" id="">
+                                <input type="text" name="pc_surname" class="form-control" id="">
                             </div>
                         </div>
                         
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Primary Contact Other Names</label>
-                                <input type="text" name="pc_other_names" class="form-control" id="">
+                                <input type="text" name="pc_other_name" class="form-control" id="">
                             </div>
                         </div>
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Primary Contact Designation</label>
-                                <input type="text" name="pcdesignation" class="form-control" id="">
+                                <input type="text" name="pc_designation" class="form-control" id="">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -113,7 +112,7 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Primary Contact Email</label>
-                                <input type="email" name="pct" class="form-control" id="">
+                                <input type="email" name="pc_email" class="form-control" id="">
                             </div>
                         </div>
                     </div>
@@ -132,9 +131,10 @@
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->
+                <?php $fullname = $_SESSION["fullname"] ?>
                 <div class="card-body">
                   <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                  <h4 class="card-title">Alec Thompson</h4>
+                  <h4 class="card-title"> <?php echo $fullname?></h4>
                   <p class="card-description">
                     Sekani Systems
                   </p>

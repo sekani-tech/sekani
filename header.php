@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    if(!$_SESSION["usertype"] == "super_admin"){
+      header("location: login.php");
+      exit;
+  }
+?>
 <!doctype html>
 <html lang="en">
 
@@ -88,6 +95,11 @@
                 </div>
               </li>
               <!-- your navbar here -->
+              <li class="nav-item">
+                <a class="nav-link" href="functions/logout.php">
+                  <i class="material-icons">logout</i> Logout
+                </a>
+              </li>
             </ul>
           </div>
         </div>
