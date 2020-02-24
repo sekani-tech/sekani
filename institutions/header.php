@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Sekani</title>
+  <title>Sekani - <?php echo "institutions"; ?></title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- Material Kit CSS -->
-  <link href="assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+  <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
 </head>
 
 <body>
@@ -44,8 +44,38 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="institution.php">
-              <p>Institutions</p>
+            <a class="nav-link" href="client.php">
+              <p>Client</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="lend.php">
+              <p>Lend</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="loans.php">
+              <p>Loans</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="branch.php">
+              <p>Branch</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="products.php">
+              <p>Products</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="accounting.php">
+              <p>Accounting</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="config.php">
+              <p>Configuration</p>
             </a>
           </li>
           <!-- your sidebar here -->
@@ -72,7 +102,7 @@
                   <i class="material-icons">notifications</i> Notifications
                 </a>
               </li>
-              <!-- user config -->
+              <!-- user setup -->
               <li class="nav-item dropdown">
                 <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">person</i>
