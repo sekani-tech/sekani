@@ -3,7 +3,7 @@
           <nav class="float-left">
             <ul>
               <li>
-                <a href="#"><?php echo "instituion name"; ?></a>
+                <a href="#"><?php echo $int_name?></a>
               </li>
             </ul>
           </nav>

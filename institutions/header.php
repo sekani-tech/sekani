@@ -1,8 +1,26 @@
+<?php
+    session_start();
+    if(!$_SESSION["usertype"] == "admin"){
+      header("location: ../login.php");
+      exit;
+  }
+?>
+
+<?php
+  // get connections for all pages
+  include("../functions/connect.php");
+  $sessint_id = $_SESSION["int_id"];
+  $inq = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$sessint_id'");
+    if (count([$inq]) == 1) {
+      $n = mysqli_fetch_array($inq);
+      $int_name = $n['int_name'];
+    }
+?>
 <!doctype html>
 <html lang="en">
 
 <head>
-  <title>Sekani - <?php echo "institutions"; ?></title>
+  <title>Sekani - <?php echo $int_name?></title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />

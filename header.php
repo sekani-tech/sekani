@@ -5,6 +5,7 @@
       exit;
   }
 ?>
+
 <?php
   // get connections for all pages
   include("functions/connect.php");
