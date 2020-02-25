@@ -40,6 +40,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="users.php">
+              <i class="material-icons">person</i>
               <p>Staff</p>
             </a>
           </li>
@@ -65,6 +66,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="products.php">
+              <i class="material-icons">bubble_chart</i>
               <p>Products</p>
             </a>
           </li>
