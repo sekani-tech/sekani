@@ -15,30 +15,30 @@
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form action="../functions/institution_client_upload.php" method="post">
                     <div class="row">
                       <div class="col-md-5">
                         <div class="form-group">
                           <label class="bmd-label-floating">Bank</label>
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" name="bank">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Account No</label>
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" name="acct_no">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Display name</label>
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" name="display_name">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Email address</label>
-                          <input type="email" class="form-control">
+                          <input type="email" class="form-control" name="email">
                         </div>
                       </div>
                     </div>
@@ -46,25 +46,25 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Fist Name</label>
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" name="first_name">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Last Name</label>
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" name="last_name">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Phone No</label>
-                          <input type="tel" class="form-control">
+                          <input type="tel" class="form-control" name="phone">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Phone No2</label>
-                          <input type="tel" class="form-control">
+                          <input type="tel" class="form-control" name="phone2">
                         </div>
                       </div>
                     </div>
@@ -72,7 +72,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Address</label>
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" name="addres">
                         </div>
                       </div>
                     </div>
@@ -80,7 +80,7 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Gender:</label>
-                          <select class="form-control" name="" id="">
+                          <select class="form-control" name="gender" id="">
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                           </select>
@@ -89,7 +89,7 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Is staff:</label>
-                          <select name="" id="" class="form-control">
+                          <select name="is_staff" id="" class="form-control">
                               <option value="">Yes</option>
                               <option value="">No</option>
                           </select>
@@ -98,7 +98,7 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="">Date of Birth:</label>
-                          <input type="date" class="form-control">
+                          <input type="date" class="form-control" name="date_of_birth">
                         </div>
                       </div>
                     </div>
@@ -108,7 +108,7 @@
                           <label>Profile Photo</label>
                           <div class="form-group">
                             <label class=""> Use .jpg or png files other file types are not acceptible.</label>
-                            <input type="text" name="" class="form-control" id="">
+                            <input type="text" name="img" class="form-control" id="">
                           </div>
                         </div>
                       </div>
@@ -123,49 +123,49 @@
                       <div class="col-md-6">
                         <div class="form-group">
                             <label for=""> First Name:</label>
-                            <input type="text" name="name_gan" id="" class="form-control">
+                            <input type="text" name="gau_first_name" id="" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                             <label for=""> Last Name:</label>
-                            <input type="text" name="lname_gan" id="" class="form-control">
+                            <input type="text" name="gau_last_name" id="" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
                               <label for="">Phone:</label>
-                              <input type="text" name="phone_gan" id="" class="form-control">
+                              <input type="text" name="gau_phone" id="" class="form-control">
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                               <label for="">Phone:</label>
-                              <input type="text" name="phone_gan2" id="" class="form-control">
+                              <input type="text" name="gau_phone2" id="" class="form-control">
                           </div>
                         </div>
                         <div class="col-md-12">
                           <div class="form-group">
                               <label for="">Home Address:</label>
-                              <input type="text" name="address_gan" id="" class="form-control">
+                              <input type="text" name="gau_home_address" id="" class="form-control">
                           </div>
                         </div>
                         <div class="col-md-12">
                           <div class="form-group">
                               <label for="">Office Address:</label>
-                              <input type="text" name="oaddress_gan" id="" class="form-control">
+                              <input type="text" name="gau_office_address" id="" class="form-control">
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                               <label for="">Position Held:</label>
-                              <input type="text" name="pheld" id="" class="form-control">
+                              <input type="text" name="gau_position_held" id="" class="form-control">
                           </div>
                         </div>
                         <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Email:</label>
-                            <input type="text" name="email_gan" id="" class="form-control">
+                            <input type="text" name="gau_email" id="" class="form-control">
                         </div>
                         </div>
                     </div>
