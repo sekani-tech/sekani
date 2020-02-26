@@ -42,7 +42,7 @@ while ( $results[] = mysqli_fetch_object ( $res ) );
                           <input type="text" class="form-control" name="display_name">
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Email address</label>
                           <input type="email" class="form-control" name="email">
@@ -109,13 +109,23 @@ while ( $results[] = mysqli_fetch_object ( $res ) );
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-12">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label>Profile Photo</label>
                           <div class="form-group">
                             <label class="bmd-label-floating"> Use .jpg or png files other file types are not acceptible.</label>
                             <input type="text" name="img" class="form-control" id="">
                           </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">UserType</label>
+                          <select name="user_t" id="" class="form-control">
+                          <option value="">...</option>
+                            <option value="admin">Admin</option>
+                            <option value="staff">Staff</option>
+                          </select>
                         </div>
                       </div>
                     </div>

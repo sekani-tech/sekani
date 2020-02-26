@@ -6,6 +6,7 @@ session_start();
 $sessint_id = $_SESSION["int_id"];
 $int_n = $_POST['int_name'];
 $username = $_POST['username'];
+$user_t = $_POST['user_t'];
 $display_name = $_POST['display_name'];
 $email = $_POST['email'];
 $first_name = $_POST['first_name'];
@@ -16,11 +17,12 @@ $description = $_POST['description'];
 $address = $_POST['address'];
 $date_joined = $_POST['date_joined'];
 $org_role = $_POST['org_role'];
+$std = "Not Active";
 $phone = $_POST['phone'];
 $img = $_POST['img'];
 
-$queryuser = "INSERT INTO users (int_id, username, fullname, password, usertype, time_created, pics)
-VALUES ('{$sessint_id}', '{$username}', '{$display_name}', '{$hash}', '{$org_role}', '{$date_joined}', '{$img}')";
+$queryuser = "INSERT INTO users (int_id, username, fullname, password, usertype, status, time_created, pics)
+VALUES ('{$sessint_id}', '{$username}', '{$display_name}', '{$hash}', '{$user_t}', '{$std}', '{$date_joined}', '{$img}')";
 
 $result = mysqli_query($connection, $queryuser);
 

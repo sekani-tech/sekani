@@ -90,8 +90,8 @@
                         <div class="form-group">
                           <label class="bmd-label-floating">Is staff:</label>
                           <select name="is_staff" id="" class="form-control">
-                              <option value="">Yes</option>
-                              <option value="">No</option>
+                              <option value="Yes">Yes</option>
+                              <option value="No">No</option>
                           </select>
                         </div>
                       </div>
