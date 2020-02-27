@@ -20,55 +20,188 @@
                   <div class="list-group">
 
                     <div class="list-group-item py-3" data-acc-step>
-                      <h5 class="mb-0" data-acc-title>Name &amp; Email</h5>
+                      <h5 class="mb-0" data-acc-title>Loan Terms</h5>
                       <div data-acc-content>
                         <div class="my-3">
                           <div class="form-group">
-                            <label>Name:</label>
-                            <input type="text" name="name" class="form-control" />
+                            <label>Loan size:</label>
+                            <input type="number" name="" class="form-control" required id="">
                           </div>
                           <div class="form-group">
-                            <label>Email:</label>
-                            <input type="text" name="email" class="form-control" />
+                            <label>Loan Term:</label>
+                            <input type="number" name="" class="form-control" />
+                          </div>
+                          <div class="form-group">
+                            <label>Interest Rate (per month):</label>
+                            <input type="number" name="" class="form-control" id="">
+                          </div>
+                          <div class="form-group">
+                            <label>Disbusrsement Date:</label>
+                            <input type="date" name="" class="form-control" id="">
+                          </div>
+                          <div class="form-group">
+                            <label>Loan Officer:</label>
+                            <input type="text" name="" class="form-control" id="">
+                          </div>
+                          <div class="form-group">
+                            <label>Loan Purpose:</label>
+                            <input type="text" name="" class="form-control" id="">
+                          </div>
+                          <div class="form-group">
+                            <label>Linked Savings account:</label>
+                            <input type="text" name="" class="form-control" id="">
+                          </div>
+                          <div class="form-group">
+                            <label>Repayment Start Date:</label>
+                            <input type="date" name="" class="form-control" id="">
                           </div>
                         </div>
                       </div>
                     </div>
 
                     <div class="list-group-item py-3" data-acc-step>
-                      <h5 class="mb-0" data-acc-title>Contact</h5>
+                      <h5 class="mb-0" data-acc-title>Collateral</h5>
                       <div data-acc-content>
                         <div class="my-3">
                           <div class="form-group">
-                            <label>Telephone:</label>
-                            <input type="text" name="telephone" class="form-control" />
+                            <label>Type:</label>
+                            <select name=""class="form-control" id="">
+                              <option value="">select an option</option>
+                            </select>
                           </div>
 
                           <div class="form-group">
-                            <label>Mobile:</label>
-                            <input type="text" name="mobile" class="form-control" />
+                            <label>Value:</label>
+                            <input type="text" name="" class="form-control" />
+                          </div>
+                          <div class="form-group">
+                            <label for="">Description:</label>
+                            <input type="text" name="" class="form-control" id="">
                           </div>
                         </div>
                       </div>
                     </div>
 
                     <div class="list-group-item py-3" data-acc-step>
-                      <h5 class="mb-0" data-acc-title>Payment</h5>
+                      <h5 class="mb-0" data-acc-title>Guarantors</h5>
                       <div data-acc-content>
                         <div class="my-3">
-                          <div class="form-group">
-                            <label>Credit card:</label>
-                            <input type="text" name="card" class="form-control">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                                <label for=""> First Name:</label>
+                                <input type="text" name="gau_first_name" id="" class="form-control">
+                            </div>
                           </div>
-                          <div class="form-group form-row">
-                            <div class="col-sm-4">
-                              <label>Expiry:</label>
-                              <input type="text" name="expiry" class="form-control">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                                <label for=""> Last Name:</label>
+                                <input type="text" name="gau_last_name" id="" class="form-control">
                             </div>
-                            <div class="col-sm-4">
-                              <label>CVV:</label>
-                              <input type="text" name="cvv" class="form-control">
+                          </div>
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label for="">Phone:</label>
+                                  <input type="text" name="gau_phone" id="" class="form-control">
+                              </div>
                             </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                  <label for="">Phone:</label>
+                                  <input type="text" name="gau_phone2" id="" class="form-control">
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                  <label for="">Home Address:</label>
+                                  <input type="text" name="gau_home_address" id="" class="form-control">
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                  <label for="">Office Address:</label>
+                                  <input type="text" name="gau_office_address" id="" class="form-control">
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                  <label for="">Position Held:</label>
+                                  <input type="text" name="gau_position_held" id="" class="form-control">
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Email:</label>
+                                <input type="text" name="gau_email" id="" class="form-control">
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- group 4 -->
+
+                    <div class="list-group-item py-3" data-acc-step>
+                      <h5 class="mb-0" data-acc-title>Repayment Schedule</h5>
+                      <div data-acc-content>
+                        <div class="my-3">
+                          <!-- replace values with loan data -->
+                          <div class="form -group">
+                            <label for="">Disbursement:</label> <span>50000</span>
+                          </div>
+                          <div class="form -group">
+                            <label for="">Principal Due &amp; Date:</label> <ul>
+                              <li>(DATE) - 667</li>
+                            </ul>
+                          </div>
+                          <div class="form -group">
+                            <label for="">Principal Balance:</label> <span>50000</span>
+                          </div>
+                          <div class="form -group">
+                            <label for="">Intrest Rate:</label> <span>7%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- 5 -->
+                    <div class="list-group-item py-3" data-acc-step>
+                      <h5 class="mb-0" data-acc-title>Overview</h5>
+                      <div data-acc-content>
+                        <div class="my-3">
+                          <!-- replace values with loan data -->
+                          <div class="form-group">
+                            <label>Loan size:</label>
+                            <input type="number" name="" class="form-control" required id="">
+                          </div>
+                          <div class="form-group">
+                            <label>Loan Term:</label>
+                            <input type="number" name="" class="form-control" />
+                          </div>
+                          <div class="form-group">
+                            <label>Interest Rate (per month):</label>
+                            <input type="number" name="" class="form-control" id="">
+                          </div>
+                          <div class="form-group">
+                            <label>Disbusrsement Date:</label>
+                            <input type="date" name="" class="form-control" id="">
+                          </div>
+                          <div class="form-group">
+                            <label>Loan Officer:</label>
+                            <input type="text" name="" class="form-control" id="">
+                          </div>
+                          <div class="form-group">
+                            <label>Loan Purpose:</label>
+                            <input type="text" name="" class="form-control" id="">
+                          </div>
+                          <div class="form-group">
+                            <label>Linked Savings account:</label>
+                            <input type="text" name="" class="form-control" id="">
+                          </div>
+                          <div class="form-group">
+                            <label>Repayment Start Date:</label>
+                            <input type="date" name="" class="form-control" id="">
                           </div>
                         </div>
                       </div>
