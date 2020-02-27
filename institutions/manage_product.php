@@ -24,22 +24,22 @@
                         <div class="my-3">
                           <div class="form-group">
                             <label>Name *:</label>
-                            <input type="text" required name="" class="form-control" required id="">
+                            <input type="text" required name="name" class="form-control" required id="">
                           </div>
                           <div class="form-group">
                                                         <label for="shortLoanName" >Short Loan Name *</label>
-                                                        <input type="text" class="form-control" name="" value="" placeholder="Short Name..." required>
+                                                        <input type="text" class="form-control" name="short_name" value="" placeholder="Short Name..." required>
                                                       </div>
                                                       
 
                                                       <div class="form-group">
                                                         <label for="loanDescription" >Description *</label>
-                                                        <input type="text" class="form-control" name="" value="" placeholder="Description...." required>
+                                                        <input type="text" class="form-control" name="description" value="" placeholder="Description...." required>
                                                       </div>
 
                                                     <div class="form-group">
                                                       <label for="fundOrigin">Origin of Funding*</label>
-                                                      <select class="form-control" name="fundOrigin" required>
+                                                      <select class="form-control" name="fund_id" required>
                                                         <option value="1">Bank</option>
                                                         <option value="2"> Cash </option>
                                                       </select>
@@ -60,46 +60,46 @@
 
                                                     <div class="form-group">
                                                       <label for="installmentAmount" >Installment Amount in Multiples</label>
-                                                      <input type="text" class="form-control" name="" value="">
+                                                      <input type="text" class="form-control" name="in_amt_multiples" value="">
                                                     </div>
 
                                                     <div class="form-group">
                                                       <label for="principal" >Principal</label>
-                                                      <input type="text" class="form-control" name="" value="" placeholder="Default" required>
-                                                      <input type="text" class="form-control" name="" value="" placeholder="Min" required>
-                                                      <input type="text" class="form-control" name="" value="" placeholder="Max" required>
+                                                      <input type="text" class="form-control" name="principal_amount" value="" placeholder="Default" required>
+                                                      <input type="text" class="form-control" name="min_principal_amount" value="" placeholder="Min" required>
+                                                      <input type="text" class="form-control" name="max_principal_amount" value="" placeholder="Max" required>
                                                     </div>
 
                                                     <div class="form-group">
                                                       <label for="loanTerms" >Loan Term</label>
-                                                      <input type="text" class="form-control" name="" value="" placeholder="Default" required>
-                                                      <input type="text" class="form-control" name="" value="" placeholder="Min" required>
-                                                      <input type="text" class="form-control" name="" value="" placeholder="Max" required>
+                                                      <input type="text" class="form-control" name="loan_term" value="" placeholder="Default" required>
+                                                      <input type="text" class="form-control" name="min_loan_term" value="" placeholder="Min" required>
+                                                      <input type="text" class="form-control" name="max_loan_term" value="" placeholder="Max" required>
                                                     </div>
 
                                                     <div class="form-group">
                                                       <label for="repaymentFrequency" >Repayment Frequency *</label>
-                                                        <input type="text" class="form-control " name="" value=""required>
+                                                        <input type="text" class="form-control " name="repayment_frequency" value=""required>
 
-                                                        <select class="form-control" name="">
-                                                          <option value="">Days</option>
-                                                          <option value="">Weeks</option>
-                                                          <option value="">Months</option>
+                                                        <select class="form-control" name="repayment_every">
+                                                          <option value="days">Days</option>
+                                                          <option value="weeks">Weeks</option>
+                                                          <option value="months">Months</option>
                                                         </select>
                                                     </div>
 
                                                     <div class="form-group">
                                                       <label for="interestRate" >Interest Rate</label>
-                                                      <input type="text" class="form-control" name="" value="" placeholder="Default" required>
-                                                      <input type="text" class="form-control" name="" value="" placeholder="Min" required>
-                                                      <input type="text" class="form-control" name="" value="" placeholder="Max" required>
+                                                      <input type="text" class="form-control" name="interest_rate" value="" placeholder="Default" required>
+                                                      <input type="text" class="form-control" name="min_interest_rate" value="" placeholder="Min" required>
+                                                      <input type="text" class="form-control" name="max_interest_rate" value="" placeholder="Max" required>
                                                     </div>
 
                                                     <div class="form-group">
                                                       <label for="interestRateApplied" >Interest Rate Applied *</label>
-                                                      <select class="form-control" name="" required>
-                                                        <option value="">Per Month</option>
-                                                        <option value="">Per Year</option>
+                                                      <select class="form-control" name="interest_rate_applied" required>
+                                                        <option value="per_month">Per Month</option>
+                                                        <option value="per_year">Per Year</option>
                                                       </select>
                                                     </div>
                                               
@@ -137,7 +137,7 @@
                                                 
                                                 <div class="form-group">
                                                   <label for="interestMethodology" >Interest Methodology *</label>
-                                                  <select class="form-control" name="" required>
+                                                  <select class="form-control" name="interest_rate_methodoloy" required>
                                                     <option value="1">Flat</option>
 <!--                                                    <option value="">Declining Balance</option>-->
                                                   </select>
@@ -165,9 +165,9 @@
 
                                                 <div class="form-group">
                                                   <label for="amortizatioMethody" >Amortization Method *</label>
-                                                  <select class="form-control" name="" required>
-                                                    <option value="">Equal Installments</option>
-                                                    <option value="">Equal Principal Payment</option>
+                                                  <select class="form-control" name="ammortization_method" required>
+                                                    <option value="equal_installment">Equal Installments</option>
+                                                    <option value="equal_principal_payment">Equal Principal Payment</option>
                                                   </select>
                                               </div>
                                               <div class="clearfix"></div>
@@ -211,9 +211,9 @@
 
                                                 <div class="form-group">
                                                   <label for="loanCycleCount" >Include In Loan Cycle Count </label>
-                                                  <select class="form-control" name="" required>
-                                                    <option value="">No</option>
-                                                    <option value="">Yes</option>
+                                                  <select class="form-control" name="cycle_count" required>
+                                                    <option value="no">No</option>
+                                                    <option value="yes">Yes</option>
                                                   </select>
                                                 </div>
 
@@ -227,25 +227,25 @@
 
                                                 <div class="form-group">
                                                   <label for="overPayment" >Automatically Allocate Overpayment </label>
-                                                  <select class="form-control" name="" required>
-                                                    <option value="">No</option>
-                                                    <option value="">Yes</option>
+                                                  <select class="form-control" name="auto_allocate_overpayment" required>
+                                                    <option value="no">No</option>
+                                                    <option value="yes">Yes</option>
                                                   </select>
                                                 </div>
 
                                                 <div class="form-group">
                                                   <label for="additionalCharges" >Allow Additional Charges </label>
-                                                  <select class="form-control" name="" required>
-                                                    <option value="">No</option>
-                                                    <option value="">Yes</option>
+                                                  <select class="form-control" name="additional_charge" required>
+                                                    <option value="no">No</option>
+                                                    <option value="yes">Yes</option>
                                                   </select>
                                                 </div>
 
                                                 <div class="form-group">
                                                   <label for="autoDisburse" >Auto Disburse </label>
-                                                  <select class="form-control" name="" required>
-                                                    <option value="">No</option>
-                                                    <option value="">Yes</option>
+                                                  <select class="form-control" name="auto_disburse" required>
+                                                    <option value="no">No</option>
+                                                    <option value="yes">Yes</option>
                                                   </select>
                                                 </div>
 
@@ -256,12 +256,26 @@
                                                     <option value="">Lagos Savings Group</option>
                                                   </select>
                                                 </div>-->
-
+<?php
+// load user role data
+function fill_charges($connection)
+{
+$sint_id = $_SESSION["int_id"];
+$org = "SELECT * FROM charge WHERE int_id = '$sint_id'";
+$res = mysqli_query($connection, $org);
+$output = '';
+while ($row = mysqli_fetch_array($res))
+{
+  $output .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+}
+return $output;
+}
+?>
                                                 <div class="form-group">
                                                   <label for="requireSavingsAcct" >Requires Linked Savings Account </label>
-                                                  <select class="form-control" name="" required>
-                                                    <option value="">Abuja Savings Group</option>
-                                                    <option value="">Lagos Savings Group</option>
+                                                  <select class="form-control" name="linked_savings_acct" required>
+                                                    <option value="abuja_savings_group">Abuja Savings Group</option>
+                                                    <option value="lagos_savings_group">Lagos Savings Group</option>
                                                   </select>
                                                 </div>
                         <!-- </div> -->
@@ -273,14 +287,30 @@
                       <div data-acc-content>
                         <div class="my-3">
                           <div class="form-group">
-                            <p><label for="">Name: </label> <span></span></p>
-                            <p><label for="">Charge: </label> <span></span></p>
-                            <p><label for="">Collected on: </label> <span></span></p>
+                          <div id="show_charges">
+                            <!-- reveals those stuffsh -->
+                          </div>
                           </div>
                           <div class="form-group">
+                          <script>
+                            $(document).ready(function() {
+                              $('#charges').change(function(){
+                                var id = $(this).val();
+                                $.ajax({
+                                  url:"load_data.php",
+                                  method:"POST",
+                                  data:{id:id},
+                                  success:function(data){
+                                    $('#show_charges').html(data);
+                                  }
+                                })
+                              });
+                            })
+                          </script>
                             <label>Charges:</label>
-                            <select name=""class="form-control" id="">
+                            <select name=""class="form-control" id="charges">
                               <option value="">select an option</option>
+                              <?php echo fill_charges($connection); ?>
                             </select>
                           </div>
 
@@ -521,7 +551,7 @@
           <!-- /content -->
         </div>
       </div>
-
+      <!-- make something cool here -->
 <?php
 
     include("footer.php");

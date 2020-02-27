@@ -15,18 +15,24 @@
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form action="../functions/update_client.php" method="post">
                     <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">ID</label>
+                          <input type="text" readonly value="<?php echo $int_id; ?>" class="form-control" name="int_id">
+                        </div>
+                      </div>
                       <div class="col-md-5">
                         <div class="form-group">
                           <label class="bmd-label-floating">Bank</label>
-                          <input type="text" class="form-control">
+                          <input type="text" value="<?php echo $bank; ?>" name="bank" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Account No</label>
-                          <input type="text" class="form-control">
+                          <input type="text" value="<?php echo $acct_no; ?>" name="bank" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
