@@ -12,6 +12,15 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- Material Kit CSS -->
   <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+  <!-- accordion -->
+  <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/materia/bootstrap.min.css">
+  <style>
+    div[data-acc-content] { display: none;  }
+    div[data-acc-step]:not(.open) { background: #f2f2f2;  }
+    div[data-acc-step]:not(.open) h5 { color: #777;  }
+    div[data-acc-step]:not(.open) .badge-primary { background: #ccc;  }
+  </style>
 </head>
 
 <body>
