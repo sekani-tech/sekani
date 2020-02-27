@@ -13,12 +13,22 @@
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Users</h4>
                   <!-- Insert number users institutions -->
-                  <p class="card-category"><?php echo 0; ?> Users on the platform || <a href="user.php">Create New user</a></p>
+                  <p class="card-category"><?php
+                   $query = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
+                   $result = mysqli_query($connection, $query);
+                   if ($result) {
+                     $inr = mysqli_num_rows($result);
+                     echo $inr;
+                   }?> Users on the platform || <a href="user.php">Create New user</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table">
                       <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT users.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status FROM staff JOIN users ON users.id = staff.user_id WHERE users.int_id ='$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
                         <!-- <th>
                           ID
                         </th> -->
@@ -38,12 +48,24 @@
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <!-- <th></th> -->
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                          <th><?php echo $row["display_name"]; ?></th>
+                          <th><?php echo $row["username"]; ?></th>
+                          <th><?php echo $row["int_name"]; ?></th>
+                          <th><?php echo $row["email"]; ?></th>
+                          <th><?php echo $row["status"]; ?></th>
+                          <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                          <td><a href="functions/delete_staff.php?edit=<?php echo $row["int_id"]; ?>" class="btn btn-danger">Delete</a></td>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
                       </tbody>
                     </table>
                   </div>

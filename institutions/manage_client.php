@@ -90,8 +90,8 @@
                         <div class="form-group">
                           <label class="bmd-label-floating">Is staff:</label>
                           <select name="is_staff" id="" class="form-control">
-                              <option value="">Yes</option>
-                              <option value="">No</option>
+                              <option value="Yes">Yes</option>
+                              <option value="No">No</option>
                           </select>
                         </div>
                       </div>
@@ -183,11 +183,16 @@
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->
+                <?php
+                $fullname = $_SESSION["fullname"];
+                $sessint_id = $_SESSION["int_id"];
+                $org_role = $_SESSION["org_role"];
+                ?>
                 <div class="card-body">
-                  <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                  <h4 class="card-title">Alec Thompson</h4>
+                  <h6 class="card-category text-gray"><?php echo $org_role?></h6>
+                  <h4 class="card-title"> <?php echo $fullname?></h4>
                   <p class="card-description">
-                    Sekani Systems
+                  <?php echo $int_name?>
                   </p>
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>

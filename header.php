@@ -9,6 +9,15 @@
   // get connections for all pages
   include("functions/connect.php");
 ?>
+<?php
+//active user
+$activecode = "Active";
+// working on the time stamp right now
+$ts = date('Y-m-d H:i:s');
+$acuser = $_SESSION["username"];
+$activeq = "UPDATE users SET users.status ='$activecode', users.last_logged = '$ts' WHERE users.username ='$acuser'";
+$rezz = mysqli_query($connection, $activeq);
+?>
 <!doctype html>
 <html lang="en">
 

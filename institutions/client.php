@@ -13,12 +13,22 @@
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Clients</h4>
                   <!-- Insert number users institutions -->
-                  <p class="card-category"><?php echo 0; ?> registred clients || <a href="manage_client.php">Create New client</a></p>
+                  <p class="card-category"><?php
+                   $query = "SELECT * FROM clients WHERE int_id = '$sessint_id'";
+                   $result = mysqli_query($connection, $query);
+                   if ($result) {
+                     $inr = mysqli_num_rows($result);
+                     echo $inr;
+                   }?> registered clients || <a href="manage_client.php">Create New client</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table">
                       <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM clients WHERE int_id ='$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
                         <!-- <th>
                           ID
                         </th> -->
@@ -38,11 +48,24 @@
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                          <th><?php echo $row["first_name"]; ?></th>
+                          <th><?php echo $row["last_name"]; ?></th>
+                          <th><?php echo $row["loan_officer"]; ?></th>
+                          <th><?php echo $row["phone"]; ?></th>
+                          <th><?php echo $row["loan_status"]; ?></th>
+                          <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                          <td><a href="functions/delete_staff.php?edit=<?php echo $row["int_id"]; ?>" class="btn btn-danger">Delete</a></td>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
                           <!-- <th></th> -->
                       </tbody>
                     </table>
