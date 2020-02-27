@@ -23,6 +23,43 @@
                       <h5 class="mb-0" data-acc-title>Loan Terms</h5>
                       <div data-acc-content>
                         <div class="my-3">
+                        <div class="form-group">
+                        <?php
+// load user role data
+function fill_product($connection)
+{
+$sint_id = $_SESSION["int_id"];
+$org = "SELECT * FROM product WHERE int_id = '$sint_id'";
+$res = mysqli_query($connection, $org);
+$output = '';
+while ($row = mysqli_fetch_array($res))
+{
+  $output .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+}
+return $output;
+}
+?>
+                          <script>
+                            $(document).ready(function() {
+                              $('#charges').change(function(){
+                                var id = $(this).val();
+                                $.ajax({
+                                  url:"load_datal.php",
+                                  method:"POST",
+                                  data:{id:id},
+                                  success:function(data){
+                                    $('#show_charges').html(data);
+                                  }
+                                })
+                              });
+                            })
+                          </script>
+                            <label>Product Type:</label>
+                            <select name=""class="form-control" id="charges">
+                              <option value="">select an option</option>
+                              <?php echo fill_product($connection); ?>
+                            </select>
+                          </div>
                           <div class="form-group">
                             <label>Loan size:</label>
                             <input type="number" name="" class="form-control" required id="">
