@@ -38,17 +38,43 @@ while ($row = mysqli_fetch_array($res))
 }
 return $output;
 }
+// a function for client data fill
+function fill_client($connection)
+{
+$sint_id = $_SESSION["int_id"];
+$org = "SELECT * FROM clients WHERE int_id = '$sint_id'";
+$res = mysqli_query($connection, $org);
+$out = '';
+while ($row = mysqli_fetch_array($res))
+{
+  $out .= '<option value="'.$row["id"].'">'.$row["display_name"].'</option>';
+}
+return $out;
+}
+// a function for collateral
+function fill_collateral($connection)
+{
+$sint_id = $_SESSION["int_id"];
+$org = "SELECT * FROM collateral WHERE int_id = '$sint_id'";
+$res = mysqli_query($connection, $org);
+$out = '';
+while ($row = mysqli_fetch_array($res))
+{
+  $out .= '<option value="'.$row["id"].'">'.$row["type"].'</option>';
+}
+return $out;
+}
 ?>
                           <script>
                             $(document).ready(function() {
                               $('#charges').change(function(){
                                 var id = $(this).val();
                                 $.ajax({
-                                  url:"load_datal.php",
+                                  url:"load_data_lend.php",
                                   method:"POST",
                                   data:{id:id},
                                   success:function(data){
-                                    $('#show_charges').html(data);
+                                    $('#show_product').html(data);
                                   }
                                 })
                               });
@@ -60,61 +86,70 @@ return $output;
                               <?php echo fill_product($connection); ?>
                             </select>
                           </div>
-                          <div class="form-group">
-                            <label>Loan size:</label>
-                            <input type="number" name="" class="form-control" required id="">
+                          <div id="show_product">
                           </div>
                           <div class="form-group">
-                            <label>Loan Term:</label>
-                            <input type="number" name="" class="form-control" />
-                          </div>
-                          <div class="form-group">
-                            <label>Interest Rate (per month):</label>
-                            <input type="number" name="" class="form-control" id="">
-                          </div>
-                          <div class="form-group">
-                            <label>Disbusrsement Date:</label>
-                            <input type="date" name="" class="form-control" id="">
-                          </div>
-                          <div class="form-group">
-                            <label>Loan Officer:</label>
-                            <input type="text" name="" class="form-control" id="">
-                          </div>
-                          <div class="form-group">
-                            <label>Loan Purpose:</label>
-                            <input type="text" name="" class="form-control" id="">
-                          </div>
-                          <div class="form-group">
-                            <label>Linked Savings account:</label>
-                            <input type="text" name="" class="form-control" id="">
-                          </div>
-                          <div class="form-group">
-                            <label>Repayment Start Date:</label>
-                            <input type="date" name="" class="form-control" id="">
-                          </div>
+                          <script>
+                            $(document).ready(function() {
+                              $('#client_name').change(function(){
+                                var id = $(this).val();
+                                $.ajax({
+                                  url:"load_data_client_gau.php",
+                                  method:"POST",
+                                  data:{id:id},
+                                  success:function(data){
+                                    $('#show_client_gau').html(data);
+                                  }
+                                })
+                              });
+                            })
+                          </script>
+                           <label>Client Name:</label>
+                           <select name=""class="form-control" id="client_name">
+                              <option value="">select an option</option>
+                              <?php echo fill_client($connection); ?>
+                            </select>
+                           </div>
                         </div>
                       </div>
                     </div>
-
+                    <script>
+                            $(document).ready(function() {
+                              $('#collat').change(function(){
+                                var id = $(this).val();
+                                $.ajax({
+                                  url:"load_data_col.php",
+                                  method:"POST",
+                                  data:{id:id},
+                                  success:function(data){
+                                    $('#show_collat').html(data);
+                                  }
+                                })
+                              });
+                            })
+                    </script>
                     <div class="list-group-item py-3" data-acc-step>
                       <h5 class="mb-0" data-acc-title>Collateral</h5>
                       <div data-acc-content>
                         <div class="my-3">
                           <div class="form-group">
                             <label>Type:</label>
-                            <select name=""class="form-control" id="">
+                            <select name=""class="form-control" id="collat">
                               <option value="">select an option</option>
+                              <?php echo fill_collateral($connection); ?>
                             </select>
                           </div>
-
-                          <div class="form-group">
+                          <!-- result start -->
+                          <div id="show_collat"></div>
+                          <!-- result end -->
+                          <!-- <div class="form-group">
                             <label>Value:</label>
                             <input type="text" name="" class="form-control" />
                           </div>
                           <div class="form-group">
                             <label for="">Description:</label>
                             <input type="text" name="" class="form-control" id="">
-                          </div>
+                          </div> -->
                         </div>
                       </div>
                     </div>
@@ -122,8 +157,10 @@ return $output;
                     <div class="list-group-item py-3" data-acc-step>
                       <h5 class="mb-0" data-acc-title>Guarantors</h5>
                       <div data-acc-content>
-                        <div class="my-3">
+                      <div id="show_client_gau"></div>
+                        <!-- <div class="my-3">
                         <div class="row">
+                        <div id="show_client_gau"></div>
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label for=""> First Name:</label>
@@ -173,7 +210,7 @@ return $output;
                             </div>
                             </div>
                         </div>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
 
