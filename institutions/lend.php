@@ -219,8 +219,8 @@ return $out;
                     <div class="list-group-item py-3" data-acc-step>
                       <h5 class="mb-0" data-acc-title>Repayment Schedule</h5>
                       <div data-acc-content>
-                        <div class="my-3">
-                          <!-- replace values with loan data -->
+                      <div id="result" name="" for=""></div>
+                        <!-- <div class="my-3">
                           <div class="form -group">
                             <label for="">Disbursement:</label> <span>50000</span>
                           </div>
@@ -235,7 +235,7 @@ return $out;
                           <div class="form -group">
                             <label for="">Intrest Rate:</label> <span>7%</span>
                           </div>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
 
