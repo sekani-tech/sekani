@@ -26,7 +26,11 @@ if(isset($_POST["id"]))
         <input type="number" value="'.$row["loan_term"].'" name="loan_term" class="form-control" id="loan_term" />
       </div>
       <div class="form-group">
-        <label>Interest Rate (per '.$row["repayment_every"].'):</label>
+        <label>Interest Rate per:</label>
+        <input type="text" value="'.$row["repayment_every"].'" name="repayp" class="form-control" id="repay">
+      </div>
+      <div class="form-group">
+        <label>Interest Rate:</label>
         <input type="number" value="'.$row["interest_rate"].'" name="interest_r" class="form-control" id="interest_rate">
       </div>
       <div class="form-group">
@@ -60,17 +64,18 @@ if(isset($_POST["id"]))
 
 <script>
       $(document).ready(function(){
-        $('#disb_date').change(function(){
+        $('#repay_start').change(function(){
           console.log('changed');
           var prina = document.getElementById("principal_amount").value;
           var loant = document.getElementById("loan_term").value;
           var intr = document.getElementById("interest_rate").value;
+          var repay = document.getElementById("repay").value;
           var repay_start = document.getElementById("repay_start").value;
           var disbd = document.getElementById("disb_date").value;
           $.ajax({
             url:"loan_calculation.php",
             method:"POST",
-            data:{prina: prina, loant: loant, intr: intr, disbd: disbd, repay_start: repay_start},
+            data:{prina: prina, loant: loant, intr: intr, repay: repay, disbd: disbd, repay_start: repay_start},
             success: function(data){
               $('#result').html(data);
             }
