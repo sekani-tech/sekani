@@ -33,7 +33,7 @@ $additional_charge = $_POST['additional_charge'];
 $auto_disburse = $_POST['auto_disburse'];
 $linked_savings_acct = $_POST['linked_savings_acct'];
 // credit checks and accounting rules
-
+// insertion query for product
 $query = "INSERT INTO product (int_id, charge_id, name, short_name, description, 
 fund_id, in_amt_multiples, principal_amount, min_principal_amount, max_principal_amount,
 loan_term, min_loan_term, max_loan_term, repayment_frequency, repayment_every,
