@@ -15,7 +15,7 @@
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                <form id="form">
+                <form id="form" action="../functions/int_lend_upload.php" method="POST">
 
                   <div class="list-group">
 
@@ -81,7 +81,7 @@ return $out;
                             })
                           </script>
                             <label>Product Type:</label>
-                            <select name=""class="form-control" id="charges">
+                            <select name="product_id" class="form-control" id="charges">
                               <option value="">select an option</option>
                               <?php echo fill_product($connection); ?>
                             </select>

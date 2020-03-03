@@ -29,7 +29,11 @@ if ($tm == 'day') {
 $formg = date('Y-m-d', strtotime($repay_start. ' + '.$t.' '.$tms.''));
 $end_date = $formg;
 $date = $repay_start;
+
 function fill_com ($e, $d, $tx, $em) {
+  if ($d == "") {
+    echo "Add Repayment Date";
+  } else {
   date_default_timezone_set('UTC');
   echo "<label for=''>". "Date & Principal Due:" ."</label>";
 while (strtotime($d) <= strtotime($e)) {
@@ -37,6 +41,7 @@ while (strtotime($d) <= strtotime($e)) {
     $d = date ("Y-m-d", strtotime("+1 ".$tx." ", strtotime($d)));
 }
 date("M Y", strtotime($d));
+  }
 }
 $result1 = '<div class="my-3">
   <!-- replace values with loan data -->

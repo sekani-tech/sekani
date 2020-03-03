@@ -82,9 +82,9 @@
                                                         <input type="text" class="form-control " name="repayment_frequency" value=""required>
 
                                                         <select class="form-control" name="repayment_every">
-                                                          <option value="days">Days</option>
-                                                          <option value="weeks">Weeks</option>
-                                                          <option value="months">Months</option>
+                                                          <option value="day">Day</option>
+                                                          <option value="week">Week</option>
+                                                          <option value="month">Month</option>
                                                         </select>
                                                     </div>
 
@@ -242,8 +242,8 @@ return $output;
                                                 <div class="form-group">
                                                   <label for="requireSavingsAcct" >Requires Linked Savings Account </label>
                                                   <select class="form-control" name="linked_savings_acct" required>
-                                                    <option value="abuja_savings_group">Abuja Savings Group</option>
-                                                    <option value="lagos_savings_group">Lagos Savings Group</option>
+                                                    <option value="Abuja Savings Group">Abuja Savings Group</option>
+                                                    <option value="Lagos Ssavings Group">Lagos Savings Group</option>
                                                   </select>
                                                 </div>
                         <!-- </div> -->
