@@ -23,19 +23,19 @@
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#messages" data-toggle="tab">
-                            <i class="material-icons">code</i> Roles
+                            <i class="material-icons">supervisor_account</i> Roles
                             <div class="ripple-container"></div>
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#" data-toggle="tab">
-                            <i class="material-icons">cloud</i> Permission
+                            <i class="material-icons">visibility</i> Permission
                             <div class="ripple-container"></div>
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#" data-toggle="tab">
-                            <i class="material-icons">cloud</i> Marker Checker Permissions
+                            <i class="material-icons">visibility_off</i> Marker Checker Permissions
                             <div class="ripple-container"></div>
                           </a>
                         </li>

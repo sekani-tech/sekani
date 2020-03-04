@@ -136,11 +136,11 @@ include('functions/config.php');
 </head>
 <body>
     <div class="wrapper">
-        <div class="content justify-content-around">
-            <div class="container-fluid">
+        <div class="content justify-content-between">
+            <div class="container">
                 <!-- Login form -->
                 <!-- <div class="row"> -->
-                    <div class="col-md-7">
+                    <div class="col-md-7" style="margin-left:auto; margin-right:auto;">
                     <div class="card">
                         <div class="card-header card-header-primary">
                         <h4 class="card-title">Login</h4>

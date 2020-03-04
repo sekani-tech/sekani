@@ -29,7 +29,7 @@ $rezz = mysqli_query($connection, $activeq);
 <html lang="en">
 
 <head>
-  <title>Sekani - <?php echo $int_name?></title>
+  <title><?php echo $int_name?></title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
@@ -83,21 +83,25 @@ $rezz = mysqli_query($connection, $activeq);
           </li>
           <li class="nav-item">
             <a class="nav-link" href="client.php">
+              <i class="material-icons">people</i>
               <p>Client</p>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="lend.php">
+              <i class="material-icons">send</i>
               <p>Lend</p>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="loans.php">
+              <i class="material-icons">account_balance_wallet</i>
               <p>Loans</p>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="branch.php">
+              <i class="material-icons">account_tree</i>
               <p>Branch</p>
             </a>
           </li>
@@ -109,11 +113,13 @@ $rezz = mysqli_query($connection, $activeq);
           </li>
           <li class="nav-item">
             <a class="nav-link" href="accounting.php">
+              <i class="material-icons">credit_card</i>
               <p>Accounting</p>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="config.php">
+              <i class="material-icons">settings</i>
               <p>Configuration</p>
             </a>
           </li>

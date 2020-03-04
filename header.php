@@ -66,6 +66,7 @@ $rezz = mysqli_query($connection, $activeq);
           </li>
           <li class="nav-item">
             <a class="nav-link" href="institution.php">
+              <i class="material-icons">house</i>
               <p>Institutions</p>
             </a>
           </li>

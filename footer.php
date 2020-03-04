@@ -20,8 +20,8 @@
             &copy;
             <script>
               document.write(new Date().getFullYear())
-            </script>, made <i class="material-icons">favorite</i> by
-                <a href="https://www.sekanisytems.com">Sekani System</a>
+            </script>, made <i class="material-icons">group</i> by
+                <a target="blank" href="https://www.sekanisytems.com.ng">Sekani Systems</a>
           </div>
           <!-- your footer here -->
         </div>
