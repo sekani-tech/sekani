@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 03, 2020 at 08:24 PM
+-- Generation Time: Mar 03, 2020 at 10:47 PM
 -- Server version: 8.0.18
 -- PHP Version: 7.2.18
 
@@ -220,16 +220,19 @@ INSERT INTO `institutions` (`int_id`, `int_name`, `rcn`, `int_state`, `lga`, `of
 DROP TABLE IF EXISTS `loan`;
 CREATE TABLE IF NOT EXISTS `loan` (
   `id` int(100) NOT NULL,
+  `int_id` int(100) DEFAULT NULL,
   `account_no` varchar(20) NOT NULL,
-  `client_id` bigint(20) DEFAULT NULL,
-  `product_id` bigint(20) DEFAULT NULL,
+  `client_id` int(100) DEFAULT NULL,
+  `product_id` int(100) DEFAULT NULL,
   `fund_id` bigint(20) DEFAULT NULL,
   `loan_officer` varchar(50) DEFAULT NULL,
-  `loan_type` smallint(5) NOT NULL,
+  `loan_purpose` varchar(100) DEFAULT NULL,
   `currency_code` varchar(3) NOT NULL,
   `currency_digits` smallint(5) NOT NULL,
   `principal_amount_proposed` decimal(19,6) NOT NULL,
   `principal_amount` decimal(19,6) NOT NULL,
+  `loan_term` int(100) DEFAULT NULL,
+  `interest_rate` decimal(19,6) DEFAULT NULL,
   `approved_principal` decimal(19,6) NOT NULL,
   `arrearstolerance_amount` decimal(19,6) DEFAULT NULL,
   `is_floating_interest_rate` bit(1) DEFAULT b'0',
@@ -242,7 +245,7 @@ CREATE TABLE IF NOT EXISTS `loan` (
   `allow_partial_period_interest_calcualtion` tinyint(1) NOT NULL DEFAULT '0',
   `term_frequency` smallint(5) NOT NULL DEFAULT '0',
   `term_period_frequency_enum` smallint(5) NOT NULL DEFAULT '2',
-  `repay_every` smallint(5) NOT NULL,
+  `repay_every` varchar(100) DEFAULT NULL,
   `repayment_period_frequency_enum` smallint(5) NOT NULL,
   `number_of_repayments` smallint(5) NOT NULL,
   `grace_on_principal_periods` smallint(5) DEFAULT NULL,
@@ -257,7 +260,7 @@ CREATE TABLE IF NOT EXISTS `loan` (
   `expected_disbursedon_date` date DEFAULT NULL,
   `expected_firstrepaymenton_date` date DEFAULT NULL,
   `interest_calculated_from_date` date DEFAULT NULL,
-  `disbursedon_date` date DEFAULT NULL,
+  `disbursement_date` date DEFAULT NULL,
   `disbursedon_userid` bigint(20) DEFAULT NULL,
   `expected_maturedon_date` date DEFAULT NULL,
   `maturedon_date` date DEFAULT NULL,
@@ -324,7 +327,10 @@ CREATE TABLE IF NOT EXISTS `loan` (
   `repay_interest_every` int(11) NOT NULL DEFAULT '1',
   `restrict_linked_savings_product_type` bigint(20) DEFAULT NULL,
   `mandatory_savings_percentage` decimal(19,6) DEFAULT NULL,
-  `internal_rate_of_return` decimal(19,2) DEFAULT '0.00'
+  `internal_rate_of_return` decimal(19,2) DEFAULT '0.00',
+  KEY `int_id_loan` (`int_id`),
+  KEY `product_id_loan` (`product_id`),
+  KEY `client_id_loan` (`client_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
@@ -396,8 +402,8 @@ CREATE TABLE IF NOT EXISTS `product` (
 --
 
 INSERT INTO `product` (`id`, `int_id`, `charge_id`, `name`, `short_name`, `description`, `fund_id`, `in_amt_multiples`, `principal_amount`, `min_principal_amount`, `max_principal_amount`, `loan_term`, `min_loan_term`, `max_loan_term`, `repayment_frequency`, `repayment_every`, `interest_rate`, `min_interest_rate`, `max_interest_rate`, `interest_rate_applied`, `interest_rate_methodoloy`, `ammortization_method`, `cycle_count`, `auto_allocate_overpayment`, `additional_charge`, `auto_disburse`, `linked_savings_acct`) VALUES
-(1, 6, 2, 'Back to School', 'BTS', 'a student loan', 1, 10, '10000.000000', '100.000000', '10000.000000', 5, 1, 7, 10, 'year', '0.200000', '0.100000', '2.000000', 'per_year', 'flat', 'equal_installment', 'no', 'yes', 'no', 'yes', 'abuja_savings_group'),
-(2, 6, 1, 'Higher Institution', 'HI', 'For college', 2, 8, '50000.000000', '10000.000000', '100000.000000', 10, 1, 10, 10, 'months', '20.000000', '8.000000', '20.000000', 'per_month', '1', 'equal_installment', 'no', 'no', 'no', 'no', 'abuja_savings_group');
+(1, 6, 2, 'Back to School', 'BTS', 'a student loan', 1, 10, '10000.000000', '100.000000', '10000.000000', 5, 1, 7, 10, 'year', '0.200000', '0.100000', '2.000000', 'per_year', 'flat', 'equal_installment', 'no', 'yes', 'no', 'yes', 'Abuja Savings Group'),
+(2, 6, 1, 'Higher Institution', 'HI', 'For college', 2, 8, '50000.000000', '10000.000000', '100000.000000', 10, 1, 10, 10, 'month', '20.000000', '8.000000', '20.000000', 'per_month', '1', 'equal_installment', 'no', 'no', 'no', 'no', 'Abuja Savings Group');
 
 -- --------------------------------------------------------
 
@@ -479,7 +485,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `int_id`, `username`, `fullname`, `password`, `usertype`, `status`, `last_logged`, `time_created`, `pics`) VALUES
 (1, 7, 'robot', 'robot test', '$2y$10$bBNsJA2KZNuoR9ZZQRsd1.JE4xVc8/LE7Q7nr96O.dRC6GABZDiEy', 'super_admin', 'Not Active', '2020-03-02 20:24:40', '2020-02-18', NULL),
-(2, 6, 'sam', 'sammy', '$2y$10$bBNsJA2KZNuoR9ZZQRsd1.JE4xVc8/LE7Q7nr96O.dRC6GABZDiEy', 'staff', 'Active', '2020-03-02 21:56:26', '2020-02-13', 'https://something'),
+(2, 6, 'sam', 'sammy', '$2y$10$bBNsJA2KZNuoR9ZZQRsd1.JE4xVc8/LE7Q7nr96O.dRC6GABZDiEy', 'staff', 'Active', '2020-03-03 21:41:25', '2020-02-13', 'https://something'),
 (16, 6, 'flint123', 'flint', '$2y$10$bBNsJA2KZNuoR9ZZQRsd1.JE4xVc8/LE7Q7nr96O.dRC6GABZDiEy', 'staff', 'Not Active', '2020-02-26 17:42:32', '2020-02-26', 'https://location'),
 (17, 6, 'clerk', 'front desk clerk', '$2y$10$sMaGiJM1VbqX9SxCJiSzt.gl5kj49AdBDu9UNCYbxpUxMwZGyIGxu', 'staff', 'Not Active', '2020-02-26 11:37:39', '2020-02-26', 'https://url'),
 (18, 6, 'teston', 'teston', '$2y$10$E8v18q39LIlV7w7q4121geix/K5ky/d9DdSHZh5aPANqAUDrShpwu', 'staff', 'Active', '2020-02-26 17:47:44', '2020-02-26', 'ss');
@@ -506,6 +512,14 @@ ALTER TABLE `clients`
 --
 ALTER TABLE `collateral`
   ADD CONSTRAINT `int_id_collateral` FOREIGN KEY (`int_id`) REFERENCES `institutions` (`int_id`);
+
+--
+-- Constraints for table `loan`
+--
+ALTER TABLE `loan`
+  ADD CONSTRAINT `client_id_loan` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`),
+  ADD CONSTRAINT `int_id_loan` FOREIGN KEY (`int_id`) REFERENCES `institutions` (`int_id`),
+  ADD CONSTRAINT `product_id_loan` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
 
 --
 -- Constraints for table `org_role`
