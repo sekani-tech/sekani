@@ -15,7 +15,7 @@
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                <form id="form">
+                <form id="form" action="../functions/int_product_upload.php" method="POST">
                   <div class="list-group">
 
                     <div class="list-group-item py-3" data-acc-step>
@@ -82,9 +82,9 @@
                                                         <input type="text" class="form-control " name="repayment_frequency" value=""required>
 
                                                         <select class="form-control" name="repayment_every">
-                                                          <option value="days">Days</option>
-                                                          <option value="weeks">Weeks</option>
-                                                          <option value="months">Months</option>
+                                                          <option value="day">Day</option>
+                                                          <option value="week">Week</option>
+                                                          <option value="month">Month</option>
                                                         </select>
                                                     </div>
 
@@ -102,38 +102,6 @@
                                                         <option value="per_year">Per Year</option>
                                                       </select>
                                                     </div>
-                                              
-
-<!--                                                <div class="form-group">
-                                                  <label for="multipleRepayments" >Enable Multiple Balloon Repayments </label>
-                                                  <select class="form-control" name="" required>
-                                                    <option value="">No</option>
-                                                    <option value=""> Yes</option>
-                                                  </select>
-                                                </div>
-
-                                                <div class="form-group">
-                                                  <label for="paymentSchedule" >Allow Adjustment of Repayment Schedule </label>
-                                                  <select class="form-control" name=""required>
-                                                    <option value="">No</option>
-                                                    <option value=""> Yes</option>
-                                                  </select>
-                                                </div>-->
-
-<!--                                                <div class="form-group">
-                                                  <label for="gracePrincipal" > Grace On Principal Payment *</label>
-                                                  <input type="text" class="form-control" name="" value="" required>
-                                                </div>
-
-                                                <div class="form-group">
-                                                  <label for="graceInterest" > Grace On Interest Payment *</label>
-                                                  <input type="text" class="form-control" name="" value="" required>
-                                                </div>
-
-                                                <div class="form-group">
-                                                  <label for="graceInterestCharged" > Grace On Interest Charged *</label>
-                                                  <input type="text" class="form-control" name="" value="" required>
-                                                </div>-->
                                                 
                                                 <div class="form-group">
                                                   <label for="interestMethodology" >Interest Methodology *</label>
@@ -274,8 +242,8 @@ return $output;
                                                 <div class="form-group">
                                                   <label for="requireSavingsAcct" >Requires Linked Savings Account </label>
                                                   <select class="form-control" name="linked_savings_acct" required>
-                                                    <option value="abuja_savings_group">Abuja Savings Group</option>
-                                                    <option value="lagos_savings_group">Lagos Savings Group</option>
+                                                    <option value="Abuja Savings Group">Abuja Savings Group</option>
+                                                    <option value="Lagos Ssavings Group">Lagos Savings Group</option>
                                                   </select>
                                                 </div>
                         <!-- </div> -->
@@ -308,7 +276,7 @@ return $output;
                             })
                           </script>
                             <label>Charges:</label>
-                            <select name=""class="form-control" id="charges">
+                            <select name="charge_id"class="form-control" id="charges">
                               <option value="">select an option</option>
                               <?php echo fill_charges($connection); ?>
                             </select>

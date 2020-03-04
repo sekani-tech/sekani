@@ -13,12 +13,22 @@
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Products</h4>
                   <!-- Insert number users institutions -->
-                  <p class="card-category"><?php echo 0; ?> Created products || <a href="manage_product.php">Create New Product</a></p>
+                  <p class="card-category"><?php
+                   $query = "SELECT * FROM product WHERE int_id = '$sessint_id'";
+                   $result = mysqli_query($connection, $query);
+                   if ($result) {
+                     $inr = mysqli_num_rows($result);
+                     echo $inr;
+                   }?> Created products || <a href="manage_product.php">Create New Product</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table">
                       <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM product WHERE int_id ='$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
                         <!-- <th>
                           ID
                         </th> -->
@@ -31,9 +41,20 @@
                         </th>
                       </thead>
                       <tbody>
-                          <th></th>
-                          <th></th>
-                          <th></th>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                          <th><?php echo $row["name"]; ?></th>
+                          <th><?php echo $row["description"]; ?></th>
+                          <th><?php echo $row["short_name"]; ?></th>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
                       </tbody>
                     </table>
                   </div>

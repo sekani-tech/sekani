@@ -12,6 +12,7 @@ $rep = $_POST["repay"];
 $tms = '';
 $r = $intr / 100;
 $gi = $r * $prina;
+$pd = $gi + $prina;
 $t = $loant;
 $EMI = ($gi + $prina) / $t;
 $tm = $rep;
@@ -28,38 +29,33 @@ if ($tm == 'day') {
 $formg = date('Y-m-d', strtotime($repay_start. ' + '.$t.' '.$tms.''));
 $end_date = $formg;
 $date = $repay_start;
+
 function fill_com ($e, $d, $tx, $em) {
+  if ($d == "") {
+    echo "Add Repayment Date";
+  } else {
   date_default_timezone_set('UTC');
   echo "<label for=''>". "Date & Principal Due:" ."</label>";
 while (strtotime($d) <= strtotime($e)) {
-    echo "<div class='form-group'>". "<ul> <li>". date("d M Y", strtotime($d)) . ": " . $em ."<li/></ul>"."</div>";
+    echo "<div class='form-group'>" . "<ul>" . "<li>". date("d M Y", strtotime($d)) . ": " . $em . "</li>" . "</ul>"."</div>";
     $d = date ("Y-m-d", strtotime("+1 ".$tx." ", strtotime($d)));
 }
 date("M Y", strtotime($d));
+  }
 }
 $result1 = '<div class="my-3">
   <!-- replace values with loan data -->
   <div class="form -group">
     <label for="">Disbursement:</label> <span>'.$prina.'</span>
   </div>
-  <div class="form -group">
-    <label for="">Date &amp; Principal Due:</label> <ul>
-    </ul>
-  </div>
-  <div class="form -group">
-    <label for="">Principal Balance:</label> <span>'.$prina.'</span>
-  </div>
-  <div class="form -group">
-    <label for="">Intrest Rate:</label> <span>'.$intr.'%</span>
-  </div>
 </div>';
 $result2 = '<div class="my-3">
   <!-- replace values with loan data -->
   <div class="form -group">
-    <label for="">Principal Balance:</label> <span>'.$prina.'</span>
+    <label for="">Principal Balance:</label> <span>'.$pd.'</span>
   </div>
   <div class="form -group">
-    <label for="">Intrest Rate:</label> <span>'.$intr.'%</span>
+    <label for="">Interest Rate:</label> <span>'.$intr.'%</span>
   </div>
 </div>';
 echo $result1;

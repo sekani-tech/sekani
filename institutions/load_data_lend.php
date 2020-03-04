@@ -27,27 +27,27 @@ if(isset($_POST["id"]))
       </div>
       <div class="form-group">
         <label>Interest Rate per:</label>
-        <input type="text" value="'.$row["repayment_every"].'" name="repayp" class="form-control" id="repay">
+        <input type="text" value="'.$row["repayment_every"].'" name="repay_every" class="form-control" id="repay">
       </div>
       <div class="form-group">
         <label>Interest Rate:</label>
-        <input type="number" value="'.$row["interest_rate"].'" name="interest_r" class="form-control" id="interest_rate">
+        <input type="number" value="'.$row["interest_rate"].'" name="interest_rate" class="form-control" id="interest_rate">
       </div>
       <div class="form-group">
-        <label>Disbusrsement Date:</label>
-        <input type="date" name="disb_date" class="form-control" id="disb_date">
+        <label>Disbursement Date:</label>
+        <input type="date" name="disbursement_date" class="form-control" id="disb_date">
       </div>
       <div class="form-group">
         <label>Loan Officer:</label>
-        <input type="text" value="" name="" class="form-control" id="">
+        <input type="text" value="" name="loan_officer" class="form-control" id="lof">
       </div>
       <div class="form-group">
         <label>Loan Purpose:</label>
-        <input type="text" value="" name="" class="form-control" id="">
+        <input type="text" value="" name="loan_purpose" class="form-control" id="lop">
       </div>
       <div class="form-group">
         <label>Linked Savings account:</label>
-        <input type="text" value="" name="" class="form-control" id="">
+        <input type="text" value="'.$row["linked_savings_acct"].'" name="linked_savings_acct" class="form-control" id="">
       </div>
       <div class="form-group">
         <label>Repayment Start Date:</label>
@@ -65,6 +65,63 @@ if(isset($_POST["id"]))
 <script>
       $(document).ready(function(){
         $('#repay_start').change(function(){
+          console.log('changed');
+          var prina = document.getElementById("principal_amount").value;
+          var loant = document.getElementById("loan_term").value;
+          var intr = document.getElementById("interest_rate").value;
+          var repay = document.getElementById("repay").value;
+          var repay_start = document.getElementById("repay_start").value;
+          var disbd = document.getElementById("disb_date").value;
+          $.ajax({
+            url:"loan_calculation.php",
+            method:"POST",
+            data:{prina: prina, loant: loant, intr: intr, repay: repay, disbd: disbd, repay_start: repay_start},
+            success: function(data){
+              $('#result').html(data);
+            }
+          })
+        });
+      })
+      $(document).ready(function(){
+        $('#loan_term').change(function(){
+          console.log('changed');
+          var prina = document.getElementById("principal_amount").value;
+          var loant = document.getElementById("loan_term").value;
+          var intr = document.getElementById("interest_rate").value;
+          var repay = document.getElementById("repay").value;
+          var repay_start = document.getElementById("repay_start").value;
+          var disbd = document.getElementById("disb_date").value;
+          $.ajax({
+            url:"loan_calculation.php",
+            method:"POST",
+            data:{prina: prina, loant: loant, intr: intr, repay: repay, disbd: disbd, repay_start: repay_start},
+            success: function(data){
+              $('#result').html(data);
+            }
+          })
+        });
+      })
+      $(document).ready(function(){
+        $('#principal_amount').change(function(){
+          console.log('changed');
+          var prina = document.getElementById("principal_amount").value;
+          var loant = document.getElementById("loan_term").value;
+          var intr = document.getElementById("interest_rate").value;
+          var repay = document.getElementById("repay").value;
+          var repay_start = document.getElementById("repay_start").value;
+          var disbd = document.getElementById("disb_date").value;
+          $.ajax({
+            url:"loan_calculation.php",
+            method:"POST",
+            data:{prina: prina, loant: loant, intr: intr, repay: repay, disbd: disbd, repay_start: repay_start},
+            success: function(data){
+              $('#result').html(data);
+            }
+          })
+        });
+      })
+      $(document).ready(function(){
+        $('#interest_rate').change(function(){
           console.log('changed');
           var prina = document.getElementById("principal_amount").value;
           var loant = document.getElementById("loan_term").value;

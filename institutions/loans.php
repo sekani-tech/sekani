@@ -13,7 +13,7 @@
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Loans</h4>
                   <!-- Insert number users institutions -->
-                  <p class="card-category"><?php echo 0; ?> Active loans || <a href="manage_product.php">Create New Product</a></p>
+                  <p class="card-category"><?php echo 0; ?> Active loans || <a href="lend.php">Lend Client</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
