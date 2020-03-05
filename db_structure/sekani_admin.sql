@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 03, 2020 at 10:47 PM
+-- Generation Time: Mar 05, 2020 at 01:00 AM
 -- Server version: 8.0.18
 -- PHP Version: 7.2.18
 
@@ -190,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `institutions` (
   `lga` varchar(25) DEFAULT NULL,
   `office_address` longtext,
   `office_phone` varchar(25) DEFAULT NULL,
-  `email` varchar(25) DEFAULT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `website` varchar(50) DEFAULT NULL,
   `pc_title` varchar(10) DEFAULT NULL,
   `pc_surname` varchar(25) DEFAULT NULL,
@@ -199,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `institutions` (
   `pc_phone` varchar(25) DEFAULT NULL,
   `pc_email` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`int_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `institutions`
@@ -209,7 +209,8 @@ INSERT INTO `institutions` (`int_id`, `int_name`, `rcn`, `int_state`, `lga`, `of
 (3, 'Flint technology LTD', '12637484RC', 'FCT', 'AMAC', 'Federal Ministry of Finance', '0816239961', 'sunnyboye2015@gmail.com', 'www.flinttech@gmail.com', 'Mr', 'jsjs', 'jimmy', 'jimmy', '09034567648', 'ff@m.c'),
 (6, 'Dally', '20192293RC', 'FCT', 'AMAC', 'Karu Abuja', '+2348162399614', 'Dally@gmail.com', 'www.dally.com', 'Mr', 'samuel', 'james', 'kemi', '+2349078695849', 'jamesp@yahoo.com'),
 (7, 'Sekani Systems', '100test', 'FCT', 'AMAC', 'Monrovia Street no 22, Wuse II ABUJA.', '08162399614', 'sekanisystems@gmail.com', 'www.sekanisystems.com', 'Mr', 'Samuel', 'Tosin', 'Ajiboye', '09012384783', 'sun@gmail.com'),
-(8, 'Sammy', '20091', 'FCT', 'AMAC', 'somewhere', '092nn', 'sammy@gmail.com', 'www.flinttech.com', 'Mr', 'samuel', 'james', 'something', '08162399762', 'sunn@N.c');
+(8, 'Sammy', '20091', 'FCT', 'AMAC', 'somewhere', '092nn', 'sammy@gmail.com', 'www.flinttech.com', 'Mr', 'samuel', 'james', 'something', '08162399762', 'sunn@N.c'),
+(9, 'danels global', '0', 'Abuja', 'null', 'null', '081', 'danielsglobal@d.com', 'www.danielsglobal.com', 'name', 'surname', 'name', 'name', '081', 'email@email.com');
 
 -- --------------------------------------------------------
 
@@ -433,7 +434,6 @@ CREATE TABLE IF NOT EXISTS `staff` (
   `email` varchar(30) DEFAULT NULL,
   `first_name` varchar(30) DEFAULT NULL,
   `last_name` varchar(30) DEFAULT NULL,
-  `password` varchar(500) DEFAULT NULL,
   `description` longtext,
   `address` longtext,
   `date_joined` date DEFAULT NULL,
@@ -443,18 +443,62 @@ CREATE TABLE IF NOT EXISTS `staff` (
   PRIMARY KEY (`id`),
   KEY `int_id_staff` (`int_id`),
   KEY `user_id_staff` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `staff`
 --
 
-INSERT INTO `staff` (`id`, `int_id`, `user_id`, `int_name`, `username`, `display_name`, `email`, `first_name`, `last_name`, `password`, `description`, `address`, `date_joined`, `org_role`, `phone`, `img`) VALUES
-(1, 6, 2, 'Dally', 'sam', 'sam', 'sam@gmail.com', 'sam', 'sam', '$2y$10$bBNsJA2KZNuoR9ZZQRsd1.JE4xVc8/LE7Q7nr96O.dRC6GABZDiEy', 'something', 'something', '2020-02-24', 'CEO', '08162399', 'https://somewhere'),
-(2, 7, 1, 'Sekani Systems', 'robot', 'robot test', 'robot@gmail.com', 'robot', 'test', '$2y$10$bBNsJA2KZNuoR9ZZQRsd1.JE4xVc8/LE7Q7nr96O.dRC6GABZDiEy', 'something', 'something', '2020-02-24', 'OWNER', '08162399614', 'https://url'),
-(7, 6, 16, 'Dally', 'flint123', 'flint', 'test@gmail.com', 'test', 'test', '$2y$10$bBNsJA2KZNuoR9ZZQRsd1.JE4xVc8/LE7Q7nr96O.dRC6GABZDiEy', 'test', 'test', '2020-02-26', 'CEO', '98262', 'https://location'),
-(8, 6, 17, 'Dally', 'clerk', 'front desk clerk', 'clerk@gmail.com', 'clerk', 'clerk', '$2y$10$sMaGiJM1VbqX9SxCJiSzt.gl5kj49AdBDu9UNCYbxpUxMwZGyIGxu', 'clerk', 'clerk', '2020-02-26', 'FRONT DESK CLERK', '0901267384', 'https://url'),
-(9, 6, 18, 'Dally', 'teston', 'teston', 'teston@gmail.com', 'test', 'testton', '$2y$10$E8v18q39LIlV7w7q4121geix/K5ky/d9DdSHZh5aPANqAUDrShpwu', 'testtest', 'testt', '2020-02-26', 'FRONT DESK CLERK', '08162399614', 'ss');
+INSERT INTO `staff` (`id`, `int_id`, `user_id`, `int_name`, `username`, `display_name`, `email`, `first_name`, `last_name`, `description`, `address`, `date_joined`, `org_role`, `phone`, `img`) VALUES
+(1, 6, 2, 'Dally', 'sam', 'sam', 'sam@gmail.com', 'sam', 'sam', 'something', 'something', '2020-02-24', 'CEO', '08162399', 'https://somewhere'),
+(2, 7, 1, 'Sekani Systems', 'robot', 'robot test', 'robot@gmail.com', 'robot', 'test', 'something', 'something', '2020-02-24', 'OWNER', '08162399614', 'https://url'),
+(7, 6, 16, 'Dally', 'flint123', 'flint', 'test@gmail.com', 'test', 'test', 'test', 'test', '2020-02-26', 'CEO', '98262', 'https://location'),
+(8, 6, 17, 'Dally', 'clerk', 'front desk clerk', 'clerk@gmail.com', 'clerk', 'clerk', 'clerk', 'clerk', '2020-02-26', 'FRONT DESK CLERK', '0901267384', 'https://url'),
+(9, 6, 18, 'Dally', 'teston', 'teston', 'teston@gmail.com', 'test', 'testton', 'testtest', 'testt', '2020-02-26', 'FRONT DESK CLERK', '08162399614', 'ss'),
+(10, 9, 42, 'danels global', 'BMOHAMMED', 'Mohammed, Bashir', NULL, 'Bashir', 'Mohammed', NULL, NULL, '2018-12-12', NULL, NULL, NULL),
+(11, 9, 43, 'danels global', 'MAKANDE', 'Akande, Mosi', NULL, 'Mosi', 'Akande', NULL, NULL, '2018-12-12', NULL, NULL, NULL),
+(12, 9, 44, 'danels global', 'OLILIAN', 'Lilian, Ogochukwu', NULL, 'Ogochukwu', 'Lilian', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(13, 9, 40, 'danels global', 'PMR', 'Mr, Peter', NULL, 'Peter', 'Mr', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(14, 9, 41, 'danels global', 'FUMOGBAI', 'Umogbai, Favour', NULL, 'Favour', 'Umogbai', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(15, 9, 39, 'danels global', 'GENEH', 'Eneh, Grace ', NULL, 'Grace ', 'Eneh', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(16, 9, 38, 'danels global', 'FIBEKWE', 'Ibekwe, Faith', NULL, 'Faith', 'Ibekwe', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(17, 9, 37, 'danels global', 'EABDUL', 'Abdul, Emmanuel', NULL, 'Emmanuel', 'Abdul', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(18, 9, 36, 'danels global', 'TABUO', 'Abuo, Thomas', NULL, 'Thomas', 'Abuo', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(19, 9, 35, 'danels global', 'JAGADA', 'Agada, Jerry', NULL, 'Jerry', 'Agada', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(20, 9, 34, 'danels global', 'MAKHILE', 'Akhile, Mercy', NULL, 'Mercy', 'Akhile', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(21, 9, 33, 'danels global', 'AAKPAN', 'Akpan, Alice', NULL, 'Alice', 'Akpan', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(22, 9, 32, 'danels global', 'FBINTA', 'Binta, Fatima', NULL, 'Fatima', 'Binta', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(23, 9, 31, 'danels global', 'JBIODU', 'Biodu, Joseph', NULL, 'Joseph', 'Biodu', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(24, 9, 30, 'danels global', 'BEKONG', 'Ekong, Blessing', NULL, 'Blessing', 'Ekong', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(25, 9, 29, 'danels global', 'EFALETI', 'Faleti, Emmanuel', NULL, 'Emmanuel', 'Faleti', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(26, 9, 28, 'danels global', 'FIMOUKHUEDE', 'Imoukhuede, Felix', NULL, 'Felix', 'Imoukhuede', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(27, 9, 27, 'danels global', 'CKATO', 'Kato, Christine', NULL, 'Christine', 'Kato', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(28, 9, 26, 'danels global', 'OOCHE', 'Oche, Oche', NULL, 'Oche', 'Oche', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(29, 9, 25, 'danels global', 'OOJORO', 'Ojoro, Onyeche', NULL, 'Onyeche', 'Ojoro', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(30, 9, 24, 'danels global', 'SOLABODE', 'Olabode, Saheed', NULL, 'Saheed', 'Olabode', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(31, 9, 23, 'danels global', 'JOLUKPOSO', 'Olukposo, John', NULL, 'John', 'Olukposo', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(32, 9, 22, 'danels global', 'BSHUAIBU', 'Shuaibu, Blessing', NULL, 'Blessing', 'Shuaibu', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(33, 9, 21, 'danels global', 'ATAHADDUS', 'Tahaddus, Abigail', NULL, 'Abigail', 'Tahaddus', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(34, 9, 20, 'danels global', 'ATOKURAH', 'Tokurah, Austin', NULL, 'Austin', 'Tokurah', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(35, 9, 19, 'danels global', 'NYACHAM', 'Yacham, Nuhu', NULL, 'Nuhu', 'Yacham', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(36, 9, 63, 'danels global', 'LYEWANDE', 'Yewande, Linda', NULL, 'Linda', 'Yewande', NULL, NULL, '2019-02-19', NULL, NULL, NULL),
+(37, 9, 45, 'danels global', 'MEJIE', 'EJIE, MELVIS', NULL, 'MELVIS', 'EJIE', NULL, NULL, '2019-03-01', NULL, NULL, NULL),
+(38, 9, 46, 'danels global', 'LONALUGBUM', 'Onalugbum, Larry', NULL, 'Larry', 'Onalugbum', NULL, NULL, '2019-03-14', NULL, NULL, NULL),
+(39, 9, 47, 'danels global', 'CSIDI', 'SIDI, CYNTHIA', NULL, 'CYNTHIA', 'SIDI', NULL, NULL, '2019-03-20', NULL, NULL, NULL),
+(40, 9, 48, 'danels global', 'AAGU', 'AGU, AMAKA', NULL, 'AMAKA', 'AGU', NULL, NULL, '2019-01-01', NULL, NULL, NULL),
+(41, 9, 49, 'danels global', 'UUMOGBAI', 'UMOGBAI, UMOGBAI', NULL, 'UMOGBAI', 'UMOGBAI', NULL, NULL, '2019-01-01', NULL, NULL, NULL),
+(42, 9, 50, 'danels global', 'VIKWOYI', 'Ikwoyi, Veronica', NULL, 'Veronica', 'Ikwoyi', NULL, NULL, '2019-05-20', NULL, NULL, NULL),
+(43, 9, 52, 'danels global', 'IUZOMA', 'May Uzoma, Igweoko', NULL, 'Igweoko', 'May Uzoma', NULL, NULL, '2019-06-06', NULL, NULL, NULL),
+(44, 9, 53, 'danels global', 'MAPKAN', 'Apkan, Mercy Bassey', NULL, 'Mercy Bassey', 'Apkan', NULL, NULL, '2019-06-06', NULL, NULL, NULL),
+(45, 9, 54, 'danels global', 'LACHOR', 'Achor, Linda, Chinelo', NULL, 'Linda, Chinelo', 'Achor', NULL, NULL, '2019-06-17', NULL, NULL, NULL),
+(46, 9, 55, 'danels global', 'OOBAJI', 'Obaji, Odinaka I', NULL, 'Odinaka I', 'Obaji', NULL, NULL, '2019-06-13', NULL, NULL, NULL),
+(47, 9, 56, 'danels global', 'VPIUS', 'Pius, Victor', NULL, 'Victor', 'Pius', NULL, NULL, '2019-06-06', NULL, NULL, NULL),
+(48, 9, 57, 'danels global', 'QAGU', 'Agu, Queen', NULL, 'Queen', 'Agu', NULL, NULL, '2019-07-01', NULL, NULL, NULL),
+(49, 9, 58, 'danels global', 'JSAMUEL', 'Samuel, Julie', NULL, 'Julie', 'Samuel', NULL, NULL, '2019-08-01', NULL, NULL, NULL),
+(50, 9, 59, 'danels global', 'PJOHN', 'John, Patience', NULL, 'Patience', 'John', NULL, NULL, '2019-09-04', NULL, NULL, NULL),
+(51, 9, 60, 'danels global', 'OSOLOMON', 'Solomon, Osas', NULL, 'Osas', 'Solomon', NULL, NULL, '2019-09-01', NULL, NULL, NULL),
+(52, 9, 61, 'danels global', 'JSOLOMON', 'Solomon, Jude Osareme', NULL, 'Jude Osareme', 'Solomon', NULL, NULL, '2019-08-01', NULL, NULL, NULL),
+(53, 9, 62, 'danels global', 'SSUPPORT', 'Sekani Support', NULL, 'Support', 'Sekani', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -477,7 +521,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   KEY `int_id_users` (`int_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `users`
@@ -485,10 +529,54 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `int_id`, `username`, `fullname`, `password`, `usertype`, `status`, `last_logged`, `time_created`, `pics`) VALUES
 (1, 7, 'robot', 'robot test', '$2y$10$bBNsJA2KZNuoR9ZZQRsd1.JE4xVc8/LE7Q7nr96O.dRC6GABZDiEy', 'super_admin', 'Not Active', '2020-03-02 20:24:40', '2020-02-18', NULL),
-(2, 6, 'sam', 'sammy', '$2y$10$bBNsJA2KZNuoR9ZZQRsd1.JE4xVc8/LE7Q7nr96O.dRC6GABZDiEy', 'staff', 'Active', '2020-03-03 21:41:25', '2020-02-13', 'https://something'),
+(2, 6, 'sam', 'sammy', '$2y$10$bBNsJA2KZNuoR9ZZQRsd1.JE4xVc8/LE7Q7nr96O.dRC6GABZDiEy', 'staff', 'Active', '2020-03-04 23:04:58', '2020-02-13', 'https://something'),
 (16, 6, 'flint123', 'flint', '$2y$10$bBNsJA2KZNuoR9ZZQRsd1.JE4xVc8/LE7Q7nr96O.dRC6GABZDiEy', 'staff', 'Not Active', '2020-02-26 17:42:32', '2020-02-26', 'https://location'),
 (17, 6, 'clerk', 'front desk clerk', '$2y$10$sMaGiJM1VbqX9SxCJiSzt.gl5kj49AdBDu9UNCYbxpUxMwZGyIGxu', 'staff', 'Not Active', '2020-02-26 11:37:39', '2020-02-26', 'https://url'),
-(18, 6, 'teston', 'teston', '$2y$10$E8v18q39LIlV7w7q4121geix/K5ky/d9DdSHZh5aPANqAUDrShpwu', 'staff', 'Active', '2020-02-26 17:47:44', '2020-02-26', 'ss');
+(18, 6, 'teston', 'teston', '$2y$10$E8v18q39LIlV7w7q4121geix/K5ky/d9DdSHZh5aPANqAUDrShpwu', 'staff', 'Active', '2020-02-26 17:47:44', '2020-02-26', 'ss'),
+(19, 9, 'NYACHAM', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(20, 9, 'ATOKURAH', NULL, '$2a$10$mhg5jDZQpk9Pvf2AI4WHJ.994iBf07juY23w6EA302VHAp/CjBvUO', NULL, 'Not Active', '2019-12-24 17:13:35', '2019-08-22', NULL),
+(21, 9, 'ATAHADDUS', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(22, 9, 'BSHUAIBU', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(23, 9, 'JOLUKPOSO', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(24, 9, 'SOLABODE', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(25, 9, 'OOJORO', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(26, 9, 'OOCHE', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(27, 9, 'CKATO', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(28, 9, 'FIMOUKHUEDE', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(29, 9, 'EFALETI', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(30, 9, 'BEKONG', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(31, 9, 'JBIODU', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(32, 9, 'FBINTA', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(33, 9, 'AAKPAN', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(34, 9, 'MAKHILE', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(35, 9, 'JAGADA', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(36, 9, 'TABUO', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(37, 9, 'EABDUL', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(38, 9, 'FIBEKWE', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(39, 9, 'GENEH', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(40, 9, 'PMR', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(41, 9, 'FUMOGBAI', NULL, '$2a$10$r3KmKfB5kFhb3WsVfQPIK.tWSCtWUH5.I.aUhfE9sf90sKB0mlyh.', NULL, 'Not Active', '2020-02-18 12:42:09', '2019-08-22', NULL),
+(42, 9, 'BMOHAMMED', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(43, 9, 'MAKANDE', NULL, '$2a$10$AWhp52CpN0D55HmStzGFZe4eIAucw4Sa7IVp1OB/Ao3Z9l681Z2q.', NULL, 'Not Active', '2020-02-13 19:30:56', '2019-08-22', NULL),
+(44, 9, 'OLILIAN', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(45, 9, 'MEJIE', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(46, 9, 'LONALUGBUM', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(47, 9, 'CSIDI', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(48, 9, 'AAGU', NULL, '$2a$10$tx/yStTlnOhh9T1xut84d.FjOyW8VxXCZxRGc7XH8ohe269gCANPm', NULL, 'Not Active', '2020-01-08 22:40:22', '2019-08-22', NULL),
+(49, 9, 'UUMOGBAI', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(50, 9, 'VIKWOYI', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(52, 9, 'IUZOMA', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(53, 9, 'MAPKAN', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(54, 9, 'LACHOR', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(55, 9, 'OOBAJI', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(56, 9, 'VPIUS', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(57, 9, 'QAGU', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(58, 9, 'JSAMUEL', NULL, '$2a$10$XHWIGlOHQr8U.7mnspxfUuT8wctbMgLCbaFRxUS7Ah7pTFyO2h3VW', NULL, 'Not Active', '2019-12-19 17:58:33', '2019-08-22', NULL),
+(59, 9, 'PJOHN', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-12-04 13:36:01', '2019-08-22', NULL),
+(60, 9, 'OSOLOMON', NULL, '$2a$10$v1qN9KVuJmTKyR3Oaly7GeK2jKhUSqXYfecYDe1WCJ3ijX.l9oXn6', NULL, 'Not Active', '2020-01-08 11:08:00', '2019-08-22', NULL),
+(61, 9, 'JSOLOMON', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL),
+(62, 9, 'SSUPPORT', NULL, '$2a$10$wY46YL0i9JOq5aBQmXVuz.aaDw/9hMTffA.YfHWeatb2G6P2qjpvS', NULL, 'Not Active', '2020-02-11 03:20:35', '2019-08-22', NULL),
+(63, 9, 'LYEWANDE', NULL, '$2a$10$T5YY8Il.7ZTy7/02tsp43uBd6UTg.vZ89zT3k/CqhVZxC5oapmyGq', NULL, 'Not Active', '2019-08-27 15:23:53', '2019-08-22', NULL);
 
 --
 -- Constraints for dumped tables
