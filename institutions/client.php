@@ -57,7 +57,7 @@
                           <th><?php echo $row["loan_officer"]; ?></th>
                           <th><?php echo $row["phone"]; ?></th>
                           <th><?php echo $row["loan_status"]; ?></th>
-                          <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                          <td><a href="update_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
                         <?php }
                           }
