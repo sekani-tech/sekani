@@ -1,0 +1,5 @@
+Tasks to carry out based on system review.
+1. Update roles (populate the database with roles definition... That would be used in the creation of user data)
+2. Update loan (as you are doing already)
+3. Update clients & users & Branch (not showing preloaded data from database)
+4. Change delete button to active in staff table.. the active and non-active staff shows user status

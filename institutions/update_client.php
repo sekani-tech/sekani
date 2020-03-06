@@ -11,8 +11,8 @@
             <div class="col-md-8">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Create new Client</h4>
-                  <p class="card-category">Fill in all important data</p>
+                  <h4 class="card-title">Update Client</h4>
+                  <p class="card-category">Modify Client Proile</p>
                 </div>
                 <div class="card-body">
                   <form action="../functions/update_client.php" method="post">
