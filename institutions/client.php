@@ -58,7 +58,6 @@
                           <th><?php echo $row["phone"]; ?></th>
                           <th><?php echo $row["loan_status"]; ?></th>
                           <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
-                          <td><a href="functions/delete_staff.php?edit=<?php echo $row["int_id"]; ?>" class="btn btn-danger">Delete</a></td>
                         </tr>
                         <?php }
                           }
