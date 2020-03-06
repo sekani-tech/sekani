@@ -20,7 +20,6 @@ if (isset($_GET["edit"])) {
     $first_name = $n['first_name'];
     $last_name = $n['last_name'];
     $phone = $n['phone'];
-    $description = $n['description'];
     $address = $n['address'];
     $date_joined = $n['date_joined'];
     $org_role = $n['org_role'];
@@ -45,12 +44,13 @@ if (isset($_GET["edit"])) {
                   <p class="card-category">Modify user profile</p>
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form action="../functions/update_staff.php" method="POST">
                     <div class="row">
                       <div class="col-md-2">
                         <div class="form-group">
                           <label class="bmd-label-floating">ID</label>
                           <input type="text" readonly name="staff_id" value="<?php echo $staff_id; ?>" class="form-control">
+                          <input type="text" readonly name="user_id" hidden value="<?php echo $user_id; ?>" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-5">

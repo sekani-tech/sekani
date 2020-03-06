@@ -19,7 +19,7 @@ $pc_email = $_POST['pc_email'];
   $query = "UPDATE institutions SET int_name = '$int_name', 
   rcn = '$rcn', lga = '$lga', int_state = '$int_state', email = '$email',
   office_address = '$office_address', website = '$website', office_phone = '$office_phone',
-  pc_title = '$pc_title', pc_other_name = '$pc_other_name', pc_designation = '$pc_designation',
+  pc_title = '$pc_title', pc_surname = '$pc_surname', pc_other_name = '$pc_other_name', pc_designation = '$pc_designation',
   pc_phone = '$pc_phone', pc_email = '$pc_email' WHERE int_id = '$int_id'";
   $result = mysqli_prepare($connection, $query);
   if(mysqli_stmt_execute($result)) {
