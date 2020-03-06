@@ -105,7 +105,7 @@ return $out;
                             })
                           </script>
                            <label>Client Name:</label>
-                           <select name=""class="form-control" id="client_name">
+                           <select name="client_id" class="form-control" id="client_name">
                               <option value="">select an option</option>
                               <?php echo fill_client($connection); ?>
                             </select>
