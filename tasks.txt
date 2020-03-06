@@ -1,5 +1,18 @@
 Tasks to carry out based on system review.
-1. Update roles (populate the database with roles definition... That would be used in the creation of user data)
-2. Update loan (as you are doing already)
-3. Update clients & users & Branch (not showing preloaded data from database)
+-----
+Sam
+-----
+1. Create branch
+2. Create Loan 
+3. Update client
 4. Change delete button to active in staff table.. the active and non-active staff shows user status
+------
+Sanusi
+------
+1. Update branch
+2. Update Product
+3. Populate database with existing client data
+
+
+NB: COMMENT WITH --DONE after a task is completed note the task would be updated as ui is pushed.
+

@@ -13,7 +13,7 @@
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Branch</h4>
                   <!-- Insert number users institutions -->
-                  <p class="card-category"><?php echo 0; ?> Branch(s) || <a href="manage_branch.php">Create New Product</a></p>
+                  <p class="card-category"><?php echo 0; ?> Branch(s) || <a href="manage_branch.php">Create New Branch</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
