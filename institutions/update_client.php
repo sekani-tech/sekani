@@ -3,6 +3,39 @@
     include("header.php");
 
 ?>
+<?php
+if(isset($_GET["edit"])) {
+  $id = $_GET["edit"];
+  $update = true;
+  $person = mysqli_query($connection, "SELECT * FROM clients WHERE id='$id'");
+
+  if (count([$person]) == 1) {
+    $n = mysqli_fetch_array($person);
+    $bank = $n['bank'];
+    $acct_no = $n['acct_no'];
+    $display_name = $n['display_name'];
+    $email = $n['email'];
+    $first_name = $n['first_name'];
+    $last_name = $n['last_name'];
+    $phone = $n['phone'];
+    $phone2 = $n['phone2'];
+    $address = $n['addres'];
+    $gender = $n['gender'];
+    $is_staff = $n['is_staff'];
+    $date_of_birth = $n['date_of_birth'];
+    $img = $n['img'];
+// gaurantors part
+$gau_first_name = $n['gau_first_name'];
+$gau_last_name = $n['gau_last_name'];
+$gau_phone = $n['gau_phone'];
+$gau_phone2 = $n['gau_phone2'];
+$gau_home_address = $n['gau_home_address'];
+$gau_office_address = $n['gau_office_address'];
+$gau_position_held = $n['gau_position_held'];
+$gau_email = $n['gau_email'];
+  }
+}
+?>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -20,7 +53,7 @@
                     <div class="col-md-2">
                         <div class="form-group">
                           <label class="bmd-label-floating">ID</label>
-                          <input type="text" readonly value="<?php echo $int_id; ?>" class="form-control" name="int_id">
+                          <input type="text" readonly value="<?php echo $id; ?>" name="id" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-5">
@@ -32,39 +65,39 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Account No</label>
-                          <input type="text" value="<?php echo $acct_no; ?>" name="bank" class="form-control">
+                          <input type="text" value="<?php echo $acct_no; ?>" name="acct_no" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Display name</label>
-                          <input type="text" class="form-control">
+                          <input type="text" value="<?php echo $display_name; ?>" name="display_name" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Email address</label>
-                          <input type="email" class="form-control">
+                          <input type="email" value="<?php echo $email; ?>" name="email" class="form-control">
                         </div>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Fist Name</label>
-                          <input type="text" class="form-control">
+                          <label class="bmd-label-floating">First Name</label>
+                          <input type="text" value="<?php echo $first_name; ?>" name="first_name" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Last Name</label>
-                          <input type="text" class="form-control">
+                          <input type="text" value="<?php echo $last_name; ?>" name="last_name" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Phone No</label>
-                          <input type="tel" class="form-control">
+                          <input type="tel" value="<?php echo $phone; ?>" name="phone" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -78,7 +111,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Address</label>
-                          <input type="text" class="form-control">
+                          <input type="text" value="<?php echo $phone2; ?>" name="phone2" class="form-control">
                         </div>
                       </div>
                     </div>
@@ -86,7 +119,8 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Gender:</label>
-                          <select class="form-control" name="" id="">
+                          <select class="form-control" name="gender" id="">
+                          <option value="<?php echo $gender; ?>"><?php echo $gender; ?></option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                           </select>
@@ -95,7 +129,8 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Is staff:</label>
-                          <select name="" id="" class="form-control">
+                          <select name="is_staff" id="" class="form-control">
+                          <option value="<?php echo $is_staff; ?>"><?php echo $is_staff; ?></option>
                               <option value="">Yes</option>
                               <option value="">No</option>
                           </select>
@@ -104,7 +139,7 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="">Date of Birth:</label>
-                          <input type="date" class="form-control">
+                          <input type="date" value="<?php echo $date_of_birth; ?>" name="date_of_birth" class="form-control">
                         </div>
                       </div>
                     </div>
@@ -114,7 +149,7 @@
                           <label>Profile Photo</label>
                           <div class="form-group">
                             <label class=""> Use .jpg or png files other file types are not acceptible.</label>
-                            <input type="text" name="" class="form-control" id="">
+                            <input type="text" value="<?php echo $img; ?>" name="img" class="form-control" id="">
                           </div>
                         </div>
                       </div>
@@ -129,49 +164,49 @@
                       <div class="col-md-6">
                         <div class="form-group">
                             <label for=""> First Name:</label>
-                            <input type="text" name="name_gan" id="" class="form-control">
+                            <input type="text" value="<?php echo $gau_first_name; ?>" name="gau_first_name" id="" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                             <label for=""> Last Name:</label>
-                            <input type="text" name="lname_gan" id="" class="form-control">
+                            <input type="text" value="<?php echo $gau_last_name; ?>" name="gau_last_name" id="" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
                               <label for="">Phone:</label>
-                              <input type="text" name="phone_gan" id="" class="form-control">
+                              <input type="text" value="<?php echo $gau_phone; ?>" name="gau_phone" id="" class="form-control">
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                               <label for="">Phone:</label>
-                              <input type="text" name="phone_gan2" id="" class="form-control">
+                              <input type="text" value="<?php echo $gau_phone2; ?>" name="gau_phone2" id="" class="form-control">
                           </div>
                         </div>
                         <div class="col-md-12">
                           <div class="form-group">
                               <label for="">Home Address:</label>
-                              <input type="text" name="address_gan" id="" class="form-control">
+                              <input type="text" value="<?php echo $gau_home_address; ?>" name="gau_home_address" id="" class="form-control">
                           </div>
                         </div>
                         <div class="col-md-12">
                           <div class="form-group">
                               <label for="">Office Address:</label>
-                              <input type="text" name="oaddress_gan" id="" class="form-control">
+                              <input type="text" value="<?php echo $gau_office_address; ?>" name="gau_office_address" id="" class="form-control">
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                               <label for="">Position Held:</label>
-                              <input type="text" name="pheld" id="" class="form-control">
+                              <input type="text" value="<?php echo $gau_position_held; ?>" name="gau_position_held" id="" class="form-control">
                           </div>
                         </div>
                         <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Email:</label>
-                            <input type="text" name="email_gan" id="" class="form-control">
+                            <input type="text" value="<?php echo $gau_email; ?>" name="gau_email" id="" class="form-control">
                         </div>
                         </div>
                     </div>

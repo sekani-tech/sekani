@@ -6,6 +6,7 @@ session_start();
 ?>
 <?php
 $sessint_id = $_SESSION["int_id"];
+$client_id = $_SESSION["client_id"];
 $product_id = $_POST['product_id'];
 $principal_amount = $_POST['principal_amount'];
 $loan_term = $_POST['loan_term'];
