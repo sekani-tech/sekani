@@ -91,15 +91,16 @@ $rezz = mysqli_query($connection, $activeq);
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" href="#pablo">
-                  <i class="material-icons">notifications</i> Notifications
+                  <i class="material-icons">notifications</i>
                 </a>
               </li>
               <!-- user config -->
               <li class="nav-item dropdown">
                 <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">person</i>
+                  <!-- insert user name here -->
                   <p class="d-lg-none d-md-block">
-                    Account
+                    User
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">

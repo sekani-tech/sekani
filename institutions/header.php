@@ -76,21 +76,9 @@ $rezz = mysqli_query($connection, $activeq);
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="users.php">
-              <i class="material-icons">person</i>
-              <p>Staff</p>
-            </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="client.php">
               <i class="material-icons">people</i>
               <p>Client</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="lend.php">
-              <i class="material-icons">send</i>
-              <p>Lend</p>
             </a>
           </li>
           <li class="nav-item">
@@ -99,29 +87,18 @@ $rezz = mysqli_query($connection, $activeq);
               <p>Loans</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="branch.php">
-              <i class="material-icons">account_tree</i>
-              <p>Branch</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="products.php">
-              <i class="material-icons">bubble_chart</i>
-              <p>Products</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="accounting.php">
-              <i class="material-icons">credit_card</i>
-              <p>Accounting</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="config.php">
-              <i class="material-icons">settings</i>
-              <p>Configuration</p>
-            </a>
+          <li class="nav-item dropdown show">
+          <a class="nav-link btn btn-secondary dropdown-toggle" href="javascript:;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <!-- <i class="material-icons">settings</i> -->
+              Configuration
+          </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="javascript:;">Settings</a>
+              <a href="javascript:;" class="dropdown-item">Products</a>
+              <a href="javascript:;" class="dropdown-item">Users</a>
+              <a href="javascript:;" class="dropdown-item">Branch</a>
+              <a href="javascript:;" class="dropdown-item">Accounting</a>
+            </div>
           </li>
           <!-- your sidebar here -->
         </ul>
@@ -144,16 +121,17 @@ $rezz = mysqli_query($connection, $activeq);
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" href="#pablo">
-                  <i class="material-icons">notifications</i> Notifications
+                  <i class="material-icons">notifications</i>
                 </a>
               </li>
               <!-- user setup -->
               <li class="nav-item dropdown">
                 <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">person</i>
-                  <p class="d-lg-none d-md-block">
-                    Account
-                  </p>
+                  <!-- Insert user display name here -->
+                  <!-- <p class="d-lg-none d-md-block"> -->
+                    User name
+                  <!-- </p> -->
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown-item" href="#">Profile</a>

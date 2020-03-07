@@ -23,7 +23,7 @@
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap-material-design.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!-- <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script> -->
   <!-- Plugin for the momentJs  -->
   <script src="../assets/js/plugins/moment.min.js"></script>
   <!--  Plugin for Sweet Alert -->
@@ -55,6 +55,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <script src="../assets/js/jquery.accordion-wizard.min.js"></script>
+  <!-- chart data ... -->
+  <script src="../assets/demo/demo.js"></script>
   <script>
     var options = {
           mode: 'wizard',
@@ -82,7 +84,16 @@
           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
+        $(document).ready(function() {
+          // Javascript method's body can be found in assets/js/demos.js
+          md.initDashboardPageCharts();
+
+        });
       </script>
+      <!-- script for chart -->
+      <!-- <script>
+        
+      </script> -->
 </body>
 
 </html>
