@@ -6,6 +6,12 @@ define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 define('DB_CHARSET', 'utf8');
 define('DB_NAME', 'sekani_admin');
+// test
+// define('DB_SERVER', 'localhost');
+// define('DB_USERNAME', 'root');
+// define('DB_PASSWORD', 'password');
+// define('DB_CHARSET', 'utf8');
+// define('DB_NAME', 'sekani_admin');
 
 // MUTE NOTICES
 error_reporting(E_ALL & ~E_NOTICE);

@@ -15,12 +15,12 @@
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/institution_client_upload.php" method="post">
+                  <form action="../functions/branch_upload.php" method="post">
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Name</label>
-                          <input type="text" class="form-control" name="bank">
+                          <input type="text" class="form-control" name="name">
                         </div>
                       </div>
                       <div class="col-md-4">
@@ -38,7 +38,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Location</label>
-                          <input type="text" class="form-control" name="acct_no">
+                          <input type="text" class="form-control" name="location">
                         </div>
                       </div>
                       </div>

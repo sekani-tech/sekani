@@ -13,27 +13,49 @@
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Branch</h4>
                   <!-- Insert number users institutions -->
-                  <p class="card-category"><?php echo 0; ?> Branch(s) || <a href="manage_branch.php">Create New Branch</a></p>
+                  <p class="card-category"><?php
+                   $query = "SELECT * FROM branch WHERE int_id = '$sessint_id'";
+                   $result = mysqli_query($connection, $query);
+                   if ($result) {
+                     $inr = mysqli_num_rows($result);
+                     echo $inr;
+                   }?> Branch(s) || <a href="manage_branch.php">Create New Branch</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table">
                       <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM branch WHERE int_id ='$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
                         <!-- <th>
                           ID
                         </th> -->
                         <th>Name</th>
                         <th>
-                          Description
+                          Phone
                         </th>
                         <th>
-                          Product Group
+                          Location
                         </th>
                       </thead>
                       <tbody>
-                          <th></th>
-                          <th></th>
-                          <th></th>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                          <th><?php echo $row["name"]; ?></th>
+                          <th><?php echo $row["phone"]; ?></th>
+                          <th><?php echo $row["location"]; ?></th>
+                          <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                          </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
                       </tbody>
                     </table>
                   </div>

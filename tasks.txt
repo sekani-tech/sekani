@@ -2,7 +2,7 @@ Tasks to carry out based on system review.
 -----
 Sam
 -----
-1. Create branch
+1. Create branch -- DONE
 2. Create Loan 
 3. Update client --DONE
 4. Change delete button to active in staff table.. the active and non-active staff shows user status --DONE
