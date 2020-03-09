@@ -17,7 +17,13 @@
                   </div>
                   <p class="card-category">Clients</p>
                   <!-- Populate with number of existing clients -->
-                  <h3 class="card-title">245</h3>
+                  <h3 class="card-title"><?php
+                   $query = "SELECT * FROM clients WHERE int_id = '$sessint_id'";
+                   $result = mysqli_query($connection, $query);
+                   if ($result) {
+                     $inr = mysqli_num_rows($result);
+                     echo $inr;
+                   }?></h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -56,7 +62,13 @@
                   </div>
                   <p class="card-category">Logged in Staff</p>
                   <!-- Populate with number of logged in staff -->
-                  <h3 class="card-title">245</h3>
+                  <h3 class="card-title"><?php
+                   $query = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
+                   $result = mysqli_query($connection, $query);
+                   if ($result) {
+                     $inr = mysqli_num_rows($result);
+                     echo $inr;
+                   }?></h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -76,7 +88,7 @@
                   </div>
                   <p class="card-category">Outstanding Loan Balance</p>
                   <!-- Populate with the total value of outstanding loans -->
-                  <h3 class="card-title">NGN - 2,000,000</h3>
+                  <h3 class="card-title">NGN - 200000</h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
