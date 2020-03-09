@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `branch` (
   `location` longtext,
   PRIMARY KEY (`id`),
   KEY `branch_int_id` (`int_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `branch`
