@@ -96,7 +96,8 @@ $rezz = mysqli_query($connection, $activeq);
               <a class="dropdown-item" href="products.php">Products</a>
               <a class="dropdown-item" href="config.php">Roles</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Staff</a>
+              <a class="dropdown-item" href="users.php">Staff</a>
+              <a class="dropdown-item" href="branch.php">Branch</a>
               <!-- <a class="dropdown-item" href="#">Group</a> -->
               <a class="dropdown-item" href="#">Accounting</a>
             </div>

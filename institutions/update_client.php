@@ -42,68 +42,63 @@ $gau_email = $n['gau_email'];
           <!-- your content here -->
           <div class="row">
             <div class="col-md-8">
-              <div class="card">
+            <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Update Client</h4>
-                  <p class="card-category">Modify Client Proile</p>
+                  <h4 class="card-title">Create new Client</h4>
+                  <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/update_client.php" method="post">
+                  <form action="../functions/institution_client_upload.php" method="post">
                     <div class="row">
-                    <div class="col-md-2">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">ID</label>
-                          <input type="text" readonly value="<?php echo $id; ?>" name="id" class="form-control">
-                        </div>
-                      </div>
                       <div class="col-md-5">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Bank</label>
-                          <input type="text" value="<?php echo $bank; ?>" name="bank" class="form-control">
+                          <label class="bmd-label-floating">Client Type</label>
+                          <input type="text" class="form-control" name="ctype" value="Individual" readonly>
+                        </div>
+                      </div>
+                      <!-- </div> -->
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Display name</label>
+                          <input type="text" class="form-control" name="display_name">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Fist Name</label>
+                          <input type="text" class="form-control" name="first_name">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Account No</label>
-                          <input type="text" value="<?php echo $acct_no; ?>" name="acct_no" class="form-control">
+                          <label class="bmd-label-floating">Middle Name</label>
+                          <input type="text" class="form-control" name="middle_name">
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Display name</label>
-                          <input type="text" value="<?php echo $display_name; ?>" name="display_name" class="form-control">
+                          <label class="bmd-label-floating">Last Name</label>
+                          <input type="text" class="form-control" name="last_name">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Phone No</label>
+                          <input type="tel" class="form-control" name="phone">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Phone No2</label>
+                          <input type="tel" class="form-control" name="phone2">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Email address</label>
-                          <input type="email" value="<?php echo $email; ?>" name="email" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">First Name</label>
-                          <input type="text" value="<?php echo $first_name; ?>" name="first_name" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Last Name</label>
-                          <input type="text" value="<?php echo $last_name; ?>" name="last_name" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Phone No</label>
-                          <input type="tel" value="<?php echo $phone; ?>" name="phone" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Phone No2</label>
-                          <input type="tel" class="form-control">
+                          <input type="email" class="form-control" name="email">
                         </div>
                       </div>
                     </div>
@@ -111,7 +106,7 @@ $gau_email = $n['gau_email'];
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Address</label>
-                          <input type="text" value="<?php echo $phone2; ?>" name="phone2" class="form-control">
+                          <input type="text" class="form-control" name="addres">
                         </div>
                       </div>
                     </div>
@@ -120,7 +115,6 @@ $gau_email = $n['gau_email'];
                         <div class="form-group">
                           <label class="bmd-label-floating">Gender:</label>
                           <select class="form-control" name="gender" id="">
-                          <option value="<?php echo $gender; ?>"><?php echo $gender; ?></option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                           </select>
@@ -128,88 +122,130 @@ $gau_email = $n['gau_email'];
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Is staff:</label>
-                          <select name="is_staff" id="" class="form-control">
-                          <option value="<?php echo $is_staff; ?>"><?php echo $is_staff; ?></option>
-                              <option value="">Yes</option>
-                              <option value="">No</option>
-                          </select>
+                          <label class="">Date of Birth:</label>
+                          <input type="date" class="form-control" name="date_of_birth">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="">Date of Birth:</label>
-                          <input type="date" value="<?php echo $date_of_birth; ?>" name="date_of_birth" class="form-control">
+                          <label class="">Branch:</label>
+                          <input type="text" class="form-control" name="branch">
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
+                      <div class="col-md-4">
                         <div class="form-group">
-                          <label>Profile Photo</label>
-                          <div class="form-group">
-                            <label class=""> Use .jpg or png files other file types are not acceptible.</label>
-                            <input type="text" value="<?php echo $img; ?>" name="img" class="form-control" id="">
-                          </div>
+                          <label for="">Country:</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">State:</label>
+                        <input type="text" name="" class="form-control" id="">
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">LGA:</label>
+                        <input type="text" class="form-control">
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">BVN:</label>
+                        <input type="text" name="" class="form-control" id="">
+                      </div>
+                      <div class="col-md-4">
+                        <p><label for="">Active Alerts:</label></p>
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                              <input class="form-check-input" type="checkbox" value="">
+                              SMS
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                              <input class="form-check-input" type="checkbox" value="">
+                              Email
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Account Officer:</label>
+                          <select name="" class="form-control" id="">
+                            <option value=""></option>
+                          </select>
                         </div>
                       </div>
                     </div>
                     <hr>
-                    <div class="card-header card-header-primary">
-                      <h5 class="card-title">Gaurantor</h5>
-                    </div>
-                    <hr>
-                    <!-- guarantor -->
                     <div class="row">
                       <div class="col-md-6">
-                        <div class="form-group">
-                            <label for=""> First Name:</label>
-                            <input type="text" value="<?php echo $gau_first_name; ?>" name="gau_first_name" id="" class="form-control">
+                        <!-- insert passport -->
+                        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail img-raised">
+                                <!-- <img src="http://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" rel="nofollow" alt="..."> -->
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                            <div>
+                                <span class="btn btn-raised btn-round btn-default btn-file">
+                                    <span class="fileinput-new">Select passport</span>
+                                    <span class="fileinput-exists">Change</span>
+                                    <input type="file" name="..." />
+                                </span>
+                                <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                            </div>
                         </div>
                       </div>
                       <div class="col-md-6">
-                        <div class="form-group">
-                            <label for=""> Last Name:</label>
-                            <input type="text" value="<?php echo $gau_last_name; ?>" name="gau_last_name" id="" class="form-control">
+                        <!-- insert passport -->
+                        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail img-raised">
+                                <!-- <img src="http://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" rel="nofollow" alt="..."> -->
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                            <div>
+                                <span class="btn btn-raised btn-round btn-default btn-file">
+                                    <span class="fileinput-new">Select signature</span>
+                                    <span class="fileinput-exists">Change</span>
+                                    <input type="file" name="..." />
+                                </span>
+                                <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                            </div>
                         </div>
                       </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <label for="">Phone:</label>
-                              <input type="text" value="<?php echo $gau_phone; ?>" name="gau_phone" id="" class="form-control">
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                              <label for="">Phone:</label>
-                              <input type="text" value="<?php echo $gau_phone2; ?>" name="gau_phone2" id="" class="form-control">
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="form-group">
-                              <label for="">Home Address:</label>
-                              <input type="text" value="<?php echo $gau_home_address; ?>" name="gau_home_address" id="" class="form-control">
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="form-group">
-                              <label for="">Office Address:</label>
-                              <input type="text" value="<?php echo $gau_office_address; ?>" name="gau_office_address" id="" class="form-control">
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                              <label for="">Position Held:</label>
-                              <input type="text" value="<?php echo $gau_position_held; ?>" name="gau_position_held" id="" class="form-control">
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Email:</label>
-                            <input type="text" value="<?php echo $gau_email; ?>" name="gau_email" id="" class="form-control">
-                        </div>
-                        </div>
                     </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">Id Type</label>
+                        <select name="" class="form-control" id="">
+                          <option value="National ID">National ID</option>
+                          <option value="Voters ID">Voters ID</option>
+                          <option value="International Passport">International Passport</option>
+                          <!-- <option value="Drivers Liscense"></option> -->
+                        </select>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail img-raised">
+                                <!-- <img src="http://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" rel="nofollow" alt="..."> -->
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                            <div>
+                                <span class="btn btn-raised btn-round btn-default btn-file">
+                                    <span class="fileinput-new">Select signature</span>
+                                    <span class="fileinput-exists">Change</span>
+                                    <input type="file" name="..." />
+                                </span>
+                                <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <a href="client.php" class="btn btn-secondary">Back</a>
                     <button type="submit" class="btn btn-primary pull-right">Create Client</button>
                     <div class="clearfix"></div>
                   </form>
@@ -223,7 +259,7 @@ $gau_email = $n['gau_email'];
                     <img class="img" src="../assets/img/faces/marc.jpg" />
                   </a>
                 </div>
-                <!-- Get session data and populate user profile -->
+                <!-- Get client data -->
                 <div class="card-body">
                   <h6 class="card-category text-gray">CEO / Co-Founder</h6>
                   <h4 class="card-title">Alec Thompson</h4>

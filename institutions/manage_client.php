@@ -115,11 +115,11 @@
                       </div>
                       <div class="col-md-4">
                         <label for="">BVN:</label>
-                        <input type="number" name="" class="form-control" id="">
+                        <input type="text" name="" class="form-control" id="">
                       </div>
                       <div class="col-md-4">
-                        <label for="">Active Alerts</label>
-                        <div class="form-check">
+                        <p><label for="">Active Alerts:</label></p>
+                        <div class="form-check form-check-inline">
                           <label class="form-check-label">
                               <input class="form-check-input" type="checkbox" value="">
                               SMS
@@ -128,7 +128,7 @@
                               </span>
                           </label>
                         </div>
-                        <div class="form-check">
+                        <div class="form-check form-check-inline">
                           <label class="form-check-label">
                               <input class="form-check-input" type="checkbox" value="">
                               Email
@@ -212,6 +212,7 @@
                         </div>
                       </div>
                     </div>
+                    <a href="client.php" class="btn btn-secondary">Back</a>
                     <button type="submit" class="btn btn-primary pull-right">Create Client</button>
                     <div class="clearfix"></div>
                   </form>
