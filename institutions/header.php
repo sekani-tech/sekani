@@ -87,19 +87,23 @@ $rezz = mysqli_query($connection, $activeq);
               <p>Loans</p>
             </a>
           </li>
-          <li class="nav-item dropdown show">
-          <a class="nav-link btn btn-secondary dropdown-toggle" href="javascript:;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <!-- <i class="material-icons">settings</i> -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="material-icons">settings</i>
               Configuration
-          </a>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="javascript:;">Settings</a>
-              <a href="javascript:;" class="dropdown-item">Products</a>
-              <a href="javascript:;" class="dropdown-item">Users</a>
-              <a href="javascript:;" class="dropdown-item">Branch</a>
-              <a href="javascript:;" class="dropdown-item">Accounting</a>
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Separated link</a>
             </div>
           </li>
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            
+          </li> -->
           <!-- your sidebar here -->
         </ul>
       </div>

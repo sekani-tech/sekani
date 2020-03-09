@@ -1,0 +1,281 @@
+<form name="createAccountForm" action="accountOpen" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="staffId" value="<%out.print(staffInfo.getStaffId());%>">
+    <div class="row">
+      <div class="col-md-12">
+            <div class="main-card mb-3 p-3 card">
+
+              <div class="card-body">
+              <div class="form-row" >
+                  <div class="col-md-5 d-inline">
+                        <div class="position-relative form-group">
+                              <label class="control-label" for="Client_dateOfBirth">Client Type</label>
+                                    <!-- <div class="controls"> -->
+                                          <select class="form-control form-control-sm" id="changeClientSel" name="changeClientSel" onchange="changeClientType()">
+                                            <option value="0" selected disabled>Select Client Type</option>
+                                            <option value="Individual">Individual</option>
+<!--                                                                <option value="Corporate">Corporate</option>
+                                            <option value="Group">Group</option>-->
+                                        </select>
+
+                                  </div>
+                                  <div id="individualDiv">
+                                          <div class="position-relative form-group">
+                                              <label class="control-label" for="Client_firstname">First Name</label>
+                                              <input type="text" class="form-control form-control-sm" id="firstNameCreateAcc" name="firstNameCreateAcc">
+                                          </div>
+                                          <div class="position-relative form-group">
+                                              <label class="control-label" for="Client_middlename">Middle Name</label>
+                                              <input type="text" class="form-control form-control-sm" id="middleNameCreateAcc" name="middleNameCreateAcc">
+                                          </div>
+
+                                          <div class="position-relative form-group">
+                                              <label class="control-label" for="Client_lastname">Last Name</label>
+                                              <input type="text" class="form-control form-control-sm"  id="lastNameCreateAcc" name="lastNameCreateAcc">
+                                          </div>
+
+                                          <div class="position-relative form-group">
+                                              <label class="control-label" for="Client_dateOfBirth">Date Of Birth</label>
+                                                  <input type="date" class="form-control form-control-sm" id="dobCreateAcc" name="dobCreateAcc">
+                                          </div>
+                                          <div class="position-relative form-group">
+                                              <label class="control-label" for="Client_gender_cv_id">Gender</label>
+                                                  <select class="form-control form-control-sm" id="genderCreateAcc" name="genderCreateAcc">
+                                                      <option value="218">Male</option>
+                                                      <option value="219">Female</option>
+                                                  </select>
+                                          </div>
+                                          <div class="position-relative form-group">
+                                              <label class="control-label" for="Client_dateOfBirth">Passport</label>
+                                                  <input type="file" accept="image/jpeg, image/gif, image/tiff" class="form-control-file form-control-sm" id="passportCreateAcc" name="passportCreateAcc" multiple>
+                                              </div>
+
+                                          <div class="position-relative form-group">
+                                                  <label class="control-label" for="Client_dateOfBirth">Signature</label>
+                                                      <input type="file" accept="image/jpeg" class="form-control-file form-control-sm" id="signCreateAcc" name="signCreateAcc">
+                                              </div>
+                                          <div class="position-relative form-group">
+                                                  <label class="control-label" for="Client_dateOfBirth">ID card</label>
+                                                          <select class="form-control form-control-sm" id="idCardCreateAcc" name="idCardCreateAcc">
+                                                              <option value="0" selected disabled>Select ID Type</option>
+                                                              <option value="National ID">National ID</option>
+                                                              <option value="Voters Card">Voters Card</option>
+                                                              <option value="International Passport">International Passport</option>
+                                                          </select><br>
+                                                          <input type="file" accept="image/jpeg" class="form-control-file form-control-sm" name="idCardCreateAccAtt">
+                                                          <small>Upload a copy of your ID in the following format png, jpeg, jpg, pdf.</small>
+                                              </div>
+
+<!--                                                                  <div class="position-relative form-group">
+                                                <label class="control-label" for="Client_emailAddress">Add to Group</label>
+                                                <div class="input-group"><input type="search" class="form-control form-control-sm" placeholder="Search Group" id="addGroupCreateAcc" name="addGroupCreateAcc">
+                                                    <div class="input-group-append"><button id="addGroupBtn" name="sendType" value="search" type="submit" class="btn btn-sm btn-primary" onclick="showGroupSearchDiv()">Search</button></div>
+                                                </div>
+                                              </div>-->
+
+
+
+                                              <div id="selectGrpDiv" style="display: block">
+<!--                                                                      <div class="form-group">
+                                                      <label class="control-label" for="Client_emailAddress">Select Group</label>
+                                                        <select class="form-control form-control-sm" id="groupSelectCreateAcc" name="groupSelectCreateAcc">
+                                                            <option value="0" selected disabled>No Group</option>                                                                                
+                                                            <%
+//                                                                                    MosuniQueriesAdHoc groupInfoQuery = new MosuniQueriesAdHoc();
+//                                                                                    List<GroupInfo> groupInfoList = new ArrayList<>();
+//                                                                                    groupInfoList = groupInfoQuery.getGroupInfo();
+//                                                                                    if(groupInfoList != null){
+//                                                                                        for(GroupInfo indvGroupInfo : groupInfoList){
+                                                            %>
+                                                              <option value="<% //out.print(indvGroupInfo.getId());%>"><% //out.print(indvGroupInfo.getDisplayName());%></option>
+                                                            <%
+//                                                                                        }
+//                                                                                    }
+                                                            %>
+                                                        </select>
+                                                  </div>-->
+
+<!--                                                                  <div class="form-group">
+                                                  <label class="control-label" for="Client_emailAddress">Position in Group</label>
+                                                      <select class="form-control form-control-sm" id="groupPositionCreateAcc" name="groupPositionCreateAcc">
+                                                          <option value="0" selected disabled>Select Position</option>
+                                                          <option value="Chairman">Chairman</option>
+                                                          <option value="Secretary">Secretary</option>
+                                                          <option value="Member">Member</option>
+                                                      </select>
+                                                  </div>-->
+
+                                  </div>
+                                </div>
+
+                                  <div id="corporateDiv" style="display: none">
+                                      <div class="position-relative form-group">
+                                          <label class="control-label" for="Client_lastname">Company Name</label>
+                                              <input type="text" class="form-control form-control-sm" id="companyNameCreateAcc" name="companyNameCreateAcc" >
+                                      </div>
+                                      <div class="form-group">
+                                          <label class="control-label" for="Client_lastname">Reg. Number</label>
+                                          <input type="text" class="form-control form-control-sm" id="regNumCreateAcc" name="regNumCreateAcc">
+                                        </div>
+                                      <div class="position-relative form-group">
+                                          <label class="control-label" for="Client_dateOfBirth">Date Of Registration</label>
+                                              <input type="date" class="form-control form-control-sm" id="regDateCreateAcc" name="regDateCreateAcc">
+                                      </div>
+                                      <div class="position-relative form-group">
+                                          <label class="control-label" for="Client_lastname">Tax Identification Number</label>
+                                          <input type="number" class="form-control form-control-sm" id="tinCreateAcc" name="tinCreateAcc">
+                                      </div>
+                                    </div>
+
+                                  <div id="groupDiv" style="display: none">
+                                          <div class="position-relative form-group">
+                                              <label class="control-label" for="Client_lastname">Group Name</label>
+                                              <input type="text" class="form-control form-control-sm" id="groupNameCreateAcc" name="groupNameCreateAcc">
+                                            </div>
+
+                                          <div class="form-group">
+                                              <label class="control-label" for="Client_dateOfBirth">Date Of Registration</label>
+                                              <input type="date" class="form-control form-control-sm" id="dateOfRegCreateAcc" name="dateOfRegCreateAcc">
+                                          </div>
+
+                                          <div class="form-group">
+                                              <label class="control-label" for="Client_dateOfBirth">Meeting Day</label>
+                                                      <select class="form-control form-control-sm" id="meetDaysCreateAcc" name="meetDaysCreateAcc">
+                                                          <option value="0" selected disabled>Select Weekday</option>
+                                                          <option value="Sunday">Sunday</option>
+                                                          <option value="Monday">Monday</option>
+                                                          <option value="Tuesday">Tuesday</option>
+                                                          <option value="Wednesday">Wednesday</option>
+                                                          <option value="Thursday">Thursday</option>
+                                                          <option value="Friday">Friday</option>
+                                                          <option value="Saturday">Saturday</option>
+                                                      </select>
+                                          </div>
+                                          <div class="position-relative form-group">
+                                              <label class="control-label" for="Client_dateOfBirth">Meeting Time</label>
+                                              <input type="time" class="form-control form-control-sm" id="meetTimeCreateAcc" name="meetTimeCreateAcc">
+                                          </div>
+                             </div>
+                           </div>
+                           <div class="col-md-1 d-inline">
+
+                           </div>
+
+                             <div class="col-md-5 d-inline">
+                             <div class="position-relative form-group">
+                                  <label class="control-label" for="Client_mobileNo">Phone Number</label>
+                                  <input type="number" class="form-control form-control-sm" id="numberCreateAcc" name="numberCreateAcc">
+                              </div>
+                              <div class="position-relative form-group">
+                                  <label class="control-label" for="Client_mobileNoSecondary">Secondary Mobile No</label>
+
+                                      <input type="number" class="form-control form-control-sm" id="secNumCreateAcc" name="secNumCreateAcc">
+
+                              </div>
+                              <div class="position-relative form-group">
+                                  <label class="control-label" for="Client_emailAddress">Email Address</label>
+
+                                      <input type="email" class="form-control form-control-sm" id="emailCreateAcc" name="emailCreateAcc">
+                                  </div>
+
+
+                              <div class="position-relative form-group">
+                                <label class="control-label" for="Client_officeName">Branch</label>
+
+                                <select class="form-control" id="branchCreateAcc" name="activeBranch" onclick="sendBranch()">
+                                    <option value="#" selected disabled="#">Select a Branch</option>
+                                  <%
+                                      String branchName = (String)request.getAttribute("branchName");
+                                      if(branchName == null){
+                                  %>
+                                  <%
+                                      }else{
+                                  %>
+                                  <option value="#"><% out.println(branchName);%></option>
+                                  <%
+                                      }
+                                       MosuniQueriesAdHoc brnQuery;
+                                       List<MosuniBranchInfo> branchInfoList = new ArrayList<>();
+
+                                       brnQuery = new MosuniQueriesAdHoc();
+                                       branchInfoList = brnQuery.getMosuniBranchInfo();
+                                       for(MosuniBranchInfo individualBrn : branchInfoList){
+                                   %>
+                                   <option value="<% out.println(individualBrn.getOfficeId());%>"><% out.println(individualBrn.getOfficeName());%></option>
+                                   <%
+                                       }
+                                   %>
+                                </select>
+
+                              </div>
+
+
+                              <div class="position-relative form-group">
+                                      <label class="control-label" for="Client_gender_cv_id">Country</label>
+                                          <select class="form-control form-control-sm" name="country" id="country" onchange="setStates();">
+                                                  <option value="-1" selected disabled>Nationality</option>
+                                                  <option value="Nigeria">Nigeria</option>
+                                                  <option value="Ghana">Ghana</option>
+                                          </select>
+                                  </div>
+                                  <div class="position-relative form-group">
+                                          <label class="control-label" for="Client_gender_cv_id">State</label>
+                                                  <select class="form-control form-control-sm" name="stateOfOrigin" id="state" onchange="setLgcs();">
+                                                          <option value="-1" selected disabled>Select State</option>
+                                                          <option value="0">Please select country</option>
+                                                  </select>
+                                      </div>
+                                      <div class="position-relative form-group">
+                                              <label class="control-label" for="Client_gender_cv_id">LGA</label>
+                                                      <select class="form-control form-control-sm" name="lga" id="lgc">
+                                                              <option value="#" selected disabled>Select LGA</option>
+                                                              <option value="#"></option>
+                                                      </select>
+                                          </div>
+                                          <div class="position-relative form-group">
+                                            <label class="control-label" for="Client_gender_cv_id">Address</label>
+                                                    <input type="text" class="form-control" id="address" name="address">
+                                        </div>
+                              <div class="form-group">
+                                  <label class="control-label" >BVN</label>
+                                      <input type="number" class="form-control" id="bvn" name="bvn">
+                              </div>
+
+                              <div class="form-group">
+                                <label class="control-label">Type of Product</label>
+                                <select class="form-control" id="accountType" name="accountType">
+                                    <option value="0" selected disabled>Select Account Type</option>
+                                    <option value="Current">Current Account</option>
+                                    <option value="FDA">Fixed Account</option>
+                                </select>
+                              </div>
+
+                                  <div class="form-check"><label for="#"><b>Activate Alerts</b></label>
+                                      <label for="" class="form-check-label">SMS</label>
+                                      <input type="checkbox" class="form-check-input" name="sms" id="">
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                      <label for="" class="form-check-label">Email</label>
+                                      <input type="checkbox" class="form-check-input" name="email" id="">
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                  </div>
+
+
+
+
+                              <div class="form-group">
+                                      <label class="control-label" for="Client_officeName">Account Officer</label>
+                                          <select name="activeOfficer" id="loanOfficer" class="form-control form-control-sm">
+                                              <option>Select Account Officer</option>
+                                          </select>
+                                    </div>
+                                </div>
+
+
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                      <a href="client.php" class="btn">Back</a>
+
+    </div>
+  </form>

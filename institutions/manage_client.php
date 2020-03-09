@@ -8,7 +8,7 @@
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Create new Client</h4>
@@ -19,52 +19,53 @@
                     <div class="row">
                       <div class="col-md-5">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Bank</label>
-                          <input type="text" class="form-control" name="bank">
+                          <label class="bmd-label-floating">Client Type</label>
+                          <input type="text" class="form-control" name="ctype" value="Individual" readonly>
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Account No</label>
-                          <input type="text" class="form-control" name="acct_no">
-                        </div>
-                      </div>
+                      <!-- </div> -->
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Display name</label>
                           <input type="text" class="form-control" name="display_name">
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Email address</label>
-                          <input type="email" class="form-control" name="email">
-                        </div>
-                      </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Fist Name</label>
                           <input type="text" class="form-control" name="first_name">
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Middle Name</label>
+                          <input type="text" class="form-control" name="middle_name">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Last Name</label>
                           <input type="text" class="form-control" name="last_name">
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Phone No</label>
                           <input type="tel" class="form-control" name="phone">
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Phone No2</label>
                           <input type="tel" class="form-control" name="phone2">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Email address</label>
+                          <input type="email" class="form-control" name="email">
                         </div>
                       </div>
                     </div>
@@ -169,35 +170,28 @@
                         </div>
                         </div>
                     </div>
+                    <!-- insert passport -->
+                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                        <div class="fileinput-new thumbnail img-raised">
+                            <!-- <img src="http://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" rel="nofollow" alt="..."> -->
+                        </div>
+                        <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                        <div>
+                            <span class="btn btn-raised btn-round btn-default btn-file">
+                                <span class="fileinput-new">Select passport</span>
+                                <span class="fileinput-exists">Change</span>
+                                <input type="file" name="..." />
+                            </span>
+                            <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary pull-right">Create Client</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="../assets/img/faces/marc.jpg" />
-                  </a>
-                </div>
-                <!-- Get session data and populate user profile -->
-                <?php
-                $fullname = $_SESSION["fullname"];
-                $sessint_id = $_SESSION["int_id"];
-                $org_role = $_SESSION["org_role"];
-                ?>
-                <div class="card-body">
-                  <h6 class="card-category text-gray"><?php echo $org_role?></h6>
-                  <h4 class="card-title"> <?php echo $fullname?></h4>
-                  <p class="card-description">
-                  <?php echo $int_name?>
-                  </p>
-                  <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
-                </div>
-              </div>
-            </div>
+            <!-- /form card -->
           </div>
           <!-- /content -->
         </div>

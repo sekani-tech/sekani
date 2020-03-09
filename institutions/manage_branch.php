@@ -17,13 +17,25 @@
                 <div class="card-body">
                   <form action="../functions/institution_client_upload.php" method="post">
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Name</label>
                           <input type="text" class="form-control" name="bank">
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Email</label>
+                          <input type="email" class="form-control" name="email">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Phone</label>
+                          <input type="tel" class="form-control" name="phone">
+                        </div>
+                      </div>
+                      <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Location</label>
                           <input type="text" class="form-control" name="acct_no">
@@ -33,29 +45,6 @@
                     <button type="submit" class="btn btn-primary pull-right">Create Branch</button>
                     <div class="clearfix"></div>
                   </form>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="../assets/img/faces/marc.jpg" />
-                  </a>
-                </div>
-                <!-- Get session data and populate user profile -->
-                <?php
-                $fullname = $_SESSION["fullname"];
-                $sessint_id = $_SESSION["int_id"];
-                $org_role = $_SESSION["org_role"];
-                ?>
-                <div class="card-body">
-                  <h6 class="card-category text-gray"><?php echo $org_role?></h6>
-                  <h4 class="card-title"> <?php echo $fullname?></h4>
-                  <p class="card-description">
-                  <?php echo $int_name?>
-                  </p>
-                  <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>
               </div>
             </div>
