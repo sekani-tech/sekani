@@ -93,11 +93,12 @@ $rezz = mysqli_query($connection, $activeq);
               Configuration
             </a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <a class="dropdown-item" href="products.php">Products</a>
+              <a class="dropdown-item" href="config.php">Roles</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
+              <a class="dropdown-item" href="#">Staff</a>
+              <!-- <a class="dropdown-item" href="#">Group</a> -->
+              <a class="dropdown-item" href="#">Accounting</a>
             </div>
           </li>
           <!-- <li class="nav-item dropdown">

@@ -89,101 +89,128 @@
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Is staff:</label>
-                          <select name="is_staff" id="" class="form-control">
-                              <option value="Yes">Yes</option>
-                              <option value="No">No</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
                           <label class="">Date of Birth:</label>
                           <input type="date" class="form-control" name="date_of_birth">
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
+                      <div class="col-md-4">
                         <div class="form-group">
-                          <label>Profile Photo</label>
-                          <div class="form-group">
-                            <label class=""> Use .jpg or png files other file types are not acceptible.</label>
-                            <input type="text" name="img" class="form-control" id="">
-                          </div>
+                          <label class="">Branch:</label>
+                          <input type="text" class="form-control" name="branch">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Country:</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">State:</label>
+                        <input type="text" name="" class="form-control" id="">
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">LGA:</label>
+                        <input type="text" class="form-control">
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">BVN:</label>
+                        <input type="number" name="" class="form-control" id="">
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Active Alerts</label>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                              <input class="form-check-input" type="checkbox" value="">
+                              SMS
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                              <input class="form-check-input" type="checkbox" value="">
+                              Email
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Account Officer:</label>
+                          <select name="" class="form-control" id="">
+                            <option value=""></option>
+                          </select>
                         </div>
                       </div>
                     </div>
                     <hr>
-                    <div class="card-header card-header-primary">
-                      <h5 class="card-title">Gaurantor</h5>
-                    </div>
-                    <hr>
-                    <!-- guarantor -->
                     <div class="row">
                       <div class="col-md-6">
-                        <div class="form-group">
-                            <label for=""> First Name:</label>
-                            <input type="text" name="gau_first_name" id="" class="form-control">
+                        <!-- insert passport -->
+                        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail img-raised">
+                                <!-- <img src="http://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" rel="nofollow" alt="..."> -->
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                            <div>
+                                <span class="btn btn-raised btn-round btn-default btn-file">
+                                    <span class="fileinput-new">Select passport</span>
+                                    <span class="fileinput-exists">Change</span>
+                                    <input type="file" name="..." />
+                                </span>
+                                <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                            </div>
                         </div>
                       </div>
                       <div class="col-md-6">
-                        <div class="form-group">
-                            <label for=""> Last Name:</label>
-                            <input type="text" name="gau_last_name" id="" class="form-control">
+                        <!-- insert passport -->
+                        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail img-raised">
+                                <!-- <img src="http://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" rel="nofollow" alt="..."> -->
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                            <div>
+                                <span class="btn btn-raised btn-round btn-default btn-file">
+                                    <span class="fileinput-new">Select signature</span>
+                                    <span class="fileinput-exists">Change</span>
+                                    <input type="file" name="..." />
+                                </span>
+                                <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                            </div>
                         </div>
                       </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <label for="">Phone:</label>
-                              <input type="text" name="gau_phone" id="" class="form-control">
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                              <label for="">Phone:</label>
-                              <input type="text" name="gau_phone2" id="" class="form-control">
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="form-group">
-                              <label for="">Home Address:</label>
-                              <input type="text" name="gau_home_address" id="" class="form-control">
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="form-group">
-                              <label for="">Office Address:</label>
-                              <input type="text" name="gau_office_address" id="" class="form-control">
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                              <label for="">Position Held:</label>
-                              <input type="text" name="gau_position_held" id="" class="form-control">
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Email:</label>
-                            <input type="text" name="gau_email" id="" class="form-control">
-                        </div>
-                        </div>
                     </div>
-                    <!-- insert passport -->
-                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                        <div class="fileinput-new thumbnail img-raised">
-                            <!-- <img src="http://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" rel="nofollow" alt="..."> -->
+                    <hr>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">Id Type</label>
+                        <select name="" class="form-control" id="">
+                          <option value="National ID">National ID</option>
+                          <option value="Voters ID">Voters ID</option>
+                          <option value="International Passport">International Passport</option>
+                          <!-- <option value="Drivers Liscense"></option> -->
+                        </select>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail img-raised">
+                                <!-- <img src="http://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" rel="nofollow" alt="..."> -->
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                            <div>
+                                <span class="btn btn-raised btn-round btn-default btn-file">
+                                    <span class="fileinput-new">Select signature</span>
+                                    <span class="fileinput-exists">Change</span>
+                                    <input type="file" name="..." />
+                                </span>
+                                <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                            </div>
                         </div>
-                        <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
-                        <div>
-                            <span class="btn btn-raised btn-round btn-default btn-file">
-                                <span class="fileinput-new">Select passport</span>
-                                <span class="fileinput-exists">Change</span>
-                                <input type="file" name="..." />
-                            </span>
-                            <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
-                        </div>
+                      </div>
                     </div>
                     <button type="submit" class="btn btn-primary pull-right">Create Client</button>
                     <div class="clearfix"></div>
