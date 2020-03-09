@@ -13,7 +13,7 @@ Sanusi
 ------
 1. Update branch
 2. Update Product
-3. Populate database with existing client data
+3. Populate database with existing client data --DONE
 
 
 NB: COMMENT WITH --DONE after a task is completed note the task would be updated as ui is pushed.
