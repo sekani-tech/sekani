@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 09, 2020 at 09:48 PM
--- Server version: 10.1.16-MariaDB
--- PHP Version: 7.0.9
+-- Host: 127.0.0.1:3306
+-- Generation Time: Mar 10, 2020 at 09:00 AM
+-- Server version: 8.0.18
+-- PHP Version: 7.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,12 +28,13 @@ SET time_zone = "+00:00";
 -- Table structure for table `client`
 --
 
-CREATE TABLE `client` (
-  `id` bigint(20) DEFAULT NULL,
-  `int_id` varchar(20) DEFAULT NULL,
+DROP TABLE IF EXISTS `client`;
+CREATE TABLE IF NOT EXISTS `client` (
+  `id` int(100) NOT NULL AUTO_INCREMENT,
+  `int_id` int(100) DEFAULT NULL,
   `loan_officer_id` int(100) DEFAULT NULL,
   `loan_status` varchar(50) DEFAULT NULL,
-  `branch_id` int(20) DEFAULT NULL,
+  `branch_id` int(100) DEFAULT NULL,
   `client_type` varchar(20) DEFAULT NULL,
   `account_no` varchar(20) DEFAULT NULL,
   `activation_date` date DEFAULT NULL,
@@ -58,8 +61,25 @@ CREATE TABLE `client` (
   `id_img_url` varchar(200) DEFAULT NULL,
   `LGA` varchar(255) DEFAULT NULL,
   `signature` varchar(200) DEFAULT NULL,
-  `passport` varchar(200) DEFAULT NULL
+  `passport` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `int_id_client` (`int_id`),
+  KEY `loan_officer_id_client` (`loan_officer_id`),
+  KEY `branch_id_client` (`branch_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `client`
+--
+ALTER TABLE `client`
+  ADD CONSTRAINT `branch_id_client` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`),
+  ADD CONSTRAINT `int_id_client` FOREIGN KEY (`int_id`) REFERENCES `institutions` (`int_id`),
+  ADD CONSTRAINT `loan_officer_id_client` FOREIGN KEY (`loan_officer_id`) REFERENCES `staff` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
