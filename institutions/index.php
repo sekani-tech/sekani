@@ -63,7 +63,7 @@
                   <p class="card-category">Logged in Staff</p>
                   <!-- Populate with number of logged in staff -->
                   <h3 class="card-title"><?php
-                   $query = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
+                   $query = "SELECT * FROM users WHERE int_id = '$sessint_id' && status = 'Active'";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);

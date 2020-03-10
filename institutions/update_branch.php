@@ -3,6 +3,21 @@
     include("header.php");
 
 ?>
+<?php
+ if (isset($_GET["edit"])) {
+  $user_id = $_GET["edit"];
+  $update = true;
+  $value = mysqli_query($connection, "SELECT * FROM branch WHERE id='$user_id'");
+
+  if (count([$value] == 1)) {
+    $n = mysqli_fetch_array($value);
+    $name = $n['name'];
+    $email = $n['email'];
+    $phone = $n['phone'];
+    $location = $n['location'];
+  }
+}
+?>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -15,22 +30,40 @@
                   <p class="card-category">Modify Branch Data</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/institution_client_upload.php" method="post">
+                  <form action="../functions/branch_update.php" method="post">
                     <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">ID</label>
+                          <input type="text"  readonly class="form-control" value="<?php echo $user_id; ?>" name="id">
+                        </div>
+                    </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Name</label>
-                          <input type="text" class="form-control" name="bank">
+                          <input type="text" class="form-control" value="<?php echo $name; ?>" name="name">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Email</label>
+                          <input type="text" class="form-control" value="<?php echo $email; ?>" name="email">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Phone</label>
+                          <input type="text" class="form-control" value="<?php echo $phone; ?>" name="phone">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Location</label>
-                          <input type="text" class="form-control" name="acct_no">
+                          <input type="text" class="form-control" value="<?php echo $location; ?>" name="location">
                         </div>
                       </div>
                       </div>
-                    <button type="submit" class="btn btn-primary pull-right">Create Branch</button>
+                    <button type="submit" class="btn btn-primary pull-right">Update Branch</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>

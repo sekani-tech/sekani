@@ -48,7 +48,7 @@
                           <th><?php echo $row["name"]; ?></th>
                           <th><?php echo $row["phone"]; ?></th>
                           <th><?php echo $row["location"]; ?></th>
-                          <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                          <td><a href="update_branch.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                           </tr>
                         <?php }
                           }

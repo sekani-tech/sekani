@@ -43,7 +43,7 @@
                       </div>
                       </div>
                       <a href="client.php" class="btn btn-secondary">Back</a>
-                    <button type="submit" class="btn btn-primary pull-right">Create Branch</button>
+                    <button type="submit" class="btn btn-primary pull-right">Update Branch</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>
