@@ -15,7 +15,7 @@
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/institution_client_upload.php" method="post">
+                  <form action="../functions/institution_client_upload.php" method="post" enctype="multipart/form-data">
                     <div class="row">
                       <div class="col-md-5">
                         <div class="form-group">
@@ -34,8 +34,8 @@
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Fist Name</label>
-                          <input type="text" class="form-control" name="first_name">
+                          <label class="bmd-label-floating">Middle Name</label>
+                          <input type="text" class="form-control" name="middlename">
                         </div>
                       </div>
                       <div class="col-md-4">
@@ -47,7 +47,7 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Last Name</label>
-                          <input type="text" class="form-control" name="last_name">
+                          <input type="text" class="form-control" name="lastname">
                         </div>
                       </div>
                       <div class="col-md-4">
@@ -73,7 +73,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Address</label>
-                          <input type="text" class="form-control" name="addres">
+                          <input type="text" class="form-control" name="address">
                         </div>
                       </div>
                     </div>
@@ -94,6 +94,20 @@
                         </div>
                       </div>
                       <div class="col-md-4">
+                      <?php
+                      function fill_branch($connection)
+                      {
+                      $sint_id = $_SESSION["int_id"];
+                      $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
+                      $res = mysqli_query($connection, $org);
+                      $out = '';
+                      while ($row = mysqli_fetch_array($res))
+                      {
+                        $out .= '<option value="'.$row["id"].'">'.$row["name"]. ' @ ' .$row["location"]. '</option>';
+                      }
+                      return $out;
+                      }
+                      ?>
                         <div class="form-group">
                           <label class="">Branch:</label>
                           <input type="text" class="form-control" name="branch">
