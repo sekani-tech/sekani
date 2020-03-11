@@ -1,6 +1,12 @@
 <?php
 /* Database credentials. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
+// define('DB_SERVER', 'localhost');
+// define('DB_USERNAME', 'root');
+// define('DB_PASSWORD', '');
+// define('DB_CHARSET', 'utf8');
+// define('DB_NAME', 'sekani_admin');
+// test
 define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');

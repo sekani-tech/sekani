@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `client` (
   `display_name` varchar(100) DEFAULT NULL,
   `mobile_no` varchar(50) DEFAULT NULL,
   `is_staff` tinyint(1) DEFAULT '0',
-  `date_of_birth` date(100) DEFAULT NULL,
+  `date_of_birth` date DEFAULT NULL,
   `image_id` bigint(20) DEFAULT NULL,
   `updated_by` varchar(20) DEFAULT NULL,
   `updated_on` date DEFAULT NULL,

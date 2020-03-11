@@ -14,7 +14,7 @@
                   <h4 class="card-title ">Clients</h4>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM clients WHERE int_id = '$sessint_id'";
+                   $query = "SELECT * FROM client WHERE int_id = '$sessint_id'";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
