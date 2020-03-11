@@ -38,7 +38,7 @@ $id_card = $_POST['id_card'];
 // an if statement to return uncheck value to 0
 if ( isset($_POST['sms_active']) ) {
     $sms_active = 1;
-} else { 
+} else {
     $sms_active = 0;
 }
 
