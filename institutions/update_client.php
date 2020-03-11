@@ -48,12 +48,12 @@ if(isset($_GET["edit"])) {
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/update_client.php" method="post">
+                  <form action="../functions/client_update.php" method="POST" enctype="multipart/form-data">
                     <div class="row">
                       <div class="col-md-5">
                         <div class="form-group">
                           <label class="bmd-label-floating">Client Type</label>
-                          <input type="text" class="form-control" hidden value="<?php echo $id; ?>" name="id" readonly>
+                          <input type="text" class="form-control" hidden value="<?php echo $id; ?>" name="id">
                           <input type="text" class="form-control" value="<?php echo $ctype; ?>" name="ctype" readonly>
                         </div>
                       </div>
@@ -145,7 +145,7 @@ if(isset($_GET["edit"])) {
                   ?>
                           <label class="">Branch:</label>
                           <select name="branch" class="form-control" id="collat">
-                          <option value="">select a Branch</option>
+                          <option value="<?php echo $branch; ?>">Update Branch</option>
                           <?php echo fill_branch($connection); ?>
                         </select>
                         </div>
@@ -166,13 +166,13 @@ if(isset($_GET["edit"])) {
                       </div>
                       <div class="col-md-4">
                         <label for="">BVN:</label>
-                        <input type="text" value="<?php echo $bvn; ?>" name="lga" class="form-control" id="">
+                        <input type="text" value="<?php echo $bvn; ?>" name="bvn" class="form-control" id="">
                       </div>
                       <div class="col-md-4">
                         <p><label for="">Active Alerts:</label></p>
                         <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active; ?>" name="sms_active">
+                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active">
                               SMS
                               <span class="form-check-sign">
                                 <span class="check"></span>
@@ -181,7 +181,7 @@ if(isset($_GET["edit"])) {
                         </div>
                         <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="<?php echo $email_active; ?>" name="email_active">
+                              <input class="form-check-input" type="checkbox" value="<?php echo $email_active;?>" name="email_active">
                               Email
                               <span class="form-check-sign">
                                 <span class="check"></span>
@@ -201,10 +201,8 @@ if(isset($_GET["edit"])) {
                     <hr>
                     <div class="row">
                       <div class="col-md-6">
-                        <!-- insert passport -->
                         <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                             <div class="fileinput-new thumbnail img-raised">
-                                <!-- <img src="http://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" rel="nofollow" alt="..."> -->
                             </div>
                             <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
                             <div>
@@ -217,11 +215,9 @@ if(isset($_GET["edit"])) {
                             </div>
                         </div>
                       </div>
-                      <div class="col-md-6">
-                        <!-- insert passport -->
+                       <div class="col-md-6">
                         <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                             <div class="fileinput-new thumbnail img-raised">
-                                <!-- <img src="http://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" rel="nofollow" alt="..."> -->
                             </div>
                             <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
                             <div>
@@ -239,17 +235,16 @@ if(isset($_GET["edit"])) {
                     <div class="row">
                       <div class="col-md-4">
                         <label for="">Id Type</label>
-                        <select name="" class="form-control" name="id_card">
+                        <select class="form-control" name="id_card">
+                          <option value="<?php echo $id_card ?>"><?php echo $id_card ?></option>
                           <option value="National ID">National ID</option>
                           <option value="Voters ID">Voters ID</option>
                           <option value="International Passport">International Passport</option>
-                          <!-- <option value="Drivers Liscense"></option> -->
                         </select>
                       </div>
                       <div class="col-md-8">
                         <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                             <div class="fileinput-new thumbnail img-raised">
-                                <!-- <img src="http://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" rel="nofollow" alt="..."> -->
                             </div>
                             <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
                             <div>

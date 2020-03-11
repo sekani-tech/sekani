@@ -3,8 +3,7 @@ include("connect.php");
 session_start();
 ?>
 <?php
-echo "hello";
-if (isset($_POST['id']) && isset($_POST['bvn'])) {
+if (isset($_POST['id']) && isset($_POST['ctype'])) {
     $id = $_POST['id'];
     $ctype = $_POST['ctype'];
     $display_name = $_POST['display_name'];
@@ -34,35 +33,34 @@ if (isset($_POST['id']) && isset($_POST['bvn'])) {
         $email_active = 0;
     }    
     $id_card = $_POST['id_card'];
-    $passport =$_POST['passport'];
-    $signature = $_POST['signature'];
-    $id_img_url = $_POST['id_img_url'];
+    // $passport =$_POST['passport'];
+    // $signature = $_POST['signature'];
+    // $id_img_url = $_POST['id_img_url'];
 // smalls
-$updated_by = $_SESSION["fullname"];
+$updated_by = $_SESSION["user_id"];
 $updated_on = date("Y-m-d");
-$query = "UPDATE client SET client_type = '$c_type', display_name = '$display_name',
+$queryx = "UPDATE client SET client_type = '$ctype', display_name = '$display_name',
 firstname = '$first_name', lastname= '$last_name', middlename = '$middle_name',
-mobile_no = '$phone', mobile_no_2 = '$phone2',
-ADDRESS = '$address', gender = '$gender',
-date_of_birth = '$date_of_birth', branch_id = '$branch', COUNTRY = '$country',
-STATE_OF_ORIGIN = '$state',
+mobile_no = '$phone', mobile_no_2 = '$phone2', ADDRESS = '$address', gender = '$gender',
+date_of_birth = '$date_of_birth', branch_id = '$branch', COUNTRY = '$country', STATE_OF_ORIGIN = '$state',
 LGA = '$lga', BVN = '$bvn', SMS_ACTIVE = '$sms_active',
 EMAIL_ACTIVE = '$email_active', id_card = '$id_card', updated_by = '$updated_by', updated_on = '$updated_on' WHERE id = '$id'";
 
-$result = mysqli_query($connection, $query);
-// if($result) {
-//     echo header("location: ../institutions/client.php");
-// } else {
-//     echo "there is an error here";
-// }
-
-if ($connection->error) {
-    try {   
-        throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
-    } catch(Exception $e ) {
-        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-        echo nl2br($e->getTraceAsString());
-    }
+$result = mysqli_query($connection, $queryx);
+if($result) {
+    echo header("location: ../institutions/client.php");
+} else {
+    echo "there is an error here";
 }
+// if ($connection->error) {
+//     try {   
+//         throw new Exception("MySQL error $connection->error <br> Query:<br> $queryx", $mysqli->error);   
+//     } catch(Exception $e ) {
+//         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+//         echo nl2br($e->getTraceAsString());
+//     }
+// }
+} else {
+    echo "bad";
 }
 ?>
