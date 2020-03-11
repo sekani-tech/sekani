@@ -26,7 +26,7 @@
                     <table class="table">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM clients WHERE int_id ='$sessint_id'";
+                        $query = "SELECT * FROM client WHERE int_id ='$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -52,10 +52,10 @@
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
-                          <th><?php echo $row["first_name"]; ?></th>
-                          <th><?php echo $row["last_name"]; ?></th>
-                          <th><?php echo $row["loan_officer"]; ?></th>
-                          <th><?php echo $row["phone"]; ?></th>
+                          <th><?php echo $row["firstname"]; ?></th>
+                          <th><?php echo $row["lastname"]; ?></th>
+                          <th><?php echo $row["loan_officer_id"]; ?></th>
+                          <th><?php echo $row["mobile_no"]; ?></th>
                           <th><?php echo $row["loan_status"]; ?></th>
                           <td><a href="update_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
