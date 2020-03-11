@@ -7,32 +7,32 @@
 if(isset($_GET["edit"])) {
   $id = $_GET["edit"];
   $update = true;
-  $person = mysqli_query($connection, "SELECT * FROM clients WHERE id='$id'");
+  $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id'");
 
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
-    $bank = $n['bank'];
-    $acct_no = $n['acct_no'];
+    $ctype = $n['client_type'];
     $display_name = $n['display_name'];
-    $email = $n['email'];
-    $first_name = $n['first_name'];
-    $last_name = $n['last_name'];
-    $phone = $n['phone'];
-    $phone2 = $n['phone2'];
-    $address = $n['addres'];
+    $first_name = $n['firstname'];
+    $middle_name = $n['middlename'];
+    $last_name = $n['lastname'];
+    $phone = $n['mobile_no'];
+    $phone2 = $n['mobile_no_2'];
+    $email = $n['email_address'];
+    $address = $n['ADDRESS'];
     $gender = $n['gender'];
-    $is_staff = $n['is_staff'];
     $date_of_birth = $n['date_of_birth'];
-    $img = $n['img'];
-// gaurantors part
-$gau_first_name = $n['gau_first_name'];
-$gau_last_name = $n['gau_last_name'];
-$gau_phone = $n['gau_phone'];
-$gau_phone2 = $n['gau_phone2'];
-$gau_home_address = $n['gau_home_address'];
-$gau_office_address = $n['gau_office_address'];
-$gau_position_held = $n['gau_position_held'];
-$gau_email = $n['gau_email'];
+    $branch = $n['branch_id'];
+    $country = $n['COUNTRY'];
+    $state = $n['STATE_OF_ORIGIN'];
+    $lga = $n['LGA'];
+    $bvn = $n['BVN'];
+    $sms_active = $n['SMS_ACTIVE'];
+    $email_active = $n['EMAIL_ACTIVE'];
+    $id_card = $n['id_card'];
+    $passport = $n['passport'];
+    // $signature = $n['signature'];
+    // $id_img_url = $n['id_img_url'];
   }
 }
 ?>
@@ -48,57 +48,58 @@ $gau_email = $n['gau_email'];
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/institution_client_upload.php" method="post">
+                  <form action="../functions/update_client.php" method="post">
                     <div class="row">
                       <div class="col-md-5">
                         <div class="form-group">
                           <label class="bmd-label-floating">Client Type</label>
-                          <input type="text" class="form-control" name="ctype" value="Individual" readonly>
+                          <input type="text" class="form-control" hidden value="<?php echo $id; ?>" name="id" readonly>
+                          <input type="text" class="form-control" value="<?php echo $ctype; ?>" name="ctype" readonly>
                         </div>
                       </div>
                       <!-- </div> -->
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Display name</label>
-                          <input type="text" class="form-control" name="display_name">
+                          <input type="text" class="form-control" value="<?php echo $display_name; ?>" name="display_name">
                         </div>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Fist Name</label>
-                          <input type="text" class="form-control" name="first_name">
+                          <label class="bmd-label-floating">First Name</label>
+                          <input type="text" class="form-control" value="<?php echo $first_name; ?>" name="first_name">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Middle Name</label>
-                          <input type="text" class="form-control" name="middle_name">
+                          <input type="text" class="form-control" value="<?php echo $middle_name; ?>" name="middle_name">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Last Name</label>
-                          <input type="text" class="form-control" name="last_name">
+                          <input type="text" class="form-control" value="<?php echo $last_name; ?>" name="last_name">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Phone No</label>
-                          <input type="tel" class="form-control" name="phone">
+                          <input type="tel" class="form-control" value="<?php echo $phone2; ?>" name="phone">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Phone No2</label>
-                          <input type="tel" class="form-control" name="phone2">
+                          <input type="tel" class="form-control" value="<?php echo $phone2; ?>" name="phone2">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Email address</label>
-                          <input type="email" class="form-control" name="email">
+                          <input type="email" class="form-control" value="<?php echo $email; ?>" name="email">
                         </div>
                       </div>
                     </div>
@@ -106,7 +107,7 @@ $gau_email = $n['gau_email'];
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Address</label>
-                          <input type="text" class="form-control" name="addres">
+                          <input type="text" class="form-control" value="<?php echo $address; ?>" name="address">
                         </div>
                       </div>
                     </div>
@@ -114,7 +115,7 @@ $gau_email = $n['gau_email'];
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Gender:</label>
-                          <select class="form-control" name="gender" id="">
+                          <select class="form-control" value="<?php echo $gender; ?>" name="gender" id="">
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                           </select>
@@ -123,38 +124,55 @@ $gau_email = $n['gau_email'];
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="">Date of Birth:</label>
-                          <input type="date" class="form-control" name="date_of_birth">
+                          <input type="date" class="form-control" value="<?php echo $date_of_birth; ?>" name="date_of_birth">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
+                        <?php
+                  function fill_branch($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"]. ' @ ' .$row["location"]. '</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
                           <label class="">Branch:</label>
-                          <input type="text" class="form-control" name="branch">
+                          <select name="branch" class="form-control" id="collat">
+                          <option value="">select a Branch</option>
+                          <?php echo fill_branch($connection); ?>
+                        </select>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="">Country:</label>
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" value="<?php echo $country; ?>" name="country">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <label for="">State:</label>
-                        <input type="text" name="" class="form-control" id="">
+                        <input type="text" value="<?php echo $state; ?>" name="state" class="form-control" id="">
                       </div>
                       <div class="col-md-4">
                         <label for="">LGA:</label>
-                        <input type="text" class="form-control">
+                        <input type="text" value="<?php echo $lga; ?>" name="lga" class="form-control">
                       </div>
                       <div class="col-md-4">
                         <label for="">BVN:</label>
-                        <input type="text" name="" class="form-control" id="">
+                        <input type="text" value="<?php echo $bvn; ?>" name="lga" class="form-control" id="">
                       </div>
                       <div class="col-md-4">
                         <p><label for="">Active Alerts:</label></p>
                         <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="">
+                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active; ?>" name="sms_active">
                               SMS
                               <span class="form-check-sign">
                                 <span class="check"></span>
@@ -163,7 +181,7 @@ $gau_email = $n['gau_email'];
                         </div>
                         <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="">
+                              <input class="form-check-input" type="checkbox" value="<?php echo $email_active; ?>" name="email_active">
                               Email
                               <span class="form-check-sign">
                                 <span class="check"></span>
@@ -193,7 +211,7 @@ $gau_email = $n['gau_email'];
                                 <span class="btn btn-raised btn-round btn-default btn-file">
                                     <span class="fileinput-new">Select passport</span>
                                     <span class="fileinput-exists">Change</span>
-                                    <input type="file" name="..." />
+                                    <input type="file" name="passport" />
                                 </span>
                                 <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                             </div>
@@ -210,7 +228,7 @@ $gau_email = $n['gau_email'];
                                 <span class="btn btn-raised btn-round btn-default btn-file">
                                     <span class="fileinput-new">Select signature</span>
                                     <span class="fileinput-exists">Change</span>
-                                    <input type="file" name="..." />
+                                    <input type="file" name="signature" />
                                 </span>
                                 <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                             </div>
@@ -221,7 +239,7 @@ $gau_email = $n['gau_email'];
                     <div class="row">
                       <div class="col-md-4">
                         <label for="">Id Type</label>
-                        <select name="" class="form-control" id="">
+                        <select name="" class="form-control" name="id_card">
                           <option value="National ID">National ID</option>
                           <option value="Voters ID">Voters ID</option>
                           <option value="International Passport">International Passport</option>
@@ -238,7 +256,7 @@ $gau_email = $n['gau_email'];
                                 <span class="btn btn-raised btn-round btn-default btn-file">
                                     <span class="fileinput-new">Select signature</span>
                                     <span class="fileinput-exists">Change</span>
-                                    <input type="file" name="..." />
+                                    <input type="file" name="id_img_url" />
                                 </span>
                                 <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                             </div>
@@ -256,15 +274,22 @@ $gau_email = $n['gau_email'];
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../assets/img/faces/marc.jpg" />
+                    <img class="img" src="../functions/clients/<?php echo $passport;?>" />
                   </a>
                 </div>
                 <!-- Get client data -->
                 <div class="card-body">
-                  <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                  <h4 class="card-title">Alec Thompson</h4>
+                  <h6 class="card-category text-gray">Clients Profile Picture</h6>
+                  <h4 class="card-title"><?php echo $display_name; ?></h4>
                   <p class="card-description">
-                    Sekani Systems
+                  <?php
+                $inq = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$sessint_id'");
+                if (count([$inq]) == 1) {
+                  $n = mysqli_fetch_array($inq);
+                  $int_name = $n['int_name'];
+                }
+              ?>
+            <?php echo $int_name; ?>
                   </p>
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>

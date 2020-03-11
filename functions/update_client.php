@@ -1,44 +1,68 @@
 <?php
 include("connect.php");
+session_start();
 ?>
 <?php
-if (isset($_POST['bank']) && isset($_POST['email'])) {
+echo "hello";
+if (isset($_POST['id']) && isset($_POST['bvn'])) {
     $id = $_POST['id'];
-    $bank = $_POST['bank'];
-    $acct_no = $_POST['acct_no'];
+    $ctype = $_POST['ctype'];
     $display_name = $_POST['display_name'];
-    $email = $_POST['email'];
     $first_name = $_POST['first_name'];
+    $middle_name = $_POST['middle_name'];
     $last_name = $_POST['last_name'];
     $phone = $_POST['phone'];
     $phone2 = $_POST['phone2'];
-    $address = $_POST['addres'];
+    $email = $_POST['email'];
+    $address = $_POST['address'];
     $gender = $_POST['gender'];
-    $is_staff = $_POST['is_staff'];
     $date_of_birth = $_POST['date_of_birth'];
-    $img = $_POST['img'];
-// gaurantors part
-$gau_first_name = $_POST['gau_first_name'];
-$gau_last_name = $_POST['gau_last_name'];
-$gau_phone = $_POST['gau_phone'];
-$gau_phone2 = $_POST['gau_phone2'];
-$gau_home_address = $_POST['gau_home_address'];
-$gau_office_address = $_POST['gau_office_address'];
-$gau_position_held = $_POST['gau_position_held'];
-$gau_email = $_POST['gau_email'];
-
-$query = "UPDATE clients SET bank = '$bank', acct_no = '$acct_no', display_name = '$display_name',
-email = '$email', first_name = '$first_name', last_name = '$last_name', phone = '$phone',
-phone2 = '$phone2', addres = '$address', gender = '$gender', is_staff = '$is_staff',
-date_of_birth = '$date_of_birth', img = '$img', gau_first_name = '$gau_first_name', gau_last_name = '$gau_last_name',
-gau_phone = '$gau_phone', gau_phone2 = '$gau_phone2', gau_home_address = '$gau_home_address',
-gau_office_address = '$gau_office_address', gau_position_held = '$gau_position_held', gau_email = '$gau_email' WHERE id = '$id'";
+    $branch = $_POST['branch'];
+    $country = $_POST['country'];
+    $state = $_POST['state'];
+    $lga = $_POST['lga'];
+    $bvn = $_POST['bvn'];
+    if ( isset($_POST['sms_active']) ) {
+        $sms_active = 1;
+    } else {
+        $sms_active = 0;
+    }
+    
+    if ( isset($_POST['email_active']) ) {
+        $email_active = 1;
+    } else { 
+        $email_active = 0;
+    }    
+    $id_card = $_POST['id_card'];
+    $passport =$_POST['passport'];
+    $signature = $_POST['signature'];
+    $id_img_url = $_POST['id_img_url'];
+// smalls
+$updated_by = $_SESSION["fullname"];
+$updated_on = date("Y-m-d");
+$query = "UPDATE client SET client_type = '$c_type', display_name = '$display_name',
+firstname = '$first_name', lastname= '$last_name', middlename = '$middle_name',
+mobile_no = '$phone', mobile_no_2 = '$phone2',
+ADDRESS = '$address', gender = '$gender',
+date_of_birth = '$date_of_birth', branch_id = '$branch', COUNTRY = '$country',
+STATE_OF_ORIGIN = '$state',
+LGA = '$lga', BVN = '$bvn', SMS_ACTIVE = '$sms_active',
+EMAIL_ACTIVE = '$email_active', id_card = '$id_card', updated_by = '$updated_by', updated_on = '$updated_on' WHERE id = '$id'";
 
 $result = mysqli_query($connection, $query);
-if($result) {
-    echo header("location: ../institutions/client.php");
-} else {
-    echo "there is an error here";
+// if($result) {
+//     echo header("location: ../institutions/client.php");
+// } else {
+//     echo "there is an error here";
+// }
+
+if ($connection->error) {
+    try {   
+        throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
+    } catch(Exception $e ) {
+        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+        echo nl2br($e->getTraceAsString());
+    }
 }
 }
 ?>

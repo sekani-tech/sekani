@@ -29,13 +29,16 @@ $country = $_POST['country'];
 $state = $_POST['state'];
 $lga = $_POST['lga'];
 $bvn = $_POST['bvn'];
+$loan_status = "Not Active";
+$activation_date = date("Y-m-d");
+$submitted_on = date("Y-m-d");
 // $sa = $_POST['sms_active'];
 // $ea = $_POST['email_active'];
 $id_card = $_POST['id_card'];
 // an if statement to return uncheck value to 0
 if ( isset($_POST['sms_active']) ) {
     $sms_active = 1;
-} else { 
+} else {
     $sms_active = 0;
 }
 
@@ -74,11 +77,12 @@ $query = "INSERT INTO client (int_id, loan_officer_id, client_type,
 display_name, account_no,
 firstname, lastname, middlename, mobile_no, mobile_no_2, email_address, address, gender, date_of_birth,
 branch_id, country, state_of_origin, lga, bvn, sms_active, email_active, id_card,
-passport, signature, id_img_url) VALUES ('{$sessint_id}', '{$loan_officer_id}', '{$ctype}',
+passport, signature, id_img_url, loan_status, submittedon_date, activition_date) VALUES ('{$sessint_id}', '{$loan_officer_id}', '{$ctype}',
 '{$display_name}', '{$account_no}', '{$first_name}', '{$last_name}', '{$middlename}', '{$phone}', '{$phone2}',
 '{$email}', '{$address}', '{$gender}', '{$date_of_birth}', '{$branch}',
 '{$country}', '{$state}', '{$lga}', '{$bvn}', '{$sms_active}', '{$email_active}',
-'{$id_card}', '{$image3}', '{$image1}', '{$image2}')";
+'{$id_card}', '{$image3}', '{$image1}', '{$image2}', '{$loan_status}',
+'{$submitted_on}', '{$activation_date}')";
 
 $res = mysqli_query($connection, $query);
 
