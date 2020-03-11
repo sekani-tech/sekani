@@ -48,7 +48,7 @@ if(isset($_GET["edit"])) {
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/update_client.php" method="post" enctype="multipart/form-data">
+                  <form action="../functions/update_client.php" method="post">
                     <div class="row">
                       <div class="col-md-5">
                         <div class="form-group">

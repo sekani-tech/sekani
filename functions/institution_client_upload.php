@@ -86,22 +86,22 @@ passport, signature, id_img_url, loan_status, submittedon_date, activition_date)
 
 $res = mysqli_query($connection, $query);
 
-//  if ($res) {
-//     echo header("location: ../institutions/client.php");
-//  } else {
-//      echo "<p>Error</p>";
-//  }
+ if ($res) {
+    echo header("location: ../institutions/client.php");
+ } else {
+     echo "<p>Error</p>";
+ }
 if (move_uploaded_file($_FILES['image1']['tmp_name'], $target)) {
     echo "Image uploaded successfully";
 }else{
     echo "Failed to upload image";
 }
-if ($connection->error) {
-        try {   
-            throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
-        } catch(Exception $e ) {
-            echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-            echo nl2br($e->getTraceAsString());
-        }
-    }
+// if ($connection->error) {
+//         try {   
+//             throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
+//         } catch(Exception $e ) {
+//             echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+//             echo nl2br($e->getTraceAsString());
+//         }
+//     }
 ?>

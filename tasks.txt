@@ -11,11 +11,7 @@ Sam
 ------
 Sanusi
 ------
-<<<<<<< HEAD
-1. Update branch --DONE
-=======
 1. Update branch
->>>>>>> i am ready
 2. Update Product
 3. Populate database with existing client data --DONE
 

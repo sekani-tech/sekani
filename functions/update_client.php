@@ -3,6 +3,7 @@ include("connect.php");
 session_start();
 ?>
 <?php
+echo "hello";
 if (isset($_POST['id']) && isset($_POST['bvn'])) {
     $id = $_POST['id'];
     $ctype = $_POST['ctype'];
@@ -49,10 +50,19 @@ LGA = '$lga', BVN = '$bvn', SMS_ACTIVE = '$sms_active',
 EMAIL_ACTIVE = '$email_active', id_card = '$id_card', updated_by = '$updated_by', updated_on = '$updated_on' WHERE id = '$id'";
 
 $result = mysqli_query($connection, $query);
-if($result) {
-    echo header("location: ../institutions/client.php");
-} else {
-    echo "there is an error here";
+// if($result) {
+//     echo header("location: ../institutions/client.php");
+// } else {
+//     echo "there is an error here";
+// }
+
+if ($connection->error) {
+    try {   
+        throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
+    } catch(Exception $e ) {
+        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+        echo nl2br($e->getTraceAsString());
+    }
 }
 }
 ?>
