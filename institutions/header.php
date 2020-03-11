@@ -136,7 +136,7 @@ $rezz = mysqli_query($connection, $activeq);
                   <i class="material-icons">person</i>
                   <!-- Insert user display name here -->
                   <!-- <p class="d-lg-none d-md-block"> -->
-                    User name
+                    <?php echo $_SESSION["username"]; ?>
                   <!-- </p> -->
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
