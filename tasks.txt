@@ -1,4 +1,5 @@
 Tasks to carry out based on system review.
+NB: The stucture of the files have changed slightly - with the change being the name of the folder
 -----
 Sam
 -----
@@ -14,6 +15,7 @@ Sanusi
 1. Update branch --DONE
 2. Update Product --DONE
 3. Populate database with existing client data --DONE
+4. View client (Link the view client page the client table and populate data as needed)
 
 
 NB: COMMENT WITH --DONE after a task is completed note the task would be updated as ui is pushed.
