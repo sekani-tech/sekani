@@ -28,7 +28,6 @@ if ($tm == 'day') {
 }
 
 $formg = date('Y-m-d', strtotime($repay_start. ' + '.$mt.' '.$tms.''));
-echo $formg;
 $end_date = $formg;
 $date = $repay_start;
 
