@@ -7,6 +7,7 @@ session_start();
 $sessint_id = $_SESSION["int_id"];
 $loan_officer_id = $_SESSION["user_id"];
 $ctype = $_POST['ctype'];
+$acct_type = $_POST['acct_type'];
 $display_name = $_POST['display_name'];
 // an account number generation
  $inttest = str_pad($sessint_id, 3, '0', STR_PAD_LEFT);
@@ -73,12 +74,12 @@ if (move_uploaded_file($_FILES['passport']['tmp_name'], $target3)) {
     $msg = "Failed to upload image";
 }
 // gaurantors part
-$query = "INSERT INTO client (int_id, loan_officer_id, client_type,
+$query = "INSERT INTO client (int_id, loan_officer_id, client_type, account_type,
 display_name, account_no,
 firstname, lastname, middlename, mobile_no, mobile_no_2, email_address, address, gender, date_of_birth,
 branch_id, country, state_of_origin, lga, bvn, sms_active, email_active, id_card,
 passport, signature, id_img_url, loan_status, submittedon_date, activation_date) VALUES ('{$sessint_id}', '{$loan_officer_id}', '{$ctype}',
-'{$display_name}', '{$account_no}', '{$first_name}', '{$last_name}', '{$middlename}', '{$phone}', '{$phone2}',
+'{$account_type}', '{$display_name}', '{$account_no}', '{$first_name}', '{$last_name}', '{$middlename}', '{$phone}', '{$phone2}',
 '{$email}', '{$address}', '{$gender}', '{$date_of_birth}', '{$branch}',
 '{$country}', '{$state}', '{$lga}', '{$bvn}', '{$sms_active}', '{$email_active}',
 '{$id_card}', '{$image3}', '{$image1}', '{$image2}', '{$loan_status}',

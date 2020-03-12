@@ -18,14 +18,28 @@ include("header.php");
             <div class="card-body">
               <form action="../functions/institution_client_upload.php" method="post" enctype="multipart/form-data">
                 <div class="row">
-                  <div class="col-md-5">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">Account Type</label>
+                        <select name="acct_type" class="form-control" id="collat">
+                          <option value="">select a Account Type</option>
+                          <option value="savings">Savings Account</option>
+                          <option value="current">Current Account</option>
+                        </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label class="bmd-label-floating">Client Type</label>
-                      <input type="text" class="form-control" name="ctype" value="Individual" readonly>
+                      <select name="ctype" class="form-control" id="collat">
+                          <option value="Individual">Individual</option>
+                          <option value="Joint">Joint Account</option>
+                          <option value="Student">Student Account</option>
+                        </select>
                     </div>
                   </div>
                   <!-- </div> -->
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label class="bmd-label-floating">Display name</label>
                       <input type="text" class="form-control" name="display_name">
@@ -35,7 +49,7 @@ include("header.php");
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label class="bmd-label-floating">Fist Name</label>
+                      <label class="bmd-label-floating">First Name</label>
                       <input type="text" class="form-control" name="firstname">
                     </div>
                   </div>

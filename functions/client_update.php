@@ -6,6 +6,7 @@ session_start();
 if (isset($_POST['id']) && isset($_POST['ctype'])) {
     $id = $_POST['id'];
     $ctype = $_POST['ctype'];
+    $acct_type = $_POST['acct_type'];
     $display_name = $_POST['display_name'];
     $first_name = $_POST['first_name'];
     $middle_name = $_POST['middle_name'];
@@ -39,7 +40,7 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
 // smalls
 $updated_by = $_SESSION["user_id"];
 $updated_on = date("Y-m-d");
-$queryx = "UPDATE client SET client_type = '$ctype', display_name = '$display_name',
+$queryx = "UPDATE client SET client_type = '$ctype', account_type = '$acct_type', display_name = '$display_name',
 firstname = '$first_name', lastname= '$last_name', middlename = '$middle_name',
 mobile_no = '$phone', mobile_no_2 = '$phone2', ADDRESS = '$address', gender = '$gender',
 date_of_birth = '$date_of_birth', branch_id = '$branch', COUNTRY = '$country', STATE_OF_ORIGIN = '$state',

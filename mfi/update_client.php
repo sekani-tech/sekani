@@ -12,6 +12,7 @@ if(isset($_GET["edit"])) {
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
     $ctype = $n['client_type'];
+    $acct_type = $n['account_type'];
     $display_name = $n['display_name'];
     $first_name = $n['firstname'];
     $middle_name = $n['middlename'];
@@ -55,6 +56,12 @@ if(isset($_GET["edit"])) {
                           <label class="bmd-label-floating">Client Type</label>
                           <input type="text" class="form-control" hidden value="<?php echo $id; ?>" name="id">
                           <input type="text" class="form-control" value="<?php echo $ctype; ?>" name="ctype" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Account Type</label>
+                          <input type="text" class="form-control" value="<?php echo $acct_type; ?>" name="acct_type">
                         </div>
                       </div>
                       <!-- </div> -->
