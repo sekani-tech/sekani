@@ -157,10 +157,25 @@ include("header.php");
                     </div>
                   </div>
                   <div class="col-md-4">
+                  <?php
+                  function fill_officer($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM staff WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"]. ' @ ' .$row["location"]. '</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
                     <div class="form-group">
                       <label for="">Account Officer:</label>
                       <select name="acct_of" class="form-control" id="">
-                        <option value=""></option>
+                        <option value="">select account officer</option>
+                        <?php echo fill_officer($connection); ?>
                       </select>
                     </div>
                   </div>
@@ -175,26 +190,6 @@ include("header.php");
                         </div>
                         <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
                         <div>
-                        <script>
-                        $(document).ready(function(){
-                          $'(#submit').click(function () {
-                            var img_name = $('#passport').val();
-                            if (img_name == '')
-                            {
-                              alert("please select image");
-                              return false;
-                            } else {
-                              var extension = $('#passport').val().split('.').pop().toLowerCase();
-                              if (jQuery.inArray(extension, ['png', 'jpg', 'jpeg']) == -1 )
-                              {
-                                alert('Invalid Image File');
-                                $('#passport').val('');
-                                return false;
-                              }
-                            }
-                          });
-                        });
-                        </script>
                             <span class="btn btn-raised btn-round btn-default btn-file">
                                 <span class="fileinput-new">Select passport</span>
                                 <span class="fileinput-exists">Change</span>

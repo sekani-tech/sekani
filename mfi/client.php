@@ -45,6 +45,8 @@
                           Phone
                         </th>
                         <th>Active Loan</th>
+                        <th>Actions</th>
+                        <th> </th>
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>
@@ -57,6 +59,7 @@
                           <th><?php echo $row["loan_officer_id"]; ?></th>
                           <th><?php echo $row["mobile_no"]; ?></th>
                           <th><?php echo $row["loan_status"]; ?></th>
+                          <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                           <td><a href="update_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
                         <?php }
