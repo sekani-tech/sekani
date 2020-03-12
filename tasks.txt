@@ -9,6 +9,7 @@ Sam
 4. Change delete button to active in staff table.. the active and non-active staff shows user status --DONE
 5. fix error in int_lend_upload
 6. Populate chart on institution dashboard
+7. Loan collection
 ------
 Sanusi
 ------
