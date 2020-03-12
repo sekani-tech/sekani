@@ -12,7 +12,7 @@ Sam
 Sanusi
 ------
 1. Update branch --DONE
-2. Update Product
+2. Update Product --DONE
 3. Populate database with existing client data --DONE
 
 

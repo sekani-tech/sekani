@@ -48,6 +48,7 @@
                           <th><?php echo $row["name"]; ?></th>
                           <th><?php echo $row["description"]; ?></th>
                           <th><?php echo $row["short_name"]; ?></th>
+                          <td><a href="update_product.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
                         <?php }
                           }

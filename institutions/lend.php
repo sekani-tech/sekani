@@ -42,7 +42,7 @@ return $output;
 function fill_client($connection)
 {
 $sint_id = $_SESSION["int_id"];
-$org = "SELECT * FROM clients WHERE int_id = '$sint_id'";
+$org = "SELECT * FROM client WHERE int_id = '$sint_id'";
 $res = mysqli_query($connection, $org);
 $out = '';
 while ($row = mysqli_fetch_array($res))
@@ -89,21 +89,6 @@ return $out;
                           <div id="show_product">
                           </div>
                           <div class="form-group">
-                          <script>
-                            $(document).ready(function() {
-                              $('#client_name').change(function(){
-                                var id = $(this).val();
-                                $.ajax({
-                                  url:"load_data_client_gau.php",
-                                  method:"POST",
-                                  data:{id:id},
-                                  success:function(data){
-                                    $('#show_client_gau').html(data);
-                                  }
-                                })
-                              });
-                            })
-                          </script>
                            <label>Client Name:</label>
                            <select name="client_id" class="form-control" id="client_name">
                               <option value="">select an option</option>
@@ -158,59 +143,57 @@ return $out;
                       <h5 class="mb-0" data-acc-title>Guarantors</h5>
                       <div data-acc-content>
                       <div id="show_client_gau"></div>
-                        <!-- <div class="my-3">
-                        <div class="row">
-                        <div id="show_client_gau"></div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                                <label for=""> First Name:</label>
-                                <input type="text" name="gau_first_name" id="" class="form-control">
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                                <label for=""> Last Name:</label>
-                                <input type="text" name="gau_last_name" id="" class="form-control">
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                              <div class="form-group">
-                                  <label for="">Phone:</label>
-                                  <input type="text" name="gau_phone" id="" class="form-control">
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="form-group">
-                                  <label for="">Phone:</label>
-                                  <input type="text" name="gau_phone2" id="" class="form-control">
-                              </div>
-                            </div>
-                            <div class="col-md-12">
-                              <div class="form-group">
-                                  <label for="">Home Address:</label>
-                                  <input type="text" name="gau_home_address" id="" class="form-control">
-                              </div>
-                            </div>
-                            <div class="col-md-12">
-                              <div class="form-group">
-                                  <label for="">Office Address:</label>
-                                  <input type="text" name="gau_office_address" id="" class="form-control">
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="form-group">
-                                  <label for="">Position Held:</label>
-                                  <input type="text" name="gau_position_held" id="" class="form-control">
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="">Email:</label>
-                                <input type="text" name="gau_email" id="" class="form-control">
-                            </div>
-                            </div>
-                        </div>
-                        </div> -->
+                      <div class="my-3"> <div class="row">
+        <div class="col-md-6">
+        <div class="form-group">
+            <label for=""> First Name:</label>
+            <input type="text" name="gau_first_name" id="" class="form-control">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+            <label for=""> Last Name:</label>
+            <input type="text" name="gau_last_name" id="" class="form-control">
+        </div>
+      </div>
+      <div class="col-md-6">
+          <div class="form-group">
+              <label for="">Phone:</label>
+              <input type="text" name="gau_phone" id="" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+              <label for="">Phone:</label>
+              <input type="text" name="gau_phone2" id="" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+              <label for="">Home Address:</label>
+              <input type="text" name="gau_home_address" id="" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+              <label for="">Office Address:</label>
+              <input type="text" name="gau_office_address" id="" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+              <label for="">Position Held:</label>
+              <input type="text" name="gau_position_held" id="" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-6">
+        <div class="form-group">
+            <label for="">Email:</label>
+            <input type="text" name="gau_email" id="" class="form-control">
+        </div>
+        </div>
+                </div>
+                </div>'
                       </div>
                     </div>
 
