@@ -13,7 +13,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     exit;
   }
   elseif($_SESSION["usertype"] == "staff"){
-    header("location: institutions/index.php");
+    header("location: mfi/index.php");
     exit;
   }
 }
@@ -86,10 +86,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             if ($stmt->num_rows ==1 && $_SESSION["usertype"] =="super_admin") {
                               header("location: index.php");
                             }elseif ($stmt->num_rows ==1 && $_SESSION["usertype"]=="admin"){
-                              header("location: ./insitution/admin/dashboard.php");
+                              header("location: ./mfi/admin/dashboard.php");
                             }
                             elseif ($stmt->num_rows ==1 && $_SESSION["usertype"]=="staff") {
-                              header("location: institutions/index.php");
+                              header("location: mfi/index.php");
                             }
                             elseif ($stmt->num_rows ==1 && $_SESSION["usertype"]=="super_staff") {
                                 header("location: ./modules/staff/dashboard.php");
