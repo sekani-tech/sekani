@@ -14,6 +14,7 @@ $r = $intr / 100;
 $gi = $r * $prina;
 $pd = $gi + $prina;
 $t = $loant;
+$mt = $t - 1;
 $EMI = ($gi + $prina) / $t;
 $tm = $rep;
 if ($tm == 'day') {
@@ -26,7 +27,7 @@ if ($tm == 'day') {
   echo 'error';
 }
 
-$formg = date('Y-m-d', strtotime($repay_start. ' + '.$t.' '.$tms.''));
+$formg = date('Y-m-d', strtotime($repay_start. ' + '.$mt.' '.$tms.''));
 $end_date = $formg;
 $date = $repay_start;
 
