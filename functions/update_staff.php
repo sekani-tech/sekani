@@ -34,7 +34,7 @@ if (isset($_POST['int_name']) && isset($_POST['usertype'])) {
         //                 }
         // }
         if ($res) {
-            echo header("location: ../institutions/users.php");
+            echo header("location: ../mfi/users.php");
         } else {
             echo "there is an error here";
         }

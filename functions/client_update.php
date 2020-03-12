@@ -49,7 +49,7 @@ EMAIL_ACTIVE = '$email_active', id_card = '$id_card', updated_by = '$updated_by'
 
 $result = mysqli_query($connection, $queryx);
 if($result) {
-    echo header("location: ../institutions/client.php");
+    echo header("location: ../mfi/client.php");
 } else {
     echo "there is an error here";
 }

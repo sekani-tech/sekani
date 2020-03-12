@@ -39,7 +39,7 @@ password, description, address, date_joined, org_role, phone, img) VALUES ('{$se
 $result = mysqli_query($connection, $qrys);
 
 if ($result) {
-    echo header("location: ../institutions/users.php");
+    echo header("location: ../mfi/users.php");
     exit;
 } else {
    echo "<p>Error</p>";

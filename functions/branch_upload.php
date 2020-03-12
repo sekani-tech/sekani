@@ -15,7 +15,7 @@ $query = "INSERT INTO branch (int_id, name, email, phone, location) VALUES ('{$s
 $result = mysqli_query($connection, $query);
 
 if ($result) {
-    echo header("location: ../institutions/branch.php");
+    echo header("location: ../mfi/branch.php");
 } else {
     echo "<p>Bad</p>";
 }

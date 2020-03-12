@@ -49,7 +49,7 @@ auto_disburse, linked_savings_acct) VALUES ('{$sessint_id}', '{$charge_id}', '{$
 $res = mysqli_query($connection, $query);
 
  if ($res) {
-    echo header("location: ../institutions/products.php");
+    echo header("location: ../mfi/products.php");
  } else {
      echo "<p>Error</p>";
  }

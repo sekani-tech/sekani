@@ -11,7 +11,7 @@ $location = $_POST['location'];
   location = '$location' WHERE id = '$id'";
   $result = mysqli_prepare($connection, $query);
   if(mysqli_stmt_execute($result)) {
-     echo header("location: ../institutions/branch.php");
+     echo header("location: ../mfi/branch.php");
     echo "<p>done</p>";
   } else {
       echo "nop";
