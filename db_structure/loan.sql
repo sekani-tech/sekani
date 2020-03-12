@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 12, 2020 at 01:53 PM
+-- Generation Time: Mar 12, 2020 at 07:24 PM
 -- Server version: 8.0.18
 -- PHP Version: 7.2.18
 
@@ -37,6 +37,8 @@ CREATE TABLE IF NOT EXISTS `loan` (
   `product_id` int(100) DEFAULT NULL,
   `fund_id` bigint(20) DEFAULT NULL,
   `col_id` int(100) DEFAULT NULL,
+  `col_name` varchar(30) DEFAULT NULL,
+  `col_description` longtext,
   `loan_officer` varchar(50) DEFAULT NULL,
   `loan_purpose` varchar(100) DEFAULT NULL,
   `currency_code` varchar(3) NOT NULL,
