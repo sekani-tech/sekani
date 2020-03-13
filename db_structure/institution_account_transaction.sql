@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 13, 2020 at 11:29 AM
--- Server version: 10.1.16-MariaDB
--- PHP Version: 7.0.9
+-- Host: 127.0.0.1:3306
+-- Generation Time: Mar 13, 2020 at 10:38 AM
+-- Server version: 8.0.18
+-- PHP Version: 7.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,7 +28,8 @@ SET time_zone = "+00:00";
 -- Table structure for table `institution_account_transaction`
 --
 
-CREATE TABLE `institution_account_transaction` (
+DROP TABLE IF EXISTS `institution_account_transaction`;
+CREATE TABLE IF NOT EXISTS `institution_account_transaction` (
   `id` int(100) NOT NULL,
   `int_id` int(100) NOT NULL,
   `branch_id` int(100) NOT NULL,
@@ -43,18 +46,25 @@ CREATE TABLE `institution_account_transaction` (
   `cumulative_balance_derived` decimal(19,6) DEFAULT NULL,
   `created_date` datetime NOT NULL,
   `appuser_id` bigint(20) DEFAULT NULL,
-  `manually_adjusted_or_reversed` tinyint(1) DEFAULT '0'
+  `manually_adjusted_or_reversed` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `int_id_intacct` (`int_id`),
+  KEY `brh_id_intacct` (`branch_id`),
+  KEY `client_id_intacct` (`client_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Indexes for dumped tables
+-- Constraints for dumped tables
 --
 
 --
--- Indexes for table `institution_account_transaction`
+-- Constraints for table `institution_account_transaction`
 --
 ALTER TABLE `institution_account_transaction`
-  ADD PRIMARY KEY (`id`);
+  ADD CONSTRAINT `brh_id_intacct` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`),
+  ADD CONSTRAINT `client_id_intacct` FOREIGN KEY (`client_id`) REFERENCES `client` (`id`),
+  ADD CONSTRAINT `int_id_intacct` FOREIGN KEY (`int_id`) REFERENCES `institutions` (`int_id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
