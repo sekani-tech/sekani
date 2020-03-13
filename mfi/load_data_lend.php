@@ -19,39 +19,39 @@ if(isset($_POST["id"]))
     {
         $output = '<div class="form-group">
         <label>Loan size:</label>
-        <input type="number" value="'.$row["principal_amount"].'" name="principal_amount" class="form-control" required id="principal_amount">
+        <input type="number" value="'.$row["principal_amount"].'" name="principal_amoun" class="form-control" required id="principal_amount">
       </div>
       <div class="form-group">
         <label>Loan Term:</label>
-        <input type="number" value="'.$row["loan_term"].'" name="loan_term" class="form-control" id="loan_term" />
+        <input type="number" value="'.$row["loan_term"].'" name="loan_ter" class="form-control" id="loan_term" />
       </div>
       <div class="form-group">
         <label>Interest Rate per:</label>
-        <input type="text" value="'.$row["repayment_every"].'" name="repay_every" class="form-control" id="repay">
+        <input type="text" value="'.$row["repayment_every"].'" name="repay_ever" class="form-control" id="repay">
       </div>
       <div class="form-group">
         <label>Interest Rate:</label>
-        <input type="number" value="'.$row["interest_rate"].'" name="interest_rate" class="form-control" id="interest_rate">
+        <input type="number" value="'.$row["interest_rate"].'" name="interest_rat" class="form-control" id="interest_rate">
       </div>
       <div class="form-group">
         <label>Disbursement Date:</label>
-        <input type="date" name="disbursement_date" class="form-control" id="disb_date">
+        <input type="date" name="disbursement_dat" class="form-control" id="disb_date">
       </div>
       <div class="form-group">
         <label>Loan Officer:</label>
-        <input type="text" value="" name="loan_officer" class="form-control" id="lof">
+        <input type="text" value="" name="loan_office" class="form-control" id="lof">
       </div>
       <div class="form-group">
         <label>Loan Purpose:</label>
-        <input type="text" value="" name="loan_purpose" class="form-control" id="lop">
+        <input type="text" value="" name="loan_purpos" class="form-control" id="lop">
       </div>
       <div class="form-group">
         <label>Linked Savings account:</label>
-        <input type="text" value="'.$row["linked_savings_acct"].'" name="linked_savings_acct" class="form-control" id="">
+        <input type="text" value="'.$row["linked_savings_acct"].'" name="linked_savings_acc" class="form-control" id="lsaa">
       </div>
       <div class="form-group">
         <label>Repayment Start Date:</label>
-        <input type="date" value="" name="repay_start" class="form-control" id="repay_start">
+        <input type="date" value="" name="repay_star" class="form-control" id="repay_start">
       </div>';
     }
     echo $output;
@@ -63,6 +63,107 @@ if(isset($_POST["id"]))
 ?>
 
 <script>
+$(document).ready(function() { 
+    $('#principal_amount').change(function() {
+      $('#ls').val($('#principal_amount').val());
+      $('#lt').val($('#loan_term').val());
+      $('#irp').val($('#repay').val());
+      $('#ir').val($('#interest_rate').val());
+      $('#db').val($('#disb_date').val());
+      $('#lo').val($('#lof').val());
+      $('#lp').val($('#lop').val());
+      $('#lsa').val($('#lsaa').val());
+      $('#rsd').val($('#repay_start').val());
+    });
+    $('#loan_term').change(function() {
+      $('#ls').val($('#principal_amount').val());
+      $('#lt').val($('#loan_term').val());
+      $('#irp').val($('#repay').val());
+      $('#ir').val($('#interest_rate').val());
+      $('#db').val($('#disb_date').val());
+      $('#lo').val($('#lof').val());
+      $('#lp').val($('#lop').val());
+      $('#lsa').val($('#lsaa').val());
+      $('#rsd').val($('#repay_start').val());
+    });
+    $('#repay').change(function() {
+      $('#ls').val($('#principal_amount').val());
+      $('#lt').val($('#loan_term').val());
+      $('#irp').val($('#repay').val());
+      $('#ir').val($('#interest_rate').val());
+      $('#db').val($('#disb_date').val());
+      $('#lo').val($('#lof').val());
+      $('#lp').val($('#lop').val());
+      $('#lsa').val($('#lsaa').val());
+      $('#rsd').val($('#repay_start').val());
+    });
+    $('#interest_rate').change(function() {
+      $('#ls').val($('#principal_amount').val());
+      $('#lt').val($('#loan_term').val());
+      $('#irp').val($('#repay').val());
+      $('#ir').val($('#interest_rate').val());
+      $('#db').val($('#disb_date').val());
+      $('#lo').val($('#lof').val());
+      $('#lp').val($('#lop').val());
+      $('#lsa').val($('#lsaa').val());
+      $('#rsd').val($('#repay_start').val());
+    });
+    $('#disb_date').change(function() {
+      $('#ls').val($('#principal_amount').val());
+      $('#lt').val($('#loan_term').val());
+      $('#irp').val($('#repay').val());
+      $('#ir').val($('#interest_rate').val());
+      $('#db').val($('#disb_date').val());
+      $('#lo').val($('#lof').val());
+      $('#lp').val($('#lop').val());
+      $('#lsa').val($('#lsaa').val());
+      $('#rsd').val($('#repay_start').val());
+    });
+    $('#lof').change(function() {
+      $('#ls').val($('#principal_amount').val());
+      $('#lt').val($('#loan_term').val());
+      $('#irp').val($('#repay').val());
+      $('#ir').val($('#interest_rate').val());
+      $('#db').val($('#disb_date').val());
+      $('#lo').val($('#lof').val());
+      $('#lp').val($('#lop').val());
+      $('#lsa').val($('#lsaa').val());
+      $('#rsd').val($('#repay_start').val());
+    });
+    $('#lop').change(function() {
+      $('#ls').val($('#principal_amount').val());
+      $('#lt').val($('#loan_term').val());
+      $('#irp').val($('#repay').val());
+      $('#ir').val($('#interest_rate').val());
+      $('#db').val($('#disb_date').val());
+      $('#lo').val($('#lof').val());
+      $('#lp').val($('#lop').val());
+      $('#lsa').val($('#lsaa').val());
+      $('#rsd').val($('#repay_start').val());
+    });
+    $('#lsaa').change(function() {
+      $('#ls').val($('#principal_amount').val());
+      $('#lt').val($('#loan_term').val());
+      $('#irp').val($('#repay').val());
+      $('#ir').val($('#interest_rate').val());
+      $('#db').val($('#disb_date').val());
+      $('#lo').val($('#lof').val());
+      $('#lp').val($('#lop').val());
+      $('#lsa').val($('#lsaa').val());
+      $('#rsd').val($('#repay_start').val());
+    });
+    $('#repay_start').change(function() {
+      $('#ls').val($('#principal_amount').val());
+      $('#lt').val($('#loan_term').val());
+      $('#irp').val($('#repay').val());
+      $('#ir').val($('#interest_rate').val());
+      $('#db').val($('#disb_date').val());
+      $('#lo').val($('#lof').val());
+      $('#lp').val($('#lop').val());
+      $('#lsa').val($('#lsaa').val());
+      $('#rsd').val($('#repay_start').val());
+    });
+});
       $(document).ready(function(){
         $('#repay_start').change(function(){
           console.log('changed');

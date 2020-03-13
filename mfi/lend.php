@@ -119,7 +119,7 @@ return $out;
                         <div class="my-3">
                           <div class="form-group">
                             <label>Type:</label>
-                            <select name=""class="form-control" id="collat">
+                            <select name="col_id"class="form-control" id="collat">
                               <option value="">select an option</option>
                               <?php echo fill_collateral($connection); ?>
                             </select>
@@ -230,35 +230,39 @@ return $out;
                           <!-- replace values with loan data -->
                           <div class="form-group">
                             <label>Loan size:</label>
-                            <input type="number" name="" class="form-control" required id="">
+                            <input type="number" value="" name="principal_amount" class="form-control" required id="ls">
                           </div>
                           <div class="form-group">
                             <label>Loan Term:</label>
-                            <input type="number" name="" class="form-control" />
+                            <input type="number" id="lt" name="loan_term" class="form-control" />
                           </div>
                           <div class="form-group">
-                            <label>Interest Rate (per month):</label>
-                            <input type="number" name="" class="form-control" id="">
+                           <label>Interest Rate per:</label>
+                         <input type="text" value="" name="repay_every" class="form-control" id="irp">
+                          </div>
+                          <div class="form-group">
+                            <label>Interest Rate:</label>
+                            <input type="number" name="interest_rate" class="form-control" id="ir">
                           </div>
                           <div class="form-group">
                             <label>Disbusrsement Date:</label>
-                            <input type="date" name="" class="form-control" id="">
+                            <input type="date" name="disbursement_date" class="form-control" id="db">
                           </div>
                           <div class="form-group">
                             <label>Loan Officer:</label>
-                            <input type="text" name="" class="form-control" id="">
+                            <input type="text" name="loan_officer" class="form-control" id="lo">
                           </div>
                           <div class="form-group">
                             <label>Loan Purpose:</label>
-                            <input type="text" name="" class="form-control" id="">
+                            <input type="text" name="loan_purpose" class="form-control" id="lp">
                           </div>
                           <div class="form-group">
                             <label>Linked Savings account:</label>
-                            <input type="text" name="" class="form-control" id="">
+                            <input type="text" name="linked_savings_acct" class="form-control" id="lsa">
                           </div>
                           <div class="form-group">
                             <label>Repayment Start Date:</label>
-                            <input type="date" name="" class="form-control" id="">
+                            <input type="date" name="repay_start" class="form-control" id="rsd">
                           </div>
                         </div>
                       </div>
