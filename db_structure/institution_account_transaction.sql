@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `institution_account_transaction` (
   `int_id` int(100) NOT NULL,
   `branch_id` int(100) NOT NULL,
   `client_id` int(100) NOT NULL,
-  `tansaction_id` varchar(20) NOT NULL,
+  `transaction_id` varchar(20) NOT NULL,
   `transaction_type` varchar(50) NOT NULL,
   `is_reversed` tinyint(1) NOT NULL,
   `transaction_date` date NOT NULL,
