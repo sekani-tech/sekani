@@ -26,7 +26,7 @@
                     <table class="table">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT users.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status FROM staff JOIN users ON users.id = staff.user_id WHERE users.int_id ='$sessint_id'";
+                        $query = "SELECT users.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id WHERE users.int_id ='$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -45,6 +45,7 @@
                           E-mail
                         </th>
                         <th>Active</th>
+                        <th>Employee Status</th>
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>
@@ -57,6 +58,7 @@
                           <th><?php echo $row["int_name"]; ?></th>
                           <th><?php echo $row["email"]; ?></th>
                           <th><?php echo $row["status"]; ?></th>
+                          <th><?php echo $row["employee_status"]; ?></th>
                           <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
                         <?php }
