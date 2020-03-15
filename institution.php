@@ -19,7 +19,7 @@
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> Registered institutions here</p>
+                   }?> Registered institutions here || <a href="create_institution.php">Create New Insitution</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
