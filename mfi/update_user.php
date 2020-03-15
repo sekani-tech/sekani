@@ -147,10 +147,10 @@ if (isset($_GET["edit"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Employee Status</label></br>
-                          <input type="radio" name="Employed" value="<?php echo $status; ?>">
-                            <label for="male">Employed</label><br>
-                            <input type="radio" name="Decommisioned" value="<?php echo $status; ?>">
-                            <label for="female">Decommisioned</label><br>
+                          <input type="radio" name="employee_status" value="Employed">
+                            <label style="color: black;">Employed</label><br>
+                            <input type="radio" name="employee_status" value="Decommisioned">
+                            <label style="color: black;">Decommisioned</label><br>
                         </div>
                       </div>
                     </div>

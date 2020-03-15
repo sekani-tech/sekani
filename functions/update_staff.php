@@ -11,6 +11,7 @@ if (isset($_POST['int_name']) && isset($_POST['usertype'])) {
     $email = $_POST['email'];
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
+    $status = $_POST['employee_status'];
     $phone = $_POST['phone'];
     $address = $_POST['address'];
     $date_joined = $_POST['date_joined'];
@@ -22,7 +23,7 @@ if (isset($_POST['int_name']) && isset($_POST['usertype'])) {
     $result = mysqli_query($connection, $query);
     if($result) {
         $sec = "UPDATE staff SET int_name = '$int_name', username = '$username', display_name = '$display_name', email = '$email',
-        first_name = '$first_name', last_name = '$last_name', phone = '$phone', address = '$address', date_joined = '$date_joined',
+        first_name = '$first_name', last_name = '$last_name', phone = '$phone', employee_status = '$status', address = '$address', date_joined = '$date_joined',
         org_role = '$org_role', img = '$img' WHERE id = '$staff_id'";
         $res = mysqli_query($connection, $sec);
         // if ($connection->error) {
