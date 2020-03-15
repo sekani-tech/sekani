@@ -1,6 +1,8 @@
 <?php
 // here i am going to add the connection
-include("connect.php");?>
+include("connect.php");
+session_start();
+?>
 <!-- another for inputting the data -->
 <?php
 $int_name = $_POST['int_name'];
@@ -17,6 +19,20 @@ $pc_other_name = $_POST['pc_other_name'];
 $pc_designation = $_POST['pc_designation'];
 $pc_phone = $_POST['pc_phone'];
 $pc_email = $_POST['pc_email'];
+// preparation of account number
+$sessint_id = $_SESSION["int_id"];
+$ldi = $_SESSION["user_id"];
+$inttest = str_pad($sessint_id, 3, '0', STR_PAD_LEFT);
+$usertest = str_pad($ldi, 3, '0', STR_PAD_LEFT);
+$digits = 4;
+$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$account_no = $inttest. "-" .$usertest. "-" .$randms;
+// done with account number preparation
+$submitted_on = date("Y-m-d");
+$currency = "NGN";
+
+
+
 $query = "INSERT INTO institutions (int_name, rcn, lga, int_state, email,
 office_address, website, office_phone, pc_title, pc_surname, pc_other_name,
 pc_designation, pc_phone, pc_email) VALUES ('{$int_name}','{$rcn}',
@@ -26,9 +42,33 @@ pc_designation, pc_phone, pc_email) VALUES ('{$int_name}','{$rcn}',
 // add
 $result = mysqli_query($connection, $query);
 if ($result) {
+    $verify = mysqli_query($connection, "SELECT * FROM institutions WHERE rcn = '$rcn'");
+    if (count([$verify]) == 1) {
+        $x = mysqli_fetch_array($verify);
+        $int_id = $x['int_id'];
+
+        $queryx = "INSERT INTO institution_account (int_id, account_no,
+    submittedon_date, submittedon_userid, currency_code) VALUES ('{$int_id}',
+    '{$account_no}', '{$submitted_on}', '{$ldi}', '{$currency}')";
+    $gogoo = mysqli_query($connection, $queryx);
+    if ($gogoo) {
+        echo header("Location: ../institution.php");
+    } else {
+        echo "oboy";
+    }
+    } else {
+        echo "no count";
+    }
+    // if ($connection->error) {
+    //     try {   
+    //         throw new Exception("MySQL error $connection->error <br> Query:<br> $queryx", $mysqli->error);   
+    //     } catch(Exception $e ) {
+    //         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+    //         echo nl2br($e->getTraceAsString());
+    //     }
+    // }
     // successfully inserted the data
     // header("Location: ../../manage_users.php");
-    echo header("Location: ../institution.php");
     exit;
 } else {
     // Display an error message

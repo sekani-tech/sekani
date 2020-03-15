@@ -6,6 +6,13 @@
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
+        <?php
+        if(isset($_GET["message"])) {
+          $key = $_GET["message"];
+        echo $_SESSION["Lack_of_intfund_$key"];
+        $_SESSION["lack_of_intfund_$key"] = null;
+        }
+        ?>
           <!-- your content here -->
           <div class="row">
             <div class="col-md-8">
@@ -242,7 +249,7 @@ return $out;
                           </div>
                           <div class="form-group">
                             <label>Interest Rate:</label>
-                            <input type="number" name="interest_rate" class="form-control" id="ir">
+                            <input type="text" name="interest_rate" class="form-control" id="ir">
                           </div>
                           <div class="form-group">
                             <label>Disbusrsement Date:</label>

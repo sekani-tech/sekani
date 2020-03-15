@@ -13,7 +13,13 @@
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Loans</h4>
                   <!-- Insert number users institutions -->
-                  <p class="card-category"><?php echo 0; ?> Active loans || <a href="lend.php">Lend Client</a></p>
+                  <p class="card-category"><?php
+                   $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
+                   $result = mysqli_query($connection, $query);
+                   if ($result) {
+                     $inr = mysqli_num_rows($result);
+                     echo $inr;
+                   }?> Active loans || <a href="lend.php">Lend Client</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -22,6 +28,10 @@
                         <!-- <th>
                           ID
                         </th> -->
+                        <?php
+                        $query = "SELECT loan.id, principal_amount_proposed, client.display_name, loan.interest_rate FROM loan JOIN client ON loan.int_id = client.int_id WHERE client.int_id ='$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
                         <th>Name</th>
                         <th>
                           Principal
@@ -31,9 +41,19 @@
                         </th>
                       </thead>
                       <tbody>
-                          <th></th>
-                          <th></th>
-                          <th></th>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                          <th><?php echo $row["display_name"]; ?></th>
+                          <th><?php echo $row["principal_amount_proposed"]; ?></th>
+                          <th><?php echo $row["interest_rate"]; ?></th>
+                          </tr>
+                          <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
                       </tbody>
                     </table>
                   </div>
