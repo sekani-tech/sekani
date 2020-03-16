@@ -72,7 +72,12 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
         $int_acct_bal = $x['account_balance_derived'];
         $calprinamt = $principal_amount;
         $acctprin = $int_acct_bal - $calprinamt;
-        if ($acctprin >= 0 ) {
+        $branchhl = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id'");
+                if (count([$branchhl]) == 1) {
+                    $yxx = mysqli_fetch_array($branchhl);
+                    $lsff = $yxx['loan_status'];
+                }
+        if ($acctprin >= 0 && $lsff == "Not Active") {
             $res = mysqli_query($connection, $query);
             if ($res) {
                 $brancl = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id'");
@@ -82,7 +87,7 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
                     $lsf = $yx['loan_status'];
                     // quick loan test
                     $pkn = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$client_id'");
-                    if (count([$pkn]) == 1 && $lsf == "Not Active") {
+                    if (count([$pkn]) == 1) {
                         $gf = mysqli_fetch_array($pkn);
                         $abd = $gf['account_balance_derived'];
                     // update institution account balance derived
@@ -199,7 +204,7 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
               header ("Location: ../mfi/lend.php?message=$randms");
             }
         } else {
-            $_SESSION["Lack_of_intfund_$randms"] = "Insufficent Fund From Institution Account!";
+            $_SESSION["Lack_of_intfund_$randms"] = "Insufficent Fund From Institution Account! OR This Client Has Been Given Loan Before";
             header ("Location: ../mfi/lend.php?message=$randms");
         }
 
