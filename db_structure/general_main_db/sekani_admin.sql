@@ -31,7 +31,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE IF NOT EXISTS `account` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
-  `int_id` int(100) DEFAULT NULL,
+  `int_id` int(100) DEFAULT '6' NULL,
   `branch_id` int(100) DEFAULT NULL,
   `account_no` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `account_type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `account_transaction` (
 DROP TABLE IF EXISTS `branch`;
 CREATE TABLE IF NOT EXISTS `branch` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
-  `int_id` int(100) DEFAULT NULL,
+  `int_id` int(100) DEFAULT '6' NULL,
   `name` varchar(200) DEFAULT NULL,
   `email` varchar(500) DEFAULT NULL,
   `phone` varchar(15) DEFAULT NULL,
@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `branch` (
 DROP TABLE IF EXISTS `charge`;
 CREATE TABLE IF NOT EXISTS `charge` (
   `id` int(100) NOT NULL,
-  `int_id` int(100) DEFAULT NULL,
+  `int_id` int(100) DEFAULT '6' NULL,
   `name` varchar(100) DEFAULT NULL,
   `currency_code` varchar(3) NOT NULL,
   `charge_applies_to_enum` smallint(5) NOT NULL,
@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `charge` (
 DROP TABLE IF EXISTS `client`;
 CREATE TABLE IF NOT EXISTS `client` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
-  `int_id` int(100) DEFAULT NULL,
+  `int_id` int(100) DEFAULT '6' NULL,
   `loan_officer_id` int(100) DEFAULT NULL,
   `loan_status` varchar(50) DEFAULT NULL,
   `branch_id` int(100) DEFAULT NULL,
@@ -248,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `client` (
 DROP TABLE IF EXISTS `collateral`;
 CREATE TABLE IF NOT EXISTS `collateral` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
-  `int_id` int(100) DEFAULT NULL,
+  `int_id` int(100) DEFAULT '6' NULL,
   `type` varchar(50) DEFAULT NULL,
   `value` varchar(100) DEFAULT NULL,
   `description` longtext,
@@ -291,7 +291,7 @@ CREATE TABLE IF NOT EXISTS `credit_check` (
 DROP TABLE IF EXISTS `funds`;
 CREATE TABLE IF NOT EXISTS `funds` (
   `id` int(100) NOT NULL,
-  `int_id` int(100) DEFAULT NULL,
+  `int_id` int(100) DEFAULT '6' NULL,
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -331,7 +331,7 @@ CREATE TABLE IF NOT EXISTS `institutions` (
 DROP TABLE IF EXISTS `institution_account`;
 CREATE TABLE IF NOT EXISTS `institution_account` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
-  `int_id` int(100) DEFAULT NULL,
+  `int_id` int(100) DEFAULT '6' NULL,
   `account_no` varchar(20) NOT NULL,
   `submittedon_date` date NOT NULL,
   `submittedon_userid` bigint(20) DEFAULT NULL,
@@ -424,7 +424,7 @@ CREATE TABLE IF NOT EXISTS `institution_account_transaction` (
 DROP TABLE IF EXISTS `loan`;
 CREATE TABLE IF NOT EXISTS `loan` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
-  `int_id` int(100) DEFAULT NULL,
+  `int_id` int(100) DEFAULT '6' NULL,
   `account_no` varchar(20) NOT NULL,
   `client_id` int(100) DEFAULT NULL,
   `product_id` int(100) DEFAULT NULL,
@@ -552,7 +552,7 @@ CREATE TABLE IF NOT EXISTS `loan` (
 DROP TABLE IF EXISTS `loan_gaurantor`;
 CREATE TABLE IF NOT EXISTS `loan_gaurantor` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
-  `int_id` int(100) DEFAULT NULL,
+  `int_id` int(100) DEFAULT '6' NULL,
   `loan_id` int(100) DEFAULT NULL,
   `client_id` int(100) DEFAULT NULL,
   `first_name` varchar(50) DEFAULT NULL,
@@ -578,7 +578,7 @@ CREATE TABLE IF NOT EXISTS `loan_gaurantor` (
 DROP TABLE IF EXISTS `loan_interest_port`;
 CREATE TABLE IF NOT EXISTS `loan_interest_port` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
-  `int_id` int(100) DEFAULT NULL,
+  `int_id` int(100) DEFAULT '6' NULL,
   `officer_id` int(100) DEFAULT NULL,
   `branch_id` int(100) DEFAULT NULL,
   `account_no` varchar(20) DEFAULT NULL,
@@ -596,7 +596,7 @@ CREATE TABLE IF NOT EXISTS `loan_interest_port` (
 DROP TABLE IF EXISTS `loan_principal_port`;
 CREATE TABLE IF NOT EXISTS `loan_principal_port` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
-  `int_id` int(100) DEFAULT NULL,
+  `int_id` int(100) DEFAULT '6' NULL,
   `officer_id` int(100) DEFAULT NULL,
   `branch_id` int(100) DEFAULT NULL,
   `account_no` varchar(20) DEFAULT NULL,
@@ -658,7 +658,7 @@ CREATE TABLE IF NOT EXISTS `loan_transaction` (
 
 DROP TABLE IF EXISTS `org_role`;
 CREATE TABLE IF NOT EXISTS `org_role` (
-  `int_id` int(100) DEFAULT NULL,
+  `int_id` int(100) DEFAULT '6' NULL,
   `role` varchar(200) DEFAULT NULL,
   `permission` int(11) DEFAULT NULL,
   KEY `int_id_row` (`int_id`)
@@ -673,7 +673,7 @@ CREATE TABLE IF NOT EXISTS `org_role` (
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE IF NOT EXISTS `product` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
-  `int_id` int(100) DEFAULT NULL,
+  `int_id` int(100) DEFAULT '6' NULL,
   `charge_id` int(100) DEFAULT NULL,
   `name` varchar(25) DEFAULT NULL,
   `short_name` varchar(25) DEFAULT NULL,
@@ -713,7 +713,7 @@ CREATE TABLE IF NOT EXISTS `product` (
 DROP TABLE IF EXISTS `staff`;
 CREATE TABLE IF NOT EXISTS `staff` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
-  `int_id` int(100) DEFAULT NULL,
+  `int_id` int(100) DEFAULT '6' NULL,
   `user_id` int(100) DEFAULT NULL,
   `int_name` varchar(50) DEFAULT NULL,
   `username` varchar(25) DEFAULT NULL,
