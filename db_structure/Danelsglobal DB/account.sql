@@ -1,3 +1,103 @@
+-- phpMyAdmin SQL Dump
+-- version 4.5.1
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Mar 16, 2020 at 03:11 PM
+-- Server version: 10.1.16-MariaDB
+-- PHP Version: 7.0.9
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `sekani_admin`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account`
+--
+
+CREATE TABLE `account` (
+  `id` int(100) NOT NULL,
+  `int_id` int(100) NOT NULL,
+  `branch_id` int(100) DEFAULT NULL,
+  `account_no` varchar(20) NOT NULL,
+  `account_type` varchar(50) DEFAULT NULL,
+  `client_id` int(100) DEFAULT NULL,
+  `product_id` int(100) DEFAULT NULL,
+  `field_officer_id` int(100) DEFAULT NULL,
+  `group_id` bigint(20) DEFAULT NULL,
+  `deposit_type_enum` smallint(5) NOT NULL DEFAULT '100',
+  `submittedon_date` date NOT NULL,
+  `submittedon_userid` bigint(20) DEFAULT NULL,
+  `approvedon_date` date DEFAULT NULL,
+  `approvedon_userid` bigint(20) DEFAULT NULL,
+  `currency_code` varchar(3) NOT NULL DEFAULT 'NGN',
+  `currency_digits` smallint(5) NOT NULL DEFAULT '2',
+  `activatedon_date` date DEFAULT NULL,
+  `activatedon_userid` bigint(20) DEFAULT NULL,
+  `closedon_date` date DEFAULT NULL,
+  `closedon_userid` bigint(20) DEFAULT NULL,
+  `currency_multiplesof` smallint(5) DEFAULT '2',
+  `nominal_annual_interest_rate` decimal(19,6) DEFAULT NULL,
+  `interest_compounding_period_enum` smallint(5) DEFAULT NULL,
+  `interest_posting_period_enum` smallint(5) NOT NULL DEFAULT '4',
+  `interest_calculation_type_enum` smallint(5) DEFAULT NULL,
+  `interest_calculation_days_in_year_type_enum` smallint(5) DEFAULT NULL,
+  `min_required_opening_balance` decimal(19,6) DEFAULT NULL,
+  `lockin_period_frequency` decimal(19,6) DEFAULT NULL,
+  `lockin_period_frequency_enum` smallint(5) DEFAULT NULL,
+  `withdrawal_fee_for_transfer` tinyint(4) DEFAULT '1',
+  `allow_overdraft` tinyint(1) NOT NULL DEFAULT '0',
+  `overdraft_limit` decimal(19,6) DEFAULT NULL,
+  `nominal_annual_interest_rate_overdraft` decimal(19,6) DEFAULT '0.000000',
+  `min_overdraft_for_interest_calculation` decimal(19,6) DEFAULT '0.000000',
+  `min_required_balance` decimal(19,6) DEFAULT NULL,
+  `min_balance_for_interest_calculation` decimal(19,6) DEFAULT NULL,
+  `lockedin_until_date_derived` date DEFAULT NULL,
+  `total_deposits_derived` decimal(19,6) DEFAULT NULL,
+  `total_withdrawals_derived` decimal(19,6) DEFAULT NULL,
+  `total_withdrawal_fees_derived` decimal(19,6) DEFAULT NULL,
+  `total_fees_charge_derived` decimal(19,6) DEFAULT NULL,
+  `total_penalty_charge_derived` decimal(19,6) DEFAULT NULL,
+  `total_annual_fees_derived` decimal(19,6) DEFAULT NULL,
+  `total_quarterly_fees_owed_derived` decimal(19,6) DEFAULT NULL,
+  `total_quarterly_fees_derived` decimal(19,6) DEFAULT NULL,
+  `total_interest_earned_derived` decimal(19,6) DEFAULT NULL,
+  `total_interest_posted_derived` decimal(19,6) DEFAULT NULL,
+  `total_overdraft_interest_derived` decimal(19,6) DEFAULT '0.000000',
+  `total_withhold_tax_derived` decimal(19,6) DEFAULT NULL,
+  `total_writtenoff_derived` decimal(19,6) DEFAULT NULL,
+  `enforce_min_required_balance` tinyint(1) NOT NULL DEFAULT '0',
+  `start_interest_calculation_date` date DEFAULT NULL,
+  `on_hold_funds_derived` decimal(19,6) DEFAULT NULL,
+  `version` int(15) NOT NULL DEFAULT '1',
+  `account_balance_derived` decimal(19,6) NOT NULL DEFAULT '0.000000',
+  `rejectedon_date` date DEFAULT NULL,
+  `rejectedon_userid` bigint(20) DEFAULT NULL,
+  `withdrawnon_date` date DEFAULT NULL,
+  `withdrawnon_userid` bigint(20) DEFAULT NULL,
+  `auto_renew_on_closure` tinyint(1) NOT NULL DEFAULT '0',
+  `withhold_tax` tinyint(4) NOT NULL DEFAULT '0',
+  `tax_group_id` bigint(20) DEFAULT NULL,
+  `last_interest_calculation_date` date DEFAULT NULL,
+  `last_activity_date` date DEFAULT NULL,
+  `last_quarterly_calculation_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `account`
+--
+
 INSERT INTO `account` (`id`, `int_id`, `branch_id`, `account_no`, `account_type`, `client_id`, `product_id`, `field_officer_id`, `group_id`, `deposit_type_enum`, `submittedon_date`, `submittedon_userid`, `approvedon_date`, `approvedon_userid`, `currency_code`, `currency_digits`, `activatedon_date`, `activatedon_userid`, `closedon_date`, `closedon_userid`, `currency_multiplesof`, `nominal_annual_interest_rate`, `interest_compounding_period_enum`, `interest_posting_period_enum`, `interest_calculation_type_enum`, `interest_calculation_days_in_year_type_enum`, `min_required_opening_balance`, `lockin_period_frequency`, `lockin_period_frequency_enum`, `withdrawal_fee_for_transfer`, `allow_overdraft`, `overdraft_limit`, `nominal_annual_interest_rate_overdraft`, `min_overdraft_for_interest_calculation`, `min_required_balance`, `min_balance_for_interest_calculation`, `lockedin_until_date_derived`, `total_deposits_derived`, `total_withdrawals_derived`, `total_withdrawal_fees_derived`, `total_fees_charge_derived`, `total_penalty_charge_derived`, `total_annual_fees_derived`, `total_quarterly_fees_owed_derived`, `total_quarterly_fees_derived`, `total_interest_earned_derived`, `total_interest_posted_derived`, `total_overdraft_interest_derived`, `total_withhold_tax_derived`, `total_writtenoff_derived`, `enforce_min_required_balance`, `start_interest_calculation_date`, `on_hold_funds_derived`, `version`, `account_balance_derived`, `rejectedon_date`, `rejectedon_userid`, `withdrawnon_date`, `withdrawnon_userid`, `auto_renew_on_closure`, `withhold_tax`, `tax_group_id`, `last_interest_calculation_date`, `last_activity_date`, `last_quarterly_calculation_date`) VALUES
 (1, 6, NULL, '0020000001', NULL, 2, 2, 13, NULL, 100, '2019-02-28', 32, '2019-02-28', 6, 'NGN', 2, '2019-02-28', NULL, NULL, NULL, NULL, '0.000000', 4, 4, 1, 365, '500.000000', '0.000000', 0, 0, 0, '0.000000', '0.000000', '0.000000', NULL, NULL, '2019-02-28', '500.000000', NULL, NULL, '2100.000000', NULL, NULL, NULL, NULL, '0.000000', NULL, NULL, NULL, NULL, 0, NULL, NULL, 18, '-1600.000000', NULL, NULL, NULL, NULL, 0, 0, NULL, '2019-09-28', '2019-02-28', NULL),
 (2, 6, NULL, '0020000002', NULL, 4, 3, 25, NULL, 100, '2019-03-06', 32, '2019-03-06', 6, 'NGN', 2, '2019-03-06', NULL, NULL, NULL, NULL, '0.000000', 1, 4, 1, 360, '500.000000', NULL, NULL, 0, 0, '0.000000', '0.000000', '0.000000', NULL, NULL, NULL, '500.000000', NULL, NULL, '1100.000000', NULL, NULL, NULL, NULL, '0.000000', NULL, NULL, NULL, NULL, 0, NULL, NULL, 16, '-600.000000', NULL, NULL, NULL, NULL, 0, 0, NULL, '2019-09-28', '2019-03-06', NULL),
@@ -485,3 +585,32 @@ INSERT INTO `account` (`id`, `int_id`, `branch_id`, `account_no`, `account_type`
 (485, 6, NULL, '0020000485', NULL, 408, 11, 25, NULL, 100, '2019-10-04', 8, '2019-10-04', 43, 'NGN', 2, '2019-10-04', NULL, NULL, NULL, NULL, '4.000000', 7, 7, 1, 365, '0.000000', '0.000000', 0, 0, 0, '0.000000', '0.000000', '0.000000', NULL, NULL, '2019-10-04', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000000', NULL, NULL, NULL, NULL, 0, NULL, NULL, 8, '0.000000', NULL, NULL, NULL, NULL, 0, 0, NULL, '2019-10-08', NULL, NULL),
 (486, 6, NULL, '0020000486', NULL, 389, 11, 24, NULL, 100, '2019-10-04', 43, NULL, NULL, 'NGN', 2, NULL, NULL, NULL, NULL, NULL, '4.000000', 7, 7, 1, 365, '0.000000', '0.000000', 0, 0, 0, '0.000000', '0.000000', '0.000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 2, '0.000000', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL),
 (487, 6, NULL, '0020000487', NULL, 409, 11, 25, NULL, 100, '2019-10-04', 43, NULL, NULL, 'NGN', 2, NULL, NULL, NULL, NULL, NULL, '4.000000', 7, 7, 1, 365, '0.000000', '0.000000', 0, 0, 0, '0.000000', '0.000000', '0.000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 2, '0.000000', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `account`
+--
+ALTER TABLE `account`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `int_id_acct` (`int_id`),
+  ADD KEY `client_id_acct` (`client_id`),
+  ADD KEY `branch_id_acct` (`branch_id`),
+  ADD KEY `product_id_acct` (`product_id`),
+  ADD KEY `field_officer_id_acct` (`field_officer_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `account`
+--
+ALTER TABLE `account`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=488;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -50,12 +50,12 @@ if ($result) {
 } else {
    echo "<p>Error</p>";
 }
-// if ($connection->error) {
-//     try {   
-//         throw new Exception("MySQL error $connection->error <br> Query:<br> $qrys", $msqli->errno);   
-//     } catch(Exception $e ) {
-//         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-//         echo nl2br($e->getTraceAsString());
-//     }
-// }
+if ($connection->error) {
+    try {   
+        throw new Exception("MySQL error $connection->error <br> Query:<br> $qrys", $msqli->errno);   
+    } catch(Exception $e ) {
+        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+        echo nl2br($e->getTraceAsString());
+    }
+}
 ?>
