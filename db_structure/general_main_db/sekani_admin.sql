@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `branch` (
   `location` longtext,
   PRIMARY KEY (`id`),
   KEY `branch_int_id` (`int_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -254,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `collateral` (
   `description` longtext,
   PRIMARY KEY (`id`),
   KEY `int_id_collateral` (`int_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -294,7 +294,7 @@ CREATE TABLE IF NOT EXISTS `funds` (
   `int_id` int(100) DEFAULT NULL,
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -305,13 +305,13 @@ CREATE TABLE IF NOT EXISTS `funds` (
 DROP TABLE IF EXISTS `institutions`;
 CREATE TABLE IF NOT EXISTS `institutions` (
   `int_id` int(100) NOT NULL AUTO_INCREMENT,
-  `int_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `int_name` varchar(50) CHARACTER SET utf8mb4 DEFAULT NULL,
   `rcn` varchar(25) DEFAULT NULL,
-  `int_state` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `int_state` varchar(25) CHARACTER SET utf8mb4 DEFAULT NULL,
   `lga` varchar(25) DEFAULT NULL,
   `office_address` longtext,
   `office_phone` varchar(25) DEFAULT NULL,
-  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL,
   `website` varchar(50) DEFAULT NULL,
   `pc_title` varchar(10) DEFAULT NULL,
   `pc_surname` varchar(25) DEFAULT NULL,
@@ -320,7 +320,7 @@ CREATE TABLE IF NOT EXISTS `institutions` (
   `pc_phone` varchar(25) DEFAULT NULL,
   `pc_email` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`int_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -567,7 +567,7 @@ CREATE TABLE IF NOT EXISTS `loan_gaurantor` (
   KEY `int_id_gau` (`int_id`),
   KEY `loan_id_gau` (`loan_id`),
   KEY `client_id_gau` (`client_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -585,7 +585,7 @@ CREATE TABLE IF NOT EXISTS `loan_interest_port` (
   `client_id` int(100) DEFAULT NULL,
   `interest_amount` decimal(16,9) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -603,7 +603,7 @@ CREATE TABLE IF NOT EXISTS `loan_principal_port` (
   `client_id` int(100) DEFAULT NULL,
   `principal_amount` decimal(16,9) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -662,7 +662,7 @@ CREATE TABLE IF NOT EXISTS `org_role` (
   `role` varchar(200) DEFAULT NULL,
   `permission` int(11) DEFAULT NULL,
   KEY `int_id_row` (`int_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -698,11 +698,11 @@ CREATE TABLE IF NOT EXISTS `product` (
   `auto_allocate_overpayment` varchar(50) DEFAULT NULL,
   `additional_charge` varchar(50) DEFAULT NULL,
   `auto_disburse` varchar(50) DEFAULT NULL,
-  `linked_savings_acct` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `linked_savings_acct` varchar(50) CHARACTER SET utf8mb4 DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `product_charge_id` (`charge_id`),
   KEY `product_int_id` (`int_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -731,7 +731,7 @@ CREATE TABLE IF NOT EXISTS `staff` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`),
   KEY `int_id_staff` (`int_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -745,8 +745,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `int_id` int(50) DEFAULT NULL,
   `username` varchar(25) DEFAULT NULL,
   `fullname` varchar(50) DEFAULT NULL,
-  `password` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `usertype` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `password` varchar(500) DEFAULT NULL,
+  `usertype` varchar(25)  DEFAULT NULL,
   `status` varchar(10) DEFAULT NULL,
   `last_logged` timestamp NULL DEFAULT NULL,
   `time_created` date DEFAULT NULL,
@@ -754,7 +754,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   KEY `int_id_users` (`int_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 --
 -- Constraints for dumped tables
