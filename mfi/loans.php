@@ -14,10 +14,10 @@
                   <h4 class="card-title ">Loans</h4>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT client.id, principal_amount_proposed, client.display_name, loan.interest_rate FROM loan JOIN client ON loan.int_id = client.int_id WHERE client.int_id ='$sessint_id' && client.loan_status = 'Active'";
-                   $result = mysqli_query($connection, $query);
-                   if ($result) {
-                     $inr = mysqli_num_rows($result);
+                   $query = "SELECT client.id, principal_amount_proposed, client.display_name, loan.interest_rate FROM loan JOIN client ON loan.client_id = client.id WHERE client.int_id ='$sessint_id' && client.loan_status = 'Active'";
+                   $resultx = mysqli_query($connection, $query);
+                   if ($resultx) {
+                     $inr = mysqli_num_rows($resultx);
                      echo $inr;
                    }?> Active loans || <a href="lend.php">Lend Client</a></p>
                 </div>
@@ -29,7 +29,7 @@
                           ID
                         </th> -->
                         <?php
-                        $query = "SELECT client.id, principal_amount_proposed, client.display_name, loan.interest_rate FROM loan JOIN client ON loan.int_id = client.int_id WHERE client.int_id ='$sessint_id' && client.loan_status = 'Active'";
+                        $query = "SELECT client.id, principal_amount_proposed, client.display_name, loan.interest_rate FROM loan JOIN client ON loan.client_id = client.id WHERE client.int_id ='$sessint_id' && client.loan_status = 'Active'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>Name</th>
