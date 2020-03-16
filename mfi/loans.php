@@ -29,7 +29,7 @@
                           ID
                         </th> -->
                         <?php
-                        $query = "SELECT client.id, principal_amount_proposed, client.display_name, loan.interest_rate FROM loan JOIN client ON loan.client_id = client.id WHERE client.int_id ='$sessint_id' && client.loan_status = 'Active'";
+                        $query = "SELECT client.id, principal_amount, client.display_name, loan.interest_rate FROM loan JOIN client ON loan.client_id = client.id WHERE client.int_id ='$sessint_id' && client.loan_status = 'Active'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>Name</th>
@@ -49,7 +49,7 @@
                         <tr>
                         <?php $row["id"]; ?>
                           <th><?php echo $row["display_name"]; ?></th>
-                          <th><?php echo $row["principal_amount_proposed"]; ?></th>
+                          <th><?php echo $row["principal_amount"]; ?></th>
                           <th><?php echo $row["interest_rate"]; ?></th>
                           <td><a href="loan_collection.php?loancoll=<?php echo $row["id"];?>" class="btn btn-info">Collect</a></td>
                           </tr>
