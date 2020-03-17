@@ -64,7 +64,7 @@
                         <?php }
                           }
                           else {
-                            // echo "0 Document";
+                            echo "0 Staff";
                           }
                           ?>
                       </tbody>

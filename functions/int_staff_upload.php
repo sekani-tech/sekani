@@ -33,8 +33,8 @@ $row = mysqli_fetch_array($res);
 $ui = $row["id"];
  if ($res) {
     $qrys = "INSERT INTO staff (int_id, user_id, int_name, username, display_name, email, first_name, last_name,
-password, description, address, date_joined, org_role, phone, img) VALUES ('{$sessint_id}', '{$ui}', '{$int_n}', '{$username}', '{$display_name}', '{$email}',
-'{$first_name}', '{$last_name}', '{$hash}', '{$description}', '{$address}', '{$date_joined}', '{$org_role}', '{$phone}', '{$img}')";
+description, address, date_joined, org_role, phone, img) VALUES ('{$sessint_id}', '{$ui}', '{$int_n}', '{$username}', '{$display_name}', '{$email}',
+'{$first_name}', '{$last_name}', '{$description}', '{$address}', '{$date_joined}', '{$org_role}', '{$phone}', '{$img}')";
 
 $result = mysqli_query($connection, $qrys);
 
