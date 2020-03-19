@@ -119,14 +119,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         '{$trans_date}', '{$trans_amt}', '{$running_b}', '{$trans_amt}',
         '{$created_date}', '{$appuser_id}')";
         $res3 = mysqli_query($connection, $iat);
-        if ($connection->error) {
-          try {
-              throw new Exception("MYSQL error $connection->error <br> $iat ", $mysqli->error);
-          } catch (Exception $e) {
-              echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
-              echo n12br($e->getTraceAsString());
-          }
-      }
+      //   if ($connection->error) {
+      //     try {
+      //         throw new Exception("MYSQL error $connection->error <br> $iat ", $mysqli->error);
+      //     } catch (Exception $e) {
+      //         echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
+      //         echo n12br($e->getTraceAsString());
+      //     }
+      // }
         // we insert to priciapl portfolio
         if ($res3) {
           // we insert to interest portfolio
