@@ -3,6 +3,9 @@
     include("header.php");
 
 ?>
+
+<!-- <link href="vendor/css/addons/datatables.min.css" rel="stylesheet">
+<script type="text/javascript" src="vendor/js/addons/datatables.min.js"></script> -->
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -23,7 +26,7 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table">
+                    <table id="" class="table">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT users.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id";
@@ -32,19 +35,21 @@
                         <!-- <th>
                           ID
                         </th> -->
-                        <th>
+                        <tr>
+                        <th class="th-sm">
                           Display Name
                         </th>
-                        <th>
+                        <th class="th-sm">
                           Username
                         </th>
-                        <th>
+                        <th class="th-sm">
                           Insitution
                         </th>
-                        <th>
+                        <th class="th-sm">
                           E-mail
                         </th>
-                        <th>Active</th>
+                        <th class="th-sm">Active</th>
+                        </tr>
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>

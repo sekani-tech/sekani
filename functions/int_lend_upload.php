@@ -64,7 +64,6 @@ disbursedon_userid, repay_principal_every, repay_interest_every) VALUES ('{$sess
 // stopped at principal amount
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-
 // first test client loan status then test the running balance in the institution acct.
 $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id'");
     if (count([$verify]) == 1) {
