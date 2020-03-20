@@ -66,7 +66,7 @@ $res = mysqli_query($connection, $qrys);
 $row = mysqli_fetch_array($res);
 $ui = $row["id"];
  if ($res) {
-    $qrys = "INSERT INTO staff (int_id, int_name user_id, username, display_name, email, first_name, last_name,
+    $qrys = "INSERT INTO staff (int_id, int_name, user_id, username, display_name, email, first_name, last_name,
 description, address, date_joined, org_role, phone) VALUES ('{$inst_id}', '{$int_name}', '{$ui}', '{$username}', '{$display_name}', '{$email}',
 '{$first_name}', '{$last_name}', '{$description}', '{$address}', '{$date_joined}', '{$org_role}', '{$phone}')";
 
