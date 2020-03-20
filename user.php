@@ -67,11 +67,18 @@ $row = mysqli_fetch_array($res);
 $ui = $row["id"];
  if ($res) {
     $qrys = "INSERT INTO staff (int_id, int_name user_id, username, display_name, email, first_name, last_name,
-description, address, date_joined, org_role, phone, img) VALUES ('{$inst_id}', '{$int_name}', '{$ui}', '{$username}', '{$display_name}', '{$email}',
-'{$first_name}', '{$last_name}', '{$description}', '{$address}', '{$date_joined}', '{$org_role}', '{$phone}', '{$image3}')";
+description, address, date_joined, org_role, phone) VALUES ('{$inst_id}', '{$int_name}', '{$ui}', '{$username}', '{$display_name}', '{$email}',
+'{$first_name}', '{$last_name}', '{$description}', '{$address}', '{$date_joined}', '{$org_role}', '{$phone}')";
 
 $result = mysqli_query($connection, $qrys);
-
+if ($connection->error) {
+  try {
+      throw new Exception("MYSQL error $connection->error <br> $qrys ", $mysqli->error);
+  } catch (Exception $e) {
+      echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
+      echo n12br($e->getTraceAsString());
+  }
+}
 if ($result) {
   $URL="users.php";
   echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
