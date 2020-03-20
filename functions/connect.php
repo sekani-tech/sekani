@@ -10,6 +10,7 @@ define('DB_NAME', 'sekani_admin');
 // define('DB_PASSWORD', 'password');
 // define('DB_CHARSET', 'utf8');
 // define('DB_NAME', 'sekani_admin');
+// alright
 
 $connection = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
