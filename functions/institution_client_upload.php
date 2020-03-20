@@ -137,12 +137,22 @@ if ($connection->error) {
         }
     }
     // Email function section 
-$to = "hesanmal316@gmail.com";
+$to = $email;
 $subject = "Login Successful";
 
+echo "<!DOCTYPE html>
+<head>
+<link rel='./dfhk'></link>
+</head>
+</html>";
 $message = "
 <!DOCTYPE HTML>
 <html>
+    <head>
+    <link rel=\"stylesheet\" type=\"text/css\" href=\"https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons\" />
+  <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css\">
+  <link href=\"assets/css/material-dashboard.css?v=2.1.1\" rel=\"stylesheet\" />
+    </head>
 	<body>
 		<div class=\"card\">
                 <div class=\"card-header card-header-primary\">
