@@ -3,7 +3,7 @@ define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'sekanisy');
 define('DB_PASSWORD', '4r6WY#JP+rnl67');
 define('DB_CHARSET', 'utf8');
-define('DB_NAME', 'sekani_admin');
+define('DB_NAME', 'sekanisy_admin');
 // test
 // define('DB_SERVER', 'localhost');
 // define('DB_USERNAME', 'root');
