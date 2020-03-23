@@ -12,6 +12,11 @@
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Clients</h4>
+                  <script>
+                  $(document).ready(function() {
+                  $('#example').DataTable();
+                  });
+                  </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
                    $query = "SELECT * FROM client WHERE int_id = '$sessint_id'";
@@ -23,7 +28,7 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table">
+                    <table id="example" class="table table-striped table-bordered" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM client WHERE int_id ='$sessint_id'";
@@ -45,8 +50,8 @@
                           Phone
                         </th>
                         <th>Active Loan</th>
-                        <th>Actions</th>
-                        <th> </th>
+                        <th>View</th>
+                        <th>Edit </th>
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>

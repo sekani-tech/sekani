@@ -93,7 +93,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             if ($stmt->num_rows ==1 && $_SESSION["usertype"] =="super_admin") {
                               header("location: index.php");
                             }elseif ($stmt->num_rows ==1 && $_SESSION["usertype"]=="admin"){
-                                header("location: index.php");
+                                header("location: mfi/index.php");
                             //   header("location: ./mfi/admin/dashboard.php");
                             }
                             elseif ($stmt->num_rows ==1 && $_SESSION["usertype"]=="staff") {
