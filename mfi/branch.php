@@ -23,7 +23,12 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table">
+                  <script>
+                  $(document).ready(function() {
+                  $('#tabledat4').DataTable();
+                  });
+                  </script>
+                    <table id="tabledat4" class="table">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM branch WHERE int_id ='$sessint_id'";
@@ -38,6 +43,9 @@
                         </th>
                         <th>
                           Location
+                        </th>
+                        <th>
+                          Edit
                         </th>
                       </thead>
                       <tbody>

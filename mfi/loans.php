@@ -22,8 +22,13 @@
                    }?> Active loans || <a href="lend.php">Lend Client</a></p>
                 </div>
                 <div class="card-body">
+                <script>
+                  $(document).ready(function() {
+                  $('#tabledat3').DataTable();
+                  });
+                  </script>
                   <div class="table-responsive">
-                    <table class="table">
+                    <table id="tabledat3" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                         <!-- <th>
                           ID

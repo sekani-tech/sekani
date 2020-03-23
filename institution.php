@@ -23,7 +23,12 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table">
+                  <script>
+                  $(document).ready(function() {
+                  $('#tabledat5').DataTable();
+                  });
+                  </script>
+                    <table id="tabledat5" class="table">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM institutions";
@@ -46,6 +51,8 @@
                         </th>
                         <th>P. Contact</th>
                         <th>Phone</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
