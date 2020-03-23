@@ -138,6 +138,7 @@ if(isset($_GET["edit"])) {
                     <a href="lend.php" class="btn btn-primary">Disburse Loan</a>
                     <a href="#" class="btn btn-primary">Generate Account Report</a>
                     <a href="update_client.php?edit=<?php echo $id;?>" class="btn btn-primary">Edit CLient</a>
+                    <a href="client.php" class="btn btn-primary pull-right">Back</a>
                   </form>
                 </div>
               </div>
