@@ -14,7 +14,7 @@
                   <h4 class="card-title ">Clients</h4>
                   <script>
                   $(document).ready(function() {
-                  $('#example').DataTable();
+                  $('#tabledat').DataTable();
                   });
                   </script>
                   <!-- Insert number users institutions -->
@@ -28,7 +28,7 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table id="example" class="table" style="width:100%">
+                    <table id="tabledat" class="table" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM client WHERE int_id ='$sessint_id'";
