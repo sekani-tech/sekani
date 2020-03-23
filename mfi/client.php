@@ -28,7 +28,7 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <table id="example" class="table" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM client WHERE int_id ='$sessint_id'";
