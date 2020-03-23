@@ -75,6 +75,11 @@ input:checked + .slider:before {
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Users</h4>
                   <!-- Insert number users institutions -->
+                  <script>
+                  $(document).ready(function() {
+                  $('#tabledat2').DataTable();
+                  });
+                  </script>
                   <p class="card-category"><?php
                    $query = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
                    $result = mysqli_query($connection, $query);
@@ -85,7 +90,7 @@ input:checked + .slider:before {
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table">
+                    <table id="tabledat2" class="table" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT users.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id WHERE users.int_id ='$sessint_id'";
@@ -108,6 +113,8 @@ input:checked + .slider:before {
                         </th>
                         <th>Active</th>
                         <th>Employee Status</th>
+                        <th>Action</th>
+                        <th>Edit</th>
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>

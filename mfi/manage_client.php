@@ -134,7 +134,7 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="">Country:</label>
-                      <input type="text" class="form-control" name="country">
+                      <input type="text" value="NIGERIA" class="form-control" name="country">
                     </div>
                   </div>
                   <div class="col-md-4">
