@@ -44,3 +44,19 @@ if (isset($_POST['int_name']) && isset($_POST['usertype'])) {
     }
 }
 ?>
+<?php
+if (isset($_POST['employee_status']) && ($_POST['employee_status'] == "Employed")) {
+  $employee = "Decomisioned";
+ } else {
+  $employee = "Employed";
+ }
+ 
+  $query = "UPDATE staff SET employee_status = $employee WHERE id = '$user_id'";
+  
+  $form = mysqli_query($connection, $query);
+  if ($form) {
+    echo header("location: ../mfi/users.php");
+  } else {
+    echo "there is an error here";
+  }
+?>
