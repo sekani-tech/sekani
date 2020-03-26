@@ -218,7 +218,7 @@ if(isset($_GET["edit"])) {
                                 <span class="btn btn-raised btn-round btn-default btn-file">
                                     <span class="fileinput-new">Select passport</span>
                                     <span class="fileinput-exists">Change</span>
-                                    <input type="file" name="passport" />
+                                    <input type="file" name="passport" id="passport" />
                                 </span>
                                 <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                             </div>
@@ -260,7 +260,7 @@ if(isset($_GET["edit"])) {
                                 <span class="btn btn-raised btn-round btn-default btn-file">
                                     <span class="fileinput-new">Select Image ID</span>
                                     <span class="fileinput-exists">Change</span>
-                                    <input type="file" name="id_img_url" />
+                                    <input type="file" name="idimg" />
                                 </span>
                                 <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                             </div>
