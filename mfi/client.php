@@ -24,7 +24,7 @@
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> registered clients || <a href="manage_client.php">Create New client</a></p>
+                   }?> registered clients || <a style = "color: white;" href="manage_client.php">Create New client</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
