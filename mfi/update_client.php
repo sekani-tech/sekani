@@ -1,6 +1,7 @@
 <?php
 
 $page_title = "Edit Client";
+$destination = "client.php";
     include("header.php");
 
 ?>

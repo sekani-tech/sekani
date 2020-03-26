@@ -1,6 +1,7 @@
 <?php
 
 $page_title = "Users";
+$destination = "index.php";
     include("header.php");
 
 ?>

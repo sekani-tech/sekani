@@ -59,14 +59,17 @@ $rezz = mysqli_query($connection, $activeq);
 
       Tip 2: you can also add an image using data-image tag
   -->
-      <!-- <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-          CT
-        </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
-        </a>
-      </div> -->
+      <div class="logo">
+        <div class="col-xs-2">
+          <div class="card-profile">
+            <div class="card-avatar">
+                  <a href="#pablo">
+                    <img class="img" src="../assets/img/faces/dpr.jpg" />
+                  </a>
+                </div>
+          </div>
+        </div>
+      </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="nav-item">
@@ -79,6 +82,12 @@ $rezz = mysqli_query($connection, $activeq);
             <a class="nav-link" href="client.php">
               <i class="material-icons">people</i>
               <p>Client</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="transact.php">
+              <i class="material-icons">account_balance_wallet</i>
+              <p>Transaction</p>
             </a>
           </li>
           <li class="nav-item">
@@ -115,7 +124,19 @@ $rezz = mysqli_query($connection, $activeq);
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <!-- <a class="navbar-brand" href="#pablo">Dashboard</a> -->
+            <?php
+              if($page_title == "Dashboard"){
+            ?>
+            <!-- <a class="btn btn-primary" href="#pablo"><i class="fa fa-caret-left"></i> Back</a> -->
+            <?php
+              }else{            ?>
+
+              <a class="btn btn-primary" href="<?php echo $destination ?>"><i class="fa fa-caret-left"></i> Back</a>
+              
+              <?php
+                }
+              ?>
+          
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>

@@ -1,6 +1,7 @@
 <?php
 
 $page_title = "Create User";
+$destination = "users.php";
     include("header.php");
 ?>
 <?php

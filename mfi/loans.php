@@ -1,6 +1,7 @@
 <?php
 
 $page_title = "Loans";
+$destination = "index.php";
     include("header.php");
 
 ?>

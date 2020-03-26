@@ -2,6 +2,7 @@
 <?php
 
 $page_title = "New Client";
+$destination = "client.php";
 include("header.php");
 
 ?>

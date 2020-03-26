@@ -1,6 +1,7 @@
 <?php
 
 $page_title = "New Product";
+$destination = "products.php";
     include("header.php");
 
 ?>
