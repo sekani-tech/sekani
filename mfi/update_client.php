@@ -164,13 +164,15 @@ if(isset($_GET["edit"])) {
                         </div>
                       </div>
                       <div class="col-md-4">
-                        <label for="">State:</label>
-                        <input type="text" value="<?php echo $state; ?>" name="state" class="form-control" id="">
-                      </div>
-                      <div class="col-md-4">
-                        <label for="">LGA:</label>
-                        <input type="text" value="<?php echo $lga; ?>" name="lga" class="form-control">
-                      </div>
+                    <div class="form-group">
+                      <label for="">State:</label>
+                      <select class="form-control" name="state" id="selState" onchange="configureDropDownLists()">
+                      </select>
+                      <label for="">LGA:</label>
+                      <select  class="form-control"name="lga" id="selCity">
+                      </select>
+                    </div>
+                  </div>
                       <div class="col-md-4">
                         <label for="">BVN:</label>
                         <input type="text" value="<?php echo $bvn; ?>" name="bvn" class="form-control" id="">
