@@ -186,6 +186,14 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
                         echo "bad on update client loan status";
                     }
                     } else {
+                        if ($connection->error) {
+                    try {
+                    throw new Exception("MYSQL error $connection->error <br> $iat ", $mysqli->error);
+                    } catch (Exception $e) {
+                    echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
+                    echo n12br($e->getTraceAsString());
+                    }
+                }
                         echo "bad on institution account transaction";
                     }
                     } else {
