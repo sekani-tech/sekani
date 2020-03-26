@@ -144,7 +144,7 @@ include('functions/config.php');
                     <div class="card">
                         <div class="card-header card-header-primary">
                         <h4 class="card-title">Login</h4>
-                        <p class="card-category">Sign in to tour profile</p>
+                        <p class="card-category">Sign in</p>
                         </div>
                         <div class="card-body">
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">

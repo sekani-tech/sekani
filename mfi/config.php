@@ -1,5 +1,7 @@
 <?php
 
+$page_title = "Branch";
+$destination = "index.php";
     include("header.php");
 
 ?>

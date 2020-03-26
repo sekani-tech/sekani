@@ -23,8 +23,8 @@ include("header.php");
                               <div class="row">
                                   <div class="col-md-4">
                                       <div class="form-group">
-                                         <label class="bmd-label-floating">Name</label>
-                                         <input type="text" class="form-control" name="name" value="Sanusi Suen">
+                                         <label class="bmd-label-floating">Account Number</label>
+                                         <input type="text" class="form-control" name="accno" value="Sanusi Suen">
                                       </div>
                                   </div>
                                   <div class="col-md-4">
@@ -58,7 +58,7 @@ include("header.php");
                               <div class="row">
                                   <div class="col-md-4">
                                       <div class="form-group">
-                                         <label class="bmd-label-floating">Name</label>
+                                         <label class="bmd-label-floating">Account No</label>
                                          <input type="text" class="form-control" name="name" value="Sanusi Suen">
                                       </div>
                                   </div>
