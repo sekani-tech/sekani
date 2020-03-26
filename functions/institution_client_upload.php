@@ -8,13 +8,13 @@ $sessint_id = $_SESSION["int_id"];
 $loan_officer_id = $_SESSION["user_id"];
 $ctype = $_POST['ctype'];
 $acct_type = $_POST['acct_type'];
+$branch = $_POST['branch'];
 $display_name = $_POST['display_name'];
 // an account number generation
- $inttest = str_pad($sessint_id, 3, '0', STR_PAD_LEFT);
-$usertest = str_pad($loan_officer_id, 3, '0', STR_PAD_LEFT);
-$digits = 3;
+ $inttest = str_pad($branch, 4, '0', STR_PAD_LEFT);
+$digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-$account_no = $inttest. "-" .$usertest. "-" .$randms;
+$account_no = $inttest. "-" .$randms;
 // auto calculation for the account number generation
 $first_name = $_POST['firstname'];
 $last_name = $_POST['lastname'];
@@ -25,7 +25,6 @@ $email = $_POST['email'];
 $address = $_POST['address'];
 $gender = $_POST['gender'];
 $date_of_birth = $_POST['date_of_birth'];
-$branch = $_POST['branch'];
 $country = $_POST['country'];
 $state = $_POST['state'];
 $lga = $_POST['lga'];
