@@ -34,6 +34,31 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
         $email_active = 0;
     }    
     $id_card = $_POST['id_card'];
+    // a new stuff for data upload
+$image1 = $_FILES['signature']['name'];
+$target1 = "clients/".basename($image1);
+
+$image2 = $_FILES['idimg']['name'];
+$target2 = "clients/".basename($image2);
+
+$image3 = $_FILES['passport']['name'];
+$target3 = "clients/".basename($image3);
+
+if (move_uploaded_file($_FILES['signature']['tmp_name'], $target1)) {
+    $msg = "Image uploaded successfully";
+}else{
+    $msg = "Failed to upload image";
+}
+if (move_uploaded_file($_FILES['idimg']['tmp_name'], $target2)) {
+    $msg = "Image uploaded successfully";
+}else{
+    $msg = "Failed to upload image";
+}
+if (move_uploaded_file($_FILES['passport']['tmp_name'], $target3)) {
+    $msg = "Image uploaded successfully";
+}else{
+    $msg = "Failed to upload image";
+}
     // $passport =$_POST['passport'];
     // $signature = $_POST['signature'];
     // $id_img_url = $_POST['id_img_url'];
@@ -45,7 +70,8 @@ firstname = '$first_name', lastname= '$last_name', middlename = '$middle_name',
 mobile_no = '$phone', mobile_no_2 = '$phone2', ADDRESS = '$address', gender = '$gender',
 date_of_birth = '$date_of_birth', branch_id = '$branch', COUNTRY = '$country', STATE_OF_ORIGIN = '$state',
 LGA = '$lga', BVN = '$bvn', SMS_ACTIVE = '$sms_active',
-EMAIL_ACTIVE = '$email_active', id_card = '$id_card', updated_by = '$updated_by', updated_on = '$updated_on' WHERE id = '$id'";
+EMAIL_ACTIVE = '$email_active', id_card = '$id_card', updated_by = '$updated_by', updated_on = '$updated_on',
+id_img_url = '$image2', passport = '$image3', signature = '$image1' WHERE id = '$id'";
 
 $result = mysqli_query($connection, $queryx);
 if($result) {
