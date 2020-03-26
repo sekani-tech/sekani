@@ -1,5 +1,6 @@
 <?php
 
+$page_title = "Create Branch";
     include("header.php");
 
 ?>

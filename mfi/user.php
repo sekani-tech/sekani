@@ -1,5 +1,6 @@
 <?php
 
+$page_title = "Create User";
     include("header.php");
 ?>
 <?php

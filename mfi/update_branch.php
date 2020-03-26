@@ -1,5 +1,6 @@
 <?php
 
+$page_title = "Edit Branch";
     include("header.php");
 
 ?>

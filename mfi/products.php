@@ -1,5 +1,6 @@
 <?php
 
+$page_title = "Products";
     include("header.php");
 
 ?>

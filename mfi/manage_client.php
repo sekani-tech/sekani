@@ -1,6 +1,7 @@
 
 <?php
 
+$page_title = "New Client";
 include("header.php");
 
 ?>

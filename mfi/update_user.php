@@ -1,5 +1,6 @@
 <?php
 
+$page_title = "Edit User";
     include("header.php");
 
 ?>

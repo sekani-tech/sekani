@@ -1,5 +1,6 @@
 <?php 
 
+$page_title = "Loan Collection";
 include("header.php");
 
 ?>

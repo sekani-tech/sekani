@@ -1,5 +1,6 @@
 <?php
 
+$page_title = "Users";
     include("header.php");
 
 ?>

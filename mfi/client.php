@@ -1,5 +1,6 @@
 <?php
 
+$page_title = "Clients";
     include("header.php");
 
 ?>

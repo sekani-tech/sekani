@@ -1,5 +1,6 @@
 <?php
 
+$page_title = "Branch";
     include("header.php");
 
 ?>

@@ -1,5 +1,6 @@
 <?php
 
+$page_title = "New Product";
     include("header.php");
 
 ?>

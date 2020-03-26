@@ -1,5 +1,6 @@
 <?php
 
+$page_title = "View Client";
 include('header.php');
 
 ?>
