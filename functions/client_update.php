@@ -6,6 +6,7 @@ session_start();
 if (isset($_POST['id']) && isset($_POST['ctype'])) {
     $id = $_POST['id'];
     $ctype = $_POST['ctype'];
+    $acct_type = $_POST['acct_type'];
     $display_name = $_POST['display_name'];
     $first_name = $_POST['first_name'];
     $middle_name = $_POST['middle_name'];
@@ -33,33 +34,59 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
         $email_active = 0;
     }    
     $id_card = $_POST['id_card'];
+    // a new stuff for data upload
+$image1 = $_FILES['signature']['name'];
+$target1 = "clients/".basename($image1);
+
+$image2 = $_FILES['idimg']['name'];
+$target2 = "clients/".basename($image2);
+
+$image3 = $_FILES['passport']['name'];
+$target3 = "clients/".basename($image3);
+
+if (move_uploaded_file($_FILES['signature']['tmp_name'], $target1)) {
+    $msg = "Image uploaded successfully";
+}else{
+    $msg = "Failed to upload image";
+}
+if (move_uploaded_file($_FILES['idimg']['tmp_name'], $target2)) {
+    $msg = "Image uploaded successfully";
+}else{
+    $msg = "Failed to upload image";
+}
+if (move_uploaded_file($_FILES['passport']['tmp_name'], $target3)) {
+    $msg = "Image uploaded successfully";
+}else{
+    $msg = "Failed to upload image";
+}
     // $passport =$_POST['passport'];
     // $signature = $_POST['signature'];
     // $id_img_url = $_POST['id_img_url'];
 // smalls
 $updated_by = $_SESSION["user_id"];
 $updated_on = date("Y-m-d");
-$queryx = "UPDATE client SET client_type = '$ctype', display_name = '$display_name',
+$queryx = "UPDATE client SET client_type = '$ctype', account_type = '$acct_type', display_name = '$display_name',
 firstname = '$first_name', lastname= '$last_name', middlename = '$middle_name',
 mobile_no = '$phone', mobile_no_2 = '$phone2', ADDRESS = '$address', gender = '$gender',
 date_of_birth = '$date_of_birth', branch_id = '$branch', COUNTRY = '$country', STATE_OF_ORIGIN = '$state',
 LGA = '$lga', BVN = '$bvn', SMS_ACTIVE = '$sms_active',
-EMAIL_ACTIVE = '$email_active', id_card = '$id_card', updated_by = '$updated_by', updated_on = '$updated_on' WHERE id = '$id'";
+EMAIL_ACTIVE = '$email_active', id_card = '$id_card', updated_by = '$updated_by', updated_on = '$updated_on',
+id_img_url = '$image2', passport = '$image3', signature = '$image1' WHERE id = '$id'";
 
 $result = mysqli_query($connection, $queryx);
 if($result) {
-    echo header("location: ../institutions/client.php");
+    echo header("location: ../mfi/client.php");
 } else {
     echo "there is an error here";
 }
-// if ($connection->error) {
-//     try {   
-//         throw new Exception("MySQL error $connection->error <br> Query:<br> $queryx", $mysqli->error);   
-//     } catch(Exception $e ) {
-//         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-//         echo nl2br($e->getTraceAsString());
-//     }
-// }
+if ($connection->error) {
+    try {   
+        throw new Exception("MySQL error $connection->error <br> Query:<br> $queryx", $mysqli->error);   
+    } catch(Exception $e ) {
+        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+        echo nl2br($e->getTraceAsString());
+    }
+}
 } else {
     echo "bad";
 }

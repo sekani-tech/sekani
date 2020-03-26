@@ -19,11 +19,11 @@ if(isset($_POST["id"]))
     {
         $output = '<div class="form-group">
         <label>Value:</label>
-        <input type="text" value="'.$row["value"].'" name="" class="form-control" />
+        <input type="text" value="'.$row["value"].'" name="col_name" class="form-control" />
       </div>
       <div class="form-group">
         <label for="">Description:</label>
-        <input type="text" value="'.$row["description"].'" name="" class="form-control" id="">
+        <input type="text" value="'.$row["description"].'" name="col_description" class="form-control" id="">
       </div>';
     }
     echo $output;

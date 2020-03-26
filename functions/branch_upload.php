@@ -15,8 +15,16 @@ $query = "INSERT INTO branch (int_id, name, email, phone, location) VALUES ('{$s
 $result = mysqli_query($connection, $query);
 
 if ($result) {
-    echo header("location: ../institutions/branch.php");
+    echo header("location: ../mfi/branch.php");
 } else {
     echo "<p>Bad</p>";
+}
+if ($connection->error) {
+    try {   
+        throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
+    } catch(Exception $e ) {
+        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+        echo nl2br($e->getTraceAsString());
+    }
 }
 ?>

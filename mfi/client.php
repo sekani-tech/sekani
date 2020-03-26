@@ -14,6 +14,11 @@ $destination = "index.php";
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Clients</h4>
+                  <script>
+                  $(document).ready(function() {
+                  $('#tabledat').DataTable();
+                  });
+                  </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
                    $query = "SELECT * FROM client WHERE int_id = '$sessint_id'";
@@ -21,11 +26,11 @@ $destination = "index.php";
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> registered clients || <a href="manage_client.php">Create New client</a></p>
+                   }?> registered clients || <a style = "color: white;" href="manage_client.php">Create New client</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table">
+                    <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM client WHERE int_id ='$sessint_id'";
@@ -41,12 +46,16 @@ $destination = "index.php";
                           Last Name
                         </th>
                         <th>
-                          Loan officer
+                          Account officer
+                        </th>
+                        <th>
+                          Account Type
                         </th>
                         <th>
                           Phone
                         </th>
-                        <th>Active Loan</th>
+                        <th>View</th>
+                        <th>Edit </th>
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>
@@ -57,8 +66,9 @@ $destination = "index.php";
                           <th><?php echo $row["firstname"]; ?></th>
                           <th><?php echo $row["lastname"]; ?></th>
                           <th><?php echo $row["loan_officer_id"]; ?></th>
+                          <th><?php echo $row["account_type"]; ?></th>
                           <th><?php echo $row["mobile_no"]; ?></th>
-                          <th><?php echo $row["loan_status"]; ?></th>
+                          <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                           <td><a href="update_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
                         <?php }

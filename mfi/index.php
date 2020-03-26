@@ -89,7 +89,17 @@
                   </div>
                   <p class="card-category">Outstanding Loan Balance</p>
                   <!-- Populate with the total value of outstanding loans -->
-                  <h3 class="card-title">NGN - 200000</h3>
+                  <?php
+                  $re = "SELECT SUM(principal_amount) AS principal_amount FROM loan WHERE int_id = '$sessint_id'";
+                  $resultxx = mysqli_query($connection, $re);
+                  if (count([$resultxx]) == 1) {
+                  $jk = mysqli_fetch_array($resultxx); 
+                  $sum = $jk['principal_amount'];
+                  ?>
+                  <h3 class="card-title">NGN - <?php echo round($sum); ?></h3>
+                  <?php
+                  }
+                  ?>
                 </div>
                 <div class="card-footer">
                   <div class="stats">

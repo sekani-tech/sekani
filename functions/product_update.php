@@ -36,7 +36,7 @@ $linked_savings_acct = $_POST['linked_savings_acct'];
 
   $result = mysqli_prepare($connection, $query);
   if(mysqli_stmt_execute($result)) {
-     echo header("location: ../institutions/products.php");
+     echo header("location: ../mfi/products.php");
     echo "<p>done</p>";
   } else {
       echo "nop";

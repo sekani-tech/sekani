@@ -11,11 +11,19 @@ $location = $_POST['location'];
   location = '$location' WHERE id = '$id'";
   $result = mysqli_prepare($connection, $query);
   if(mysqli_stmt_execute($result)) {
-     echo header("location: ../institutions/branch.php");
+     echo header("location: ../mfi/branch.php");
     echo "<p>done</p>";
   } else {
       echo "nop";
   }
+  if ($connection->error) {
+    try {   
+        throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
+    } catch(Exception $e ) {
+        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+        echo nl2br($e->getTraceAsString());
+    }
+}
 }
 mysqli_close($connection);
 ?>

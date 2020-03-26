@@ -24,6 +24,7 @@ if (isset($_GET["edit"])) {
     $phone = $n['phone'];
     $address = $n['address'];
     $date_joined = $n['date_joined'];
+    $status = $n['employee_status'];
     $org_role = $n['org_role'];
     $img = $n['img'];
     $ut = mysqli_query($connection, "SELECT usertype FROM users WHERE id='$user_id'");
@@ -145,8 +146,17 @@ if (isset($_GET["edit"])) {
                           </select>
                         </div>
                       </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Employee Status</label></br>
+                          <input type="radio" name="employee_status" value="Employed">
+                            <label style="color: black;">Employed</label><br>
+                            <input type="radio" name="employee_status" value="Decommisioned">
+                            <label style="color: black;">Decommisioned</label><br>
+                        </div>
+                      </div>
                     </div>
-                    <button type="submit" class="btn btn-primary pull-right">Create Profile</button>
+                    <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>

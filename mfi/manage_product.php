@@ -81,7 +81,7 @@ $destination = "products.php";
 
                                                     <div class="form-group">
                                                       <label for="repaymentFrequency" >Repayment Frequency *</label>
-                                                        <input type="text" class="form-control " name="repayment_frequency" value=""required>
+                                                        <!-- <input type="text" class="form-control " name="repayment_frequency" value=""required> -->
 
                                                         <select class="form-control" name="repayment_every">
                                                           <option value="day">Day</option>

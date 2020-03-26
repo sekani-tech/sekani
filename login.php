@@ -12,10 +12,16 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     header("location: ./modules/admin/dashboard.php");
     exit;
   }
-  elseif($_SESSION["usertype"] == "staff"){
-    header("location: mfi/index.php");
-    exit;
-  }
+//   elseif($_SESSION["usertype"] == "staff"){
+//       if($_SESSION["employee_status"] == "Employed"){
+//         header("location: mfi/index.php");
+//       }
+//       elseif($_SESSION["employee_status"] == "Decommisioned"){
+//         $err = "Sorry, you are not allowed to login";
+//         $password = "";
+//       }
+//     exit;
+//   }
 }
  
 // Include config file
@@ -24,7 +30,7 @@ require_once "functions/config.php";
 // Define variables and initialize with empty values
 $username = $password = "";
 $username_err = $password_err = "";
-
+$err = "";
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
@@ -45,7 +51,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT users.id, staff.user_id, users.int_id, users.username, users.fullname, users.usertype, users.password, org_role, display_name FROM staff JOIN users ON users.id = staff.user_id WHERE users.username = ?";
+        $sql = "SELECT users.id, staff.user_id, users.int_id, users.username, users.fullname, users.usertype,staff.employee_status, users.password, org_role, display_name FROM staff JOIN users ON users.id = staff.user_id WHERE users.username = ?";
         // $sqlj = "SELECT users.id, users.int_id, users.username, users.fullname, users.usertype, users.password, org_role, display_name FROM staff JOIN users ON users.id = staff.user_id WHERE users.username = "sam"";
         
         if($stmt = mysqli_prepare($link, $sql)){
@@ -63,7 +69,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Check if username exists, if yes then verify password
                 if(mysqli_stmt_num_rows($stmt) == 1){                    
                     // Bind result variables
-                    mysqli_stmt_bind_result($stmt, $id, $user_id, $int_id, $username, $fullname, $usertype, $hashed_password, $org_role, $display_name);
+                    mysqli_stmt_bind_result($stmt, $id, $user_id, $int_id, $username, $fullname, $usertype, $employee_status, $hashed_password, $org_role, $display_name);
                     if(mysqli_stmt_fetch($stmt)){
                         if(password_verify($password, $hashed_password)){
                             // Password is correct, so start a new session
@@ -79,6 +85,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["usertype"] = $usertype;
                             $_SESSION["fullname"] = $fullname;
                             $_SESSION["org_role"] = $org_role;
+                            $_SESSION["employee_status"] = $employee_status;
                             // $_SESSION["lastname"] = $lastname;
                             session_write_close();                            
                             //run a quick code to show active user
@@ -86,10 +93,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             if ($stmt->num_rows ==1 && $_SESSION["usertype"] =="super_admin") {
                               header("location: index.php");
                             }elseif ($stmt->num_rows ==1 && $_SESSION["usertype"]=="admin"){
-                              header("location: ./mfi/admin/dashboard.php");
+                                header("location: mfi/index.php");
+                            //   header("location: ./mfi/admin/dashboard.php");
                             }
                             elseif ($stmt->num_rows ==1 && $_SESSION["usertype"]=="staff") {
-                              header("location: mfi/index.php");
+                                if($_SESSION["employee_status"] == "Employed"){
+                                    header("location: mfi/index.php");
+                                  }
+                                  elseif($_SESSION["employee_status"] == "Decommisioned"){
+                                    $err = "Sorry You cannot login";
+                                    $password = "";
+                                  }
                             }
                             elseif ($stmt->num_rows ==1 && $_SESSION["usertype"]=="super_staff") {
                                 header("location: ./modules/staff/dashboard.php");
@@ -144,6 +158,7 @@ include('functions/config.php');
                     <div class="card">
                         <div class="card-header card-header-primary">
                         <h4 class="card-title">Login</h4>
+                        <h4 class="card-title"><?php echo $err;?></h4>
                         <p class="card-category">Sign in</p>
                         </div>
                         <div class="card-body">

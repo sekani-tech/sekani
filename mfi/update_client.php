@@ -14,6 +14,7 @@ if(isset($_GET["edit"])) {
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
     $ctype = $n['client_type'];
+    $acct_type = $n['account_type'];
     $display_name = $n['display_name'];
     $first_name = $n['firstname'];
     $middle_name = $n['middlename'];
@@ -59,6 +60,12 @@ if(isset($_GET["edit"])) {
                           <input type="text" class="form-control" value="<?php echo $ctype; ?>" name="ctype" readonly>
                         </div>
                       </div>
+                      <div class="col-md-5">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Account Type</label>
+                          <input type="text" class="form-control" value="<?php echo $acct_type; ?>" name="acct_type">
+                        </div>
+                      </div>
                       <!-- </div> -->
                       <div class="col-md-6">
                         <div class="form-group">
@@ -89,7 +96,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Phone No</label>
-                          <input type="tel" class="form-control" value="<?php echo $phone2; ?>" name="phone">
+                          <input type="tel" class="form-control" value="<?php echo $phone; ?>" name="phone">
                         </div>
                       </div>
                       <div class="col-md-4">
@@ -159,13 +166,15 @@ if(isset($_GET["edit"])) {
                         </div>
                       </div>
                       <div class="col-md-4">
-                        <label for="">State:</label>
-                        <input type="text" value="<?php echo $state; ?>" name="state" class="form-control" id="">
-                      </div>
-                      <div class="col-md-4">
-                        <label for="">LGA:</label>
-                        <input type="text" value="<?php echo $lga; ?>" name="lga" class="form-control">
-                      </div>
+                    <div class="form-group">
+                      <label for="">State:</label>
+                      <select class="form-control" name="state" id="selState" onchange="configureDropDownLists()">
+                      </select>
+                      <label for="">LGA:</label>
+                      <select  class="form-control"name="lga" id="selCity">
+                      </select>
+                    </div>
+                  </div>
                       <div class="col-md-4">
                         <label for="">BVN:</label>
                         <input type="text" value="<?php echo $bvn; ?>" name="bvn" class="form-control" id="">
@@ -211,7 +220,7 @@ if(isset($_GET["edit"])) {
                                 <span class="btn btn-raised btn-round btn-default btn-file">
                                     <span class="fileinput-new">Select passport</span>
                                     <span class="fileinput-exists">Change</span>
-                                    <input type="file" name="passport" />
+                                    <input type="file" name="passport" id="passport" />
                                 </span>
                                 <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                             </div>
@@ -236,7 +245,7 @@ if(isset($_GET["edit"])) {
                     <hr>
                     <div class="row">
                       <div class="col-md-4">
-                        <label for="">Id Type</label>
+                        <label for="">Select ID</label>
                         <select class="form-control" name="id_card">
                           <option value="<?php echo $id_card ?>"><?php echo $id_card ?></option>
                           <option value="National ID">National ID</option>
@@ -251,9 +260,9 @@ if(isset($_GET["edit"])) {
                             <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
                             <div>
                                 <span class="btn btn-raised btn-round btn-default btn-file">
-                                    <span class="fileinput-new">Select signature</span>
+                                    <span class="fileinput-new">Select Image ID</span>
                                     <span class="fileinput-exists">Change</span>
-                                    <input type="file" name="id_img_url" />
+                                    <input type="file" name="idimg" />
                                 </span>
                                 <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                             </div>

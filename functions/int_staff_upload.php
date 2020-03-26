@@ -33,13 +33,13 @@ $row = mysqli_fetch_array($res);
 $ui = $row["id"];
  if ($res) {
     $qrys = "INSERT INTO staff (int_id, user_id, int_name, username, display_name, email, first_name, last_name,
-password, description, address, date_joined, org_role, phone, img) VALUES ('{$sessint_id}', '{$ui}', '{$int_n}', '{$username}', '{$display_name}', '{$email}',
-'{$first_name}', '{$last_name}', '{$hash}', '{$description}', '{$address}', '{$date_joined}', '{$org_role}', '{$phone}', '{$img}')";
+description, address, date_joined, org_role, phone, img) VALUES ('{$sessint_id}', '{$ui}', '{$int_n}', '{$username}', '{$display_name}', '{$email}',
+'{$first_name}', '{$last_name}', '{$description}', '{$address}', '{$date_joined}', '{$org_role}', '{$phone}', '{$img}')";
 
 $result = mysqli_query($connection, $qrys);
 
 if ($result) {
-    echo header("location: ../institutions/users.php");
+    echo header("location: ../mfi/users.php");
     exit;
 } else {
    echo "<p>Error</p>";
@@ -50,12 +50,12 @@ if ($result) {
 } else {
    echo "<p>Error</p>";
 }
-// if ($connection->error) {
-//     try {   
-//         throw new Exception("MySQL error $connection->error <br> Query:<br> $qrys", $msqli->errno);   
-//     } catch(Exception $e ) {
-//         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-//         echo nl2br($e->getTraceAsString());
-//     }
-// }
+if ($connection->error) {
+    try {   
+        throw new Exception("MySQL error $connection->error <br> Query:<br> $qrys", $msqli->errno);   
+    } catch(Exception $e ) {
+        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+        echo nl2br($e->getTraceAsString());
+    }
+}
 ?>
