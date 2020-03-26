@@ -199,6 +199,14 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
                     echo "bad general";
                 }
             } else {
+                if ($connection->error) {
+                    try {
+                    throw new Exception("MYSQL error $connection->error <br> $query ", $mysqli->error);
+                    } catch (Exception $e) {
+                    echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
+                    echo n12br($e->getTraceAsString());
+                    }
+                }
               $_SESSION["Lack_of_intfund_$randms"] = "Sorry Can't Disburse Loan";
               header ("Location: ../mfi/lend.php?message=$randms");
             }
