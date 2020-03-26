@@ -140,6 +140,24 @@ if(isset($_GET["edit"])) {
                           <input type="text" name="" id="" class="form-control" value="2500" readonly>
                         </div>
                       </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Amount in Arrears</label>
+                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Days in Arrears</label>
+                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Collateral Value</label>
+                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
+                        </div>
+                      </div>
                     </div>
                     <a href="lend.php" class="btn btn-primary">Disburse Loan</a>
                     <a href="#" class="btn btn-primary">Generate Account Report</a>

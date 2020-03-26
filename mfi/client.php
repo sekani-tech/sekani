@@ -47,6 +47,9 @@
                           Account officer
                         </th>
                         <th>
+                          Account Type
+                        </th>
+                        <th>
                           Phone
                         </th>
                         <th>View</th>
@@ -61,6 +64,7 @@
                           <th><?php echo $row["firstname"]; ?></th>
                           <th><?php echo $row["lastname"]; ?></th>
                           <th><?php echo $row["loan_officer_id"]; ?></th>
+                          <th><?php echo $row["account_type"]; ?></th>
                           <th><?php echo $row["mobile_no"]; ?></th>
                           <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                           <td><a href="update_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>

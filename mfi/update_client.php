@@ -94,7 +94,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Phone No</label>
-                          <input type="tel" class="form-control" value="<?php echo $phone2; ?>" name="phone">
+                          <input type="tel" class="form-control" value="<?php echo $phone; ?>" name="phone">
                         </div>
                       </div>
                       <div class="col-md-4">
@@ -243,7 +243,7 @@ if(isset($_GET["edit"])) {
                     <hr>
                     <div class="row">
                       <div class="col-md-4">
-                        <label for="">Id Type</label>
+                        <label for="">Select ID</label>
                         <select class="form-control" name="id_card">
                           <option value="<?php echo $id_card ?>"><?php echo $id_card ?></option>
                           <option value="National ID">National ID</option>
@@ -258,7 +258,7 @@ if(isset($_GET["edit"])) {
                             <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
                             <div>
                                 <span class="btn btn-raised btn-round btn-default btn-file">
-                                    <span class="fileinput-new">Select signature</span>
+                                    <span class="fileinput-new">Select Image ID</span>
                                     <span class="fileinput-exists">Change</span>
                                     <input type="file" name="id_img_url" />
                                 </span>
