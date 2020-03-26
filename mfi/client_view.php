@@ -112,19 +112,25 @@ if(isset($_GET["edit"])) {
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
+                          <label for="">Total Outstanding Loan balance:</label>
+                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
                           <label for="">Total Withdrawal:</label>
                           <input type="text" name="" id="" class="form-control" value="2500" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="">Total Charges:</label>
+                          <label for="">Total Amoount payed:</label>
                           <input type="text" name="" id="" class="form-control" value="2500" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="">Total Interest Posted:</label>
+                          <label for="">Total Charges:</label>
                           <input type="text" name="" id="" class="form-control" value="2500" readonly>
                         </div>
                       </div>
