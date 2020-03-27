@@ -4,6 +4,10 @@ session_start();
 $sessint_id = $_SESSION["int_id"];
 ?>
 <?php
+$test = $_POST['test'];
+$acct_no = $_POST['account_no'];
+$amt = $_POST['amount'];
+$type = $_POST['pay_type'];
  $runaccount = mysqli_query($connection, "SELECT * FROM account WHERE account_no ='$_POST['account_no']' && int_id = '$sessint_id' ");
      if (count([$runaccount]) == 1) {
          $x = mysqli_fetch_array($runaccount);
@@ -14,13 +18,11 @@ $sessint_id = $_SESSION["int_id"];
          $digits = 6;
          $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
  
-         $test = $_POST['test'];
-         $acct_no = $_POST['account_no'];
-         $amt = $_POST['amount'];
-         $type = $_POST['pay_type'];
          if ($test == "deposit") {
-             $trancache = "INSERT INTO `transact_cache` (`int_id`, `account_no`, `client_id`, `amount`, `pay_type`, `transact_type`, `product_type`, `status`) VALUES
-             ('{$sessint_id}', '{$acct_no}', '{$client_id}', '{$amt}', '{$type}', 'Deposit', '{$product_id}', 'Not Verified') ";
+             $dd = "Deposit";
+             $ogs = "Not Verified"
+             $trancache = "INSERT INTO transact_cache (int_id, account_no, client_id, amount, pay_type, transact_type, product_type, status) VALUES
+             ('{$sessint_id}', '{$acct_no}', '{$client_id}', '{$amt}', '{$type}', '{$dd}', '{$product_id}', '{$ogs}') ";
              if ($trancache) {
                $_SESSION["Lack_of_intfund_$randms"] = "Deposit Has Been Done, Awaiting Approval!";
                 header ("Location: ../mfi/lend.php?message=$randms");
@@ -52,5 +54,5 @@ $sessint_id = $_SESSION["int_id"];
              } catch (Exception $e) {
                  echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
                  echo n12br($e->getTraceAsString());
-             }
+    }
 ?>

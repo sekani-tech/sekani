@@ -19,8 +19,10 @@ $sessint_id = $_SESSION["int_id"];
 
          if ($test == "withdraw") {
             if ($acct_b_d >= $amt2) {
-             $trancache = "INSERT INTO `transact_cache` (`int_id`, `account_no`, `client_id`, `amount`, `pay_type`, `transact_type`, `product_type`, `status`) VALUES
-             ('{$sessint_id}', '{$acct_no2}', '{$client_id}', '{$amt2}', '{$type2}', 'Withdrawal', '{$product_id}', 'Not Verified') ";
+                $wd = "Withdrawal";
+                $gms = "Not Verified";
+             $trancache = "INSERT INTO transact_cache (int_id, account_no, client_id, amount, pay_type, transact_type, product_type, status) VALUES
+             ('{$sessint_id}', '{$acct_no2}', '{$client_id}', '{$amt2}', '{$type2}', '{$gms}', '{$product_id}', '{$gms}') ";
              if ($trancache) {
                 $_SESSION["Lack_of_intfund_$randms"] = "Withdrawal Successful!";
                 header ("Location: ../mfi/lend.php?message3=$randms");
