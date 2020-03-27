@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                   <div class="col-md-4">
                                       <div class="form-group">
                                          <label class="bmd-label-floating">Account Number</label>
-                                         <input type="text" class="form-control" name="test" hidden value="deposit">
+                                         <input type="text" class="form-control" name="test" readonly value="deposit">
                                          <input type="text" class="form-control" name="account_no" value="">
                                       </div>
                                   </div>
@@ -125,12 +125,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <!-- <p class="card-category">Fill in all important data</p> -->
                       </div>
                       <div class="card-body">
-                        <form method="post">
+                        <form>
                               <div class="row">
                                   <div class="col-md-4">
                                       <div class="form-group">
                                          <label class="bmd-label-floating">Account No</label>
-                                         <input type="text" class="form-control" name="test" hidden value="withdraw">
+                                         <input type="text" class="form-control" name="test" readonly value="withdraw">
                                          <input type="text" class="form-control" name="account_no" value="">
                                       </div>
                                   </div>
