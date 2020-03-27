@@ -4,7 +4,11 @@ session_start();
 $sessint_id = $_SESSION["int_id"];
 ?>
 <?php
- $runaccount = mysqli_query($connection, "SELECT * FROM account WHERE account_no='$_POST['account_no2']' && int_id = '$sessint_id' ");
+$test2 = $_POST['test2'];
+$acct_no2 = $_POST['account_no2'];
+$amt2 = $_POST['amount2'];
+$type2 = $_POST['pay_type2'];
+ $runaccount = mysqli_query($connection, "SELECT * FROM account WHERE account_no='$acct_no2' && int_id = '$sessint_id' ");
      if (count([$runaccount]) == 1) {
          $x = mysqli_fetch_array($runaccount);
          $brnid = $x['branch_id'];
@@ -12,11 +16,6 @@ $sessint_id = $_SESSION["int_id"];
          $acct_b_d = $x['account_balance_derived'];
          $client_id = $x['client_id'];
  
-         $test2 = $_POST['test2'];
-         $acct_no2 = $_POST['account_no2'];
-         $amt2 = $_POST['amount2'];
-         $type2 = $_POST['pay_type2'];
-
          if ($test == "withdraw") {
             if ($acct_b_d >= $amt2) {
                 $wd = "Withdrawal";
