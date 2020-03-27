@@ -6,10 +6,14 @@ include("header.php");
 
 ?>
 
-
-<?php
+<!-- Content added here -->
+<div class="content">
+        <div class="container-fluid">
+          <!-- your content here -->
+          <div class="row">
+          <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $runaccount = mysqli_query($connection, "SELECT * FROM account WHERE account_no ='$_POST['account_no']' && int_id = '$sessint_id' ");
+    $runaccount = mysqli_query($connection, "SELECT * FROM account WHERE account_no ='$_POST['account_no']' || account_no='$_POST['account_no2']' && int_id = '$sessint_id' ");
     if (count([$runaccount]) == 1) {
         $x = mysqli_fetch_array($runaccount);
         $brnid = $x['branch_id'];
@@ -22,16 +26,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $acct_no = $_POST['account_no'];
         $amt = $_POST['amount'];
         $type = $_POST['pay_type'];
+        // sec
+        $test2 = $_POST['test2'];
+        $acct_no2 = $_POST['account_no2'];
+        $amt2 = $_POST['amount2'];
+        $type2 = $_POST['pay_type2'];
         if ($test == "deposit") {
             // calculate the new balance
             $trancache = "INSERT INTO `transact_cache` (`int_id`, `account_no`, `client_id`, `amount`, `pay_type`, `transact_type`, `product_type`, `status`) VALUES
             ('{$sessint_id}', '{$acct_no}', '{$client_id}', '{$amt}', '{$type}', 'Deposit', '{$product_id}', 'Not Verified') ";
             if ($trancache) {
-                echo "deposit done awaiting approval";
-            //   echo "<script>".swal({ title:"Done!", text: "Deposit Has Been Done, Awaiting Approval!", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+              echo "<script>".swal({ title:"Done!", text: "Deposit Has Been Done, Awaiting Approval!", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
             } else {
-                echo "failed";
-                // echo "<script>".swal({ title:"Error!", text: "Transaction Failed!", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+                echo "<script>".swal({ title:"Error!", text: "Transaction Failed!", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
                 // throw an error of why
                 if ($connection->error) {
                     try {
@@ -43,15 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             }
         } else if ($test == "withdraw") {
-           if ($acct_b_d >= $amt) {
+           if ($acct_b_d >= $amt2) {
             $trancache = "INSERT INTO `transact_cache` (`int_id`, `account_no`, `client_id`, `amount`, `pay_type`, `transact_type`, `product_type`, `status`) VALUES
-            ('{$sessint_id}', '{$acct_no}', '{$client_id}', '{$amt}', '{$type}', 'Withdrawal', '{$product_id}', 'Not Verified') ";
+            ('{$sessint_id}', '{$acct_no2}', '{$client_id}', '{$amt2}', '{$type2}', 'Withdrawal', '{$product_id}', 'Not Verified') ";
             if ($trancache) {
-                echo "done";
-            //   echo "<script>".swal({ title:"Done!", text: "Withdrawal Has Been Done, Awaiting Approval!", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+              echo "<script>".swal({ title:"Done!", text: "Withdrawal Has Been Done, Awaiting Approval!", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
             } else {
-                echo "transaction failed";
-                // echo "<script>".swal({ title:"Error!", text: "Transaction Failed!", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+                echo "<script>".swal({ title:"Error!", text: "Transaction Failed!", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
                 // throw an error of why
                 if ($connection->error) {
                     try {
@@ -63,8 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             }
            } else {
-               echo "insufficient fund";
-            // echo "<script>".swal({ title:"Error!", text: "Insufficient Fund", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+            echo "<script>".swal({ title:"Error!", text: "Insufficient Fund", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
            }
         } else {
             echo "Test is Empty";
@@ -80,11 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-<!-- Content added here -->
-<div class="content">
-        <div class="container-fluid">
-          <!-- your content here -->
-          <div class="row">
               <div class="col-md-12">
                   <div class="card">
                       <div class="card-header card-header-primary">
@@ -135,20 +134,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                   <div class="col-md-4">
                                       <div class="form-group">
                                          <label class="bmd-label-floating">Account No</label>
-                                         <input type="text" class="form-control" name="test" hidden value="withdraw">
-                                         <input type="text" class="form-control" name="account_no" value="">
+                                         <input type="text" class="form-control" name="test2" hidden value="withdraw">
+                                         <input type="text" class="form-control" name="account_no2" value="">
                                       </div>
                                   </div>
                                   <div class="col-md-4">
                                       <div class="form-group">
                                          <label class="bmd-label-floating">Amount</label>
-                                         <input type="number" class="form-control" name="amount" value="">
+                                         <input type="number" class="form-control" name="amount2" value="">
                                       </div>
                                   </div>
                                   <div class="col-md-4">
                                       <div class="form-group">
                                          <label class="bmd-label-floating">Type</label>
-                                         <input type="type" class="form-control" name="pay_type" value="Cheque">
+                                         <input type="type" class="form-control" name="pay_type2" value="Cheque">
                                       </div>
                                   </div>
                               </div>
