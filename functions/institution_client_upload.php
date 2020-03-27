@@ -14,7 +14,7 @@ $display_name = $_POST['display_name'];
  $inttest = str_pad($branch, 4, '0', STR_PAD_LEFT);
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-$account_no = $inttest. "-" .$randms;
+$account_no = $inttest."".$randms;
 // auto calculation for the account number generation
 $first_name = $_POST['firstname'];
 $last_name = $_POST['lastname'];
