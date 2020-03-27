@@ -4,58 +4,102 @@ $page_title = "Deposit/ Withdrwal";
 $destination = "index.php";
 include("header.php");
 ?>
-<script type="text/javascript">
-function msg () {
-  swal({
-      title: "Success",
-      text: "Transaction Successful, Awaiting Approval",
-      type: "success"
-  });
-}
-</script>
 <?php
 if (isset($_GET["message"])) {
     $key = $_GET["message"];
     $out = $_SESSION["lack_of_intfund_$key"];
     echo '<script type="text/javascript">
-    msg();
-    </script>';
-    echo "i am working";
+    $(document).ready(function(){
+        swal({
+            type: "success",
+            title: "Success",
+            text: "Transaction Successful, Awaiting Approval",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
     $_SESSION["lack_of_intfund_$key"] = null;
 } else if (isset($_GET["message2"])) {
     $key = $_GET["message2"];
     $out = $_SESSION["lack_of_intfund_$key"];
-    echo '<script type="text/javascript">';
-    echo 'setTimeout(function () { swal("Failed!", '.$out.', "error");';
-    echo '}, 1000);</script>';
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "Error",
+            text: "Transaction Error",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
     $_SESSION["lack_of_intfund_$key"] = null;
 } else if (isset($_GET["message3"])) {
     $key = $_GET["message3"];
     $out = $_SESSION["lack_of_intfund_$key"];
-    echo '<script type="text/javascript">';
-    echo 'setTimeout(function () { swal("Done!", '.$out.', "success");';
-    echo '}, 1000);</script>';
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "success",
+            title: "Withdrawal",
+            text: "Transaction Successful, Awaiting Approval",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
     $_SESSION["lack_of_intfund_$key"] = null;
 } else if (isset($_GET["message4"])) {
     $key = $_GET["message4"];
     $out = $_SESSION["lack_of_intfund_$key"];
-    echo '<script type="text/javascript">';
-    echo 'setTimeout(function () { swal("Failed!", '.$out.', "error");';
-    echo '}, 1000);</script>';
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "Withdrawal Error",
+            text: "Transaction Error",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
     $_SESSION["lack_of_intfund_$key"] = null;
 } else if (isset($_GET["message5"])) {
     $key = $_GET["message5"];
     $out = $_SESSION["lack_of_intfund_$key"];
-    echo '<script type="text/javascript">';
-    echo 'setTimeout(function () { swal("Error!", '.$out.', "error");';
-    echo '}, 1000);</script>';
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "Fund Error",
+            text: "Insufficient Fund",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
     $_SESSION["lack_of_intfund_$key"] = null;
 } else if (isset($_GET["message7"])) {
     $key = $_GET["message5"];
     $out = $_SESSION["lack_of_intfund_$key"];
-    echo '<script type="text/javascript">';
-    echo 'setTimeout(function () { swal("Account Error!", '.$out.', "error");';
-    echo '}, 1000);</script>';
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "Account Number Error",
+            text: "Account Not Found",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
     $_SESSION["lack_of_intfund_$key"] = null;
 } else {
     echo "";
