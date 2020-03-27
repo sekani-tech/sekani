@@ -39,11 +39,14 @@ $sessint_id = $_SESSION["int_id"];
              }
             } else {
                 $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";
-                header ("Location: ../mfi/lend.php?message=$randms");
+                header ("Location: ../mfi/lend.php?message5=$randms");
             }
          } else {
              echo "Test is Empty";
          }
+     } else {
+        $_SESSION["Lack_of_intfund_$randms"] = "AccountNot Found";
+        header ("Location: ../mfi/lend.php?message7=$randms");
      }
      if ($connection->error) {
              try {

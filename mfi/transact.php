@@ -17,7 +17,7 @@ if (isset($_GET["message"])) {
     $key = $_GET["message2"];
     $out = $_SESSION["lack_of_intfund_$key"];
     echo '<script type="text/javascript">';
-    echo 'setTimeout(function () { swal("Done!", '.$out.', "success");';
+    echo 'setTimeout(function () { swal("Failed!", '.$out.', "error");';
     echo '}, 1000);</script>';
     $_SESSION["lack_of_intfund_$key"] = null;
 } else if (isset($_GET["message3"])) {
@@ -31,14 +31,21 @@ if (isset($_GET["message"])) {
     $key = $_GET["message4"];
     $out = $_SESSION["lack_of_intfund_$key"];
     echo '<script type="text/javascript">';
-    echo 'setTimeout(function () { swal("Done!", '.$out.', "success");';
+    echo 'setTimeout(function () { swal("Failed!", '.$out.', "error");';
     echo '}, 1000);</script>';
     $_SESSION["lack_of_intfund_$key"] = null;
 } else if (isset($_GET["message5"])) {
     $key = $_GET["message5"];
     $out = $_SESSION["lack_of_intfund_$key"];
     echo '<script type="text/javascript">';
-    echo 'setTimeout(function () { swal("Done!", '.$out.', "success");';
+    echo 'setTimeout(function () { swal("Error!", '.$out.', "error");';
+    echo '}, 1000);</script>';
+    $_SESSION["lack_of_intfund_$key"] = null;
+} else if (isset($_GET["message7"])) {
+    $key = $_GET["message5"];
+    $out = $_SESSION["lack_of_intfund_$key"];
+    echo '<script type="text/javascript">';
+    echo 'setTimeout(function () { swal("Account Error!", '.$out.', "error");';
     echo '}, 1000);</script>';
     $_SESSION["lack_of_intfund_$key"] = null;
 } else {
