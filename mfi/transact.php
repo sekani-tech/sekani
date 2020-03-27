@@ -8,37 +8,49 @@ include("header.php");
 
 <!-- Content added here -->
 <div class="content">
-        <div class="container-fluid">
-          <!-- your content here -->
-          <div class="row">
 <?php
 if (isset($_GET["message"])) {
     $key = $_GET["message"];
     $out = $_SESSION["lack_of_intfund_$key"];
-    echo "<script>".swal({ title:"Done!", text: ".$out.", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+    echo '<script type="text/javascript">';
+    echo 'setTimeout(function () { swal("Done!", "'$out'", "success");';
+    echo '}, 1000);</script>';
     $_SESSION["lack_of_intfund_$key"]; = null;
 } else if (isset($_GET["message2"])) {
     $key = $_GET["message2"];
     $out = $_SESSION["lack_of_intfund_$key"];
-    echo "<script>".swal({ title:"Error!", text: ".$out.", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+    echo '<script type="text/javascript">';
+    echo 'setTimeout(function () { swal("Done!", "'$out'", "success");';
+    echo '}, 1000);</script>';
     $_SESSION["lack_of_intfund_$key"]; = null;
 } else if (isset($_GET["message3"])) {
     $key = $_GET["message3"];
     $out = $_SESSION["lack_of_intfund_$key"];
-    echo "<script>".swal({ title:"Done!", text: ".$out.", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+    echo '<script type="text/javascript">';
+    echo 'setTimeout(function () { swal("Done!", "'$out'", "success");';
+    echo '}, 1000);</script>';
     $_SESSION["lack_of_intfund_$key"]; = null;
 } else if (isset($_GET["message4"])) {
     $key = $_GET["message4"];
     $out = $_SESSION["lack_of_intfund_$key"];
-    echo "<script>".swal({ title:"Error!", text: ".$out.", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+    echo '<script type="text/javascript">';
+    echo 'setTimeout(function () { swal("Done!", "'$out'", "success");';
+    echo '}, 1000);</script>';
     $_SESSION["lack_of_intfund_$key"]; = null;
 } else if (isset($_GET["message5"])) {
     $key = $_GET["message5"];
     $out = $_SESSION["lack_of_intfund_$key"];
-    echo "<script>".swal({ title:"Error!", text: ".$out.", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+    echo '<script type="text/javascript">';
+    echo 'setTimeout(function () { swal("Done!", "'$out'", "success");';
+    echo '}, 1000);</script>';
     $_SESSION["lack_of_intfund_$key"]; = null;
+} else {
+    echo "";
 }
 ?>
+        <div class="container-fluid">
+          <!-- your content here -->
+          <div class="row">
               <div class="col-md-12">
                   <div class="card">
                       <div class="card-header card-header-primary">
