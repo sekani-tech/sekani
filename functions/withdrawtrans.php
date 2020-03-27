@@ -8,6 +8,8 @@ $test2 = $_POST['test2'];
 $acct_no2 = $_POST['account_no2'];
 $amt2 = $_POST['amount2'];
 $type2 = $_POST['pay_type2'];
+
+$digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 
  $runaccount = mysqli_query($connection, "SELECT * FROM account WHERE account_no='$acct_no2' && int_id = '$sessint_id' ");

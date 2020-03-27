@@ -4,14 +4,23 @@ $page_title = "Deposit/ Withdrwal";
 $destination = "index.php";
 include("header.php");
 ?>
-
+<script type="text/javascript">
+function msg () {
+  swal({
+      title: "Success",
+      text: "Transaction Successful, Awaiting Approval",
+      type: "success"
+  });
+}
+</script>
 <?php
 if (isset($_GET["message"])) {
     $key = $_GET["message"];
     $out = $_SESSION["lack_of_intfund_$key"];
-    echo '<script type="text/javascript">';
-    echo 'setTimeout(function () { swal("Done!", "Transaction Successful, Awaiting Approval", "success");';
-    echo '}, 1000);</script>';
+    echo '<script type="text/javascript">
+    msg();
+    </script>';
+    echo "i am working";
     $_SESSION["lack_of_intfund_$key"] = null;
 } else if (isset($_GET["message2"])) {
     $key = $_GET["message2"];
