@@ -24,18 +24,18 @@ $type = $_POST['pay_type'];
              $trancache = "INSERT INTO transact_cache (int_id, account_no, client_id, amount, pay_type, transact_type, product_type, status) VALUES ('{$sessint_id}', '{$acct_no}', '{$client_id}', '{$amt}', '{$type}', '{$dd}', '{$product_id}', '{$ogs}')";
              if ($trancache) {
                $_SESSION["Lack_of_intfund_$randms"] = "Deposit Has Been Done, Awaiting Approval!";
-                header ("Location: ../mfi/lend.php?message=$randms");
+                echo header ("Location: ../mfi/lend.php?message=$randms");
              } else {
                 $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
-                header ("Location: ../mfi/lend.php?message2=$randms");
-                 if ($connection->error) {
-                     try {
-                         throw new Exception("MYSQL error $connection->error <br> $trancache ", $mysqli->error);
-                     } catch (Exception $e) {
-                         echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
-                         echo n12br($e->getTraceAsString());
-                     }
-             }
+                echo header ("Location: ../mfi/lend.php?message2=$randms");
+            //      if ($connection->error) {
+            //          try {
+            //              throw new Exception("MYSQL error $connection->error <br> $trancache ", $mysqli->error);
+            //          } catch (Exception $e) {
+            //              echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
+            //              echo n12br($e->getTraceAsString());
+            //          }
+            //  }
              }
          } else {
              echo "Not equal to deposit";
@@ -44,11 +44,12 @@ $type = $_POST['pay_type'];
         $_SESSION["Lack_of_intfund_$randms"] = "Account not Found";
         echo header ("Location: ../mfi/lend.php?message7=$randms");
      }
-     if ($connection->error) {
-             try {
-                 throw new Exception("MYSQL error $connection->error <br> $runaccount ", $mysqli->error);
-             } catch (Exception $e) {
-                 echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
-                 echo n12br($e->getTraceAsString());
-    }
+//      if ($connection->error) {
+//              try {
+//                  throw new Exception("MYSQL error $connection->error <br> $runaccount ", $mysqli->error);
+//              } catch (Exception $e) {
+//                  echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
+//                  echo n12br($e->getTraceAsString());
+//     }
+// }
 ?>

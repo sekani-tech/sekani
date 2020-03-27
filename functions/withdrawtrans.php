@@ -16,7 +16,7 @@ $type2 = $_POST['pay_type2'];
          $acct_b_d = $x['account_balance_derived'];
          $client_id = $x['client_id'];
  
-         if ($test == "withdraw") {
+         if ($test2 == "withdraw") {
             if ($acct_b_d >= $amt2) {
                 $wd = "Withdrawal";
                 $gms = "Not Verified";
@@ -24,19 +24,19 @@ $type2 = $_POST['pay_type2'];
              ('{$sessint_id}', '{$acct_no2}', '{$client_id}', '{$amt2}', '{$type2}', '{$gms}', '{$product_id}', '{$gms}') ";
              if ($trancache) {
                 $_SESSION["Lack_of_intfund_$randms"] = "Withdrawal Successful!";
-                header ("Location: ../mfi/lend.php?message3=$randms");
+               echo header ("Location: ../mfi/lend.php?message3=$randms");
              } else {
                 $_SESSION["Lack_of_intfund_$randms"] = "Withdrawal Failed";
-                header ("Location: ../mfi/lend.php?message4=$randms");
+               echo header ("Location: ../mfi/lend.php?message4=$randms");
  
-                 if ($connection->error) {
-                     try {
-                         throw new Exception("MYSQL error $connection->error <br> $trancache ", $mysqli->error);
-                     } catch (Exception $e) {
-                         echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
-                         echo n12br($e->getTraceAsString());
-                     }
-             }
+            //      if ($connection->error) {
+            //          try {
+            //              throw new Exception("MYSQL error $connection->error <br> $trancache ", $mysqli->error);
+            //          } catch (Exception $e) {
+            //              echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
+            //              echo n12br($e->getTraceAsString());
+            //          }
+            //  }
              }
             } else {
                 $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";
@@ -47,14 +47,14 @@ $type2 = $_POST['pay_type2'];
          }
      } else {
         $_SESSION["Lack_of_intfund_$randms"] = "AccountNot Found";
-        header ("Location: ../mfi/lend.php?message7=$randms");
+        echo header ("Location: ../mfi/lend.php?message7=$randms");
      }
-     if ($connection->error) {
-             try {
-                 throw new Exception("MYSQL error $connection->error <br> $runaccount ", $mysqli->error);
-             } catch (Exception $e) {
-                 echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
-                 echo n12br($e->getTraceAsString());
-             }
-     }
+    //  if ($connection->error) {
+    //          try {
+    //              throw new Exception("MYSQL error $connection->error <br> $runaccount ", $mysqli->error);
+    //          } catch (Exception $e) {
+    //              echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
+    //              echo n12br($e->getTraceAsString());
+    //          }
+    //  }
 ?>
