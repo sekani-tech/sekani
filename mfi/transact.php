@@ -3,46 +3,48 @@
 $page_title = "Deposit/ Withdrwal";
 $destination = "index.php";
 include("header.php");
+?>
+
+<?php
 if (isset($_GET["message"])) {
     $key = $_GET["message"];
     $out = $_SESSION["lack_of_intfund_$key"];
     echo '<script type="text/javascript">';
-    echo 'setTimeout(function () { swal("Done!", "'$out'", "success");';
+    echo 'setTimeout(function () { swal("Done!", '.$out.', "success");';
     echo '}, 1000);</script>';
     $_SESSION["lack_of_intfund_$key"]; = null;
 } else if (isset($_GET["message2"])) {
     $key = $_GET["message2"];
     $out = $_SESSION["lack_of_intfund_$key"];
     echo '<script type="text/javascript">';
-    echo 'setTimeout(function () { swal("Done!", "'$out'", "success");';
+    echo 'setTimeout(function () { swal("Done!", '.$out.', "success");';
     echo '}, 1000);</script>';
     $_SESSION["lack_of_intfund_$key"]; = null;
 } else if (isset($_GET["message3"])) {
     $key = $_GET["message3"];
     $out = $_SESSION["lack_of_intfund_$key"];
     echo '<script type="text/javascript">';
-    echo 'setTimeout(function () { swal("Done!", "'$out'", "success");';
+    echo 'setTimeout(function () { swal("Done!", '.$out.', "success");';
     echo '}, 1000);</script>';
     $_SESSION["lack_of_intfund_$key"]; = null;
 } else if (isset($_GET["message4"])) {
     $key = $_GET["message4"];
     $out = $_SESSION["lack_of_intfund_$key"];
     echo '<script type="text/javascript">';
-    echo 'setTimeout(function () { swal("Done!", "'$out'", "success");';
+    echo 'setTimeout(function () { swal("Done!", '.$out.', "success");';
     echo '}, 1000);</script>';
     $_SESSION["lack_of_intfund_$key"]; = null;
 } else if (isset($_GET["message5"])) {
     $key = $_GET["message5"];
     $out = $_SESSION["lack_of_intfund_$key"];
     echo '<script type="text/javascript">';
-    echo 'setTimeout(function () { swal("Done!", "'$out'", "success");';
+    echo 'setTimeout(function () { swal("Done!", '.$out.', "success");';
     echo '}, 1000);</script>';
     $_SESSION["lack_of_intfund_$key"]; = null;
 } else {
     echo "";
 }
 ?>
-
 <!-- Content added here -->
 <div class="content">
         <div class="container-fluid">
