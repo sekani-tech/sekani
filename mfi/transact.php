@@ -27,9 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $trancache = "INSERT INTO `transact_cache` (`int_id`, `account_no`, `client_id`, `amount`, `pay_type`, `transact_type`, `product_type`, `status`) VALUES
             ('{$sessint_id}', '{$acct_no}', '{$client_id}', '{$amt}', '{$type}', 'Deposit', '{$product_id}', 'Not Verified') ";
             if ($trancache) {
-              echo "<script>".swal({ title:"Done!", text: "Deposit Has Been Done, Awaiting Approval!", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+                echo "deposit done awaiting approval";
+            //   echo "<script>".swal({ title:"Done!", text: "Deposit Has Been Done, Awaiting Approval!", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
             } else {
-                echo "<script>".swal({ title:"Error!", text: "Transaction Failed!", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+                echo "failed";
+                // echo "<script>".swal({ title:"Error!", text: "Transaction Failed!", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
                 // throw an error of why
                 if ($connection->error) {
                     try {
@@ -45,9 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $trancache = "INSERT INTO `transact_cache` (`int_id`, `account_no`, `client_id`, `amount`, `pay_type`, `transact_type`, `product_type`, `status`) VALUES
             ('{$sessint_id}', '{$acct_no}', '{$client_id}', '{$amt}', '{$type}', 'Withdrawal', '{$product_id}', 'Not Verified') ";
             if ($trancache) {
-              echo "<script>".swal({ title:"Done!", text: "Withdrawal Has Been Done, Awaiting Approval!", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+                echo "done";
+            //   echo "<script>".swal({ title:"Done!", text: "Withdrawal Has Been Done, Awaiting Approval!", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
             } else {
-                echo "<script>".swal({ title:"Error!", text: "Transaction Failed!", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+                echo "transaction failed";
+                // echo "<script>".swal({ title:"Error!", text: "Transaction Failed!", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
                 // throw an error of why
                 if ($connection->error) {
                     try {
@@ -59,7 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             }
            } else {
-            echo "<script>".swal({ title:"Error!", text: "Insufficient Fund", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+               echo "insufficient fund";
+            // echo "<script>".swal({ title:"Error!", text: "Insufficient Fund", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
            }
         } else {
             echo "Test is Empty";
@@ -92,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                   <div class="col-md-4">
                                       <div class="form-group">
                                          <label class="bmd-label-floating">Account Number</label>
-                                         <input type="text" class="form-control" name="test" readonly value="deposit">
+                                         <input type="text" class="form-control" name="test" hidden value="deposit">
                                          <input type="text" class="form-control" name="account_no" value="">
                                       </div>
                                   </div>
@@ -125,12 +130,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <!-- <p class="card-category">Fill in all important data</p> -->
                       </div>
                       <div class="card-body">
-                        <form>
+                        <form method="post">
                               <div class="row">
                                   <div class="col-md-4">
                                       <div class="form-group">
                                          <label class="bmd-label-floating">Account No</label>
-                                         <input type="text" class="form-control" name="test" readonly value="withdraw">
+                                         <input type="text" class="form-control" name="test" hidden value="withdraw">
                                          <input type="text" class="form-control" name="account_no" value="">
                                       </div>
                                   </div>
