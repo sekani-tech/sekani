@@ -24,10 +24,10 @@ $type2 = $_POST['pay_type2'];
              ('{$sessint_id}', '{$acct_no2}', '{$client_id}', '{$amt2}', '{$type2}', '{$gms}', '{$product_id}', '{$gms}') ";
              if ($trancache) {
                 $_SESSION["Lack_of_intfund_$randms"] = "Withdrawal Successful!";
-               echo header ("Location: ../mfi/lend.php?message3=$randms");
+               echo header ("Location: ../mfi/transact.php?message3=$randms");
              } else {
                 $_SESSION["Lack_of_intfund_$randms"] = "Withdrawal Failed";
-               echo header ("Location: ../mfi/lend.php?message4=$randms");
+               echo header ("Location: ../mfi/transact.php?message4=$randms");
  
             //      if ($connection->error) {
             //          try {
@@ -40,14 +40,14 @@ $type2 = $_POST['pay_type2'];
              }
             } else {
                 $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";
-                header ("Location: ../mfi/lend.php?message5=$randms");
+                header ("Location: ../mfi/transact.php?message5=$randms");
             }
          } else {
              echo "Test is Empty";
          }
      } else {
-        $_SESSION["Lack_of_intfund_$randms"] = "AccountNot Found";
-        echo header ("Location: ../mfi/lend.php?message7=$randms");
+        $_SESSION["Lack_of_intfund_$randms"] = "Account Not Found";
+        echo header ("Location: ../mfi/transact.php?message7=$randms");
      }
     //  if ($connection->error) {
     //          try {

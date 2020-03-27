@@ -24,10 +24,10 @@ $type = $_POST['pay_type'];
              $trancache = "INSERT INTO transact_cache (int_id, account_no, client_id, amount, pay_type, transact_type, product_type, status) VALUES ('{$sessint_id}', '{$acct_no}', '{$client_id}', '{$amt}', '{$type}', '{$dd}', '{$product_id}', '{$ogs}')";
              if ($trancache) {
                $_SESSION["Lack_of_intfund_$randms"] = "Deposit Has Been Done, Awaiting Approval!";
-                echo header ("Location: ../mfi/lend.php?message=$randms");
+                echo header ("Location: ../mfi/transact.php?message=$randms");
              } else {
                 $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
-                echo header ("Location: ../mfi/lend.php?message2=$randms");
+                echo header ("Location: ../mfi/transact.php?message2=$randms");
             //      if ($connection->error) {
             //          try {
             //              throw new Exception("MYSQL error $connection->error <br> $trancache ", $mysqli->error);
@@ -42,7 +42,7 @@ $type = $_POST['pay_type'];
          }
     } else {
         $_SESSION["Lack_of_intfund_$randms"] = "Account not Found";
-        echo header ("Location: ../mfi/lend.php?message7=$randms");
+        echo header ("Location: ../mfi/transact.php?message7=$randms");
      }
 //      if ($connection->error) {
 //              try {
