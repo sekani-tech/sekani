@@ -21,9 +21,12 @@ $min_loan_term = $_POST['min_loan_term'];
 $max_loan_term = $_POST['max_loan_term'];
 $repayment_frequency = $_POST['repayment_frequency'];
 $repayment_every = $_POST['repayment_every'];
-$interest_rate = $_POST['interest_rate'];
-$min_interest_rate = $_POST['min_interest_rate'];
-$max_interest_rate = $_POST['max_interest_rate'];
+$i_r = $_POST['interest_rate'];
+$interest_rate = $i_r / 100;
+$min_i_r = $_POST['min_interest_rate'];
+$min_interest_rate = $min_i_r / 100;
+$max_i_r = $_POST['max_interest_rate'];
+$max_interest_rate = $max_i_r / 100;
 $interest_rate_applied = $_POST['interest_rate_applied'];
 $interest_rate_methodoloy = $_POST['interest_rate_methodoloy'];
 $ammortization_method = $_POST['ammortization_method'];
@@ -53,13 +56,13 @@ $res = mysqli_query($connection, $query);
  } else {
      echo "<p>Error</p>";
  }
-// if ($connection->error) {
-//         try {   
-//             throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $msqli->errno);   
-//         } catch(Exception $e ) {
-//             echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-//             echo nl2br($e->getTraceAsString());
-//         }
-//     }
+if ($connection->error) {
+        try {   
+            throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $msqli->errno);   
+        } catch(Exception $e ) {
+            echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+            echo nl2br($e->getTraceAsString());
+        }
+    }
 
 ?>
