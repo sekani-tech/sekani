@@ -26,7 +26,8 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
                     $gms = "Not Verified";
                  $trancache = "INSERT INTO transact_cache (int_id, account_no, client_id, amount, pay_type, transact_type, product_type, status) VALUES
                  ('{$sessint_id}', '{$acct_no2}', '{$client_id}', '{$amt2}', '{$type2}', '{$gms}', '{$product_id}', '{$gms}') ";
-                 if ($trancache) {
+                 $go = mysqli_query($connection, $trancache);
+                 if ($go) {
                     $_SESSION["Lack_of_intfund_$randms"] = "Withdrawal Successful!";
                    echo header ("Location: ../mfi/transact.php?message3=$randms");
                  } else {

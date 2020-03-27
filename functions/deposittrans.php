@@ -24,7 +24,8 @@ $type = $_POST['pay_type'];
                 $dd = "Deposit";
                 $ogs = "Not Verified";
                 $trancache = "INSERT INTO transact_cache (int_id, account_no, client_id, amount, pay_type, transact_type, product_type, status) VALUES ('{$sessint_id}', '{$acct_no}', '{$client_id}', '{$amt}', '{$type}', '{$dd}', '{$product_id}', '{$ogs}')";
-                if ($trancache) {
+                $go = mysqli_query($connection, $trancache);
+                if ($go) {
                   $_SESSION["Lack_of_intfund_$randms"] = "Deposit Has Been Done, Awaiting Approval!";
                    echo header ("Location: ../mfi/transact.php?message=$randms");
                 } else {
