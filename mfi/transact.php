@@ -12,77 +12,32 @@ include("header.php");
           <!-- your content here -->
           <div class="row">
 <?php
-// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//     $runaccount = mysqli_query($connection, "SELECT * FROM account WHERE account_no ='$_POST['account_no']' || account_no='$_POST['account_no2']' && int_id = '$sessint_id' ");
-//     if (count([$runaccount]) == 1) {
-//         $x = mysqli_fetch_array($runaccount);
-//         $brnid = $x['branch_id'];
-//         $product_id = $x['product_id'];
-//         $acct_b_d = $x['account_balance_derived'];
-//         $client_id = $x['client_id'];
-
-
-//         $test = $_POST['test'];
-//         $acct_no = $_POST['account_no'];
-//         $amt = $_POST['amount'];
-//         $type = $_POST['pay_type'];
-
-//         $test2 = $_POST['test2'];
-//         $acct_no2 = $_POST['account_no2'];
-//         $amt2 = $_POST['amount2'];
-//         $type2 = $_POST['pay_type2'];
-//         if ($test == "deposit") {
-
-//             $trancache = "INSERT INTO `transact_cache` (`int_id`, `account_no`, `client_id`, `amount`, `pay_type`, `transact_type`, `product_type`, `status`) VALUES
-//             ('{$sessint_id}', '{$acct_no}', '{$client_id}', '{$amt}', '{$type}', 'Deposit', '{$product_id}', 'Not Verified') ";
-//             if ($trancache) {
-//               echo "<script>".swal({ title:"Done!", text: "Deposit Has Been Done, Awaiting Approval!", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
-//             } else {
-//                 echo "<script>".swal({ title:"Error!", text: "Transaction Failed!", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
-
-//                 if ($connection->error) {
-//                     try {
-//                         throw new Exception("MYSQL error $connection->error <br> $trancache ", $mysqli->error);
-//                     } catch (Exception $e) {
-//                         echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
-//                         echo n12br($e->getTraceAsString());
-//                     }
-//             }
-//             }
-//         } else if ($test == "withdraw") {
-//            if ($acct_b_d >= $amt2) {
-//             $trancache = "INSERT INTO `transact_cache` (`int_id`, `account_no`, `client_id`, `amount`, `pay_type`, `transact_type`, `product_type`, `status`) VALUES
-//             ('{$sessint_id}', '{$acct_no2}', '{$client_id}', '{$amt2}', '{$type2}', 'Withdrawal', '{$product_id}', 'Not Verified') ";
-//             if ($trancache) {
-//               echo "<script>".swal({ title:"Done!", text: "Withdrawal Has Been Done, Awaiting Approval!", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
-//             } else {
-//                 echo "<script>".swal({ title:"Error!", text: "Transaction Failed!", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
-
-//                 if ($connection->error) {
-//                     try {
-//                         throw new Exception("MYSQL error $connection->error <br> $trancache ", $mysqli->error);
-//                     } catch (Exception $e) {
-//                         echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
-//                         echo n12br($e->getTraceAsString());
-//                     }
-//             }
-//             }
-//            } else {
-//             echo "<script>".swal({ title:"Error!", text: "Insufficient Fund", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
-//            }
-//         } else {
-//             echo "Test is Empty";
-//         }
-//     }
-//     if ($connection->error) {
-//             try {
-//                 throw new Exception("MYSQL error $connection->error <br> $runaccount ", $mysqli->error);
-//             } catch (Exception $e) {
-//                 echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
-//                 echo n12br($e->getTraceAsString());
-//             }
-//     }
-// }
+if (isset($_GET["message"])) {
+    $key = $_GET["message"];
+    $out = $_SESSION["lack_of_intfund_$key"];
+    echo "<script>".swal({ title:"Done!", text: ".$out.", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+    $_SESSION["lack_of_intfund_$key"]; = null;
+} else if (isset($_GET["message2"])) {
+    $key = $_GET["message2"];
+    $out = $_SESSION["lack_of_intfund_$key"];
+    echo "<script>".swal({ title:"Error!", text: ".$out.", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+    $_SESSION["lack_of_intfund_$key"]; = null;
+} else if (isset($_GET["message3"])) {
+    $key = $_GET["message3"];
+    $out = $_SESSION["lack_of_intfund_$key"];
+    echo "<script>".swal({ title:"Done!", text: ".$out.", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+    $_SESSION["lack_of_intfund_$key"]; = null;
+} else if (isset($_GET["message4"])) {
+    $key = $_GET["message4"];
+    $out = $_SESSION["lack_of_intfund_$key"];
+    echo "<script>".swal({ title:"Error!", text: ".$out.", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+    $_SESSION["lack_of_intfund_$key"]; = null;
+} else if (isset($_GET["message5"])) {
+    $key = $_GET["message5"];
+    $out = $_SESSION["lack_of_intfund_$key"];
+    echo "<script>".swal({ title:"Error!", text: ".$out.", type: "error", buttonsStyling: false, confirmButtonClass: "btn btn-success"})."<script>";
+    $_SESSION["lack_of_intfund_$key"]; = null;
+}
 ?>
               <div class="col-md-12">
                   <div class="card">
@@ -91,7 +46,7 @@ include("header.php");
                         <!-- <p class="card-category">Fill in all important data</p> -->
                       </div>
                       <div class="card-body">
-                          <form method="post">
+                          <form action="../functions/deposittrans.php" method="post">
                               <div class="row">
                                   <div class="col-md-4">
                                       <div class="form-group">
@@ -129,7 +84,7 @@ include("header.php");
                         <!-- <p class="card-category">Fill in all important data</p> -->
                       </div>
                       <div class="card-body">
-                        <form method="post">
+                        <form action="../functions/withdrawtrans.php" method="post">
                               <div class="row">
                                   <div class="col-md-4">
                                       <div class="form-group">
