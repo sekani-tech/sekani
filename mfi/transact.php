@@ -47,6 +47,8 @@ include("header.php");
                       </div>
                   </div>
               </div>
+              <!-- sweet alert -->
+              <button class="btn btn-primary btn-fill" onclick='swal({ title:"Good job!", text: "You clicked the button!", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})'>Try me!</button>
               <div class="col-md-12">
                   <div class="card">
                   <div class="card-header card-header-primary">
