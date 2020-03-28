@@ -138,7 +138,7 @@ if (isset($_GET["edit"])) {
                             <!-- <span class="btn btn-raised btn-round btn-default btn-file"> -->
                                 <span class="fileinput-new">Select picture</span>
                                 <span class="fileinput-exists">Change</span>
-                                <input type="file" name="picture" />
+                                <input type="file" name="image" id="image" />
                             <!-- </span> -->
                             <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                         </div>
