@@ -19,10 +19,19 @@ $date_joined = $_POST['date_joined'];
 $org_role = $_POST['org_role'];
 $std = "Not Active";
 $phone = $_POST['phone'];
-$img = $_POST['img'];
+
+
+$image1 = $_FILES['passport']['name'];
+$target1 = "clients/".basename($image1);
+
+if (move_uploaded_file($_FILES['passport']['tmp_name'], $target1)) {
+    $msg = "Image uploaded successfully";
+} else{
+    $msg = "Failed to upload image";
+}
 
 $queryuser = "INSERT INTO users (int_id, username, fullname, password, usertype, status, time_created, pics)
-VALUES ('{$sessint_id}', '{$username}', '{$display_name}', '{$hash}', '{$user_t}', '{$std}', '{$date_joined}', '{$img}')";
+VALUES ('{$sessint_id}', '{$username}', '{$display_name}', '{$hash}', '{$user_t}', '{$std}', '{$date_joined}', '{$image1}')";
 
 $result = mysqli_query($connection, $queryuser);
 
@@ -34,7 +43,7 @@ $ui = $row["id"];
  if ($res) {
     $qrys = "INSERT INTO staff (int_id, user_id, int_name, username, display_name, email, first_name, last_name,
 description, address, date_joined, org_role, phone, img) VALUES ('{$sessint_id}', '{$ui}', '{$int_n}', '{$username}', '{$display_name}', '{$email}',
-'{$first_name}', '{$last_name}', '{$description}', '{$address}', '{$date_joined}', '{$org_role}', '{$phone}', '{$img}')";
+'{$first_name}', '{$last_name}', '{$description}', '{$address}', '{$date_joined}', '{$org_role}', '{$phone}', '{$image1}')";
 
 $result = mysqli_query($connection, $qrys);
 
