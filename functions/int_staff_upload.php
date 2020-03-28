@@ -21,13 +21,14 @@ $std = "Not Active";
 $phone = $_POST['phone'];
 
 
-$image1 = $_FILES['passport']['name'];
+$image1 = $_FILES['picture']['name'];
 $target1 = "staff/".basename($image1);
 
-if (move_uploaded_file($_FILES['passport']['tmp_name'], $target1)) {
+if (move_uploaded_file($_FILES['picture']['tmp_name'], $target1)) {
     $msg = "Image uploaded successfully";
 } else{
     $msg = "Failed to upload image";
+    echo "<script> console.log($msg); </script>";
 }
 
 $queryuser = "INSERT INTO users (int_id, username, fullname, password, usertype, status, time_created, pics)
