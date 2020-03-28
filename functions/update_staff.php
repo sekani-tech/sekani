@@ -19,7 +19,7 @@ if (isset($_POST['int_name']) && isset($_POST['usertype'])) {
     $usertype = $_POST['usertype'];
 
     $image1 = $_FILES['passport']['name'];
-$target1 = "clients/".basename($image1);
+$target1 = "staff/".basename($image1);
 
 if (move_uploaded_file($_FILES['passport']['tmp_name'], $target1)) {
     $msg = "Image uploaded successfully";

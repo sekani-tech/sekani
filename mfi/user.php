@@ -111,7 +111,7 @@ while ( $results[] = mysqli_fetch_object ( $res ) );
                       </div>
                     </div>
                     <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                     <!-- insert passport -->
                     <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                         <div class="fileinput-new thumbnail img-raised">

@@ -36,6 +36,8 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 
 $image3 = $_FILES['passport']["name"];
 $target3 = "instimg/".basename($image3);
+
+
 $personx = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id = '$inst_id'");
 if (count([$personx]) == 1) {
   $x = mysqli_fetch_array($personx);
@@ -71,14 +73,14 @@ description, address, date_joined, org_role, phone) VALUES ('{$inst_id}', '{$int
 '{$first_name}', '{$last_name}', '{$description}', '{$address}', '{$date_joined}', '{$org_role}', '{$phone}')";
 
 $result = mysqli_query($connection, $qrys);
-if ($connection->error) {
-  try {
-      throw new Exception("MYSQL error $connection->error <br> $qrys ", $mysqli->error);
-  } catch (Exception $e) {
-      echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
-      echo n12br($e->getTraceAsString());
-  }
-}
+// if ($connection->error) {
+//   try {
+//       throw new Exception("MYSQL error $connection->error <br> $qrys ", $mysqli->error);
+//   } catch (Exception $e) {
+//       echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
+//       echo n12br($e->getTraceAsString());
+//   }
+// }
 if ($result) {
   $URL="users.php";
   echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';

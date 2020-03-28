@@ -127,7 +127,7 @@ if (isset($_GET["edit"])) {
                       </div>
                     </div>
                     <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                     <!-- insert passport -->
                     <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                         <div class="fileinput-new thumbnail img-raised">
@@ -174,15 +174,22 @@ if (isset($_GET["edit"])) {
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="assets/img/faces/marc.jpg" />
+                    <img class="img" src="../functions/staff/<?php echo $img;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->
                 <div class="card-body">
                   <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                  <h4 class="card-title">Alec Thompson</h4>
+                  <h4 class="card-title"><?php echo $display_name; ?></h4>
                   <p class="card-description">
-                    Sekani Systems
+                  <?php
+                $inq = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$sessint_id'");
+                if (count([$inq]) == 1) {
+                  $n = mysqli_fetch_array($inq);
+                  $int_name = $n['int_name'];
+                }
+              ?>
+            <?php echo $int_name; ?>
                   </p>
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>
