@@ -35,8 +35,11 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
     }    
     $id_card = $_POST['id_card'];
     // a new stuff for data upload
+    $digits = 10;
+
     $temp = explode(".", $_FILES['signature']['name']);
-    $image1 = round(microtime(true)). '.' .end($temp);
+    $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+    $image1 = $randms. '.' .end($temp);
     
     if (move_uploaded_file($_FILES['signature']['tmp_name'], "clients/" . $image1)) {
         $msg = "Image uploaded successfully";
@@ -47,7 +50,8 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
 // $target2 = "clients/".basename($image2);
 
 $temp2 = explode(".", $_FILES['idimg']['name']);
-$image2 = round(microtime(true)). '.' .end($temp2);
+$randms2 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$image2 = $randms2. '.' .end($temp2);
 
 if (move_uploaded_file($_FILES['idimg']['tmp_name'], "clients/" . $image2)) {
     $msg = "Image uploaded successfully";
@@ -59,7 +63,8 @@ if (move_uploaded_file($_FILES['idimg']['tmp_name'], "clients/" . $image2)) {
 // $target3 = "clients/".basename($image3);
 
 $temp3 = explode(".", $_FILES['passport']['name']);
-$image3 = round(microtime(true)). '.' .end($temp3);
+$randms3 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$image3 = $randms3. '.' .end($temp3);
 
 if (move_uploaded_file($_FILES['passport']['tmp_name'], "clients/" . $image3)) {
     $msg = "Image uploaded successfully";
