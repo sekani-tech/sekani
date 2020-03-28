@@ -18,13 +18,13 @@ if (isset($_POST['int_name']) && isset($_POST['usertype'])) {
     $org_role = $_POST['org_role'];
     $usertype = $_POST['usertype'];
 
-    $image1 = $_FILES['picture']['name'];
+$image1 = $_FILES['picture']['name'];
 $target1 = "staff/".basename($image1);
 
 if (move_uploaded_file($_FILES['picture']['tmp_name'], $target1)) {
     $msg = "Image uploaded successfully";
 } else {
-  console.log('i am bad');
+  $msg = "Image Failed";
 }
     $query = "UPDATE users SET username = '$username', usertype = '$usertype' WHERE id = '$user_id'";
     $result = mysqli_query($connection, $query);
