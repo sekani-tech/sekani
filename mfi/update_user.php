@@ -47,7 +47,7 @@ if (isset($_GET["edit"])) {
                   <p class="card-category">Modify user profile</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/update_staff.php" method="POST">
+                  <form action="../functions/update_staff.php" method="POST" enctype="multipart/form-data">
                     <div class="row">
                       <div class="col-md-2">
                         <div class="form-group">
@@ -127,15 +127,23 @@ if (isset($_GET["edit"])) {
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>Profile Photo</label>
-                          <div class="form-group">
-                            <label class="bmd-label-floating"> Use .jpg or png files other file types are not acceptible.</label>
-                            <input type="text" name="img" value="<?php echo $img; ?>" placeholder="select image" class="form-control" id="">
-                          </div>
+                    <div class="col-md-8">
+                    <!-- insert passport -->
+                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                        <div class="fileinput-new thumbnail img-raised">
+                            <!-- <img src="http://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" rel="nofollow" alt="..."> -->
                         </div>
-                      </div>
+                        <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                        <div>
+                            <span class="btn btn-raised btn-round btn-default btn-file">
+                                <span class="fileinput-new">Select picture</span>
+                                <span class="fileinput-exists">Change</span>
+                                <input type="file" name="imagefile"/>
+                            </span>
+                            <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                        </div>
+                    </div>
+                  </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">UserType</label>
@@ -166,15 +174,22 @@ if (isset($_GET["edit"])) {
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="assets/img/faces/marc.jpg" />
+                    <img class="img" src="../functions/staff/<?php echo $img;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->
                 <div class="card-body">
                   <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                  <h4 class="card-title">Alec Thompson</h4>
+                  <h4 class="card-title"><?php echo $display_name; ?></h4>
                   <p class="card-description">
-                    Sekani Systems
+                  <?php
+                $inq = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$sessint_id'");
+                if (count([$inq]) == 1) {
+                  $n = mysqli_fetch_array($inq);
+                  $int_name = $n['int_name'];
+                }
+              ?>
+            <?php echo $int_name; ?>
                   </p>
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>

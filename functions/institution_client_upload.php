@@ -48,30 +48,66 @@ if ( isset($_POST['email_active']) ) {
     $email_active = 0;
 }
 
-$image1 = $_FILES['signature']['name'];
-$target1 = "clients/".basename($image1);
+$digits = 10;
 
-$image2 = $_FILES['idimg']['name'];
-$target2 = "clients/".basename($image2);
+$temp = explode(".", $_FILES['signature']['name']);
+$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$image1 = $randms. '.' .end($temp);
 
-$image3 = $_FILES['passport']['name'];
-$target3 = "clients/".basename($image3);
+if (move_uploaded_file($_FILES['signature']['tmp_name'], "clients/" . $image1)) {
+    $msg = "Image uploaded successfully";
+} else {
+  $msg = "Image Failed";
+}
+// $image2 = $_FILES['idimg']['name'];
+// $target2 = "clients/".basename($image2);
 
-if (move_uploaded_file($_FILES['signature']['tmp_name'], $target1)) {
-    $msg = "Image uploaded successfully";
-}else{
-    $msg = "Failed to upload image";
+$temp2 = explode(".", $_FILES['idimg']['name']);
+$randms2 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$image2 = $randms2. '.' .end($temp2);
+
+if (move_uploaded_file($_FILES['idimg']['tmp_name'], "clients/" . $image2)) {
+$msg = "Image uploaded successfully";
+} else {
+$msg = "Image Failed";
 }
-if (move_uploaded_file($_FILES['idimg']['tmp_name'], $target2)) {
-    $msg = "Image uploaded successfully";
-}else{
-    $msg = "Failed to upload image";
+
+// $image3 = $_FILES['passport']['name'];
+// $target3 = "clients/".basename($image3);
+
+$temp3 = explode(".", $_FILES['passport']['name']);
+$randms3 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$image3 = $randms3. '.' .end($temp3);
+
+if (move_uploaded_file($_FILES['passport']['tmp_name'], "clients/" . $image3)) {
+$msg = "Image uploaded successfully";
+} else {
+$msg = "Image Failed";
 }
-if (move_uploaded_file($_FILES['passport']['tmp_name'], $target3)) {
-    $msg = "Image uploaded successfully";
-}else{
-    $msg = "Failed to upload image";
-}
+// $image1 = $_FILES['signature']['name'];
+// $target1 = "clients/".basename($image1);
+
+// $image2 = $_FILES['idimg']['name'];
+// $target2 = "clients/".basename($image2);
+
+// $image3 = $_FILES['passport']['name'];
+// $target3 = "clients/".basename($image3);
+
+// if (move_uploaded_file($_FILES['signature']['tmp_name'], $target1)) {
+//     $msg = "Image uploaded successfully";
+// }else{
+//     $msg = "Failed to upload image";
+// }
+// if (move_uploaded_file($_FILES['idimg']['tmp_name'], $target2)) {
+//     $msg = "Image uploaded successfully";
+// }else{
+//     $msg = "Failed to upload image";
+// }
+// if (move_uploaded_file($_FILES['passport']['tmp_name'], $target3)) {
+//     $msg = "Image uploaded successfully";
+// }else{
+//     $msg = "Failed to upload image";
+// }
 // gaurantors part
 $query = "INSERT INTO client (int_id, loan_officer_id, client_type, account_type,
 display_name, account_no,
