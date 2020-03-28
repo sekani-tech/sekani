@@ -113,9 +113,13 @@ $res = mysqli_query($connection, $query);
 
         $go = mysqli_query($connection, $accountins);
         if ($go) {
-            echo header("location: ../mfi/client.php");
+          $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
+          echo header ("Location: ../mfi/client.php?message1=$randms");
         } else {
-            echo "error";
+           $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+           echo "error";
+          echo header ("Location: ../mfi/client.php?message2=$randms");
+            // echo header("location: ../mfi/client.php");
         }
     }
 

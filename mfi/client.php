@@ -5,6 +5,76 @@ $destination = "index.php";
     include("header.php");
 
 ?>
+<?php
+  if (isset($_GET["message1"])) {
+    $key = $_GET["message1"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "success",
+            title: "Success",
+            text: "Registration Successful",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = null;
+}
+else if (isset($_GET["message2"])) {
+  $key = $_GET["message2"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Error",
+          text: "Error during Registration",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = null;
+}
+if (isset($_GET["message3"])) {
+  $key = $_GET["message3"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Success",
+          text: "Client was Updated successfully!",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = null;
+}
+else if (isset($_GET["message4"])) {
+$key = $_GET["message4"];
+// $out = $_SESSION["lack_of_intfund_$key"];
+echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "error",
+        title: "Error",
+        text: "Error updating client!",
+        showConfirmButton: false,
+        timer: 2000
+    })
+});
+</script>
+';
+$_SESSION["lack_of_intfund_$key"] = null;
+}
+?>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">

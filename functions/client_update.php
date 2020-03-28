@@ -3,6 +3,8 @@ include("connect.php");
 session_start();
 ?>
 <?php
+$digits = 6;
+$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 if (isset($_POST['id']) && isset($_POST['ctype'])) {
     $id = $_POST['id'];
     $ctype = $_POST['ctype'];
@@ -75,10 +77,14 @@ id_img_url = '$image2', passport = '$image3', signature = '$image1' WHERE id = '
 
 $result = mysqli_query($connection, $queryx);
 if($result) {
-    echo header("location: ../mfi/client.php");
-} else {
-    echo "there is an error here";
-}
+    $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
+          echo header ("Location: ../mfi/client.php?message3=$randms");
+        } else {
+           $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+           echo "error";
+          echo header ("Location: ../mfi/client.php?message4=$randms");
+            // echo header("location: ../mfi/client.php");
+        }
 if ($connection->error) {
     try {   
         throw new Exception("MySQL error $connection->error <br> Query:<br> $queryx", $mysqli->error);   
