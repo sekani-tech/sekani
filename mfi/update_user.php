@@ -47,7 +47,7 @@ if (isset($_GET["edit"])) {
                   <p class="card-category">Modify user profile</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/update_staff.php" method="POST">
+                  <form action="../functions/update_staff.php" method="POST" enctype="multipart/form-data">
                     <div class="row">
                       <div class="col-md-2">
                         <div class="form-group">
@@ -127,7 +127,7 @@ if (isset($_GET["edit"])) {
                       </div>
                     </div>
                     <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                     <!-- insert passport -->
                     <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                         <div class="fileinput-new thumbnail img-raised">
@@ -135,11 +135,11 @@ if (isset($_GET["edit"])) {
                         </div>
                         <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
                         <div>
-                            <!-- <span class="btn btn-raised btn-round btn-default btn-file"> -->
+                            <span class="btn btn-raised btn-round btn-default btn-file">
                                 <span class="fileinput-new">Select picture</span>
                                 <span class="fileinput-exists">Change</span>
-                                <input type="file" name="image" id="image" />
-                            <!-- </span> -->
+                                <input type="file" name="imagefile"/>
+                            </span>
                             <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                         </div>
                     </div>

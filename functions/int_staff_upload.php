@@ -20,18 +20,19 @@ $org_role = $_POST['org_role'];
 $std = "Not Active";
 $phone = $_POST['phone'];
 
+$digits = 10;
+$temp = explode(".", $_FILES['imagefile']['name']);
+$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$imagex = $randms. '.' .end($temp);
 
-$temp = explode(".", $_FILES['picture']['name']);
-$image1 = round(microtime(true)). '.' .end($temp);
-
-if (move_uploaded_file($_FILES['picture']['tmp_name'], "staff/" . $image1)) {
+if (move_uploaded_file($_FILES['imagefile']['tmp_name'], "staff/" . $imagex)) {
     $msg = "Image uploaded successfully";
 } else {
   $msg = "Image Failed";
 }
 
 $queryuser = "INSERT INTO users (int_id, username, fullname, password, usertype, status, time_created, pics)
-VALUES ('{$sessint_id}', '{$username}', '{$display_name}', '{$hash}', '{$user_t}', '{$std}', '{$date_joined}', '{$image1}')";
+VALUES ('{$sessint_id}', '{$username}', '{$display_name}', '{$hash}', '{$user_t}', '{$std}', '{$date_joined}', '{$imagex}')";
 
 $result = mysqli_query($connection, $queryuser);
 
@@ -43,7 +44,7 @@ $ui = $row["id"];
  if ($res) {
     $qrys = "INSERT INTO staff (int_id, user_id, int_name, username, display_name, email, first_name, last_name,
 description, address, date_joined, org_role, phone, img) VALUES ('{$sessint_id}', '{$ui}', '{$int_n}', '{$username}', '{$display_name}', '{$email}',
-'{$first_name}', '{$last_name}', '{$description}', '{$address}', '{$date_joined}', '{$org_role}', '{$phone}', '{$image1}')";
+'{$first_name}', '{$last_name}', '{$description}', '{$address}', '{$date_joined}', '{$org_role}', '{$phone}', '{$imagex}')";
 
 $result = mysqli_query($connection, $qrys);
 

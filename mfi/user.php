@@ -24,7 +24,7 @@ while ( $results[] = mysqli_fetch_object ( $res ) );
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/int_staff_upload.php" method="POST">
+                  <form action="../functions/int_staff_upload.php" method="POST" enctype="multipart/form-data">
                     <div class="row">
                       <div class="col-md-5">
                         <div class="form-group">
@@ -111,7 +111,7 @@ while ( $results[] = mysqli_fetch_object ( $res ) );
                       </div>
                     </div>
                     <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                     <!-- insert passport -->
                     <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                         <div class="fileinput-new thumbnail img-raised">
@@ -119,11 +119,11 @@ while ( $results[] = mysqli_fetch_object ( $res ) );
                         </div>
                         <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
                         <div>
-                            <!-- <span class="btn btn-raised btn-round btn-default btn-file"> -->
+                            <span class="btn btn-raised btn-round btn-default btn-file">
                                 <span class="fileinput-new">Select picture</span>
                                 <span class="fileinput-exists">Change</span>
-                                <input type="file" name="picture" />
-                            <!-- </span> -->
+                                <input type="file" name="imagefile"/>
+                            </span>
                             <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                         </div>
                     </div>
