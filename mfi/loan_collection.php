@@ -1,9 +1,7 @@
-<?php 
-
+<?php
 $page_title = "Loan Collection";
 $destination = "loans.php";
 include("header.php");
-
 ?>
 <!-- Content added here -->
 <div class="content">
@@ -129,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       //         echo n12br($e->getTraceAsString());
       //     }
       // }
-        // we insert to priciapl portfolio
+        // we insert to principal portfolio
         if ($res3) {
           // we insert to interest portfolio
           $last = "INSERT INTO loan_principal_port (int_id, officer_id, branch_id,
@@ -192,11 +190,60 @@ echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
     }
   } else {
     $exp_error = "<p>Amount Less then the Expected amount</p>";
+    // if($exp_error = "<p>Amount Less then the Expected amount</p>") {
+    //   // If 'exp_error' has value, it will send the required message to client.php
+    //   $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name> was updated successfully!";
+    //         echo header ("Location: ../mfi/client.php?message1=$randms");
+    //       } else {
+    //          $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+    //          echo "error";
+    //         echo header ("Location: ../mfi/client.php?message2=$randms");
+    //           // echo header("location: ../mfi/client.php");
+    //       }
   }
 } else {
   $exp_error = "";
 }
 ?>
+<?php
+//  Sweet alert Function
+
+// If it is successfull, It will show this message
+  if (isset($_GET["message1"])) {
+    $key = $_GET["message1"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "Success",
+            text: "Amount Less then the Expected amount",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = null;
+}
+// If it is not successfull, It will show this message
+else if (isset($_GET["message2"])) {
+  $key = $_GET["message2"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Error",
+          text: "Error during Registration",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = null;
+}?>
           <!-- your content here -->
           <div class="row">
               <div class="col-md-12">

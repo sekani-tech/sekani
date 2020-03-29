@@ -32,7 +32,7 @@ $destination = "products.php";
     $min_interest_rate = $n['min_interest_rate'];
     $max_interest_rate = $n['max_interest_rate'];
     $interest_rate_applied = $n['interest_rate_applied'];
-    $interest_rate_methodology = $n['interest_rate_methodology'];
+    $interest_rate_methodoloy = $n['interest_rate_methodoloy'];
     $ammortization_method = $n['ammortization_method'];
     $cycle_count = $n['cycle_count'];
     $auto_allocate_overpayment = $n['auto_allocate_overpayment'];
@@ -180,7 +180,7 @@ $destination = "products.php";
                     <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Interest Rate Methodology</label>
-                          <input type="text"  class="form-control" value="<?php echo $interest_rate_methodology; ?>" name="interest_rate_methodology">
+                          <input type="text"  class="form-control" value="<?php echo $interest_rate_methodoloy; ?>" name="interest_rate_methodology">
                         </div>
                     </div>
                     <div class="col-md-6">

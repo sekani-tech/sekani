@@ -11,11 +11,15 @@ $location = $_POST['location'];
   location = '$location' WHERE id = '$id'";
   $result = mysqli_prepare($connection, $query);
   if(mysqli_stmt_execute($result)) {
-     echo header("location: ../mfi/branch.php");
-    echo "<p>done</p>";
-  } else {
-      echo "nop";
-  }
+    // If 'result' is successful, it will send the required message to client.php
+    $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
+          echo header ("Location: ../mfi/branch.php?message3=$randms");
+        } else {
+           $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+           echo "error";
+          echo header ("Location: ../mfi/branch.php?message4=$randms");
+            // echo header("location: ../mfi/client.php");
+        }
   if ($connection->error) {
     try {   
         throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   

@@ -47,7 +47,7 @@ if(isset($_GET["edit"])) {
             <div class="col-md-8">
             <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Create new Client</h4>
+                  <h4 class="card-title">Update <?php echo $display_name; ?></h4>
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
@@ -270,7 +270,7 @@ if(isset($_GET["edit"])) {
                       </div>
                     </div>
                     <a href="client.php" class="btn btn-secondary">Back</a>
-                    <button type="submit" class="btn btn-primary pull-right">Create Client</button>
+                    <button type="submit" class="btn btn-primary pull-right">Update Client</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>

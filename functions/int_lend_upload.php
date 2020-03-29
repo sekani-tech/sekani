@@ -169,7 +169,7 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
                                     }
                                     if ($connection->error) {
                                         try {
-                                            throw new Exception("MYSQL error $connection->error <br> $kdln ", $mysqli->error);
+                                            throw new Exception("MYSQL error $connection->error <br> $colacctts", $mysqli->error);
                                         } catch (Exception $e) {
                                             echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
                                             echo n12br($e->getTraceAsString());
@@ -177,6 +177,14 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
                                     }
                                 } else {
                                     echo "bad data in the last if statement";
+                                    if ($connection->error) {
+                                        try {
+                                            throw new Exception("MYSQL error $connection->error <br> $kdln ", $mysqli->error);
+                                        } catch (Exception $e) {
+                                            echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
+                                            echo n12br($e->getTraceAsString());
+                                        }
+                                    }
                                 }
                             }
                         } else {

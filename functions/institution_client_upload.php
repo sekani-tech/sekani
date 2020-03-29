@@ -8,13 +8,13 @@ $sessint_id = $_SESSION["int_id"];
 $loan_officer_id = $_SESSION["user_id"];
 $ctype = $_POST['ctype'];
 $acct_type = $_POST['acct_type'];
+$branch = $_POST['branch'];
 $display_name = $_POST['display_name'];
 // an account number generation
- $inttest = str_pad($sessint_id, 3, '0', STR_PAD_LEFT);
-$usertest = str_pad($loan_officer_id, 3, '0', STR_PAD_LEFT);
-$digits = 3;
+ $inttest = str_pad($branch, 4, '0', STR_PAD_LEFT);
+$digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-$account_no = $inttest. "-" .$usertest. "-" .$randms;
+$account_no = $inttest."".$randms;
 // auto calculation for the account number generation
 $first_name = $_POST['firstname'];
 $last_name = $_POST['lastname'];
@@ -25,7 +25,6 @@ $email = $_POST['email'];
 $address = $_POST['address'];
 $gender = $_POST['gender'];
 $date_of_birth = $_POST['date_of_birth'];
-$branch = $_POST['branch'];
 $country = $_POST['country'];
 $state = $_POST['state'];
 $lga = $_POST['lga'];
@@ -49,30 +48,66 @@ if ( isset($_POST['email_active']) ) {
     $email_active = 0;
 }
 
-$image1 = $_FILES['signature']['name'];
-$target1 = "clients/".basename($image1);
+$digits = 10;
 
-$image2 = $_FILES['idimg']['name'];
-$target2 = "clients/".basename($image2);
+$temp = explode(".", $_FILES['signature']['name']);
+$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$image1 = $randms. '.' .end($temp);
 
-$image3 = $_FILES['passport']['name'];
-$target3 = "clients/".basename($image3);
+if (move_uploaded_file($_FILES['signature']['tmp_name'], "clients/" . $image1)) {
+    $msg = "Image uploaded successfully";
+} else {
+  $msg = "Image Failed";
+}
+// $image2 = $_FILES['idimg']['name'];
+// $target2 = "clients/".basename($image2);
 
-if (move_uploaded_file($_FILES['signature']['tmp_name'], $target1)) {
-    $msg = "Image uploaded successfully";
-}else{
-    $msg = "Failed to upload image";
+$temp2 = explode(".", $_FILES['idimg']['name']);
+$randms2 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$image2 = $randms2. '.' .end($temp2);
+
+if (move_uploaded_file($_FILES['idimg']['tmp_name'], "clients/" . $image2)) {
+$msg = "Image uploaded successfully";
+} else {
+$msg = "Image Failed";
 }
-if (move_uploaded_file($_FILES['idimg']['tmp_name'], $target2)) {
-    $msg = "Image uploaded successfully";
-}else{
-    $msg = "Failed to upload image";
+
+// $image3 = $_FILES['passport']['name'];
+// $target3 = "clients/".basename($image3);
+
+$temp3 = explode(".", $_FILES['passport']['name']);
+$randms3 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$image3 = $randms3. '.' .end($temp3);
+
+if (move_uploaded_file($_FILES['passport']['tmp_name'], "clients/" . $image3)) {
+$msg = "Image uploaded successfully";
+} else {
+$msg = "Image Failed";
 }
-if (move_uploaded_file($_FILES['passport']['tmp_name'], $target3)) {
-    $msg = "Image uploaded successfully";
-}else{
-    $msg = "Failed to upload image";
-}
+// $image1 = $_FILES['signature']['name'];
+// $target1 = "clients/".basename($image1);
+
+// $image2 = $_FILES['idimg']['name'];
+// $target2 = "clients/".basename($image2);
+
+// $image3 = $_FILES['passport']['name'];
+// $target3 = "clients/".basename($image3);
+
+// if (move_uploaded_file($_FILES['signature']['tmp_name'], $target1)) {
+//     $msg = "Image uploaded successfully";
+// }else{
+//     $msg = "Failed to upload image";
+// }
+// if (move_uploaded_file($_FILES['idimg']['tmp_name'], $target2)) {
+//     $msg = "Image uploaded successfully";
+// }else{
+//     $msg = "Failed to upload image";
+// }
+// if (move_uploaded_file($_FILES['passport']['tmp_name'], $target3)) {
+//     $msg = "Image uploaded successfully";
+// }else{
+//     $msg = "Failed to upload image";
+// }
 // gaurantors part
 $query = "INSERT INTO client (int_id, loan_officer_id, client_type, account_type,
 display_name, account_no,
@@ -114,9 +149,13 @@ $res = mysqli_query($connection, $query);
 
         $go = mysqli_query($connection, $accountins);
         if ($go) {
-            echo header("location: ../mfi/client.php");
+          $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
+          echo header ("Location: ../mfi/client.php?message1=$randms");
         } else {
-            echo "error";
+           $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+           echo "error";
+          echo header ("Location: ../mfi/client.php?message2=$randms");
+            // echo header("location: ../mfi/client.php");
         }
     }
 

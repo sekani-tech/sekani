@@ -16,7 +16,7 @@ Sanusi
 1. Update branch --DONE
 2. Update Product --DONE
 3. Populate database with existing client data --DONE
-4. View client (Link the view client page the client table and populate data as needed)
+4. View client (Link the view client page the client table and populate data as needed) ---DONE
 
 
 NB: COMMENT WITH --DONE after a task is completed note the task would be updated as ui is pushed.
