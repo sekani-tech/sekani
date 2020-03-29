@@ -6,6 +6,9 @@ $destination = "index.php";
 
 ?>
 <?php
+//  Sweet alert Function
+
+// If it is successfull, It will show this message
   if (isset($_GET["message1"])) {
     $key = $_GET["message1"];
     // $out = $_SESSION["lack_of_intfund_$key"];
@@ -23,6 +26,7 @@ $destination = "index.php";
     ';
     $_SESSION["lack_of_intfund_$key"] = null;
 }
+// If it is not successfull, It will show this message
 else if (isset($_GET["message2"])) {
   $key = $_GET["message2"];
   // $out = $_SESSION["lack_of_intfund_$key"];

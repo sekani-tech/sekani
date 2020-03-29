@@ -3,6 +3,8 @@ include("connect.php");
 session_start();
 ?>
 <?php
+$digits = 6;
+$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $sessint_id = $_SESSION["int_id"];
 $int_n = $_POST['int_name'];
 $username = $_POST['username'];
@@ -49,23 +51,27 @@ description, address, date_joined, org_role, phone, img) VALUES ('{$sessint_id}'
 $result = mysqli_query($connection, $qrys);
 
 if ($result) {
-    echo header("location: ../mfi/users.php");
-    exit;
-} else {
-   echo "<p>Error</p>";
-}
+   // If 'result' is successful, it will send the required message to client.php
+   $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
+   echo header ("Location: ../mfi/users.php?message1=$randms");
+ } else {
+    $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+   echo header ("Location: ../mfi/users.php?message2=$randms");
+     // echo header("location: ../mfi/client.php");
+ }
  } else {
      echo "<p>ERROR</p>";
  }
 } else {
-   echo "<p>Error</p>";
+  $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+   echo header ("Location: ../mfi/users.php?message2=$randms");
 }
-if ($connection->error) {
-    try {   
-        throw new Exception("MySQL error $connection->error <br> Query:<br> $qrys", $msqli->errno);   
-    } catch(Exception $e ) {
-        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-        echo nl2br($e->getTraceAsString());
-    }
-}
+// if ($connection->error) {
+//     try {   
+//         throw new Exception("MySQL error $connection->error <br> Query:<br> $qrys", $msqli->errno);   
+//     } catch(Exception $e ) {
+//         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+//         echo nl2br($e->getTraceAsString());
+//     }
+// }
 ?>

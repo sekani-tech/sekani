@@ -245,7 +245,7 @@ return $output;
                                                   <label for="requireSavingsAcct" >Requires Linked Savings Account </label>
                                                   <select class="form-control" name="linked_savings_acct" required>
                                                     <option value="Abuja Savings Group">Abuja Savings Group</option>
-                                                    <option value="Lagos Ssavings Group">Lagos Savings Group</option>
+                                                    <option value="Lagos Savings Group">Lagos Savings Group</option>
                                                   </select>
                                                 </div>
                         <!-- </div> -->

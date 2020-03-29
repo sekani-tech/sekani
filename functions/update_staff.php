@@ -2,6 +2,8 @@
 include("connect.php")
 ?>
 <?php
+$digits = 6;
+$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 if (isset($_POST['int_name']) && isset($_POST['usertype'])) {
     $user_id = $_POST['user_id'];
     $staff_id = $_POST['staff_id'];
@@ -44,9 +46,13 @@ if (move_uploaded_file($_FILES['imagefile']['tmp_name'], "staff/" . $imagex)) {
         //                 }
         // }
         if ($res) {
-            echo header("location: ../mfi/users.php");
+          $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
+          echo header ("Location: ../mfi/users.php?message3=$randms");
         } else {
-            echo "there is an error here";
+           $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+           echo "error";
+          echo header ("Location: ../mfi/users.php?message4=$randms");
+            // echo header("location: ../mfi/client.php");
         }
     } else {
         echo "nop";

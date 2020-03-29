@@ -6,6 +6,8 @@ session_start();
 
 ?>
 <?php
+$digits = 6;
+$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $sessint_id = $_SESSION["int_id"];
 $charge_id = $_POST['charge_id'];
 $name = $_POST['name'];
@@ -52,10 +54,14 @@ auto_disburse, linked_savings_acct) VALUES ('{$sessint_id}', '{$charge_id}', '{$
 $res = mysqli_query($connection, $query);
 
  if ($res) {
-    echo header("location: ../mfi/products.php");
- } else {
-     echo "<p>Error</p>";
- }
+    $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
+          echo header ("Location: ../mfi/products.php?message1=$randms");
+        } else {
+           $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+           echo "error";
+          echo header ("Location: ../mfi/products.php?message2=$randms");
+            // echo header("location: ../mfi/client.php");
+        }
 if ($connection->error) {
         try {   
             throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $msqli->errno);   

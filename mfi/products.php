@@ -5,6 +5,80 @@ $destination = "index.php";
     include("header.php");
 
 ?>
+<?php
+//  Sweet alert Function
+
+// If it is successfull, It will show this message
+  if (isset($_GET["message1"])) {
+    $key = $_GET["message1"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "success",
+            title: "Success",
+            text: "Product Created!",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = null;
+}
+// If it is not successfull, It will show this message
+else if (isset($_GET["message2"])) {
+  $key = $_GET["message2"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Error",
+          text: "Product failed to be created",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = null;
+}
+if (isset($_GET["message3"])) {
+  $key = $_GET["message3"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Success",
+          text: "Product was Updated successfully!",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = null;
+}
+else if (isset($_GET["message4"])) {
+$key = $_GET["message4"];
+// $out = $_SESSION["lack_of_intfund_$key"];
+echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "error",
+        title: "Error",
+        text: "Error updating Product!",
+        showConfirmButton: false,
+        timer: 2000
+    })
+});
+</script>
+';
+$_SESSION["lack_of_intfund_$key"] = null;
+}
+?>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">

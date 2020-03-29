@@ -104,6 +104,7 @@ id_img_url = '$image2', passport = '$image3', signature = '$image1' WHERE id = '
 
 $result = mysqli_query($connection, $queryx);
 if($result) {
+    // If 'result' is successful, it will send the required message to client.php
     $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
           echo header ("Location: ../mfi/client.php?message3=$randms");
         } else {

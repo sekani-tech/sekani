@@ -15,10 +15,15 @@ $query = "INSERT INTO branch (int_id, name, email, phone, location) VALUES ('{$s
 $result = mysqli_query($connection, $query);
 
 if ($result) {
-    echo header("location: ../mfi/branch.php");
-} else {
-    echo "<p>Bad</p>";
-}
+    // If 'result' is successful, it will send the required message to client.php
+    $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
+          echo header ("Location: ../mfi/branch.php?message1=$randms");
+        } else {
+           $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+           echo "error";
+          echo header ("Location: ../mfi/branch.php?message2=$randms");
+            // echo header("location: ../mfi/client.php");
+        }
 if ($connection->error) {
     try {   
         throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
