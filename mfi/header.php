@@ -83,23 +83,49 @@ $rezz = mysqli_query($connection, $activeq);
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="client.php">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="false">
               <i class="material-icons">people</i>
-              <p>Client</p>
+              Client
             </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="client.php">Client List</a>
+              <a href="manage_client.php" class="dropdown-item">Register Client</a>
+            </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="transact.php">
-              <i class="material-icons">account_balance_wallet</i>
-              <p>Transaction</p>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="false">
+              <i class="material-icons">people</i>
+              Group
             </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="client.php">Group List</a>
+              <a href="manage_client.php" class="dropdown-item">Register Group</a>
+            </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="loans.php">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="fasle">
               <i class="material-icons">account_balance_wallet</i>
-              <p>Loans</p>
+              Transaction
             </a>
+            <div class="dropdown-menu">
+              <a href="transact.php" class="dropdown-item">Deposit/Withdrwal</a>
+              <a href="#" class="dropdown-item">Fixed Deposit</a>
+              <a href="lend.php" class="dropdown-item">Create Loan</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown-menu">
+            <a class="nav-link dropdown-toggle" href="#">
+              <i class="material-icons">brand</i>
+              Products Summary
+            </a>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item">Savings Account</a>
+              <a href="#" class="dropdown-item">Current Account</a>
+              <a href="#" class="dropdown-item">Fixed Desposit</a>
+              <a href="#" class="dropdown-item">Shares</a>
+              <a href="loans.php" class="dropdown-item">Loans</a>
+            </div>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
