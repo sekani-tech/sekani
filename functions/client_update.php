@@ -8,7 +8,7 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 if (isset($_POST['id']) && isset($_POST['ctype'])) {
     $id = $_POST['id'];
     $ctype = $_POST['ctype'];
-    $acct_type = $_POST['acct_type'];
+    $acct_type = $_POST['account_type'];
     $display_name = $_POST['display_name'];
     $first_name = $_POST['first_name'];
     $middle_name = $_POST['middle_name'];

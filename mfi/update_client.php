@@ -60,10 +60,14 @@ if(isset($_GET["edit"])) {
                           <input type="text" class="form-control" value="<?php echo $ctype; ?>" name="ctype" readonly>
                         </div>
                       </div>
-                      <div class="col-md-5">
+                      <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Account Type</label>
-                          <input type="text" class="form-control" value="<?php echo $acct_type; ?>" name="acct_type">
+                          <label class="">Account Type:</label>
+                          <select name="account_type" class="form-control" id="collat">
+                          <option value="">Choose Account Type</option>
+                          <option value="Current">Current</option>
+                          <option value="Savings">Savings</option>
+                        </select>
                         </div>
                       </div>
                       <!-- </div> -->
@@ -218,8 +222,8 @@ if(isset($_GET["edit"])) {
                             <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
                             <div>
                                 <span class="btn btn-raised btn-round btn-default btn-file">
-                                    <span class="fileinput-new">Select passport</span>
-                                    <span class="fileinput-exists">Change</span>
+                                    <span class="fileinput-new">Upload passport</span>
+                                    <!-- <span class="fileinput-exists">Change</span> -->
                                     <input type="file" name="passport" id="passport" />
                                 </span>
                                 <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
@@ -234,7 +238,7 @@ if(isset($_GET["edit"])) {
                             <div>
                                 <span class="btn btn-raised btn-round btn-default btn-file">
                                     <span class="fileinput-new">Select signature</span>
-                                    <span class="fileinput-exists">Change</span>
+                                    <!-- <span class="fileinput-exists">Change</span> -->
                                     <input type="file" name="signature" />
                                 </span>
                                 <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
@@ -260,8 +264,8 @@ if(isset($_GET["edit"])) {
                             <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
                             <div>
                                 <span class="btn btn-raised btn-round btn-default btn-file">
-                                    <span class="fileinput-new">Select Image ID</span>
-                                    <span class="fileinput-exists">Change</span>
+                                    <span class="fileinput-new">Upload Image ID</span>
+                                    <!-- <span class="fileinput-exists">Change</span> -->
                                     <input type="file" name="idimg" />
                                 </span>
                                 <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>

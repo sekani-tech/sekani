@@ -102,7 +102,7 @@ if(isset($_GET["edit"])) {
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="">Quaterly Fee Owed:</label>
+                          <label for="">APR (Annual per interest rate):</label>
                           <input type="text" name="" id="" class="form-control" value="2500" readonly>
                         </div>
                       </div>
@@ -126,7 +126,7 @@ if(isset($_GET["edit"])) {
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="">Total Amoount payed:</label>
+                          <label for="">Total Loan Amount payed:</label>
                           <input type="text" name="" id="" class="form-control" value="2500" readonly>
                         </div>
                       </div>
