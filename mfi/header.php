@@ -104,7 +104,7 @@ $rezz = mysqli_query($connection, $activeq);
             </div>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="fasle">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="false" aria-expanded="fasle">
               <i class="material-icons">account_balance_wallet</i>
               Transaction
             </a>
@@ -115,7 +115,7 @@ $rezz = mysqli_query($connection, $activeq);
             </div>
           </li>
           <li class="nav-item dropdown-menu">
-            <a class="nav-link dropdown-toggle" href="#">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
               <i class="material-icons">brand</i>
               Products Summary
             </a>
