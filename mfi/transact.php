@@ -140,7 +140,7 @@ if (isset($_GET["message"])) {
                                   </div>
                                   <script>
                             $(document).ready(function() {
-                              $('#account_no').keyup(function(){
+                              $('#account_no').on("input", function(){
                                 var id = $(this).val();
                                 var int_id = $sessint_id;
                                 $.ajax({
