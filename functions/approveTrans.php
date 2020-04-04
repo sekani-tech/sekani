@@ -51,8 +51,17 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                     '{$gen_date}', '{$appuser_id}')";
                     $res3 = mysqli_query($connection, $iat);
                     if ($res3) {
-                        $_SESSION["Lack_of_intfund_$randms"] = "Successfully Approved";
-                        echo header ("Location: ../mfi/transact_approval.php?message1=$randms");
+                        $v = "Verified";
+                        $iupqx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod'";
+                        $res4 = mysqli_query($connection, $iupqx);
+                        if ($res4) {
+                            $_SESSION["Lack_of_intfund_$randms"] = "Successfully Approved";
+                            echo header ("Location: ../mfi/transact_approval.php?message1=$randms");
+                        } else {
+                            $_SESSION["Lack_of_intfund_$randms"] = "Error updating Cache";
+                            echo header ("Location: ../mfi/transact_approval.php?message2=$randms");
+                        }
+                        
                     } else {
                         $_SESSION["Lack_of_intfund_$randms"] = "Error in Transaction";
                         echo header ("Location: ../mfi/transact_approval.php?message2=$randms");
@@ -77,8 +86,16 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                     '{$gen_date}', '{$appuser_id}')";
                     $res3 = mysqli_query($connection, $iat);
                     if ($res3) {
-                        $_SESSION["Lack_of_intfund_$randms"] = "Successfully Approved";
-                        echo header ("Location: ../mfi/transact_approval.php?message1=$randms");
+                        $v = "Verified";
+                        $iupqx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod'";
+                        $res4 = mysqli_query($connection, $iupqx);
+                        if ($res4) {
+                            $_SESSION["Lack_of_intfund_$randms"] = "Successfully Approved";
+                            echo header ("Location: ../mfi/transact_approval.php?message1=$randms");
+                        } else {
+                            $_SESSION["Lack_of_intfund_$randms"] = "Error updating Cache";
+                            echo header ("Location: ../mfi/transact_approval.php?message2=$randms");
+                        }
                     } else {
                         $_SESSION["Lack_of_intfund_$randms"] = "Error in Transaction";
                         echo header ("Location: ../mfi/transact_approval.php?message2=$randms");
