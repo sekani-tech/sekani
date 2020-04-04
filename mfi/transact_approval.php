@@ -3,7 +3,57 @@
     include("header.php");
 
 ?>
-
+<?php
+if (isset($_GET["message1"])) {
+  $key = $_GET["message1"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Success",
+          text: "Transaction Successfully Approved",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = null;
+} else if (isset($_GET["message2"])) {
+  $key = $_GET["message2"];
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Error",
+          text: "'.$out = $_SESSION["lack_of_intfund_$key"].'",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = null;
+} else if (isset($_GET["message3"])) {
+  $key = $_GET["message2"];
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Error",
+          text: "'.$out = $_SESSION["lack_of_intfund_$key"].'",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = null;
+} else {
+  echo "";
+}
+?>
 <!-- <link href="vendor/css/addons/datatables.min.css" rel="stylesheet">
 <script type="text/javascript" src="vendor/js/addons/datatables.min.js"></script> -->
 <!-- Content added here -->
@@ -45,6 +95,9 @@
                           Transaction Type
                         </th>
                         <th class="th-sm">
+                          Amount
+                        </th>
+                        <th class="th-sm">
                           Account Officer
                         </th>
                         <th class="th-sm">
@@ -61,10 +114,11 @@
                         <tr>
                         <?php $row["id"]; ?>
                           <th><?php echo $row["transact_type"]; ?></th>
+                          <th><?php echo $row["amount"]; ?></th>
                           <th><?php echo $row["account_off_name"]; ?></th>
                           <th><?php echo $row["client_name"]; ?></th>
                           <th><?php echo $row["status"]; ?></th>
-                          <td><a href="#.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
+                          <td><a href="../functions/approveTrans.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
                           </tr>
                           <!-- <th></th> -->
                           <?php }

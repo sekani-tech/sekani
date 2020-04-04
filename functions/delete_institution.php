@@ -1,5 +1,5 @@
 <?php
-include("connect.php")
+include("connect.php");
 ?>
 <?php
 if(isset($_GET['edit']) && $_GET['edit'] !== '') {
