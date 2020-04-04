@@ -1,98 +1,51 @@
 <?php
 include("../functions/connect.php");
+
 $output = '';
 
 if(isset($_POST["id"]))
 {
-    if($_POST["id"] !='') {
-        $balancesql = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '".$_POST["id"]."'");
-        if (count([$balancesql]) == 1) {
-            $x = mysqli_fetch_array($balancesql);
-            $balance = $x['account_balance_derived'];
-            $accnsql =  mysqli_query($connection, "SELECT * FROM client WHERE account_no = '".$_POST["id"]."'");
-            if (count([$accnsql]) == 1) {
-                $z = mysqli_fetch_array($accnsql);
-                $fn = $z['firstname'];
-                $ln = $z['lastname'];
-                $mb = $z['mobile_no'];
-
-                // output
-                while ($row = mysqli_fetch_array($accnsql))
-                {
-                    $output = '
-                    <div class="col-md-4">
-                        <div class="form-group">
-                        <label>Account Balance:</label>
-                        <input type="text" value="'.$balance.'" name="Acctbb" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                        <label>Account Balance:</label>
-                        <input type="text" value="'.$fn.'" name="Abb" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                        <label>Account Balance:</label>
-                        <input type="text" value="'.$ln.'" name="Abbb" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                        <label>Account Balance:</label>
-                        <input type="text" value="'.$mb.'" name="Abbnb" class="form-control">
-                        </div>
-                    </div>';
-                }
-                echo $output;
-            }
-        }
-
-    } else {
-        $balancesql = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '".$_POST["id"]."' && int_id = '".$_POST["int_id"]."'");
-        if (count([$balancesql]) == 1) {
-            $x = mysqli_fetch_array($balancesql);
-            $balance = $x['account_balance_derived'];
-            $accnsql =  mysqli_query($connection, "SELECT * FROM client WHERE account_no = '".$_POST["id"]."' && int_id = '".$_POST["int_id"]."'");
-            if (count([$accnsql]) == 1) {
-                $z = mysqli_fetch_array($accnsql);
-                $fn = $z['firstname'];
-                $ln = $z['lastname'];
-                $mb = $z['mobile_no'];
-
-                // output
-                while ($row = mysqli_fetch_array($accnsql))
-                {
-                    $output = '
-                    <div class="col-md-4">
-                        <div class="form-group">
-                        <label>Account Balance:</label>
-                        <input type="text" value="'.$balance.'" name="Acctbb" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                        <label>Account Balance:</label>
-                        <input type="text" value="'.$fn.'" name="Abb" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                        <label>Account Balance:</label>
-                        <input type="text" value="'.$ln.'" name="Abbb" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                        <label>Account Balance:</label>
-                        <input type="text" value="'.$mb.'" name="Abbnb" class="form-control">
-                        </div>
-                    </div>';
-                }
-                echo $output;
-            }
-        }
+    if($_POST["id"] !='')
+    {
+        $sql = "SELECT * FROM client WHERE account_no = '".$_POST["id"]."'";
     }
+    else
+    {
+        $sql = "SELECT * FROM client";
+    }
+    $result = mysqli_query($connection, $sql);
+
+    while ($row = mysqli_fetch_array($result))
+    {
+        $output = '<div class="form-group">
+        <label>Account Name:</label>
+        <input type="text" value="'.$row["firstname"].'" name="principal_amoun" class="form-control" readonly required id="principal_amount">
+      </div>
+      ';
+    }
+    if($_POST["id"] !='')
+    {
+        $ans = "SELECT * FROM account WHERE account_no = '".$_POST["id"]."'";
+    }
+    else
+    {
+        $ans = "SELECT * FROM account";
+    }
+    $result = mysqli_query($connection, $ans);
+
+    while ($row = mysqli_fetch_array($result))
+    {
+        $output2 = '<div class="form-group">
+        <label>Account Balance:</label>
+        <input type="text" value="'.$row["account_balance_derived"].'" name="principal_amoun" class="form-control" readonly required id="principal_amount">
+      </div>
+      ';
+    }
+    echo $output;
+    echo $output2;
 }
+// session_start();
+//    $_SESSION['load_term'] = "batman";
+//    $_SESSION['interest_rate'] = "batman";
+//    $_SESSION['disbursment_date'] = "batman";
 ?>
