@@ -30,13 +30,15 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                $acct_no = $y['account_no'];
                $client_id = $y['client_id'];
                $int_acct_bal = $x['account_balance_derived'];
+               $comp = $amount + $int_acct_bal;
+               $comp2 = $int_acct_bal - $amount;
                $trans_type = "credit";
                $trans_type2 = "debit";
                $irvs = 0;
     
             //    account deposite computation
               if($transact_type == "Deposit") {
-                $new_abd = $amount + $int_acct_bal;
+                $new_abd = $comp;
                 $iupq = "UPDATE account SET account_balance_derived = '$new_abd',
                 total_deposits_derived = '$amount' WHERE account_no = '$acct_no'";
                 $iupqres = mysqli_query($connection, $iupq);
@@ -71,8 +73,8 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                         echo header ("Location: ../mfi/transact_approval.php?message2=$randms");
                 }
               } else if ($transact_type == "Withdrawal") {
-                $new_abd = $int_acct_bal - $amount;
-                $iupq = "UPDATE account SET account_balance_derived = '$new_abd',
+                $new_abd2 = $comp2;
+                $iupq = "UPDATE account SET account_balance_derived = '$new_abd2',
                 total_withdrawals_derived  = '$amount' WHERE account_no = '$acct_no'";
                 $iupqres = mysqli_query($connection, $iupq);
                 if ($iupqres) {
