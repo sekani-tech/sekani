@@ -4,6 +4,13 @@
       header("location: login.php");
       exit;
   }
+  if ($_SESSION["usertype"] == "admin") {
+    header("location: mfi/index.php");
+    exit;
+  } else if ($_SESSION["usertype"] == "staff") {
+    header("location: mfi/index.php");
+    exit;
+  }
 ?>
 <?php
   // get connections for all pages
