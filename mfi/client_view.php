@@ -189,6 +189,36 @@ if(isset($_GET["edit"])) {
                 </div>
               </div>
             </div>
+            <div class="col-md-4">
+              <div class="card card-profile">
+                <div class="card-avatar">
+                  <a href="#pablo">
+                    <img class="img" src="../functions/clients/<?php echo $passport;?>" />
+                  </a>
+                </div>
+                <!-- Get session data and populate user profile -->
+                <div class="card-body">
+                  <h6 class="card-category text-gray">ID Card</h6>
+                  <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
+                </div>
+              </div>
+            </div>
+            <!-- /id card -->
+            <div class="col-md-4">
+              <div class="card card-profile">
+                <div class="card-avatar">
+                  <a href="#pablo">
+                    <img class="img" src="../functions/clients/<?php echo $passport;?>" />
+                  </a>
+                </div>
+                <!-- Get session data and populate user profile -->
+                <div class="card-body">
+                  <h6 class="card-category text-gray">Signature</h6>
+                  <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
+                </div>
+              </div>
+            </div>
+            <!-- signature -->
           </div>
         </div>
       </div>
