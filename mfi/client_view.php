@@ -187,9 +187,8 @@ if(isset($_GET["edit"])) {
                   </p>
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>
+                <!-- passport -->
               </div>
-            </div>
-            <div class="col-md-4">
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
@@ -202,10 +201,8 @@ if(isset($_GET["edit"])) {
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>
               </div>
-            </div>
-            <!-- /id card -->
-            <div class="col-md-4">
-              <div class="card card-profile">
+                <!-- /id card -->
+                <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
                     <img class="img" src="../functions/clients/<?php echo $passport;?>" />
@@ -217,8 +214,8 @@ if(isset($_GET["edit"])) {
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>
               </div>
+                <!-- signature -->
             </div>
-            <!-- signature -->
           </div>
         </div>
       </div>
