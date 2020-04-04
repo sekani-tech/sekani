@@ -140,7 +140,7 @@ if (isset($_GET["message"])) {
                                   </div>
                                   <script>
                             $(document).ready(function() {
-                              $('#axt_no').on('input', function(){
+                              $('#axt_no').change(function(){
                                 var id = $(this).val();
                                 var int_id = $sessint_id;
                                 $.ajax({
