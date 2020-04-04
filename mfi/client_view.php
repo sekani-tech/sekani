@@ -41,6 +41,13 @@ if(isset($_GET["edit"])) {
     }
     $signature = $n['signature'];
     $id_img_url = $n['id_img_url'];
+
+    $getacctv = mysqli_query($connection, "SELECT * FROM account WHERE account_no='$acc_no' && int_id='$sessint_id'");
+    if (count([$getacctv]) == 1) {
+      $xrx = mysqli_fetch_array($getacctv);
+      $cb = $xrx[''];
+      $cb = $xrx[''];
+    }
   }
 }
 ?>
@@ -85,7 +92,7 @@ if(isset($_GET["edit"])) {
                 <form action="">
                     <div class="form-group">
                       <label for="">Current Balance:</label>
-                      <input type="text" name="" id="" class="form-control" value="200000" readonly>
+                      <input type="text" name="" id="" class="form-control" value="<?php ?>" readonly>
                     </div>
                     <div class="row">
                       <div class="col-md-6">
@@ -102,55 +109,13 @@ if(isset($_GET["edit"])) {
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="">APR (Annual per interest rate):</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Total Deposit:</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
                           <label for="">Total Outstanding Loan balance:</label>
                           <input type="text" name="" id="" class="form-control" value="2500" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="">Total Withdrawal:</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
                           <label for="">Total Loan Amount payed:</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Total Charges:</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Total Interest Earned:</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Amount in Arrears</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Days in Arrears</label>
                           <input type="text" name="" id="" class="form-control" value="2500" readonly>
                         </div>
                       </div>

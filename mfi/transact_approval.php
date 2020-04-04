@@ -15,21 +15,26 @@
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Users</h4>
+                  <script>
+                  $(document).ready(function() {
+                  $('#tabledat').DataTable();
+                  });
+                  </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM staff";
+                   $query = "SELECT * FROM transact_cache WHERE int_id='$sessint_id'";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> Users on the platform || <a href="user.php">Approve Transaction</a></p>
+                   }?> Users on the platform || Approve Transaction</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table id="" class="table">
+                    <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT users.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id";
+                        $query = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -45,10 +50,8 @@
                         <th class="th-sm">
                           Client
                         </th>
-                        <!-- <th class="th-sm">
-                          E-mail
-                        </th> -->
-                        <th class="th-sm">Approval</th>
+                        <th class="th-sm">Status</th>
+                        <th>Approval</th>
                         </tr>
                         <!-- <th>Phone</th> -->
                       </thead>
