@@ -95,6 +95,9 @@ if (isset($_GET["message1"])) {
                           Transaction Type
                         </th>
                         <th class="th-sm">
+                          Amount
+                        </th>
+                        <th class="th-sm">
                           Account Officer
                         </th>
                         <th class="th-sm">
@@ -111,10 +114,11 @@ if (isset($_GET["message1"])) {
                         <tr>
                         <?php $row["id"]; ?>
                           <th><?php echo $row["transact_type"]; ?></th>
+                          <th><?php echo $row["amount"]; ?></th>
                           <th><?php echo $row["account_off_name"]; ?></th>
                           <th><?php echo $row["client_name"]; ?></th>
                           <th><?php echo $row["status"]; ?></th>
-                          <td><a href="./functions/approveTrans.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
+                          <td><a href="../functions/approveTrans.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
                           </tr>
                           <!-- <th></th> -->
                           <?php }
