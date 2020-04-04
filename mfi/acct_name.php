@@ -50,6 +50,8 @@ if(isset($_POST["id"]) && isset($_POST["int_id"]))
         }
 
     } else {
-        echo "";
+        echo "nothing";
     }
+} else {
+    echo "test false";
 }

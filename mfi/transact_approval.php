@@ -60,11 +60,11 @@
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
-                          <th><?php echo $row["display_name"]; ?></th>
-                          <th><?php echo $row["username"]; ?></th>
-                          <th><?php echo $row["int_name"]; ?></th>
-                          <th><?php echo $row["email"]; ?></th>
+                          <th><?php echo $row["transact_type"]; ?></th>
+                          <th><?php echo $row["account_off_name"]; ?></th>
+                          <th><?php echo $row["client_name"]; ?></th>
                           <th><?php echo $row["status"]; ?></th>
+                          <td><a href="#.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
                           </tr>
                           <!-- <th></th> -->
                           <?php }
