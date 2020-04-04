@@ -44,7 +44,7 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="bmd-label-floating">Display name</label>
-                      <input type="text" class="form-control" name="display_name">
+                      <input type="text" style="text-transform: uppercase;" class="form-control" name="display_name">
                     </div>
                   </div>
                 </div>
@@ -52,19 +52,19 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="bmd-label-floating">First Name</label>
-                      <input type="text" class="form-control" name="firstname">
+                      <input type="text" style="text-transform: uppercase;" class="form-control" name="firstname">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="bmd-label-floating">Middle Name</label>
-                      <input type="text" class="form-control" name="middlename">
+                      <input type="text" style="text-transform: uppercase;" class="form-control" name="middlename">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="bmd-label-floating">Last Name</label>
-                      <input type="text" class="form-control" name="lastname">
+                      <input type="text" style="text-transform: uppercase;" class="form-control" name="lastname">
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -90,7 +90,7 @@ include("header.php");
                   <div class="col-md-12">
                     <div class="form-group">
                       <label class="bmd-label-floating">Address</label>
-                      <input type="text" class="form-control" name="address">
+                      <input type="text" style="text-transform: uppercase;" class="form-control" name="address">
                     </div>
                   </div>
                 </div>
@@ -99,8 +99,8 @@ include("header.php");
                     <div class="form-group">
                       <label class="bmd-label-floating">Gender:</label>
                       <select class="form-control" name="gender" id="">
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
+                        <option value="MALE">MALE</option>
+                        <option value="FEMALE">FEMALE</option>
                       </select>
                     </div>
                   </div>
@@ -136,13 +136,13 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="">Country:</label>
-                      <input type="text" class="form-control" value = "NIGERIA" name="country">
+                      <input type="text" style="text-transform: uppercase;" class="form-control" value = "NIGERIA" name="country">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="">State:</label>
-                      <select class="form-control" name="state" id="selState" onchange="configureDropDownLists()">
+                      <select class="form-control" style="text-transform: uppercase;" name="state" id="selState" onchange="configureDropDownLists()">
                       </select>
                       <label for="">LGA:</label>
                       <select  class="form-control"name="lga" id="selCity">
@@ -159,7 +159,7 @@ include("header.php");
                   </div> -->
                   <div class="col-md-4">
                     <label for="">BVN:</label>
-                    <input type="text" name="bvn" class="form-control" id="">
+                    <input type="text" style="text-transform: uppercase;" name="bvn" class="form-control" id="">
                   </div>
                   <div class="col-md-4">
                     <p><label for="">Active Alerts:</label></p>

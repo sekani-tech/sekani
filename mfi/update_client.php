@@ -56,8 +56,8 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-5">
                         <div class="form-group">
                           <label class="bmd-label-floating">Client Type</label>
-                          <input type="text" class="form-control" hidden value="<?php echo $id; ?>" name="id">
-                          <input type="text" class="form-control" value="<?php echo $ctype; ?>" name="ctype" readonly>
+                          <input type="text" style="text-transform: uppercase;" class="form-control" hidden value="<?php echo $id; ?>" name="id">
+                          <input type="text" style="text-transform: uppercase;" class="form-control" value="<?php echo $ctype; ?>" name="ctype" readonly>
                         </div>
                       </div>
                       <div class="col-md-4">
@@ -74,7 +74,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Display name</label>
-                          <input type="text" class="form-control" value="<?php echo $display_name; ?>" name="display_name">
+                          <input type="text" style="text-transform: uppercase;" class="form-control" value="<?php echo $display_name; ?>" name="display_name">
                         </div>
                       </div>
                     </div>
@@ -94,7 +94,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Last Name</label>
-                          <input type="text" class="form-control" value="<?php echo $last_name; ?>" name="last_name">
+                          <input type="text" style="text-transform: uppercase;" class="form-control" value="<?php echo $last_name; ?>" name="last_name">
                         </div>
                       </div>
                       <div class="col-md-4">
@@ -120,7 +120,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Address</label>
-                          <input type="text" class="form-control" value="<?php echo $address; ?>" name="address">
+                          <input type="text" style="text-transform: uppercase;" class="form-control" value="<?php echo $address; ?>" name="address">
                         </div>
                       </div>
                     </div>
@@ -129,8 +129,8 @@ if(isset($_GET["edit"])) {
                         <div class="form-group">
                           <label class="bmd-label-floating">Gender:</label>
                           <select class="form-control" value="<?php echo $gender; ?>" name="gender" id="">
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
+                            <option value="MALE">MALE</option>
+                            <option value="FEMALE">FEMALE</option>
                           </select>
                         </div>
                       </div>
@@ -166,13 +166,13 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="">Country:</label>
-                          <input type="text" class="form-control" value="<?php echo $country; ?>" name="country">
+                          <input type="text" style="text-transform: uppercase;" class="form-control" value="<?php echo $country; ?>" name="country">
                         </div>
                       </div>
                       <div class="col-md-4">
                     <div class="form-group">
                       <label for="">State:</label>
-                      <select class="form-control" name="state" id="selState" onchange="configureDropDownLists()">
+                      <select class="form-control" style="text-transform: uppercase;" name="state" id="selState" onchange="configureDropDownLists()">
                       </select>
                       <label for="">LGA:</label>
                       <select  class="form-control"name="lga" id="selCity">

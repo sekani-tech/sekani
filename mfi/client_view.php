@@ -58,19 +58,19 @@ if(isset($_GET["edit"])) {
                   <form action="">
                     <div class="form-group">
                       <label for="">Name:</label>
-                      <input type="text" name="" id="" class="form-control" value="<?php echo $display_name; ?>" readonly name="display_name">
+                      <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo $display_name; ?>" readonly name="display_name">
                     </div>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Account No:</label>
-                          <input type="text" name="" id="" class="form-control" value="<?php echo $acc_no; ?>" readonly>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $acc_no; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Account Officer:</label>
-                          <input type="text" name="" id="" class="form-control" value="<?php echo $displayname; ?>" readonly>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $displayname; ?>" readonly>
                         </div>
                       </div>
                     </div>
