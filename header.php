@@ -34,7 +34,9 @@ $rezz = mysqli_query($connection, $activeq);
   <link href="assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
   <script src="datatable/jquery-3.3.2.js"></script>
   <script src="datatable/jquery.dataTables.min.js"></script>
-  <script src="datatable/dataTables.bootstrap.min.js"></script>
+  <script src="datatable/jquery.dataTables.min.js"></script>
+  <script src="datatable/DropdownSelect.js"></script>
+  <script src="datatable/stepper.js"></script>
 </head>
 
 <body>
