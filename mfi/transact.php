@@ -123,6 +123,7 @@ if (isset($_GET["message"])) {
                                       <div class="form-group">
                                          <label class="bmd-label-floating">Account Number</label>
                                          <input type="text" class="form-control" name="test" hidden value="deposit">
+                                         <input type="text" class="form-control" name="testintid" hidden value="<?php echo $sessint_id; ?>" id="int_id">
                                          <input type="text" class="form-control" name="account_no" id="axt_no">
                                       </div>
                                   </div>
@@ -142,7 +143,7 @@ if (isset($_GET["message"])) {
                             $(document).ready(function() {
                               $('#axt_no').keyup(function(){
                                 var id = $(this).val();
-                                var int_id = $sessint_id;
+                                var int_id = document.getElementById("int_id").value;
                                 $.ajax({
                                   url:"acct_name.php",
                                   method:"POST",
