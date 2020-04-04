@@ -34,8 +34,8 @@ if(isset($_GET["edit"])) {
     $email_active = $n['EMAIL_ACTIVE'];
     $id_card = $n['id_card'];
     $passport = $n['passport'];
-    // $signature = $n['signature'];
-    // $id_img_url = $n['id_img_url'];
+    $signature = $n['signature'];
+    $id_img_url = $n['id_img_url'];
   }
 }
 ?>
@@ -307,7 +307,7 @@ if(isset($_GET["edit"])) {
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $passport;?>" />
+                    <img class="img" src="../functions/clients/<?php echo $id_img_url;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->
@@ -320,7 +320,7 @@ if(isset($_GET["edit"])) {
                 <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $passport;?>" />
+                    <img class="img" src="../functions/clients/<?php echo $signature;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->

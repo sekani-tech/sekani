@@ -72,6 +72,6 @@ if (isset($_POST['employee_status']) && ($_POST['employee_status'] == "Employed"
   if ($form) {
     echo header("location: ../mfi/users.php");
   } else {
-    echo "there is an error here";
+    echo "there is an error here on sanusi end";
   }
 ?>
