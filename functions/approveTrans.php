@@ -29,7 +29,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                $branch_id = $y['branch_id'];
                $acct_no = $y['account_no'];
                $client_id = $y['client_id'];
-               $int_acct_bal = $x['account_balance_derived'];
+               $int_acct_bal = $y['account_balance_derived'];
                $comp = $amount + $int_acct_bal;
                $comp2 = $int_acct_bal - $amount;
                $trans_type = "credit";
