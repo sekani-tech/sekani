@@ -448,24 +448,24 @@ button:hover {
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
                     <img class="img" src="../assets/img/faces/marc.jpg" />
                   </a>
                 </div>
-                <!-- Get session data and populate user profile -->
+                 Get session data and populate user profile 
                 <div class="card-body">
                   <h6 class="card-category text-gray">CEO / Co-Founder</h6>
                   <h4 class="card-title">Alec Thompson</h4>
                   <p class="card-description">
                     Sekani Systems
                   </p>
-                  <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
+                   <a href="#pablo" class="btn btn-primary btn-round">Follow</a> 
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
           <!-- /content -->
         </div>
