@@ -2,14 +2,14 @@
 include("../functions/connect.php");
 $output = '';
 
-if(isset($_POST["id"]) && isset($_POST["int_id"]))
+if(isset($_POST["id"]))
 {
     if($_POST["id"] !='') {
-        $balancesql = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '".$_POST["id"]."' && int_id = '".$_POST["int_id"]."'");
+        $balancesql = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '".$_POST["id"]."'");
         if (count([$balancesql]) == 1) {
             $x = mysqli_fetch_array($balancesql);
             $balance = $x['account_balance_derived'];
-            $accnsql =  mysqli_query($connection, "SELECT * FROM client WHERE account_no = '".$_POST["id"]."' && int_id = '".$_POST["int_id"]."'");
+            $accnsql =  mysqli_query($connection, "SELECT * FROM client WHERE account_no = '".$_POST["id"]."'");
             if (count([$accnsql]) == 1) {
                 $z = mysqli_fetch_array($accnsql);
                 $fn = $z['firstname'];
