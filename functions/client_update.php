@@ -40,8 +40,8 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
     $digits = 10;
 
     $temp = explode(".", $_FILES['signature']['name']);
-    $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-    $image1 = $randms. '.' .end($temp);
+    $randmst = str_pad(rand(0, pow(10, 5)-1), $digits, '0', STR_PAD_LEFT);
+    $image1 = $randmst. '.' .end($temp);
     
     if (move_uploaded_file($_FILES['signature']['tmp_name'], "clients/" . $image1)) {
         $msg = "Image uploaded successfully";
@@ -51,11 +51,11 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
 // $image2 = $_FILES['idimg']['name'];
 // $target2 = "clients/".basename($image2);
 
-$temp2 = explode(".", $_FILES['idimg']['name']);
-$randms2 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$temp2 = explode(".", $_FILES['id_img_url']['name']);
+$randms2 = str_pad(rand(0, pow(10, 7)-1), $digits, '0', STR_PAD_LEFT);
 $image2 = $randms2. '.' .end($temp2);
 
-if (move_uploaded_file($_FILES['idimg']['tmp_name'], "clients/" . $image2)) {
+if (move_uploaded_file($_FILES['id_img_url']['tmp_name'], "clients/" . $image2)) {
     $msg = "Image uploaded successfully";
 } else {
   $msg = "Image Failed";
@@ -65,7 +65,7 @@ if (move_uploaded_file($_FILES['idimg']['tmp_name'], "clients/" . $image2)) {
 // $target3 = "clients/".basename($image3);
 
 $temp3 = explode(".", $_FILES['passport']['name']);
-$randms3 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$randms3 = str_pad(rand(0, pow(10, 9)-1), $digits, '0', STR_PAD_LEFT);
 $image3 = $randms3. '.' .end($temp3);
 
 if (move_uploaded_file($_FILES['passport']['tmp_name'], "clients/" . $image3)) {
