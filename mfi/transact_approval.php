@@ -6,8 +6,8 @@
 <?php
 if (isset($_GET["message1"])) {
   $key = $_GET["message1"];
-  $tt = $_SESSION["lack_of_intfund_$key"];
-  if ($tt != null) {
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
@@ -20,12 +20,12 @@ if (isset($_GET["message1"])) {
   });
   </script>
   ';
-  $_SESSION["lack_of_intfund_$key"] = null;
+  $_SESSION["lack_of_intfund_$key"] = 0;
  }
 } else if (isset($_GET["message2"])) {
   $key = $_GET["message2"];
-  $tt = $_SESSION["lack_of_intfund_$key"];
-  if ($tt != null) {
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
@@ -38,12 +38,12 @@ if (isset($_GET["message1"])) {
   });
   </script>
   ';
-  $_SESSION["lack_of_intfund_$key"] = null;
+  $_SESSION["lack_of_intfund_$key"] = 0;
 }
 } else if (isset($_GET["message3"])) {
   $key = $_GET["message2"];
-  $tt = $_SESSION["lack_of_intfund_$key"];
-  if ($tt != null) {
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
@@ -56,7 +56,7 @@ if (isset($_GET["message1"])) {
   });
   </script>
   ';
-  $_SESSION["lack_of_intfund_$key"] = null;
+  $_SESSION["lack_of_intfund_$key"] = 0;
 }
 } else {
   echo "";
