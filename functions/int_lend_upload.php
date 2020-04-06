@@ -81,7 +81,7 @@ disbursedon_userid, repay_principal_every, repay_interest_every) VALUES ('{$sess
             $res = mysqli_query($connection, $query);
             if ($res) {
                 $_SESSION["Lack_of_intfund_$randms"] = "Successfully Uploaded, Awaiting Disbursement Approval";
-        header ("Location: ../mfi/lend.php?message1=$randms");
+        header ("Location: ../mfi/lend.php?message=$randms");
             } else {
                 $_SESSION["Lack_of_intfund_$randms"] = "Error in Posting For Approval";
         header ("Location: ../mfi/lend.php?message2=$randms");
