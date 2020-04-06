@@ -59,7 +59,7 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
                 if (count([$branchhl]) == 1) {
                     $yxx = mysqli_fetch_array($branchhl);
                     $lsff = $yxx['loan_status'];
-                    $cdn = $yxx['displayname'];
+                    $cdn = $yxx['display_name'];
                 }
         if ($acctprin >= 0) {
             if ($lsff == "Not Active" || $lsff == "") {
@@ -95,10 +95,10 @@ disbursedon_userid, repay_principal_every, repay_interest_every, status) VALUES 
                                     $kdln = mysqli_query($connection, $gjjj);
                                     if ($kdln) {
                                         $_SESSION["Lack_of_intfund_$randms"] = "Successfully Uploaded, Awaiting Disbursement Approval";
-        header ("Location: ../mfi/lend.php?message5=$randms");
+        header ("Location: ../mfi/lend.php?message=$randms");
                                     } else {
                                         $_SESSION["Lack_of_intfund_$randms"] = "Error in Posting For Loan Gaurantor";
-        header ("Location: ../mfi/lend.php?message2=$randms");
+        header ("Location: ../mfi/lend.php?message5=$randms");
                                     }
             } else {
                 $_SESSION["Lack_of_intfund_$randms"] = "Error in Posting For Approval";
