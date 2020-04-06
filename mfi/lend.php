@@ -63,8 +63,8 @@ $destination = "loans.php";
           ';
           $_SESSION["lack_of_intfund_$key"] = 0;
         }
-      } else if (isset($_GET["message3"])) {
-        $key = $_GET["message3"];
+      } else if (isset($_GET["message4"])) {
+        $key = $_GET["message4"];
         $tt = 0;
         if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
         echo '<script type="text/javascript">
