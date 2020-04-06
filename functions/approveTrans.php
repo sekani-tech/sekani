@@ -35,7 +35,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                $trans_type = "credit";
                $trans_type2 = "debit";
                $irvs = 0;
-    
+
             //    account deposite computation
               if($transact_type == "Deposit") {
                 $new_abd = $comp;
