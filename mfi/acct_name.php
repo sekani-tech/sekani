@@ -21,6 +21,14 @@ if(isset($_POST["id"]))
         <label>Account Name:</label>
         <input type="text" value="'.$row["firstname"].'" name="principal_amoun" class="form-control" readonly required id="principal_amount">
       </div>
+      <div class="form-group">
+        <label>Account Name:</label>
+        <input type="text" value="'.$row["middlename"].'" name="principal_amoun" class="form-control" readonly required id="principal_amount">
+      </div>
+      <div class="form-group">
+        <label>Account Name:</label>
+        <input type="text" value="'.$row["lastname"].'" name="principal_amoun" class="form-control" readonly required id="principal_amount">
+      </div>
       ';
     }
     if($_POST["id"] !='')
