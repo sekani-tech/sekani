@@ -156,25 +156,6 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
                                     $kl = mysqli_fetch_array($colkt);
                                     $loan_id = $kl['id'];
                                 }
-                                    $gjjj = "INSERT INTO loan_gaurantor (int_id, loan_id, client_id, first_name, last_name,
-                                    phone, phone2, home_address, office_address, position_held, email) VALUES ('{$sessint_id}',
-                                    '{$loan_id}', '{$client_id}', '{$first_name}', '{$last_name}',
-                                    '{$phone}', '{$phone2}', '{$home_address}', '{$office_address}', '{$position_held}',
-                                    '{$email}')";
-                                    $kdln = mysqli_query($connection, $gjjj);
-                                    if ($kdln) {
-                                        echo header("location: ../mfi/loans.php");
-                                    } else {
-                                        echo "final error bro";
-                                    }
-                                    if ($connection->error) {
-                                        try {
-                                            throw new Exception("MYSQL error $connection->error <br> $colacctts", $mysqli->error);
-                                        } catch (Exception $e) {
-                                            echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
-                                            echo ($e->getTraceAsString());
-                                        }
-                                    }
                                 } else {
                                     echo "bad data in the last if statement";
                                     if ($connection->error) {
