@@ -9,7 +9,7 @@ $destination = "client.php";
 if(isset($_GET["edit"])) {
   $id = $_GET["edit"];
   $update = true;
-  $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id'");
+  $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id' && int_id='$sessint_id'");
 
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
