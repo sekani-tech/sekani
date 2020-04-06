@@ -8,6 +8,8 @@ include("header.php");
 if (isset($_GET["message"])) {
     $key = $_GET["message"];
     // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
     echo '<script type="text/javascript">
     $(document).ready(function(){
         swal({
@@ -20,10 +22,13 @@ if (isset($_GET["message"])) {
     });
     </script>
     ';
-    $_SESSION["lack_of_intfund_$key"] = null;
+    $_SESSION["lack_of_intfund_$key"] = 0;
+ }
 } else if (isset($_GET["message2"])) {
     $key = $_GET["message2"];
     // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
     echo '<script type="text/javascript">
     $(document).ready(function(){
         swal({
@@ -36,10 +41,13 @@ if (isset($_GET["message"])) {
     });
     </script>
     ';
-    $_SESSION["lack_of_intfund_$key"] = null;
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
 } else if (isset($_GET["message3"])) {
     $key = $_GET["message3"];
-    $out = $_SESSION["lack_of_intfund_$key"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
     echo '<script type="text/javascript">
     $(document).ready(function(){
         swal({
@@ -52,10 +60,13 @@ if (isset($_GET["message"])) {
     });
     </script>
     ';
-    $_SESSION["lack_of_intfund_$key"] = null;
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
 } else if (isset($_GET["message4"])) {
     $key = $_GET["message4"];
-    $out = $_SESSION["lack_of_intfund_$key"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
     echo '<script type="text/javascript">
     $(document).ready(function(){
         swal({
@@ -68,10 +79,13 @@ if (isset($_GET["message"])) {
     });
     </script>
     ';
-    $_SESSION["lack_of_intfund_$key"] = null;
+    $_SESSION["lack_of_intfund_$key"] = 0;
+ }
 } else if (isset($_GET["message5"])) {
     $key = $_GET["message5"];
-    $out = $_SESSION["lack_of_intfund_$key"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
     echo '<script type="text/javascript">
     $(document).ready(function(){
         swal({
@@ -84,10 +98,13 @@ if (isset($_GET["message"])) {
     });
     </script>
     ';
-    $_SESSION["lack_of_intfund_$key"] = null;
+    $_SESSION["lack_of_intfund_$key"] = 0;
+ }
 } else if (isset($_GET["message7"])) {
     $key = $_GET["message7"];
-    $out = $_SESSION["lack_of_intfund_$key"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
     echo '<script type="text/javascript">
     $(document).ready(function(){
         swal({
@@ -100,7 +117,8 @@ if (isset($_GET["message"])) {
     });
     </script>
     ';
-    $_SESSION["lack_of_intfund_$key"] = null;
+    $_SESSION["lack_of_intfund_$key"] = 0;
+}
 } else {
     echo "";
 }
@@ -211,21 +229,21 @@ if (isset($_GET["message"])) {
                                       <div class="form-group">
                                           
                                          <label class="bmd-label-floating">Account Number</label>
-                                         <input type="text" class="form-control" name="test" hidden value="deposit">
-                                         <input type="text" class="form-control" name="account_no" id="act">
+                                         <input type="text" class="form-control" name="test2" hidden value="withdraw">
+                                         <input type="text" class="form-control" name="account_no2" id="act">
                                       </div>
                                       <div id="accname"></div>
                                   </div>
                                   <div class="col-md-4">
                                       <div class="form-group">
                                          <label class="bmd-label-floating">Amount</label>
-                                         <input type="number" class="form-control" name="amount" value="">
+                                         <input type="number" class="form-control" name="amount2" value="">
                                       </div>
                                   </div>
                                   <div class="col-md-4">
                                       <div class="form-group">
                                          <label class="bmd-label-floating">Type</label>
-                                         <select class="form-control" name="pay_type">
+                                         <select class="form-control" name="pay_type2">
                                             <option> </option>
                                             <option>Cash</option>
                                             <option>Bank</option>

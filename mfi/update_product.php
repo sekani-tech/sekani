@@ -9,7 +9,7 @@ $destination = "products.php";
  if (isset($_GET["edit"])) {
   $user_id = $_GET["edit"];
   $update = true;
-  $value = mysqli_query($connection, "SELECT * FROM product WHERE id='$user_id'");
+  $value = mysqli_query($connection, "SELECT * FROM product WHERE id='$user_id' && int_id='$sessint_id'");
 
   if (count([$value] == 1)) {
     $n = mysqli_fetch_array($value);

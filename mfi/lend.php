@@ -9,11 +9,97 @@ $destination = "loans.php";
     <div class="content">
         <div class="container-fluid">
         <?php
-        if(isset($_GET["message"])) {
+        if (isset($_GET["message"])) {
           $key = $_GET["message"];
-        echo $_SESSION["Lack_of_intfund_$key"];
-        $_SESSION["lack_of_intfund_$key"] = null;
+          $tt = 0;
+          if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+          echo '<script type="text/javascript">
+          $(document).ready(function(){
+              swal({
+                  type: "success",
+                  title: "Success",
+                  text: "Loan Submitted Successfully, Awaiting Approval",
+                  showConfirmButton: false,
+                  timer: 2000
+              })
+          });
+          </script>
+          ';
+          $_SESSION["lack_of_intfund_$key"] = 0;
+         }
+        } else if (isset($_GET["message2"])) {
+          $key = $_GET["message2"];
+          $tt = 0;
+          if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+          echo '<script type="text/javascript">
+          $(document).ready(function(){
+              swal({
+                  type: "error",
+                  title: "Error",
+                  text: "Error in Posting For Approval",
+                  showConfirmButton: false,
+                  timer: 2000
+              })
+          });
+          </script>
+          ';
+          $_SESSION["lack_of_intfund_$key"] = 0;
         }
+       } else if (isset($_GET["message3"])) {
+          $key = $_GET["message3"];
+          $tt = 0;
+          if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+          echo '<script type="text/javascript">
+          $(document).ready(function(){
+              swal({
+                  type: "error",
+                  title: "Error",
+                  text: "This Client Has Been Given Loan Before",
+                  showConfirmButton: false,
+                  timer: 2000
+              })
+          });
+          </script>
+          ';
+          $_SESSION["lack_of_intfund_$key"] = 0;
+        }
+      } else if (isset($_GET["message4"])) {
+        $key = $_GET["message4"];
+        $tt = 0;
+        if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "Error",
+                text: "Insufficent Fund From Institution Account!",
+                showConfirmButton: false,
+                timer: 2000
+            })
+        });
+        </script>
+        ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+      }
+    } else if (isset($_GET["message5"])) {
+      $key = $_GET["message5"];
+      $tt = 0;
+      if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+      echo '<script type="text/javascript">
+      $(document).ready(function(){
+          swal({
+              type: "error",
+              title: "Error",
+              text: "Error in Posting For Loan Gaurantor",
+              showConfirmButton: false,
+              timer: 2000
+          })
+      });
+      </script>
+      ';
+      $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+  }
         ?>
           <!-- your content here -->
           <div class="row">
