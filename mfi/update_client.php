@@ -33,9 +33,14 @@ if(isset($_GET["edit"])) {
     $sms_active = $n['SMS_ACTIVE'];
     $email_active = $n['EMAIL_ACTIVE'];
     $id_card = $n['id_card'];
+    // These extra array is to put whatever is in DB but not being used
     $passport = $n['passport'];
     $signature = $n['signature'];
     $id_img_url = $n['id_img_url'];
+    // These extra array is to put whatever is in DB
+    $sign = $n['signature'];
+    $passportbk = $n['passport'];
+    $idimg = $n['id_img_url'];
   }
 }
 ?>
@@ -216,15 +221,30 @@ if(isset($_GET["edit"])) {
                     <hr>
                     <div class="row">
                       <div class="col-md-4">
-                        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                        <label for="">Select ID</label>
+                        <select class="form-control" name="id_card">
+                          <option value="<?php echo $id_card ?>"><?php echo $id_card ?></option>
+                          <option value="National ID">National ID</option>
+                          <option value="Voters ID">Voters ID</option>
+                          <option value="International Passport">International Passport</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div id="myImg" class="fileinput fileinput-new text-center" data-provides="fileinput">
                             <div class="fileinput-new thumbnail img-raised">
                             </div>
-                            <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                            <div class="fileinput-preview fileinput-exists thumbnail img-raised">
+
+                            </div>
                             <div>
+                              <!-- This input type displays and saves the Passport img path originally in DB -->
+                            <input type="text" hidden class="form-control" value="<?php echo $passportbk; ?>" name="passportbk">
                                 <span class="btn btn-raised btn-round btn-default btn-file">
                                     <span class="fileinput-new">Upload passport</span>
                                     <!-- <span class="fileinput-exists">Change</span> -->
-                                    <input type="file" name="passport" id="passport" />
+                                    <input style ="width:90px;" type="file" onchange="resize()" name="passport" id="myImg" />
                                 </span>
                                 <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                             </div>
@@ -236,26 +256,16 @@ if(isset($_GET["edit"])) {
                             </div>
                             <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
                             <div>
+                              <!-- This input type displays and saves the signature img path originally in DB -->
+                            <input type="text" hidden class="form-control" value="<?php echo $sign; ?>" name="sign">
                                 <span class="btn btn-raised btn-round btn-default btn-file">
                                     <span class="fileinput-new">Select signature</span>
                                     <!-- <span class="fileinput-exists">Change</span> -->
-                                    <input type="file" name="signature" />
+                                   <input style ="width:90px;" type="file" name="signature" />
                                 </span>
                                 <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                             </div>
                         </div>
-                      </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                      <div class="col-md-4">
-                        <label for="">Select ID</label>
-                        <select class="form-control" name="id_card">
-                          <option value="<?php echo $id_card ?>"><?php echo $id_card ?></option>
-                          <option value="National ID">National ID</option>
-                          <option value="Voters ID">Voters ID</option>
-                          <option value="International Passport">International Passport</option>
-                        </select>
                       </div>
                       <div class="col-md-4">
                         <div class="fileinput fileinput-new text-center" data-provides="fileinput">
@@ -263,10 +273,12 @@ if(isset($_GET["edit"])) {
                             </div>
                             <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
                             <div>
+                              <!-- This input type displays and saves the ID image path originally in DB -->
+                            <input type="text" hidden class="form-control" value="<?php echo $idimg; ?>" name="idimg">
                                 <span class="btn btn-raised btn-round btn-default btn-file">
                                     <span class="fileinput-new">Upload Image ID</span>
                                     <!-- <span class="fileinput-exists">Change</span> -->
-                                    <input type="file" name="id_img_url" />
+                                    <input style ="width:90px;" type="file" name="id_img_url" />
                                 </span>
                                 <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                             </div>
