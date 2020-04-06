@@ -211,7 +211,7 @@ if (isset($_GET["message"])) {
                                       <div class="form-group">
                                           
                                          <label class="bmd-label-floating">Account Number</label>
-                                         <input type="text" class="form-control" name="test2" hidden value="deposit">
+                                         <input type="text" class="form-control" name="test2" hidden value="withdraw">
                                          <input type="text" class="form-control" name="account_no2" id="act">
                                       </div>
                                       <div id="accname"></div>
