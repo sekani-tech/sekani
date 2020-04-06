@@ -212,20 +212,20 @@ if (isset($_GET["message"])) {
                                           
                                          <label class="bmd-label-floating">Account Number</label>
                                          <input type="text" class="form-control" name="test2" hidden value="deposit">
-                                         <input type="text" class="form-control" name="account_no" id="act">
+                                         <input type="text" class="form-control" name="account_no2" id="act">
                                       </div>
                                       <div id="accname"></div>
                                   </div>
                                   <div class="col-md-4">
                                       <div class="form-group">
                                          <label class="bmd-label-floating">Amount</label>
-                                         <input type="number" class="form-control" name="amount" value="">
+                                         <input type="number" class="form-control" name="amount2" value="">
                                       </div>
                                   </div>
                                   <div class="col-md-4">
                                       <div class="form-group">
                                          <label class="bmd-label-floating">Type</label>
-                                         <select class="form-control" name="pay_type">
+                                         <select class="form-control" name="pay_type2">
                                             <option> </option>
                                             <option>Cash</option>
                                             <option>Bank</option>
