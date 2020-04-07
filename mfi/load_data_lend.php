@@ -18,11 +18,11 @@ if(isset($_POST["id"]))
     while ($row = mysqli_fetch_array($result))
     {
         $output = '<div class="form-group">
-        <label>Loan size:</label>
+        <label>Loan Amount:</label>
         <input type="number" value="'.$row["principal_amount"].'" name="principal_amoun" class="form-control" required id="principal_amount">
       </div>
       <div class="form-group">
-        <label>Loan Term:</label>
+        <label>Loan Tenor:</label>
         <input type="number" value="'.$row["loan_term"].'" name="loan_ter" class="form-control" id="loan_term" />
       </div>
       <div class="form-group">
@@ -38,6 +38,14 @@ if(isset($_POST["id"]))
         <input type="date" name="disbursement_dat" class="form-control" id="disb_date">
       </div>
       <div class="form-group">
+        <label>Grace on Principal Payment:</label>
+        <input type="number" value="'.$row["interest_rate"].'" name="interest_rat" class="form-control" id="interest_rate">
+      </div>
+      <div class="form-group">
+        <label>Grace on Interest Payment:</label>
+        <input type="number" value="'.$row["interest_rate"].'" name="interest_rat" class="form-control" id="interest_rate">
+      </div>
+      <div class="form-group">
         <label>Loan Officer:</label>
         <input type="text" value="" name="loan_office" class="form-control" id="lof">
       </div>
@@ -46,12 +54,26 @@ if(isset($_POST["id"]))
         <input type="text" value="" name="loan_purpos" class="form-control" id="lop">
       </div>
       <div class="form-group">
+        <label>Apply Standing instruction:</label>
+        <select name="" class="form-control">
+          <option value="on">ON</option>
+          <option value="off">OFF</option>
+        </select>
+      </div>
+      <div class="form-group">
         <label>Linked Savings account:</label>
         <input type="text" value="'.$row["linked_savings_acct"].'" name="linked_savings_acc" class="form-control" id="lsaa">
       </div>
       <div class="form-group">
-        <label>Repayment Start Date:</label>
+        <label>Repayment Starting From:</label>
         <input type="date" value="" name="repay_star" class="form-control" id="repay_start">
+      </div>
+      <div class="form-group">
+        <label>Loan Sector:</label>
+        <select name="" class="form-control">
+          <option value="on">Select loan sector</option>
+          <option value="off">OFF</option>
+        </select>
       </div>';
     }
     echo $output;

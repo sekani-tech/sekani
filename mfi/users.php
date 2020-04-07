@@ -217,12 +217,26 @@ input:checked + .slider:before {
                           <th><?php echo $row["status"]; ?></th>
                           <th><?php echo $row["employee_status"]; ?></th>
                           <th>
-                          <a href="update_user.php?edit=<?php echo $row["id"];?>"><form action="../functions/update_staff.php"><label class="switch">
+                          <label class="switch">
                                 <input type="checkbox" name="employee_status[]" value="<?php echo $row["employee_status"]; ?>">
                                 <span class="slider round"></span>
                               </label>
-                              </form>
-                              </a>
+                              <script>
+                                var button = new Ext.button({
+                                  text: 'test',
+                                  enableToggle: true,
+                                  stateful: true
+                              });
+                              
+                              button.getState = function() {
+                                  if (this.enableToggle == true) {
+                                      var config = {};
+                                      config.pressed = this.pressed;
+                                      return config;
+                                  }
+                                  return null;
+                              }
+                                </script>
                           </th>
                           <!-- <a href="update_user.php?edit=<?php echo $row["id"];?>"><form action="../functions/update_staff.php"><label class="switch">
                                 <input type="checkbox" name="employee_status" value="<?php echo $row["employee_status"]; ?>">
