@@ -121,8 +121,8 @@ $rezz = mysqli_query($connection, $activeq);
             </a>
             <div class="dropdown-menu">
               <a href="#" class="dropdown-item">Account Opening</a>
-              <a href="transact_approval" class="dropdown-item">Transactions</a>
-              <a href="lend.php" class="dropdown-item">Loan disbursement</a>
+              <a href="transact_approval.php" class="dropdown-item">Transactions</a>
+              <a href="disbursement_approval.php" class="dropdown-item">Loan disbursement</a>
             </div>
           </li>
           <li class="nav-item dropdown-menu">

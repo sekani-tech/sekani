@@ -79,6 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (count([$olbd]) == 1) {
           $oo = mysqli_fetch_array($olbd);
           $out_loan_bal = $oo['principal_amount'];
+          $prd = $oo['principal_repaid_derived'] + $amt;
+          $rnu = mysqli_query($connection, "UPDATE loan SET principal_repaid_derived = '$prd'  WHERE client_id = '$id'");
         }
         $appuser_id = $_SESSION["user_id"];
         $olbdq = "INSERT INTO loan_transaction (int_id, branch_id,

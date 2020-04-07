@@ -45,22 +45,6 @@ $tff = $loan_term - 1;
 $submitted_on = date("Y-m-d");
 $currency = "NGN";
 $cd = 2;
-$query = "INSERT INTO loan (int_id, account_no, client_id,
-product_id, col_id, col_name, col_description,
-loan_officer, loan_purpose, currency_code,
-currency_digits, principal_amount_proposed, principal_amount,
-loan_term, interest_rate, approved_principal, repayment_date,
-term_frequency, repay_every, number_of_repayments, submittedon_date,
-submittedon_userid, approvedon_date, approvedon_userid,
-expected_disbursedon_date, expected_firstrepaymenton_date, disbursement_date,
-disbursedon_userid, repay_principal_every, repay_interest_every) VALUES ('{$sessint_id}', '{$acct_no}', '{$client_id}',
-'{$product_id}', '{$col_id}', '{$col_name}', '{$col_description}',
-'{$loan_officer}', '{$loan_purpose}', '{$currency}', '{$cd}',
-'{$principal_amount}', '{$pd}', '{$loan_term}', '{$interest_rate}',
-'{$principal_amount}', '{$repay_start}', '{$tff}', '$repay_every',
-'{$loan_term}', '{$submitted_on}', '{$userid}', '{$submitted_on}', '{$userid}',
-'{$disbursement_date}', '{$repay_start}', '{$disbursement_date}',
-'{$userid}', '{$loan_term}', '{$loan_term}')";
 // stopped at principal amount
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
@@ -75,161 +59,58 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
                 if (count([$branchhl]) == 1) {
                     $yxx = mysqli_fetch_array($branchhl);
                     $lsff = $yxx['loan_status'];
+                    $cdn = $yxx['display_name'];
                 }
-        if ($acctprin >= 0 && $lsff == "Not Active") {
+        if ($acctprin >= 0) {
+            if ($lsff == "Not Active" || $lsff == "") {
+                $stt = "Not Approved";
+                $query = "INSERT INTO loan_disbursement_cache (int_id, account_no, client_id,
+display_name, product_id, col_id, col_name, col_description,
+loan_officer, loan_purpose, currency_code,
+currency_digits, principal_amount_proposed, principal_amount,
+loan_term, interest_rate, approved_principal, repayment_date,
+term_frequency, repay_every, number_of_repayments, submittedon_date,
+submittedon_userid, approvedon_date, approvedon_userid,
+expected_disbursedon_date, expected_firstrepaymenton_date, disbursement_date,
+disbursedon_userid, repay_principal_every, repay_interest_every, status) VALUES ('{$sessint_id}', '{$acct_no}', '{$client_id}',
+'{$cdn}', '{$product_id}', '{$col_id}', '{$col_name}', '{$col_description}',
+'{$loan_officer}', '{$loan_purpose}', '{$currency}', '{$cd}',
+'{$principal_amount}', '{$pd}', '{$loan_term}', '{$interest_rate}',
+'{$principal_amount}', '{$repay_start}', '{$tff}', '$repay_every',
+'{$loan_term}', '{$submitted_on}', '{$userid}', '{$submitted_on}', '{$userid}',
+'{$disbursement_date}', '{$repay_start}', '{$disbursement_date}',
+'{$userid}', '{$loan_term}', '{$loan_term}', '{$stt}')";
             $res = mysqli_query($connection, $query);
             if ($res) {
-                $brancl = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id'");
-                if (count([$brancl]) == 1) {
-                    $yx = mysqli_fetch_array($brancl);
-                    $branch_id = $yx['branch_id'];
-                    $lsf = $yx['loan_status'];
-                    // quick loan test
-                    $pkn = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$client_id'");
-                    if (count([$pkn]) == 1) {
-                        $gf = mysqli_fetch_array($pkn);
-                        $abd = $gf['account_balance_derived'];
-                    // update institution account balance derived
-                    $upacctb = $acctprin;
-                    $iupq = "UPDATE institution_account SET account_balance_derived = '$upacctb' WHERE int_id = '$sessint_id'";
-                    $iupres = mysqli_query($connection, $iupq);
-                    if($iupres) {
-                    // insert into institution account transaction
-                    $tess = 10;
-                    $trans_id = str_pad(rand(0, pow(10, $tess)-1), $digits, '0', STR_PAD_LEFT);
-                    $trans_type = "debit";
-                    $trans_date = date("Y-m-d");
-                    $trans_amt = $calprinamt;
-                    $irvs = 0;
-                    $ova = 0;
-                    $running_b = $upacctb;
-                    $created_date = date("Y-m-d");
-
-                    $iat = "INSERT INTO institution_account_transaction (int_id, branch_id,
-                    client_id, transaction_id, transaction_type, is_reversed,
-                    transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-                    created_date) VALUES ('{$sessint_id}', '{$branch_id}',
-                    '{$client_id}', '{$trans_id}', '{$trans_type}', '{$irvs}',
-                    '{$trans_date}', '{$trans_amt}', '{$running_b}', '{$trans_amt}',
-                    '{$created_date}')";
-                    $res2 = mysqli_query($connection, $iat);
-                    if ($res2) {
-                    // update client loan status
-                    $lsxx = "Active";
-                    $clsu = "UPDATE client SET loan_status = '$lsxx' WHERE id = '$client_id'";
-                    $clsures = mysqli_query($connection, $clsu);
-                    if ($clsures) {
-                        // update client account (savings or current)
-                        $cabd = $abd + $principal_amount;
-                        $ladd = date("Y-m-d");
-                        $oyacbu = "UPDATE account SET account_balance_derived = '$cabd',
-                        last_activity_date = '$ladd' WHERE client_id = '$client_id'";
-                        $gomrca = mysqli_query($connection, $oyacbu);
-                        if ($gomrca) {
-                            // insert into client account transaction
-                            $colacct = mysqli_query($connection, "SELECT * FROM account where client_id = '$client_id'");
-                            if (count([$colacct]) == 1) {
-                                $mov = mysqli_fetch_array($colacct);
-                                $a_product_id = $product_id;
-                                $acctnt_no = $mov['account_no'];
-                                $acctrunb = $mov['account_balance_derived'];
-                                $hsj = 6;
-                                $transac_id = str_pad(rand(0, pow(10, $hsj)-1), $digits, '0', STR_PAD_LEFT);
-                                $transac_type = "credit";
-                                $transac_date = date("Y-m-d");
-                                $transac_amt = $calprinamt;
-                                $cova = 0;
-                                $crunning_b = $acctrunb + $calprinamt;
-                                $trans_created_date = date("Y-m-d");
-
-                                $colacctts = "INSERT INTO account_transaction (int_id,
-                                branch_id, product_id, account_no, client_id,
-                                transaction_id, transaction_type, is_reversed, transaction_date, amount,
-                                running_balance_derived, created_date) VALUES ('{$sessint_id}',
-                                '{$branch_id}', '{$product_id}', '{$acctnt_no}',
-                                '{$client_id}', '{$transac_id}', '{$transac_type}', '{$cova}', '{$transac_date}',
-                                '{$transac_amt}', '{$crunning_b}', '{$trans_created_date}')";
-                                $res3 = mysqli_query($connection, $colacctts);
-                                if ($res3) {
-                                    $colkt = mysqli_query($connection, "SELECT * FROM loan where client_id = '$client_id'");
+                $colkt = mysqli_query($connection, "SELECT * FROM loan_disbursement_cache where client_id = '$client_id'");
                                 if (count([$colkt]) == 1) {
                                     $kl = mysqli_fetch_array($colkt);
                                     $loan_id = $kl['id'];
                                 }
-                                    $gjjj = "INSERT INTO loan_gaurantor (int_id, loan_id, client_id, first_name, last_name,
+                $gjjj = "INSERT INTO loan_gaurantor (int_id, loan_id, client_id, first_name, last_name,
                                     phone, phone2, home_address, office_address, position_held, email) VALUES ('{$sessint_id}',
                                     '{$loan_id}', '{$client_id}', '{$first_name}', '{$last_name}',
                                     '{$phone}', '{$phone2}', '{$home_address}', '{$office_address}', '{$position_held}',
                                     '{$email}')";
                                     $kdln = mysqli_query($connection, $gjjj);
                                     if ($kdln) {
-                                        echo header("location: ../mfi/loans.php");
+                                        $_SESSION["Lack_of_intfund_$randms"] = "Successfully Uploaded, Awaiting Disbursement Approval";
+        header ("Location: ../mfi/lend.php?message=$randms");
                                     } else {
-                                        echo "final error bro";
+                                        $_SESSION["Lack_of_intfund_$randms"] = "Error in Posting For Loan Gaurantor";
+        header ("Location: ../mfi/lend.php?message5=$randms");
                                     }
-                                    if ($connection->error) {
-                                        try {
-                                            throw new Exception("MYSQL error $connection->error <br> $colacctts", $mysqli->error);
-                                        } catch (Exception $e) {
-                                            echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
-                                            echo n12br($e->getTraceAsString());
-                                        }
-                                    }
-                                } else {
-                                    echo "bad data in the last if statement";
-                                    if ($connection->error) {
-                                        try {
-                                            throw new Exception("MYSQL error $connection->error <br> $kdln ", $mysqli->error);
-                                        } catch (Exception $e) {
-                                            echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
-                                            echo n12br($e->getTraceAsString());
-                                        }
-                                    }
-                                }
-                            }
-                        } else {
-                            echo "bad on client account update";
-                        }
-                    } else {
-                        echo "bad on update client loan status";
-                    }
-                    } else {
-                        if ($connection->error) {
-                    try {
-                    throw new Exception("MYSQL error $connection->error <br> $iat ", $mysqli->error);
-                    } catch (Exception $e) {
-                    echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
-                    echo n12br($e->getTraceAsString());
-                    }
-                }
-                        echo "bad on institution account transaction";
-                    }
-                    } else {
-                        echo "bad on institution account update";
-                    }
-                  } else {
-                    $_SESSION["Lack_of_intfund_$randms"] = "This Client Has Been Given Loan Before";
-                    header ("Location: ../mfi/lend.php?message=$randms");
-                  }
-                } else {
-                    echo "bad general";
-                }
             } else {
-                if ($connection->error) {
-                    try {
-                    throw new Exception("MYSQL error $connection->error <br> $query ", $mysqli->error);
-                    } catch (Exception $e) {
-                    echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
-                    echo n12br($e->getTraceAsString());
-                    }
-                }
-              $_SESSION["Lack_of_intfund_$randms"] = "Sorry Can't Disburse Loan";
-              header ("Location: ../mfi/lend.php?message=$randms");
+                $_SESSION["Lack_of_intfund_$randms"] = "Error in Posting For Approval";
+        header ("Location: ../mfi/lend.php?message2=$randms");
             }
-        } else {
-            $_SESSION["Lack_of_intfund_$randms"] = "Insufficent Fund From Institution Account! OR This Client Has Been Given Loan Before";
-            header ("Location: ../mfi/lend.php?message=$randms");
-        }
-
-    }
+            } else {
+                $_SESSION["Lack_of_intfund_$randms"] = "This Client Has Been Given Loan Before";
+        header ("Location: ../mfi/lend.php?message3=$randms");
+            }
+    }  else {
+        $_SESSION["Lack_of_intfund_$randms"] = "Insufficent Fund From Institution Account!";
+        header ("Location: ../mfi/lend.php?message4=$randms");
+}
+}
 ?>

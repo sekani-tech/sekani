@@ -2,6 +2,8 @@
 include("connect.php");
 session_start();
 $sessint_id = $_SESSION["int_id"];
+$staff_id = $_SESSION["user_id"];
+$staff_name  = $_SESSION["fullname"];
 ?>
 <?php
 $test = $_POST['test'];
@@ -18,12 +20,18 @@ $type = $_POST['pay_type'];
          $client_id = $x['client_id'];
          $digits = 6;
          $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
- 
+
+         $clientfn =  mysqli_query($connection, "SELECT firstname FROM client WHERE account_no ='$acct_no' && int_id = '$sessint_id' ");
+         if (count([$clientfn]) == 1) {
+             $py = mysqli_fetch_array($clientfn);
+             $clientt_name = $py['firstname'];
+         }
          if ($acct_no == $tryacc) {
             if ($test == "deposit") {
                 $dd = "Deposit";
                 $ogs = "Not Verified";
-                $trancache = "INSERT INTO transact_cache (int_id, account_no, client_id, amount, pay_type, transact_type, product_type, status) VALUES ('{$sessint_id}', '{$acct_no}', '{$client_id}', '{$amt}', '{$type}', '{$dd}', '{$product_id}', '{$ogs}')";
+                $trancache = "INSERT INTO transact_cache (int_id, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, product_type, status) 
+                VALUES ('{$sessint_id}', '{$acct_no}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt}', '{$type}', '{$dd}', '{$product_id}', '{$ogs}')";
                 $go = mysqli_query($connection, $trancache);
                 if ($go) {
                   $_SESSION["Lack_of_intfund_$randms"] = "Deposit Has Been Done, Awaiting Approval!";

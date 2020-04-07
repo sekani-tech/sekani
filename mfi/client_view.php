@@ -9,7 +9,7 @@ include('header.php');
 if(isset($_GET["edit"])) {
   $id = $_GET["edit"];
   $update = true;
-  $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id'");
+  $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id' && int_id ='$sessint_id'");
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
     $ctype = $n['client_type'];
@@ -39,8 +39,23 @@ if(isset($_GET["edit"])) {
       $j = mysqli_fetch_array($acount);
       $displayname = $j['display_name'];
     }
-    // $signature = $n['signature'];
-    // $id_img_url = $n['id_img_url'];
+    $signature = $n['signature'];
+    $id_img_url = $n['id_img_url'];
+
+    $getacctv = mysqli_query($connection, "SELECT * FROM account WHERE account_no='$acc_no' && int_id='$sessint_id'");
+    if (count([$getacctv]) == 1) {
+      $xrx = mysqli_fetch_array($getacctv);
+      $abd = $xrx['account_balance_derived'];
+      $tdd = $xrx['total_deposits_derived'];
+      $twd = $xrx['total_withdrawals_derived'];
+      $gogo = mysqli_query($connection, "SELECT * FROM loan WHERE account_no = '$acc_no' && int_id='$sessint_id'");
+      if (count([$gogo]) == 1) {
+        $ppo = mysqli_fetch_array($gogo);
+        $olb = $ppo['principal_amount'];
+        $prd = $ppo['principal_repaid_derived'];
+        $cv = "Null";
+      }
+    }
   }
 }
 ?>
@@ -85,79 +100,37 @@ if(isset($_GET["edit"])) {
                 <form action="">
                     <div class="form-group">
                       <label for="">Current Balance:</label>
-                      <input type="text" name="" id="" class="form-control" value="200000" readonly>
+                      <input type="text" name="" id="" class="form-control" value="<?php echo $abd; ?>" readonly>
                     </div>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Last Deposit:</label>
-                          <input type="text" name="" id="" class="form-control" value="0" readonly>
+                          <input type="text" name="" id="" class="form-control" value="<?php echo $tdd; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Last Withdrawal:</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">APR (Annual per interest rate):</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Total Deposit:</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
+                          <input type="text" name="" id="" class="form-control" value="<?php echo $twd; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Total Outstanding Loan balance:</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Total Withdrawal:</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
+                          <input type="text" name="" id="" class="form-control" value="<?php echo $olb; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Total Loan Amount payed:</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Total Charges:</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Total Interest Earned:</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Amount in Arrears</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Days in Arrears</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
+                          <input type="text" name="" id="" class="form-control" value="<?php echo $prd; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Collateral Value</label>
-                          <input type="text" name="" id="" class="form-control" value="2500" readonly>
+                          <input type="text" name="" id="" class="form-control" value="<?php echo $cv; ?>" readonly>
                         </div>
                       </div>
                     </div>
@@ -192,7 +165,7 @@ if(isset($_GET["edit"])) {
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $passport;?>" />
+                    <img class="img" src="../functions/clients/<?php echo $id_img_url;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->
@@ -205,7 +178,7 @@ if(isset($_GET["edit"])) {
                 <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $passport;?>" />
+                    <img class="img" src="../functions/clients/<?php echo $signature;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->

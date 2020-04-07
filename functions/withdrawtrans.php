@@ -2,6 +2,8 @@
 include("connect.php");
 session_start();
 $sessint_id = $_SESSION["int_id"];
+$staff_id = $_SESSION["user_id"];
+$staff_name  = $_SESSION["fullname"];
 ?>
 <?php
 $test2 = $_POST['test2'];
@@ -22,12 +24,17 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
          $client_id = $x['client_id'];
 
          if ($acct_no2 == $tryacc) {
+            $clientfn =  mysqli_query($connection, "SELECT firstname FROM client WHERE account_no ='$acct_no2' && int_id = '$sessint_id' ");
+            if (count([$clientfn]) == 1) {
+                $py = mysqli_fetch_array($clientfn);
+                $clientt_name = $py['firstname'];
+            }
             if ($test2 == "withdraw") {
                 if ($acct_b_d >= $amt2) {
                     $wd = "Withdrawal";
                     $gms = "Not Verified";
-                 $trancache = "INSERT INTO transact_cache (int_id, account_no, client_id, amount, pay_type, transact_type, product_type, status) VALUES
-                 ('{$sessint_id}', '{$acct_no2}', '{$client_id}', '{$amt2}', '{$type2}', '{$wd}', '{$product_id}', '{$gms}') ";
+                 $trancache = "INSERT INTO transact_cache (int_id, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, product_type, status) VALUES
+                 ('{$sessint_id}', '{$acct_no2}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt2}', '{$type2}', '{$wd}', '{$product_id}', '{$gms}') ";
                  $go = mysqli_query($connection, $trancache);
                  if ($go) {
                     $_SESSION["Lack_of_intfund_$randms"] = "Withdrawal Successful!";

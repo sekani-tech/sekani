@@ -9,7 +9,7 @@ $destination = "client.php";
 if(isset($_GET["edit"])) {
   $id = $_GET["edit"];
   $update = true;
-  $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id'");
+  $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id' && int_id='$sessint_id'");
 
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
@@ -34,8 +34,8 @@ if(isset($_GET["edit"])) {
     $email_active = $n['EMAIL_ACTIVE'];
     $id_card = $n['id_card'];
     $passport = $n['passport'];
-    // $signature = $n['signature'];
-    // $id_img_url = $n['id_img_url'];
+    $signature = $n['signature'];
+    $id_img_url = $n['id_img_url'];
   }
 }
 ?>
@@ -266,7 +266,7 @@ if(isset($_GET["edit"])) {
                                 <span class="btn btn-raised btn-round btn-default btn-file">
                                     <span class="fileinput-new">Upload Image ID</span>
                                     <!-- <span class="fileinput-exists">Change</span> -->
-                                    <input type="file" name="idimg" />
+                                    <input type="file" name="id_img_url" />
                                 </span>
                                 <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                             </div>
@@ -307,7 +307,7 @@ if(isset($_GET["edit"])) {
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $passport;?>" />
+                    <img class="img" src="../functions/clients/<?php echo $id_img_url;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->
@@ -320,7 +320,7 @@ if(isset($_GET["edit"])) {
                 <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $passport;?>" />
+                    <img class="img" src="../functions/clients/<?php echo $signature;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->
