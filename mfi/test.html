@@ -1,281 +1,434 @@
-<form name="createAccountForm" action="accountOpen" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="staffId" value="<%out.print(staffInfo.getStaffId());%>">
-    <div class="row">
-      <div class="col-md-12">
-            <div class="main-card mb-3 p-3 card">
+<form name="createLoan" action="createLoan" method="post">                                     
+                                            
+    <div class="tab-content">
+         <div class="tab-pane active" id="crt-tab-0" role="tabpanel">
+             <%
+                 ClientInfo clientInfo = (ClientInfo)request.getAttribute("clientInfo");
+             %>
+             <input type="hidden" name="clientId" value="<%out.print(clientInfo.getClientId());%>">
+           <div class="form-row" >
+               <div class="col-md-6 d-inline">
+                 <div class="input-group mb-3">
+                   <label for="productGroup" class="mr-3 form-align">Product*</label>
+                   <select class="form-control form-control-sm" name="loanProduct" onclick="sendLoanProduct()" required>
+                     <%
+                         MosuniQueriesAdHoc loanProductQuery = new MosuniQueriesAdHoc();
+                         List<ProductLoan> loanProductList = new ArrayList<>();
+                         loanProductList = loanProductQuery.getAllProductLoan();
+                         if(loanProductList != null){
+                             for(ProductLoan loanProduct : loanProductList){
+                     %>  
+                         <option value="<% out.print(loanProduct.getProductId());%>"><% out.print(loanProduct.getName());%></option>
+                    <%
+                             }
+                         }
+                    %>
+                   </select>
+                 </div>
 
-              <div class="card-body">
-              <div class="form-row" >
-                  <div class="col-md-5 d-inline">
-                        <div class="position-relative form-group">
-                              <label class="control-label" for="Client_dateOfBirth">Client Type</label>
-                                    <!-- <div class="controls"> -->
-                                          <select class="form-control form-control-sm" id="changeClientSel" name="changeClientSel" onchange="changeClientType()">
-                                            <option value="0" selected disabled>Select Client Type</option>
-                                            <option value="Individual">Individual</option>
-<!--                                                                <option value="Corporate">Corporate</option>
-                                            <option value="Group">Group</option>-->
-                                        </select>
+                 <div class="input-group mb-3">
+                 <label for="loanName" class="mr-3 form-align ">Name *</label>
+                 <input type="text" class="form-control form-control-sm"  name="" value="<% out.print(clientInfo.getDisplayName());%>" placeholder="<% out.print(clientInfo.getDisplayName());%>" readonly>
+                 </div>
+                 <span class="invalid-feedback">Name cannot be blank!</span>                                                
 
-                                  </div>
-                                  <div id="individualDiv">
-                                          <div class="position-relative form-group">
-                                              <label class="control-label" for="Client_firstname">First Name</label>
-                                              <input type="text" class="form-control form-control-sm" id="firstNameCreateAcc" name="firstNameCreateAcc">
-                                          </div>
-                                          <div class="position-relative form-group">
-                                              <label class="control-label" for="Client_middlename">Middle Name</label>
-                                              <input type="text" class="form-control form-control-sm" id="middleNameCreateAcc" name="middleNameCreateAcc">
-                                          </div>
+                 <div class="input-group mb-3">
+                   <label for="loanAmount" class="mr-3 form-align">Loan Amount*</label>
+                   <input type="text" class="form-control form-control-sm"  name="loanAmount" placeholder="Loan Amount">
+                 
+                 </div>
+                 <div class="input-group mb-3">
+                     <label for="loanTenor" class="form-align mr-3">Loan Tenor</label>
+                     <input type="number" class="form-control form-control-sm" name="loanTenor" placeholder="Tenor" required>
+                     <select class="form-control form-control-sm" name="loanTenorSel">
+                         <option value="1">Days</option>
+                         <option value="2">Weeks</option>
+                         <option value="3">Months</option>
+                       </select>
+                 </div>
+                 <div class="input-group mb-3">
+                     <label for="repaymentFreq" class="form-align mr-3">Repayment Frequency</label>
+                     <input type="number" class="form-control form-control-sm" name="repaymentFreq" placeholder="Period" required>
+                     <select class="form-control form-control-sm" name="repaymentFreqSel">
+                         <option value="1">Days</option>
+                         <option value="2">Weeks</option>
+                         <option value="3">Months</option>
+                       </select>
+                 </div>
+                 <div class="input-group mb-3">
+                     <label for="interestRate" class="form-align mr-3">Interest Rate</label>
+                     <input type="number" class="form-control form-control-sm" name="interestRate" required>
+                     <span class="form-control-sm">% Per Month</span>
+                 </div>
+                 <div class="input-group mb-3">
+                     <label for="disburseDate" class="form-align mr-3">Disbursement Date</label>
+                     <input type="date" class="form-control form-control-sm" name="disburseDate" required>
+                 </div>
+                 <div class="input-group mb-3">
+                     <label for="gracePrincipal" class="form-align mr-3">Grace On Principal Payment</label>
+                     <input type="number" class="form-control form-control-sm" name="gracePrincipal" required>
+                 </div>
+                 <div class="input-group mb-3">
+                     <label for="graceInterest" class="form-align mr-3">Grace On Interest Payment</label>
+                     <input type="number" class="form-control form-control-sm" name="graceInterest" required>
+                 </div>
+                 <div class="input-group mb-3">
+                     <label for="loanOfficer" class="mr-3 form-align">Loan Officer</label>
+                     <select class="form-control form-control-sm" name="loanOfficer" required>
+                         <%
+                             List<MosuniOfficerInfo> mosuniOfficerInfoList;
+                             MosuniQueriesAdHoc officerListQuery;
 
-                                          <div class="position-relative form-group">
-                                              <label class="control-label" for="Client_lastname">Last Name</label>
-                                              <input type="text" class="form-control form-control-sm"  id="lastNameCreateAcc" name="lastNameCreateAcc">
-                                          </div>
+                             mosuniOfficerInfoList = new ArrayList<>();
+                             officerListQuery = new MosuniQueriesAdHoc();
+                             mosuniOfficerInfoList = officerListQuery.getOfficersList(String.valueOf(staffInfo.getOfficeId()));
+                            for(MosuniOfficerInfo individualOfficer : mosuniOfficerInfoList){
+                         %>
+                         <option value="<%out.print(individualOfficer.getStaffId());%>"><%out.print(individualOfficer.getDisplayName());%></option>
+                         <%
+                             }
+                         %>
+                     </select>
+                   </div>                                                 
 
-                                          <div class="position-relative form-group">
-                                              <label class="control-label" for="Client_dateOfBirth">Date Of Birth</label>
-                                                  <input type="date" class="form-control form-control-sm" id="dobCreateAcc" name="dobCreateAcc">
-                                          </div>
-                                          <div class="position-relative form-group">
-                                              <label class="control-label" for="Client_gender_cv_id">Gender</label>
-                                                  <select class="form-control form-control-sm" id="genderCreateAcc" name="genderCreateAcc">
-                                                      <option value="218">Male</option>
-                                                      <option value="219">Female</option>
-                                                  </select>
-                                          </div>
-                                          <div class="position-relative form-group">
-                                              <label class="control-label" for="Client_dateOfBirth">Passport</label>
-                                                  <input type="file" accept="image/jpeg, image/gif, image/tiff" class="form-control-file form-control-sm" id="passportCreateAcc" name="passportCreateAcc" multiple>
-                                              </div>
+               </div>
+                 <div class="col-md-6 d-inline">
+                     <div class="input-group mb-3">
+                     <label for="loanPurpose" class="mr-3 form-align">Loan Purpose</label>
+                     <select class="form-control form-control-sm" name="loanPurpose" required>
+                         <option value="0" selected disabled>Select Loan Purpose</option>
+                     <%
+                         List<CodeValueInfo> dropDownLoanPurposeList = new ArrayList<>();
+                         MosuniQueriesAdHoc dropDownLoanPurposeQuery = new MosuniQueriesAdHoc();
+                         dropDownLoanPurposeList = dropDownLoanPurposeQuery.getDropDownList(3);
+                         
+                         for(CodeValueInfo indvItem : dropDownLoanPurposeList){
+                     %>
+                         <option value="<%out.print(indvItem.getId());%>"><%out.print(indvItem.getCodeValue());%></option>
+                     <%
+                         }
+                     %>
+                     </select>
+                   </div>
+                   <div class="input-group mb-3">
+                       <label for="fundOrigin" class="mr-3 form-align">Apply Standing Instruction</label>
+                       <select class="form-control form-control-sm" name="applyStandingInst" required>
+                         <option value="1">On</option>
+                         <option value="2">Off</option>
+                       </select>
+                     </div>
+                 <div class="input-group mb-3">
+                   <label for="linkedSavingsAcct" class="form-align mr-3">Linked Savings Account </label>
+                   <select class="form-control form-control-sm" name="linkedSavingsAcct" required>
+                         <%
+                             MosuniQueriesAdHoc savingsAcctQueries, savingsProdQueries, balQueries;
+                             String productName, outstandingBal;
+                             DoDigitGroup dgBal;
+                             String savingsStatus = "";
 
-                                          <div class="position-relative form-group">
-                                                  <label class="control-label" for="Client_dateOfBirth">Signature</label>
-                                                      <input type="file" accept="image/jpeg" class="form-control-file form-control-sm" id="signCreateAcc" name="signCreateAcc">
-                                              </div>
-                                          <div class="position-relative form-group">
-                                                  <label class="control-label" for="Client_dateOfBirth">ID card</label>
-                                                          <select class="form-control form-control-sm" id="idCardCreateAcc" name="idCardCreateAcc">
-                                                              <option value="0" selected disabled>Select ID Type</option>
-                                                              <option value="National ID">National ID</option>
-                                                              <option value="Voters Card">Voters Card</option>
-                                                              <option value="International Passport">International Passport</option>
-                                                          </select><br>
-                                                          <input type="file" accept="image/jpeg" class="form-control-file form-control-sm" name="idCardCreateAccAtt">
-                                                          <small>Upload a copy of your ID in the following format png, jpeg, jpg, pdf.</small>
-                                              </div>
+                             savingsAcctQueries = new MosuniQueriesAdHoc();
+                             savingsProdQueries = new MosuniQueriesAdHoc();
+                             balQueries = new MosuniQueriesAdHoc();
 
-<!--                                                                  <div class="position-relative form-group">
-                                                <label class="control-label" for="Client_emailAddress">Add to Group</label>
-                                                <div class="input-group"><input type="search" class="form-control form-control-sm" placeholder="Search Group" id="addGroupCreateAcc" name="addGroupCreateAcc">
-                                                    <div class="input-group-append"><button id="addGroupBtn" name="sendType" value="search" type="submit" class="btn btn-sm btn-primary" onclick="showGroupSearchDiv()">Search</button></div>
-                                                </div>
-                                              </div>-->
+                             List<SavingsAccountInfoView> savingAccountInfoList = new ArrayList<>();
+                             savingAccountInfoList = savingsAcctQueries.getSavingsAccounts(clientInfo.getClientId());
+                             if(savingAccountInfoList != null){
+                                 
+                             MosuniQueriesAdHoc rEnumQuery = new MosuniQueriesAdHoc();
+                             REnumValue enumValue;                                                        
+                             for(SavingsAccountInfoView individualSavingsAcc : savingAccountInfoList){
+                                 productName = savingsProdQueries.getSavingsProductName(individualSavingsAcc.getProductId());
+                                 outstandingBal = balQueries.getOutstandingBal(individualSavingsAcc.getAccountId().substring(3));
+                                 dgBal = new DoDigitGroup(individualSavingsAcc.getAccountBalDerived());
+                                 enumValue = rEnumQuery.getEnumType("status_enum", individualSavingsAcc.getStatusEnum());
+                                 savingsStatus = enumValue.getEnumValue();
+                                 if(individualSavingsAcc.getStatusEnum() == 300){
+                         %>
+                             <option value="<% out.println(individualSavingsAcc.getAccountId());%>"><% out.println(individualSavingsAcc.getAccountId());%> ::: <% out.println(productName);%></option>
+                         <%
+                             }else{
+                         %>
+                             <option value="0">No Active Account(s)</option>
+                         <%
+                                     }
+                                 }
+                             }
+                         %>
+                   </select>
+                 </div>
+                   <div class="input-group mb-3">
+                     <label for="disburseDate" class="form-align mr-3">Repayments Starting From</label>
+                     <input type="date" class="form-control form-control-sm" name="repayStartDate" required>
+                 </div>
+                 
+                 <div class="input-group mb-3">
+                     <label for="fundOrigin" class="mr-3 form-align">Loan Sector</label>
+                     <select class="form-control form-control-sm" name="loanPurpose" required>
+                             <option value="0" selected disabled>Select Loan Sector</option>
+                         <%
+                             List<CodeValueInfo> dropDownLoanSectorList = new ArrayList<>();
+                             MosuniQueriesAdHoc dropDownLoanSectorQuery = new MosuniQueriesAdHoc();
+                             dropDownLoanSectorList = dropDownLoanSectorQuery.getDropDownList(26);
 
+                             for(CodeValueInfo indvItem : dropDownLoanSectorList){
+                         %>
+                             <option value="<%out.print(indvItem.getId());%>"><%out.print(indvItem.getCodeValue());%></option>
+                         <%
+                             }
+                         %>
+                     </select>
+                   </div>
+                 </div>
+             </div>
+         </div>
+         <div class="tab-pane" id="crt-tab-1">
+             <div id="chargeProductDiv">
+                 <table class="table table-bordered">
+                 <thead>
+                   <tr>
+                     <th>Name</th>
+                     <th>Charge</th>
+                     <th>Collected On</th>
+                     <th></th>
+                   </tr>
+                 </thead>
+                 <tbody>  
+                     
+                 </tbody>
 
+               </table>
+             </div>
+           <div class="mb-3 input-group col-md-6">
+             <label for="charge" class="form-align mr-3">Charges</label>
+             <select class="form-control form-control-sm mr-3" name="charge">
+                 <%
+//                                                    MosuniQueriesAdHoc rEnumCalQuery = new MosuniQueriesAdHoc();
+//                                                    List<REnumValue> enumCalValueList = new ArrayList<>();
+//                                                    enumCalValueList = rEnumCalQuery.getEnumTypeMsgProp
+//                                                    
+                     MosuniQueriesAdHoc chargeInfoQuery = new MosuniQueriesAdHoc();
+                     List<ChargeInfo> chargeInfoList = new ArrayList<>();
+                     chargeInfoList = chargeInfoQuery.getAllChargeInfo(1);
+                     if(chargeInfoList != null){
+                         for(ChargeInfo chargeInfo : chargeInfoList){
+                 %>  
+                     <option value="<% out.print(chargeInfo.getId());%>"><% out.print(chargeInfo.getName());%></option>
+                <%
+                         }
+                     }
+                %>
+             </select>
+             <button type="button" class="btn btn-primary" name="button" onclick="displayCharge()"> <i class="fa fa-plus"></i> Add To Product </button>
+           </div>
+         </div>
 
-                                              <div id="selectGrpDiv" style="display: block">
-<!--                                                                      <div class="form-group">
-                                                      <label class="control-label" for="Client_emailAddress">Select Group</label>
-                                                        <select class="form-control form-control-sm" id="groupSelectCreateAcc" name="groupSelectCreateAcc">
-                                                            <option value="0" selected disabled>No Group</option>                                                                                
-                                                            <%
-//                                                                                    MosuniQueriesAdHoc groupInfoQuery = new MosuniQueriesAdHoc();
-//                                                                                    List<GroupInfo> groupInfoList = new ArrayList<>();
-//                                                                                    groupInfoList = groupInfoQuery.getGroupInfo();
-//                                                                                    if(groupInfoList != null){
-//                                                                                        for(GroupInfo indvGroupInfo : groupInfoList){
-                                                            %>
-                                                              <option value="<% //out.print(indvGroupInfo.getId());%>"><% //out.print(indvGroupInfo.getDisplayName());%></option>
-                                                            <%
-//                                                                                        }
-//                                                                                    }
-                                                            %>
-                                                        </select>
-                                                  </div>-->
+         <div class="tab-pane" id="crt-tab-2">
+           <table class="table table-striped">
+             <thead>
+               <tr>
+                 <th>Name</th>
+                 <th>Severity Level</th>
+                 <th>Order</th>
+                 <th></th>
+               </tr>
+             </thead>
+             <tbody>
+               <tr>
+                 <td>Business Loan Processing Fee</td>
+                 <td>1% Original Loan Principal</td>
+                 <td>Disbursement</td>
+                 <td> <a href="#"><i class="fa fa-times"></i></a> </td>
+               </tr>
+             </tbody>
 
-<!--                                                                  <div class="form-group">
-                                                  <label class="control-label" for="Client_emailAddress">Position in Group</label>
-                                                      <select class="form-control form-control-sm" id="groupPositionCreateAcc" name="groupPositionCreateAcc">
-                                                          <option value="0" selected disabled>Select Position</option>
-                                                          <option value="Chairman">Chairman</option>
-                                                          <option value="Secretary">Secretary</option>
-                                                          <option value="Member">Member</option>
-                                                      </select>
-                                                  </div>-->
+           </table>
 
-                                  </div>
-                                </div>
+           <div class="mb-3 input-group col-md-6">
+             <label for="charge" class="form-align mr-3">Credit Checks</label>
+             <select class="form-control form-control-sm mr-3" name="">
+               <option value="">Processing loan</option>
+             </select>
+             <button type="button" class="btn btn-primary" name="button"> <i class="fa fa-plus"></i> Add To Product </button>
+           </div>
+           <button class="btn btn-primary mr-3" name="" >Next <i class="fa fa-arrow-right"></i></button>
+         </div>
 
-                                  <div id="corporateDiv" style="display: none">
-                                      <div class="position-relative form-group">
-                                          <label class="control-label" for="Client_lastname">Company Name</label>
-                                              <input type="text" class="form-control form-control-sm" id="companyNameCreateAcc" name="companyNameCreateAcc" >
-                                      </div>
-                                      <div class="form-group">
-                                          <label class="control-label" for="Client_lastname">Reg. Number</label>
-                                          <input type="text" class="form-control form-control-sm" id="regNumCreateAcc" name="regNumCreateAcc">
-                                        </div>
-                                      <div class="position-relative form-group">
-                                          <label class="control-label" for="Client_dateOfBirth">Date Of Registration</label>
-                                              <input type="date" class="form-control form-control-sm" id="regDateCreateAcc" name="regDateCreateAcc">
-                                      </div>
-                                      <div class="position-relative form-group">
-                                          <label class="control-label" for="Client_lastname">Tax Identification Number</label>
-                                          <input type="number" class="form-control form-control-sm" id="tinCreateAcc" name="tinCreateAcc">
-                                      </div>
-                                    </div>
+         <div class="tab-pane" id="crt-tab-3">
+             
+             
+             <div class="mb-3 col-md-6">
 
-                                  <div id="groupDiv" style="display: none">
-                                          <div class="position-relative form-group">
-                                              <label class="control-label" for="Client_lastname">Group Name</label>
-                                              <input type="text" class="form-control form-control-sm" id="groupNameCreateAcc" name="groupNameCreateAcc">
-                                            </div>
-
-                                          <div class="form-group">
-                                              <label class="control-label" for="Client_dateOfBirth">Date Of Registration</label>
-                                              <input type="date" class="form-control form-control-sm" id="dateOfRegCreateAcc" name="dateOfRegCreateAcc">
-                                          </div>
-
-                                          <div class="form-group">
-                                              <label class="control-label" for="Client_dateOfBirth">Meeting Day</label>
-                                                      <select class="form-control form-control-sm" id="meetDaysCreateAcc" name="meetDaysCreateAcc">
-                                                          <option value="0" selected disabled>Select Weekday</option>
-                                                          <option value="Sunday">Sunday</option>
-                                                          <option value="Monday">Monday</option>
-                                                          <option value="Tuesday">Tuesday</option>
-                                                          <option value="Wednesday">Wednesday</option>
-                                                          <option value="Thursday">Thursday</option>
-                                                          <option value="Friday">Friday</option>
-                                                          <option value="Saturday">Saturday</option>
-                                                      </select>
-                                          </div>
-                                          <div class="position-relative form-group">
-                                              <label class="control-label" for="Client_dateOfBirth">Meeting Time</label>
-                                              <input type="time" class="form-control form-control-sm" id="meetTimeCreateAcc" name="meetTimeCreateAcc">
-                                          </div>
+                 <h5 class="card-title">Accounting Rules</h5>
+                     <div class="position-relative form-group mb-3">
+                         <div>
+                             <div class="custom-radio custom-control">
+                                 <input type="radio" id="cashBased" name="acc" class="custom-control-input">
+                                 <label class="custom-control-label" for="cashBased">Cash Based</label>
                              </div>
-                           </div>
-                           <div class="col-md-1 d-inline">
+                             <div class="custom-radio custom-control">
+                                 <input type="radio" id="accuralP" name="acc" class="custom-control-input">
+                                 <label class="custom-control-label" for="accuralP">Accural (Periodic)</label>
+                             </div>
+                             <div class="custom-radio custom-control">
+                                 <input type="radio" id="accuralU" name="acc" class="custom-control-input">
+                                 <label class="custom-control-label" for="accuralU">Accural (Upfront)</label>
+                             </div>
+                         </div>
+                     </div>
+                     
+                     <h5 class="card-title">Assets</h5>
+                     <div class="position-relative input-group mb-3">
+                         
+                             <div class="input-group mb-3">
+                                 <label for="charge" class="form-align mr-3">Fund Source</label>
+                                 <select class="form-control form-control-sm" name="">
+                                   <option value="">--</option>
+                                 </select>
+                                 
+                               </div>
+                               <div class="mb-3 input-group">
+                                 <label for="charge" class="form-align mr-3">Loan Portfolio</label>
+                                 <select class="form-control form-control-sm" name="">
+                                   <option value="">--</option>
+                                 </select>
+                                 
+                               </div>
+                         
+                     </div>
+                     
+                     <h5 class="card-title">Liabilities</h5>
+                     <div class="position-relative input-group mb-3">
+                         
+                             <div class="input-group mb-3">
+                                 <label for="charge" class="form-align mr-3">Over Payment</label>
+                                 <select class="form-control form-control-sm" name="">
+                                   <option value="">--</option>
+                                 </select>
+                                 
+                               </div>
+                         
+                     </div>
 
-                           </div>
+                     <h5 class="card-title">Income</h5>
+                     <div class="position-relative input-group mb-3">
+                         
+                             <div class="input-group mb-3">
+                                 <label for="charge" class="form-align mr-3">Income for Interest</label>
+                                 <select class="form-control form-control-sm" name="">
+                                   <option value="">--</option>
+                                 </select>
+                                 
+                             </div>
+                             <div class="input-group mb-3">
+                                 <label for="charge" class="form-align mr-3">Income from Fees</label>
+                                 <select class="form-control form-control-sm" name="">
+                                   <option value="">--</option>
+                                 </select>
+                                 
+                             </div>
+                             <div class="input-group mb-3">
+                                 <label for="charge" class="form-align mr-3">Income from Penalties</label>
+                                 <select class="form-control form-control-sm" name="">
+                                   <option value="">--</option>
+                                 </select>
+                                 
+                             </div>
+                             <div class="input-group mb-3">
+                                 <label for="charge" class="form-align mr-3">Income from Recovery</label>
+                                 <select class="form-control form-control-sm" name="">
+                                   <option value="">--</option>
+                                 </select>
+                                 
+                             </div>
+                             <div class="input-group mb-3">
+                                 <label for="charge" class="form-align mr-3">Income from Recovery</label>
+                                 <select class="form-control form-control-sm" name="">
+                                   <option value="">--</option>
+                                 </select>
+                                 
+                             </div>
+                     </div>
 
-                             <div class="col-md-5 d-inline">
-                             <div class="position-relative form-group">
-                                  <label class="control-label" for="Client_mobileNo">Phone Number</label>
-                                  <input type="number" class="form-control form-control-sm" id="numberCreateAcc" name="numberCreateAcc">
-                              </div>
-                              <div class="position-relative form-group">
-                                  <label class="control-label" for="Client_mobileNoSecondary">Secondary Mobile No</label>
+                     <h5 class="card-title">Expenses</h5>
+                     <div class="position-relative input-group mb-3">
+                         
+                             <div class="input-group mb-3">
+                                 <label for="charge" class="form-align mr-3">Losses Written Off</label>
+                                 <select class="form-control form-control-sm" name="">
+                                   <option value="">--</option>
+                                 </select>
+                                 
+                               </div>
+                         
+                     </div>
 
-                                      <input type="number" class="form-control form-control-sm" id="secNumCreateAcc" name="secNumCreateAcc">
+                     <h5 class="card-title">Advanced Accounting Rules</h5>
+                     <div class="position-relative input-group mb-3">
+                         
+                             <div class="input-group mb-3">
+                                 <label for="charge" class="mr-3"> Add Configure Fund sources for payment channels</label>
+                                 <button class="btn btn-primary-sm btn-primary mb-3" name="" type="button" ><i class="fa fa-plus"></i> Add</button>
+                               
+                               <table class="table table-striped table-bordered">
+                                   <thead>
+                                       <tr>
+                                           <th>Payment Type</th>
+                                           <th>Fund Source</th>
+                                       </tr>
+                                   </thead>
+                                   <tbody>
+                                       <tr>
+                                           <td>Cash</td>
+                                           <td>--</td>
+                                       </tr>
+                                   </tbody>
+                               </table>
+                             </div>
 
-                              </div>
-                              <div class="position-relative form-group">
-                                  <label class="control-label" for="Client_emailAddress">Email Address</label>
-
-                                      <input type="email" class="form-control form-control-sm" id="emailCreateAcc" name="emailCreateAcc">
-                                  </div>
-
-
-                              <div class="position-relative form-group">
-                                <label class="control-label" for="Client_officeName">Branch</label>
-
-                                <select class="form-control" id="branchCreateAcc" name="activeBranch" onclick="sendBranch()">
-                                    <option value="#" selected disabled="#">Select a Branch</option>
-                                  <%
-                                      String branchName = (String)request.getAttribute("branchName");
-                                      if(branchName == null){
-                                  %>
-                                  <%
-                                      }else{
-                                  %>
-                                  <option value="#"><% out.println(branchName);%></option>
-                                  <%
-                                      }
-                                       MosuniQueriesAdHoc brnQuery;
-                                       List<MosuniBranchInfo> branchInfoList = new ArrayList<>();
-
-                                       brnQuery = new MosuniQueriesAdHoc();
-                                       branchInfoList = brnQuery.getMosuniBranchInfo();
-                                       for(MosuniBranchInfo individualBrn : branchInfoList){
-                                   %>
-                                   <option value="<% out.println(individualBrn.getOfficeId());%>"><% out.println(individualBrn.getOfficeName());%></option>
-                                   <%
-                                       }
-                                   %>
-                                </select>
-
-                              </div>
-
-
-                              <div class="position-relative form-group">
-                                      <label class="control-label" for="Client_gender_cv_id">Country</label>
-                                          <select class="form-control form-control-sm" name="country" id="country" onchange="setStates();">
-                                                  <option value="-1" selected disabled>Nationality</option>
-                                                  <option value="Nigeria">Nigeria</option>
-                                                  <option value="Ghana">Ghana</option>
-                                          </select>
-                                  </div>
-                                  <div class="position-relative form-group">
-                                          <label class="control-label" for="Client_gender_cv_id">State</label>
-                                                  <select class="form-control form-control-sm" name="stateOfOrigin" id="state" onchange="setLgcs();">
-                                                          <option value="-1" selected disabled>Select State</option>
-                                                          <option value="0">Please select country</option>
-                                                  </select>
-                                      </div>
-                                      <div class="position-relative form-group">
-                                              <label class="control-label" for="Client_gender_cv_id">LGA</label>
-                                                      <select class="form-control form-control-sm" name="lga" id="lgc">
-                                                              <option value="#" selected disabled>Select LGA</option>
-                                                              <option value="#"></option>
-                                                      </select>
-                                          </div>
-                                          <div class="position-relative form-group">
-                                            <label class="control-label" for="Client_gender_cv_id">Address</label>
-                                                    <input type="text" class="form-control" id="address" name="address">
-                                        </div>
-                              <div class="form-group">
-                                  <label class="control-label" >BVN</label>
-                                      <input type="number" class="form-control" id="bvn" name="bvn">
-                              </div>
-
-                              <div class="form-group">
-                                <label class="control-label">Type of Product</label>
-                                <select class="form-control" id="accountType" name="accountType">
-                                    <option value="0" selected disabled>Select Account Type</option>
-                                    <option value="Current">Current Account</option>
-                                    <option value="FDA">Fixed Account</option>
-                                </select>
-                              </div>
-
-                                  <div class="form-check"><label for="#"><b>Activate Alerts</b></label>
-                                      <label for="" class="form-check-label">SMS</label>
-                                      <input type="checkbox" class="form-check-input" name="sms" id="">
-                                        <span class="form-check-sign">
-                                            <span class="check"></span>
-                                        </span>
-                                      <label for="" class="form-check-label">Email</label>
-                                      <input type="checkbox" class="form-check-input" name="email" id="">
-                                        <span class="form-check-sign">
-                                            <span class="check"></span>
-                                        </span>
-                                  </div>
-
-
-
-
-                              <div class="form-group">
-                                      <label class="control-label" for="Client_officeName">Account Officer</label>
-                                          <select name="activeOfficer" id="loanOfficer" class="form-control form-control-sm">
-                                              <option>Select Account Officer</option>
-                                          </select>
-                                    </div>
-                                </div>
-
-
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                      <a href="client.php" class="btn">Back</a>
-
-    </div>
-  </form>
+                             <div class="input-group mb-3">
+                                 <label for="charge" class=" mr-3"> Add Map Fees to Specific Income accounts</label>
+                                 <button class="btn btn-primary-sm btn-primary mb-3" name="" type="button" ><i class="fa fa-plus"></i> Add</button>
+                               
+                               <table class="table table-striped table-bordered">
+                                   <thead>
+                                       <tr>
+                                           <th>Fee</th>
+                                           <th>Income Account</th>
+                                       </tr>
+                                   </thead>
+                                   <tbody>
+                                       <tr>
+                                           <td>Cash</td>
+                                           <td>--</td>
+                                       </tr>
+                                   </tbody>
+                               </table>
+                             </div>
+                             <div class="input-group mb-3">
+                                 <label for="charge" class="mr-3"> Add Map Penalties to Specific income accounts</label>
+                                 <button class="btn btn-primary-sm btn-primary mb-3" name="" type="button" ><i class="fa fa-plus"></i> Add</button>
+                               
+                               <table class="table table-striped table-bordered">
+                                   <thead>
+                                       <tr>
+                                           <th>Penalty</th>
+                                           <th>Income Account</th>
+                                       </tr>
+                                   </thead>
+                                   <tbody>
+                                       <tr>
+                                           <td>Cash</td>
+                                           <td>--</td>
+                                       </tr>
+                                   </tbody>
+                               </table>
+                             </div>                                                            
+                         
+                     </div>
+                     
+             </div>
+         
+         </div>
+         
+   </div>
+ </form>

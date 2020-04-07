@@ -23,7 +23,7 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="bmd-label-floating">Account Type</label>
-                        <select name="acct_type" class="form-control" id="collat">
+                        <select name="acct_type" class="form-control selectpicker" id="collat">
                           <option value="">select a Account Type</option>
                           <option value="savings">Savings Account</option>
                           <option value="current">Current Account</option>
@@ -33,7 +33,7 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="bmd-label-floating">Client Type</label>
-                      <select name="ctype" class="form-control" id="collat">
+                      <select name="ctype" class="form-control selectpicker" id="collat">
                           <option value="Individual">Individual</option>
                           <option value="Joint">Joint Account</option>
                           <option value="Student">Student Account</option>
@@ -127,7 +127,7 @@ include("header.php");
                   ?>
                     <div class="form-group">
                       <label class="">Branch:</label>
-                      <select name="branch" class="form-control" id="collat">
+                      <select name="branch" class="form-control selectpicker" id="collat">
                           <option value="">select a Branch</option>
                           <?php echo fill_branch($connection); ?>
                         </select>
@@ -142,10 +142,10 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="">State:</label>
-                      <select class="form-control" style="text-transform: uppercase;" name="state" id="selState" onchange="configureDropDownLists()">
+                      <select class="form-control selectpicker" style="text-transform: uppercase;" name="state" id="selState" onchange="configureDropDownLists()">
                       </select>
                       <label for="">LGA:</label>
-                      <select  class="form-control"name="lga" id="selCity">
+                      <select  class="form-control selectpicker"name="lga" id="selCity">
                       </select>
                     </div>
                   </div>
@@ -199,7 +199,7 @@ include("header.php");
                   ?>
                     <div class="form-group">
                       <label for="">Account Officer:</label>
-                      <select name="acct_of" class="form-control" id="">
+                      <select name="acct_of" class="form-control selectpicker" id="">
                         <option value="">select account officer</option>
                         <?php echo fill_officer($connection); ?>
                       </select>
@@ -247,7 +247,7 @@ include("header.php");
                 <div class="row">
                   <div class="col-md-4">
                     <label for="">Id Type</label>
-                    <select name="id_card" class="form-control" id="">
+                    <select name="id_card" class="form-control selectpicker" id="">
                       <option value="National ID">National ID</option>
                       <option value="Voters ID">Voters ID</option>
                       <option value="International Passport">International Passport</option>

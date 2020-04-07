@@ -1,23 +1,29 @@
-Tasks to carry out based on system review.
+Tasks to carry out based on system review.- 7th-April-2020
 NB: The stucture of the files have changed slightly - with the change being the name of the folder
 -----
-Sam
+Seun
 -----
-1. Create branch -- DONE
-2. Create Loan -- DONE
-3. Update client --DONE
-4. Change delete button to active in staff table.. the active and non-active staff shows user status
-5. fix error in int_lend_upload
-6. Populate chart on institution dashboard -- DONE
-7. Loan collection
-------
-Sanusi
-------
-1. Update branch --DONE
-2. Update Product --DONE
-3. Populate database with existing client data --DONE
-4. View client (Link the view client page the client table and populate data as needed) ---DONE
+1. 
+2. 
+3. 
+4. 
+5. 
 
+------
+Sanusi 
+------
+1. Fix loan creation -- (use the form in test.html the current form in lend.php not accurate)
+2. Update Loan functionalities - preview
+3. 
+4. 
+5. 
+------
+Sam
+------
+1. Loan summary page
+2. Add expense posting to transcation
+3. Move product creation to configuration page
+4. Remove "just updated" from cards in dashboard
 
 NB: COMMENT WITH --DONE after a task is completed note the task would be updated as ui is pushed.
 

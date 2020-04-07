@@ -110,8 +110,9 @@ $rezz = mysqli_query($connection, $activeq);
             </a>
             <div class="dropdown-menu">
               <a href="transact.php" class="dropdown-item">Deposit/Withdrwal</a>
-              <a href="#" class="dropdown-item">Fixed Deposit</a>
-              <a href="lend.php" class="dropdown-item">Create Loan</a>
+              <a href="#" class="dropdown-item">FTD Booking</a>
+              <a href="lend.php" class="dropdown-item">Book Loan</a>
+              <a href="#" class="dropdown-item">Expense Posting</a>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -123,19 +124,6 @@ $rezz = mysqli_query($connection, $activeq);
               <a href="#" class="dropdown-item">Account Opening</a>
               <a href="transact_approval.php" class="dropdown-item">Transactions</a>
               <a href="disbursement_approval.php" class="dropdown-item">Loan disbursement</a>
-            </div>
-          </li>
-          <li class="nav-item dropdown-menu">
-            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-              <i class="material-icons">brand</i>
-              Products Summary
-            </a>
-            <div class="dropdown-menu">
-              <a href="#" class="dropdown-item">Savings Account</a>
-              <a href="#" class="dropdown-item">Current Account</a>
-              <a href="#" class="dropdown-item">Fixed Desposit</a>
-              <a href="#" class="dropdown-item">Shares</a>
-              <a href="loans.php" class="dropdown-item">Loans</a>
             </div>
           </li>
           <li class="nav-item dropdown-menu">
@@ -153,6 +141,19 @@ $rezz = mysqli_query($connection, $activeq);
               <a href="#" class="dropdown-item">Audit</a>
             </div>
           </li>
+          <li class="nav-item dropdown-menu">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+              <i class="material-icons">brand</i>
+              Products Summary
+            </a>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item">Savings Account</a>
+              <a href="#" class="dropdown-item">Current Account</a>
+              <a href="#" class="dropdown-item">Fixed Desposit</a>
+              <a href="#" class="dropdown-item">Shares</a>
+              <a href="loans.php" class="dropdown-item">Loans</a>
+            </div>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               <i class="material-icons">settings</i>
@@ -162,7 +163,7 @@ $rezz = mysqli_query($connection, $activeq);
               <a class="dropdown-item" href="products.php">Products</a>
               <a class="dropdown-item" href="config.php">Roles</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="users.php">Staff</a>
+              <a class="dropdown-item" href="users.php">Staff Mgt.</a>
               <a class="dropdown-item" href="branch.php">Branch</a>
               <!-- <a class="dropdown-item" href="#">Group</a> -->
               <a class="dropdown-item" href="#">Accounting</a>

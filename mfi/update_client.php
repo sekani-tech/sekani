@@ -68,7 +68,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="">Account Type:</label>
-                          <select name="account_type" class="form-control" id="collat">
+                          <select name="account_type" class="form-control selectpicker" id="collat">
                           <option value="">Choose Account Type</option>
                           <option value="Current">Current</option>
                           <option value="Savings">Savings</option>
@@ -133,7 +133,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Gender:</label>
-                          <select class="form-control" value="<?php echo $gender; ?>" name="gender" id="">
+                          <select class="form-control selectpicker" value="<?php echo $gender; ?>" name="gender" id="">
                             <option value="MALE">MALE</option>
                             <option value="FEMALE">FEMALE</option>
                           </select>
@@ -212,7 +212,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="">Account Officer:</label>
-                          <select name="" class="form-control" id="">
+                          <select name="" class="form-control selectpicker" id="">
                             <option value=""></option>
                           </select>
                         </div>
