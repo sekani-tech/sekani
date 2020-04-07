@@ -11,8 +11,8 @@
             &copy;
             <script>
               document.write(new Date().getFullYear())
-            </script>, made <i class="material-icons">group</i> by
-                <a target="blank" href="https://sekanisystems.com.ng/">Sekani Systems</a>
+            </script> @ <i class="material-icons">group</i> 
+                <a target="blank" href="https://sekanisystems.com.ng/">Sekani Systems</a> 2020
           </div>
           <!-- your footer here -->
         </div>
@@ -23,7 +23,7 @@
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap-material-design.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!-- <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script> -->
   <!-- Plugin for the momentJs  -->
   <script src="../assets/js/plugins/moment.min.js"></script>
   <!--  Plugin for Sweet Alert -->
@@ -47,7 +47,7 @@
   <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
   <script src="../assets/js/plugins/jquery-jvectormap.js"></script>
   <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-  <script src="../assets/js/plugins/nouislider.min.js"></script>
+  <!-- <script src="../assets/js/plugins/nouislider.min.js"></script> -->
   <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
   <!-- Library for adding dinamically elements -->
