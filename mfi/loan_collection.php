@@ -235,7 +235,7 @@ echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                         <div class="col-md-6">
                           <div class="form-group">
                               <label for="">Payment Method:</label>
-                              <select name="payment_method" id="" class="form-control">
+                              <select name="payment_method" id="" class="form-control selectpicker">
                                 <option value="Cash">Cash</option>
                                 <option value="Cheque">Cheque</option>
                                 <option value="Transfer">Transfer</option>
