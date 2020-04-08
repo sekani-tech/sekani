@@ -150,7 +150,7 @@ if (isset($_GET["message1"])) {
                           <?php }
                           }
                           else {
-                            echo "0 Staff";
+                            // echo "0 Staff";
                           }
                           ?>
                       </tbody>
