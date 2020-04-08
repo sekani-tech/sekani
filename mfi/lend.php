@@ -103,22 +103,20 @@ $destination = "loans.php";
         ?>
           <!-- your content here -->
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-12">
             <div class="card">
               <div class="card-header card-header-primary">
                 <h4 class="card-title">Disburse Loan</h4>
                 <p class="card-category">Fill in all important data</p>
               </div>
               <div class="card-body">
-                <form id="form" action="../functions/int_lend_upload.php" method="POST">
-                  <div class="list-group">
-                    <!--First tab -->
-                    <!-- One "tab" for each step in the form: -->
-                    <div class="tab">Loan Terms:
-                      <div class="col-md-4">
-                        <div class="my-3">
-                          <div class="form-group">
-                            <?php
+                <form>
+                  <div class = "row">
+                    <div class = "col-md-12">
+                      <div class = "form-group">
+                        <!-- First Tab Begins -->
+                    <div class="tab"><h3> Terms:</h3>
+                    <?php
                               // load user role data
                               function fill_product($connection) {
                                 $sint_id = $_SESSION["int_id"];
@@ -171,394 +169,343 @@ $destination = "loans.php";
                                 });
                               })
                             </script>
-                            <label class="bmd-label-floating">Client Name *:</label>
-                            <select name="client_id" class="form-control selectpicker" id="client_name">
-                              <option value="">select an option</option>
-                              <?php echo fill_client($connection); ?>
-                            </select>
-                            <label class="bmd-label-floating" >Product *:</label>
-                            <select name="product_id" class="form-control selectpicker" id="charges">
-                              <option value="">select an option</option>
-                              <?php echo fill_product($connection); ?>
-                            </select>
-                          </div>
-                          <div id="show_product">
-                          </div>
-                        </div>
+                    <div class="col-md-4">
+                      <label class = "bmd-label-floating">Client Name *:</label>
+                        <select name="client_id" class="form-control" id="client_name">
+                          <option value="">select an option</option>
+                          <?php echo fill_client($connection); ?>
+                        </select>
+                        <label class="bmd-label-floating" >Product *:</label>
+                        <select name="product_id" class="form-control" id="charges">
+                          <option value="">select an option</option>
+                          <?php echo fill_product($connection); ?>
+                        </select>
+                    </div>
+                    <div class="col-md-12" id="show_product"></div>
+                    </div>
+                    <!-- First Tab Ends -->
+                    <!-- Second Tab Begins -->
+                    <div class="tab"><h3> Settings:</h3>
+                    
+                    </div>
+                    <!-- Second Tab Ends -->
+                    <!-- Third Tab Begins -->
+                    <div class="tab"><h3> Charges:</h3>
+                    <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Charge</th>
+                              <th>Amount</th>
+                              <th>Collected On</th>
+                              <th>Date</th>
+                              <th>Payment Mode</th>
+                            </tr>
+                          </thead>
+                          <tbody>  
+                             <tr>
+                               <td>Valuation</td>
+                               <td>Flat</td>
+                               <td>10000</td>
+                               <td>Disbursement</td>
+                               <td></td>
+                               <td>Normal</td>
+                             </tr>
+                             <tr>
+                               <td>Search fee</td>
+                               <td>Flat</td>
+                               <td>23000</td>
+                               <td>Disbursement</td>
+                               <td></td>
+                               <td>Normal</td>
+                             </tr> 
+                             <tr>
+                               <td>Membership Gold</td>
+                               <td>Flat</td>
+                               <td>20000</td>
+                               <td>Disbursement</td>
+                               <td></td>
+                               <td>Normal</td>
+                             </tr>     
+                          </tbody>
+                        </table>
+                        <div class="col-md-6">
+                        <label class = "bmd-label-floating" for="charge" class="form-align mr-3">Charges</label>
+                          <select class="form-control" name="charge">                                                
+                            <option value="">Membership Bronze</option>
+                          </select>
+                          <button type="button" class="btn btn-primary" name="button" onclick="displayCharge()"> <i class="fa fa-plus"></i> Add To Product </button>
                       </div>
                     </div>
-                <!--First tab -->
-                <!--Second tab -->
-                    
-                    <!-- <div class="tab">Collateral:
-                      <div class="my-3">
-                        <div class="form-group">
-                          <label>Type:</label>
-                          <select name="col_id"class="form-control" id="collat">
-                            <option value="">select an option</option>
-                            <?php echo fill_collateral($connection); ?>
-                          </select>
-                        </div>
-                        <! -- result start -->
-                        <div id="show_collat"></div>
-                        <!-- result end -->
-                        <!-- <div class="form-group">
-                          <label>Value:</label>
-                          <input type="text" name="" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                          <label for="">Description:</label>
-                          <input type="text" name="" class="form-control" id="">
-                        </div> -->
+                    <!-- Third Tab Ends -->
+                    <!-- Fourth Tab Begins -->
+                    <div class="tab"><h3> Collateral:</h3>
+                    <button type="button" class="btn btn-primary" name="button" onclick="dial()"> <i class="fa fa-plus"></i> Add</button>
+                    <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th>Value</th>
+                              <th>Description</th>
+                            </tr>
+                          </thead>
+                          <tbody>  
+                          <tr>
+                               <td>Motorcycle</td>
+                               <td>Flat</td>
+                               <td>20000</td>
+                             </tr>
+                             <tr>
+                               <td>Plot of Land</td>
+                               <td>Flat</td>
+                               <td>20000</td>
+                             </tr>
+                             <tr>
+                               <td>Car</td>
+                               <td>Flat</td>
+                               <td>20000</td>
+                             </tr>     
+                          </tbody>
+                        </table>
+                        <!-- <style>
+                          dialog{
+                            background-color: #aaaaaa;
+                          }
+                        </style>
+                        <dialog id="dial">
+                          <h3>Add Collateral</h3>
+                          <div class="form-group">
+                          <label>Type</label>
+                          <input class="form-control" type="text" value="Motor Cycles"/>
+                          <label>Value</label>
+                          <input class="form-control" type="text" value="10000"/>
+                          <label>Description</label>
+                          <input class="form-control" type="text" value="Test"/>
+                          </div>
+                          <div style="float:right;">
+                            <button class="btn btn-primary pull-right" type="button" id="">Add</button>
+                            <button class="btn btn-primary pull-right" type="button" id="">Cancel</button>
+                          </div>
+                        </dialog> -->
+                    </div>
+                    <!-- Fourth Tab Ends -->
+                    <!-- Fifth Tab Begins -->
+                    <div class="tab"><h3> Guarantors:</h3>
+                      <div class="form-group">
+                      <button type="button" class="btn btn-primary" name="button" onclick="dial()"> <i class="fa fa-plus"></i> Add</button>
                       </div>
-                  <!--Second tab -->
-                  <!--Third tab -->
-                      <div class="tab">Guarantors:
-                        <div>
-                          <div id="show_client_gau"></div>
-                          <div class="my-3"> 
-                            <div class="row">
-                              <div class="col-md-6">
+                      <div class="form-group">
+                      <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Guarantor Type</th>
+                              <th>Guarantee Amount</th>
+                            </tr>
+                          </thead>
+                          <tbody>  
+                          <tr>
+                               <td>abcde</td>
+                               <td>New Guarantor</td>
+                               <td>20000</td>
+                             </tr>
+                             <tr>
+                               <td>vwxyz</td>
+                               <td>New Guarantor</td>
+                               <td>20000</td>
+                             </tr>   
+                          </tbody>
+                        </table>
+                      </div>
+                      <!-- <div class="form-group">
+                        <dialog>
+                        <div class="row">
+                              <div class="col-md-4">
                                 <div class="form-group">
-                                  <label class="md-3 form-align " for=""> First Name:</label>
+                                  <label class = "bmd-label-floating" class="md-3 form-align " for=""> First Name:</label>
                                   <input type="text" name="gau_first_name" id="" class="form-control">
                                 </div>
                               </div>
-                              <div class="col-md-6">
+                              <div class="col-md-4">
                                 <div class="form-group">
-                                  <label for=""> Last Name:</label>
+                                  <label class = "bmd-label-floating" for=""> Last Name:</label>
                                   <input type="text" name="gau_last_name" id="" class="form-control">
                                 </div>
                               </div>
-                              <div class="col-md-6">
+                              <div class="col-md-4">
                                 <div class="form-group">
-                                  <label for="">Phone:</label>
+                                  <label class = "bmd-label-floating" for="">Phone:</label>
                                   <input type="text" name="gau_phone" id="" class="form-control">
                                 </div>
                               </div>
-                              <div class="col-md-6">
+                              <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="">Phone:</label>
+                                    <label class = "bmd-label-floating" for="">Phone:</label>
                                     <input type="text" name="gau_phone2" id="" class="form-control">
                                 </div>
                               </div>
-                              <div class="col-md-12">
+                              <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="">Home Address:</label>
+                                    <label class = "bmd-label-floating" for="">Home Address:</label>
                                     <input type="text" name="gau_home_address" id="" class="form-control">
                                 </div>
                               </div>
-                              <div class="col-md-12">
+                              <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="">Office Address:</label>
+                                    <label class = "bmd-label-floating" for="">Office Address:</label>
                                     <input type="text" name="gau_office_address" id="" class="form-control">
                                 </div>
                               </div>
                               <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="">Position Held:</label>
+                                    <label class = "bmd-label-floating" for="">Position Held:</label>
                                     <input type="text" name="gau_position_held" id="" class="form-control">
                                 </div>
                               </div>
-                              <div class="col-md-6">
+                              <div class="col-md-4">
                                 <div class="form-group">
-                                  <label for="">Email:</label>
+                                  <label class = "bmd-label-floating" class = "bmd-label-floating">Email:</label>
                                   <input type="text" name="gau_email" id="" class="form-control">
                                 </div>
                               </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                  <!--Third tab -->
-                  <!-- Fourth tab -->
-                      <div class="tab">
-                        <div class="tab-pane" id="crt-tab-1">
-                          <div id="chargeProductDiv">
-                            <table class="table table-bordered">
-                              <thead>
-                                <tr>
-                                  <th>Name</th>
-                                  <th>Charge</th>
-                                  <th>Collected On</th>
-                                </tr>
-                              </thead>
-                              <tbody>  
-                                        
-                              </tbody>
-                            </table>
-                          </div>
-                          <div class="mb-3 input-group col-md-6">
-                            <label for="charge" class="form-align mr-3">Charges</label>
-                              <select class="form-control form-control-sm mr-3" name="charge">                                                
-                                <option value="<% out.print(chargeInfo.getId());%>">charges</option>
-                              </select>
-                              <button type="button" class="btn btn-primary" name="button" onclick="displayCharge()"> <i class="fa fa-plus"></i> Add To Product </button>
-                          </div>
-                        </div>
-                        <div class="tab-pane" id="crt-tab-2">
-                          <table class="table table-striped">
-                            <thead>
-                              <tr>
-                                <th>Name</th>
-                                <th>Severity Level</th>
-                                <th>Order</th>
-                                <th></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>Business Loan Processing Fee</td>
-                                <td>1% Original Loan Principal</td>
-                                <td>Disbursement</td>
-                                <td> <a href="#"><i class="fa fa-times"></i></a> </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                          <div class="mb-3 input-group col-md-6">
-                            <label for="charge" class="form-align mr-3">Credit Checks</label>
-                            <select class="form-control form-control-sm mr-3" name="">
-                              <option value="">Processing loan</option>
-                            </select>
-                            <button type="button" class="btn btn-primary" name="button"> <i class="fa fa-plus"></i> Add To Product </button>
-                          </div>
-                          <button class="btn btn-primary mr-3" name="" >Next <i class="fa fa-arrow-right"></i></button>
-                        </div>
-                      </div>
-                  <!-- Fourth tab -->
-                  <!-- Fifth tab -->
-                      <div class="tab">
-                        <div class="tab-pane" id="crt-tab-3">
-                          <div class="mb-3 col-md-6">
-                            <h5 class="card-title">Accounting Rules</h5>
-                            <div class="position-relative form-group mb-3">
-                              <div>
-                                <div class="custom-radio custom-control">
-                                    <input type="radio" id="cashBased" name="acc" class="custom-control-input">
-                                    <label class="custom-control-label" for="cashBased">Cash Based</label>
-                                </div>
-                                <div class="custom-radio custom-control">
-                                    <input type="radio" id="accuralP" name="acc" class="custom-control-input">
-                                    <label class="custom-control-label" for="accuralP">Accural (Periodic)</label>
-                                </div>
-                                <div class="custom-radio custom-control">
-                                    <input type="radio" id="accuralU" name="acc" class="custom-control-input">
-                                    <label class="custom-control-label" for="accuralU">Accural (Upfront)</label>
-                                </div>
-                              </div>
-                            </div>
-                            <h5 class="card-title">Assets</h5>
-                            <div class="position-relative input-group mb-3">
-                              <div class="input-group mb-3">
-                                <label for="charge" class="form-align mr-3">Fund Source</label>
-                                <select class="form-control form-control-sm" name="">
-                                  <option value="">--</option>
-                                </select>  
-                              </div>
-                              <div class="mb-3 input-group">
-                                <label for="charge" class="form-align mr-3">Loan Portfolio</label>
-                                <select class="form-control form-control-sm" name="">
-                                  <option value="">--</option>
-                                </select>
-                              </div>
-                            </div>
-                            <h5 class="card-title">Liabilities</h5>
-                            <div class="position-relative input-group mb-3">
-                              <div class="input-group mb-3">
-                                <label for="charge" class="form-align mr-3">Over Payment</label>
-                                <select class="form-control form-control-sm" name="">
-                                  <option value="">--</option>
-                                </select> 
-                              </div>
-                            </div>
-                            <h5 class="card-title">Income</h5>
-                            <div class="position-relative input-group mb-3">
-                              <div class="input-group mb-3">
-                                <label for="charge" class="form-align mr-3">Income for Interest</label>
-                                <select class="form-control form-control-sm" name="">
-                                  <option value="">--</option>
-                                </select> 
-                              </div>
-                              <div class="input-group mb-3">
-                                  <label for="charge" class="form-align mr-3">Income from Fees</label>
-                                  <select class="form-control form-control-sm" name="">
-                                    <option value="">--</option>
-                                  </select>
-                              </div>
-                              <div class="input-group mb-3">
-                                  <label for="charge" class="form-align mr-3">Income from Penalties</label>
-                                  <select class="form-control form-control-sm" name="">
-                                    <option value="">--</option>
-                                  </select> 
-                              </div>
-                              <div class="input-group mb-3">
-                                <label for="charge" class="form-align mr-3">Income from Recovery</label>
-                                <select class="form-control form-control-sm" name="">
-                                  <option value="">--</option>
-                                </select>
-                              </div>
-                            </div>
-                            <h5 class="card-title">Expenses</h5>
-                            <div class="position-relative input-group mb-3">
-                             <div class="input-group mb-3">
-                                <label for="charge" class="form-align mr-3">Losses Written Off</label>
-                                <select class="form-control form-control-sm" name="">
-                                  <option value="">--</option>
-                                </select>  
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    <!-- Fifth tab -->
-                    <!-- Sixth tab -->
-                      <div class="tab">
-                        <div>
-                          <h5 class="card-title">Advanced Accounting Rules</h5>
-                          <div class="position-relative input-group mb-3">
-                            <div class="input-group mb-3">
-                              <label for="charge" class="mr-3"> Add Configure Fund sources for payment channels</label>
-                              <button class="btn btn-primary-sm btn-primary mb-3" name="" type="button" ><i class="fa fa-plus"></i> Add</button>
-                              <table class="table table-striped table-bordered">
-                                  <thead>
-                                      <tr>
-                                          <th>Payment Type</th>
-                                          <th>Fund Source</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <tr>
-                                          <td>Cash</td>
-                                          <td>--</td>
-                                      </tr>
-                                  </tbody>
-                              </table>
-                            </div>
-                            <div class="input-group mb-3">
-                              <label for="charge" class=" mr-3"> Add Map Fees to Specific Income accounts</label>
-                              <button class="btn btn-primary-sm btn-primary mb-3" name="" type="button" ><i class="fa fa-plus"></i> Add</button>
-                              <table class="table table-striped table-bordered">
-                                  <thead>
-                                      <tr>
-                                          <th>Fee</th>
-                                          <th>Income Account</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <tr>
-                                          <td>Cash</td>
-                                          <td>--</td>
-                                      </tr>
-                                  </tbody>
-                              </table>
-                            </div>
-                            <div class="input-group mb-3">
-                                <label for="charge" class="mr-3"> Add Map Penalties to Specific income accounts</label>
-                                <button class="btn btn-primary-sm btn-primary mb-3" name="" type="button" ><i class="fa fa-plus"></i> Add</button>
-                              
-                              <table class="table table-striped table-bordered">
-                                  <thead>
-                                      <tr>
-                                          <th>Penalty</th>
-                                          <th>Income Account</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <tr>
-                                          <td>Cash</td>
-                                          <td>--</td>
-                                      </tr>
-                                  </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    <!-- Sixth tab -->
-                    <!-- Seventh tab -->
-                        <div class="tab">Repayment Schedule:
-                          <div>
-                            <div id="result" name="" for=""></div>
-                            <!-- <div class="my-3">
-                              <div class="form -group">
-                                <label for="">Disbursement:</label> <span>50000</span>
-                              </div>
-                              <div class="form -group">
-                                <label for="">Principal Due &amp; Date:</label> <ul>
-                                  <li>(DATE) - 667</li>
-                                </ul>
-                              </div>
-                              <div class="form -group">
-                                <label for="">Principal Balance:</label> <span>50000</span>
-                              </div>
-                              <div class="form -group">
-                                <label for="">Intrest Rate:</label> <span>7%</span>
-                              </div>
                             </div> -->
-                          </div>
-                        </div>
-                    <!-- Seventh tab -->
-                    <!-- Eighth tab -->
-                        <div class="tab">Overview:
-                          <div>
-                            <div class="my-3">
+                        </dialog>
+                      </div>
+                    </div>
+                    <!-- Fifth Tab Ends -->
+                    <!-- Sixth Tab Begins -->
+                    <div class="tab"><h3> Repayment Schedule:</h3>
+                      <div class="form-group">
+                      <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Date</th>
+                              <th>Days</th>
+                              <th>Disbursement</th>
+                              <th>Principal Due</th>
+                              <th>Principal Balance</th>
+                              <th>Interest Due</th>
+                              <th>Fees</th>
+                              <th>Total Due</th>
+                            </tr>
+                          </thead>
+                          <tbody>  
+                          <tr>
+                               <td>01-06-2020</td>
+                               <td>40</td>
+                               <td>79000</td>
+                               <td>10000</td>
+                               <td>70000</td>
+                               <td></td>
+                               <td>4800</td>
+                               <td>3250</td>
+                               <td>4000</td>
+                             </tr>
+                             <tr>
+                               <td>07-01-2020</td>
+                               <td>20</td>
+                               <td>69000</td>
+                               <td>15000</td>
+                               <td></td>
+                               <td>70000</td>
+                               <td>6600</td>
+                               <td>3175</td>
+                               <td>4040</td>
+                             </tr>
+                             <tr>
+                               <td>09-10-2020</td>
+                               <td>30</td>
+                               <td>10000</td>
+                               <td>43000</td>
+                               <td></td>
+                               <td>60000</td>
+                               <td>5600</td>
+                               <td>4250</td>
+                               <td>5500</td>
+                             </tr>
+                             <tr>
+                               <td>01-02-2020</td>
+                               <td>60</td>
+                               <td>20000</td>
+                               <td></td>
+                               <td>13000</td>
+                               <td>70000</td>
+                               <td>4300</td>
+                               <td>2950</td>
+                               <td>2300</td>
+                             </tr>   
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- Sixth Tab Ends -->
+                    <!-- Seventh Tab Begins -->
+                    <div class="tab"><h3> Overview:</h3>
+                          <div class="row">
+                            <!-- <div class="my-3"> -->
                               <!-- replace values with loan data -->
-                              <div class="form-group">
-                                <label>Loan size:</label>
+                              <div class=" col-md-6 form-group">
+                                <label class = "bmd-label-floating">Loan size:</label>
                                 <input type="number" value="" name="principal_amount" class="form-control" required id="ls">
                               </div>
-                              <div class="form-group">
-                                <label>Loan Term:</label>
+                              <div class="col-md-6 form-group">
+                                <label class = "bmd-label-floating">Loan Term:</label>
                                 <input type="number" id="lt" name="loan_term" class="form-control" />
                               </div>
-                              <div class="form-group">
-                                <label>Interest Rate per:</label>
+                              <div class="col-md-6 form-group">
+                                <label class = "bmd-label-floating">Interest Rate per:</label>
                                 <input type="text" value="" name="repay_every" class="form-control" id="irp">
                               </div>
-                              <div class="form-group">
-                                <label>Interest Rate:</label>
+                              <div class="col-md-6 form-group">
+                                <label class = "bmd-label-floating">Interest Rate:</label>
                                 <input type="text" name="interest_rate" class="form-control" id="ir">
                               </div>
-                              <div class="form-group">
-                                <label>Disbusrsement Date:</label>
+                              <div class="col-md-6 form-group">
+                                <label class = "bmd-label-floating">Disbusrsement Date:</label>
                                 <input type="date" name="disbursement_date" class="form-control" id="db">
                               </div>
-                              <div class="form-group">
-                                <label>Loan Officer:</label>
+                              <div class="col-md-6 form-group">
+                                <label class = "bmd-label-floating">Loan Officer:</label>
                                 <input type="text" name="loan_officer" class="form-control" id="lo">
                               </div>
-                              <div class="form-group">
-                                <label>Loan Purpose:</label>
+                              <div class="col-md-6 form-group">
+                                <label class = "bmd-label-floating">Loan Purpose:</label>
                                 <input type="text" name="loan_purpose" class="form-control" id="lp">
                               </div>
-                              <div class="form-group">
-                                <label>Linked Savings account:</label>
+                              <div class="col-md-6 form-group">
+                                <label class = "bmd-label-floating">Linked Savings account:</label>
                                 <input type="text" name="linked_savings_acct" class="form-control" id="lsa">
                               </div>
-                              <div class="form-group">
-                                <label>Repayment Start Date:</label>
+                              <div class="col-md-6 form-group">
+                                <label class = "bmd-label-floating">Repayment Start Date:</label>
                                 <input type="date" name="repay_start" class="form-control" id="rsd">
                               </div>
-                            </div>
+                            <!-- </div> -->
                           </div>
-                        </div>
-                    <!-- Eighth tab -->
-                        <div style="overflow:auto;">
+                    </div>
+                    <!-- Seventh Tab Ends -->
+                    <!-- Buttons -->
+                    <div style="overflow:auto;">
                           <div style="float:right;">
                             <button class="btn btn-primary pull-right" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
                             <button class="btn btn-primary pull-right" type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
                           </div>
                         </div>
+                      <!-- Steppers -->
                       <!-- Circles which indicates the steps of the form: -->
                       <div style="text-align:center;margin-top:40px;">
-                        <span class="step"></span>
-                        <span class="step"></span>
-                        <span class="step"></span>
-                        <span class="step"></span>
-                        <span class="step"></span>
-                        <span class="step"></span>
-                        <span class="step"></span>
+                          <span class="step"></span>
+                          <span class="step"></span>
+                          <span class="step"></span>
+                          <span class="step"></span>
+                          <span class="step"></span>
+                          <span class="step"></span>
+                          <span class="step"></span>
+                        </div>
                       </div>
+                    </div>
+                  </div>
                 </form>
               </div>
 
