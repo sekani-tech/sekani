@@ -103,7 +103,7 @@ $destination = "loans.php";
         ?>
           <!-- your content here -->
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-6">
             <div class="card">
               <div class="card-header card-header-primary">
                 <h4 class="card-title">Disburse Loan</h4>
@@ -115,7 +115,7 @@ $destination = "loans.php";
                     <!--First tab -->
                     <!-- One "tab" for each step in the form: -->
                     <div class="tab">Loan Terms:
-                      <div>
+                      <div class="col-md-4">
                         <div class="my-3">
                           <div class="form-group">
                             <?php
@@ -171,13 +171,13 @@ $destination = "loans.php";
                                 });
                               })
                             </script>
-                            <label>Client Name *:</label>
-                            <select name="client_id" class="form-control" id="client_name">
+                            <label class="bmd-label-floating">Client Name *:</label>
+                            <select name="client_id" class="form-control selectpicker" id="client_name">
                               <option value="">select an option</option>
                               <?php echo fill_client($connection); ?>
                             </select>
-                            <label>Product *:</label>
-                            <select name="product_id" class="form-control" id="charges">
+                            <label class="bmd-label-floating" >Product *:</label>
+                            <select name="product_id" class="form-control selectpicker" id="charges">
                               <option value="">select an option</option>
                               <?php echo fill_product($connection); ?>
                             </select>
@@ -220,7 +220,7 @@ $destination = "loans.php";
                             <div class="row">
                               <div class="col-md-6">
                                 <div class="form-group">
-                                  <label for=""> First Name:</label>
+                                  <label class="md-3 form-align " for=""> First Name:</label>
                                   <input type="text" name="gau_first_name" id="" class="form-control">
                                 </div>
                               </div>
@@ -254,7 +254,7 @@ $destination = "loans.php";
                                     <input type="text" name="gau_office_address" id="" class="form-control">
                                 </div>
                               </div>
-                              <div class="col-md-6">
+                              <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Position Held:</label>
                                     <input type="text" name="gau_position_held" id="" class="form-control">
@@ -475,7 +475,7 @@ $destination = "loans.php";
                         </div>
                       </div>
                     <!-- Sixth tab -->
-                    <!-- tab -->
+                    <!-- Seventh tab -->
                         <div class="tab">Repayment Schedule:
                           <div>
                             <div id="result" name="" for=""></div>
@@ -497,8 +497,8 @@ $destination = "loans.php";
                             </div> -->
                           </div>
                         </div>
-                    <!-- tab -->
-                    <!-- tab -->
+                    <!-- Seventh tab -->
+                    <!-- Eighth tab -->
                         <div class="tab">Overview:
                           <div>
                             <div class="my-3">
@@ -542,7 +542,7 @@ $destination = "loans.php";
                             </div>
                           </div>
                         </div>
-                    <!--Fifth tab -->
+                    <!-- Eighth tab -->
                         <div style="overflow:auto;">
                           <div style="float:right;">
                             <button class="btn btn-primary pull-right" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
