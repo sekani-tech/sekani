@@ -23,7 +23,7 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="bmd-label-floating">Account Type</label>
-                        <select name="acct_type" class="form-control selectpicker" id="collat">
+                        <select name="acct_type" class="form-control selectpicker" data-style="btn btn-link" id="collat">
                           <option value="">select a Account Type</option>
                           <option value="savings">Savings Account</option>
                           <option value="current">Current Account</option>
