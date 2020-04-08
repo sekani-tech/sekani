@@ -72,7 +72,7 @@ if (isset($_GET["message1"])) {
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Users</h4>
+                  <h4 class="card-title ">Tranactions</h4>
                   <script>
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
@@ -85,7 +85,7 @@ if (isset($_GET["message1"])) {
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> Users on the platform || Approve Transaction</p>
+                   }?> Transaction on the platform || Approve Transaction</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
