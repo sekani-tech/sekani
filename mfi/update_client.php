@@ -171,7 +171,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="">Country:</label>
-                          <input type="text" style="text-transform: uppercase;" class="form-control" value="<?php echo $country; ?>" name="country">
+                          <input type="text" style="text-transform: uppercase;" class="form-control" value="NIGERIA" name="country">
                         </div>
                       </div>
                       <div class="col-md-4">
