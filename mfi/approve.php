@@ -47,7 +47,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
           $gen_date = date("Y-m-d");
           $digits = 10;
           $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-          $transid = $ssint_id."-".$randms;
+          $transid = $sessint_id."-".$randms;
   
           if ($stat == "Not Verified") {
               $getacct = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' && int_id = '$sessint_id'");
@@ -84,20 +84,60 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                           $iupqx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod' && int_id = '$sessint_id'";
                           $res4 = mysqli_query($connection, $iupqx);
                           if ($res4) {
-                              $_SESSION["Lack_of_intfund_$randms"] = "Successfully Approved";
-                              echo header ("Location: transact_approval.php?message1=$randms");
+                            echo '<script type="text/javascript">
+                            $(document).ready(function(){
+                                swal({
+                                    type: "success",
+                                    title: "Success",
+                                    text: "Transaction Successfully Approved",
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                })
+                            });
+                            </script>
+                            ';
                           } else {
-                              $_SESSION["Lack_of_intfund_$randms"] = "Error updating Cache";
-                              echo header ("Location: transact_approval.php?message2=$randms");
+                            echo '<script type="text/javascript">
+                            $(document).ready(function(){
+                                swal({
+                                    type: "error",
+                                    title: "Error",
+                                    text: "Error updating Cache",
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                })
+                            });
+                            </script>
+                            ';
                           }
                           
                       } else {
-                          $_SESSION["Lack_of_intfund_$randms"] = "Error in Transaction";
-                          echo header ("Location: transact_approval.php?message2=$randms");
+                        echo '<script type="text/javascript">
+                        $(document).ready(function(){
+                            swal({
+                                type: "error",
+                                title: "Error",
+                                text: "Error in Transaction",
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        });
+                        </script>
+                        ';
                       }
                   } else {
-                      $_SESSION["Lack_of_intfund_$randms"] = "Error in Account";
-                          echo header ("Location:  transact_approval.php?message2=$randms");
+                    echo '<script type="text/javascript">
+                    $(document).ready(function(){
+                        swal({
+                            type: "error",
+                            title: "Error",
+                            text: "Error in Account",
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    });
+                    </script>
+                    ';
                   }
                 } else if ($transact_type == "Withdrawal") {
                   $new_abd2 = $comp2;
@@ -119,30 +159,90 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                           $iupqx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod' && int_id = '$sessint_id'";
                           $res4 = mysqli_query($connection, $iupqx);
                           if ($res4) {
-                              $_SESSION["Lack_of_intfund_$randms"] = "Successfully Approved";
-                              echo header ("Location: transact_approval.php?message1=$randms");
+                            echo '<script type="text/javascript">
+                            $(document).ready(function(){
+                                swal({
+                                    type: "success",
+                                    title: "Success",
+                                    text: "Transaction Successfully Approved",
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                })
+                            });
+                            </script>
+                            ';
                           } else {
-                              $_SESSION["Lack_of_intfund_$randms"] = "Error updating Cache";
-                              echo header ("Location: transact_approval.php?message2=$randms");
+                            echo '<script type="text/javascript">
+                            $(document).ready(function(){
+                                swal({
+                                    type: "error",
+                                    title: "Error",
+                                    text: "Error updating Cache",
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                })
+                            });
+                            </script>
+                            ';
                           }
                       } else {
-                          $_SESSION["Lack_of_intfund_$randms"] = "Error in Transaction";
-                          echo header ("Location: transact_approval.php?message2=$randms");
+                        echo '<script type="text/javascript">
+                        $(document).ready(function(){
+                            swal({
+                                type: "error",
+                                title: "Error",
+                                text: "Error in Transaction",
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        });
+                        </script>
+                        ';
                       }
                   } else {
-                      $_SESSION["Lack_of_intfund_$randms"] = "Error in Account";
-                          echo header ("Location: transact_approval.php?message2=$randms");
+                    echo '<script type="text/javascript">
+                    $(document).ready(function(){
+                        swal({
+                            type: "error",
+                            title: "Error",
+                            text: "Error in Account",
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    });
+                    </script>
+                    ';
                   }
                 } else {
-                  $_SESSION["Lack_of_intfund_$randms"] = "Error No With or Dep";
-                  echo header ("Location: transact_approval.php?message2=$randms");
+                  echo '<script type="text/javascript">
+                  $(document).ready(function(){
+                      swal({
+                          type: "error",
+                          title: "Error",
+                          text: "No Deposit or Withdrawal",
+                          showConfirmButton: false,
+                          timer: 2000
+                      })
+                  });
+                  </script>
+                  ';
                  }
   
               }
           } else {
               // a message
-              $_SESSION["Lack_of_intfund_$randms"] = "Transaction Has Been Verified Already";
-                  echo header ("Location: transact_approval.php?message3=$randms");
+              echo '<script type="text/javascript">
+                    $(document).ready(function(){
+                        swal({
+                            type: "error",
+                            title: "Error",
+                            text: "Transaction Has Been Approved Already",
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    });
+                    </script>
+                    ';
           }
       }
   }
@@ -155,11 +255,31 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
        $take = "UPDATE transact_cache SET `status` = '$dc' WHERE id = '$appe' && int_id = '$sessint_id'";
        $deny = mysqli_query($connection, $take);
        if ($deny) {
-        $_SESSION["Lack_of_intfund_$randms"] = "Transaction Has Been Declined";
-        echo header ("Location: transact_approval.php?message8=$randms");
+        echo '<script type="text/javascript">
+                            $(document).ready(function(){
+                                swal({
+                                    type: "success",
+                                    title: "Success",
+                                    text: "Transaction Declined",
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                })
+                            });
+                            </script>
+        ';
        } else {
-        $_SESSION["Lack_of_intfund_$randms"] = "Error in Account";
-        echo header ("Location: transact_approval.php?message2=$randms");
+        echo '<script type="text/javascript">
+                            $(document).ready(function(){
+                                swal({
+                                    type: "error",
+                                    title: "Error",
+                                    text: "Error Not Declined",
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                })
+                            });
+                            </script>
+      ';
        }
      }
    }

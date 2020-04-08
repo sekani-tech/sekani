@@ -31,7 +31,7 @@ if (isset($_GET["message1"])) {
       swal({
           type: "error",
           title: "Error",
-          text: "'.$out = $_SESSION["lack_of_intfund_$key"].'",
+          text: "Error updating Cache",
           showConfirmButton: false,
           timer: 2000
       })
