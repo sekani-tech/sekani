@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "New Product";
-$destination = "products.php";
+$destination = "config.php";
     include("header.php");
 
 ?>
@@ -10,7 +10,7 @@ $destination = "products.php";
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Create new Product</h4>
@@ -499,24 +499,7 @@ return $output;
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="../assets/img/faces/marc.jpg" />
-                  </a>
-                </div>
-                <!-- Get session data and populate user profile -->
-                <div class="card-body">
-                  <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                  <h4 class="card-title">Alec Thompson</h4>
-                  <p class="card-description">
-                    Sekani Systems
-                  </p>
-                  <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
-                </div>
-              </div>
-            </div>
+            <!-- /col-12 -->
           </div>
           <!-- /content -->
         </div>

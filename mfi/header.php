@@ -171,8 +171,8 @@ input[type=number] {
               Configuration
             </a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="products.php">Products</a>
-              <!-- <a class="dropdown-item" href="config.php">Roles</a> -->
+              <!-- <a class="dropdown-item" href="products.php">Products</a> -->
+              <a class="dropdown-item" href="config.php">Configuration</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="users.php">Staff Mgt.</a>
               <a class="dropdown-item" href="branch.php">Branch</a>

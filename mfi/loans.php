@@ -88,6 +88,7 @@ else if (isset($_GET["message2"])) {
                         <th>
                           Collect Loan
                         </th>
+                        <th></th>
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
@@ -98,6 +99,7 @@ else if (isset($_GET["message2"])) {
                           <th><?php echo $row["principal_amount"]; ?></th>
                           <th><?php echo $row["interest_rate"]; ?></th>
                           <td><a href="loan_collection.php?loancoll=<?php echo $row["id"];?>" class="btn btn-info">Collect</a></td>
+                          <td><a href="loan_summary.php?loancoll=<?php echo $row["id"];?>" class="btn btn-success">View</a></td>
                           </tr>
                           <?php }
                           }
