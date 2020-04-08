@@ -31,7 +31,7 @@ if (isset($_GET["message1"])) {
       swal({
           type: "error",
           title: "Error",
-          text: "'.$out = $_SESSION["lack_of_intfund_$key"].'",
+          text: "Error updating Cache",
           showConfirmButton: false,
           timer: 2000
       })
@@ -50,6 +50,24 @@ if (isset($_GET["message1"])) {
           type: "error",
           title: "Error",
           text: "'.$out = $_SESSION["lack_of_intfund_$key"].'",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+} else if (isset($_GET["message8"])) {
+  $key = $_GET["message8"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Success",
+          text: "Transaction Has Been Declined",
           showConfirmButton: false,
           timer: 2000
       })
@@ -92,7 +110,7 @@ if (isset($_GET["message1"])) {
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id'";
+                        $query = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' && status = 'Not Verified'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -126,13 +144,13 @@ if (isset($_GET["message1"])) {
                           <th><?php echo $row["account_off_name"]; ?></th>
                           <th><?php echo $row["client_name"]; ?></th>
                           <th><?php echo $row["status"]; ?></th>
-                          <td><a href="../functions/approveTrans.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
+                          <td><a href="approve.php?approve=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                           </tr>
                           <!-- <th></th> -->
                           <?php }
                           }
                           else {
-                            echo "0 Staff";
+                            // echo "0 Staff";
                           }
                           ?>
                       </tbody>
