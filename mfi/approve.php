@@ -7,10 +7,7 @@ $destination = "transact_approval.php";
 ?>
 <?php
 if (isset($_GET['approve']) && $_GET['approve'] !== '') {
-  session_start();
   $appod = $_GET['approve'];
-  $digits = 10;
-  $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
   $checkm = mysqli_query($connection, "SELECT * FROM transact_cache WHERE id = '$appod' && int_id = '$sessint_id'");
   if (count([$checkm]) == 1) {
       $x = mysqli_fetch_array($checkm);
@@ -48,7 +45,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
           $product_type = $x['product_type'];
           $stat = $x['status'];
           $gen_date = date("Y-m-d");
-          $digits = 4;
+          $digits = 10;
           $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
           $transid = $ssint_id."-".$randms;
   
@@ -150,6 +147,8 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       }
   }
    } else {
+    $digits = 10;
+    $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
      if (isset($_GET['approve']) && $_GET['approve'] !== '') {
        $appe = $_GET['approve'];
        $dc = "declined";
