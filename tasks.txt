@@ -24,6 +24,7 @@ Sam
 2. Add expense posting to transcation
 3. Move product creation to configuration page
 4. Remove "just updated" from cards in dashboard
+5. Add loan repayment to transcation(withrawal/deposit)
 
 NB: COMMENT WITH --DONE after a task is completed note the task would be updated as ui is pushed.
 

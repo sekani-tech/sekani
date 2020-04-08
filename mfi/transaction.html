@@ -1,0 +1,91 @@
+<!-- Loan collection -->
+<!-- if loan repayment -->
+<form method="post">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Type</label>
+                <input type="text" class="form-control" value="<?php echo Loan repayment ?>" readonly>
+            </div>
+        </div>
+      <div class="col-md-4">
+        <div class="form-group">
+            <label for="">Expected Amount:</label>
+            <input type="text" name="exp_amt" class="form-control" id="" value="<?php echo $expa; ?>" readonly>
+        </div>
+      </div>
+      <div class="col-md-4">
+          <div class="form-group">
+            <label for="">Amount Recieved:</label>
+            <input type="number" name="collect" id="" value="" class="form-control">
+            <span class="help-block" style="color: red;"><?php echo $exp_error;?></span>
+          </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+            <label for="">Payment Method:</label>
+            <select name="payment_method" id="" class="form-control selectpicker">
+              <option value="Cash">Cash</option>
+              <option value="Cheque">Cheque</option>
+              <option value="Transfer">Transfer</option>
+            </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+            <label for="">Transaction ID(Cheque no, Transfer Id):</label>
+            <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="">
+        </div>
+      </div>
+    </div>    
+          <!-- <button class="btn btn-default">Reset</button> -->
+          <button type="submit" class="btn btn-primary pull-right">Submit</button>
+  </form>
+
+  <!-- WitHdraw and Deposit -->
+  <!-- else -->
+
+  <form action="" method="post">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Type</label>
+                <input type="text" class="form-control" value="<?php echo Withdraw ?>" readonly>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+               <label class="bmd-label-floating">Account Number</label>
+               <input type="text" class="form-control" name="test2" hidden value="withdraw">
+               <input type="text" class="form-control" name="account_no2" id="act">
+            </div>
+            <div id="accname"></div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+               <label class="bmd-label-floating">Amount</label>
+               <input type="number" class="form-control" name="amount2" value="">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+               <label class="bmd-label-floating">Type</label>
+               <select class="form-control" name="pay_type2">
+                  <option> </option>
+                  <option>Cash</option>
+                  <option>Bank</option>
+                  <option>Cheque</option>
+               </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Transaction ID(Cheque no, Transfer Id, Deposit Id):</label>
+                <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="">
+            </div>
+          </div>
+    </div>
+    <button type="reset" class="btn btn-danger">Reset</button>
+    <button type="submit" class="btn btn-primary pull-right">Submit</button>
+    <div class="clearfix"></div>
+</form>
