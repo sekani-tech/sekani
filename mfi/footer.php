@@ -9,10 +9,11 @@
           </nav>
           <div class="copyright float-right">
             &copy;
-            <script>
+              <i class="material-icons">group</i> 
+                <a target="blank" href="https://sekanisystems.com.ng/">Sekani Systems</a> 
+                <script>
               document.write(new Date().getFullYear())
-            </script> @ <i class="material-icons">group</i> 
-                <a target="blank" href="https://sekanisystems.com.ng/">Sekani Systems</a> 2020
+            </script>
           </div>
           <!-- your footer here -->
         </div>

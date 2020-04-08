@@ -47,12 +47,23 @@ $rezz = mysqli_query($connection, $activeq);
   <script src="../datatable/jquery.dataTables.min.js"></script>
   <script src="../datatable/dataTables.bootstrap.min.js"></script>
   <script src="../datatable/DropdownSelect.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/materia/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/materia/bootstrap.min.css"> -->
   <style>
     div[data-acc-content] { display: none;  }
     div[data-acc-step]:not(.open) { background: #f2f2f2;  }
     div[data-acc-step]:not(.open) h5 { color: #777;  }
     div[data-acc-step]:not(.open) .badge-primary { background: #ccc;  }
+    /* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
   </style>
 </head>
 
@@ -85,7 +96,7 @@ $rezz = mysqli_query($connection, $activeq);
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="false">
-              <i class="material-icons">people</i>
+              <i class="material-icons">person</i>
               Client
             </a>
             <div class="dropdown-menu">
@@ -117,7 +128,7 @@ $rezz = mysqli_query($connection, $activeq);
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="false" aria-expanded="fasle">
-              <i class="material-icons">account_balance_wallet</i>
+              <i class="material-icons">library_books</i>
               Approval
             </a>
             <div class="dropdown-menu">
@@ -126,9 +137,9 @@ $rezz = mysqli_query($connection, $activeq);
               <a href="disbursement_approval.php" class="dropdown-item">Loan disbursement</a>
             </div>
           </li>
-          <li class="nav-item dropdown-menu">
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-              <i class="material-icons">brand</i>
+              <i class="material-icons">content_paste</i>
               Reports
             </a>
             <div class="dropdown-menu">
@@ -141,9 +152,9 @@ $rezz = mysqli_query($connection, $activeq);
               <a href="#" class="dropdown-item">Audit</a>
             </div>
           </li>
-          <li class="nav-item dropdown-menu">
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-              <i class="material-icons">brand</i>
+              <i class="material-icons">bubble_chart</i>
               Products Summary
             </a>
             <div class="dropdown-menu">

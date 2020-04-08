@@ -29,7 +29,7 @@
                 <div class="card-footer">
                   <div class="stats">
                     <!-- Get current update time and display -->
-                    <i class="material-icons">update</i> Just Updated
+                    <!-- <i class="material-icons">update</i> Just Updated -->
                   </div>
                 </div>
               </div>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">warning</i> Just Updated
+                    <!-- <i class="material-icons">warning</i> Just Updated -->
                   </div>
                 </div>
               </div>
@@ -74,7 +74,7 @@
                 <div class="card-footer">
                   <div class="stats">
                     <!-- Get current update time and display -->
-                    <i class="material-icons">update</i> Just Updated
+                    <!-- <i class="material-icons">update</i> Just Updated -->
                   </div>
                 </div>
               </div>
@@ -104,7 +104,7 @@
                 <div class="card-footer">
                   <div class="stats">
                     <!-- Get current update time and display -->
-                    <i class="material-icons">update</i> Just Updated
+                    <!-- <i class="material-icons">update</i> Just Updated -->
                   </div>
                 </div>
               </div>
@@ -126,7 +126,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">access_time</i> updated 4 minutes ago
+                    <!-- <i class="material-icons">access_time</i> updated 4 minutes ago -->
                   </div>
                 </div>
               </div>

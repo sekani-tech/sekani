@@ -1,5 +1,7 @@
 <?php
 
+$page_title = "Transactions";
+$destination = "index.php";
     include("header.php");
 
 ?>
