@@ -232,60 +232,49 @@ if(isset($_GET["edit"])) {
                     </div>
                     <div class="row">
                       <div class="col-md-4">
-                        <div id="myImg" class="fileinput fileinput-new text-center" data-provides="fileinput">
-                            <div class="fileinput-new thumbnail img-raised">
-                            </div>
-                            <div class="fileinput-preview fileinput-exists thumbnail img-raised">
-
-                            </div>
-                            <div>
-                              <!-- This input type displays and saves the Passport img path originally in DB -->
-                            <input type="text" hidden class="form-control" value="<?php echo $passportbk; ?>" name="passportbk">
-                                <span class="btn btn-raised btn-round btn-default btn-file">
-                                    <span class="fileinput-new">Upload passport</span>
-                                    <!-- <span class="fileinput-exists">Change</span> -->
-                                    <input style ="width:90px;" type="file" onchange="resize()" name="passport" id="myImg" />
-                                </span>
-                                <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
-                            </div>
-                        </div>
-                      </div>
-                       <div class="col-md-4">
-                        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                            <div class="fileinput-new thumbnail img-raised">
-                            </div>
-                            <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
-                            <div>
-                              <!-- This input type displays and saves the signature img path originally in DB -->
-                            <input type="text" hidden class="form-control" value="<?php echo $sign; ?>" name="sign">
-                                <span class="btn btn-raised btn-round btn-default btn-file">
-                                    <span class="fileinput-new">Select signature</span>
-                                    <!-- <span class="fileinput-exists">Change</span> -->
-                                   <input style ="width:90px;" type="file" name="signature" />
-                                </span>
-                                <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
-                            </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                            <div class="fileinput-new thumbnail img-raised">
-                            </div>
-                            <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
-                            <div>
-                              <!-- This input type displays and saves the ID image path originally in DB -->
-                            <input type="text" hidden class="form-control" value="<?php echo $idimg; ?>" name="idimg">
-                                <span class="btn btn-raised btn-round btn-default btn-file">
-                                    <span class="fileinput-new">Upload Image ID</span>
-                                    <!-- <span class="fileinput-exists">Change</span> -->
-                                    <input style ="width:90px;" type="file" name="id_img_url" />
-                                </span>
-                                <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
-                            </div>
-                        </div>
+                      <div class="form-group form-file-upload form-file-multiple">
+                      <label for="">ID</label>
+                      <input type="file" multiple="" class="inputFileHidden">
+                      <div class="input-group">
+                          <input type="text" name="idimg" class="form-control inputFileVisible" placeholder="Insert Signature">
+                          <span class="input-group-btn">
+                              <button type="button" class="btn btn-fab btn-round btn-primary">
+                                  <i class="material-icons">attach_file</i>
+                              </button>
+                          </span>
                       </div>
                     </div>
-                    <a href="client.php" class="btn btn-secondary">Back</a>
+                      </div>
+                       <div class="col-md-4">
+                       <div class="form-group form-file-upload form-file-multiple">
+                      <label for="">Signature</label>
+                      <input type="file" multiple="" class="inputFileHidden">
+                      <div class="input-group">
+                          <input type="text" name="signature" class="form-control inputFileVisible" placeholder="Insert Signature">
+                          <span class="input-group-btn">
+                              <button type="button" class="btn btn-fab btn-round btn-primary">
+                                  <i class="material-icons">attach_file</i>
+                              </button>
+                          </span>
+                      </div>
+                    </div>
+                      </div>
+                      <div class="col-md-4">
+                      <div class="form-group form-file-upload form-file-multiple">
+                      <label for="">Passport</label>
+                      <input type="file" multiple="" class="inputFileHidden">
+                      <div class="input-group">
+                          <input type="text" name="passort" class="form-control inputFileVisible" placeholder="Insert Signature">
+                          <span class="input-group-btn">
+                              <button type="button" class="btn btn-fab btn-round btn-primary">
+                                  <i class="material-icons">attach_file</i>
+                              </button>
+                          </span>
+                      </div>
+                    </div>
+                      </div>
+                    </div>
+                    <a href="client.php" class="btn btn-danger">Back</a>
                     <button type="submit" class="btn btn-primary pull-right">Update Client</button>
                     <div class="clearfix"></div>
                   </form>

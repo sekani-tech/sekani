@@ -114,39 +114,25 @@
                                 <input type="email" name="pc_email" class="form-control" id="">
                             </div>
                         </div>
+                        <div class="col-md-4">
+                          <div class="form-group form-file-upload form-file-multiple">
+                            <label for="">Logo</label>
+                            <input type="file" multiple="" class="inputFileHidden">
+                            <div class="input-group">
+                                <input type="text" name="signature" class="form-control inputFileVisible" placeholder="Insert Logo">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-fab btn-round btn-primary">
+                                        <i class="material-icons">attach_file</i>
+                                    </button>
+                                </span>
+                            </div>
+                          </div>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary pull-right">Create Profile</button>
+                    <button type="submit" class="btn btn-primary pull-right">Create Institution</button>
                     <button type="reset" class="btn btn_danger">Reset</button>
                     <div class="clearfix"></div>
                   </form>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="assets/img/faces/marc.jpg" />
-                  </a>
-                </div>
-                <!-- Get session data and populate user profile -->
-                <?php
-                $fullname = $_SESSION["fullname"];
-                $sessint_id = $_SESSION["int_id"];
-                $org_role = $_SESSION["org_role"];
-                $inq = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$sessint_id'");
-                if (count([$inq]) == 1) {
-                  $n = mysqli_fetch_array($inq);
-                  $int_name = $n['int_name'];
-                }
-                ?>
-                <div class="card-body">
-                  <h6 class="card-category text-gray"><?php echo $org_role?></h6>
-                  <h4 class="card-title"> <?php echo $fullname?></h4>
-                  <p class="card-description">
-                  <?php echo $int_name?>
-                  </p>
-                  <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>
               </div>
             </div>
