@@ -7,6 +7,7 @@ $destination = "transact_approval.php";
 ?>
 <?php
 if (isset($_GET['approve']) && $_GET['approve'] !== '') {
+  session_start();
   $appod = $_GET['approve'];
   $digits = 10;
   $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
@@ -87,10 +88,10 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                           $res4 = mysqli_query($connection, $iupqx);
                           if ($res4) {
                               $_SESSION["Lack_of_intfund_$randms"] = "Successfully Approved";
-                              echo header ("Location: mfi/transact_approval.php?message1=$randms");
+                              echo header ("Location: transact_approval.php?message1=$randms");
                           } else {
                               $_SESSION["Lack_of_intfund_$randms"] = "Error updating Cache";
-                              echo header ("Location: mfi/transact_approval.php?message2=$randms");
+                              echo header ("Location: transact_approval.php?message2=$randms");
                           }
                           
                       } else {
