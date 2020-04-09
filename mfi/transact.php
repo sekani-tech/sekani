@@ -186,7 +186,6 @@ $transid1 = $randms1;
                 <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id;?>" id="int_id">
             </div>
         </div>
-        <div id="accrep"></div>
         <div class="col-md-4">
         <div class="form-group">
           <label for="">Amount Recieved:</label>
@@ -209,6 +208,9 @@ $transid1 = $randms1;
           <label for="">Transaction ID(Cheque no, Transfer Id):</label>
           <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="">
       </div>
+    </div>
+    <div class="col-md-4">
+    <div id="accrep"></div>
     </div>
     </div>    
           <button type="submit" class="btn btn-primary pull-right">Submit</button>

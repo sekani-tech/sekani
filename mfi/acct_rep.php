@@ -26,10 +26,6 @@ if (isset($_POST["id"]))
     while ($row = mysqli_fetch_array($result))
     {
       $output = '
-        <div class="form-group">
-          <label for="">First Name:</label>
-          <input type="number" name="fn id="" value="'.$dn.'" class="form-control" readonly>
-        </div>
       <div class="form-group">
           <label for="">Expected Amount:</label>
           <input type="text" name="exp_amt" class="form-control" id="" value="'.$expa.'" readonly>
