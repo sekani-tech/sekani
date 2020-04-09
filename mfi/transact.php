@@ -178,6 +178,7 @@ $transid1 = $randms1;
                       }
                     })
                   });
+              });
         </script>
             <div class="form-group">
                 <label for="">Account Number</label>
@@ -214,7 +215,6 @@ $transid1 = $randms1;
         </div>
       </div>
     </div>    
-          <!-- <button class="btn btn-default">Reset</button> -->
           <button type="submit" class="btn btn-primary pull-right">Submit</button>
   </form>
                       </div>
@@ -244,19 +244,7 @@ $transid1 = $randms1;
                       }
                     })
                   });
-                  $('#act').on("change keyup paste click", function(){
-                    var id = $(this).val();
-                    var ist = $('#int_id').val();
-                    $.ajax({
-                      url:"acct_name.php",
-                      method:"POST",
-                      data:{id:id, ist: ist},
-                      success:function(data){
-                        $('#accname').html(data);
-                      }
-                    })
-                  });
-                })
+                });
               </script>
             <div class="form-group">
                 <label for="">Type</label>
@@ -309,7 +297,5 @@ $transid1 = $randms1;
         </div>
       </div>
 <?php
-
 include("footer.php");
-
 ?>
