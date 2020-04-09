@@ -8,7 +8,7 @@ $destination = "transact_approval.php";
 <?php
 if (isset($_GET['approve']) && $_GET['approve'] !== '') {
   $appod = $_GET['approve'];
-  $checkm = mysqli_query($connection, "SELECT * FROM transact_cache WHERE id = '$appod' && int_id = '$sessint_id'");
+  $checkm = mysqli_query($connection, "SELECT * FROM transact_cache WHERE id = '$appod' && int_id = '$sessint_id' && status = 'Not Verified'");
   if (count([$checkm]) == 1) {
       $x = mysqli_fetch_array($checkm);
       $ssint_id = $_SESSION["int_id"];
@@ -347,6 +347,8 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
         }
               if ($outloanbal == 0) {
                 $updc = mysqli_query($connection, "UPDATE client SET loan_status = 'Not Active' WHERE id = '$id'");
+                $ixxxx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod' && int_id = '$sessint_id'";
+                $res4 = mysqli_query($connection, $ixxxx);
                 echo '<script type="text/javascript">
                     $(document).ready(function(){
                         swal({
@@ -360,6 +362,8 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                     </script>
                     ';
               } else {
+                $ixxxx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod' && int_id = '$sessint_id'";
+                $res4 = mysqli_query($connection, $ixxxx);
                 echo '<script type="text/javascript">
                     $(document).ready(function(){
                         swal({
@@ -586,6 +590,8 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                 '{$gen_date}', '{$chaclamt2}', '{$newcanb}', '{$amount}',
                 '{$trans_date}', '{$appuser_id}')";
                 $res3 = mysqli_query($connection, $insertnew);
+                $ixxxx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod' && int_id = '$sessint_id'";
+                $res4 = mysqli_query($connection, $ixxxx);
                 if ($res3) {
                   echo '<script type="text/javascript">
                   $(document).ready(function(){
@@ -615,6 +621,8 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                 }
               }
             } else {
+              $ixxxx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod' && int_id = '$sessint_id'";
+                $res4 = mysqli_query($connection, $ixxxx);
               echo '<script type="text/javascript">
                   $(document).ready(function(){
                       swal({
