@@ -234,7 +234,7 @@ $transid1 = $randms1;
                         <!-- <p class="card-category">Fill in all important data</p> -->
                       </div>
                       <div class="card-body">
-                      <form method="post">
+                      <form action="../functions/loan_repayment.php" method="post">
     <div class="row">
         <div class="col-md-4">
         <script>
