@@ -186,7 +186,7 @@ $destination = "loans.php";
                     <!-- First Tab Ends -->
                     <!-- Second Tab Begins -->
                     <div class="tab"><h3> Settings:</h3>
-                          <!-- <div class="row">
+                          <div class="row">
                              <div class="my-3"> 
                                replace values with loan data
                               <div class=" col-md-4 form-group">
@@ -270,7 +270,7 @@ $destination = "loans.php";
                                   <option>Yes</option>
                                 </select> </div>
                              </div>
-                          </div>-->
+                          </div>
                     </div> 
                     <!-- Second Tab Ends -->
                     <!-- Third Tab Begins -->
