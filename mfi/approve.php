@@ -320,7 +320,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Amount</label>
-                          <input type="text" class="form-control" name="location" value="<?php echo $amount; ?>">
+                          <input type="text" class="form-control" name="location" value="<?php echo $amount; ?>" readonly>
                         </div>
                       </div>
                       </div>
