@@ -120,6 +120,6 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
     }
  } else {
     $_SESSION["Lack_of_intfund_$randms"] = "Account Not Found";
-    echo header ("Location: ../mfi/transact.php?message7=$randms");
+    echo header ("Location: ../mfi/transact.php?message8=$randms");
  }
 ?>
