@@ -7,7 +7,7 @@ if(isset($_POST["id"]))
 {
     if($_POST["id"] !='')
     {
-        $sql = "SELECT * FROM client WHERE account_no = '".$_POST["id"]."'";
+        $sql = "SELECT * FROM client WHERE account_no = '".$_POST["id"]."' && int_id = '".$_POST["ist"]."'";
     }
     else
     {

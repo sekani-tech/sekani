@@ -226,10 +226,11 @@ $transid1 = $randms1;
                 $(document).ready(function() {
                   $('#act').keyup(function(){
                     var id = $(this).val();
+                    var ist = $('#int_id').val();
                     $.ajax({
                       url:"acct_name.php",
                       method:"POST",
-                      data:{id:id},
+                      data:{id:id, ist: ist},
                       success:function(data){
                         $('#accname').html(data);
                       }
@@ -237,10 +238,11 @@ $transid1 = $randms1;
                   });
                   $('#act').bind(function(){
                     var id = $(this).val();
+                    var ist = $('#int_id').val();
                     $.ajax({
                       url:"acct_name.php",
                       method:"POST",
-                      data:{id:id},
+                      data:{id:id, ist: ist},
                       success:function(data){
                         $('#accname').html(data);
                       }
@@ -252,7 +254,7 @@ $transid1 = $randms1;
                 <label for="">Type</label>
                 <select class="form-control" name="test">
                     <option> </option>
-                    <option value="deposit">deposit</option>
+                    <option value="deposit">Deposit</option>
                     <option value="withdraw">Withdraw</option>
                  </select>
             </div>
@@ -262,6 +264,7 @@ $transid1 = $randms1;
             <div class="form-group">
                <label class="bmd-label-floating">Account Number</label>
                <input type="text" class="form-control" name="account_no" id="act">
+               <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id;?>" id="int_id">
             </div>
             <div id="accname"></div>
         </div>
@@ -273,10 +276,8 @@ $transid1 = $randms1;
         </div>
         <div class="col-md-4">
             <div class="form-group">
-               <label class="bmd-label-floating">Type</label>
                <select class="form-control" name="pay_type">
-                  <option> </option>
-                  <option>Cash</option>
+                  <option>Cash </option>
                   <option>Bank</option>
                   <option>Cheque</option>
                </select>
