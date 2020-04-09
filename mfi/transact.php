@@ -243,7 +243,7 @@ $transid1 = $randms1;
         <div class="col-md-4">
             <script>
                 $(document).ready(function() {
-                  $('#act').keyup(function(){
+                  $('#act').on("change keyup paste click", function(){
                     var id = $(this).val();
                     var ist = $('#int_id').val();
                     $.ajax({
@@ -255,7 +255,7 @@ $transid1 = $randms1;
                       }
                     })
                   });
-                  $('#act').bind(function(){
+                  $('#act').on("change keyup paste click", function(){
                     var id = $(this).val();
                     var ist = $('#int_id').val();
                     $.ajax({
