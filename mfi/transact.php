@@ -123,6 +123,13 @@ if (isset($_GET["message"])) {
     echo "";
 }
 ?>
+<?php
+$digits = 6;
+$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$randms1= str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$transid = $randms;
+$transid1 = $randms1;
+?>
 <!-- Content added here -->
 <div class="content">
         <div class="container-fluid">
@@ -135,69 +142,73 @@ if (isset($_GET["message"])) {
                         <!-- <p class="card-category">Fill in all important data</p> -->
                       </div>
                       <div class="card-body">
-                          <form action="../functions/deposittrans.php" method="post">
-                              <div class="row">
-                                  <div class="col-md-4">
-                                  <!-- <script>
-                            $(document).ready(function() {
-                              $('#axt_no').change(function(){
-                                var id = $(this).val();
-                                $.ajax({
-                                  url:"acct_name.php",
-                                  method:"POST",
-                                  data:{id:id, int_id: int_id},
-                                  success:function(data){
-                                    $('#acct_name').html(data);
-                                  }
-                                })
-                              });
-                            })
-                          </script> -->
-                          <script>
-                            $(document).ready(function() {
-                              $('#acct').keyup(function(){
-                                var id = $(this).val();
-                                $.ajax({
-                                  url:"acct_name.php",
-                                  method:"POST",
-                                  data:{id:id},
-                                  success:function(data){
-                                    $('#acct_name').html(data);
-                                  }
-                                })
-                              });
-                            })
-                          </script>
-                                      <div class="form-group">
-                                          
-                                         <label class="bmd-label-floating">Account Number</label>
-                                         <input type="text" class="form-control" name="test" hidden value="deposit">
-                                         <input type="text" class="form-control" name="account_no" id="acct">
-                                      </div>
-                                      <div id="acct_name"></div>
-                                  </div>
-                                  <div class="col-md-4">
-                                      <div class="form-group">
-                                         <label class="bmd-label-floating">Amount</label>
-                                         <input type="number" class="form-control" name="amount" value="">
-                                      </div>
-                                  </div>
-                                  <div class="col-md-4">
-                                      <div class="form-group">
-                                         <label class="bmd-label-floating">Type</label>
-                                         <select class="form-control" name="pay_type">
-                                            <option> </option>
-                                            <option>Cash</option>
-                                            <option>Bank</option>
-                                            <option>Cheque</option>
-                                         </select>
-                                      </div>
-                                  </div>
-                              </div>
-                              <button type="reset" class="btn btn-danger">Reset</button>
-                              <button type="submit" class="btn btn-primary pull-right">Submit</button>
-                              <div class="clearfix"></div>
-                          </form>
+                      <form method="post">
+    <div class="row">
+        <div class="col-md-4">
+        <script>
+                $(document).ready(function() {
+                  $('#acct').keyup(function(){
+                    var id = $(this).val();
+                    $.ajax({
+                      url:"acct_rep.php",
+                      method:"POST",
+                      data:{id:id},
+                      success:function(data){
+                        $('#accrep').html(data);
+                      }
+                    })
+                  });
+                  $('#acct').change(function(){
+                    var id = $(this).val();
+                    $.ajax({
+                      url:"acct_rep.php",
+                      method:"POST",
+                      data:{id:id},
+                      success:function(data){
+                        $('#accrep').html(data);
+                      }
+                    })
+                  });
+                })
+              </script>
+            <div class="form-group">
+                <label for="">Account Number</label>
+                <input type="text" class="form-control" name="account_no" id="acct" readonly>
+            </div>
+        </div>
+      <div class="col-md-4">
+        <div class="form-group">
+            <label for="">Expected Amount:</label>
+            <input type="text" name="exp_amt" class="form-control" id="" value="<?php echo $expa; ?>" readonly>
+        </div>
+      </div>
+      <div class="col-md-4">
+          <div class="form-group">
+            <label for="">Amount Recieved:</label>
+            <input type="number" name="collect" id="" value="" class="form-control">
+            <span class="help-block" style="color: red;"><?php echo $exp_error;?></span>
+          </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+            <label for="">Payment Method:</label>
+            <select name="payment_method" id="" class="form-control selectpicker">
+              <option value="Cash">Cash</option>
+              <option value="Cheque">Cheque</option>
+              <option value="Transfer">Transfer</option>
+            </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+            <label for="">Transaction ID(Cheque no, Transfer Id):</label>
+            <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="">
+        </div>
+      </div>
+    </div>    
+          <!-- <button class="btn btn-default">Reset</button> -->
+          <button type="submit" class="btn btn-primary pull-right">Submit</button>
+  </form>
                       </div>
                   </div>
               </div>
@@ -208,54 +219,80 @@ if (isset($_GET["message"])) {
                         <!-- <p class="card-category">Fill in all important data</p> -->
                       </div>
                       <div class="card-body">
-                          <form action="../functions/withdrawtrans.php" method="post">
-                              <div class="row">
-                                  <div class="col-md-4">
-                          <script>
-                            $(document).ready(function() {
-                              $('#act').keyup(function(){
-                                var id = $(this).val();
-                                $.ajax({
-                                  url:"acct_name.php",
-                                  method:"POST",
-                                  data:{id:id},
-                                  success:function(data){
-                                    $('#accname').html(data);
-                                  }
-                                })
-                              });
-                            })
-                          </script>
-                                      <div class="form-group">
-                                          
-                                         <label class="bmd-label-floating">Account Number</label>
-                                         <input type="text" class="form-control" name="test2" hidden value="withdraw">
-                                         <input type="text" class="form-control" name="account_no2" id="act">
-                                      </div>
-                                      <div id="accname"></div>
-                                  </div>
-                                  <div class="col-md-4">
-                                      <div class="form-group">
-                                         <label class="bmd-label-floating">Amount</label>
-                                         <input type="number" class="form-control" name="amount2" value="">
-                                      </div>
-                                  </div>
-                                  <div class="col-md-4">
-                                      <div class="form-group">
-                                         <label class="bmd-label-floating">Type</label>
-                                         <select class="form-control" name="pay_type2">
-                                            <option> </option>
-                                            <option>Cash</option>
-                                            <option>Bank</option>
-                                            <option>Cheque</option>
-                                         </select>
-                                      </div>
-                                  </div>
-                              </div>
-                              <button type="reset" class="btn btn-danger">Reset</button>
-                              <button type="submit" class="btn btn-primary pull-right">Submit</button>
-                              <div class="clearfix"></div>
-                          </form>
+                      <form action="../functions/withdep.php" method="post">
+    <div class="row">
+        <div class="col-md-4">
+            <script>
+                $(document).ready(function() {
+                  $('#act').keyup(function(){
+                    var id = $(this).val();
+                    $.ajax({
+                      url:"acct_name.php",
+                      method:"POST",
+                      data:{id:id},
+                      success:function(data){
+                        $('#accname').html(data);
+                      }
+                    })
+                  });
+                  $('#act').change(function(){
+                    var id = $(this).val();
+                    $.ajax({
+                      url:"acct_name.php",
+                      method:"POST",
+                      data:{id:id},
+                      success:function(data){
+                        $('#accname').html(data);
+                      }
+                    })
+                  });
+                })
+              </script>
+            <div class="form-group">
+                <label for="">Type</label>
+                <select class="form-control" name="test">
+                    <option> </option>
+                    <option value="deposit">deposit</option>
+                    <option value="withdraw">Withdraw/option>
+                 </select>
+            </div>
+            <div id="acct_name"></div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+               <label class="bmd-label-floating">Account Number</label>
+               <input type="text" class="form-control" name="account_no" id="act">
+            </div>
+            <div id="accname"></div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+               <label class="bmd-label-floating">Amount</label>
+               <input type="number" class="form-control" name="amount" value="">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+               <label class="bmd-label-floating">Type</label>
+               <select class="form-control selectpicker" name="pay_type">
+                  <option> </option>
+                  <option>Cash</option>
+                  <option>Bank</option>
+                  <option>Cheque</option>
+               </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Transaction ID(Cheque no, Transfer Id, Deposit Id):</label>
+                <input type="text" readonly value="<?php echo $transid1; ?>" name="transid" class="form-control" id="">
+            </div>
+          </div>
+    </div>
+    <button type="reset" class="btn btn-danger">Reset</button>
+    <button type="submit" class="btn btn-primary pull-right">Submit</button>
+    <div class="clearfix"></div>
+</form>
                       </div>
                   </div>
               </div>
