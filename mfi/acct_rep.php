@@ -26,8 +26,7 @@ if (isset($_POST["id"]))
      $result = mysqli_query($connection, $sql);
     while ($row = mysqli_fetch_array($result))
     {
-      $output = '
-      <div class="col-md-4">
+      $output = '<div class="col-md-4">
         <div class="form-group">
           <label for="">First Name:</label>
           <input type="number" name="fn id="" value="'.$row["firstname"].'" class="form-control" readonly>
@@ -36,30 +35,7 @@ if (isset($_POST["id"]))
       <div class="col-md-4">
       <div class="form-group">
           <label for="">Expected Amount:</label>
-          <input type="text" name="exp_amt" class="form-control" id="" value="'.$expa;'" readonly>
-      </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-          <label for="">Amount Recieved:</label>
-          <input type="number" name="collect" id="" value="" class="form-control">
-          <span class="help-block" style="color: red;"><?php echo $exp_error;?></span>
-        </div>
-    </div>
-    <div class="col-md-4">
-      <div class="form-group">
-          <label for="">Payment Method:</label>
-          <select name="payment_method" id="" class="form-control">
-            <option value="Cash">Cash</option>
-            <option value="Cheque">Cheque</option>
-            <option value="Transfer">Transfer</option>
-          </select>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="form-group">
-          <label for="">Transaction ID(Cheque no, Transfer Id):</label>
-          <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="">
+          <input type="text" name="exp_amt" class="form-control" id="" value="'.$expa.'" readonly>
       </div>
     </div>';
       echo $output;

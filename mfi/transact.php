@@ -187,6 +187,29 @@ $transid1 = $randms1;
             </div>
         </div>
         <div id="accrep"></div>
+        <div class="col-md-4">
+        <div class="form-group">
+          <label for="">Amount Recieved:</label>
+          <input type="number" name="collect" id="" value="" class="form-control">
+          <span class="help-block" style="color: red;"><?php echo $exp_error;?></span>
+        </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+          <label for="">Payment Method:</label>
+          <select name="payment_method" id="" class="form-control">
+            <option value="Cash">Cash</option>
+            <option value="Cheque">Cheque</option>
+            <option value="Transfer">Transfer</option>
+          </select>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+          <label for="">Transaction ID(Cheque no, Transfer Id):</label>
+          <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="">
+      </div>
+    </div>
     </div>    
           <button type="submit" class="btn btn-primary pull-right">Submit</button>
   </form>
