@@ -216,7 +216,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                     </script>
                     ';
                   }
-                } else if ($trans_type == "Loan Repayment") {
+                } else if ($transact_type == "Loan Repayment") {
                   $person = mysqli_query($connection, "SELECT loan.interest_rate, client.id, client.account_no, loan.id, client.branch_id, loan.product_id, principal_amount, loan_term, loan.interest_rate FROM loan JOIN client ON loan.client_id = client.id WHERE client.int_id ='$sessint_id' && client_id = '$client_id'");
                     if (count([$person]) == 1) {
                       $x = mysqli_fetch_array($person);
