@@ -14,7 +14,7 @@ Sanusi
 ------
 1. Fix loan creation -- (use the form in test.html the current form in lend.php not accurate) --DONE
 2. Update Loan functionalities - preview
-3. manage_product convert to stepper
+3. manage_product convert to stepper --DONE
 4. 
 5. 
 ------
