@@ -186,8 +186,92 @@ $destination = "loans.php";
                     <!-- First Tab Ends -->
                     <!-- Second Tab Begins -->
                     <div class="tab"><h3> Settings:</h3>
-                    
-                    </div>
+                          <!-- <div class="row">
+                             <div class="my-3"> 
+                               replace values with loan data
+                              <div class=" col-md-4 form-group">
+                                <label class = "bmd-label-floating">Description:</label>
+                                <input type="number" value="" name="principal_amount" class="form-control" required id="ls">
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">Origin of Funding:</label>
+                                <select class="form-control" name="" id="">
+                                  <option>Bank</option>
+                                </select>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">Currency:</label>
+                                <input type="text" value="" name="repay_every" class="form-control" id="irp">
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">To Decimal place:</label>
+                                <input type="number" name="interest_rate" class="form-control" id="ir">
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">In Multiples of:</label>
+                                <input type="number" name="disbursement_date" class="form-control" id="db">
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">Installment Amount in Multiples of:</label>
+                                <input type="number" name="loan_officer" class="form-control" id="lo">
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">Principal:</label>
+                                <input type="number" name="loan_purpose" class="form-control" id="lp">
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">Loan Term:</label>
+                                <input type="text" name="linked_savings_acct" class="form-control" id="lsa">
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">Repayment Frequency:</label>
+                                <input type="date" name="repay_start" class="form-control" id="rsd">
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">Repayment Frequency type:</label>
+                                <select class="form-control" name="" id="">
+                                  <option>Months</option>
+                                </select>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">Interest Rate:</label>
+                                <input type="number" name="repay_start" class="form-control" id="rsd">
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">Interest Rate Applied:</label>
+                                <input type="number" name="repay_start" class="form-control" id="rsd">%
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">Interest Methodology:</label>
+                                <select class="form-control" name="" id="">
+                                  <option>Flat</option>
+                                </select>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">Ammortization Method:</label>
+                                <select class="form-control" name="" id="">
+                                  <option>Equal installments</option>
+                                </select>                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">Days in Year:</label>
+                                <input type="date" name="repay_start" class="form-control" id="rsd">
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">Days in Month Type:</label>
+                                <input type="date" name="repay_start" class="form-control" id="rsd">
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">Transaction Processing Strategy:</label>
+                                <input type="date" name="repay_start" class="form-control" id="rsd">
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class = "bmd-label-floating">Include Loan cycle:</label>
+                                <select class="form-control" name="" id="">
+                                  <option>Yes</option>
+                                </select> </div>
+                             </div>
+                          </div>-->
+                    </div> 
                     <!-- Second Tab Ends -->
                     <!-- Third Tab Begins -->
                     <div class="tab"><h3> Charges:</h3>
@@ -240,7 +324,7 @@ $destination = "loans.php";
                     <!-- Third Tab Ends -->
                     <!-- Fourth Tab Begins -->
                     <div class="tab"><h3> Collateral:</h3>
-                    <button type="button" class="btn btn-primary" name="button" onclick="dial()"> <i class="fa fa-plus"></i> Add</button>
+                    <button type="button" class="btn btn-primary" name="button" onclick="showDialog()"> <i class="fa fa-plus"></i> Add</button>
                     <table class="table table-bordered">
                           <thead>
                             <tr>
@@ -267,13 +351,53 @@ $destination = "loans.php";
                              </tr>     
                           </tbody>
                         </table>
-                        <!-- <style>
-                          dialog{
-                            background-color: #aaaaaa;
-                          }
-                        </style>
-                        <dialog id="dial">
-                          <h3>Add Collateral</h3>
+                        <div id="background">
+        </div>
+        <style>
+            #background{
+                display: none;
+                width: 100%;
+                height: 100%;
+                position: fixed;
+                top: 0px;
+                left: 0px;
+                background-color: black;
+                opacity: 0.7;
+                z-index: 9999;
+            }
+            
+            #dlgbox{
+                /*initially dialog box is hidden*/
+                display: none;
+                position: fixed;
+                width: 480px;
+                z-index: 9999;
+                border-radius: 10px;
+                background-color: #ffffff;
+            }
+            
+            #dlg-header{
+                background-color: #6d84b4;
+                color: white;
+                font-size: 20px;
+                padding: 10px;
+                margin: 10px 10px 0px 10px;
+            }
+            
+            #dlg-body{
+                background-color: white;
+                color: black;
+                font-size: 14px;
+                padding: 10px;
+                margin: 0px 10px 0px 10px;
+            }
+            #box {
+              padding: 20px;
+            }
+        </style>
+        <div id="dlgbox">
+            <div id="box">
+            <h3>Add Collateral</h3>
                           <div class="form-group">
                           <label>Type</label>
                           <input class="form-control" type="text" value="Motor Cycles"/>
@@ -283,16 +407,39 @@ $destination = "loans.php";
                           <input class="form-control" type="text" value="Test"/>
                           </div>
                           <div style="float:right;">
-                            <button class="btn btn-primary pull-right" type="button" id="">Add</button>
+                            <button class="btn btn-primary pull-right"  onclick="dlgLogin()" type="button" id="">Add</button>
                             <button class="btn btn-primary pull-right" type="button" id="">Cancel</button>
                           </div>
-                        </dialog> -->
+                    </div>
+                 </div>
+                        <!-- script of dialog -->
+        <script>
+            function dlgLogin(){
+                var bg = document.getElementById("background");
+                var dlg = document.getElementById("dlgbox");
+                bg.style.display = "none";
+                dlg.style.display = "none";
+            }
+            
+            function showDialog(){
+                var bg = document.getElementById("background");
+                var dlg = document.getElementById("dlgbox");
+                bg.style.display = "block";
+                dlg.style.display = "block";
+                
+                var winWidth = window.innerWidth;
+                var winHeight = window.innerHeight;
+                
+                dlg.style.left = (winWidth/2) - 480/2 + "px";
+                dlg.style.top = "150px";
+            }
+        </script>
                     </div>
                     <!-- Fourth Tab Ends -->
                     <!-- Fifth Tab Begins -->
                     <div class="tab"><h3> Guarantors:</h3>
                       <div class="form-group">
-                      <button type="button" class="btn btn-primary" name="button" onclick="dial()"> <i class="fa fa-plus"></i> Add</button>
+                      <button type="button" class="btn btn-primary" name="button" onclick="DisplayDialog()"> <i class="fa fa-plus"></i> Add</button>
                       </div>
                       <div class="form-group">
                       <table class="table table-bordered">
@@ -317,59 +464,112 @@ $destination = "loans.php";
                           </tbody>
                         </table>
                       </div>
-                      <!-- <div class="form-group">
-                        <dialog>
-                        <div class="row">
-                              <div class="col-md-4">
-                                <div class="form-group">
-                                  <label class = "bmd-label-floating" class="md-3 form-align " for=""> First Name:</label>
-                                  <input type="text" name="gau_first_name" id="" class="form-control">
-                                </div>
-                              </div>
-                              <div class="col-md-4">
-                                <div class="form-group">
-                                  <label class = "bmd-label-floating" for=""> Last Name:</label>
-                                  <input type="text" name="gau_last_name" id="" class="form-control">
-                                </div>
-                              </div>
-                              <div class="col-md-4">
-                                <div class="form-group">
-                                  <label class = "bmd-label-floating" for="">Phone:</label>
-                                  <input type="text" name="gau_phone" id="" class="form-control">
-                                </div>
-                              </div>
-                              <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class = "bmd-label-floating" for="">Phone:</label>
-                                    <input type="text" name="gau_phone2" id="" class="form-control">
-                                </div>
-                              </div>
-                              <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class = "bmd-label-floating" for="">Home Address:</label>
-                                    <input type="text" name="gau_home_address" id="" class="form-control">
-                                </div>
-                              </div>
-                              <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class = "bmd-label-floating" for="">Office Address:</label>
-                                    <input type="text" name="gau_office_address" id="" class="form-control">
-                                </div>
-                              </div>
-                              <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class = "bmd-label-floating" for="">Position Held:</label>
-                                    <input type="text" name="gau_position_held" id="" class="form-control">
-                                </div>
-                              </div>
-                              <div class="col-md-4">
-                                <div class="form-group">
-                                  <label class = "bmd-label-floating" class = "bmd-label-floating">Email:</label>
-                                  <input type="text" name="gau_email" id="" class="form-control">
-                                </div>
-                              </div>
-                            </div> -->
-                        </dialog>
+                      <!-- dialog box -->
+                      <div class="form-group">
+                      <div id="backg">
+                      </div>
+                      <div id="dlbox">
+    <h3>Add Guarantor</h3>
+    <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class = "bmd-label-floating" class="md-3 form-align " for=""> First Name:</label>
+            <input type="text" name="gau_first_name" id="" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class = "bmd-label-floating" for=""> Last Name:</label>
+            <input type="text" name="gau_last_name" id="" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class = "bmd-label-floating" for="">Phone:</label>
+            <input type="text" name="gau_phone" id="" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+              <label class = "bmd-label-floating" for="">Phone:</label>
+              <input type="text" name="gau_phone2" id="" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+              <label class = "bmd-label-floating" for="">Home Address:</label>
+              <input type="text" name="gau_home_address" id="" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+              <label class = "bmd-label-floating" for="">Office Address:</label>
+              <input type="text" name="gau_office_address" id="" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+              <label class = "bmd-label-floating" for="">Position Held:</label>
+              <input type="text" name="gau_position_held" id="" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class = "bmd-label-floating" class = "bmd-label-floating">Email:</label>
+            <input type="text" name="gau_email" id="" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div style="float:right;">
+            <button class="btn btn-primary pull-right"  onclick="DlgAdd()" type="button" id="">Add</button>
+            <button class="btn btn-primary pull-right" type="button" id="">Cancel</button>
+          </div>
+</div>
+<script>
+    function DlgAdd(){
+        var bg = document.getElementById("backg");
+        var dlg = document.getElementById("dlbox");
+        bg.style.display = "none";
+        dlg.style.display = "none";
+    }
+    
+    function DisplayDialog(){
+        var bg = document.getElementById("backg");
+        var dlg = document.getElementById("dlbox");
+        bg.style.display = "block";
+        dlg.style.display = "block";
+        
+        var winWidth = window.innerWidth;
+        var winHeight = window.innerHeight;
+        
+        dlg.style.left = (winWidth/2) - 480/2 + "px";
+        dlg.style.top = "150px";
+    }
+</script>
+<style>
+    #backg{
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        background-color: black;
+        opacity: 0.7;
+        z-index: 9999;
+    }
+    
+    #dlbox{
+        /*initially dialog box is hidden*/
+        display: none;
+        position: fixed;
+        width: 480px;
+        z-index: 9999;
+        border-radius: 10px;
+        padding:20px;
+        background-color: #ffffff;
+    }
+</style>
                       </div>
                     </div>
                     <!-- Fifth Tab Ends -->
@@ -669,7 +869,7 @@ function validateForm() {
       // add an "invalid" class to the field:
       y[i].className += " invalid";
       // and set the current valid status to false
-      valid = false;
+      valid = true;
     }
   }
   // If the valid status is true, mark the step as finished and valid:
