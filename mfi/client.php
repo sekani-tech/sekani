@@ -147,7 +147,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
                           <th><?php echo $row["account_no"]; ?></th>
                           <th><?php echo $row["mobile_no"]; ?></th>
                           <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
-                          <td><a href="update_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                          <td><a href="update_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Close</a></td>
                         </tr>
                         <?php }
                           }

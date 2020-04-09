@@ -5,7 +5,7 @@ Seun
 -----
 1. take care of file upload in update_client
 2. Loan_summary
-3. 
+3. Client table (make close account functional)
 4. 
 5. 
 

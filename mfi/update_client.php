@@ -68,7 +68,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="">Account Type:</label>
-                          <select name="account_type" class="form-control selectpicker" id="collat">
+                          <select name="account_type" class="form-control " id="collat">
                           <option value="">Choose Account Type</option>
                           <option value="Current">Current</option>
                           <option value="Savings">Savings</option>
@@ -133,7 +133,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Gender:</label>
-                          <select class="form-control selectpicker" value="<?php echo $gender; ?>" name="gender" id="">
+                          <select class="form-control " value="<?php echo $gender; ?>" name="gender" id="">
                             <option value="MALE">MALE</option>
                             <option value="FEMALE">FEMALE</option>
                           </select>
@@ -212,7 +212,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="">Account Officer:</label>
-                          <select name="" class="form-control selectpicker" id="">
+                          <select name="" class="form-control " id="">
                             <option value=""></option>
                           </select>
                         </div>
@@ -229,8 +229,8 @@ if(isset($_GET["edit"])) {
                           <option value="International Passport">International Passport</option>
                         </select>
                       </div>
-                    </div>
-                    <div class="row">
+                    <!-- </div>
+                    <div class="row"> -->
                       <div class="col-md-4">
                       <div class="form-group form-file-upload form-file-multiple">
                       <label for="">ID</label>
@@ -260,18 +260,18 @@ if(isset($_GET["edit"])) {
                     </div>
                       </div>
                       <div class="col-md-4">
-                      <div class="form-group form-file-upload form-file-multiple">
-                      <label for="">Passport</label>
-                      <input type="file" multiple="" class="inputFileHidden">
-                      <div class="input-group">
-                          <input type="text" name="passort" class="form-control inputFileVisible" placeholder="Insert Signature">
-                          <span class="input-group-btn">
-                              <button type="button" class="btn btn-fab btn-round btn-primary">
-                                  <i class="material-icons">attach_file</i>
-                              </button>
-                          </span>
-                      </div>
-                    </div>
+                        <div class="form-group form-file-upload form-file-multiple">
+                          <label for="">Passport</label>
+                          <input type="file" multiple="" class="inputFileHidden">
+                          <div class="input-group">
+                              <input type="text" name="passort" class="form-control inputFileVisible" placeholder="Insert Signature">
+                              <span class="input-group-btn">
+                                  <button type="button" class="btn btn-fab btn-round btn-primary">
+                                      <i class="material-icons">attach_file</i>
+                                  </button>
+                              </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <a href="client.php" class="btn btn-danger">Back</a>
