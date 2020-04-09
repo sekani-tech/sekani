@@ -138,6 +138,63 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   ';
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
+} else if (isset($_GET["loan1"])) {
+  $key = $_GET["loan1"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Loan",
+          text: "Loan Repayment Successful",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+} else if (isset($_GET["loan2"])) {
+  $key = $_GET["loan2"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Loan",
+          text: "Loan Repayment Failed",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+} else if (isset($_GET["loan3"])) {
+  $key = $_GET["loan3"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Loan",
+          text: "Amount Less Than Expected Amount",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
 } else {
     echo "";
 }

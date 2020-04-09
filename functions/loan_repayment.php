@@ -63,6 +63,6 @@ if ($clamt >= 0) {
                 }
 } else if ($clamt < 0) {
     $_SESSION["Lack_of_intfund_$randms"] = "Amount Less Than Expected Amount";
-    echo header ("Location: ../mfi/transact.php?loan2=$randms");
+    echo header ("Location: ../mfi/transact.php?loan3=$randms");
 }
 ?>
