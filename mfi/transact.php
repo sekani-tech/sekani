@@ -192,7 +192,7 @@ $transid1 = $randms1;
       <div class="col-md-4">
         <div class="form-group">
             <label for="">Payment Method:</label>
-            <select name="payment_method" id="" class="form-control selectpicker">
+            <select name="payment_method" id="" class="form-control">
               <option value="Cash">Cash</option>
               <option value="Cheque">Cheque</option>
               <option value="Transfer">Transfer</option>
@@ -235,7 +235,7 @@ $transid1 = $randms1;
                       }
                     })
                   });
-                  $('#act').change(function(){
+                  $('#act').bind(function(){
                     var id = $(this).val();
                     $.ajax({
                       url:"acct_name.php",
@@ -253,7 +253,7 @@ $transid1 = $randms1;
                 <select class="form-control" name="test">
                     <option> </option>
                     <option value="deposit">deposit</option>
-                    <option value="withdraw">Withdraw/option>
+                    <option value="withdraw">Withdraw</option>
                  </select>
             </div>
             <div id="acct_name"></div>
@@ -274,7 +274,7 @@ $transid1 = $randms1;
         <div class="col-md-4">
             <div class="form-group">
                <label class="bmd-label-floating">Type</label>
-               <select class="form-control selectpicker" name="pay_type">
+               <select class="form-control" name="pay_type">
                   <option> </option>
                   <option>Cash</option>
                   <option>Bank</option>
