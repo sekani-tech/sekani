@@ -16,11 +16,35 @@ $pc_other_name = $_POST['pc_other_name'];
 $pc_designation = $_POST['pc_designation'];
 $pc_phone = $_POST['pc_phone'];
 $pc_email = $_POST['pc_email'];
+
+$digits = 10;
+$temp = explode(".", $_FILES['int_logo']['name']);
+$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$imagex = $randms. '.' .end($temp);
+
+$sel = mysqli_query($connection, "SELECT * FROM institutions WHERE id = '$int_id'");
+ if (count([$sel]) == 1) {
+   $d = mysqli_fetch_array($sel);
+   $imgx = $d['img'];
+ }
+
+if ($imagex == null) {
+  $img = $imgx;
+} else {
+  $img = $imagex;
+}
+
+if (move_uploaded_file($_FILES['imagefile']['tmp_name'], "instimg/" . $imagex)) {
+    $msg = "Image uploaded successfully";
+} else {
+  $msg = "Image Failed";
+}
+
   $query = "UPDATE institutions SET int_name = '$int_name', 
   rcn = '$rcn', lga = '$lga', int_state = '$int_state', email = '$email',
   office_address = '$office_address', website = '$website', office_phone = '$office_phone',
   pc_title = '$pc_title', pc_surname = '$pc_surname', pc_other_name = '$pc_other_name', pc_designation = '$pc_designation',
-  pc_phone = '$pc_phone', pc_email = '$pc_email' WHERE int_id = '$int_id'";
+  pc_phone = '$pc_phone', pc_email = '$pc_email', img = '$img' WHERE int_id = '$int_id'";
   $result = mysqli_prepare($connection, $query);
   if(mysqli_stmt_execute($result)) {
      echo header("location: ../institution.php");

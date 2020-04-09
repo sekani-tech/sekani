@@ -31,14 +31,24 @@ $account_no = $inttest. "-" .$usertest. "-" .$randms;
 $submitted_on = date("Y-m-d");
 $currency = "NGN";
 
+$digits = 10;
+$temp = explode(".", $_FILES['int_logo']['name']);
+$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$imagex = $randms. '.' .end($temp);
+
+if (move_uploaded_file($_FILES['imagefile']['tmp_name'], "instimg/" . $imagex)) {
+    $msg = "Image uploaded successfully";
+} else {
+  $msg = "Image Failed";
+}
 
 
 $query = "INSERT INTO institutions (int_name, rcn, lga, int_state, email,
 office_address, website, office_phone, pc_title, pc_surname, pc_other_name,
-pc_designation, pc_phone, pc_email) VALUES ('{$int_name}','{$rcn}',
+pc_designation, pc_phone, pc_email, img) VALUES ('{$int_name}','{$rcn}',
 '{$lga}', '{$int_state}', '{$email}', '{$office_address}', '{$website}', '{$office_phone}',
 '{$pc_title}', '{$pc_surname}', '{$pc_other_name}', '{$pc_designation}',
-'{$pc_phone}', '{$pc_email}')";
+'{$pc_phone}', '{$pc_email}', '{$imagex}')";
 // add
 $result = mysqli_query($connection, $query);
 if ($result) {

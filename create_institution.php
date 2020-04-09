@@ -13,7 +13,7 @@
                   <p class="card-category">Create New institution profile</p>
                 </div>
                 <div class="card-body">
-                  <form action="functions/institution_data.php" method="post">
+                  <form action="functions/institution_data.php" method="POST" enctype="multipart/form-data">
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
@@ -119,7 +119,7 @@
                             <label for="">Logo</label>
                             <input type="file" multiple="" class="inputFileHidden">
                             <div class="input-group">
-                                <input type="text" name="signature" class="form-control inputFileVisible" placeholder="Insert Logo">
+                                <input type="file" name="int_logo" class="form-control inputFileVisible" placeholder="Insert Logo">
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-fab btn-round btn-primary">
                                         <i class="material-icons">attach_file</i>
