@@ -7,11 +7,7 @@ if(isset($_POST["id"]))
 {
     if($_POST["id"] !='')
     {
-        $sql = "SELECT * FROM client WHERE account_no = '".$_POST["id"]."'";
-    }
-    else
-    {
-        $sql = "SELECT * FROM client";
+        $sql = "SELECT * FROM client WHERE account_no = '".$_POST["id"]."' && int_id = '".$_POST["ist"]."'";
     }
     $result = mysqli_query($connection, $sql);
 
@@ -33,11 +29,7 @@ if(isset($_POST["id"]))
     }
     if($_POST["id"] !='')
     {
-        $ans = "SELECT * FROM account WHERE account_no = '".$_POST["id"]."'";
-    }
-    else
-    {
-        $ans = "SELECT * FROM account";
+        $ans = "SELECT * FROM account WHERE account_no = '".$_POST["id"]."' && int_id = '".$_POST["ist"]."'";
     }
     $result = mysqli_query($connection, $ans);
 

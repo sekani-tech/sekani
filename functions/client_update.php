@@ -49,23 +49,23 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
     // a new stuff for data upload
     $digits = 10;
 
-    // if signature has value, code should run and save normally
-    if($_FILES['signature']) {
+
         $temp = explode(".", $_FILES['signature']['name']);
         $randmst = str_pad(rand(0, pow(10, 7)-1), 10, '0', STR_PAD_LEFT);
         $image1 = $randmst. '.' .end($temp);
+        $sel = mysqli_query($connection, "SELECT * FROM client WHERE id = '$id'");
+ if (count([$sel]) == 1) {
+   $d = mysqli_fetch_array($sel);
+   $imgx = $d['signature'];
+   $imgxx = $d['id_img_url'];
+   $imgxxx = $d['passport'];
+ }
+
         if (move_uploaded_file($_FILES['signature']['tmp_name'], "clients/" . $image1)) {
             $msg = "Image uploaded successfully";
         } else {
             $msg = "Image Failed";
-        }
-    }
-    // if signature is empty, code should use what was in the hidden input type as value
-    else {
-        $image1 = $_POST['sign'];
-    }
-            
-       
+        }   
     // }
     // else {
     //     $image1 = $_POST['sign'];
@@ -74,7 +74,6 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
 // $target2 = "clients/".basename($image2);
 
 // if ID image has value, code should run and save normally
-    if ($_FILES['id_img_url']) {
         $temp2 = explode(".", $_FILES['id_img_url']['name']);
         $randms2 = str_pad(rand(0, pow(10, 9)-1), 10, '0', STR_PAD_LEFT);
         $image2 = $randms2. '.' .end($temp2);
@@ -83,17 +82,17 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
         } else {
             $msg = "Image Failed";
         }
-    }
-    // if ID image is empty, code should use what was in the hidden input type as value
-    else {
-        $image2 = $_POST['idimg'];
-    }
+
+        if ($image2 == null) {
+            $img2 = $image2;
+          } else {
+            $img2 = $imgxx;
+          }
 
 // $image3 = $_FILES['passport']['name'];
 // $target3 = "clients/".basename($image3);
 
 // if passport has value, code should run and save normally
-    if (isset($_POST['passport'])){
         $temp3 = explode(".", $_FILES['passport']['name']);
         $randms3 = str_pad(rand(0, pow(10, 8)-1), 10, '0', STR_PAD_LEFT);
         $image3 = $randms3. '.' .end($temp3);
@@ -102,13 +101,40 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
         } else {
             $msg = "Image Failed";
         }
-    }
-    // if passport is empty, code should use what was in the hidden input type as value
-    else {
-        $image3 = $_POST['passportbk'];
-    }
 
-
+    if ($image1 == NULL && $image2 == NULL && $image3 == NULL) {
+        $img1 = $imgx;
+        $img2 = $imgxx;
+        $img3 = $imgxxx;
+      } else if ($image2 == NULL && $image3 == NULL) {
+        $img1 = $image1;
+        $img2 = $imgxx;
+        $img3 = $imgxxx;
+      } else if ($image3 == NULL) {
+          $img1 = $image1;
+          $img2 = $image2;
+          $img3 = $imgxxx;
+      } else if ($image1 == NULL) {
+          $img1 = $imgx;
+        $img2 = $image2;
+        $img3 = $image3;
+      } else if ($image2 == NULL) {
+        $img1 = $image1;
+        $img2 = $imgxx;
+        $img3 = $image3;
+      } else if ($image1 == NULL && $image3 == NULL) {
+          $img1 = $imgx;
+          $img2 = $image2;
+          $img3 = $imgxxx;
+      } else if ($image1 == NULL && $image2 == NULL) {
+          $img1 = $imgx;
+          $img2 = $imgxx;
+          $img3 = $image3;
+      } else {
+          $img1 = $image1;
+          $img2 = $image2;
+          $img3 = $image3;
+      }
 // if (move_uploaded_file($_FILES['signature']['tmp_name'], $target1)) {
 //     $msg = "Image uploaded successfully";
 // }else{
@@ -136,7 +162,7 @@ mobile_no = '$phone', mobile_no_2 = '$phone2', ADDRESS = '$address', gender = '$
 date_of_birth = '$date_of_birth', branch_id = '$branch', COUNTRY = '$country', STATE_OF_ORIGIN = '$state',
 LGA = '$lga', BVN = '$bvn', SMS_ACTIVE = '$sms_active',
 EMAIL_ACTIVE = '$email_active', id_card = '$id_card', updated_by = '$updated_by', updated_on = '$updated_on',
-id_img_url = '$image2', passport = '$image3', signature = '$image1' WHERE id = '$id'";
+id_img_url = '$img2', passport = '$img3', signature = '$img1' WHERE id = '$id'";
 
 $result = mysqli_query($connection, $queryx);
 if($result) {

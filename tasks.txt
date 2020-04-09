@@ -3,11 +3,11 @@ NB: The stucture of the files have changed slightly - with the change being the 
 -----
 Seun
 -----
-1. take care of file upload in update_client
+1. Take care of file upload in update_client -- DONE
 2. Loan_summary
-3. 
-4. 
-5. 
+3. Transaction - loan repayment, deposit and withdrawal backend -- DONE
+4. Logo file upload by institution -- DONE
+5. Loan over payment(saves into the clients linked savings account) -- DONE
 
 ------
 Sanusi 
