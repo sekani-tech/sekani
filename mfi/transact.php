@@ -165,31 +165,20 @@ $transid1 = $randms1;
     <div class="row">
         <div class="col-md-4">
         <script>
-                $(document).ready(function() {
-                  $('#acct').keyup(function(){
+              $(document).ready(function() {
+                  $('#acct').on("change keyup paste click", function(){
                     var id = $(this).val();
+                    var ist = $('#int_id').val();
                     $.ajax({
                       url:"acct_rep.php",
                       method:"POST",
-                      data:{id:id},
+                      data:{id:id, ist: ist},
                       success:function(data){
                         $('#accrep').html(data);
                       }
                     })
                   });
-                  $('#acct').change(function(){
-                    var id = $(this).val();
-                    $.ajax({
-                      url:"acct_rep.php",
-                      method:"POST",
-                      data:{id:id},
-                      success:function(data){
-                        $('#accrep').html(data);
-                      }
-                    })
-                  });
-                })
-              </script>
+        </script>
             <div class="form-group">
                 <label for="">Account Number</label>
                 <input type="text" class="form-control" name="account_no" id="acct" readonly>

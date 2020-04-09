@@ -10,7 +10,7 @@ $test = $_POST['test'];
 $acct_no = $_POST['account_no'];
 $amt = $_POST['amount'];
 $type = $_POST['pay_type'];
-$trs_id = $['transid'];
+$trs_id = $_POST['transid'];
 // variable for second which is withdrawal
 $test2 = $_POST['test'];
 $acct_no2 = $_POST['account_no'];
