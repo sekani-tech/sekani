@@ -148,7 +148,7 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
       swal({
           type: "success",
           title: "Loan",
-          text: "Loan Repayment Successful",
+          text: "Loan Repayment Successful, Awaiting Approval",
           showConfirmButton: false,
           timer: 2000
       })
