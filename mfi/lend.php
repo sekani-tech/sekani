@@ -110,7 +110,7 @@ $destination = "loans.php";
                 <p class="card-category">Fill in all important data</p>
               </div>
               <div class="card-body">
-                <form>
+              <form id="form" action="../functions/int_lend_upload.php" method="POST">
                   <div class = "row">
                     <div class = "col-md-12">
                       <div class = "form-group">
@@ -153,6 +153,18 @@ $destination = "loans.php";
                                 }
                                 return $out;
                               }
+                              // Function for charges
+                              function fill_charges($connection) {
+                                $sint_id = $_SESSION["int_id"];
+                                $org = "SELECT * FROM charge WHERE int_id = '$sint_id'";
+                                $res = mysqli_query($connection, $org);
+                                $out = '';
+                                while ($row = mysqli_fetch_array($res))
+                                {
+                                  $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                                }
+                                return $out;
+                              }
                             ?>
                             <script>
                               $(document).ready(function() {
@@ -185,7 +197,7 @@ $destination = "loans.php";
                     </div>
                     <!-- First Tab Ends -->
                     <!-- Second Tab Begins -->
-                    <div class="tab"><h3> Settings:</h3>
+                    <!-- <div class="tab"><h3> Settings:</h3>
                           <div class="row">
                              <div class="my-3"> 
                                replace values with loan data
@@ -271,11 +283,18 @@ $destination = "loans.php";
                                 </select> </div>
                              </div>
                           </div>
-                    </div> 
+                    </div>  -->
                     <!-- Second Tab Ends -->
                     <!-- Third Tab Begins -->
                     <div class="tab"><h3> Charges:</h3>
                     <table class="table table-bordered">
+                    <?php
+                   $query = "SELECT * FROM charge WHERE int_id = '$sessint_id'";
+                   $result = mysqli_query($connection, $query);
+                   if ($result) {
+                     $inr = mysqli_num_rows($result);
+                     echo $inr;
+                   }?>
                           <thead>
                             <tr>
                               <th>Name</th>
@@ -286,37 +305,30 @@ $destination = "loans.php";
                               <th>Payment Mode</th>
                             </tr>
                           </thead>
-                          <tbody>  
-                             <tr>
-                               <td>Valuation</td>
-                               <td>Flat</td>
-                               <td>10000</td>
-                               <td>Disbursement</td>
-                               <td></td>
-                               <td>Normal</td>
-                             </tr>
-                             <tr>
-                               <td>Search fee</td>
-                               <td>Flat</td>
-                               <td>23000</td>
-                               <td>Disbursement</td>
-                               <td></td>
-                               <td>Normal</td>
-                             </tr> 
-                             <tr>
-                               <td>Membership Gold</td>
-                               <td>Flat</td>
-                               <td>20000</td>
-                               <td>Disbursement</td>
-                               <td></td>
-                               <td>Normal</td>
-                             </tr>     
+                          <tbody> 
+                          <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                          <th><?php echo $row["name"]; ?></th>
+                          <th><?php echo $row["currency_code"]; ?></th>
+                          <th><?php echo $row["amount"]; ?></th>
+                          <th><?php echo $row["charge_applies_to_enum"]; ?></th>
+                          <th><?php echo $row["charge_time_enum"]; ?></th>
+                          <th>Cash</th>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>   
                           </tbody>
                         </table>
                         <div class="col-md-6">
                         <label class = "bmd-label-floating" for="charge" class="form-align mr-3">Charges</label>
                           <select class="form-control" name="charge">                                                
-                            <option value="">Membership Bronze</option>
+                          <?php echo fill_charges($connection); ?>
                           </select>
                           <button type="button" class="btn btn-primary" name="button" onclick="displayCharge()"> <i class="fa fa-plus"></i> Add To Product </button>
                       </div>
@@ -400,11 +412,11 @@ $destination = "loans.php";
             <h3>Add Collateral</h3>
                           <div class="form-group">
                           <label>Type</label>
-                          <input class="form-control" type="text" value="Motor Cycles"/>
+                          <input class="form-control" name="col_name" type="text" value=""/>
                           <label>Value</label>
-                          <input class="form-control" type="text" value="10000"/>
+                          <input class="form-control" name="col_value" type="text" value=""/>
                           <label>Description</label>
-                          <input class="form-control" type="text" value="Test"/>
+                          <input class="form-control" name="col_description" type="text" value=""/>
                           </div>
                           <div style="float:right;">
                             <button class="btn btn-primary pull-right"  onclick="dlgLogin()" type="button" id="">Add</button>
@@ -491,7 +503,7 @@ $destination = "loans.php";
         </div>
         <div class="col-md-4">
           <div class="form-group">
-              <label class = "bmd-label-floating" for="">Phone:</label>
+              <label class = "bmd-label-floating" for="">Phone 2:</label>
               <input type="text" name="gau_phone2" id="" class="form-control">
           </div>
         </div>
@@ -582,58 +594,63 @@ $destination = "loans.php";
                               <th>#</th>
                               <th>Date</th>
                               <th>Days</th>
+                              <th>Paid by</th>
                               <th>Disbursement</th>
                               <th>Principal Due</th>
                               <th>Principal Balance</th>
                               <th>Interest Due</th>
                               <th>Fees</th>
+                              <th>Penalties</th>
                               <th>Total Due</th>
+                              <th>Total Paid</th>
+                              <th>Total Outstanding</th>
                             </tr>
                           </thead>
                           <tbody>  
                           <tr>
-                               <td>01-06-2020</td>
-                               <td>40</td>
-                               <td>79000</td>
-                               <td>10000</td>
-                               <td>70000</td>
                                <td></td>
-                               <td>4800</td>
-                               <td>3250</td>
-                               <td>4000</td>
+                               <td>09-04-2020</td>
+                               <td></td>
+                               <td></td>
+                               <td>30000</td>
+                               <td></td>
+                               <td>30000</td>
+                               <td></td>
+                               <td>0.00</td>
+                               <td></td>
+                               <td>0.00</td>
+                               <td>0.00</td>
+                               <td></td>
                              </tr>
                              <tr>
-                               <td>07-01-2020</td>
-                               <td>20</td>
-                               <td>69000</td>
-                               <td>15000</td>
-                               <td></td>
-                               <td>70000</td>
-                               <td>6600</td>
-                               <td>3175</td>
-                               <td>4040</td>
-                             </tr>
-                             <tr>
-                               <td>09-10-2020</td>
+                               <td>1</td>
+                               <td>09-05-2020</td>
                                <td>30</td>
+                               <td></td>
+                               <td></td>
                                <td>10000</td>
-                               <td>43000</td>
-                               <td></td>
-                               <td>60000</td>
-                               <td>5600</td>
-                               <td>4250</td>
-                               <td>5500</td>
-                             </tr>
-                             <tr>
-                               <td>01-02-2020</td>
-                               <td>60</td>
                                <td>20000</td>
+                               <td>600.00</td>
+                               <td>0.00</td>
                                <td></td>
-                               <td>13000</td>
-                               <td>70000</td>
-                               <td>4300</td>
-                               <td>2950</td>
-                               <td>2300</td>
+                               <td>10600.00</td>
+                               <td>0.00</td>
+                               <td>10,600</td>
+                             </tr>   
+                             <tr>
+                               <td>2</td>
+                               <td>09-06-2020</td>
+                               <td>60</td>
+                               <td></td>
+                               <td></td>
+                               <td>10000</td>
+                               <td>10000</td>
+                               <td>600.00</td>
+                               <td>0.00</td>
+                               <td></td>
+                               <td>10600.00</td>
+                               <td>0.00</td>
+                               <td>10,600</td>
                              </tr>   
                           </tbody>
                         </table>
@@ -697,7 +714,7 @@ $destination = "loans.php";
                       <div style="text-align:center;margin-top:40px;">
                           <span class="step"></span>
                           <span class="step"></span>
-                          <span class="step"></span>
+                          <!-- <span class="step"></span> -->
                           <span class="step"></span>
                           <span class="step"></span>
                           <span class="step"></span>

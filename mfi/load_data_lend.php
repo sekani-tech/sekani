@@ -22,61 +22,61 @@ if(isset($_POST["id"]))
         <div class="col-md-6">
         <div class="form-group">
         <label>Loan Amount:</label>
-        <input type="number" value="'.$row["principal_amount"].'" name="principal_amoun" class="form-control" required id="principal_amount">
+        <input type="number" readonly value="'.$row["principal_amount"].'" name="principal_amount" class="form-control" required id="principal_amount">
       </div>
       </div>
       <div class="col-md-6">
       <div class="form-group">
         <label>Loan Tenor:</label>
-        <input type="number" value="'.$row["loan_term"].'" name="loan_ter" class="form-control" id="loan_term" />
+        <input type="number" value="'.$row["loan_term"].'" name="loan_term" class="form-control" id="loan_term" />
       </div>
       </div>
       <div class="col-md-6">
       <div class="form-group">
         <label>Interest Rate per:</label>
-        <input type="text" value="'.$row["repayment_every"].'" name="repay_ever" class="form-control" id="repay">
+        <input type="text" value="'.$row["repayment_every"].'" name="repay_every" class="form-control" id="repay">
       </div>
       </div>
       <div class="col-md-6">
       <div class="form-group">
         <label>Interest Rate:</label>
-        <input type="number" value="'.$row["interest_rate"].'" name="interest_rat" class="form-control" id="interest_rate">
+        <input type="number" value="'.$row["interest_rate"].'" name="interest_rate" class="form-control" id="interest_rate">
       </div>
       </div>
       <div class="col-md-6">
       <div class="form-group">
         <label>Disbursement Date:</label>
-        <input type="date" name="disbursement_dat" class="form-control" id="disb_date">
+        <input type="date" name="disbursement_date" class="form-control" id="disb_date">
       </div>
       </div>
       <div class="col-md-6">
       <div class="form-group">
         <label>Grace on Principal Payment:</label>
-        <input type="number" value="'.$row["interest_rate"].'" name="interest_rat" class="form-control" id="interest_rate">
+        <input type="number" value="" name="grace_on_principal" class="form-control" id="interest_rate">
       </div>
       </div>
       <div class="col-md-6">
       <div class="form-group">
         <label>Grace on Interest Payment:</label>
-        <input type="number" value="'.$row["interest_rate"].'" name="interest_rat" class="form-control" id="interest_rate">
+        <input type="number" value="" name="grace_on_interest" class="form-control" id="interest_rate">
       </div>
       </div>
       <div class="col-md-6">
       <div class="form-group">
         <label>Loan Officer:</label>
-        <input type="text" value="" name="loan_office" class="form-control" id="lof">
+        <input type="text" value="" name="loan_officer" class="form-control" id="lof">
       </div>
       </div>
       <div class="col-md-6">
       <div class="form-group">
         <label>Loan Purpose:</label>
-        <input type="text" value="" name="loan_purpos" class="form-control" id="lop">
+        <input type="text" value="" name="loan_purpose" class="form-control" id="lop">
       </div>
       </div>
       <div class="col-md-6">
       <div class="form-group">
         <label>Apply Standing instruction:</label>
-        <select name="" class="form-control">
+        <select name="standing_instruction" class="form-control">
           <option value="on">ON</option>
           <option value="off">OFF</option>
         </select>
@@ -85,13 +85,13 @@ if(isset($_POST["id"]))
       <div class="col-md-6">
       <div class="form-group">
         <label>Linked Savings account:</label>
-        <input type="text" value="'.$row["linked_savings_acct"].'" name="linked_savings_acc" class="form-control" id="lsaa">
+        <input type="text" value="'.$row["linked_savings_acct"].'" name="linked_savings_acct" class="form-control" id="lsaa">
       </div>
       </div>
       <div class="col-md-6">
       <div class="form-group">
         <label>Repayment Starting From:</label>
-        <input type="date" value="" name="repay_star" class="form-control" id="repay_start">
+        <input type="date" value="" name="repay_start" class="form-control" id="repay_start">
       </div>
       </div>
       <div class="col-md-6">
