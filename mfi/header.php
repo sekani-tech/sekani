@@ -14,7 +14,7 @@
     if (count([$inq]) == 1) {
       $n = mysqli_fetch_array($inq);
       $int_name = $n['int_name'];
-      $img = $n['img'];
+      // $img = $n['img'];
     }
 ?>
 <?php

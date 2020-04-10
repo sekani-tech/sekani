@@ -640,7 +640,7 @@ $destination = "loans.php";
                              <tr>
                                <td>2</td>
                                <td>09-06-2020</td>
-                               <td>60</td>
+                               <td>30</td>
                                <td></td>
                                <td></td>
                                <td>10000</td>
@@ -651,6 +651,36 @@ $destination = "loans.php";
                                <td>10600.00</td>
                                <td>0.00</td>
                                <td>10,600</td>
+                             </tr>
+                             <tr>
+                               <td>3</td>
+                               <td>09-07-2020</td>
+                               <td>30</td>
+                               <td></td>
+                               <td></td>
+                               <td>10000</td>
+                               <td>0</td>
+                               <td>600.00</td>
+                               <td>0.00</td>
+                               <td></td>
+                               <td>10600.00</td>
+                               <td>0.00</td>
+                               <td>10,600</td>
+                             </tr>
+                             <tr>
+                               <td></td>
+                               <td><b>Total</b></td>
+                               <td><b>90</b></td>
+                               <td></td>
+                               <td><b>30000</b></td>
+                               <td><b>30000</b></td>
+                               <td></td>
+                               <td><b>1800.00</b></td>
+                               <td><b>0.00</b></td>
+                               <td></td>
+                               <td><b>31,800.00</b></td>
+                               <td><b>0.00</b></td>
+                               <td><b>31,800</b></td>
                              </tr>   
                           </tbody>
                         </table>
