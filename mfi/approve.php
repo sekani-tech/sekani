@@ -495,7 +495,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $trans_type = "credit";
       $trans_date = date("Y-m-d");
       $amt = $loan_amt;
-      $py_m = $pay_meth; 
+      $py_m = $pay_meth;
       $p_d = $amt - ($amt * $interest_R);
       $i_d = $amt * $interest_R;
         // quick query on outstanding loan balance derived
