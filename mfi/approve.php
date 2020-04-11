@@ -518,6 +518,14 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       '{$p_d}', '{$i_d}', '{$out_loan_bal}', '{$trans_date}', '{$trans_date}',
       '{$appuser_id}')";
       $res2 = mysqli_query($connection, $olbdq);
+      if ($connection->error) {
+        try {   
+            throw new Exception("MySQL error $connection->error <br> Query:<br> $olbdq", $mysqli->error);   
+        } catch(Exception $e ) {
+            echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+            echo nl2br($e->getTraceAsString());
+        }
+    }
     // we update institution account
     if ($res2) {
       $uiab = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id'");

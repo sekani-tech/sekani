@@ -28,7 +28,7 @@ if(isset($_POST["id"]))
     while ($row = mysqli_fetch_array($result))
     {
         $output2 = '<div class="form-group">
-        <label>Account Balance:</label>
+        <label>Account Name:</label>
         <input type="text" value="'.$row["account_balance_derived"].'" name="principal_amoun" class="form-control" readonly required id="principal_amount">
       </div>
       ';
