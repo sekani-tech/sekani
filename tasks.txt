@@ -1,5 +1,6 @@
 Tasks to carry out based on system review.- 7th-April-2020
 NB: The stucture of the files have changed slightly - with the change being the name of the folder
+
 -----
 Seun
 -----
@@ -8,6 +9,8 @@ Seun
 3. Transaction - loan repayment, deposit and withdrawal backend -- DONE
 4. Logo file upload by institution -- DONE
 5. Loan over payment(saves into the clients linked savings account) -- DONE
+6. Update any query matching with Account Number from the clients Table
+6. Transaction Page (Display (Acct_Name, Acct_Rep), Deposit, With, Loan collection)
 
 ------
 Sanusi 

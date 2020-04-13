@@ -195,6 +195,25 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   ';
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
+} else if (isset($_GET["loan4"])) {
+  $key = $_GET["loan4"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "No Loan",
+          text: "This Account Does not Have Any Active Loan",
+          showConfirmButton: false,
+          timer: 3000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
 } else {
     echo "";
 }
@@ -263,17 +282,32 @@ $transid1 = $randms1;
         </div>
         <div class="col-md-4">
             <div class="form-group">
-               <select class="form-control" name="pay_type">
-                  <option>Cash </option>
-                  <option>Bank</option>
-                  <option>Cheque</option>
+            <script>
+                $(document).ready(function() {
+                  $('#opo').change(function(){
+                    var id = $(this).val();
+                    if (id == "Cheque") {
+                      document.getElementById('ti').readOnly = false;
+                      $("#ti").val("");
+                    } else {
+                      document.getElementById('ti').readOnly = true;
+                      $("#ti").val(Math.floor(100000 + Math.random() * 900000));
+                    }
+                  });
+                });
+              </script>
+               <select class="form-control" name="pay_type" id="opo">
+                  <option value="Cash">Cash</option>
+                  <option value="Bank">Bank</option>
+                  <option value="Cheque">Cheque</option>
                </select>
             </div>
         </div>
+        <div id="rd"></div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="">Transaction ID(Cheque no, Transfer Id, Deposit Id):</label>
-                <input type="text" readonly value="<?php echo $transid1; ?>" name="transid" class="form-control" id="">
+                <input type="text" readonly="true" value="<?php echo $transid1; ?>" name="transid" class="form-control" id="ti">
             </div>
           </div>
     </div>
@@ -326,7 +360,21 @@ $transid1 = $randms1;
     <div class="col-md-4">
       <div class="form-group">
           <label for="">Payment Method:</label>
-          <select name="payment_method" id="" class="form-control">
+          <script>
+                $(document).ready(function() {
+                  $('#poo').change(function(){
+                    var id = $(this).val();
+                    if (id == "Cheque") {
+                      document.getElementById('tit').readOnly = false;
+                      $("#tit").val("");
+                    } else {
+                      document.getElementById('tit').readOnly = true;
+                      $("#tit").val(Math.floor(100000 + Math.random() * 900000));
+                    }
+                  });
+                });
+              </script>
+          <select name="payment_method" id="poo" class="form-control">
             <option value="Cash">Cash</option>
             <option value="Cheque">Cheque</option>
             <option value="Transfer">Transfer</option>
@@ -336,7 +384,7 @@ $transid1 = $randms1;
     <div class="col-md-4">
       <div class="form-group">
           <label for="">Transaction ID(Cheque no, Transfer Id):</label>
-          <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="">
+          <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="tit">
       </div>
     </div>
     <div class="col-md-4">

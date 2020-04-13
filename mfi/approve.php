@@ -8,7 +8,7 @@ $destination = "transact_approval.php";
 <?php
 if (isset($_GET['approve']) && $_GET['approve'] !== '') {
   $appod = $_GET['approve'];
-  $checkm = mysqli_query($connection, "SELECT * FROM transact_cache WHERE id = '$appod' && int_id = '$sessint_id' && status = 'Not Verified'");
+  $checkm = mysqli_query($connection, "SELECT * FROM transact_cache WHERE id = '$appod' && int_id = '$sessint_id' && status = 'Pending'");
   if (count([$checkm]) == 1) {
       $x = mysqli_fetch_array($checkm);
       $ssint_id = $_SESSION["int_id"];
@@ -22,7 +22,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $amount = $x['amount'];
       $pay_type = $x['pay_type'];
       $transact_type = $x['transact_type'];
-      $transid = $x['transid'];
+      $transid = $x['transact_id'];
       $product_type = $x['product_type'];
       $stat = $x['status'];
   }
@@ -52,7 +52,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
           $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
           $transid = $sessint_id."-".$randms;
   
-          if ($stat == "Not Verified") {
+          if ($stat == "Pending") {
               $getacct = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' && int_id = '$sessint_id'");
               if (count([$getacct]) == 1) {
                  $y = mysqli_fetch_array($getacct);
@@ -840,7 +840,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Account Officer</label>
+                          <label class="bmd-label-floating">Posted By</label>
                           <input type="text" class="form-control" name="email" value="<?php echo $ao; ?>" readonly>
                         </div>
                       </div>
@@ -850,10 +850,16 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                           <input type="text" class="form-control" name="phone" value="<?php echo $cn; ?>" readonly>
                         </div>
                       </div>
-                      <div class="col-md-12">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Amount</label>
                           <input type="text" class="form-control" name="location" value="<?php echo $amount; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Transaction ID</label>
+                          <input type="text" class="form-control" name="transidddd" value="<?php echo $transid; ?>" readonly>
                         </div>
                       </div>
                       </div>
