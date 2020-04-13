@@ -55,9 +55,7 @@ $destination = "branch.php";
           <!-- /content -->
         </div>
       </div>
-
 <?php
-
     include("footer.php");
 
 ?>

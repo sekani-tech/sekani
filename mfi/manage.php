@@ -3,7 +3,6 @@
 $page_title = "New Product";
 $destination = "config.php";
     include("header.php");
-
 ?>
 <!-- Content added here -->
     <div class="content">

@@ -840,7 +840,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Account Officer</label>
+                          <label class="bmd-label-floating">Posted By</label>
                           <input type="text" class="form-control" name="email" value="<?php echo $ao; ?>" readonly>
                         </div>
                       </div>
@@ -850,10 +850,16 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                           <input type="text" class="form-control" name="phone" value="<?php echo $cn; ?>" readonly>
                         </div>
                       </div>
-                      <div class="col-md-12">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Amount</label>
                           <input type="text" class="form-control" name="location" value="<?php echo $amount; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Transaction ID</label>
+                          <input type="text" class="form-control" name="transidddd" value="<?php echo $transid; ?>" readonly>
                         </div>
                       </div>
                       </div>

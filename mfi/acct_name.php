@@ -7,7 +7,7 @@ if(isset($_POST["id"]))
 {
     if($_POST["id"] !='')
     {
-        $sql = "SELECT * FROM client WHERE account_no = '".$_POST["id"]."' && int_id = '".$_POST["ist"]."'";
+        $sql = "SELECT client.id, client.firstname, client.middlename, client.lastname FROM client JOIN account ON account.client_id = client.id && client.int_id = '".$_POST["ist"]."' && account.account_no = '".$_POST["id"]."'";
     }
     $result = mysqli_query($connection, $sql);
 
@@ -15,7 +15,7 @@ if(isset($_POST["id"]))
     {
         $output = '<div class="form-group">
         <label>Account Name:</label>
-        <input type="text" value="'.$row["firstname"] .' '.$row["middlename"]. ' '.$row["lastname"].'" name="principal_amoun" class="form-control" readonly required id="principal_amount">
+        <input type="text" value="'.strtoupper($row["firstname"]).' '.strtoupper($row["middlename"]). ' '.strtoupper($row["lastname"]).'" name="principal_amoun" class="form-control" readonly required id="principal_amount">
       </div>
       ';
     }
