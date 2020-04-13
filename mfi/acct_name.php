@@ -14,16 +14,8 @@ if(isset($_POST["id"]))
     while ($row = mysqli_fetch_array($result))
     {
         $output = '<div class="form-group">
-        <label>Account First Name:</label>
-        <input type="text" value="'.$row["firstname"].'" name="principal_amoun" class="form-control" readonly required id="principal_amount">
-      </div>
-      <div class="form-group">
-        <label>Account Middle Name:</label>
-        <input type="text" value="'.$row["middlename"].'" name="principal_amoun" class="form-control" readonly required id="principal_amount">
-      </div>
-      <div class="form-group">
-        <label>Account Last Name:</label>
-        <input type="text" value="'.$row["lastname"].'" name="principal_amoun" class="form-control" readonly required id="principal_amount">
+        <label>Account Name:</label>
+        <input type="text" value="'.$row["firstname"] .' '.$row["middlename"]. ' '.$row["lastname"].'" name="principal_amoun" class="form-control" readonly required id="principal_amount">
       </div>
       ';
     }
