@@ -45,7 +45,7 @@ if(isset($_POST["id"]))
       <div class="col-md-6">
       <div class="form-group">
         <label>Interest Rate *:</label>
-        <input type="number" value="'.$row["interest_rate"].'" name="interest_rate" class="form-control" id="interest_rate">
+        <input type="number" value="'.$row["interest_rate"].'" onchange="tabletag()" name="interest_rate" class="form-control" id="interest_rate">
       </div>
       </div>
       <div class="col-md-6">
@@ -57,7 +57,7 @@ if(isset($_POST["id"]))
       <div class="col-md-6">
       <div class="form-group">
         <label>Grace on Principal Payment:</label>
-        <input type="number" value="" name="grace_on_principal" class="form-control" id="interest_rate">
+        <input type="number" value="" name="grace_on_principal" class="form-control" id="act">
       </div>
       </div>
       <div class="col-md-6">
@@ -119,7 +119,28 @@ if(isset($_POST["id"]))
 //    $_SESSION['interest_rate'] = "batman";
 //    $_SESSION['disbursment_date'] = "batman";
 ?>
-
+<script>
+                $(document).ready(function() {
+                  $('#act').on("change keyup paste click", function(){
+                    var id = $(this).val();
+                    var ist = $('#int_id').val();
+                    var prina = $('#principal_amount').val();
+                    var loant = $('#loan_term').val();
+                    var intr = $('#interest_rate').val();
+                    var repay = $('#repay').val();
+                    var repay_start = $('#repay_start').val();
+                    var disbd = $('#disb_date').val();
+                    $.ajax({
+                      url:"loan_calculation_table.php",
+                      method:"POST",
+                      data:{id:id, ist: ist,prina:prina,loant:loant,intr:intr,repay:repay,repay_start:repay_start,disbd:disbd},
+                      success:function(data){
+                        $('#accname').html(data);
+                      }
+                    })
+                  });
+                });
+              </script>
 <script>
 $(document).ready(function() { 
     $('#principal_amount').change(function() {

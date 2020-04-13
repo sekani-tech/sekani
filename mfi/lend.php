@@ -621,7 +621,8 @@ $destination = "loans.php";
                                 <th>Total Outstanding</th>
                               </tr>
                               </thead>
-                              <tbody id = "show_table">
+                              
+                              <tbody id = "accname">
 
                               </tbody>
                             </table>

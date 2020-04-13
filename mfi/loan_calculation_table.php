@@ -1,16 +1,17 @@
+
 <?php
 // Assign Variables
 $result = '';
 $principal_amount = $_POST["prina"];
 $loan_term = $_POST["loant"];
-$interest_rate = $_POST["intr"];
+$int_rate = $_POST["intr"];
 $repayment_start = $_POST["repay_start"];
 $rep_every = $_POST["repay"];
-$disburse_date = $_POST["repay_start"];
+$disburse_date = $_POST["disbd"];
 
 // Test Variables
 // $principal_amount = "100000";
-// $loan_term = "10";
+// $loan_term = "5";
 // $int_rate = "2";
 // $repayment_start = '01/13/2020';
 // $rep_every ="month";
