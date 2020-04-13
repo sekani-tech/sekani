@@ -269,7 +269,7 @@ $transid1 = $randms1;
                     var id = $(this).val();
                     if (id == "Cheque") {
                       document.getElementById('ti').readOnly = false;
-                      $("#ti").empty();
+                      $("#ti").val("input Cheque no");
                     } else {
                       document.getElementById('ti').readOnly = true;
                       $("#ti").val(Math.floor(100000 + Math.random() * 900000));
