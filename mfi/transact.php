@@ -269,7 +269,9 @@ $transid1 = $randms1;
                     var id = $(this).val();
                     if (id == "Cheque") {
                       document.getElementById('ti').readOnly = false;
-                      $('#ti').val() = "";
+                      // $("#ti").empty();
+                    } else {
+                      document.getElementById('ti').readOnly = true;
                     }
                   });
                 });
