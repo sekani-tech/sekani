@@ -3,7 +3,7 @@ include("connect.php");
 session_start();
 $sessint_id = $_SESSION["int_id"];
 $staff_id = $_SESSION["user_id"];
-$staff_name  = $_SESSION["fullname"];
+$staff_name  = strtoupper($_SESSION["username"]);
 ?>
 <?php
 $acct_no = $_POST['account_no'];
@@ -25,7 +25,7 @@ $runaccount = mysqli_query($connection, "SELECT * FROM account WHERE account_no 
         if (count([$clientfn]) == 1) {
             $py = mysqli_fetch_array($clientfn);
             $clientt_name = $py['firstname'].' '.$py['middlename'].' '.$py['lastname'];
-                $clientt_name = strtoupper($clientt_name);
+            $clientt_name = strtoupper($clientt_name);
         }
     }
 $person = mysqli_query($connection, "SELECT loan.interest_rate, client.id, client.loan_status, client.account_no, loan.id, client.branch_id, loan.product_id, principal_amount, loan_term, loan.interest_rate FROM loan JOIN client ON loan.client_id = client.id WHERE client.int_id ='$sessint_id' && client_id = '$client_id'");
@@ -56,7 +56,6 @@ $trans_type = "Loan Repayment";
 $gms = "Pending";
 
 if ($lsss == "" || $lsss == "Not Active") {
-
 if ($clamt >= 0) {
     $trancache = "INSERT INTO transact_cache (int_id, transact_id, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, status) VALUES
                 ('{$sessint_id}', '{$ti}', '{$acct_no}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt}', '{$pm}', '{$trans_type}', '{$gms}') ";
