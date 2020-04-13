@@ -263,17 +263,36 @@ $transid1 = $randms1;
         </div>
         <div class="col-md-4">
             <div class="form-group">
+            <script>
+                $(document).ready(function() {
+                  $('#act').change(function(){
+                    var id = $(this).val();
+                    if (id == "Cheque") {
+                      $.ajax({
+                      url:"readable.php",
+                      method:"POST",
+                      data:{id:id},
+                      success:function(data){
+                        $('#rd').html(data);
+                      }
+                    })
+                    }
+                  });
+                });
+              </script>
                <select class="form-control" name="pay_type">
-                  <option>Cash </option>
-                  <option>Bank</option>
-                  <option>Cheque</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Bank">Bank</option>
+                  <option value="Cheque">Cheque</option>
                </select>
             </div>
         </div>
+        <?php $rd = "readonly" ?>
+        <div id="rd"></div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="">Transaction ID(Cheque no, Transfer Id, Deposit Id):</label>
-                <input type="text" readonly value="<?php echo $transid1; ?>" name="transid" class="form-control" id="">
+                <input type="text" <?php echo $rd; ?> value="<?php echo $transid1; ?>" name="transid" class="form-control" id="ti">
             </div>
           </div>
     </div>
