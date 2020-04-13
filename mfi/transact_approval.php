@@ -112,7 +112,7 @@ if (isset($_GET["message1"])) {
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' && status = 'Not Verified'";
+                        $query = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' && status = 'Pending'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -126,7 +126,7 @@ if (isset($_GET["message1"])) {
                           Amount
                         </th>
                         <th class="th-sm">
-                          Account Officer
+                          Posted By
                         </th>
                         <th class="th-sm">
                           Client

@@ -40,7 +40,7 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
         if ($acct_no == $tryacc) {
            if ($test == "deposit") {
                $dd = "Deposit";
-               $ogs = "Not Verified";
+               $ogs = "Pending";
                $trancache = "INSERT INTO transact_cache (int_id, transact_id, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, product_type, status) 
                VALUES ('{$sessint_id}', '{$trs_id}', '{$acct_no}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt}', '{$type}', '{$dd}', '{$product_id}', '{$ogs}')";
                $go = mysqli_query($connection, $trancache);
@@ -87,7 +87,7 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
            if ($test2 == "withdraw") {
                if ($acct_b_d >= $amt2) {
                    $wd = "Withdrawal";
-                   $gms = "Not Verified";
+                   $gms = "Pending";
                 $trancache = "INSERT INTO transact_cache (int_id, transact_id, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, product_type, status) VALUES
                 ('{$sessint_id}', '{$trs_id}', '{$acct_no2}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt2}', '{$type2}', '{$wd}', '{$product_id}', '{$gms}') ";
                 $go = mysqli_query($connection, $trancache);
