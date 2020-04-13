@@ -195,6 +195,25 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   ';
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
+} else if (isset($_GET["loan4"])) {
+  $key = $_GET["loan4"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "No Loan",
+          text: "This Account Does not Have Any Active Loan",
+          showConfirmButton: false,
+          timer: 3000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
 } else {
     echo "";
 }
@@ -269,7 +288,7 @@ $transid1 = $randms1;
                     var id = $(this).val();
                     if (id == "Cheque") {
                       document.getElementById('ti').readOnly = false;
-                      $("#ti").val("input Cheque no");
+                      $("#ti").val("");
                     } else {
                       document.getElementById('ti').readOnly = true;
                       $("#ti").val(Math.floor(100000 + Math.random() * 900000));
