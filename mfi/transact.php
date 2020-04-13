@@ -265,7 +265,7 @@ $transid1 = $randms1;
             <div class="form-group">
             <script>
                 $(document).ready(function() {
-                  $('#act').change(function(){
+                  $('#opo').change(function(){
                     var id = $(this).val();
                     if (id == "Cheque") {
                       $.ajax({
@@ -280,7 +280,7 @@ $transid1 = $randms1;
                   });
                 });
               </script>
-               <select class="form-control" name="pay_type">
+               <select class="form-control" name="pay_type" id="opo">
                   <option value="Cash">Cash</option>
                   <option value="Bank">Bank</option>
                   <option value="Cheque">Cheque</option>
