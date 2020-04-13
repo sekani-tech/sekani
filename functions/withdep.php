@@ -3,7 +3,7 @@ include("connect.php");
 session_start();
 $sessint_id = $_SESSION["int_id"];
 $staff_id = $_SESSION["user_id"];
-$staff_name  = $_SESSION["fullname"];
+$staff_name  = strtoupper($_SESSION["username"]);
 ?>
 <?php
 $test = $_POST['test'];
@@ -31,10 +31,11 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
         $acct_b_d = $x['account_balance_derived'];
         $client_id = $x['client_id'];
 
-        $clientfn =  mysqli_query($connection, "SELECT firstname FROM client WHERE account_no ='$acct_no' && int_id = '$sessint_id' ");
+        $clientfn =  mysqli_query($connection, "SELECT client.id, client.firstname, client.middlename, client.lastname FROM client JOIN account ON account.client_id = client.id && account.account_no ='$acct_no' && client.int_id = '$sessint_id' ");
         if (count([$clientfn]) == 1) {
             $py = mysqli_fetch_array($clientfn);
-            $clientt_name = $py['firstname'];
+            $clientt_name = $py['firstname'].' '.$py['middlename'].' '.$py['lastname'];
+                $clientt_name = strtoupper($clientt_name);
         }
         if ($acct_no == $tryacc) {
            if ($test == "deposit") {
@@ -77,11 +78,12 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
         $client_id = $x['client_id'];
 
         if ($acct_no2 == $tryacc) {
-           $clientfn =  mysqli_query($connection, "SELECT firstname FROM client WHERE account_no ='$acct_no2' && int_id = '$sessint_id' ");
-           if (count([$clientfn]) == 1) {
-               $py = mysqli_fetch_array($clientfn);
-               $clientt_name = $py['firstname'];
-           }
+            $clientfn =  mysqli_query($connection, "SELECT client.id, client.firstname, client.middlename, client.lastname FROM client JOIN account ON account.client_id = client.id && account.account_no ='$acct_no' && client.int_id = '$sessint_id' ");
+            if (count([$clientfn]) == 1) {
+                $py = mysqli_fetch_array($clientfn);
+                $clientt_name = $py['firstname'].' '.$py['middlename'].' '.$py['lastname'];
+                $clientt_name = strtoupper($clientt_name);
+            }
            if ($test2 == "withdraw") {
                if ($acct_b_d >= $amt2) {
                    $wd = "Withdrawal";
