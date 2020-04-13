@@ -588,8 +588,45 @@ $destination = "loans.php";
                     <!-- Sixth Tab Begins -->
                     <div class="tab"><h3> Repayment Schedule:</h3>
                       <div class="form-group">
-                      <table class="table table-bordered">
-                          <thead>
+                      <script>
+                              $(document).ready(function() {
+                                $('#charges').change(function(){
+                                  var id = $(this).val();
+                                  $.ajax({
+                                    url:"loan_calculation_table.php",
+                                    method:"POST",
+                                    data:{id:id},
+                                    success:function(data){
+                                      $('#show_table').html(data);
+                                    }
+                                  })
+                                });
+                              })
+                            </script>
+                            <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Days</th>
+                                <th>Paid by</th>
+                                <th>Disbursement</th>
+                                <th>Principal Due</th>
+                                <th>Principal Balance</th>
+                                <th>Interest Due</th>
+                                <th>Fees</th>
+                                <th>Penalties</th>
+                                <th>Total Due</th>
+                                <th>Total Paid</th>
+                                <th>Total Outstanding</th>
+                              </tr>
+                              </thead>
+                              <tbody id = "show_table">
+
+                              </tbody>
+                            </table>
+                     <!-- <table class="table table-bordered">
+                           <thead>
                             <tr>
                               <th>#</th>
                               <th>Date</th>
@@ -683,7 +720,7 @@ $destination = "loans.php";
                                <td><b>31,800</b></td>
                              </tr>   
                           </tbody>
-                        </table>
+                        </table> -->
                       </div>
                     </div>
                     <!-- Sixth Tab Ends -->

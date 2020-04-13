@@ -21,31 +21,36 @@ if(isset($_POST["id"]))
         <div class="row">
         <div class="col-md-6">
         <div class="form-group">
-        <label>Loan Amount:</label>
+        <label>Loan Amount *:</label>
         <input type="number" readonly value="'.$row["principal_amount"].'" name="principal_amount" class="form-control" required id="principal_amount">
       </div>
       </div>
       <div class="col-md-6">
       <div class="form-group">
-        <label>Loan Tenor:</label>
+        <label>Loan Tenor *:</label>
         <input type="number" value="'.$row["loan_term"].'" name="loan_term" class="form-control" id="loan_term" />
       </div>
       </div>
       <div class="col-md-6">
       <div class="form-group">
-        <label>Interest Rate per:</label>
-        <input type="text" value="'.$row["repayment_every"].'" name="repay_every" class="form-control" id="repay">
+        <label>Interest Rate per *:</label>
+        <! -- <input type="text" value="'.$row["repayment_every"].'" name="repay_every" class="form-control" id="repay"> -->
+        <select name="repay_every" class="form-control" id="repay" >
+        <option value = "day">Day</option>
+        <option value = "month">Month</option>
+        <option value = "year">Year</option>
+        </select>
       </div>
       </div>
       <div class="col-md-6">
       <div class="form-group">
-        <label>Interest Rate:</label>
+        <label>Interest Rate *:</label>
         <input type="number" value="'.$row["interest_rate"].'" name="interest_rate" class="form-control" id="interest_rate">
       </div>
       </div>
       <div class="col-md-6">
       <div class="form-group">
-        <label>Disbursement Date:</label>
+        <label>Disbursement Date *:</label>
         <input type="date" name="disbursement_date" class="form-control" id="disb_date">
       </div>
       </div>
@@ -219,7 +224,7 @@ $(document).ready(function() {
 });
       $(document).ready(function(){
         $('#repay_start').change(function(){
-          console.log('changed');
+          console.log('it changed');
           var prina = document.getElementById("principal_amount").value;
           var loant = document.getElementById("loan_term").value;
           var intr = document.getElementById("interest_rate").value;
@@ -227,7 +232,7 @@ $(document).ready(function() {
           var repay_start = document.getElementById("repay_start").value;
           var disbd = document.getElementById("disb_date").value;
           $.ajax({
-            url:"loan_calculation.php",
+            url:"loan_calculation_table.php",
             method:"POST",
             data:{prina: prina, loant: loant, intr: intr, repay: repay, disbd: disbd, repay_start: repay_start},
             success: function(data){
@@ -246,7 +251,7 @@ $(document).ready(function() {
           var repay_start = document.getElementById("repay_start").value;
           var disbd = document.getElementById("disb_date").value;
           $.ajax({
-            url:"loan_calculation.php",
+            url:"loan_calculation_table.php",
             method:"POST",
             data:{prina: prina, loant: loant, intr: intr, repay: repay, disbd: disbd, repay_start: repay_start},
             success: function(data){
@@ -265,7 +270,7 @@ $(document).ready(function() {
           var repay_start = document.getElementById("repay_start").value;
           var disbd = document.getElementById("disb_date").value;
           $.ajax({
-            url:"loan_calculation.php",
+            url:"loan_calculation_table.php",
             method:"POST",
             data:{prina: prina, loant: loant, intr: intr, repay: repay, disbd: disbd, repay_start: repay_start},
             success: function(data){
@@ -284,7 +289,7 @@ $(document).ready(function() {
           var repay_start = document.getElementById("repay_start").value;
           var disbd = document.getElementById("disb_date").value;
           $.ajax({
-            url:"loan_calculation.php",
+            url:"loan_calculation_table.php",
             method:"POST",
             data:{prina: prina, loant: loant, intr: intr, repay: repay, disbd: disbd, repay_start: repay_start},
             success: function(data){
