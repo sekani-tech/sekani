@@ -22,7 +22,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $amount = $x['amount'];
       $pay_type = $x['pay_type'];
       $transact_type = $x['transact_type'];
-      $transid = $x['transid'];
+      $transid = $x['transact_id'];
       $product_type = $x['product_type'];
       $stat = $x['status'];
   }
