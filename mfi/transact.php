@@ -366,10 +366,10 @@ $transid1 = $randms1;
                     var id = $(this).val();
                     if (id == "Cheque") {
                       document.getElementById('tit').readOnly = false;
-                      $("#ti").val("");
+                      $("#tit").val("");
                     } else {
                       document.getElementById('tit').readOnly = true;
-                      $("#ti").val(Math.floor(100000 + Math.random() * 900000));
+                      $("#tit").val(Math.floor(100000 + Math.random() * 900000));
                     }
                   });
                 });
