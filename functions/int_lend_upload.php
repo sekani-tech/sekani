@@ -25,6 +25,7 @@ $standing_instruction = $_POST['standing_instruction'];
 $linked_savings_acct = $_POST['linked_savings_acct'];
 $repay_start = $_POST['repay_start'];
 // Part for Charges
+$charges = $_POST['charge'];
 // Part for collateral
 $col_id = $_POST['col_id'];
 $col_type = $_POST['col_name'];
@@ -71,22 +72,21 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
             if ($lsff == "Not Active" || $lsff == "") {
                 $stt = "Not Approved";
                 $query = "INSERT INTO loan_disbursement_cache (int_id, account_no, client_id,
-display_name, product_id, col_id, col_name, col_description,
-loan_officer, loan_purpose, currency_code,
-currency_digits, principal_amount_proposed, principal_amount,
-loan_term, interest_rate, approved_principal, repayment_date,
-term_frequency, repay_every, number_of_repayments, submittedon_date,
-submittedon_userid, approvedon_date, approvedon_userid,
-expected_disbursedon_date, expected_firstrepaymenton_date, disbursement_date,
-disbursedon_userid, repay_principal_every, repay_interest_every, status, 
-grace_on_principal_periods, grace_on_interest_periods) VALUES ('{$sessint_id}', '{$acct_no}', '{$client_id}',
-'{$cdn}', '{$product_id}', '{$col_id}', '{$col_name}', '{$col_description}',
-'{$loan_officer}', '{$loan_purpose}', '{$currency}', '{$cd}',
-'{$principal_amount}', '{$pd}', '{$loan_term}', '{$interest_rate}',
-'{$principal_amount}', '{$repay_start}', '{$tff}', '$repay_every',
-'{$loan_term}', '{$submitted_on}', '{$userid}', '{$submitted_on}', '{$userid}',
-'{$disbursement_date}', '{$repay_start}', '{$disbursement_date}',
-'{$userid}', '{$loan_term}', '{$loan_term}', '{$stt}','{$grace_on_principal}','{$grace_on_interest}')";
+                    display_name, product_id, col_id, col_name, col_description,
+                    loan_officer, loan_purpose, currency_code,
+                    currency_digits, principal_amount_proposed, principal_amount,
+                    loan_term, interest_rate, approved_principal, repayment_date,
+                    term_frequency, repay_every, number_of_repayments, submittedon_date,
+                    submittedon_userid, approvedon_date, approvedon_userid,
+                    expected_disbursedon_date, expected_firstrepaymenton_date, disbursement_date,
+                    disbursedon_userid, repay_principal_every, repay_interest_every, status) VALUES ('{$sessint_id}', '{$acct_no}', '{$client_id}',
+                    '{$cdn}', '{$product_id}', '{$col_id}', '{$col_name}', '{$col_description}',
+                    '{$loan_officer}', '{$loan_purpose}', '{$currency}', '{$cd}',
+                    '{$principal_amount}', '{$pd}', '{$loan_term}', '{$interest_rate}',
+                    '{$principal_amount}', '{$repay_start}', '{$tff}', '$repay_every',
+                    '{$loan_term}', '{$submitted_on}', '{$userid}', '{$submitted_on}', '{$userid}',
+                    '{$disbursement_date}', '{$repay_start}', '{$disbursement_date}',
+                    '{$userid}', '{$loan_term}', '{$loan_term}', '{$stt}')";
             $res = mysqli_query($connection, $query);
             if ($res) {
                 $colkt = mysqli_query($connection, "SELECT * FROM loan_disbursement_cache where client_id = '$client_id'");
@@ -99,11 +99,11 @@ grace_on_principal_periods, grace_on_interest_periods) VALUES ('{$sessint_id}', 
                                     '{$loan_id}', '{$client_id}', '{$first_name}', '{$last_name}',
                                     '{$phone}', '{$phone2}', '{$home_address}', '{$office_address}', '{$position_held}',
                                     '{$email}')";
-              $coll = "INSERT INTO collateral ('int_id, type, value, description') VALUES ('{$sessint_id}',
+              $coll = "INSERT INTO collateral (int_id, type, value, description) VALUES ('{$sessint_id}',
                                     '{$col_type}', '{$col_val}', '{$col_description}')";
                                     $kdln = mysqli_query($connection, $gjjj);
                                     $ssss =  mysqli_query($connection, $coll);
-                                    if ($kdln && $ssss) {
+                                    if ($kdln) {
                                         $_SESSION["Lack_of_intfund_$randms"] = "Successfully Uploaded, Awaiting Disbursement Approval";
         header ("Location: ../mfi/lend.php?message=$randms");
                                     } else {

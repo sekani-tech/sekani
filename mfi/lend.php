@@ -327,7 +327,8 @@ $destination = "loans.php";
                         </table>
                         <div class="col-md-6">
                         <label class = "bmd-label-floating" for="charge" class="form-align mr-3">Charges</label>
-                          <select class="form-control" name="charge">                                                
+                          <select class="form-control" name="charge"> 
+                            <option>select charge to add</option>                                               
                           <?php echo fill_charges($connection); ?>
                           </select>
                           <button type="button" class="btn btn-primary" name="button" onclick="displayCharge()"> <i class="fa fa-plus"></i> Add To Product </button>
@@ -379,23 +380,23 @@ $destination = "loans.php";
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class = "bmd-label-floating" class="md-3 form-align " for=""> Name:</label>
-                        <input type="text" name="col_name" id="name" class="form-control">
+                        <input type="text" name="col_name" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class = "bmd-label-floating" for=""> Type:</label>
-                        <input type="text" name="col_value" id="value" class="form-control">
+                        <input type="text" name="col_value" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class = "bmd-label-floating" for="">Description:</label>
-                        <input type="text" name="col_description" id="descr" class="form-control">
+                        <input type="text" name="col_description" class="form-control">
                       </div>
                     </div>
                   <div style="float:right;">
-                        <button class="btn btn-primary pull-right"  onclick="AddDlg()"  id="">Add</button>
+                        <button class="btn btn-primary pull-right"  onclick="AddDlg()">Add</button>
                         <button class="btn btn-primary pull-right" type="button" id="">Cancel</button>
                       </div>
 <script>

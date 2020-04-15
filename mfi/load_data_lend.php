@@ -53,8 +53,34 @@ if(isset($_POST["id"]))
         <div class="row">
         <div class="col-md-6">
         <div class="form-group">
+        <label>Maximum Loan Amount *:</label>
+        <input type="number" readonly value="'.$row["max_principal_amount"].'" name="max_principal_amount" class="form-control" required id="maximum_Lamount">
+      </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+        <label>Minimum Loan Amount *:</label>
+        <input type="number" readonly value="'.$row["min_principal_amount"].'" name="min_principal_amount" class="form-control" required id="minimum_Lamount">
+      </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+        <label>Maximum Interest Allowed *:</label>
+        <input type="number" readonly value="'.$row["max_interest_rate"].'" name="max_interest_rate" class="form-control" required id="maximum_intrate">
+      </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+        <label>Minimum Interest Allowed *:</label>
+        <input type="number" readonly value="'.$row["min_interest_rate"].'" name="min_interest_rate" class="form-control" required id="minimum_intrate">
+      </div>
+      </div>
+        <div class="col-md-6">
+        <div class="form-group">
+
         <label>Loan Amount *:</label>
-        <input type="number" readonly value="'.$row["principal_amount"].'" name="principal_amount" class="form-control" required id="principal_amount">
+        <div id="verifyl"></div>
+        <input type="number" value="'.$row["principal_amount"].'" name="principal_amount" class="form-control" required id="principal_amount">
       </div>
       </div>
       <div class="col-md-6">
@@ -77,6 +103,7 @@ if(isset($_POST["id"]))
       <div class="col-md-6">
       <div class="form-group">
         <label>Interest Rate *(%):</label>
+        <div id="verifyi"></div>
         <input type="number" step= "1" value="'.$row["interest_rate"].'" name="interest_rate" class="form-control" id="interest_rate">
       </div>
       </div>
@@ -89,13 +116,13 @@ if(isset($_POST["id"]))
       <div class="col-md-6">
       <div class="form-group">
         <label>Grace on Principal Payment:</label>
-        <input type="number" value="" name="grace_on_principal" class="form-control" id="act">
+        <input type="number" value="" name="grace_on_principal" class="form-control" id="">
       </div>
       </div>
       <div class="col-md-6">
       <div class="form-group">
         <label>Grace on Interest Payment:</label>
-        <input type="number" value="" name="grace_on_interest" class="form-control" id="interest_rate">
+        <input type="number" value="" name="grace_on_interest" class="form-control" id="">
       </div>
       </div>
       <div class="col-md-6">
@@ -286,6 +313,54 @@ if(isset($_POST["id"]))
   });
 
   // Date calculation
+  $(document).ready(function() {
+    $('#principal_amount').on("change keyup paste click", function(){
+      var id = $(this).val();
+      var ist = $('#int_id').val();
+      var prina = $('#principal_amount').val();
+      var loant = $('#loan_term').val();
+      var intr = $('#interest_rate').val();
+      var repay = $('#repay').val();
+      var repay_start = $('#repay_start').val();
+      var disbd = $('#disb_date').val();
+      var max_Lamount = $('#maximum_Lamount').val();
+      var min_Lamount = $('#minimum_Lamount').val();
+      var max_intrate = $('#maximum_intrate').val();
+      var min_intrate = $('#minimum_intrate').val();
+      $.ajax({
+        url:"loan_verify.php",
+        method:"POST",
+        data:{id:id, ist: ist,prina:prina,loant:loant,intr:intr,repay:repay,repay_start:repay_start,disbd:disbd,max_Lamount:max_Lamount,min_Lamount:min_Lamount,max_intrate:max_intrate,min_intrate:min_intrate},
+        success:function(data){
+          $('#verifyl').html(data);
+        }
+      })
+    });
+  });
+  $(document).ready(function() {
+    $('#interest_rate').on("change keyup paste click", function(){
+      var id = $(this).val();
+      var ist = $('#int_id').val();
+      var prina = $('#principal_amount').val();
+      var loant = $('#loan_term').val();
+      var intr = $('#interest_rate').val();
+      var repay = $('#repay').val();
+      var repay_start = $('#repay_start').val();
+      var disbd = $('#disb_date').val();
+      var max_Lamount = $('#maximum_Lamount').val();
+      var min_Lamount = $('#minimum_Lamount').val();
+      var max_intrate = $('#maximum_intrate').val();
+      var min_intrate = $('#minimum_intrate').val();
+      $.ajax({
+        url:"loan_verify2.php",
+        method:"POST",
+        data:{id:id, ist: ist,prina:prina,loant:loant,intr:intr,repay:repay,repay_start:repay_start,disbd:disbd,max_Lamount:max_Lamount,min_Lamount:min_Lamount,max_intrate:max_intrate,min_intrate:min_intrate},
+        success:function(data){
+          $('#verifyi').html(data);
+        }
+      })
+    });
+  });
   $(document).ready(function() {
     $('#loan_term').on("change keyup paste click", function(){
       var id = $(this).val();
