@@ -35,9 +35,27 @@ if($rep_every == "month"){
 else{
     $table_day = "days";
 }
+echo '<thead>
+<tr>
+  <th>#</th>
+  <th>Date</th>
+  <th>'.$table_day.'</th>
+  <th>Paid by</th>
+  <th>Disbursement</th>
+  <th>Principal Due</th>
+  <th>Principal Balance</th>
+  <th>Interest Due</th>
+  <th>Fees</th>
+  <th>Penalties</th>
+  <th>Total Due</th>
+  <th>Total Paid</th>
+  <th>Total Outstanding</th>
+</tr>
+</thead>';
 $first_date = date('d/m/Y', strtotime($disburse_date));
 $i = 0;
 echo '
+<tbody>
 <tr>
 <td></td>
 <td>'.$first_date.'</td>
@@ -53,6 +71,7 @@ echo '
 <td>0.00</td>
 <td></td>
 </tr>
+</tbody>
 ';
 while ($i < $loan_term){
   // if($i % 10 == 0){
@@ -62,6 +81,8 @@ while ($i < $loan_term){
   // Date Calculation
   $serial = $i + 1;
   $date = $i * $add_date;
+  $date2 = $loan_term * $add_date;
+  $actualend_date = date('d/m/Y', strtotime($repayment_start.' + '.$date2.' days'));
   $start_date = date('d/m/Y', strtotime($disburse_date.' + '.$date.' days'));
   $end_date = date('d/m/Y', strtotime($repayment_start.' + '.$date.' days'));
   $diff = abs($end_date - $start_date);
@@ -114,5 +135,7 @@ echo '<tr>
 <td><b><b><b>'.number_format($total_due_total).'</b></b></b></td>
 <td><b><b><b>0.00</b></b></b></td>
 <td><b><b><b>'.number_format($total_due_total).'</b></b></b></td>
-</tr>';
+</tr>
+<input class="form-control" type="date" value="'.$actualend_date.'"/>
+';
 ?>

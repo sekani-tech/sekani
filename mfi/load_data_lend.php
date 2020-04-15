@@ -2,7 +2,6 @@
 include("../functions/connect.php");
 
 $output = '';
-
 if(isset($_POST["id"]))
 {
     if($_POST["id"] !='')
@@ -13,8 +12,41 @@ if(isset($_POST["id"]))
     {
         $sql = "SELECT * FROM product";
     }
+
     $result = mysqli_query($connection, $sql);
 
+    function fill_account($connection) {
+      $id = $_POST["id"];
+      $org = mysqli_query($connection, "SELECT * FROM product WHERE id = '$id'");
+      if (count([$org]) == 1) {
+        $a = mysqli_fetch_array($org);
+        $int_id = $a['int_id'];
+       }
+       $pen = "SELECT * FROM account WHERE int_id = '$int_id'";
+      $res = mysqli_query($connection, $pen);
+      $out = '';
+      while ($row = mysqli_fetch_array($res))
+      {
+        $out .= '<option value="'.$row["id"].'">'.$row["account_no"].'</option>';
+      }
+      return $out;
+    }
+    function fill_loanofficer($connection) {
+      $id = $_POST["id"];
+      $org = mysqli_query($connection, "SELECT * FROM product WHERE id = '$id'");
+      if (count([$org]) == 1) {
+        $a = mysqli_fetch_array($org);
+        $int_id = $a['int_id'];
+       }
+       $pen = "SELECT * FROM staff WHERE int_id = '$int_id'";
+      $res = mysqli_query($connection, $pen);
+      $out = '';
+      while ($row = mysqli_fetch_array($res))
+      {
+        $out .= '<option value="'.$row["id"].'">'.$row["username"].'@'.$row["int_name"].'</option>';
+      }
+      return $out;
+    }
     while ($row = mysqli_fetch_array($result))
     {
         $output = '<div class="form-group">
@@ -44,8 +76,8 @@ if(isset($_POST["id"]))
       </div>
       <div class="col-md-6">
       <div class="form-group">
-        <label>Interest Rate *:</label>
-        <input type="number" value="'.$row["interest_rate"].'" onchange="tabletag()" name="interest_rate" class="form-control" id="interest_rate">
+        <label>Interest Rate *(%):</label>
+        <input type="number" step= "1" value="'.$row["interest_rate"].'" name="interest_rate" class="form-control" id="interest_rate">
       </div>
       </div>
       <div class="col-md-6">
@@ -69,7 +101,9 @@ if(isset($_POST["id"]))
       <div class="col-md-6">
       <div class="form-group">
         <label>Loan Officer:</label>
-        <input type="text" value="" name="loan_officer" class="form-control" id="lof">
+        <select type="text" value="" name="loan_officer" class="form-control" id="lof">
+        '.fill_loanofficer($connection).'
+        </select>
       </div>
       </div>
       <div class="col-md-6">
@@ -90,7 +124,9 @@ if(isset($_POST["id"]))
       <div class="col-md-6">
       <div class="form-group">
         <label>Linked Savings account:</label>
-        <input type="text" value="'.$row["linked_savings_acct"].'" name="linked_savings_acct" class="form-control" id="lsaa">
+        <select name="linked_savings_acct" class="form-control" id="lsaa">
+        '.fill_account($connection).'
+        </select>
       </div>
       </div>
       <div class="col-md-6">
@@ -103,9 +139,17 @@ if(isset($_POST["id"]))
       <div class="form-group">
         <label>Loan Sector:</label>
         <select name="" class="form-control">
-          <option value="on">Select loan sector</option>
-          <option value="off">OFF</option>
+          <option value="">Select loan sector</option>
+          <option value="education">Education</option>
+          <option value="finance">Finance</option>
+          <option value="agricultural sector">Agricultural sector</option>
+          <option value="manufacturing">Manufacturing</option>
+          <option value="construction">Construction</option>
         </select>
+        </div>
+        </div>
+        <div class="col-md-6">
+      <div id = "sekat"class="form-group">
         </div>
         </div>
         </div>
@@ -120,27 +164,201 @@ if(isset($_POST["id"]))
 //    $_SESSION['disbursment_date'] = "batman";
 ?>
 <script>
-                $(document).ready(function() {
-                  $('#act').on("change keyup paste click", function(){
-                    var id = $(this).val();
-                    var ist = $('#int_id').val();
-                    var prina = $('#principal_amount').val();
-                    var loant = $('#loan_term').val();
-                    var intr = $('#interest_rate').val();
-                    var repay = $('#repay').val();
-                    var repay_start = $('#repay_start').val();
-                    var disbd = $('#disb_date').val();
-                    $.ajax({
-                      url:"loan_calculation_table.php",
-                      method:"POST",
-                      data:{id:id, ist: ist,prina:prina,loant:loant,intr:intr,repay:repay,repay_start:repay_start,disbd:disbd},
-                      success:function(data){
-                        $('#accname').html(data);
-                      }
-                    })
-                  });
-                });
-              </script>
+  $(document).ready(function() {
+    $('#act').on("change keyup paste click", function(){
+      var id = $(this).val();
+      var ist = $('#int_id').val();
+      var prina = $('#principal_amount').val();
+      var loant = $('#loan_term').val();
+      var intr = $('#interest_rate').val();
+      var repay = $('#repay').val();
+      var repay_start = $('#repay_start').val();
+      var disbd = $('#disb_date').val();
+      $.ajax({
+        url:"loan_calculation_table.php",
+        method:"POST",
+        data:{id:id, ist: ist,prina:prina,loant:loant,intr:intr,repay:repay,repay_start:repay_start,disbd:disbd},
+        success:function(data){
+          $('#accname').html(data);
+        }
+      })
+    });
+  });
+  $(document).ready(function() {
+    $('#loan_term').on("change keyup paste click", function(){
+      var id = $(this).val();
+      var ist = $('#int_id').val();
+      var prina = $('#principal_amount').val();
+      var loant = $('#loan_term').val();
+      var intr = $('#interest_rate').val();
+      var repay = $('#repay').val();
+      var repay_start = $('#repay_start').val();
+      var disbd = $('#disb_date').val();
+      $.ajax({
+        url:"loan_calculation_table.php",
+        method:"POST",
+        data:{id:id, ist: ist,prina:prina,loant:loant,intr:intr,repay:repay,repay_start:repay_start,disbd:disbd},
+        success:function(data){
+          $('#accname').html(data);
+        }
+      })
+    });
+  });
+  $(document).ready(function() {
+    $('#interest_rate').on("change keyup paste click", function(){
+      var id = $(this).val();
+      var ist = $('#int_id').val();
+      var prina = $('#principal_amount').val();
+      var loant = $('#loan_term').val();
+      var intr = $('#interest_rate').val();
+      var repay = $('#repay').val();
+      var repay_start = $('#repay_start').val();
+      var disbd = $('#disb_date').val();
+      $.ajax({
+        url:"loan_calculation_table.php",
+        method:"POST",
+        data:{id:id, ist: ist,prina:prina,loant:loant,intr:intr,repay:repay,repay_start:repay_start,disbd:disbd},
+        success:function(data){
+          $('#accname').html(data);
+        }
+      })
+    });
+  });
+  $(document).ready(function() {
+    $('#repay').on("change keyup paste click", function(){
+      var id = $(this).val();
+      var ist = $('#int_id').val();
+      var prina = $('#principal_amount').val();
+      var loant = $('#loan_term').val();
+      var intr = $('#interest_rate').val();
+      var repay = $('#repay').val();
+      var repay_start = $('#repay_start').val();
+      var disbd = $('#disb_date').val();
+      $.ajax({
+        url:"loan_calculation_table.php",
+        method:"POST",
+        data:{id:id, ist: ist,prina:prina,loant:loant,intr:intr,repay:repay,repay_start:repay_start,disbd:disbd},
+        success:function(data){
+          $('#accname').html(data);
+        }
+      })
+    });
+  });
+  $(document).ready(function() {
+    $('#repay_start').on("change keyup paste click", function(){
+      var id = $(this).val();
+      var ist = $('#int_id').val();
+      var prina = $('#principal_amount').val();
+      var loant = $('#loan_term').val();
+      var intr = $('#interest_rate').val();
+      var repay = $('#repay').val();
+      var repay_start = $('#repay_start').val();
+      var disbd = $('#disb_date').val();
+      $.ajax({
+        url:"loan_calculation_table.php",
+        method:"POST",
+        data:{id:id, ist: ist,prina:prina,loant:loant,intr:intr,repay:repay,repay_start:repay_start,disbd:disbd},
+        success:function(data){
+          $('#accname').html(data);
+        }
+      })
+    });
+  });
+  $(document).ready(function() {
+    $('#disb_date').on("change keyup paste click", function(){
+      var id = $(this).val();
+      var ist = $('#int_id').val();
+      var prina = $('#principal_amount').val();
+      var loant = $('#loan_term').val();
+      var intr = $('#interest_rate').val();
+      var repay = $('#repay').val();
+      var repay_start = $('#repay_start').val();
+      var disbd = $('#disb_date').val();
+      $.ajax({
+        url:"loan_calculation_table.php",
+        method:"POST",
+        data:{id:id, ist: ist,prina:prina,loant:loant,intr:intr,repay:repay,repay_start:repay_start,disbd:disbd},
+        success:function(data){
+          $('#accname').html(data);
+        }
+      })
+    });
+  });
+
+  // Date calculation
+  $(document).ready(function() {
+    $('#loan_term').on("change keyup paste click", function(){
+      var id = $(this).val();
+      var ist = $('#int_id').val();
+      var loant = $('#loan_term').val();
+      var repay = $('#repay').val();
+      var repay_start = $('#repay_start').val();
+      var disbd = $('#disb_date').val();
+      $.ajax({
+        url:"date_calculation.php",
+        method:"POST",
+        data:{id:id, ist: ist,loant:loant,repay:repay,repay_start:repay_start,disbd:disbd},
+        success:function(data){
+          $('#sekat').html(data);
+        }
+      })
+    });
+  });
+  $(document).ready(function() {
+    $('#repay').on("change keyup paste click", function(){
+      var id = $(this).val();
+      var ist = $('#int_id').val();
+      var loant = $('#loan_term').val();
+      var repay = $('#repay').val();
+      var repay_start = $('#repay_start').val();
+      var disbd = $('#disb_date').val();
+      $.ajax({
+        url:"date_calculation.php",
+        method:"POST",
+        data:{id:id, ist: ist,loant:loant,repay:repay,repay_start:repay_start,disbd:disbd},
+        success:function(data){
+          $('#sekat').html(data);
+        }
+      })
+    });
+  });
+  $(document).ready(function() {
+    $('#repay_start').on("change keyup paste click", function(){
+      var id = $(this).val();
+      var ist = $('#int_id').val();
+      var loant = $('#loan_term').val();
+      var repay = $('#repay').val();
+      var repay_start = $('#repay_start').val();
+      var disbd = $('#disb_date').val();
+      $.ajax({
+        url:"date_calculation.php",
+        method:"POST",
+        data:{id:id, ist: ist,loant:loant,repay:repay,repay_start:repay_start,disbd:disbd},
+        success:function(data){
+          $('#sekat').html(data);
+        }
+      })
+    });
+  });
+  $(document).ready(function() {
+    $('#disb_date').on("change keyup paste click", function(){
+      var id = $(this).val();
+      var ist = $('#int_id').val();
+      var loant = $('#loan_term').val();
+      var repay = $('#repay').val();
+      var repay_start = $('#repay_start').val();
+      var disbd = $('#disb_date').val();
+      $.ajax({
+        url:"date_calculation.php",
+        method:"POST",
+        data:{id:id, ist: ist,loant:loant,repay:repay,repay_start:repay_start,disbd:disbd},
+        success:function(data){
+          $('#sekat').html(data);
+        }
+      })
+    });
+  });
+</script>
 <script>
 $(document).ready(function() { 
     $('#principal_amount').change(function() {
@@ -164,6 +382,7 @@ $(document).ready(function() {
       $('#lp').val($('#lop').val());
       $('#lsa').val($('#lsaa').val());
       $('#rsd').val($('#repay_start').val());
+      $('#end').val($('#ed').val());
     });
     $('#repay').change(function() {
       $('#ls').val($('#principal_amount').val());

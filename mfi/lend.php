@@ -310,12 +310,12 @@ $destination = "loans.php";
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
-                          <th><?php echo $row["name"]; ?></th>
-                          <th><?php echo $row["currency_code"]; ?></th>
-                          <th><?php echo $row["amount"]; ?></th>
-                          <th><?php echo $row["charge_applies_to_enum"]; ?></th>
-                          <th><?php echo $row["charge_time_enum"]; ?></th>
-                          <th>Cash</th>
+                          <td><?php echo $row["name"]; ?></td>
+                          <td><?php echo $row["currency_code"]; ?></td>
+                          <td><?php echo $row["amount"]; ?></td>
+                          <td><?php echo $row["charge_applies_to_enum"]; ?></td>
+                          <td><?php echo $row["charge_time_enum"]; ?></td>
+                          <td>Cash</th>
                         </tr>
                         <?php }
                           }
@@ -336,116 +336,115 @@ $destination = "loans.php";
                     <!-- Third Tab Ends -->
                     <!-- Fourth Tab Begins -->
                     <div class="tab"><h3> Collateral:</h3>
-                    <button type="button" class="btn btn-primary" name="button" onclick="showDialog()"> <i class="fa fa-plus"></i> Add</button>
-                    <table class="table table-bordered">
+                    <div class="form-group">
+                      <button type="button" class="btn btn-primary" name="button" onclick="showDialog()"> <i class="fa fa-plus"></i> Add</button>
+                      </div>
+                      <div class="form-group">
+                      <table class="table table-bordered">
                           <thead>
+                          <?php
+                            $query = "SELECT * FROM collateral WHERE int_id = '".$_SESSION["int_id"]."'";
+                            $result = mysqli_query($connection, $query);
+                            ?>
                             <tr>
                               <th></th>
                               <th>Value</th>
                               <th>Description</th>
                             </tr>
                           </thead>
-                          <tbody>  
-                          <tr>
-                               <td>Motorcycle</td>
-                               <td>Flat</td>
-                               <td>20000</td>
-                             </tr>
-                             <tr>
-                               <td>Plot of Land</td>
-                               <td>Flat</td>
-                               <td>20000</td>
-                             </tr>
-                             <tr>
-                               <td>Car</td>
-                               <td>Flat</td>
-                               <td>20000</td>
-                             </tr>     
-                          </tbody>
+                          <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                          <td><?php echo $row["type"]; ?></td>
+                          <td><?php echo $row["value"]; ?></td>
+                          <td><?php echo $row["description"]; ?></td>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            echo "No collateral Available";
+                          }
+                          ?>
+                      </tbody>
                         </table>
-                        <div id="background">
-        </div>
-        <style>
-            #background{
-                display: none;
-                width: 100%;
-                height: 100%;
-                position: fixed;
-                top: 0px;
-                left: 0px;
-                background-color: black;
-                opacity: 0.7;
-                z-index: 9999;
-            }
-            
-            #dlgbox{
-                /*initially dialog box is hidden*/
-                display: none;
-                position: fixed;
-                width: 480px;
-                z-index: 9999;
-                border-radius: 10px;
-                background-color: #ffffff;
-            }
-            
-            #dlg-header{
-                background-color: #6d84b4;
-                color: white;
-                font-size: 20px;
-                padding: 10px;
-                margin: 10px 10px 0px 10px;
-            }
-            
-            #dlg-body{
-                background-color: white;
-                color: black;
-                font-size: 14px;
-                padding: 10px;
-                margin: 0px 10px 0px 10px;
-            }
-            #box {
-              padding: 20px;
-            }
-        </style>
-        <div id="dlgbox">
-            <div id="box">
-            <h3>Add Collateral</h3>
-                          <div class="form-group">
-                          <label>Type</label>
-                          <input class="form-control" name="col_name" type="text" value=""/>
-                          <label>Value</label>
-                          <input class="form-control" name="col_value" type="text" value=""/>
-                          <label>Description</label>
-                          <input class="form-control" name="col_description" type="text" value=""/>
-                          </div>
-                          <div style="float:right;">
-                            <button class="btn btn-primary pull-right"  onclick="dlgLogin()" type="button" id="">Add</button>
-                            <button class="btn btn-primary pull-right" type="button" id="">Cancel</button>
-                          </div>
+                      </div>
+                      <!-- dialog box -->
+                      <div class="form-group">
+                      <div id="background">
+                      </div>
+                      <div id="diallbox">
+                <h3>Add Collateral</h3>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class = "bmd-label-floating" class="md-3 form-align " for=""> Name:</label>
+                        <input type="text" name="col_name" id="name" class="form-control">
+                      </div>
                     </div>
-                 </div>
-                        <!-- script of dialog -->
-        <script>
-            function dlgLogin(){
-                var bg = document.getElementById("background");
-                var dlg = document.getElementById("dlgbox");
-                bg.style.display = "none";
-                dlg.style.display = "none";
-            }
-            
-            function showDialog(){
-                var bg = document.getElementById("background");
-                var dlg = document.getElementById("dlgbox");
-                bg.style.display = "block";
-                dlg.style.display = "block";
-                
-                var winWidth = window.innerWidth;
-                var winHeight = window.innerHeight;
-                
-                dlg.style.left = (winWidth/2) - 480/2 + "px";
-                dlg.style.top = "150px";
-            }
-        </script>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class = "bmd-label-floating" for=""> Type:</label>
+                        <input type="text" name="col_value" id="value" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class = "bmd-label-floating" for="">Description:</label>
+                        <input type="text" name="col_description" id="descr" class="form-control">
+                      </div>
+                    </div>
+                  <div style="float:right;">
+                        <button class="btn btn-primary pull-right"  onclick="AddDlg()"  id="">Add</button>
+                        <button class="btn btn-primary pull-right" type="button" id="">Cancel</button>
+                      </div>
+<script>
+    function AddDlg(){
+        var bg = document.getElementById("background");
+        var dlg = document.getElementById("diallbox");
+        bg.style.display = "none";
+        dlg.style.display = "none";
+    }
+    
+    function showDialog(){
+        var bg = document.getElementById("background");
+        var dlg = document.getElementById("diallbox");
+        bg.style.display = "block";
+        dlg.style.display = "block";
+        
+        var winWidth = window.innerWidth;
+        var winHeight = window.innerHeight;
+        
+        dlg.style.left = (winWidth/2) - 480/2 + "px";
+        dlg.style.top = "150px";
+    }
+</script>
+<style>
+    #background{
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        background-color: black;
+        opacity: 0.7;
+        z-index: 9999;
+    }
+    
+    #diallbox{
+        /*initially dialog box is hidden*/
+        display: none;
+        position: fixed;
+        width: 480px;
+        z-index: 9999;
+        border-radius: 10px;
+        padding:20px;
+        background-color: #ffffff;
+    }
+</style>
+                      </div>
+                    </div>
                     </div>
                     <!-- Fourth Tab Ends -->
                     <!-- Fifth Tab Begins -->
@@ -456,24 +455,32 @@ $destination = "loans.php";
                       <div class="form-group">
                       <table class="table table-bordered">
                           <thead>
+                          <?php
+                        $query = "SELECT * FROM loan_gaurantor WHERE int_id ='$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                            ?>
                             <tr>
                               <th>Name</th>
                               <th>Guarantor Type</th>
                               <th>Guarantee Amount</th>
                             </tr>
                           </thead>
-                          <tbody>  
-                          <tr>
-                               <td>abcde</td>
-                               <td>New Guarantor</td>
-                               <td>20000</td>
-                             </tr>
-                             <tr>
-                               <td>vwxyz</td>
-                               <td>New Guarantor</td>
-                               <td>20000</td>
-                             </tr>   
-                          </tbody>
+                          <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                          <td><?php echo $row["first_name"]; ?></td>
+                          <td><?php echo $row["office_address"]; ?></td>
+                          <td><?php echo $row["email"]; ?></td>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            echo "No Guarantor Available";
+                          }
+                          ?>
+                      </tbody>
                         </table>
                       </div>
                       <!-- dialog box -->
@@ -603,125 +610,9 @@ $destination = "loans.php";
                                 });
                               })
                             </script>
-                            <table class="table table-bordered">
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Date</th>
-                                <th>Days</th>
-                                <th>Paid by</th>
-                                <th>Disbursement</th>
-                                <th>Principal Due</th>
-                                <th>Principal Balance</th>
-                                <th>Interest Due</th>
-                                <th>Fees</th>
-                                <th>Penalties</th>
-                                <th>Total Due</th>
-                                <th>Total Paid</th>
-                                <th>Total Outstanding</th>
-                              </tr>
-                              </thead>
-                              
-                              <tbody id = "accname">
+                            <table id = "accname" class="table table-bordered">
 
-                              </tbody>
                             </table>
-                     <!-- <table class="table table-bordered">
-                           <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Date</th>
-                              <th>Days</th>
-                              <th>Paid by</th>
-                              <th>Disbursement</th>
-                              <th>Principal Due</th>
-                              <th>Principal Balance</th>
-                              <th>Interest Due</th>
-                              <th>Fees</th>
-                              <th>Penalties</th>
-                              <th>Total Due</th>
-                              <th>Total Paid</th>
-                              <th>Total Outstanding</th>
-                            </tr>
-                          </thead>
-                          <tbody>  
-                          <tr>
-                               <td></td>
-                               <td>09-04-2020</td>
-                               <td></td>
-                               <td></td>
-                               <td>30000</td>
-                               <td></td>
-                               <td>30000</td>
-                               <td></td>
-                               <td>0.00</td>
-                               <td></td>
-                               <td>0.00</td>
-                               <td>0.00</td>
-                               <td></td>
-                             </tr>
-                             <tr>
-                               <td>1</td>
-                               <td>09-05-2020</td>
-                               <td>30</td>
-                               <td></td>
-                               <td></td>
-                               <td>10000</td>
-                               <td>20000</td>
-                               <td>600.00</td>
-                               <td>0.00</td>
-                               <td></td>
-                               <td>10600.00</td>
-                               <td>0.00</td>
-                               <td>10,600</td>
-                             </tr>   
-                             <tr>
-                               <td>2</td>
-                               <td>09-06-2020</td>
-                               <td>30</td>
-                               <td></td>
-                               <td></td>
-                               <td>10000</td>
-                               <td>10000</td>
-                               <td>600.00</td>
-                               <td>0.00</td>
-                               <td></td>
-                               <td>10600.00</td>
-                               <td>0.00</td>
-                               <td>10,600</td>
-                             </tr>
-                             <tr>
-                               <td>3</td>
-                               <td>09-07-2020</td>
-                               <td>30</td>
-                               <td></td>
-                               <td></td>
-                               <td>10000</td>
-                               <td>0</td>
-                               <td>600.00</td>
-                               <td>0.00</td>
-                               <td></td>
-                               <td>10600.00</td>
-                               <td>0.00</td>
-                               <td>10,600</td>
-                             </tr>
-                             <tr>
-                               <td></td>
-                               <td><b>Total</b></td>
-                               <td><b>90</b></td>
-                               <td></td>
-                               <td><b>30000</b></td>
-                               <td><b>30000</b></td>
-                               <td></td>
-                               <td><b>1800.00</b></td>
-                               <td><b>0.00</b></td>
-                               <td></td>
-                               <td><b>31,800.00</b></td>
-                               <td><b>0.00</b></td>
-                               <td><b>31,800</b></td>
-                             </tr>   
-                          </tbody>
-                        </table> -->
                       </div>
                     </div>
                     <!-- Sixth Tab Ends -->
@@ -732,39 +623,43 @@ $destination = "loans.php";
                               <!-- replace values with loan data -->
                               <div class=" col-md-6 form-group">
                                 <label class = "bmd-label-floating">Loan size:</label>
-                                <input type="number" value="" name="principal_amount" class="form-control" required id="ls">
+                                <input type="number" readonly value="" name="principal_amount" class="form-control" required id="ls">
                               </div>
                               <div class="col-md-6 form-group">
                                 <label class = "bmd-label-floating">Loan Term:</label>
-                                <input type="number" id="lt" name="loan_term" class="form-control" />
+                                <input readonly type="number" id="lt" name="loan_term" class="form-control" />
                               </div>
                               <div class="col-md-6 form-group">
                                 <label class = "bmd-label-floating">Interest Rate per:</label>
-                                <input type="text" value="" name="repay_every" class="form-control" id="irp">
+                                <input readonly type="text" value="" name="repay_every" class="form-control" id="irp">
                               </div>
                               <div class="col-md-6 form-group">
                                 <label class = "bmd-label-floating">Interest Rate:</label>
-                                <input type="text" name="interest_rate" class="form-control" id="ir">
+                                <input readonly type="text" name="interest_rate" class="form-control" id="ir">
                               </div>
                               <div class="col-md-6 form-group">
                                 <label class = "bmd-label-floating">Disbusrsement Date:</label>
-                                <input type="date" name="disbursement_date" class="form-control" id="db">
+                                <input readonly type="date" name="disbursement_date" class="form-control" id="db">
                               </div>
                               <div class="col-md-6 form-group">
                                 <label class = "bmd-label-floating">Loan Officer:</label>
-                                <input type="text" name="loan_officer" class="form-control" id="lo">
+                                <input readonly type="text" name="loan_officer" class="form-control" id="lo">
                               </div>
                               <div class="col-md-6 form-group">
                                 <label class = "bmd-label-floating">Loan Purpose:</label>
-                                <input type="text" name="loan_purpose" class="form-control" id="lp">
+                                <input readonly type="text" name="loan_purpose" class="form-control" id="lp">
                               </div>
                               <div class="col-md-6 form-group">
                                 <label class = "bmd-label-floating">Linked Savings account:</label>
-                                <input type="text" name="linked_savings_acct" class="form-control" id="lsa">
+                                <input readonly type="text" name="linked_savings_acct" class="form-control" id="lsa">
                               </div>
                               <div class="col-md-6 form-group">
                                 <label class = "bmd-label-floating">Repayment Start Date:</label>
-                                <input type="date" name="repay_start" class="form-control" id="rsd">
+                                <input readonly type="date" name="repay_start" class="form-control" id="rsd">
+                              </div>
+                              <div class="col-md-6 form-group">
+                                <label class = "bmd-label-floating">Loan End Date:</label>
+                                <input readonly type="date" value="<?php echo $actualend_date ?>" name="repay_start" id="end" class="form-control">
                               </div>
                             <!-- </div> -->
                           </div>
