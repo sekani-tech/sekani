@@ -14,6 +14,7 @@
     if (count([$inq]) == 1) {
       $n = mysqli_fetch_array($inq);
       $int_name = $n['int_name'];
+      // $img = $n['img'];
     }
 ?>
 <?php
@@ -80,7 +81,7 @@ input[type=number] {
           <div class="card-profile">
             <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../assets/img/faces/dpr.jpg" />
+                    <img class="img" src="../functions/instimg/<?php echo $img; ?>" />
                   </a>
                 </div>
           </div>

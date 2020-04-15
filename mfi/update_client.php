@@ -156,7 +156,7 @@ if(isset($_GET["edit"])) {
                   $out = '';
                   while ($row = mysqli_fetch_array($res))
                   {
-                    $out .= '<option value="'.$row["id"].'">'.$row["name"]. ' @ ' .$row["location"]. '</option>';
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"]. ' ' .$row["location"]. '</option>';
                   }
                   return $out;
                   }
@@ -222,7 +222,7 @@ if(isset($_GET["edit"])) {
                     <div class="row">
                       <div class="col-md-4">
                         <label for="">Select ID</label>
-                        <select class="form-control" name="id_card">
+                         <select class="form-control" name="id_card">
                           <option value="<?php echo $id_card ?>"><?php echo $id_card ?></option>
                           <option value="National ID">National ID</option>
                           <option value="Voters ID">Voters ID</option>
@@ -234,7 +234,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-4">
                       <div class="form-group form-file-upload form-file-multiple">
                       <label for="">ID</label>
-                      <input type="file" multiple="" class="inputFileHidden">
+                      <input type="file" class="inputFileHidden">
                       <div class="input-group">
                           <input type="text" name="idimg" class="form-control inputFileVisible" placeholder="Insert Signature">
                           <span class="input-group-btn">

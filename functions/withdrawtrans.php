@@ -1,9 +1,12 @@
 <?php
+
+// NOTE: I AM NOT USING THIS PAGE AGAIN
+
 include("connect.php");
 session_start();
 $sessint_id = $_SESSION["int_id"];
 $staff_id = $_SESSION["user_id"];
-$staff_name  = $_SESSION["fullname"];
+$staff_name  = strtoupper($_SESSION["username"]);
 ?>
 <?php
 $test2 = $_POST['test2'];
@@ -27,7 +30,8 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
             $clientfn =  mysqli_query($connection, "SELECT firstname FROM client WHERE account_no ='$acct_no2' && int_id = '$sessint_id' ");
             if (count([$clientfn]) == 1) {
                 $py = mysqli_fetch_array($clientfn);
-                $clientt_name = $py['firstname'];
+                $clientt_name = $py['firstname'].' '.$py['middlename'].' '.$py['lastname'];
+                $clientt_name = strtoupper($clientt_name);
             }
             if ($test2 == "withdraw") {
                 if ($acct_b_d >= $amt2) {

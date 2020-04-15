@@ -29,6 +29,7 @@
               $pc_designation = $n['pc_designation'];
               $pc_phone = $n['pc_phone'];
               $pc_email = $n['pc_email'];
+              $img = $n['img'];
             }
           }
         ?>
@@ -41,7 +42,7 @@
                   <p class="card-category">Complete institution profile</p>
                 </div>
                 <div class="card-body">
-                  <form action="functions/update_institution.php" method="post">
+                  <form action="functions/update_institution.php" method="POST"  enctype="multipart/form-data">
                     <div class="row">
                       <div class="col-md-2">
                         <div class="form-group">
@@ -148,6 +149,20 @@
                                 <input type="email" value="<?php echo $pc_email; ?>" name="pc_email" class="form-control" id="">
                             </div>
                         </div>
+                        <div class="col-md-4">
+                          <div class="form-group form-file-upload form-file-multiple">
+                            <label for="">Logo</label>
+                            <input type="file" multiple="" class="inputFileHidden">
+                            <div class="input-group">
+                                <input type="file" name="int_logo" class="form-control inputFileVisible" placeholder="Insert Logo">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-fab btn-round btn-primary">
+                                        <i class="material-icons">attach_file</i>
+                                    </button>
+                                </span>
+                            </div>
+                          </div>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
                     <button type="reset" class="btn btn_default">Reset</button>
@@ -160,24 +175,24 @@
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="assets/img/faces/marc.jpg" />
+                    <img class="img" src="../functions/instimg/<?php echo $img; ?>" />
                   </a>
                 </div>
                 <?php
-                $fullname = $_SESSION["fullname"];
                 $sessint_id = $_SESSION["int_id"];
+                $new = $int_name;
                 $org_role = $_SESSION["org_role"];
                 $inq = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$sessint_id'");
                 if (count([$inq]) == 1) {
                   $n = mysqli_fetch_array($inq);
-                  $int_name = $n['int_name'];
+                  $int_namex = $n['int_name'];
                 }
                 ?>
                 <div class="card-body">
-                  <h6 class="card-category text-gray"><?php echo $org_role ?></h6>
-                  <h4 class="card-title"> <?php echo $fullname ?></h4>
+                  <h6 class="card-category text-gray"><?php echo $new; ?></h6>
+                  <h4 class="card-title"> <?php echo $website; ?></h4>
                   <p class="card-description">
-                  <?php echo $int_name ?>
+                  <?php echo $int_namex ?>
                   </p>
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>

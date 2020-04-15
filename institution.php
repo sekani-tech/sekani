@@ -51,8 +51,8 @@
                         </th>
                         <th>P. Contact</th>
                         <th>Phone</th>
+                        <th>Logo</th>
                         <th>Edit</th>
-                        <th>Delete</th>
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
@@ -65,8 +65,9 @@
                           <th><?php echo $row["lga"]; ?></th>
                           <th><?php echo $row["pc_surname"]; ?></th>
                           <th><?php echo $row["pc_phone"]; ?></th>
+                          <th><img class="img" src="<?php echo $row["img"]; ?>"/></th>
                           <td><a href="manage_institution.php?edit=<?php echo $row["int_id"];?>" class="btn btn-info">Edit</a></td>
-                          <td><a href="functions/delete_institution.php?edit=<?php echo $row["int_id"]; ?>" class="btn btn-danger">Delete</a></td>
+                          <!-- <td><a href="functions/delete_institution.php?edit="" class="btn btn-danger">Delete</a></td> -->
                         </tr>
                           <?php }
                           }

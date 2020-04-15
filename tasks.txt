@@ -14,21 +14,24 @@ New files
 
 Tasks to carry out based on system review.- 7th-April-2020
 NB: The stucture of the files have changed slightly - with the change being the name of the folder
+
 -----
 Seun
 -----
-1. take care of file upload in update_client
+1. Take care of file upload in update_client -- DONE
 2. Loan_summary
-3. Client table (make close account functional)
-4. 
-5. 
+3. Transaction - loan repayment, deposit and withdrawal backend -- DONE
+4. Logo file upload by institution -- DONE
+5. Loan over payment(saves into the clients linked savings account) -- DONE
+6. Update any query matching with Account Number from the clients Table
+6. Transaction Page (Display (Acct_Name, Acct_Rep), Deposit, With, Loan collection)
 
 ------
 Sanusi 
 ------
-1. Fix loan creation -- (use the form in test.html the current form in lend.php not accurate)
-2. Update Loan functionalities - preview
-3. manage_product convert to stepper
+1. Fix loan creation -- (use the form in test.html the current form in lend.php not accurate) --DONE
+2. Update Loan functionalities - preview --DONE
+3. manage_product convert to stepper --DONE
 4. 
 5. 
 ------

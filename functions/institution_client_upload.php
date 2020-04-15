@@ -6,19 +6,19 @@ session_start();
 <?php
 $sessint_id = $_SESSION["int_id"];
 $loan_officer_id = $_SESSION["user_id"];
-$ctype = $_POST['ctype'];
-$acct_type = $_POST['acct_type'];
-$branch = $_POST['branch'];
-$display_name = $_POST['display_name'];
+$ctype = strtoupper($_POST['ctype']);
+$acct_type = strtoupper($_POST['acct_type']);
+$branch = strtoupper($_POST['branch']);
+$display_name = strtoupper($_POST['display_name']);
 // an account number generation
  $inttest = str_pad($branch, 4, '0', STR_PAD_LEFT);
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $account_no = $inttest."".$randms;
 // auto calculation for the account number generation
-$first_name = $_POST['firstname'];
-$last_name = $_POST['lastname'];
-$middlename = $_POST['middlename'];
+$first_name = strtoupper($_POST['firstname']);
+$last_name = strtoupper($_POST['lastname']);
+$middlename = strtoupper($_POST['middlename']);
 $phone = $_POST['phone'];
 $phone2 = $_POST['phone2'];
 $email = $_POST['email'];

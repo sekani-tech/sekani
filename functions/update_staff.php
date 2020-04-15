@@ -20,11 +20,23 @@ if (isset($_POST['int_name']) && isset($_POST['usertype'])) {
     $org_role = $_POST['org_role'];
     $usertype = $_POST['usertype'];
 
+
 $digits = 10;
 $temp = explode(".", $_FILES['imagefile']['name']);
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $imagex = $randms. '.' .end($temp);
 
+$sel = mysqli_query($connection, "SELECT * FROM staff WHERE id = '$staff_id'");
+ if (count([$sel]) == 1) {
+   $d = mysqli_fetch_array($sel);
+   $imgx = $d['img'];
+ }
+
+if ($imagex == null) {
+  $img = $imx;
+} else {
+  $img = $imagex;
+}
 if (move_uploaded_file($_FILES['imagefile']['tmp_name'], "staff/" . $imagex)) {
     $msg = "Image uploaded successfully";
 } else {
@@ -35,7 +47,7 @@ if (move_uploaded_file($_FILES['imagefile']['tmp_name'], "staff/" . $imagex)) {
     if($result) {
         $sec = "UPDATE staff SET int_name = '$int_name', username = '$username', display_name = '$display_name', email = '$email',
         first_name = '$first_name', last_name = '$last_name', phone = '$phone', employee_status = '$status', address = '$address', date_joined = '$date_joined',
-        org_role = '$org_role', img = '$imagex' WHERE id = '$staff_id'";
+        org_role = '$org_role', img = '$img' WHERE id = '$staff_id'";
         $res = mysqli_query($connection, $sec);
         // if ($connection->error) {
         //     try {   

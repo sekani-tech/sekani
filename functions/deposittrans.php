@@ -1,4 +1,6 @@
 <?php
+// NOTE: I AM NOT USING THIS PAGE AGAIN
+
 include("connect.php");
 session_start();
 $sessint_id = $_SESSION["int_id"];

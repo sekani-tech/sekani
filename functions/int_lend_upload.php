@@ -10,21 +10,28 @@ if (count([$goacctn]) == 1) {
     $a = mysqli_fetch_array($goacctn);
     $acct_no = $a['account_no'];
 }
+// Part for Product
 $product_id = $_POST['product_id'];
 $principal_amount = $_POST['principal_amount'];
 $loan_term = $_POST['loan_term'];
 $repay_every = $_POST['repay_every'];
 $interest_rate = $_POST['interest_rate'];
 $disbursement_date = $_POST['disbursement_date'];
+$grace_on_principal = $_POST['grace_on_principal'];
+$grace_on_interest = $_POST['grace_on_interest'];
 $loan_officer = $_POST['loan_officer'];
 $loan_purpose = $_POST['loan_purpose'];
+$standing_instruction = $_POST['standing_instruction'];
 $linked_savings_acct = $_POST['linked_savings_acct'];
 $repay_start = $_POST['repay_start'];
-// part for collatera
+// Part for Charges
+$charges = $_POST['charge'];
+// Part for collateral
 $col_id = $_POST['col_id'];
-$col_name = $_POST['col_name'];
+$col_type = $_POST['col_name'];
 $col_description = $_POST['col_description'];
-// gaurantors
+$col_val = $_POST['col_value'];
+// Part for Gaurantors
 $first_name = $_POST['gau_first_name'];
 $last_name = $_POST['gau_last_name'];
 $phone = $_POST['gau_phone'];
@@ -65,21 +72,21 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
             if ($lsff == "Not Active" || $lsff == "") {
                 $stt = "Not Approved";
                 $query = "INSERT INTO loan_disbursement_cache (int_id, account_no, client_id,
-display_name, product_id, col_id, col_name, col_description,
-loan_officer, loan_purpose, currency_code,
-currency_digits, principal_amount_proposed, principal_amount,
-loan_term, interest_rate, approved_principal, repayment_date,
-term_frequency, repay_every, number_of_repayments, submittedon_date,
-submittedon_userid, approvedon_date, approvedon_userid,
-expected_disbursedon_date, expected_firstrepaymenton_date, disbursement_date,
-disbursedon_userid, repay_principal_every, repay_interest_every, status) VALUES ('{$sessint_id}', '{$acct_no}', '{$client_id}',
-'{$cdn}', '{$product_id}', '{$col_id}', '{$col_name}', '{$col_description}',
-'{$loan_officer}', '{$loan_purpose}', '{$currency}', '{$cd}',
-'{$principal_amount}', '{$pd}', '{$loan_term}', '{$interest_rate}',
-'{$principal_amount}', '{$repay_start}', '{$tff}', '$repay_every',
-'{$loan_term}', '{$submitted_on}', '{$userid}', '{$submitted_on}', '{$userid}',
-'{$disbursement_date}', '{$repay_start}', '{$disbursement_date}',
-'{$userid}', '{$loan_term}', '{$loan_term}', '{$stt}')";
+                    display_name, product_id, col_id, col_name, col_description,
+                    loan_officer, loan_purpose, currency_code,
+                    currency_digits, principal_amount_proposed, principal_amount,
+                    loan_term, interest_rate, approved_principal, repayment_date,
+                    term_frequency, repay_every, number_of_repayments, submittedon_date,
+                    submittedon_userid, approvedon_date, approvedon_userid,
+                    expected_disbursedon_date, expected_firstrepaymenton_date, disbursement_date,
+                    disbursedon_userid, repay_principal_every, repay_interest_every, status) VALUES ('{$sessint_id}', '{$acct_no}', '{$client_id}',
+                    '{$cdn}', '{$product_id}', '{$col_id}', '{$col_name}', '{$col_description}',
+                    '{$loan_officer}', '{$loan_purpose}', '{$currency}', '{$cd}',
+                    '{$principal_amount}', '{$pd}', '{$loan_term}', '{$interest_rate}',
+                    '{$principal_amount}', '{$repay_start}', '{$tff}', '$repay_every',
+                    '{$loan_term}', '{$submitted_on}', '{$userid}', '{$submitted_on}', '{$userid}',
+                    '{$disbursement_date}', '{$repay_start}', '{$disbursement_date}',
+                    '{$userid}', '{$loan_term}', '{$loan_term}', '{$stt}')";
             $res = mysqli_query($connection, $query);
             if ($res) {
                 $colkt = mysqli_query($connection, "SELECT * FROM loan_disbursement_cache where client_id = '$client_id'");
@@ -92,12 +99,15 @@ disbursedon_userid, repay_principal_every, repay_interest_every, status) VALUES 
                                     '{$loan_id}', '{$client_id}', '{$first_name}', '{$last_name}',
                                     '{$phone}', '{$phone2}', '{$home_address}', '{$office_address}', '{$position_held}',
                                     '{$email}')";
+              $coll = "INSERT INTO collateral (int_id, type, value, description) VALUES ('{$sessint_id}',
+                                    '{$col_type}', '{$col_val}', '{$col_description}')";
                                     $kdln = mysqli_query($connection, $gjjj);
+                                    $ssss =  mysqli_query($connection, $coll);
                                     if ($kdln) {
                                         $_SESSION["Lack_of_intfund_$randms"] = "Successfully Uploaded, Awaiting Disbursement Approval";
         header ("Location: ../mfi/lend.php?message=$randms");
                                     } else {
-                                        $_SESSION["Lack_of_intfund_$randms"] = "Error in Posting For Loan Gaurantor";
+                                        $_SESSION["Lack_of_intfund_$randms"] = "Error in Posting For Loan Gaurantor or Collateral";
         header ("Location: ../mfi/lend.php?message5=$randms");
                                     }
             } else {
