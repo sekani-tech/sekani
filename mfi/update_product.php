@@ -50,8 +50,8 @@ $destination = "config.php";
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Update Branch</h4>
-                  <p class="card-category">Modify Branch Data</p>
+                  <h4 class="card-title">Update Product</h4>
+                  <!-- <p class="card-category">Modify Branch Data</p> -->
                 </div>
                 <div class="card-body">
                   <form action="../functions/product_update.php" method="post">
