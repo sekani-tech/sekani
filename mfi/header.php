@@ -124,6 +124,7 @@ input[type=number] {
               <a href="#" class="dropdown-item">FTD Booking</a>
               <a href="lend.php" class="dropdown-item">Book Loan</a>
               <a href="#" class="dropdown-item">Expense Posting</a>
+              <a href="teller_journal.php" class="dropdown-item">Teller Journal</a>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -150,6 +151,7 @@ input[type=number] {
               <a href="loans.php" class="dropdown-item">Loan reoprts</a>
               <a href="#" class="dropdown-item">Finacial reoprt</a>
               <a href="#" class="dropdown-item">Audit</a>
+              <a href="teller.php" class="dropdown-item">Teller</a>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -171,10 +173,10 @@ input[type=number] {
               Configuration
             </a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="products.php">Products</a>
+              <a class="dropdown-item" href="products_config.php">Products</a>
               <!-- <a class="dropdown-item" href="config.php">Configuration</a> -->
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="users.php">Staff Mgt.</a>
+              <a class="dropdown-item" href="staff_mgmt.php">Staff Mgt.</a>
               <a class="dropdown-item" href="branch.php">Branch</a>
               <!-- <a class="dropdown-item" href="#">Group</a> -->
               <a class="dropdown-item" href="#">Accounting</a>

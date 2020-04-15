@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Branch";
+$page_title = "Prducts Configuration";
 $destination = "index.php";
     include("header.php");
 
@@ -17,15 +17,15 @@ $destination = "index.php";
                     <div class="nav-tabs-wrapper">
                       <span class="nav-tabs-title">Configuration:</span>
                       <ul class="nav nav-tabs" data-tabs="tabs">
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                           <a class="nav-link active" href="#profile" data-toggle="tab">
                             <i class="material-icons">bug_report</i> Password Settings
                             <div class="ripple-container"></div>
                           </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
-                          <a class="nav-link" href="#messages" data-toggle="tab">
-                            <i class="material-icons">supervisor_account</i> Roles
+                          <a class="nav-link active" href="#messages" data-toggle="tab">
+                            <i class="material-icons">supervisor_account</i> Charges
                             <div class="ripple-container"></div>
                           </a>
                         </li>
@@ -35,19 +35,19 @@ $destination = "index.php";
                             <div class="ripple-container"></div>
                           </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                           <a class="nav-link" href="#" data-toggle="tab">
                             <i class="material-icons">visibility_off</i> Marker Checker Permissions
                             <div class="ripple-container"></div>
                           </a>
-                        </li>
+                        </li> -->
                       </ul>
                     </div>
                   </div>
                 </div>
                 <div class="card-body">
                   <div class="tab-content">
-                    <div class="tab-pane active" id="profile">
+                    <!-- <div class="tab-pane active" id="profile">
                       <div class="card-title">Auto Logout</div>
                       <form action="">
                         <div class="form-group">
@@ -63,16 +63,21 @@ $destination = "index.php";
                         </div>
                         <button class="btn btn-primary">Update</button>
                       </form>
-                    </div>
-                    <div class="tab-pane" id="messages">
-                      <button class="btn btn-primary"><i class="fa fa-plus"> </i> Add New Role</button>
+                    </div> -->
+                    <div class="tab-pane active" id="messages">
+                    <a href="create_charge.php" class="btn btn-primary"> Add Charge</a>
                       <table class="table">
                         <thead>
                           <th>Name</th>
-                          <th>Description</th>
-                          <th>Active</th>
+                          <th>Product</th>
+                          <th>Charge Type</th>
+                          <th>Amount</th>
+                          <th>View</th>
+                          <th>Edit</th>
                         </thead>
                         <tbody>
+                          <th></th>
+                          <th></th>
                           <th></th>
                           <th></th>
                           <th></th>

@@ -1,3 +1,17 @@
+New files
+1. create_charge (find nav in products_config)
+2. update_charge  " " " 
+3. products_config
+4. Staff_mgmt.php (users and roles)
+5. roles
+6. update_role
+7. Staff_mgmt - permissions
+8. teller
+9. teller_journal -- disbusrse money to teller
+10. create_teller
+11. view_teller
+12.  Refer to access.html for permissions
+
 Tasks to carry out based on system review.- 7th-April-2020
 NB: The stucture of the files have changed slightly - with the change being the name of the folder
 -----

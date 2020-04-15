@@ -17,7 +17,7 @@ while ( $results[] = mysqli_fetch_object ( $res ) );
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Create new Staff</h4>
@@ -142,34 +142,6 @@ while ( $results[] = mysqli_fetch_object ( $res ) );
                     <button type="submit" class="btn btn-primary pull-right">Create Profile</button>
                     <div class="clearfix"></div>
                   </form>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="../assets/img/faces/marc.jpg" />
-                  </a>
-                </div>
-                <!-- Get session data and populate user profile -->
-                <?php
-                $fullname = $_SESSION["fullname"];
-                $sessint_id = $_SESSION["int_id"];
-                $org_role = $_SESSION["org_role"];
-                $inq = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$sessint_id'");
-                if (count([$inq]) == 1) {
-                  $n = mysqli_fetch_array($inq);
-                  $int_name = $n['int_name'];
-                }
-                ?>
-                <div class="card-body">
-                  <h6 class="card-category text-gray"><?php echo $org_role?></h6>
-                  <h4 class="card-title"> <?php echo $fullname?></h4>
-                  <p class="card-description">
-                  <?php echo $int_name?>
-                  </p>
-                  <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>
               </div>
             </div>
