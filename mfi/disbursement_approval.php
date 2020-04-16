@@ -74,6 +74,7 @@ if (isset($_GET["message1"])) {
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Users</h4>
                   <script>
+                  // make move here
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
                   });
