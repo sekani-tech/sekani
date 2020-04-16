@@ -170,10 +170,27 @@ $destination = "loans.php";
                               $(document).ready(function() {
                                 $('#charges').change(function(){
                                   var id = $(this).val();
+                                  var client_id = $('#client_name').val();
                                   $.ajax({
                                     url:"load_data_lend.php",
                                     method:"POST",
-                                    data:{id:id},
+                                    data:{id:id, client_id:client_id},
+                                    success:function(data){
+                                      $('#show_product').html(data);
+                                    }
+                                  })
+                                });
+                              })
+                            </script>
+                            <script>
+                              $(document).ready(function() {
+                                $('#client_name').change(function(){
+                                  var id = $(this).val();
+                                  var client_id = $('#client_name').val();
+                                  $.ajax({
+                                    url:"load_data_lend.php",
+                                    method:"POST",
+                                    data:{id:id, client_id:client_id},
                                     success:function(data){
                                       $('#show_product').html(data);
                                     }

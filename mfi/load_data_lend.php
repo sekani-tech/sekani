@@ -22,7 +22,8 @@ if(isset($_POST["id"]))
         $a = mysqli_fetch_array($org);
         $int_id = $a['int_id'];
        }
-       $pen = "SELECT * FROM account WHERE int_id = '$int_id'";
+       $client_id = $_POST['client_id'];
+       $pen = "SELECT * FROM account WHERE client_id = '$client_id'";
       $res = mysqli_query($connection, $pen);
       $out = '';
       while ($row = mysqli_fetch_array($res))
