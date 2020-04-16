@@ -103,7 +103,7 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
                                     '{$col_type}', '{$col_val}', '{$col_description}')";
                                     $kdln = mysqli_query($connection, $gjjj);
                                     $ssss =  mysqli_query($connection, $coll);
-                                    if ($kdln) {
+                                    if ($kdln && $ssss) {
                                         $_SESSION["Lack_of_intfund_$randms"] = "Successfully Uploaded, Awaiting Disbursement Approval";
         header ("Location: ../mfi/lend.php?message=$randms");
                                     } else {

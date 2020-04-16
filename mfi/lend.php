@@ -370,65 +370,81 @@ $destination = "loans.php";
                           ?>
                       </tbody>
                         </table>
-                        <div id="background">
-            </div>
-        <style>
-            #background{
-                display: none;
-                width: 100%;
-                height: 100%;
-                position: fixed;
-                top: 0px;
-                left: 0px;
-                background-color: black;
-                opacity: 0.7;
-                z-index: 9999;
-            }
-            
-            #dlgbox{
-                /*initially dialog box is hidden*/
-                display: none;
-                position: fixed;
-                width: 480px;
-                z-index: 9999;
-                border-radius: 10px;
-                background-color: #ffffff;
-            }
-            
-            #dlg-header{
-                background-color: #6d84b4;
-                color: white;
-                font-size: 20px;
-                padding: 10px;
-                margin: 10px 10px 0px 10px;
-            }
-            
-            #dlg-body{
-                background-color: white;
-                color: black;
-                font-size: 14px;
-                padding: 10px;
-                margin: 0px 10px 0px 10px;
-            }
-            #box {
-              padding: 20px;
-            }
-        </style>
-        <div id="dlgbox">
-            <div id="box">
-            <h3>Add Collateral</h3>
-                          <div class="form-group">
-                          <label>Type</label>
-                          <input class="form-control" name="col_name" type="text" value=""/>
-                          <label>Value</label>
-                          <input class="form-control" name="col_value" type="text" value=""/>
-                          <label>Description</label>
-                          <input class="form-control" name="col_description" type="text" value=""/>
-                          </div>
-                          <div style="float:right;">
-                            <button class="btn btn-primary pull-right"  onclick="dlgLogin()" type="button" id="">Add</button>
-                            <button class="btn btn-primary pull-right" type="button" id="">Cancel</button>
-                          </div>
+                      </div>
+                      <!-- dialog box -->
+                      <div class="form-group">
+                      <div id="background">
+                      </div>
+                      <div id="diallbox">
+                <h3>Add Collateral</h3>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class = "bmd-label-floating" class="md-3 form-align " for=""> Name:</label>
+                        <input type="text" name="col_name" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class = "bmd-label-floating" for=""> Type:</label>
+                        <input type="text" name="col_value" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class = "bmd-label-floating" for="">Description:</label>
+                        <input type="text" name="col_description" class="form-control">
+                      </div>
+                    </div>
+                  <div style="float:right;">
+                        <button class="btn btn-primary pull-right"  onclick="AddDlg()">Add</button>
+                        <button class="btn btn-primary pull-right" type="button" id="">Cancel</button>
+                      </div>
+<script>
+    function AddDlg(){
+        var bg = document.getElementById("background");
+        var dlg = document.getElementById("diallbox");
+        bg.style.display = "none";
+        dlg.style.display = "none";
+    }
+    
+    function showDialog(){
+        var bg = document.getElementById("background");
+        var dlg = document.getElementById("diallbox");
+        bg.style.display = "block";
+        dlg.style.display = "block";
+        
+        var winWidth = window.innerWidth;
+        var winHeight = window.innerHeight;
+        
+        dlg.style.left = (winWidth/2) - 480/2 + "px";
+        dlg.style.top = "150px";
+    }
+</script>
+<style>
+    #background{
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        background-color: black;
+        opacity: 0.7;
+        z-index: 9999;
+    }
+    
+    #diallbox{
+        /*initially dialog box is hidden*/
+        display: none;
+        position: fixed;
+        width: 480px;
+        z-index: 9999;
+        border-radius: 10px;
+        padding:20px;
+        background-color: #ffffff;
+    }
+</style>
+                      </div>
                     </div>
                     </div>
                     <!-- Fourth Tab Ends -->
