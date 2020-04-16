@@ -70,7 +70,7 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
                 }
         if ($acctprin >= 0) {
             if ($lsff == "Not Active" || $lsff == "") {
-                $stt = "Not Approved";
+                $stt = "Pending";
                 $query = "INSERT INTO loan_disbursement_cache (int_id, account_no, client_id,
                     display_name, product_id, col_id, col_name, col_description,
                     loan_officer, loan_purpose, currency_code,

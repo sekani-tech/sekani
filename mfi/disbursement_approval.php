@@ -123,7 +123,7 @@ if (isset($_GET["message1"])) {
                           <th><?php echo $row["principal_amount"]; ?></th>
                           <th><?php echo $row["interest_rate"]; ?></th>
                           <th><?php echo $row["status"]; ?></th>
-                          <td><a href="../functions/approveLoan.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
+                          <td><a href="../functions/showLoan.php?approve=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                           </tr>
                           <!-- <th></th> -->
                           <?php }
