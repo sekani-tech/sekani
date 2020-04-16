@@ -344,6 +344,25 @@ $destination = "loans.php";
                       <table class="table table-bordered">
                           <thead>
                           <?php
+                          $errors = "";
+                          // Display message if submit button is clicked
+                          if (isset($_POST['submit'])) {
+                              $colval = $_POST['col_name'];
+                              $colname = $_POST['col_value'];
+                              $coldes = $_POST['col_description'];
+                              $task = "INSERT INTO collateral (int_id, type, value, description) VALUES ('{$_SESSION["int_id"]}',
+                              '{$colname}', '{$colval}', '{$coldes}')";
+                              mysqli_query($connection, $task);
+                              header('location: lend.php');
+                            }
+                          // delete task
+                          if (isset($_GET['delete'])) {
+                            $id = $_GET['delete'];
+                        
+                            mysqli_query($connection, "DELETE FROM collateral WHERE id=".$id);
+                            // header('location: lend.php');
+                          }
+
                             $query = "SELECT * FROM collateral WHERE int_id = '".$_SESSION["int_id"]."'";
                             $result = mysqli_query($connection, $query);
                             ?>
@@ -351,6 +370,7 @@ $destination = "loans.php";
                               <th></th>
                               <th>Value</th>
                               <th>Description</th>
+                              <th>Action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -361,6 +381,9 @@ $destination = "loans.php";
                           <td><?php echo $row["type"]; ?></td>
                           <td><?php echo $row["value"]; ?></td>
                           <td><?php echo $row["description"]; ?></td>
+                          <td> 
+                            <a href="lend.php?delete=<?php echo $row['id'] ?>"><button><i class="fa fa-close"></i></button></a> 
+					                </td>
                         </tr>
                         <?php }
                           }
@@ -376,6 +399,7 @@ $destination = "loans.php";
                       <div id="background">
                       </div>
                       <div id="diallbox">
+                        <!-- <form method="POST" action="lend.php" > -->
                 <h3>Add Collateral</h3>
                     <div class="col-md-12">
                       <div class="form-group">
@@ -396,9 +420,10 @@ $destination = "loans.php";
                       </div>
                     </div>
                   <div style="float:right;">
-                        <button class="btn btn-primary pull-right"  onclick="AddDlg()">Add</button>
-                        <button class="btn btn-primary pull-right" type="button" id="">Cancel</button>
+                        <button class="btn btn-primary pull-right"   onclick="AddDlg()">Add</button>
+                        <button class="btn btn-primary pull-right"  id="">Cancel</button>
                       </div>
+                        <!-- </form> -->
 <script>
     function AddDlg(){
         var bg = document.getElementById("background");

@@ -99,11 +99,11 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
                                     '{$loan_id}', '{$client_id}', '{$first_name}', '{$last_name}',
                                     '{$phone}', '{$phone2}', '{$home_address}', '{$office_address}', '{$position_held}',
                                     '{$email}')";
-              $coll = "INSERT INTO collateral (int_id, type, value, description) VALUES ('{$sessint_id}',
-                                    '{$col_type}', '{$col_val}', '{$col_description}')";
+            //   $coll = "INSERT INTO collateral (int_id, type, value, description) VALUES ('{$sessint_id}',
+            //                         '{$col_type}', '{$col_val}', '{$col_description}')";
                                     $kdln = mysqli_query($connection, $gjjj);
-                                    $ssss =  mysqli_query($connection, $coll);
-                                    if ($kdln && $ssss) {
+                                    // $ssss =  mysqli_query($connection, $coll);
+                                    if ($kdln) {
                                         $_SESSION["Lack_of_intfund_$randms"] = "Successfully Uploaded, Awaiting Disbursement Approval";
         header ("Location: ../mfi/lend.php?message=$randms");
                                     } else {

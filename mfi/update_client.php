@@ -218,20 +218,36 @@ if(isset($_GET["edit"])) {
                         </div>
                       </div>
                     </div>
-                    <hr>
                     <div class="row">
-                      <div class="col-md-4">
-                        <label for="">Select ID</label>
-                         <select class="form-control" name="id_card">
-                          <option value="<?php echo $id_card ?>"><?php echo $id_card ?></option>
-                          <option value="National ID">National ID</option>
-                          <option value="Voters ID">Voters ID</option>
-                          <option value="International Passport">International Passport</option>
-                        </select>
-                      </div>
+                      <style>
+                        input[type="file"]{
+                          display: none;
+                        }
+                        .custom-file-upload{
+                          border: 1px solid #ccc;
+                          display: inline-block;
+                          padding: 6px 12px;
+                          cursor: pointer;
+                        }
+                      </style>
+                    <div class="col-md-4">
+                    <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                    <input id ="file-upload" type="file" class="inputFileHidden">
+                    <label> Select ID</label>
+                    </div>
+                    <div class="col-md-4">
+                    <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                    <input id ="file-upload" type="file" class="inputFileHidden">
+                    <label> Select Signature</label>
+                    </div>
+                    <div class="col-md-4">
+                    <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                    <input id ="file-upload" type="file" class="inputFileHidden">
+                    <label> Select Passport</label>
+                    </div>
                     <!-- </div>
                     <div class="row"> -->
-                      <div class="col-md-4">
+                     <!-- <div class="col-md-4">
                       <div class="form-group form-file-upload form-file-multiple">
                       <label for="">ID</label>
                       <input type="file" class="inputFileHidden">
@@ -245,7 +261,7 @@ if(isset($_GET["edit"])) {
                       </div>
                     </div>
                       </div>
-                       <div class="col-md-4">
+                        <div class="col-md-4">
                        <div class="form-group form-file-upload form-file-multiple">
                       <label for="">Signature</label>
                       <input type="file" multiple="" class="inputFileHidden">
@@ -272,6 +288,15 @@ if(isset($_GET["edit"])) {
                               </span>
                           </div>
                         </div>
+                      </div> -->
+                      <div class="col-md-4">
+                        <label for="">Select ID</label>
+                         <select class="form-control" name="id_card">
+                          <option value="<?php echo $id_card ?>"><?php echo $id_card ?></option>
+                          <option value="National ID">National ID</option>
+                          <option value="Voters ID">Voters ID</option>
+                          <option value="International Passport">International Passport</option>
+                        </select>
                       </div>
                     </div>
                     <a href="client.php" class="btn btn-danger">Back</a>
