@@ -44,89 +44,112 @@ if(isset($_POST["id"]))
       $out = '';
       while ($row = mysqli_fetch_array($res))
       {
-        $out .= '<option value="'.$row["id"].'">'.$row["username"].'@'.$row["int_name"].'</option>';
+        $out .= '<option value="'.$row["id"].'">'.$row["first_name"].' '.$row["last_name"].'</option>';
       }
       return $out;
     }
     while ($row = mysqli_fetch_array($result))
     {
-        $output = '<div class="form-group">
-        <div class="row">
-        <div class="col-md-6">
+        $output = '
         <div class="form-group">
-        <label>Maximum Loan Amount *:</label>
-        <input type="number" readonly value="'.$row["max_principal_amount"].'" name="max_principal_amount" class="form-control" required id="maximum_Lamount">
-      </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-        <label>Minimum Loan Amount *:</label>
-        <input type="number" readonly value="'.$row["min_principal_amount"].'" name="min_principal_amount" class="form-control" required id="minimum_Lamount">
-      </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-        <label>Maximum Interest Allowed *:</label>
-        <input type="number" readonly value="'.$row["max_interest_rate"].'" name="max_interest_rate" class="form-control" required id="maximum_intrate">
-      </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-        <label>Minimum Interest Allowed *:</label>
-        <input type="number" readonly value="'.$row["min_interest_rate"].'" name="min_interest_rate" class="form-control" required id="minimum_intrate">
-      </div>
-      </div>
-        <div class="col-md-6">
-        <div class="form-group">
+          <div class="row">
+          <style>
+          label{
+            color: dimgrey;
+          }
+          </style>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Loan Size *:</label>
+                <div id="verifyl"></div>
+                <input type="number"  value="" name="principal_amount" class="form-control" required id="principal_amount">
+              </div>
+            </div>
 
-        <label>Loan Amount *:</label>
-        <div id="verifyl"></div>
-        <input type="number" value="'.$row["principal_amount"].'" name="principal_amount" class="form-control" required id="principal_amount">
+      <div class="col-md-4">
+       <div class="form-group">
+        <label>Minimum Loan Amount *: N'.$row["min_principal_amount"].'</label>
+        <label>Maximum Loan Amount *: N'.$row["max_principal_amount"].'</label>
+        <input type="number" hidden readonly value="'.$row["max_principal_amount"].'" name="max_principal_amount" class="form-control" required id="maximum_Lamount">
+        <input type="number" hidden readonly value="'.$row["min_principal_amount"].'" name="min_principal_amount" class="form-control" required id="minimum_Lamount">
+        </div>
       </div>
+
+      <div class="col-md-4">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-4">
+              <label>Loan Term *:</label>
+              <input type="number" value="" name="loan_term" class="form-control" id="loan_term" />
+            </div>
+            <div class="col-md-5">
+            <label> </label>
+              <select id="repay" class="form-control">
+                <option value ="day">Months</option>
+                <option value ="month">Days</option>
+                <option value ="year">Years</option>
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-md-6">
+
+      <div class="col-md-4">
+        <div class="form-group">
+          <div class="row">
+          <div id="verifyi"></div>
+            <div class="col-md-5">
+              <label>Interest Rate *(%):</label>
+              <input type="number" step= "1" value="" name="interest_rate" class="form-control" id="interest_rate">
+            </div>
+            <div class="col-md-5">
+            <label> </label></br>
+            <label> </label></br>
+          <label>% per day</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="col-md-4">
+    <div class="form-group">
+    <label>Minimum Interest Allowed *: '.$row["min_interest_rate"].'%</label>
+    <input hidden type="number" readonly value="'.$row["min_interest_rate"].'" name="min_interest_rate" class="form-control" required id="minimum_intrate">
+    <label>Maximum Interest Allowed *: '.$row["max_interest_rate"].'%</label>
+      <input hidden type="number" readonly value="'.$row["max_interest_rate"].'" name="max_interest_rate" class="form-control" required id="maximum_intrate">
+    </div>
+  </div>
+
+      <div class="col-md-4">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-5">
+              <label>Repayment Every:</label>
+              <input type="number" class="form-control id="repay"/>
+            </div>
+            <div class="col-md-5">
+            <label> </label></br>
+            <label> </label></br>
+            <label>Days</label>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="col-md-4">
       <div class="form-group">
-        <label>Loan Tenor *:</label>
-        <input type="number" value="'.$row["loan_term"].'" name="loan_term" class="form-control" id="loan_term" />
+        <label>Repayment Start Date:</label>
+        <input type="date" value="" name="repay_start" class="form-control" id="repay_start">
       </div>
       </div>
-      <div class="col-md-6">
-      <div class="form-group">
-        <label>Interest Rate per *:</label>
-        <! -- <input type="text" value="'.$row["repayment_every"].'" name="repay_every" class="form-control" id="repay"> -->
-        <select name="repay_every" class="form-control" id="repay" >
-        <option value = "day">Day</option>
-        <option value = "month">Month</option>
-        <option value = "year">Year</option>
-        </select>
-      </div>
-      </div>
-      <div class="col-md-6">
-      <div class="form-group">
-        <label>Interest Rate *(%):</label>
-        <div id="verifyi"></div>
-        <input type="number" step= "1" value="'.$row["interest_rate"].'" name="interest_rate" class="form-control" id="interest_rate">
-      </div>
-      </div>
-      <div class="col-md-6">
+      
+      <div class="col-md-4">
       <div class="form-group">
         <label>Disbursement Date *:</label>
         <input type="date" name="disbursement_date" class="form-control" id="disb_date">
       </div>
       </div>
-      <div class="col-md-6">
-      <div class="form-group">
-        <label>Grace on Principal Payment:</label>
-        <input type="number" value="" name="grace_on_principal" class="form-control" id="">
-      </div>
-      </div>
-      <div class="col-md-6">
-      <div class="form-group">
-        <label>Grace on Interest Payment:</label>
-        <input type="number" value="" name="grace_on_interest" class="form-control" id="">
-      </div>
-      </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
       <div class="form-group">
         <label>Loan Officer:</label>
         <select type="text" value="" name="loan_officer" class="form-control" id="lof">
@@ -134,22 +157,13 @@ if(isset($_POST["id"]))
         </select>
       </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
       <div class="form-group">
         <label>Loan Purpose:</label>
         <input type="text" value="" name="loan_purpose" class="form-control" id="lop">
       </div>
       </div>
-      <div class="col-md-6">
-      <div class="form-group">
-        <label>Apply Standing instruction:</label>
-        <select name="standing_instruction" class="form-control">
-          <option value="on">ON</option>
-          <option value="off">OFF</option>
-        </select>
-      </div>
-      </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
       <div class="form-group">
         <label>Linked Savings account:</label>
         <select name="linked_savings_acct" class="form-control" id="lsaa">
@@ -157,13 +171,8 @@ if(isset($_POST["id"]))
         </select>
       </div>
       </div>
-      <div class="col-md-6">
-      <div class="form-group">
-        <label>Repayment Starting From:</label>
-        <input type="date" value="" name="repay_start" class="form-control" id="repay_start">
-      </div>
-      </div>
-      <div class="col-md-6">
+      
+      <div class="col-md-4">
       <div class="form-group">
         <label>Loan Sector:</label>
         <select name="" class="form-control">
@@ -176,7 +185,7 @@ if(isset($_POST["id"]))
         </select>
         </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
       <div id = "sekat"class="form-group">
         </div>
         </div>

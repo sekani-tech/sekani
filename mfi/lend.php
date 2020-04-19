@@ -358,58 +358,19 @@ $destination = "loans.php";
                       <button type="button" class="btn btn-primary" name="button" onclick="showDialog()"> <i class="fa fa-plus"></i> Add</button>
                       </div>
                       <div class="form-group">
-                      <table class="table table-bordered">
-                          <thead>
-                          <?php
-                          $errors = "";
-                          // Display message if submit button is clicked
-                          if (isset($_POST['submit'])) {
-                              $colval = $_POST['col_name'];
-                              $colname = $_POST['col_value'];
-                              $coldes = $_POST['col_description'];
-                              $task = "INSERT INTO collateral (int_id, type, value, description) VALUES ('{$_SESSION["int_id"]}',
-                              '{$colname}', '{$colval}', '{$coldes}')";
-                              mysqli_query($connection, $task);
-                              header('location: lend.php');
-                            }
-                          // delete task
-                          if (isset($_GET['delete'])) {
-                            $id = $_GET['delete'];
-                        
-                            mysqli_query($connection, "DELETE FROM collateral WHERE id=".$id);
-                            // header('location: lend.php');
-                          }
+                      <!-- <button class="btn btn-primary pull-right" id="clickit">Add</button> -->
+                            <table class = "table table-bordered">
+                              <thead>
+                                <tr>
+                                  <td> .</td>
+                                  <td>Value</td>
+                                  <td>Description</td>
+                                </tr>
+                              </thead>
+                              <tbody id="coll">
 
-                            $query = "SELECT * FROM collateral WHERE int_id = '".$_SESSION["int_id"]."'";
-                            $result = mysqli_query($connection, $query);
-                            ?>
-                            <tr>
-                              <th></th>
-                              <th>Value</th>
-                              <th>Description</th>
-                              <th>Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                      <?php if (mysqli_num_rows($result) > 0) {
-                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
-                        <tr>
-                        <?php $row["id"]; ?>
-                          <td><?php echo $row["type"]; ?></td>
-                          <td><?php echo $row["value"]; ?></td>
-                          <td><?php echo $row["description"]; ?></td>
-                          <td> 
-                            <a href="lend.php?delete=<?php echo $row['id'] ?>"><button><i class="fa fa-close"></i></button></a> 
-					                </td>
-                        </tr>
-                        <?php }
-                          }
-                          else {
-                            echo "No collateral Available";
-                          }
-                          ?>
-                      </tbody>
-                        </table>
+                              </tbody>
+                            </table>
                       </div>
                       <!-- dialog box -->
                       <div class="form-group">
@@ -421,26 +382,45 @@ $destination = "loans.php";
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class = "bmd-label-floating" class="md-3 form-align " for=""> Name:</label>
-                        <input type="text" name="col_name" class="form-control">
+                        <input type="text" name="col_name" id="colname" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class = "bmd-label-floating" for=""> Type:</label>
-                        <input type="text" name="col_value" class="form-control">
+                        <input type="text" name="col_value" id="col_val" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class = "bmd-label-floating" for="">Description:</label>
-                        <input type="text" name="col_description" class="form-control">
+                        <input type="text" name="col_description" id="col_descr" class="form-control">
                       </div>
                     </div>
                   <div style="float:right;">
-                        <button class="btn btn-primary pull-right"   onclick="AddDlg()">Add</button>
-                        <button class="btn btn-primary pull-right"  id="">Cancel</button>
+                        <span class="btn btn-primary pull-right" id="clickit" onclick="AddDlg()">Add</span>
+                        <button class="btn btn-primary pull-right" onclick="AddDlg()">Cancel</button>
                       </div>
                         <!-- </form> -->
+                        <script>
+                              $(document).ready(function() {
+                                $('#clickit').on("change keyup paste click", function(){
+                                  var id = $(this).val();
+                                  var client_id = $('#client_name').val();
+                                  var colval = $('#colname').val();
+                                  var colname = $('#col_val').val();
+                                  var coldes = $('#col_descr').val();
+                                  $.ajax({
+                                    url:"collateral_upload.php",
+                                    method:"POST",
+                                    data:{id:id, client_id:client_id, colval:colval, colname:colname, coldes:coldes},
+                                    success:function(data){
+                                      $('#coll').html(data);
+                                    }
+                                  })
+                                });
+                              });
+                            </script>
 <script>
     function AddDlg(){
         var bg = document.getElementById("background");
@@ -498,32 +478,14 @@ $destination = "loans.php";
                       <div class="form-group">
                       <table class="table table-bordered">
                           <thead>
-                          <?php
-                        $query = "SELECT * FROM loan_gaurantor WHERE int_id ='$sessint_id'";
-                        $result = mysqli_query($connection, $query);
-                            ?>
                             <tr>
                               <th>Name</th>
-                              <th>Guarantor Type</th>
-                              <th>Guarantee Amount</th>
+                              <th>Guarantor Phone</th>
+                              <th>Email</th>
                             </tr>
                           </thead>
-                          <tbody>
-                      <?php if (mysqli_num_rows($result) > 0) {
-                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
-                        <tr>
-                        <?php $row["id"]; ?>
-                          <td><?php echo $row["first_name"]; ?></td>
-                          <td><?php echo $row["office_address"]; ?></td>
-                          <td><?php echo $row["email"]; ?></td>
-                        </tr>
-                        <?php }
-                          }
-                          else {
-                            echo "No Guarantor Available";
-                          }
-                          ?>
-                      </tbody>
+                          <tbody id="disgau">
+                          </tbody>
                         </table>
                       </div>
                       <!-- dialog box -->
@@ -536,57 +498,81 @@ $destination = "loans.php";
         <div class="col-md-4">
           <div class="form-group">
             <label class = "bmd-label-floating" class="md-3 form-align " for=""> First Name:</label>
-            <input type="text" name="gau_first_name" id="" class="form-control">
+            <input type="text" name="gau_first_name" id="gau_first_name" class="form-control">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label class = "bmd-label-floating" for=""> Last Name:</label>
-            <input type="text" name="gau_last_name" id="" class="form-control">
+            <input type="text" name="gau_last_name" id="gau_last_name" class="form-control">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label class = "bmd-label-floating" for="">Phone:</label>
-            <input type="text" name="gau_phone" id="" class="form-control">
+            <input type="text" name="gau_phone" id="gau_phone" class="form-control">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
               <label class = "bmd-label-floating" for="">Phone 2:</label>
-              <input type="text" name="gau_phone2" id="" class="form-control">
+              <input type="text" name="gau_phone2" id="gau_phone2" class="form-control">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
               <label class = "bmd-label-floating" for="">Home Address:</label>
-              <input type="text" name="gau_home_address" id="" class="form-control">
+              <input type="text" name="home_address" id="home_address" class="form-control">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
               <label class = "bmd-label-floating" for="">Office Address:</label>
-              <input type="text" name="gau_office_address" id="" class="form-control">
+              <input type="text" name="office_address" id="office_address" class="form-control">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
               <label class = "bmd-label-floating" for="">Position Held:</label>
-              <input type="text" name="gau_position_held" id="" class="form-control">
+              <input type="text" name="position_held" id="position_held" class="form-control">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label class = "bmd-label-floating" class = "bmd-label-floating">Email:</label>
-            <input type="text" name="gau_email" id="" class="form-control">
+            <input type="text" name="gau_email" id="gau_email" class="form-control">
           </div>
         </div>
       </div>
       <div style="float:right;">
-            <button class="btn btn-primary pull-right"  onclick="DlgAdd()" type="button" id="">Add</button>
-            <button class="btn btn-primary pull-right" type="button" id="">Cancel</button>
+            <span class="btn btn-primary pull-right"  onclick="DlgAdd()" type="button" id="gau">Add</span>
+            <button class="btn btn-primary pull-right" onclick="DlgAdd()" type="button" id="">Cancel</button>
           </div>
 </div>
+      <script>
+          $(document).ready(function() {
+            $('#gau').on("change keyup paste click", function(){
+              var id = $(this).val();
+              var client_id = $('#client_name').val();
+              var firstname = $('#gau_first_name').val();
+              var lastname = $('#gau_last_name').val();
+              var phone = $('#gau_phone').val();
+              var phone_b = $('#gau_phone2').val();
+              var h_address = $('#home_address').val();
+              var o_address = $('#office_address').val();
+              var position = $('#position_held').val();
+              var email = $('#gau_email').val();
+              $.ajax({
+                url:"guarantor_upload.php",
+                method:"POST",
+                data:{id:id, client_id:client_id, firstname:firstname, lastname:lastname, phone:phone, phone_b:phone_b, h_address:h_address, o_address:o_address, position:position, email:email},
+                success:function(data){
+                  $('#disgau').html(data);
+                }
+              })
+            });
+          });
+        </script>
 <script>
     function DlgAdd(){
         var bg = document.getElementById("backg");
