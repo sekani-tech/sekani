@@ -18,7 +18,7 @@ if(isset($_GET["edit"])) {
     $middle_name = $n['middlename'];
     $last_name = $n['lastname'];
     $acc_no = $n['account_no'];
-    $loanofficer_id =$n['loan_officer_id'];
+    $loanofficer_id = $n['loan_officer_id'];
     $phone = $n['mobile_no'];
     $phone2 = $n['mobile_no_2'];
     $email = $n['email_address'];
