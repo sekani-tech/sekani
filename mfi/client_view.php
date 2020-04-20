@@ -46,8 +46,8 @@ if(isset($_GET["edit"])) {
     if (count([$getacctv]) == 1) {
       $xrx = mysqli_fetch_array($getacctv);
       $abd = $xrx['account_balance_derived'];
-      $tdd = $xrx['total_deposits_derived'];
-      $twd = $xrx['total_withdrawals_derived'];
+      $tdd = $xrx['last_deposit'];
+      $twd = $xrx['last_withdrawal'];
       $gogo = mysqli_query($connection, "SELECT * FROM loan WHERE account_no = '$acc_no' && int_id='$sessint_id'");
       if (count([$gogo]) == 1) {
         $ppo = mysqli_fetch_array($gogo);
