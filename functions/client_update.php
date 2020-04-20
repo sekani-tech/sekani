@@ -31,9 +31,9 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
     $state = $_POST['state'];
     $lga = $_POST['lga'];
     $bvn = $_POST['bvn'];
-    $image1 = $_POST['sign'];
-    $image2 = $_POST['passportbk'];
-    $image3 = $_POST['idimg'];
+    // $image1 = $_POST['sign'];
+    // $image2 = $_POST['passportbk'];
+    // $image3 = $_POST['idimg'];
     if ( isset($_POST['sms_active']) ) {
         $sms_active = 1;
     } else {
@@ -49,23 +49,19 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
     // a new stuff for data upload
     $digits = 10;
 
-
+    if($_FILES['signature']['name']) {
         $temp = explode(".", $_FILES['signature']['name']);
         $randmst = str_pad(rand(0, pow(10, 7)-1), 10, '0', STR_PAD_LEFT);
-        $image1 = $randmst. '.' .end($temp);
-        $sel = mysqli_query($connection, "SELECT * FROM client WHERE id = '$id'");
- if (count([$sel]) == 1) {
-   $d = mysqli_fetch_array($sel);
-   $imgx = $d['signature'];
-   $imgxx = $d['id_img_url'];
-   $imgxxx = $d['passport'];
- }
-
-        if (move_uploaded_file($_FILES['signature']['tmp_name'], "clients/" . $image1)) {
+        $img1 = $randmst. '.' .end($temp);
+        if (move_uploaded_file($_FILES['signature']['tmp_name'], "clients/" . $img1)) {
             $msg = "Image uploaded successfully";
         } else {
             $msg = "Image Failed";
-        }   
+        }  
+    } else {
+        $img1 = $_POST['sign'];
+    }
+    
     // }
     // else {
     //     $image1 = $_POST['sign'];
@@ -74,86 +70,73 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
 // $target2 = "clients/".basename($image2);
 
 // if ID image has value, code should run and save normally
+    if($_FILES['id_img_url']['name']) {
         $temp2 = explode(".", $_FILES['id_img_url']['name']);
         $randms2 = str_pad(rand(0, pow(10, 9)-1), 10, '0', STR_PAD_LEFT);
-        $image2 = $randms2. '.' .end($temp2);
-        if (move_uploaded_file($_FILES['id_img_url']['tmp_name'], "clients/" . $image2)) {
+        $img2 = $randms2. '.' .end($temp2);
+        if (move_uploaded_file($_FILES['id_img_url']['tmp_name'], "clients/" . $img2)) {
             $msg = "Image uploaded successfully";
         } else {
             $msg = "Image Failed";
         }
-
-        if ($image2 == null) {
-            $img2 = $image2;
-          } else {
-            $img2 = $imgxx;
-          }
-
-// $image3 = $_FILES['passport']['name'];
-// $target3 = "clients/".basename($image3);
+    }
+    else {
+        $img2 = $_POST['idimg'];
+    }
 
 // if passport has value, code should run and save normally
+    if($_FILES['passport']['name']) {
         $temp3 = explode(".", $_FILES['passport']['name']);
         $randms3 = str_pad(rand(0, pow(10, 8)-1), 10, '0', STR_PAD_LEFT);
-        $image3 = $randms3. '.' .end($temp3);
-        if (move_uploaded_file($_FILES['passport']['tmp_name'], "clients/" . $image3)) {
+        $img3 = $randms3. '.' .end($temp3);
+        if (move_uploaded_file($_FILES['passport']['tmp_name'], "clients/" . $img3)) {
             $msg = "Image uploaded successfully";
         } else {
             $msg = "Image Failed";
         }
+    }
+    else {
+        $img3 = $_POST['passportbk'];
+    }
 
-    if ($image1 == NULL && $image2 == NULL && $image3 == NULL) {
-        $img1 = $imgx;
-        $img2 = $imgxx;
-        $img3 = $imgxxx;
-      } else if ($image2 == NULL && $image3 == NULL) {
-        $img1 = $image1;
-        $img2 = $imgxx;
-        $img3 = $imgxxx;
-      } else if ($image3 == NULL) {
-          $img1 = $image1;
-          $img2 = $image2;
-          $img3 = $imgxxx;
-      } else if ($image1 == NULL) {
-          $img1 = $imgx;
-        $img2 = $image2;
-        $img3 = $image3;
-      } else if ($image2 == NULL) {
-        $img1 = $image1;
-        $img2 = $imgxx;
-        $img3 = $image3;
-      } else if ($image1 == NULL && $image3 == NULL) {
-          $img1 = $imgx;
-          $img2 = $image2;
-          $img3 = $imgxxx;
-      } else if ($image1 == NULL && $image2 == NULL) {
-          $img1 = $imgx;
-          $img2 = $imgxx;
-          $img3 = $image3;
-      } else {
-          $img1 = $image1;
-          $img2 = $image2;
-          $img3 = $image3;
-      }
-// if (move_uploaded_file($_FILES['signature']['tmp_name'], $target1)) {
-//     $msg = "Image uploaded successfully";
-// }else{
-//     $msg = "Failed to upload image";
-// }
-// if (move_uploaded_file($_FILES['idimg']['tmp_name'], $target2)) {
-//     $msg = "Image uploaded successfully";
-// }else{
-//     $msg = "Failed to upload image";
-// }
-// if (move_uploaded_file($_FILES['passport']['tmp_name'], $target3)) {
-//     $msg = "Image uploaded successfully";
-// }else{
-//     $msg = "Failed to upload image";
-// }
-    // $passport =$_POST['passport'];
-    // $signature = $_POST['signature'];
-    // $id_img_url = $_POST['id_img_url'];
-// smalls
+
+// This query will not work because the random string you are using will always send a value at the end. So nothing is null.
+
+    // if ($image1 == NULL && $image2 == NULL && $image3 == NULL) {
+    //     $img1 = $imgx;
+    //     $img2 = $imgxx;
+    //     $img3 = $imgxxx;
+    //   } else if ($image2 == NULL && $image3 == NULL) {
+    //     $img1 = $image1;
+    //     $img2 = $imgxx;
+    //     $img3 = $imgxxx;
+    //   } else if ($image3 == NULL) {
+    //       $img1 = $image1;
+    //       $img2 = $image2;
+    //       $img3 = $imgxxx;
+    //   } else if ($image1 == NULL) {
+    //       $img1 = $imgx;
+    //     $img2 = $image2;
+    //     $img3 = $image3;
+    //   } else if ($image2 == NULL) {
+    //     $img1 = $image1;
+    //     $img2 = $imgxx;
+    //     $img3 = $image3;
+    //   } else if ($image1 == NULL && $image3 == NULL) {
+    //       $img1 = $imgx;
+    //       $img2 = $image2;
+    //       $img3 = $imgxxx;
+    //   } else if ($image1 == NULL && $image2 == NULL) {
+    //       $img1 = $imgx;
+    //       $img2 = $imgxx;
+    //       $img3 = $image3;
+    //   } else {
+    //       $img1 = $image1;
+    //       $img2 = $image2;
+    //       $img3 = $image3;
+    //   }
+// This query will not work because the random string you are using will always send a value at the end. So nothing is null.
+
 $updated_by = $_SESSION["user_id"];
 $updated_on = date("Y-m-d");
 $queryx = "UPDATE client SET client_type = '$ctype', account_type = '$acct_type', display_name = '$display_name',

@@ -230,20 +230,25 @@ if(isset($_GET["edit"])) {
                           cursor: pointer;
                         }
                       </style>
-                    <div class="col-md-4">
+                      <div class="col-md-4">
                     <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
-                    <input id ="file-upload" type="file" class="inputFileHidden">
-                    <label> Select ID</label>
+                    <input id ="file-upload" name="passport" type="file" class="inputFileHidden"/>
+                    <input type="text" hidden value="<?php echo $passportbk;?>" name="passportbk">
+                    <label> Select Passport</label>
                     </div>
+                    
                     <div class="col-md-4">
-                    <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
-                    <input id ="file-upload" type="file" class="inputFileHidden">
+                    <label for="file-insert" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                    <input id ="file-insert" name="signature" type="file" class="inputFileHidden"/>
+                    <input type="text" hidden value="<?php echo $sign;?>" name="sign">
                     <label> Select Signature</label>
                     </div>
+                    
                     <div class="col-md-4">
-                    <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
-                    <input id ="file-upload" type="file" class="inputFileHidden">
-                    <label> Select Passport</label>
+                    <label for="file-enter" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                    <input id ="file-enter" type="file" name="id_img_url" class="inputFileHidden"/>
+                    <input type="text" hidden value="<?php echo $idimg;?>" name="idimg">
+                    <label> Select ID</label>
                     </div>
                     <!-- </div>
                     <div class="row"> -->
