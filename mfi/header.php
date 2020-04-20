@@ -80,8 +80,8 @@ input[type=number] {
         <div class="col-xs-2">
           <div class="card-profile">
             <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="../functions/instimg/<?php echo $img; ?>" />
+                  <a href="#picasso">
+                    <img class="img" src="../instimg/<?php echo $img; ?>" />
                   </a>
                 </div>
           </div>

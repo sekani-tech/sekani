@@ -56,6 +56,7 @@ else if (isset($_GET["message2"])) {
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
                    $query = "SELECT client.id, principal_amount_proposed, client.display_name, loan.interest_rate FROM loan JOIN client ON loan.client_id = client.id WHERE client.int_id ='$sessint_id' && client.loan_status = 'Active'";
+                  //  this query, Na fight?
                    $resultx = mysqli_query($connection, $query);
                    if ($resultx) {
                      $inr = mysqli_num_rows($resultx);

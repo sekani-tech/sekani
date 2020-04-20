@@ -4,6 +4,27 @@ $page_title = "Loan Summary";
 $destination = "loans.php";
     include("header.php");
 
+    if(isset($_GET["loancoll"])) {
+      $id = $_GET["loancoll"];
+    }
+
+    // Query for the loan & client
+    $query = "SELECT passport, signature, id_img_url, client.id, loan_officer, loan.col_description, principal_amount, loan.total_repayment_derived, loan.account_no, client.display_name, loan.interest_rate FROM loan JOIN client ON loan.client_id = client.id WHERE client.int_id ='$sessint_id' && client.loan_status = 'Active'";
+    $result = mysqli_query($connection, $query);
+    if (count([$query]) == 1) {
+    $n = mysqli_fetch_array($result);
+    $name = $n['display_name'];
+    $accountno = $n['account_no'];
+    $passport = $n['passport'];
+    $sign = $n['signature'];
+    $idimg = $n['id_img_url'];
+    $loanofficer = $n['loan_officer'];;
+    $loan_amount = $n['principal_amount'];
+    $amount_payed = $n['total_repayment_derived'];
+    $OLoan_balance = $n['total_repayment_derived'];
+    $collateral = $n['col_description'];
+    }
+
 ?>
 
 <!-- Content added here -->
@@ -20,19 +41,19 @@ $destination = "loans.php";
                   <form action="">
                     <div class="form-group">
                       <label for="">Name:</label>
-                      <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo "Chidozie Ebuka"; ?>" readonly name="display_name">
+                      <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo $name; ?>" readonly name="display_name">
                     </div>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Account No:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo "00014273403"; ?>" readonly>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $accountno; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Account Officer:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo "Jikoba Tunde" ?>" readonly>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $loanofficer ?>" readonly>
                         </div>
                       </div>
                     </div>
@@ -47,25 +68,25 @@ $destination = "loans.php";
                 <form action="">
                     <div class="form-group">
                           <label for="">Loan Amount:</label>
-                          <input type="text" name="" id="" class="form-control" value="<?php echo "200000"; ?>" readonly>
+                          <input type="text" name="" id="" class="form-control" value="<?php echo $loan_amount; ?>" readonly>
                         </div>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Total Outstanding Loan balance:</label>
-                          <input type="text" name="" id="" class="form-control" value="<?php echo "170000"; ?>" readonly>
+                          <input type="text" name="" id="" class="form-control" value="<?php echo $amount_payed; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Total Loan Amount payed:</label>
-                          <input type="text" name="" id="" class="form-control" value="<?php echo "30000"; ?>" readonly>
+                          <input type="text" name="" id="" class="form-control" value="<?php echo $OLoan_balance; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Collateral Value</label>
-                          <input type="text" name="" id="" class="form-control" value="<?php echo "2000000"; ?>" readonly>
+                          <input type="text" name="" id="" class="form-control" value="<?php echo $collateral; ?>" readonly>
                         </div>
                       </div>
                     </div>
@@ -140,7 +161,7 @@ $destination = "loans.php";
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $id_img_url;?>" />
+                    <img class="img" src="../functions/clients/<?php echo $idimg;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->
@@ -153,7 +174,7 @@ $destination = "loans.php";
                 <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $signature;?>" />
+                    <img class="img" src="../functions/clients/<?php echo $sign;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->
