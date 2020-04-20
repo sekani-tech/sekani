@@ -70,7 +70,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                 if($transact_type == "Deposit") {
                   $new_abd = $comp;
                   $iupq = "UPDATE account SET account_balance_derived = '$new_abd',
-                  total_deposits_derived = '$amount' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
+                  last_deposit = '$amount' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
                   $iupqres = mysqli_query($connection, $iupq);
                   if ($iupqres) {
                       $iat = "INSERT INTO account_transaction (int_id, branch_id,
@@ -145,7 +145,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                 } else if ($transact_type == "Withdrawal") {
                   $new_abd2 = $comp2;
                   $iupq = "UPDATE account SET account_balance_derived = '$new_abd2',
-                  total_withdrawals_derived  = '$amount' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
+                  last_withdrawal = '$amount' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
                   $iupqres = mysqli_query($connection, $iupq);
                   if ($iupqres) {
                       $iat = "INSERT INTO account_transaction (int_id, branch_id,
