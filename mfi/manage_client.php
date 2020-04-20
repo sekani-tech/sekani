@@ -47,8 +47,6 @@ include("header.php");
                       <input type="text" style="text-transform: uppercase;" class="form-control" name="display_name">
                     </div>
                   </div>
-                </div>
-                <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >First Name</label>
@@ -85,16 +83,12 @@ include("header.php");
                       <input type="email" class="form-control" name="email">
                     </div>
                   </div>
-                </div>
-                <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
                       <label >Address</label>
                       <input type="text" style="text-transform: uppercase;" class="form-control" name="address">
                     </div>
                   </div>
-                </div>
-                <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Gender:</label>
@@ -204,42 +198,34 @@ include("header.php");
                       </select>
                     </div>
                   </div>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col-md-6">
-                    <!-- insert passport -->
-                    <div class="form-group form-file-upload form-file-multiple">
-                      <label for="">Passport</label>
-                      <input type="file" multiple="" class="inputFileHidden">
-                      <div class="input-group">
-                          <input type="text" name="passport" class="form-control inputFileVisible" placeholder="Passport">
-                          <span class="input-group-btn">
-                              <button type="button" class="btn btn-fab btn-round btn-primary">
-                                  <i class="material-icons">attach_file</i>
-                              </button>
-                          </span>
-                      </div>
+                  <style>
+                        input[type="file"]{
+                          display: none;
+                        }
+                        .custom-file-upload{
+                          border: 1px solid #ccc;
+                          display: inline-block;
+                          padding: 6px 12px;
+                          cursor: pointer;
+                        }
+                      </style>
+                      <div class="col-md-4">
+                    <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                    <input id ="file-upload" name="passport" type="file" class="inputFileHidden"/>
+                    <label> Select Passport</label>
                     </div>
-                  </div>
-                  <div class="col-md-6">
-                    <!-- insert passport -->
-                    <div class="form-group form-file-upload form-file-multiple">
-                      <label for="">Signature</label>
-                      <input type="file" multiple="" class="inputFileHidden">
-                      <div class="input-group">
-                          <input type="text" name="signature" class="form-control inputFileVisible" placeholder="Insert Signature">
-                          <span class="input-group-btn">
-                              <button type="button" class="btn btn-fab btn-round btn-primary">
-                                  <i class="material-icons">attach_file</i>
-                              </button>
-                          </span>
-                      </div>
+                    
+                    <div class="col-md-4">
+                    <label for="file-insert" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                    <input id ="file-insert" name="signature" type="file" class="inputFileHidden"/>
+                    <label> Select Signature</label>
                     </div>
-                  </div>
-                </div>
-                <hr>
-                <div class="row">
+                    
+                    <div class="col-md-4">
+                    <label for="file-enter" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                    <input id ="file-enter" type="file" name="id_img_url" class="inputFileHidden"/>
+                    <label> Select ID</label>
+                    </div>
                   <div class="col-md-4">
                     <label for="">Id Type</label>
                     <select name="id_card" class="form-control " id="">
@@ -248,20 +234,6 @@ include("header.php");
                       <option value="International Passport">International Passport</option>
                       <!-- <option value="Drivers Liscense"></option> -->
                     </select>
-                  </div>
-                  <div class="col-md-8">
-                  <div class="form-group form-file-upload form-file-multiple">
-                    <label for="">ID</label>
-                      <input type="file" multiple="" class="inputFileHidden">
-                      <div class="input-group">
-                          <input type="text" name="idimg" class="form-control inputFileVisible" placeholder="ID">
-                          <span class="input-group-btn">
-                              <button type="button" class="btn btn-fab btn-round btn-primary">
-                                  <i class="material-icons">attach_file</i>
-                              </button>
-                          </span>
-                      </div>
-                    </div>
                   </div>
                 </div>
                 <a href="client.php" class="btn btn-danger">Back</a>
