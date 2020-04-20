@@ -219,7 +219,7 @@ if(isset($_GET["edit"])) {
                   function fill_officer($connection)
                   {
                   $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM staff WHERE int_id = '$sint_id'";
+                  $org = "SELECT * FROM staff";
                   $res = mysqli_query($connection, $org);
                   $out = '';
                   while ($row = mysqli_fetch_array($res))
