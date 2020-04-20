@@ -18,6 +18,11 @@ if(isset($_GET["edit"])) {
     $display_name = $n['display_name'];
     $first_name = $n['firstname'];
     $middle_name = $n['middlename'];
+    $account_officer = $n['loan_officer_id'];
+    $checkl = "SELECT * FROM staff WHERE user_id = '$account_officer'";
+    $resxx = mysqli_query($connection, $checkl);
+    $xf = mysqli_fetch_array($resxx);
+    $acctn = strtoupper($xf['first_name'] ." ". $xf['last_name']);
     $last_name = $n['lastname'];
     $phone = $n['mobile_no'];
     $phone2 = $n['mobile_no_2'];
@@ -227,7 +232,7 @@ if(isset($_GET["edit"])) {
                         <div class="form-group">
                           <label for="">Account Officer:</label>
                           <select name="" class="form-control " id="">
-                            <option value="">select account officer</option>
+                            <option value="<?php echo $account_officer?>"><?php echo $acctn; ?></option>
                             <?php echo fill_officer($connection); ?>
                           </select>
                         </div>
