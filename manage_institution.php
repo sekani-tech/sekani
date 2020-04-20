@@ -30,6 +30,7 @@
               $pc_phone = $n['pc_phone'];
               $pc_email = $n['pc_email'];
               $img = $n['img'];
+              $int_img = $n['img'];
             }
           }
         ?>
@@ -44,36 +45,36 @@
                 <div class="card-body">
                   <form action="functions/update_institution.php" method="POST"  enctype="multipart/form-data">
                     <div class="row">
-                      <div class="col-md-2">
+                      <div class="col-md-1">
                         <div class="form-group">
                           <label class="bmd-label-floating">ID</label>
                           <input type="text" readonly value="<?php echo $int_id; ?>" class="form-control" name="int_id">
                         </div>
                       </div>
-                      <div class="col-md-10">
+                      <div class="col-md-11">
                         <div class="form-group">
                           <label class="bmd-label-floating">Name</label>
                           <input type="text" value="<?php echo $int_name; ?>" class="form-control" name="int_name">
                         </div>
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">State:</label>
+                      <select class="form-control" style="text-transform: uppercase;" name="state" id="selState" onchange="configureDropDownLists()">
+                      </select>
+                    </div> 
+                    </div> 
+                    <div class="col-md-6">
+                      <div class="form-group">
+                      <label for="">LGA:</label>
+                      <select  class="form-control"name="lga" id="selCity">
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">RCN</label>
                           <input type="text" value="<?php echo $rcn; ?>" class="form-control" name="rcn">
-                        </div>
-                      </div>
-                      <div class="col-md-8">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">LGA</label>
-                          <input type="text" value="<?php echo $lga; ?>" class="form-control" name="lga">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">State</label>
-                          <input type="text" value="<?php echo $int_state; ?>" class="form-control" name="int_state">
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -82,31 +83,25 @@
                           <input type="email" value="<?php echo $email; ?>" class="form-control" name="email">
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Office Address</label>
                           <input type="text" value="<?php echo $office_address; ?>" class="form-control" name="office_address">
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Website</label>
                           <input type="text" value="<?php echo $website; ?>" class="form-control" name="website">
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Phone</label>
                                 <input type="text" value="<?php echo $office_phone; ?>" name="office_phone" class="form-control" id="">
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Title</label>
                                 <select name="pc_title" value="<?php echo $pc_title; ?>" class="form-control" id="">
@@ -118,51 +113,54 @@
                             </div>
                         </div>
                         <!-- <div class="clearfix"></div> -->
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Primary Contact Surname</label>
                                 <input type="text" value="<?php echo $pc_surname; ?>" name="pc_surname" class="form-control" id="">
                             </div>
                         </div>
                         
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Primary Contact Other Names</label>
                                 <input type="text" value="<?php echo $pc_other_name; ?>" name="pc_other_name" class="form-control" id="">
                             </div>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Primary Contact Designation</label>
                                 <input type="text" value="<?php echo $pc_designation; ?>" name="pc_designation" class="form-control" id="">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Primary Contact Phone</label>
                                 <input type="tel" value="<?php echo $pc_phone; ?>" name="pc_phone" class="form-control" id="">
                             </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Primary Contact Email</label>
                                 <input type="email" value="<?php echo $pc_email; ?>" name="pc_email" class="form-control" id="">
                             </div>
                         </div>
-                        <div class="col-md-4">
-                          <div class="form-group form-file-upload form-file-multiple">
-                            <label for="">Logo</label>
-                            <input type="file" multiple="" class="inputFileHidden">
-                            <div class="input-group">
-                                <input type="file" name="int_logo" class="form-control inputFileVisible" placeholder="Insert Logo">
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-fab btn-round btn-primary">
-                                        <i class="material-icons">attach_file</i>
-                                    </button>
-                                </span>
-                            </div>
-                          </div>
-                        </div>
+                        <style>
+                        input[type="file"]{
+                          display: none;
+                        }
+                        .custom-file-upload{
+                          border: 1px solid #ccc;
+                          display: inline-block;
+                          padding: 6px 12px;
+                          cursor: pointer;
+                        }
+                      </style>
+                        <div class="col-md-6">
+                    <label for="file-enter" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                    <input id ="file-enter" type="file" name="int_logo" class="inputFileHidden"/>
+                    <input type="text" hidden value="<?php echo $int_img;?>" name="int_img">
+                    <label> Select Logo</label>
+                    </div>
                     </div>
                     <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
                     <button type="reset" class="btn btn_default">Reset</button>
@@ -175,7 +173,7 @@
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../functions/instimg/<?php echo $img; ?>" />
+                    <img class="img" src="./instimg/<?php echo $img; ?>" />
                   </a>
                 </div>
                 <?php

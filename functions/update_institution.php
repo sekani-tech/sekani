@@ -18,26 +18,17 @@ $pc_phone = $_POST['pc_phone'];
 $pc_email = $_POST['pc_email'];
 
 $digits = 10;
-$temp = explode(".", $_FILES['int_logo']['name']);
-$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-$imagex = $randms. '.' .end($temp);
-
-$sel = mysqli_query($connection, "SELECT * FROM institutions WHERE id = '$int_id'");
- if (count([$sel]) == 1) {
-   $d = mysqli_fetch_array($sel);
-   $imgx = $d['img'];
- }
-
-if ($imagex == null) {
-  $img = $imgx;
+if($_FILES['int_logo']['name']) {
+  $temp = explode(".", $_FILES['int_logo']['name']);
+  $randmst = str_pad(rand(0, pow(10, 7)-1), 10, '0', STR_PAD_LEFT);
+  $img = $randmst. '.' .end($temp);
+  if (move_uploaded_file($_FILES['int_logo']['tmp_name'], "../instimg/" . $img)) {
+      $msg = "Image uploaded successfully";
+  } else {
+      $msg = "Image Failed";
+  }  
 } else {
-  $img = $imagex;
-}
-
-if (move_uploaded_file($_FILES['imagefile']['tmp_name'], "instimg/" . $imagex)) {
-    $msg = "Image uploaded successfully";
-} else {
-  $msg = "Image Failed";
+  $img = $_POST['int_img'];
 }
 
   $query = "UPDATE institutions SET int_name = '$int_name', 
