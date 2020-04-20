@@ -232,17 +232,17 @@ if(isset($_GET["edit"])) {
                       </style>
                     <div class="col-md-4">
                     <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
-                    <input id ="file-upload" type="file" class="inputFileHidden">
+                    <input id ="file-upload" name="id_img_url" type="file" class="inputFileHidden">
                     <label> Select ID</label>
                     </div>
                     <div class="col-md-4">
                     <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
-                    <input id ="file-upload" type="file" class="inputFileHidden">
+                    <input id ="file-upload" name="signature" type="file" class="inputFileHidden">
                     <label> Select Signature</label>
                     </div>
                     <div class="col-md-4">
                     <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
-                    <input id ="file-upload" type="file" class="inputFileHidden">
+                    <input id ="file-upload" name="passport" type="file" class="inputFileHidden">
                     <label> Select Passport</label>
                     </div>
                     <!-- </div>

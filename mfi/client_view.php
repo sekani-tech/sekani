@@ -150,6 +150,7 @@ if(isset($_GET["edit"])) {
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>
                 <!-- passport -->
+                <br>
               </div>
               <div class="card card-profile">
                 <div class="card-avatar">
@@ -163,6 +164,7 @@ if(isset($_GET["edit"])) {
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>
               </div>
+              <br>
                 <!-- /id card -->
                 <div class="card card-profile">
                 <div class="card-avatar">
