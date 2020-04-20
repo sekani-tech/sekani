@@ -146,12 +146,7 @@ if(isset($_GET["edit"])) {
                 <!-- Get session data and populate user profile -->
                 <div class="card-body">
                   <h6 class="card-category text-gray">Account Name</h6>
-                  <h6><?php echo $display_name; ?></h6>
-                  <h4 class="card-title">Client Name</h4>
                   <h4><?php echo $display_name; ?></h4>
-                  <p class="card-description">
-                    Account Balance
-                  </p>
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>
                 <!-- passport -->
