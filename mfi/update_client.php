@@ -216,13 +216,13 @@ if(isset($_GET["edit"])) {
                       </div>
                       <div class="col-md-4">
                       <?php
-                  function fill_officerx($connection)
+                  function fx($connection)
                   {
-                  $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM staff WHERE int_id = '$sint_id'";
-                  $res = mysqli_query($connection, $org);
+                  $sessint_id = $_SESSION["int_id"];
+                  $showr = "SELECT * FROM staff WHERE int_id = '$sessint_id";
+                  $reyxx = mysqli_query($connection, $showr);
                   $out = '';
-                  while ($row = mysqli_fetch_array($res))
+                  while ($row = mysqli_fetch_array($reyxx))
                   {
                     $out = '<option value="'.$row["id"].'">' .$row["username"]. '</option>';
                   }
@@ -233,7 +233,7 @@ if(isset($_GET["edit"])) {
                           <label for="">Account Officer:</label>
                           <select name="acct_off" class="form-control " id="">
                             <option value="<?php echo $account_officer; ?>"><?php echo $acctn; ?></option>
-                            <?php echo fill_officerx($connection); ?>
+                            <?php echo fx($connection); ?>
                           </select>
                         </div>
                       </div>
