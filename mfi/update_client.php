@@ -222,9 +222,9 @@ if(isset($_GET["edit"])) {
                   $showr = "SELECT * FROM staff WHERE int_id = '$sessint_id";
                   $reyxx = mysqli_query($connection, $showr);
                   $out = '';
-                  while ($row = mysqli_fetch_array($reyxx))
+                  while ($rowx = mysqli_fetch_array($reyxx))
                   {
-                    $out = '<option value="'.$row["id"].'">' .$row["username"]. '</option>';
+                    $out = '<option value="'.$rowx["id"].'">' .$rowx["username"]. '</option>';
                   }
                   return $out;
                   }
