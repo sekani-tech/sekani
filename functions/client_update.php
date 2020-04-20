@@ -171,17 +171,9 @@ if($result) {
     $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
           echo header ("Location: ../mfi/client.php?message3=$randms");
         } else {
-        //    $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-        //    echo "error";
-        //   echo header ("Location: ../mfi/client.php?message4=$randms");
-        if ($connection->error) {
-            try {   
-                throw new Exception("MySQL error $connection->error <br> Query:<br> $queryx", $mysqli->error);   
-            } catch(Exception $e ) {
-                echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-                echo nl2br($e->getTraceAsString());
-            }
-        }
+           $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+           echo "error";
+          echo header ("Location: ../mfi/client.php?message4=$randms");
             // echo header("location: ../mfi/client.php");
         }
 if ($connection->error) {

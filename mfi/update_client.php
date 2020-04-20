@@ -224,7 +224,7 @@ if(isset($_GET["edit"])) {
                   $out = '';
                   while ($row = mysqli_fetch_array($res))
                   {
-                    $out .= '<option value="'.$row["id"].'">' .$row["display_name"]. '</option>';
+                    $out = '<option value="'.$row["id"].'">' .$row["display_name"]. '</option>';
                   }
                   return $out;
                   }
