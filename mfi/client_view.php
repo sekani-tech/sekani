@@ -34,7 +34,7 @@ if(isset($_GET["edit"])) {
     $email_active = $n['EMAIL_ACTIVE'];
     $id_card = $n['id_card'];
     $passport = $n['passport'];
-    $acount = mysqli_query($connection, "SELECT * FROM staff WHERE user_id='$loanofficer_id'");
+    $acount = mysqli_query($connection, "SELECT * FROM staff WHERE id='$loanofficer_id'");
     if (count([$acount]) == 1) {
       $j = mysqli_fetch_array($acount);
       $displayname = strtoupper($j['first_name'] ." ". $j['last_name']);
