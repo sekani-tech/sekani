@@ -216,10 +216,10 @@ if(isset($_GET["edit"])) {
                       </div>
                       <div class="col-md-4">
                       <?php
-                  function fill_officer($connection)
+                  function fill_officerx($connection)
                   {
                   $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM staff";
+                  $org = "SELECT * FROM staff WHERE int_id = '$sint_id'";
                   $res = mysqli_query($connection, $org);
                   $out = '';
                   while ($row = mysqli_fetch_array($res))
@@ -233,7 +233,7 @@ if(isset($_GET["edit"])) {
                           <label for="">Account Officer:</label>
                           <select name="acct_off" class="form-control " id="">
                             <option value="<?php echo $account_officer?>"><?php echo $acctn; ?></option>
-                            <?php echo fill_officer($connection); ?>
+                            <?php echo fill_officerx($connection); ?>
                           </select>
                         </div>
                       </div>
