@@ -5,7 +5,7 @@ session_start();
 ?>
 <?php
 $sessint_id = $_SESSION["int_id"];
-$loan_officer_id = $_SESSION["user_id"];
+$loan_officer_id = $_POST["acct_of"];
 $ctype = strtoupper($_POST['ctype']);
 $acct_type = strtoupper($_POST['acct_type']);
 $branch = strtoupper($_POST['branch']);

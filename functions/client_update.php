@@ -30,6 +30,7 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
     $country = $_POST['country'];
     $state = $_POST['state'];
     $lga = $_POST['lga'];
+    $acct_off = $_POST['acct_off'];
     $bvn = $_POST['bvn'];
     // $image1 = $_POST['sign'];
     // $image2 = $_POST['passportbk'];
@@ -139,7 +140,7 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
 
 $updated_by = $_SESSION["user_id"];
 $updated_on = date("Y-m-d");
-$queryx = "UPDATE client SET client_type = '$ctype', account_type = '$acct_type', display_name = '$display_name',
+$queryx = "UPDATE client SET loan_officer_id = '$acct_off', client_type = '$ctype', account_type = '$acct_type', display_name = '$display_name',
 firstname = '$first_name', lastname= '$last_name', middlename = '$middle_name',
 mobile_no = '$phone', mobile_no_2 = '$phone2', ADDRESS = '$address', gender = '$gender',
 date_of_birth = '$date_of_birth', branch_id = '$branch', COUNTRY = '$country', STATE_OF_ORIGIN = '$state',

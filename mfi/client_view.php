@@ -18,7 +18,7 @@ if(isset($_GET["edit"])) {
     $middle_name = $n['middlename'];
     $last_name = $n['lastname'];
     $acc_no = $n['account_no'];
-    $loanofficer_id =$n['loan_officer_id'];
+    $loanofficer_id = $n['loan_officer_id'];
     $phone = $n['mobile_no'];
     $phone2 = $n['mobile_no_2'];
     $email = $n['email_address'];
@@ -34,10 +34,10 @@ if(isset($_GET["edit"])) {
     $email_active = $n['EMAIL_ACTIVE'];
     $id_card = $n['id_card'];
     $passport = $n['passport'];
-    $acount = mysqli_query($connection, "SELECT * FROM staff WHERE user_id='$loanofficer_id'");
+    $acount = mysqli_query($connection, "SELECT * FROM staff WHERE id='$loanofficer_id'");
     if (count([$acount]) == 1) {
       $j = mysqli_fetch_array($acount);
-      $displayname = $j['display_name'];
+      $displayname = strtoupper($j['first_name'] ." ". $j['last_name']);
     }
     $signature = $n['signature'];
     $id_img_url = $n['id_img_url'];
@@ -146,15 +146,11 @@ if(isset($_GET["edit"])) {
                 <!-- Get session data and populate user profile -->
                 <div class="card-body">
                   <h6 class="card-category text-gray">Account Name</h6>
-                  <h6><?php echo $display_name; ?></h6>
-                  <h4 class="card-title">Client Name</h4>
                   <h4><?php echo $display_name; ?></h4>
-                  <p class="card-description">
-                    Account Balance
-                  </p>
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>
                 <!-- passport -->
+                <br>
               </div>
               <div class="card card-profile">
                 <div class="card-avatar">
@@ -168,6 +164,7 @@ if(isset($_GET["edit"])) {
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>
               </div>
+              <br>
                 <!-- /id card -->
                 <div class="card card-profile">
                 <div class="card-avatar">
