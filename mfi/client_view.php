@@ -37,7 +37,7 @@ if(isset($_GET["edit"])) {
     $acount = mysqli_query($connection, "SELECT * FROM staff WHERE user_id='$loanofficer_id'");
     if (count([$acount]) == 1) {
       $j = mysqli_fetch_array($acount);
-      $displayname = $j['display_name'];
+      $displayname = strtoupper($j['first_name'] ." ". $j['last_name']);
     }
     $signature = $n['signature'];
     $id_img_url = $n['id_img_url'];
