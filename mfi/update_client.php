@@ -231,7 +231,7 @@ if(isset($_GET["edit"])) {
                   ?>
                         <div class="form-group">
                           <label for="">Account Officer:</label>
-                          <select name="" class="form-control " id="">
+                          <select name="acct_off" class="form-control " id="">
                             <option value="<?php echo $account_officer?>"><?php echo $acctn; ?></option>
                             <?php echo fill_officer($connection); ?>
                           </select>
