@@ -187,7 +187,7 @@ if (isset($_GET["edit"])) {
                                  document.getElementById('emp').checked = false;
                                  document.getElementById('dec').checked = true;
                                 });
-                              } else if (xc == "Decommissioned") {
+                              } else {
                                 document.getElementById('emp').checked = false;
                                 document.getElementById('dec').checked = true;
                                 $('emp').click(function() {
@@ -201,7 +201,7 @@ if (isset($_GET["edit"])) {
                               }
                             });
                           </script>
-                          <input type="radio" name="employee_status" value="Employed" id="emp" checked="false">
+                          <input type="radio" name="employee_status" value="Employed" id="emp">
                           <input type="text" hidden value="<?php echo $status; ?>" id="opo">
                             <label style="color: black;">Employed</label><br>
                             <input type="radio" name="employee_status" id="dec" value="Decommisioned">
