@@ -243,6 +243,8 @@ if(isset($_GET["edit"])) {
                       </div>
                       <div class="col-md-4">
                         <p><label for="">Active Alerts: </label></p>
+                        <input type="text" value="<?php echo $sms_active;?>" id="opo">
+                        <input type="text" hidden value="<?php echo $email_active;?>" id="opo2">
                         <script>
                             $(document).ready(function() {
                               var xc = document.getElementById("opo").value;
@@ -289,7 +291,6 @@ if(isset($_GET["edit"])) {
                         <div class="form-check form-check-inline">
                           <label class="form-check-label">
                               <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
-                              <input type="text" hidden value="<?php echo $sms_active;?>" id="opo">
                               SMS
                               <span class="form-check-sign">
                                 <span class="check"></span>
@@ -299,7 +300,6 @@ if(isset($_GET["edit"])) {
                         <div class="form-check form-check-inline">
                           <label class="form-check-label">
                               <input class="form-check-input" type="checkbox" value="<?php echo $email_active;?>" name="email_active" id="eml">
-                              <input type="text" hidden value="<?php echo $email_active;?>" id="opo2">
                               Email
                               <span class="form-check-sign">
                                 <span class="check"></span>
