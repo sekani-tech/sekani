@@ -248,40 +248,40 @@ if(isset($_GET["edit"])) {
                               var xc = document.getElementById("opo").value;
                               var xc2 = document.getElementById("opo2").value;
                               if (xc == 1 && xc2 == 0) {
-                                document.getElementById('sms').checked = true;
-                                document.getElementById('eml').checked = false;
+                                document.getElementById('sms').prop('checked', true);
+                                document.getElementById('eml').prop('checked', false);
                                 $('sms').click(function() {
-                                 document.getElementById('sms').checked = true;
+                                 document.getElementById('sms').prop('checked', true);
                                 });
                                 $('eml').click(function() {
-                                 document.getElementById('eml').checked = true;
+                                 document.getElementById('eml').prop('checked', true);
                                 });
                               } else if (xc == 0 && xc2 == 1) {
-                                document.getElementById('sms').checked = false;
-                                document.getElementById('eml').checked = true;
+                                document.getElementById('sms').prop('checked', false);
+                                document.getElementById('eml').prop('checked', true);
                                 $('sms').click(function() {
-                                 document.getElementById('sms').checked = true;
+                                 document.getElementById('sms').prop('checked', true);
                                 });
                                 $('eml').click(function() {
-                                 document.getElementById('eml').checked = true;
+                                 document.getElementById('eml').prop('checked', true);
                                 });
                               } else if (xc == 1 && xc2 == 1) {
-                                document.getElementById('sms').checked = true;
-                                document.getElementById('eml').checked = true;
+                                document.getElementById('sms').prop('checked', true);
+                                document.getElementById('eml').prop('checked', true);
                                 $('sms').click(function() {
-                                 document.getElementById('sms').checked = true;
+                                 document.getElementById('sms').prop('checked', true);
                                 });
                                 $('eml').click(function() {
-                                 document.getElementById('eml').checked = true;
+                                 document.getElementById('eml').prop('checked', true);
                                 });
                               } else {
-                                document.getElementById('emp').checked = false;
-                                document.getElementById('dec').checked = false;
+                                document.getElementById('emp').prop('checked', false);
+                                document.getElementById('dec').prop('checked', false);
                                 $('emp').click(function() {
-                                 document.getElementById('sms').checked = true;
+                                 document.getElementById('sms').prop('checked', true);
                                 });
                                 $('dec').click(function() {
-                                 document.getElementById('eml').checked = true;
+                                 document.getElementById('eml').prop('checked', true);
                                 });
                               }
                             });
@@ -289,7 +289,7 @@ if(isset($_GET["edit"])) {
                         <div class="form-check form-check-inline">
                           <label class="form-check-label">
                               <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
-                              <input type="radio" hidden value="<?php echo $sms_active;?>" id="opo" readonly>
+                              <input type="text" hidden value="<?php echo $sms_active;?>" id="opo" readonly>
                               SMS
                               <span class="form-check-sign">
                                 <span class="check"></span>
@@ -299,7 +299,7 @@ if(isset($_GET["edit"])) {
                         <div class="form-check form-check-inline">
                           <label class="form-check-label">
                               <input class="form-check-input" type="checkbox" value="<?php echo $email_active;?>" name="email_active" id="eml">
-                              <input type="radio" hidden value="<?php echo $email_active;?>" id="opo2" readonly>
+                              <input type="text" hidden value="<?php echo $email_active;?>" id="opo2" readonly>
                               Email
                               <span class="form-check-sign">
                                 <span class="check"></span>
