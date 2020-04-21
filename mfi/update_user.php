@@ -188,8 +188,8 @@ if (isset($_GET["edit"])) {
                                  document.getElementById('dec').checked = true;
                                 });
                               } else if (xc == "Decommissioned") {
-                                document.getElementById('emp').checked = true;
-                                document.getElementById('dec').checked = false;
+                                document.getElementById('emp').checked = false;
+                                document.getElementById('dec').checked = true;
                                 $('emp').click(function() {
                                  document.getElementById('emp').checked = true;
                                  document.getElementById('dec').checked = false;
