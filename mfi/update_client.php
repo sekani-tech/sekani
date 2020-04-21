@@ -111,10 +111,10 @@ if(isset($_GET["edit"])) {
                   function fill_account($connection, $vd)
                   {
                   $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM account WHERE int_id = '$sint_id' && client_id ='$vd'";
-                  $res = mysqli_query($connection, $org);
+                  $orgs = "SELECT * FROM account WHERE int_id = '$sint_id' && client_id ='$vd'";
+                  $resx = mysqli_query($connection, $orgs);
                   $out = '';
-                  while ($row = mysqli_fetch_array($res))
+                  while ($row = mysqli_fetch_array($resx))
                   {
                     $out .= '<option value="'.$row["account_no"].'">'.$row["account_no"].'</option>';
                   }
@@ -124,7 +124,7 @@ if(isset($_GET["edit"])) {
                           <label class="">Account No</label>
                           <select name="account_no" class="form-control " id="collat">
                           <option value="<?php echo $account_no; ?>"><?php echo $account_no; ?></option>
-                          <?php echo fill_savings($connection, $vd); ?>
+                          <?php echo fill_account($connection, $vd); ?>
                         </select>
                         </div>
                       </div>
