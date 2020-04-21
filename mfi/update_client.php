@@ -243,7 +243,7 @@ if(isset($_GET["edit"])) {
                       </div>
                       <div class="col-md-4">
                         <p><label for="">Active Alerts: </label></p>
-                        <input type="text" value="<?php echo $sms_active;?>" id="opo">
+                        <input type="text" hidden value="<?php echo $sms_active;?>" id="opo">
                         <input type="text" hidden value="<?php echo $email_active;?>" id="opo2">
                         <script>
                             $(document).ready(function() {
@@ -277,7 +277,7 @@ if(isset($_GET["edit"])) {
                                  document.getElementById('eml').checked = true;
                                 });
                               } else {
-                                document.getElementById('sms').checked = true;
+                                document.getElementById('sms').checked = false;
                                 document.getElementById('eml').checked = false;
                                 $('emp').click(function() {
                                  document.getElementById('sms').checked = true;
