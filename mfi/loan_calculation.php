@@ -38,7 +38,7 @@ function fill_com ($e, $d, $tx, $em) {
   date_default_timezone_set('UTC');
   echo "<label for=''>". "Date & Principal Due:" ."</label>";
 while (strtotime($d) <= strtotime($e)) {
-    echo "<div class='form-group'>" . "jhjjjjhjjhhjkkjkkkkkkkkkkk<ul>" . "<li>". date("d M Y", strtotime($d)) . ": " . $em . "</li>" . "</ul>"."</div>";
+    echo "<div class='form-group'>" . "<ul>" . "<li>". date("d M Y", strtotime($d)) . ": " . $em . "</li>" . "</ul>"."</div>";
     $d = date ("Y-m-d", strtotime("+1 ".$tx." ", strtotime($d)));
 }
 date("M Y", strtotime($d));

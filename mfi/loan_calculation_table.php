@@ -4,7 +4,7 @@
 $result = '';
 $principal_amount = $_POST["prina"];
 $loan_term = $_POST["loant"];
-$int_rate = $_POST["intr"];
+$int_rate = $_POST["intr"] / 100;
 $repayment_start = $_POST["repay_start"];
 $rep_every = $_POST["repay"];
 $disburse_date = $_POST["disbd"];
