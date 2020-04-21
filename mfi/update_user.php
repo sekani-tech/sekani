@@ -65,7 +65,23 @@ if (isset($_GET["edit"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Username</label>
-                          <input type="text" name="username" value="<?php echo $username; ?>" class="form-control">
+                          <script>
+                            $(document).ready(function(){
+                              $('#usernamewarn').on("change keyup paste click", function(){
+                                var usern = $(this).val();
+                                $.ajax({
+                                  url: "verify_user.php",
+                                  method: "POST",
+                                  data: {usern:usern},
+                                  success: function(data){
+                                    $('#warnuser').html(data);
+                                  }
+                                });
+                              });
+                            });
+                          </script>
+                          <input type="text" name="username" value="<?php echo $username; ?>" id="usernamewarn" class="form-control">
+                          <span class="help-block" style="color: red;"><div id="warnuser"></div></span>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -157,9 +173,38 @@ if (isset($_GET["edit"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Employee Status</label></br>
-                          <input type="radio" name="employee_status" value="Employed">
+                          <script>
+                            $(document).ready(function() {
+                              var xc = $("opo").val();
+                              if (xc == "Employed") {
+                                document.getElementById('emp').checked = true;
+                                document.getElementById('dec').checked = false;
+                                $('emp').click(function() {
+                                 document.getElementById('emp').checked = true;
+                                 document.getElementById('dec').checked = false;
+                                });
+                                $('dec').click(function() {
+                                 document.getElementById('emp').checked = false;
+                                 document.getElementById('dec').checked = true;
+                                });
+                              } else if (xc == "Decommissioned") {
+                                document.getElementById('emp').checked = true;
+                                document.getElementById('dec').checked = false;
+                                $('emp').click(function() {
+                                 document.getElementById('emp').checked = true;
+                                 document.getElementById('dec').checked = false;
+                                });
+                                $('dec').click(function() {
+                                 document.getElementById('emp').checked = false;
+                                 document.getElementById('dec').checked = true;
+                                });
+                              }
+                            });
+                          </script>
+                          <input type="radio" name="employee_status" value="Employed" id="emp" checked="false">
+                          <input type="text" disabled value="<?php echo $status; ?>" id="opo">
                             <label style="color: black;">Employed</label><br>
-                            <input type="radio" name="employee_status" value="Decommisioned">
+                            <input type="radio" name="employee_status" id="dec" value="Decommisioned" checked="false">
                             <label style="color: black;">Decommisioned</label><br>
                         </div>
                       </div>
