@@ -175,7 +175,7 @@ if (isset($_GET["edit"])) {
                           <label class="bmd-label-floating">Employee Status</label></br>
                           <script>
                             $(document).ready(function() {
-                              var xc = $("opo").val();
+                              var xc = document.getElementById("opo").value;
                               if (xc == "Employed") {
                                 document.getElementById('emp').checked = true;
                                 document.getElementById('dec').checked = false;
