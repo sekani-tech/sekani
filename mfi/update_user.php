@@ -202,7 +202,7 @@ if (isset($_GET["edit"])) {
                             });
                           </script>
                           <input type="radio" name="employee_status" value="Employed" id="emp" checked="false">
-                          <input type="text" disabled value="<?php echo $status; ?>" id="opo">
+                          <input type="text" hidden value="<?php echo $status; ?>" id="opo">
                             <label style="color: black;">Employed</label><br>
                             <input type="radio" name="employee_status" id="dec" value="Decommisioned" checked="false">
                             <label style="color: black;">Decommisioned</label><br>
