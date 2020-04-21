@@ -23,10 +23,23 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Account Type</label>
+                      <?php
+                  function fill_savings($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM savings_product WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
                         <select name="acct_type" class="form-control" data-style="btn btn-link" id="collat">
                           <option value="">select a Account Type</option>
-                          <option value="savings">Savings Account</option>
-                          <option value="current">Current Account</option>
+                          <?php echo fill_savings($connection); ?>
                         </select>
                     </div>
                   </div>

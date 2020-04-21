@@ -27,7 +27,7 @@ if (isset($_GET["edit"])) {
     $status = $n['employee_status'];
     $org_role = $n['org_role'];
     $img = $n['img'];
-    $ut = mysqli_query($connection, "SELECT usertype FROM users WHERE id='$user_id' && int_id='$sessint_id");
+    $ut = mysqli_query($connection, "SELECT * FROM users WHERE id='$user_id' && int_id='$sessint_id");
     if (count([$ut]) == 1) {
       $j = mysqli_fetch_array($ut);
       $usertype = $j['usertype'];

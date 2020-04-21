@@ -13,8 +13,10 @@ if(isset($_GET["edit"])) {
 
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
+    $vd = $n['id'];
     $ctype = $n['client_type'];
     $acct_type = $n['account_type'];
+    $account_no = $n['account_no'];
     $display_name = $n['display_name'];
     $first_name = $n['firstname'];
     $middle_name = $n['middlename'];
@@ -72,15 +74,61 @@ if(isset($_GET["edit"])) {
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
+                        <?php
+                  function fill_savings($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM savings_product WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
                           <label class="">Account Type:</label>
                           <select name="account_type" class="form-control " id="collat">
-                          <option value="">Choose Account Type</option>
-                          <option value="Current">Current</option>
-                          <option value="Savings">Savings</option>
+                            <?php
+                            $queryd = mysqli_query($connection, "SELECT * FROM savings_product WHERE id='$acct_type'");
+                            $res = mysqli_fetch_array($queryd);
+                            $accttypp = $res['id'];
+                            $accttname = $res['name'];
+                            if ($accttypp == "CURRENT" || $accttypp == "SAVINGS" && $accttypp == "") {
+                              $accttname = "..choose a savings product";
+                            }
+                            ?>
+                          <option value="<?php echo $accttypp; ?>"><?php echo $accttname; ?></option>
+                          <?php echo fill_savings($connection); ?>
                         </select>
                         </div>
                       </div>
                       <!-- </div> -->
+                      <div class="col-md-4">
+                        <div class="form-group">
+                        <?php
+                  function fill_account($connection, $vd)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM account WHERE int_id = '$sint_id' && client_id ='$vd'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["account_no"].'">'.$row["account_no"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
+                          <label class="">Account No</label>
+                          <select name="account_no" class="form-control " id="collat">
+                          <option value="<?php echo $account_no; ?>"><?php echo $account_no; ?></option>
+                          <?php echo fill_savings($connection, $vd); ?>
+                        </select>
+                        </div>
+                      </div>
+                      <!-- acctnnnjni -->
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Display name</label>

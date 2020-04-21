@@ -14,6 +14,7 @@ if (isset($_POST['id']) && isset($_POST['ctype'])) {
     $idimg = $n['id_img_url'];
   }
     $id = $_POST['id'];
+    $account_no = $_POST['account_no'];
     $ctype = $_POST['ctype'];
     $acct_type = $_POST['account_type'];
     $display_name = $_POST['display_name'];
@@ -150,6 +151,17 @@ id_img_url = '$img2', passport = '$img3', signature = '$img1' WHERE id = '$id'";
 
 $result = mysqli_query($connection, $queryx);
 if($result) {
+    // select * the client and then update the product
+    $acctquery = mysqli_query($connection, "SELECT * FROM client WHERE id = '$id'");
+    // next step
+    if (count([$acctquery]) == 1) {
+        $x = mysqli_fetch_array($acctquery);
+        $account_type = $x['account_type'];
+        $queryd = mysqli_query($connection, "SELECT * FROM savings_product WHERE id='$account_type'");
+        $res = mysqli_fetch_array($queryd);
+        $accttname = $res['name'];
+        $updateacctp = mysqli_query($connection, "UPDATE account SET account_type = '$accttname', product_id = '$account_type' WHERE account_no = '$account_no'");
+    }
     // If 'result' is successful, it will send the required message to client.php
     $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
           echo header ("Location: ../mfi/client.php?message3=$randms");
