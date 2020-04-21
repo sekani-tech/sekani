@@ -13,5 +13,10 @@ if(isset($_POST["id"]))
         $prod = $res["product_id"];
         $sql2 = "SELECT * FROM savings_product WHERE id = '$prod'";
     }
+    $res2 = mysqli_query($connection, $sql2);
+    while ($row = mysqli_fetch_array($res2))
+    {
+        $output = '';
+    }
 }
 ?>
