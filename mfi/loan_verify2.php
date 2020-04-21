@@ -13,12 +13,12 @@ $minint = $_POST["min_intrate"];
 
 
 if($minint > $interest_rate ) {
-    echo '<label style="color: red;">Minimum Interest has not been met! Please adjust Interest Rate</label';
+    echo '<label style="color: red;">Min Interest has not been met!</label';
 }
 else if($maxint >= $interest_rate){
     echo '';
 }
 else if($interest_rate > $maxint) {
-    echo '<label style="color: red;">Maximum loan has been exceeded! Please adjust Interest Rate</label';
+    echo '<label style="color: red;">Max Interest has been exceeded!</label';
 }
 ?>
