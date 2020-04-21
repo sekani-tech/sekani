@@ -35,7 +35,23 @@ while ( $results[] = mysqli_fetch_object ( $res ) );
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Username</label>
-                          <input type="text" class="form-control" name="username">
+                          <script>
+                            $(document).ready(function(){
+                              $('#usernamewarn').on("change keyup paste click", function(){
+                                var usern = $(this).val();
+                                $.ajax({
+                                  url: "verify_user.php",
+                                  method: "POST",
+                                  data: {usern:usern},
+                                  success: function(data){
+                                    $('#warnuser').html(data);
+                                  }
+                                });
+                              });
+                            });
+                          </script>
+                          <input type="text" class="form-control" name="username" id="usernamewarn">
+                          <span class="help-block" style="color: red;"><div id="warnuser"></div></span>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -66,8 +82,8 @@ while ( $results[] = mysqli_fetch_object ( $res ) );
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Password: (default - bateis1)</label>
-                          <input type="password" value="bateis1" name="password" class="form-control">
+                          <label class="bmd-label-floating">Password: (default - password1)</label>
+                          <input type="password" value="password1" name="password" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -132,7 +148,7 @@ while ( $results[] = mysqli_fetch_object ( $res ) );
                         <div class="form-group">
                           <label class="bmd-label-floating">UserType</label>
                           <select name="user_t" id="" class="form-control">
-                          <option value="">...</option>
+                          <option value="staff">...</option>
                             <option value="admin">Admin</option>
                             <option value="staff">Staff</option>
                           </select>

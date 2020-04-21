@@ -36,7 +36,7 @@ include("header.php");
                       <select name="ctype" class="form-control" id="collat">
                           <option value="Individual">Individual</option>
                           <option value="Joint">Joint Account</option>
-                          <option value="Student">Student Account</option>
+                          <option value="Student">Cooperate Account</option>
                         </select>
                     </div>
                   </div>
