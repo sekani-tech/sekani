@@ -99,9 +99,9 @@ if(isset($_GET["edit"])) {
                             $poi = mysqli_fetch_array($res2);
                             $accttypp = $poi["id"];
                             $accttname = $poi["name"];
-                            if ($accttypp == "CURRENT" || $accttypp == "SAVINGS" || $accttypp == "") {
-                              $accttname = "..choose a savings product";
-                            }
+                            // if ($accttypp == "CURRENT" || $accttypp == "SAVINGS" || $accttypp == "") {
+                            //   $accttname = "..choose a savings product";
+                            // }
                             ?>
                           <option value="<?php echo $accttypp; ?>"><?php echo $accttname; ?></option>
                           <?php echo fill_savings($connection); ?>
