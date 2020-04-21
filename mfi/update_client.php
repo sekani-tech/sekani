@@ -243,9 +243,53 @@ if(isset($_GET["edit"])) {
                       </div>
                       <div class="col-md-4">
                         <p><label for="">Active Alerts:</label></p>
+                        <script>
+                            $(document).ready(function() {
+                              var xc = document.getElementById("opo").value;
+                              var xc2 = document.getElementById("opo2").value;
+                              if (xc == 1 && xc2 == 0) {
+                                document.getElementById('sms').checked = true;
+                                document.getElementById('eml').checked = false;
+                                $('sms').click(function() {
+                                 document.getElementById('sms').checked = true;
+                                });
+                                $('eml').click(function() {
+                                 document.getElementById('eml').checked = true;
+                                });
+                              } else if (xc == 0 && xc2 == 1) {
+                                document.getElementById('sms').checked = false;
+                                document.getElementById('eml').checked = true;
+                                $('sms').click(function() {
+                                 document.getElementById('sms').checked = true;
+                                });
+                                $('eml').click(function() {
+                                 document.getElementById('eml').checked = true;
+                                });
+                              } else if (xc == 1 && xc2 == 1) {
+                                document.getElementById('sms').checked = true;
+                                document.getElementById('eml').checked = true;
+                                $('sms').click(function() {
+                                 document.getElementById('sms').checked = true;
+                                });
+                                $('eml').click(function() {
+                                 document.getElementById('eml').checked = true;
+                                });
+                              } else {
+                                document.getElementById('emp').checked = false;
+                                document.getElementById('dec').checked = false;
+                                $('emp').click(function() {
+                                 document.getElementById('sms').checked = true;
+                                });
+                                $('dec').click(function() {
+                                 document.getElementById('eml').checked = true;
+                                });
+                              }
+                            });
+                          </script>
                         <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active">
+                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input type="text" hidden value="<?php echo $sms_active;?>" id="opo" readonly>
                               SMS
                               <span class="form-check-sign">
                                 <span class="check"></span>
@@ -254,7 +298,8 @@ if(isset($_GET["edit"])) {
                         </div>
                         <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="<?php echo $email_active;?>" name="email_active">
+                              <input class="form-check-input" type="checkbox" value="<?php echo $email_active;?>" name="email_active" id="eml">
+                              <input type="text" hidden value="<?php echo $email_active;?>" id="opo2" readonly>
                               Email
                               <span class="form-check-sign">
                                 <span class="check"></span>
