@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "Teller Disbursement";
-$destination = "products_config.php";
+$destination = "index.php";
     include("header.php");
 
 ?>
@@ -13,7 +13,7 @@ $destination = "products_config.php";
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Disburse to teller</h4>
+                  <h4 class="card-title">Internal Acct Posting</h4>
                   <!-- <p class="card-category">Fill in all important data</p> -->
                 </div>
                 <div class="card-body">
