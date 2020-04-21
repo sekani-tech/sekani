@@ -247,41 +247,41 @@ if(isset($_GET["edit"])) {
                             $(document).ready(function() {
                               var xc = document.getElementById("opo").value;
                               var xc2 = document.getElementById("opo2").value;
-                              if (xc == 1 && xc2 == 0) {
-                                document.getElementById('sms').prop('checked', true);
-                                document.getElementById('eml').prop('checked', false);
+                              if (xc == '1' && xc2 == '0') {
+                                document.getElementById('sms').checked = true;
+                                document.getElementById('eml').checked = false;
                                 $('sms').click(function() {
-                                 document.getElementById('sms').prop('checked', true);
+                                 document.getElementById('sms').checked = true;
                                 });
                                 $('eml').click(function() {
-                                 document.getElementById('eml').prop('checked', true);
+                                 document.getElementById('eml').checked = true;
                                 });
-                              } else if (xc == 0 && xc2 == 1) {
-                                document.getElementById('sms').prop('checked', false);
-                                document.getElementById('eml').prop('checked', true);
+                              } else if (xc == '0' && xc2 == '1') {
+                                document.getElementById('sms').checked = false;
+                                document.getElementById('eml').checked = true;
                                 $('sms').click(function() {
-                                 document.getElementById('sms').prop('checked', true);
+                                 document.getElementById('sms').checked = true;
                                 });
                                 $('eml').click(function() {
-                                 document.getElementById('eml').prop('checked', true);
+                                 document.getElementById('eml').checked = true;
                                 });
-                              } else if (xc == 1 && xc2 == 1) {
-                                document.getElementById('sms').prop('checked', true);
-                                document.getElementById('eml').prop('checked', true);
+                              } else if (xc == '1' && xc2 == '1') {
+                                document.getElementById('sms').checked = true;
+                                document.getElementById('eml').checked = true;
                                 $('sms').click(function() {
-                                 document.getElementById('sms').prop('checked', true);
+                                 document.getElementById('sms').checked = true;
                                 });
                                 $('eml').click(function() {
-                                 document.getElementById('eml').prop('checked', true);
+                                 document.getElementById('eml').checked = true;
                                 });
                               } else {
-                                document.getElementById('emp').prop('checked', false);
-                                document.getElementById('dec').prop('checked', false);
+                                document.getElementById('sms').checked = false;
+                                document.getElementById('eml').checked = false;
                                 $('emp').click(function() {
-                                 document.getElementById('sms').prop('checked', true);
+                                 document.getElementById('sms').checked = true;
                                 });
                                 $('dec').click(function() {
-                                 document.getElementById('eml').prop('checked', true);
+                                 document.getElementById('eml').checked = true;
                                 });
                               }
                             });
