@@ -91,11 +91,15 @@ if(isset($_GET["edit"])) {
                           <label class="">Account Type:</label>
                           <select name="account_type" class="form-control " id="collat">
                             <?php
-                            $queryd = mysqli_query($connection, "SELECT * FROM savings_product WHERE id='$acct_type'");
-                            $res = mysqli_fetch_array($queryd);
-                            $accttypp = $res['id'];
-                            $accttname = $res['name'];
-                            if ($accttypp == "CURRENT" || $accttypp == "SAVINGS" && $accttypp == "") {
+                            $queryd = mysqli_query($connection, "SELECT * FROM account WHERE account_no ='$account_no' && int_id = '$sint_id'");
+                            $resx = mysqli_fetch_array($queryd);
+                            $prod = $resx['product_id'];
+                            $sql2 = "SELECT * FROM savings_product WHERE id = '$prod'";
+                            $res2 = mysqli_query($connection, $sql2);
+                            $poi = mysqli_fetch_array($res2);
+                            $accttypp = $poi["id"];
+                            $accttname = $poi["name"];
+                            if ($accttypp == "CURRENT" || $accttypp == "SAVINGS" || $accttypp == "") {
                               $accttname = "..choose a savings product";
                             }
                             ?>
