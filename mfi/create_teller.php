@@ -27,7 +27,7 @@ $destination = "staff_mgmt.php";
                         swal({
                             type: "success",
                             title: "Success",
-                            text: "Loan Submitted Successfully, Awaiting Approval",
+                            text: "Teller Created Successfully",
                             showConfirmButton: false,
                             timer: 2000
                         })
@@ -52,60 +52,6 @@ $destination = "staff_mgmt.php";
                 });
                 </script>
                 ';
-            $_SESSION["lack_of_intfund_$key"] = 0;
-            }
-          }else if (isset($_GET["message3"])) {
-            $key = $_GET["message3"];
-            $tt = 0;
-            if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-              echo '<script type="text/javascript">
-                $(document).ready(function(){
-                    swal({
-                        type: "error",
-                        title: "Error",
-                        text: "This Client Has Been Given Loan Before",
-                        showConfirmButton: false,
-                        timer: 2000
-                    })
-                });
-                </script>
-                ';
-            $_SESSION["lack_of_intfund_$key"] = 0;
-            }
-          }else if (isset($_GET["message4"])) {
-            $key = $_GET["message4"];
-            $tt = 0;
-            if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-              echo '<script type="text/javascript">
-                  $(document).ready(function(){
-                      swal({
-                      type: "error",
-                      title: "Error",
-                      text: "Insufficent Fund From Institution Account!",
-                      showConfirmButton: false,
-                      timer: 2000
-                  })
-              });
-              </script>
-              ';
-            $_SESSION["lack_of_intfund_$key"] = 0;
-            }
-          }else if (isset($_GET["message5"])) {
-            $key = $_GET["message5"];
-            $tt = 0;
-            if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-            echo '<script type="text/javascript">
-            $(document).ready(function(){
-                swal({
-                    type: "error",
-                    title: "Error",
-                    text: "Error in Posting For Loan Gaurantor",
-                    showConfirmButton: false,
-                    timer: 2000
-                })
-            });
-            </script>
-            ';
             $_SESSION["lack_of_intfund_$key"] = 0;
             }
           }

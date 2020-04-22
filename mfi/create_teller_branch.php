@@ -20,7 +20,7 @@ include("../functions/connect.php");
         $out = '';
         while ($row = mysqli_fetch_array($res))
         {
-        $out .= '<option value="'.$row["id"].'">'.$row["name"]. '</option>';
+        $out .= '<option name ="branch" value="'.$row["id"].'">'.$row["name"]. '</option>';
         }
         return $out;
         }
