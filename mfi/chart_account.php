@@ -214,7 +214,7 @@ input:checked + .slider:before {
                           <th><?php echo $row["account_type"]; ?></th>
                           <th><?php echo $row["tag_id"]; ?></th>
                           <th><?php echo $row["organization_running_balance_derived"]; ?></th>
-                          <th><?php echo $row["reconciliation_enabled"]; ?></th>?></th>
+                          <th><?php echo $row["reconciliation_enabled"]; ?></th>
                           <td><a href="#?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
                         <?php }
