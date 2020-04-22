@@ -163,29 +163,36 @@ input:checked + .slider:before {
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Chart of Accounts</h4>
                   <!-- Insert number users institutions -->
+                  <p class="card-category"><?php
+                   $query = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id'";
+                   $result = mysqli_query($connection, $query);
+                   if ($result) {
+                     $inr = mysqli_num_rows($result);
+                     echo $inr;
+                   }?> Chart of Accounts || <a style = "color: white;" href="manage_client.php">Add Account</a></p>
+                  <!-- Insert number users institutions -->
                   <script>
                   $(document).ready(function() {
                   $('#tabledat2').DataTable();
                   });
                   </script>
-                  <p class="card-category"><a style ="color: white;" href="user.php">Add Account</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table id="tabledat2" class="table" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT users.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id WHERE users.int_id ='$sessint_id'";
+                        $query = "SELECT * FROM acc_gl_account WHERE int_id ='$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
                           GL No
                         </th>
                         <th>
-                          Account Type
+                          Account Name
                         </th>
                         <th>
-                          External ID
+                          Account Type
                         </th>
                         <th>
                           Account ID
@@ -199,64 +206,24 @@ input:checked + .slider:before {
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>
-                          <tr>
-                              <td>78680</td>
-                              <td>Cash Balances</td>
-                              <td>ASSETS</td>
-                              <td></td>
-                              <td></td>
-                              <td>38498304803</td>
-                              <td></td>
-                              <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
-                          </tr>
-                          <tr>
-                              <td>75934</td>
-                              <td>Cash Balances</td>
-                              <td>ASSETS</td>
-                              <td></td>
-                              <td></td>
-                              <td>349349343</td>
-                              <td></td>
-                              <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
-                          </tr>
-                          <tr>
-                              <td>75847</td>
-                              <td>Cash Balances</td>
-                              <td>ASSETS</td>
-                              <td></td>
-                              <td></td>
-                              <td>34834834</td>
-                              <td></td>
-                              <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
-                          </tr>
-                          <tr>
-                              <td>03839</td>
-                              <td>Cash Balances</td>
-                              <td>ASSETS</td>
-                              <td></td>
-                              <td></td>
-                              <td>73734737</td>
-                              <td></td>
-                              <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
-                          </tr>
-                      <!-- <?php if (mysqli_num_rows($result) > 0) {
+                      <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
-                          <th><?php echo $row["display_name"]; ?></th>
-                          <th><?php echo $row["username"]; ?></th>
-                          <th><?php echo $row["int_name"]; ?></th>
-                          <th><?php echo $row["email"]; ?></th>
-                          <th><?php echo $row["status"]; ?></th>
-                          <th><?php echo $row["employee_status"]; ?></th>
-                          <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                          <th><?php echo $row["gl_code"]; ?></th>
+                          <th><?php echo $row["name"]; ?></th>
+                          <th><?php echo $row["name"]; ?></th>
+                          <th><?php echo $row["tag_id"]; ?></th>
+                          <th><?php echo $row["organization_running_balance_derived"]; ?></th>
+                          <th><?php echo $row["reconciliation_enabled"]; ?></th>
+                          <td><a href="#?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
                         <?php }
                           }
                           else {
                             echo "0 Staff";
                           }
-                          ?> -->
+                          ?>
                       </tbody>
                     </table>
                   </div>
