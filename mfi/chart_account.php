@@ -201,7 +201,6 @@ input:checked + .slider:before {
                          Balance
                         </th>
                         <th>Unreconciled Balance</th>
-                        <th>Status</th>
                         <th>Edit</th>
                         <!-- <th>Phone</th> -->
                       </thead>
@@ -212,15 +211,10 @@ input:checked + .slider:before {
                         <?php $row["id"]; ?>
                           <th><?php echo $row["gl_code"]; ?></th>
                           <th><?php echo $row["name"]; ?></th>
-                          <th><?php echo $row["name"]; ?></th>
+                          <th><?php echo $row["account_type"]; ?></th>
                           <th><?php echo $row["tag_id"]; ?></th>
                           <th><?php echo $row["organization_running_balance_derived"]; ?></th>
-                          <th><?php echo $row["reconciliation_enabled"]; ?></th>
-                          <th><?php if($row["disabled"] == 0 || $row["disabled" == "0"]) {
-                            echo '<i class="material-icons">done</i>';
-                          } else {
-                            echo '<i class="material-icons">clear</i>';
-                          } ?></th>
+                          <th><?php echo $row["reconciliation_enabled"]; ?></th>?></th>
                           <td><a href="#?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
                         <?php }
