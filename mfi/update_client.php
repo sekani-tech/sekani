@@ -13,8 +13,10 @@ if(isset($_GET["edit"])) {
 
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
+    $vd = $n['id'];
     $ctype = $n['client_type'];
     $acct_type = $n['account_type'];
+    $account_no = $n['account_no'];
     $display_name = $n['display_name'];
     $first_name = $n['firstname'];
     $middle_name = $n['middlename'];
@@ -72,15 +74,65 @@ if(isset($_GET["edit"])) {
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
+                        <?php
+                  function fill_savings($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM savings_product WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
                           <label class="">Account Type:</label>
                           <select name="account_type" class="form-control " id="collat">
-                          <option value="">Choose Account Type</option>
-                          <option value="Current">Current</option>
-                          <option value="Savings">Savings</option>
+                            <?php
+                            $queryd = mysqli_query($connection, "SELECT * FROM account WHERE account_no ='$account_no' && int_id = '$sint_id'");
+                            $resx = mysqli_fetch_array($queryd);
+                            $prod = $resx['product_id'];
+                            $sql2 = "SELECT * FROM savings_product WHERE id = '$prod'";
+                            $res2 = mysqli_query($connection, $sql2);
+                            $poi = mysqli_fetch_array($res2);
+                            $accttypp = $poi["id"];
+                            $accttname = $poi["name"];
+                            // if ($accttypp == "CURRENT" || $accttypp == "SAVINGS" || $accttypp == "") {
+                            //   $accttname = "..choose a savings product";
+                            // }
+                            ?>
+                          <option value="<?php echo $accttypp; ?>"><?php echo $accttname; ?></option>
+                          <?php echo fill_savings($connection); ?>
                         </select>
                         </div>
                       </div>
                       <!-- </div> -->
+                      <div class="col-md-4">
+                        <div class="form-group">
+                        <?php
+                  function fill_account($connection, $vd)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $orgs = "SELECT * FROM account WHERE int_id = '$sint_id' && client_id ='$vd'";
+                  $resx = mysqli_query($connection, $orgs);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($resx))
+                  {
+                    $out .= '<option value="'.$row["account_no"].'">'.$row["account_no"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
+                          <label class="">Account No</label>
+                          <select name="account_no" class="form-control " id="collat">
+                          <option value="<?php echo $account_no; ?>"><?php echo $account_no; ?></option>
+                          <?php echo fill_account($connection, $vd); ?>
+                        </select>
+                        </div>
+                      </div>
+                      <!-- acctnnnjni -->
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Display name</label>
@@ -161,7 +213,7 @@ if(isset($_GET["edit"])) {
                   $out = '';
                   while ($row = mysqli_fetch_array($res))
                   {
-                    $out .= '<option value="'.$row["id"].'">'.$row["name"]. ' ' .$row["location"]. '</option>';
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"]. '</option>';
                   }
                   return $out;
                   }
@@ -194,10 +246,55 @@ if(isset($_GET["edit"])) {
                         <input type="text" value="<?php echo $bvn; ?>" name="bvn" class="form-control" id="">
                       </div>
                       <div class="col-md-4">
-                        <p><label for="">Active Alerts:</label></p>
+                        <p><label for="">Active Alerts: </label></p>
+                        <input type="text" hidden value="<?php echo $sms_active;?>" id="opo">
+                        <input type="text" hidden value="<?php echo $email_active;?>" id="opo2">
+                        <script>
+                            $(document).ready(function() {
+                              var xc = document.getElementById("opo").value;
+                              var xc2 = document.getElementById("opo2").value;
+                              if (xc == '1' && xc2 == '0') {
+                                document.getElementById('sms').checked = true;
+                                document.getElementById('eml').checked = false;
+                                $('sms').click(function() {
+                                 document.getElementById('sms').checked = true;
+                                });
+                                $('eml').click(function() {
+                                 document.getElementById('eml').checked = true;
+                                });
+                              } else if (xc == '0' && xc2 == '1') {
+                                document.getElementById('sms').checked = false;
+                                document.getElementById('eml').checked = true;
+                                $('sms').click(function() {
+                                 document.getElementById('sms').checked = true;
+                                });
+                                $('eml').click(function() {
+                                 document.getElementById('eml').checked = true;
+                                });
+                              } else if (xc == '1' && xc2 == '1') {
+                                document.getElementById('sms').checked = true;
+                                document.getElementById('eml').checked = true;
+                                $('sms').click(function() {
+                                 document.getElementById('sms').checked = true;
+                                });
+                                $('eml').click(function() {
+                                 document.getElementById('eml').checked = true;
+                                });
+                              } else {
+                                document.getElementById('sms').checked = false;
+                                document.getElementById('eml').checked = false;
+                                $('emp').click(function() {
+                                 document.getElementById('sms').checked = true;
+                                });
+                                $('dec').click(function() {
+                                 document.getElementById('eml').checked = true;
+                                });
+                              }
+                            });
+                          </script>
                         <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active">
+                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
                               SMS
                               <span class="form-check-sign">
                                 <span class="check"></span>
@@ -206,7 +303,7 @@ if(isset($_GET["edit"])) {
                         </div>
                         <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="<?php echo $email_active;?>" name="email_active">
+                              <input class="form-check-input" type="checkbox" value="<?php echo $email_active;?>" name="email_active" id="eml">
                               Email
                               <span class="form-check-sign">
                                 <span class="check"></span>
@@ -219,7 +316,7 @@ if(isset($_GET["edit"])) {
                   function fill_officer($connection)
                   {
                   $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM staff WHERE int_id = '$sint_id'";
+                  $org = "SELECT * FROM staff WHERE int_id = '$sint_id' ORDER BY staff.display_name ASC";
                   $res = mysqli_query($connection, $org);
                   $out = '';
                   while ($row = mysqli_fetch_array($res))

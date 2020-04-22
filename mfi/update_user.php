@@ -27,7 +27,7 @@ if (isset($_GET["edit"])) {
     $status = $n['employee_status'];
     $org_role = $n['org_role'];
     $img = $n['img'];
-    $ut = mysqli_query($connection, "SELECT usertype FROM users WHERE id='$user_id' && int_id='$sessint_id");
+    $ut = mysqli_query($connection, "SELECT * FROM users WHERE id='$user_id' && int_id='$sessint_id");
     if (count([$ut]) == 1) {
       $j = mysqli_fetch_array($ut);
       $usertype = $j['usertype'];
@@ -65,7 +65,23 @@ if (isset($_GET["edit"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Username</label>
-                          <input type="text" name="username" value="<?php echo $username; ?>" class="form-control">
+                          <script>
+                            $(document).ready(function(){
+                              $('#usernamewarn').on("change keyup paste click", function(){
+                                var usern = $(this).val();
+                                $.ajax({
+                                  url: "verify_user.php",
+                                  method: "POST",
+                                  data: {usern:usern},
+                                  success: function(data){
+                                    $('#warnuser').html(data);
+                                  }
+                                });
+                              });
+                            });
+                          </script>
+                          <input type="text" name="username" value="<?php echo $username; ?>" id="usernamewarn" class="form-control">
+                          <span class="help-block" style="color: red;"><div id="warnuser"></div></span>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -157,9 +173,38 @@ if (isset($_GET["edit"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Employee Status</label></br>
-                          <input type="radio" name="employee_status" value="Employed">
+                          <script>
+                            $(document).ready(function() {
+                              var xc = document.getElementById("opo").value;
+                              if (xc == "Employed") {
+                                document.getElementById('emp').checked = true;
+                                document.getElementById('dec').checked = false;
+                                $('emp').click(function() {
+                                 document.getElementById('emp').checked = true;
+                                 document.getElementById('dec').checked = false;
+                                });
+                                $('dec').click(function() {
+                                 document.getElementById('emp').checked = false;
+                                 document.getElementById('dec').checked = true;
+                                });
+                              } else {
+                                document.getElementById('emp').checked = false;
+                                document.getElementById('dec').checked = true;
+                                $('emp').click(function() {
+                                 document.getElementById('emp').checked = true;
+                                 document.getElementById('dec').checked = false;
+                                });
+                                $('dec').click(function() {
+                                 document.getElementById('emp').checked = false;
+                                 document.getElementById('dec').checked = true;
+                                });
+                              }
+                            });
+                          </script>
+                          <input type="radio" name="employee_status" value="Employed" id="emp">
+                          <input type="text" hidden value="<?php echo $status; ?>" id="opo">
                             <label style="color: black;">Employed</label><br>
-                            <input type="radio" name="employee_status" value="Decommisioned">
+                            <input type="radio" name="employee_status" id="dec" value="Decommisioned">
                             <label style="color: black;">Decommisioned</label><br>
                         </div>
                       </div>

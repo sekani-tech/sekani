@@ -155,19 +155,19 @@ $destination = "config.php";
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Interest Rate</label>
+                          <label class="bmd-label-floating">Interest Rate (%) /label>
                           <input type="text"  class="form-control" value="<?php echo $interest_rate; ?>" name="interest_rate">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Min Interest Rate</label>
+                          <label class="bmd-label-floating">Min Interest Rate (%)</label>
                           <input type="text"  class="form-control" value="<?php echo $min_interest_rate; ?>" name="min_interest_rate">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Max Interest Rate</label>
+                          <label class="bmd-label-floating">Max Interest Rate (%)</label>
                           <input type="text"  class="form-control" value="<?php echo $max_interest_rate; ?>" name="max_interest_rate">
                         </div>
                     </div>

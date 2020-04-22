@@ -12,12 +12,12 @@ $maxint = $_POST["max_intrate"];
 $minint = $_POST["max_intrate"];
 
  if($minL > $principal_amount ) {
-    echo '<label style="color: red;">Minimum loan has not been met! Please adjust loan</label';
+    echo '<label style="color: red;">Min Loan Principal has not been met!</label';
 }
 else if($maxL>=$principal_amount){
     echo '';
 }
 else if($principal_amount > $maxL) {
-    echo '<label style="color: red;">Maximum loan has been exceeded! Please adjust loan</label';
+    echo '<label style="color: red;">Max Loan Principal has been exceeded!</label';
 }
 ?>

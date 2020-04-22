@@ -44,7 +44,7 @@ $destination = "config.php";
                         <input type="text" class="form-control" name="description" value="" placeholder="Description...." >
                       </div>
                     </div>
-                    <div class="col-md-4"> 
+                    <!-- <div class="col-md-4"> 
                       <div class="form-group">
                         <label for="fundOrigin">Origin of Funding*</label>
                         <select class="form-control" name="fund_id" >
@@ -52,7 +52,7 @@ $destination = "config.php";
                           <option value="2"> Cash </option>
                         </select>
                       </div>
-                    </div>                            
+                    </div>                             -->
                     <!--<div class="col-md-4">
                         <div class="form-group">
                             <label for="currency" >Currency *</label>
@@ -188,12 +188,12 @@ $destination = "config.php";
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <!-- auto desburse should be disabled -->
+                      <div class="col-md-4" disable>
                         <div class="form-group">
                           <label for="autoDisburse" >Auto Disburse </label>
                           <select class="form-control" name="auto_disburse" required>
-                            <option value="no">No</option>
-                            <option value="yes">Yes</option>
+                            <option value="yes">yes</option>
                           </select>
                         </div>
                       </div>

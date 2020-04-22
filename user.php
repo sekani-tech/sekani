@@ -183,8 +183,8 @@ if ($result) {
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Password: (default - bateis1)</label>
-                          <input type="password" value="bateis1" name="password" class="form-control">
+                          <label class="bmd-label-floating">Password: (default - password1)</label>
+                          <input type="password" value="password1" name="password" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -250,7 +250,7 @@ if ($result) {
                         <div class="form-group">
                           <label class="bmd-label-floating">UserType</label>
                           <select name="user_t" id="" class="form-control">
-                          <option value="">...</option>
+                          <option value="staff">...</option>
                             <option value="admin">Admin</option>
                             <option value="staff">Staff</option>
                           </select>

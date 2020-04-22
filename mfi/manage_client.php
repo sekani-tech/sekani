@@ -23,10 +23,23 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Account Type</label>
+                      <?php
+                  function fill_savings($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM savings_product WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
                         <select name="acct_type" class="form-control" data-style="btn btn-link" id="collat">
                           <option value="">select a Account Type</option>
-                          <option value="savings">Savings Account</option>
-                          <option value="current">Current Account</option>
+                          <?php echo fill_savings($connection); ?>
                         </select>
                     </div>
                   </div>
@@ -36,7 +49,7 @@ include("header.php");
                       <select name="ctype" class="form-control" id="collat">
                           <option value="Individual">Individual</option>
                           <option value="Joint">Joint Account</option>
-                          <option value="Student">Student Account</option>
+                          <option value="Student">Cooperate Account</option>
                         </select>
                     </div>
                   </div>
@@ -114,7 +127,7 @@ include("header.php");
                   $out = '';
                   while ($row = mysqli_fetch_array($res))
                   {
-                    $out .= '<option value="'.$row["id"].'">'.$row["name"]. ' ' .$row["location"]. '</option>';
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
                   }
                   return $out;
                   }
@@ -180,7 +193,7 @@ include("header.php");
                   function fill_officer($connection)
                   {
                   $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM staff WHERE int_id = '$sint_id'";
+                  $org = "SELECT * FROM staff WHERE int_id = '$sint_id' ORDER BY staff.display_name ASC";
                   $res = mysqli_query($connection, $org);
                   $out = '';
                   while ($row = mysqli_fetch_array($res))

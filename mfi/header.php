@@ -125,7 +125,7 @@ input[type=number] {
               <a href="#" class="dropdown-item">FTD Booking</a>
               <a href="lend.php" class="dropdown-item">Book Loan</a>
               <a href="#" class="dropdown-item">Expense Posting</a>
-              <a href="teller_journal.php" class="dropdown-item">Teller Journal</a>
+              <a href="teller_journal.php" class="dropdown-item">Internal Posting</a>
             </div>
           </li>
           <li class="nav-item dropdown">

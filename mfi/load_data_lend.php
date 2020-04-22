@@ -68,8 +68,8 @@ if(isset($_POST["id"]))
 
       <div class="col-md-4">
        <div class="form-group">
-        <label>Minimum Loan Amount *: N'.$row["min_principal_amount"].'</label>
-        <label>Maximum Loan Amount *: N'.$row["max_principal_amount"].'</label>
+        <label>Min Loan Amt *: N'.$row["min_principal_amount"].'</label>
+        <label>Max Loan Amt *: N'.$row["max_principal_amount"].'</label>
         <input type="number" hidden readonly value="'.$row["max_principal_amount"].'" name="max_principal_amount" class="form-control" required id="maximum_Lamount">
         <input type="number" hidden readonly value="'.$row["min_principal_amount"].'" name="min_principal_amount" class="form-control" required id="minimum_Lamount">
         </div>
@@ -113,9 +113,9 @@ if(isset($_POST["id"]))
 
     <div class="col-md-4">
     <div class="form-group">
-    <label>Minimum Interest Allowed *: '.$row["min_interest_rate"].'%</label>
+    <label>Min Interest Allowed *: '.$row["min_interest_rate"].'%</label>
     <input hidden type="number" readonly value="'.$row["min_interest_rate"].'" name="min_interest_rate" class="form-control" required id="minimum_intrate">
-    <label>Maximum Interest Allowed *: '.$row["max_interest_rate"].'%</label>
+    <label>Max Interest Allowed *: '.$row["max_interest_rate"].'%</label>
       <input hidden type="number" readonly value="'.$row["max_interest_rate"].'" name="max_interest_rate" class="form-control" required id="maximum_intrate">
     </div>
   </div>

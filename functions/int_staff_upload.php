@@ -21,7 +21,6 @@ $date_joined = $_POST['date_joined'];
 $org_role = $_POST['org_role'];
 $std = "Not Active";
 $phone = $_POST['phone'];
-
 $digits = 10;
 $temp = explode(".", $_FILES['imagefile']['name']);
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
