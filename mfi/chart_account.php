@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Users";
+$page_title = "Chart of Account";
 $destination = "index.php";
     include("header.php");
 ?>
@@ -90,69 +90,6 @@ $_SESSION["lack_of_intfund_$key"] = 0;
 }
 }
 ?>
-<style>
-  .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #2196F3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-</style>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -168,16 +105,12 @@ input:checked + .slider:before {
                   $('#tabledat2').DataTable();
                   });
                   </script>
-                  <p class="card-category"><a style ="color: white;" href="user.php">Add Account</a></p>
+                  <p class="card-category"><a style ="color: white;" href="add_chart_account.php">Add Account</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table id="tabledat2" class="table" style="width:100%">
                       <thead class=" text-primary">
-                      <?php
-                        $query = "SELECT users.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id WHERE users.int_id ='$sessint_id'";
-                        $result = mysqli_query($connection, $query);
-                      ?>
                         <th>
                           GL No
                         </th>
@@ -194,7 +127,6 @@ input:checked + .slider:before {
                          Balance
                         </th>
                         <th>Unreconciled Balance</th>
-                        <th>Status</th>
                         <th>Edit</th>
                         <!-- <th>Phone</th> -->
                       </thead>
@@ -204,40 +136,36 @@ input:checked + .slider:before {
                               <td>Cash Balances</td>
                               <td>ASSETS</td>
                               <td></td>
-                              <td></td>
+                              <td>39839849484</td>
                               <td>38498304803</td>
-                              <td></td>
-                              <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                              <td><a href="update_user.php?edit=<?php echo $row["id"];?>" onclick="showDialog()" class="btn btn-info">Edit</a></td>
                           </tr>
                           <tr>
                               <td>75934</td>
                               <td>Cash Balances</td>
                               <td>ASSETS</td>
                               <td></td>
-                              <td></td>
+                              <td>383984938</td>
                               <td>349349343</td>
-                              <td></td>
-                              <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                              <td><a href="update_user.php?edit=<?php echo $row["id"];?>" onclick="showDialog()" class="btn btn-info">Edit</a></td>
                           </tr>
                           <tr>
                               <td>75847</td>
                               <td>Cash Balances</td>
                               <td>ASSETS</td>
                               <td></td>
-                              <td></td>
+                              <td>93843984</td>
                               <td>34834834</td>
-                              <td></td>
-                              <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                              <td><a href="update_user.php?edit=<?php echo $row["id"];?>" onclick="showDialog()" class="btn btn-info">Edit</a></td>
                           </tr>
                           <tr>
                               <td>03839</td>
                               <td>Cash Balances</td>
                               <td>ASSETS</td>
                               <td></td>
-                              <td></td>
+                              <td>38349843</td>
                               <td>73734737</td>
-                              <td></td>
-                              <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                              <td><a href="update_user.php?edit=<?php echo $row["id"];?>" onclick="showDialog()" class="btn btn-info">Edit</a></td>
                           </tr>
                       <!-- <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
@@ -259,6 +187,162 @@ input:checked + .slider:before {
                           ?> -->
                       </tbody>
                     </table>
+                    <div class="form-group">
+                      <div id="background">
+                      </div>
+                      <div id="diallbox">
+                      <form action="" method="POST" enctype="multipart/form-data">
+                      <h3>Edit Account</h3>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label >Account name</label>
+                      <input type="text" style="text-transform: uppercase;" class="form-control" name="">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label >GL Code</label>
+                      <input type="text" style="text-transform: uppercase;" class="form-control" name="">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label >Account Type</label>
+                      <select class="form-control" name="" id="">
+                        <option value="">Select an option</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label >External ID</label>
+                      <input type="text" style="text-transform: uppercase;" class="form-control" name="">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label >Account Tag</label>
+                      <select class="form-control" name="" id="">
+                        <option value="">Select an option</option>
+                      </select>                    
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label >Account Usage</label>
+                      <select class="form-control" name="" id="">
+                        <option value="">Select an option</option>
+                      </select>                    
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label >Manual Entires Allowed</label><br/>
+                      <div class="form-check form-check-inline">
+                      <label class="form-check-label">
+                          <input class="form-check-input" name="" type="checkbox" value="1">
+                          <span class="form-check-sign">
+                            <span class="check"></span>
+                          </span>
+                      </label>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label >Allow Bank reconciliation?</label><br/>
+                      <div class="form-check form-check-inline">
+                      <label class="form-check-label">
+                          <input class="form-check-input" name="" type="checkbox" value="1">
+                          <span class="form-check-sign">
+                            <span class="check"></span>
+                          </span>
+                      </label>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label> Description:</label>
+                      <input type="text" style="text-transform: uppercase;" class="form-control" name="middlename">  
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                  <div style="float:right;">
+                        <span class="btn btn-primary pull-right" id="clickit" onclick="AddDlg()">Edit</span>
+                        <span class="btn btn-danger pull-right" id="clickit" onclick="AddDlg()">Delete</span>
+                        <button class="btn pull-right" onclick="AddDlg()">Close</button>
+                      </div>
+                      </form>
+                        <!-- </form> -->
+                        <script>
+                              $(document).ready(function() {
+                                $('#clickit').on("change keyup paste click", function(){
+                                  var id = $(this).val();
+                                  var client_id = $('#client_name').val();
+                                  var colval = $('#colname').val();
+                                  var colname = $('#col_val').val();
+                                  var coldes = $('#col_descr').val();
+                                  $.ajax({
+                                    url:"collateral_upload.php",
+                                    method:"POST",
+                                    data:{id:id, client_id:client_id, colval:colval, colname:colname, coldes:coldes},
+                                    success:function(data){
+                                      $('#coll').html(data);
+                                    }
+                                  })
+                                });
+                              });
+                            </script>
+<script>
+    function AddDlg(){
+        var bg = document.getElementById("background");
+        var dlg = document.getElementById("diallbox");
+        bg.style.display = "none";
+        dlg.style.display = "none";
+    }
+    
+    function showDialog(){
+        var bg = document.getElementById("background");
+        var dlg = document.getElementById("diallbox");
+        bg.style.display = "block";
+        dlg.style.display = "block";
+        
+        var winWidth = window.innerWidth;
+        var winHeight = window.innerHeight;
+        
+        dlg.style.left = (winWidth/2) - 480/2 + "px";
+        dlg.style.top = "150px";
+    }
+</script>
+<style>
+    #background{
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        background-color: black;
+        opacity: 0.7;
+        z-index: 9999;
+    }
+    
+    #diallbox{
+        /*initially dialog box is hidden*/
+        display: none;
+        position: fixed;
+        width: 480px;
+        z-index: 9999;
+        border-radius: 10px;
+        padding:20px;
+        background-color: #ffffff;
+    }
+</style>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
