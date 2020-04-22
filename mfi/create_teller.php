@@ -4,6 +4,18 @@ $page_title = "Create Teller";
 $destination = "staff_mgmt.php";
     include("header.php");
 
+    function fill_client($connection) {
+      $sint_id = $_SESSION["int_id"];
+      $org = "SELECT * FROM staff WHERE int_id = '$sint_id'";
+      $res = mysqli_query($connection, $org);
+      $out = '';
+      while ($row = mysqli_fetch_array($res))
+      {
+        $out .= '<option value="'.$row["id"].'">'.$row["display_name"].'</option>';
+      }
+      return $out;
+    }
+
 ?>
 <!-- Content added here -->
     <div class="content">
@@ -17,33 +29,49 @@ $destination = "staff_mgmt.php";
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                  <form action="" method="post">
+                  <form action="../functions/teller_upload.php" method="POST">
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Teller Name</label>
-                          <input type="text" class="form-control" name="name">
+                          <select name="tel_name" class="form-control" id="input">
+                          <option value="">select an option</option>
+                          <?php echo fill_client($connection); ?>
+                        </select>
                         </div>
                       </div>
+                  <script>
+                              $(document).ready(function() {
+                                $('#input').change(function(){
+                                  var id = $(this).val();
+                                  var tell_name = $('#input').val();
+                                  $.ajax({
+                                    url:"create_teller_branch.php",
+                                    method:"POST",
+                                    data:{id:id, tell_name:tell_name},
+                                    success:function(data){
+                                      $('#show_branch').html(data);
+                                    }
+                                  })
+                                });
+                              })
+                            </script>
                       <div class="col-md-4">
-                        <div class="form-group">
-                            <!-- populate from db -->
-                          <label class="bmd-label-floating">Office</label>
-                          <select name="" id="" class="form-control">
-                              <option value="">select an option</option>
-                          </select>
-                        </div>
+                      <div class="form-group">
+                        <label class="bmd-label-floating">Branch</label>
+                        <!-- <div id="show_branch"></div> -->
+                        <select id="show_branch" name="branch" class="form-control">
+
+                        </select>
+                      </div>
                       </div>
                       <div class="col-md-4 form-group">
-                          <label class="bmd-label-floating" >Description</label>
-                          <input type="text" name="" id="" class="form-control">
+                          <label class="bmd-label-floating" >Teller No</label>
+                          <input type="text" name="teller_no" id="" class="form-control">
                       </div>
-                      <div class=" col-md-4 form-group">
-                          <label class="bmd-label-floating">Status</label>
-                          <select name="" id="" class="form-control">
-                              <option value="">Active</option>
-                              <option value="">Inactive</option>
-                          </select>
+                      <div class="col-md-4 form-group">
+                          <label class="bmd-label-floating" >Posting Limit</label>
+                          <input type="text" name="post_limit" id="" class="form-control">
                       </div>
                       </div>
                       <a href="staff_mgmt.php" class="btn btn-secondary">Back</a>
