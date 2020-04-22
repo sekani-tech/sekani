@@ -51,7 +51,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT users.id, staff.user_id, users.int_id, users.username, users.fullname, users.usertype,staff.employee_status, users.password, org_role, display_name FROM staff JOIN users ON users.id = staff.user_id WHERE users.username = ?";
+        $sql = "SELECT users.id, staff.user_id, users.branch_id, users.int_id, users.username, users.fullname, users.usertype,staff.employee_status, users.password, org_role, display_name FROM staff JOIN users ON users.id = staff.user_id WHERE users.username = ?";
         // $sqlj = "SELECT users.id, users.int_id, users.username, users.fullname, users.usertype, users.password, org_role, display_name FROM staff JOIN users ON users.id = staff.user_id WHERE users.username = "sam"";
         
         if($stmt = mysqli_prepare($link, $sql)){
@@ -69,7 +69,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Check if username exists, if yes then verify password
                 if(mysqli_stmt_num_rows($stmt) == 1){                    
                     // Bind result variables
-                    mysqli_stmt_bind_result($stmt, $id, $user_id, $int_id, $username, $fullname, $usertype, $employee_status, $hashed_password, $org_role, $display_name);
+                    mysqli_stmt_bind_result($stmt, $id, $user_id, $int_id, $branch_id, $username, $fullname, $usertype, $employee_status, $hashed_password, $org_role, $display_name);
                     if(mysqli_stmt_fetch($stmt)){
                         if(password_verify($password, $hashed_password)){
                             // Password is correct, so start a new session
@@ -86,6 +86,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["fullname"] = $fullname;
                             $_SESSION["org_role"] = $org_role;
                             $_SESSION["employee_status"] = $employee_status;
+                            $_SESSION["branch_id"] = $branch_id;
                             // $_SESSION["lastname"] = $lastname;
                             session_write_close();                            
                             //run a quick code to show active user
