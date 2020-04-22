@@ -106,29 +106,22 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> Chart of Accounts || <a style = "color: white;" href="#S">Add Account</a></p>
+                   }?> Chart of Accounts || <a style = "color: white;" href="add_chart_account.php">Add Account</a></p>
                   <!-- Insert number users institutions -->
                   <script>
                   $(document).ready(function() {
                   $('#tabledat2').DataTable();
                   });
                   </script>
-<<<<<<< HEAD
-                  <p class="card-category"><a style ="color: white;" href="add_chart_account.php">Add Account</a></p>
-=======
->>>>>>> a2129a1bf5702186d001be436dbc74249959c3c4
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table id="tabledat2" class="table" style="width:100%">
                       <thead class=" text-primary">
-<<<<<<< HEAD
-=======
                       <?php
                         $query = "SELECT * FROM acc_gl_account WHERE int_id ='$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
->>>>>>> a2129a1bf5702186d001be436dbc74249959c3c4
                         <th>
                           GL No
                         </th>
@@ -159,7 +152,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           <th><?php echo $row["tag_id"]; ?></th>
                           <th><?php echo $row["organization_running_balance_derived"]; ?></th>
                           <th><?php echo $row["reconciliation_enabled"]; ?></th>
-                          <td><i href="#?edit=<?php echo $row["id"];?>" class="material-icons">create</i></td>
+                          <td><a onclick="showDialog()" class="btn btn-info" ><i style="color:#ffffff;" class="material-icons">create</i></a></td>
                         </tr>
                         <?php }
                           }
