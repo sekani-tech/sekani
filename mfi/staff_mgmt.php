@@ -5,6 +5,45 @@ $destination = "index.php";
     include("header.php");
 
 ?>
+<?php
+          if (isset($_GET["message"])) {
+            $key = $_GET["message"];
+            $tt = 0;
+            if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+              echo '<script type="text/javascript">
+                    $(document).ready(function(){
+                        swal({
+                            type: "success",
+                            title: "Success",
+                            text: "Teller Created Successfully",
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    });
+                    </script>
+                    ';
+              $_SESSION["lack_of_intfund_$key"] = 0;
+            }
+          }else if (isset($_GET["message2"])) {
+            $key = $_GET["message2"];
+            $tt = 0;
+            if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+              echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Error",
+                        text: "Error in Posting For Approval",
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                });
+                </script>
+                ';
+            $_SESSION["lack_of_intfund_$key"] = 0;
+            }
+          }
+        ?>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -213,7 +252,7 @@ $destination = "index.php";
                     <table id="tabledat4" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM product WHERE int_id ='$sessint_id'";
+                        $query = "SELECT teller.id, branch.name, teller_no, till_no, teller.teller_name FROM teller JOIN branch ON branch.id = teller.branch_id WHERE teller.int_id ='$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -221,25 +260,26 @@ $destination = "index.php";
                         </th>
                         <th>Teller</th>
                         <th>
-                          Cashier
+                          Teller No
+                        </th>
+                        <th>
+                          Till No
                         </th>
                         <th>Balance</th>
-                        <th>
-                          Status
-                        </th>
                         <th></th>
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
+                        <?php $row["id"]; ?>
+                          <th><?php echo $row["name"]; ?></th>
+                          <th><?php echo $row["teller_name"]; ?></th>
+                          <th><?php echo $row["teller_no"]; ?></th>
+                          <th><?php echo $row["till_no"]; ?></th>
                           <th></th>
-                          <th><?php //echo $row["name"]; ?></th>
-                          <th><?php // echo $row["description"]; ?></th>
-                          <th><?php //echo $row["short_name"]; ?></th>
                           <th></th>
-                          <th></th>
-                          <th><a href="view_teller.php" class="btn btn-success">View</a></th>
+                          <th><a href="view_teller.php?id=<?php echo $row["id"];?>" class="btn btn-success">View</a></th>
                         </tr>
                         <?php }
                           }
