@@ -100,25 +100,43 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Chart of Accounts</h4>
                   <!-- Insert number users institutions -->
+                  <p class="card-category"><?php
+                   $query = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id'";
+                   $result = mysqli_query($connection, $query);
+                   if ($result) {
+                     $inr = mysqli_num_rows($result);
+                     echo $inr;
+                   }?> Chart of Accounts || <a style = "color: white;" href="#S">Add Account</a></p>
+                  <!-- Insert number users institutions -->
                   <script>
                   $(document).ready(function() {
                   $('#tabledat2').DataTable();
                   });
                   </script>
+<<<<<<< HEAD
                   <p class="card-category"><a style ="color: white;" href="add_chart_account.php">Add Account</a></p>
+=======
+>>>>>>> a2129a1bf5702186d001be436dbc74249959c3c4
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table id="tabledat2" class="table" style="width:100%">
                       <thead class=" text-primary">
+<<<<<<< HEAD
+=======
+                      <?php
+                        $query = "SELECT * FROM acc_gl_account WHERE int_id ='$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+>>>>>>> a2129a1bf5702186d001be436dbc74249959c3c4
                         <th>
                           GL No
                         </th>
                         <th>
-                          Account Type
+                          Account Name
                         </th>
                         <th>
-                          External ID
+                          Account Type
                         </th>
                         <th>
                           Account ID
@@ -131,60 +149,24 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>
-                          <tr>
-                              <td>78680</td>
-                              <td>Cash Balances</td>
-                              <td>ASSETS</td>
-                              <td></td>
-                              <td>39839849484</td>
-                              <td>38498304803</td>
-                              <td><a href="update_user.php?edit=<?php echo $row["id"];?>" onclick="showDialog()" class="btn btn-info">Edit</a></td>
-                          </tr>
-                          <tr>
-                              <td>75934</td>
-                              <td>Cash Balances</td>
-                              <td>ASSETS</td>
-                              <td></td>
-                              <td>383984938</td>
-                              <td>349349343</td>
-                              <td><a href="update_user.php?edit=<?php echo $row["id"];?>" onclick="showDialog()" class="btn btn-info">Edit</a></td>
-                          </tr>
-                          <tr>
-                              <td>75847</td>
-                              <td>Cash Balances</td>
-                              <td>ASSETS</td>
-                              <td></td>
-                              <td>93843984</td>
-                              <td>34834834</td>
-                              <td><a href="update_user.php?edit=<?php echo $row["id"];?>" onclick="showDialog()" class="btn btn-info">Edit</a></td>
-                          </tr>
-                          <tr>
-                              <td>03839</td>
-                              <td>Cash Balances</td>
-                              <td>ASSETS</td>
-                              <td></td>
-                              <td>38349843</td>
-                              <td>73734737</td>
-                              <td><a href="update_user.php?edit=<?php echo $row["id"];?>" onclick="showDialog()" class="btn btn-info">Edit</a></td>
-                          </tr>
-                      <!-- <?php if (mysqli_num_rows($result) > 0) {
+                      <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
-                          <th><?php echo $row["display_name"]; ?></th>
-                          <th><?php echo $row["username"]; ?></th>
-                          <th><?php echo $row["int_name"]; ?></th>
-                          <th><?php echo $row["email"]; ?></th>
-                          <th><?php echo $row["status"]; ?></th>
-                          <th><?php echo $row["employee_status"]; ?></th>
-                          <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                          <th><?php echo $row["gl_code"]; ?></th>
+                          <th><?php echo $row["name"]; ?></th>
+                          <th><?php echo $row["account_type"]; ?></th>
+                          <th><?php echo $row["tag_id"]; ?></th>
+                          <th><?php echo $row["organization_running_balance_derived"]; ?></th>
+                          <th><?php echo $row["reconciliation_enabled"]; ?></th>
+                          <td><i href="#?edit=<?php echo $row["id"];?>" class="material-icons">create</i></td>
                         </tr>
                         <?php }
                           }
                           else {
                             echo "0 Staff";
                           }
-                          ?> -->
+                          ?>
                       </tbody>
                     </table>
                     <div class="form-group">
