@@ -169,7 +169,7 @@ input:checked + .slider:before {
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> Chart of Accounts || <a style = "color: white;" href="manage_client.php">Add Account</a></p>
+                   }?> Chart of Accounts || <a style = "color: white;" href="#S">Add Account</a></p>
                   <!-- Insert number users institutions -->
                   <script>
                   $(document).ready(function() {
@@ -216,6 +216,11 @@ input:checked + .slider:before {
                           <th><?php echo $row["tag_id"]; ?></th>
                           <th><?php echo $row["organization_running_balance_derived"]; ?></th>
                           <th><?php echo $row["reconciliation_enabled"]; ?></th>
+                          <th><?php if($row["disabled"] == 0 || $row["disabled" == "0"]) {
+                            echo '<i class="material-icons">done</i>';
+                          } else {
+                            echo '<i class="material-icons">clear</i>';
+                          } ?></th>
                           <td><a href="#?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
                         <?php }
