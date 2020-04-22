@@ -3,8 +3,31 @@
 $page_title = "View teller";
 $destination = "staff_mgmt.php";
     include("header.php");
-
 ?>
+<?php
+if(isset($_GET["id"])) {
+  $id = $_GET["id"];
+  $update = true;
+  $query = mysqli_query($connection, "SELECT * FROM teller WHERE id='$id' && int_id='$sessint_id'");
+  if (count([$query]) == 1) {
+    $ans = mysqli_fetch_array($query);
+    $id = $ans['id'];
+    $int_id = $ans['int_id'];
+    $tell_name = $ans['teller_name'];
+    $postlimit = $ans['posting_limit'];
+    $tellerno = $ans['teller_no'];
+    $tillno = $ans['till_no'];
+    $startdate = $ans['valid_from'];
+    $endate = $ans['valid_to'];
+    $branch_id = $ans['branch_id'];
+    $branchquery = mysqli_query($connection, "SELECT * FROM branch WHERE id='$branch_id'");
+    if (count([$branchquery]) == 1) {
+      $ans = mysqli_fetch_array($branchquery);
+      $branch = $ans['name'];
+    }
+  }
+}
+  ?>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -17,31 +40,31 @@ $destination = "staff_mgmt.php";
                   <!-- <p class="card-category">Fill in all important data</p> -->
                 </div>
                 <div class="card-body">
-                  <form action="" method="post">
+                  <form action="" method="POST">
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Start Date</label>
-                          <input type="date" name="" class="form-control" id="">
+                          <input type="date" value="<?php echo $startdate;?>" name="" class="form-control" id="">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">End Date</label>
-                          <input type="date" name="" class="form-control" id="">
+                          <input type="date" value="<?php echo $endate;?>" name="" class="form-control" id="">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                             <!-- populate from db -->
                           <label class="bmd-label-floating">Branch</label>
-                          <input type="text" name="" id="" class="form-control" readonly>
+                          <input type="text" name="" value="<?php echo $branch;?>" id="" class="form-control" readonly>
                         </div>
                       </div>
                       <div class=" col-md-4 form-group">
                           <!-- populate from db -->
                           <label for="bmd-label-floating">Teller ID</label>
-                          <input type="text" name="" id="" class="form-control" readonly>
+                          <input type="text" name="" value="<?php echo $tellerno;?>" id="" class="form-control" readonly>
                       </div>
                       </div>
                       <button type="reset" class="btn btn-danger pull-left">Reset</button>
@@ -64,16 +87,16 @@ $destination = "staff_mgmt.php";
                     <div class="row">
                         <div class="col-md-4 form-group">
                             <label for="">Name of Teller</label>
-                            <input type="text" name="" id="" class="form-control" readonly>
+                            <input type="text" value="<?php echo $tell_name;?>" name="" id="" class="form-control" readonly>
                         </div>
                         <div class="col-md-4 form-group">
                             <label for="">Branch</label>
-                            <input type="text" name="" id="" class="form-control" readonly>
+                            <input type="text" value="<?php echo $branch;?>" name="" id="" class="form-control" readonly>
                         </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">As at:</label>
-                          <input type="text" name="" class="form-control" id="" readonly>
+                          <input type="date" value="<?php echo $startdate;?>" name="" class="form-control" id="" readonly>
                         </div>
                       </div>
                       </div>
@@ -142,7 +165,6 @@ $destination = "staff_mgmt.php";
           <!-- /content -->
         </div>
       </div>
-
 <?php
 
     include("footer.php");

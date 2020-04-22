@@ -17,45 +17,6 @@ $destination = "staff_mgmt.php";
     }
 
 ?>
-<?php
-          if (isset($_GET["message"])) {
-            $key = $_GET["message"];
-            $tt = 0;
-            if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-              echo '<script type="text/javascript">
-                    $(document).ready(function(){
-                        swal({
-                            type: "success",
-                            title: "Success",
-                            text: "Teller Created Successfully",
-                            showConfirmButton: false,
-                            timer: 2000
-                        })
-                    });
-                    </script>
-                    ';
-              $_SESSION["lack_of_intfund_$key"] = 0;
-            }
-          }else if (isset($_GET["message2"])) {
-            $key = $_GET["message2"];
-            $tt = 0;
-            if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-              echo '<script type="text/javascript">
-                $(document).ready(function(){
-                    swal({
-                        type: "error",
-                        title: "Error",
-                        text: "Error in Posting For Approval",
-                        showConfirmButton: false,
-                        timer: 2000
-                    })
-                });
-                </script>
-                ';
-            $_SESSION["lack_of_intfund_$key"] = 0;
-            }
-          }
-        ?>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">

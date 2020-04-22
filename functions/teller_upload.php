@@ -31,10 +31,10 @@ $query = "INSERT INTO teller (int_id, branch_id, teller_name, posting_limit, tel
 $res = mysqli_query($connection, $query);
 if ($res) {
     $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
-    echo header ("Location: ../mfi/create_teller.php?message=$randms");
+    echo header ("Location: ../mfi/staff_mgmt.php?message=$randms");
   } else {
      $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
      echo "error";
-    echo header ("Location: ../mfi/create_teller.php?message2=$randms");
+    echo header ("Location: ../mfi/staff_mgmt.php?message2=$randms");
   }
 ?>
