@@ -4,9 +4,30 @@
 $page_title = "Edit Account";
 $destination = "chart_account.php";
 include("header.php");
-
 ?>
 <!-- Content added here -->
+<?php
+// editing the chart account
+if(isset($_GET["edit"])) {
+  $id = $_GET["edit"];
+  $update = true;
+  $person = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE id='$id' && int_id='$sessint_id'");
+
+  if (count([$person]) == 1) {
+    $n = mysqli_fetch_array($person);
+    $vd = $n['id'];
+    $acct_name = $n[''];
+    $cl_code = $n[''];
+    $acct_type = $n[''];
+    $ext_id = $n[''];
+    $acct_tag = $n[''];
+    $acct_use = $n[''];
+    $man_ent = $n[''];
+    $disable_acct = $n[''];
+    $enb_bank_recon = $n[''];
+  }
+}
+?>
 <div class="content">
     <div class="container-fluid">
       <!-- your content here -->
@@ -78,6 +99,19 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Allow Bank reconciliation?</label><br/>
+                      <div class="form-check form-check-inline">
+                      <label class="form-check-label">
+                          <input class="form-check-input" name="" type="checkbox" value="1">
+                          <span class="form-check-sign">
+                            <span class="check"></span>
+                          </span>
+                      </label>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label >Disable</label><br/>
                       <div class="form-check form-check-inline">
                       <label class="form-check-label">
                           <input class="form-check-input" name="" type="checkbox" value="1">
