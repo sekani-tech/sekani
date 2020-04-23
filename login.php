@@ -94,7 +94,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $res = mysqli_fetch_array($compsec);
                             $intname = $res["int_name"];
                             $intemail = $res["email"];
-                            }
+
+                            // mailin
                             // begining of mail
                             $mail = new PHPMailer;
                             // from email addreess and name
@@ -301,6 +302,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 echo "Message has been sent successfully";
                             }
                             // end of mail
+                            } else {
+                                header("location: mfi/rubbish.php");
+                            }
                             session_write_close();                            
                             //run a quick code to show active user
                             // Redirect user to welcome page
