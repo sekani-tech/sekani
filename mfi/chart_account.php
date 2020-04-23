@@ -106,7 +106,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> Chart of Accounts || <a style = "color: white;" href="add_chart_account.php">Add Account</a></p>
+                   }?> Chart of Accounts || <a style = "color: white;" data-toggle="modal" data-target=".bd-example-modal-lg" href="#">Add Account</a></p>
                   <!-- Insert number users institutions -->
                   <script>
                   $(document).ready(function() {
@@ -150,9 +150,13 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           <th><?php echo $row["name"]; ?></th>
                           <th><?php echo $row["account_type"]; ?></th>
                           <th><?php echo $row["tag_id"]; ?></th>
-                          <th><?php echo $row["organization_running_balance_derived"]; ?></th>
+                          <th><?php if ($row["organization_running_balance_derived"] < 0) {
+                            echo '<div style="color: red;">'.$row["organization_running_balance_derived"].'</div>';
+                          } else {
+                            echo $row["organization_running_balance_derived"];
+                          } ?></th>
                           <th><?php echo $row["reconciliation_enabled"]; ?></th>
-                          <td><a onclick="showDialog()" class="btn btn-info" ><i style="color:#ffffff;" class="material-icons">create</i></a></td>
+                          <td><a href="edit_chart_account.php?edit=<?php echo $row["id"];?>" class="btn btn-info" ><i style="color:#ffffff;" class="material-icons">create</i></a></td>
                         </tr>
                         <?php }
                           }
@@ -162,30 +166,71 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           ?>
                       </tbody>
                     </table>
-                    <div class="form-group">
-                      <div id="background">
-                      </div>
-                      <div id="diallbox">
-                      <form action="" method="POST" enctype="multipart/form-data">
-                      <h3>Edit Account</h3>
+                    <!-- start dialog -->
+                    <!-- <button type="button" class="btn btn-primary" >Large modal</button> -->
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title">Add Chart of Account</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+        <div class="modal-body">
+         <form action="" method="POST" enctype="multipart/form-data">
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label >Account name</label>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" name="">
+                      <label >Account name*</label>
+                      <input type="text" style="text-transform: uppercase;" class="form-control" name="acct_name" required>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label >GL Code</label>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" name="">
+                      <label >GL Code*</label>
+                      <input type="text" id="tit" style="text-transform: uppercase;" class="form-control" value="" name="gl_code" required readonly>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label >Account Type</label>
-                      <select class="form-control" name="" id="">
+                      <label >Account Type*</label>
+                      <script>
+                          $(document).ready(function(){
+                            $('#give').change(function() {
+                              var id = $(this).val();
+                              if (id == "") {
+                                document.getElementById('tit').readOnly = false;
+                                $('#tit').val("choose an account type");
+                              } else if (id == "ASSET") {
+                                document.getElementById('tit').readOnly = true;
+                                $('#tit').val("1" + Math.floor(1000 + Math.random() * 9000));
+                              } else if (id == "LIABILITY") {
+                                document.getElementById('tit').readOnly = true;
+                                $('#tit').val("2" + Math.floor(1000 + Math.random() * 9000));
+                              } else if (id == "EQUITY") {
+                                document.getElementById('tit').readOnly = true;
+                                $('#tit').val("3" + Math.floor(1000 + Math.random() * 9000));
+                              } else if (id == "INCOME") {
+                                document.getElementById('tit').readOnly = true;
+                                $('#tit').val("4" + Math.floor(1000 + Math.random() * 9000));
+                              } else if (id == "EXPENSE") {
+                                document.getElementById('tit').readOnly = true;
+                                $('#tit').val("5" + Math.floor(1000 + Math.random() * 9000));
+                              } else {
+                                $('#tit').val("Nothing");
+                              }
+                            });
+                          });
+                        </script>
+                      <select class="form-control" name="acct_type" id="give">
                         <option value="">Select an option</option>
+                        <option value="ASSET">ASSET</option>
+                        <option value="LIABILITY">LIABILITY</option>
+                        <option value="EQUITY">EQUITY</option>
+                        <option value="INCOME">INCOME</option>
+                        <option value="EXPENSE">EXPENSE</option>
                       </select>
                     </div>
                   </div>
@@ -198,7 +243,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >Account Tag</label>
-                      <select class="form-control" name="" id="">
+                      <select class="form-control" name="act_tag" id="">
                         <option value="">Select an option</option>
                       </select>                    
                     </div>
@@ -206,8 +251,11 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >Account Usage</label>
-                      <select class="form-control" name="" id="">
+                      <select class="form-control" name="acct_use" id="" required>
                         <option value="">Select an option</option>
+                        <option value="1">GL GROUP</option>
+                        <option value="2">GL ACCOUNT</option>
+
                       </select>                    
                     </div>
                   </div>
@@ -246,9 +294,8 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                 </div>
                 <div class="clearfix"></div>
                   <div style="float:right;">
-                        <span class="btn btn-primary pull-right" id="clickit" onclick="AddDlg()">Edit</span>
-                        <span class="btn btn-danger pull-right" id="clickit" onclick="AddDlg()">Delete</span>
-                        <button class="btn pull-right" onclick="AddDlg()">Close</button>
+                        <span class="btn btn-primary pull-right">Add</span>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                       </div>
                       </form>
                         <!-- </form> -->
