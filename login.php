@@ -96,7 +96,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             // begining of mail
                             $mail = new PHPMailer;
                             // from email addreess and name
-                            $mail->From = $intemail;
+                            $mail->From = "techsupport@sekanisystems.com.ng";
                             $mail->FromName = $intname;
                             // to adress and name
                             $mail->addAddress($email, $username);
@@ -113,7 +113,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $mail->Subject = "LOGGED IN?";
                             $mail->Body = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                             <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
-                            
                             <head>
                                 <!--[if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
                                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
