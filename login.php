@@ -96,7 +96,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             // begining of mail
                             $mail = new PHPMailer;
                             // from email addreess and name
-                            $mail->From = $intemail;
+                            $mail->From = "techsupport@sekanisystems.com.ng";
                             $mail->FromName = $intname;
                             // to adress and name
                             $mail->addAddress($email, $username);
@@ -287,7 +287,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 </table>
                                 <!--[if (IE)]></div><![endif]-->
                             </body>
-                            
                             </html>';
                             $mail->AltBody = "This is the plain text version of the email content";
                             // mail system
