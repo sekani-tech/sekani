@@ -163,7 +163,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                       </tbody>
                     </table>
                     <!-- start dialog -->
-                    <button type="button" class="btn btn-primary" >Large modal</button>
+                    <!-- <button type="button" class="btn btn-primary" >Large modal</button> -->
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog">
