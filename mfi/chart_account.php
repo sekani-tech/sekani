@@ -196,8 +196,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >Account Type*</label>
-                      <select class="form-control" name="acct_type" required id="give">
-                        <script>
+                      <script>
                           $(document).ready(function(){
                             $('#give').change(function() {
                               var id = $(this).val();
@@ -235,6 +234,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                             });
                           });
                         </script>
+                      <select class="form-control" name="acct_type" id="give">
                         <option value="">Select an option</option>
                         <option value="ASSET">ASSET</option>
                         <option value="LIABILITY">LIABILITY</option>
