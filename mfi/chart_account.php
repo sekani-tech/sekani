@@ -229,6 +229,8 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                                 var myrnd = Math.floor(1000 + Math.random() * 9000);
                                 var xm = "5";
                                 $('tit').val(xm+myrnd);
+                              } else {
+                                $('tit').val("Nothing");
                               }
                             });
                           });
