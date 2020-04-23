@@ -89,14 +89,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["employee_status"] = $employee_status;
                             $_SESSION["branch_id"] = $branch_id;
                             // $_SESSION["lastname"] = $lastname;
-                            $compsec = mysqli_query($link, "SELECT * FROM institutions WHERE int_id ='$int_id'");
+                            $compsec = mysqli_query($link, "SELECT * FROM `institutions` WHERE int_id ='$int_id'");
                             $res = mysqli_fetch_array($compsec);
                             $intname = $res["int_name"];
                             $intemail = $res["email"];
                             // begining of mail
                             $mail = new PHPMailer;
                             // from email addreess and name
-                            $mail->From = "techsupport@sekanisystems.com.ng";
+                            $mail->From = $intemail;
                             $mail->FromName = $intname;
                             // to adress and name
                             $mail->addAddress($email, $username);
@@ -290,7 +290,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             </html>';
                             $mail->AltBody = "This is the plain text version of the email content";
                             // mail system
-                            if(!$mail->send()) 
+                            if(!$mail->send())
                             {
                                 echo "Mailer Error: " . $mail->ErrorInfo;
                             } else
