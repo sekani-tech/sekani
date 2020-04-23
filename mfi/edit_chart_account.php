@@ -45,19 +45,19 @@ if(isset($_GET["edit"])) {
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account name</label>
-                      <input type="text" value="<?php echo $acct_name; ?>" style="text-transform: uppercase;" class="form-control" name="acct_name">
+                      <input type="text" value="<?php echo $acct_name; ?>" style="text-transform: uppercase;" class="form-control" name="acct_name" required>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >GL Code</label>
-                      <input type="text" value="<?php echo $gl_code; ?>" style="text-transform: uppercase;" class="form-control" name="gl_code">
+                      <input type="text" value="<?php echo $gl_code; ?>" style="text-transform: uppercase;" class="form-control" name="gl_code" required>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account Type</label>
-                      <select class="form-control" name="" id="">
+                      <select class="form-control" name="" id="" requireds>
                         <option value="">Select an option</option>
                         <option value="">ASSET</option>
                         <option value="">LIABILITY</option>
@@ -70,13 +70,13 @@ if(isset($_GET["edit"])) {
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >External ID</label>
-                      <input type="text" value="<?php echo $ext_id; ?>" style="text-transform: uppercase;" class="form-control" name="">
+                      <input type="text" value="<?php echo $ext_id; ?>" style="text-transform: uppercase;" class="form-control" name="" required>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account Tag</label>
-                      <select class="form-control" name="" id="">
+                      <select class="form-control" name="" id="" required>
                         <option value="<?php echo $acct_tag; ?>"><?php echo $acct_tag; ?></option>
                         <option value="">...</option>
                         <option value="">...</option>
@@ -86,10 +86,10 @@ if(isset($_GET["edit"])) {
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account Usage</label>
-                      <select class="form-control" name="" id="">
+                      <select class="form-control" name="" id="" required>
                         <option value="<?php echo $acct_use;?>">...</option>
-                        <option value="">GL GROUP</option>
-                        <option value="">GL ACCOUNT</option>
+                        <option value="1">GL GROUP</option>
+                        <option value="2">GL ACCOUNT</option>
                       </select>                    
                     </div>
                   </div>
@@ -135,7 +135,7 @@ if(isset($_GET["edit"])) {
                   <div class="col-md-12">
                     <div class="form-group">
                       <label> Description:</label>
-                      <input type="text" value="<?php echo $des; ?>" style="text-transform: uppercase;" class="form-control" name="middlename">  
+                      <input type="text" value="<?php echo $des; ?>" style="text-transform: uppercase;" class="form-control" name="descript">  
                     </div>
                   </div>
                 </div>
