@@ -89,7 +89,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["employee_status"] = $employee_status;
                             $_SESSION["branch_id"] = $branch_id;
                             // $_SESSION["lastname"] = $lastname;
-                            $compsec = mysqli_query($link, "SELECT * FROM institution WHERE int_id ='$int_id'");
+                            $compsec = mysqli_query($link, "SELECT * FROM institutions WHERE int_id ='$int_id'");
                             $res = mysqli_fetch_array($compsec);
                             $intname = $res["int_name"];
                             $intemail = $res["email"];
