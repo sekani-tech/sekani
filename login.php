@@ -105,8 +105,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             // $mail->addBCC("bcc@example.com");
                             // Send HTML or Plain Text Email
                             $mail->isHTML(true);
-                            $mail->Subject = "LOGGED IN";
-                            $mail->Body = "<p>YOU JUST LOGGED IN</p>";
+                            $mail->Subject = "LOGGED IN?";
+                            $mail->Body = "<p>Good Day".$username." Always Remember to Logout after you use the system </p>";
                             $mail->AltBody = "This is the plain text version of the email content";
                             // mail system
                             if(!$mail->send()) 
