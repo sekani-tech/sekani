@@ -1,6 +1,5 @@
 
 <?php
-
 $page_title = "Edit Account";
 $destination = "chart_account.php";
 include("header.php");
@@ -12,7 +11,7 @@ if(isset($_GET["edit"])) {
   $id = $_GET["edit"];
   $update = true;
   $person = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE id='$id' && int_id='$sessint_id'");
-
+// joke
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
     $vd = $n['id'];
@@ -57,7 +56,7 @@ if(isset($_GET["edit"])) {
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account Type</label>
-                      <select class="form-control" name="" id="" requireds>
+                      <select class="form-control" name="acct_type" id="" required>
                         <option value="">Select an option</option>
                         <option value="">ASSET</option>
                         <option value="">LIABILITY</option>
@@ -70,13 +69,13 @@ if(isset($_GET["edit"])) {
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >External ID</label>
-                      <input type="text" value="<?php echo $ext_id; ?>" style="text-transform: uppercase;" class="form-control" name="" required>
+                      <input type="text" name="ext_id" value="<?php echo $ext_id; ?>" style="text-transform: uppercase;" class="form-control" required>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account Tag</label>
-                      <select class="form-control" name="" id="" required>
+                      <select class="form-control" name="acct_tag" id="" required>
                         <option value="<?php echo $acct_tag; ?>"><?php echo $acct_tag; ?></option>
                         <option value="">...</option>
                         <option value="">...</option>
@@ -86,7 +85,7 @@ if(isset($_GET["edit"])) {
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account Usage</label>
-                      <select class="form-control" name="" id="" required>
+                      <select class="form-control" name="acct_use" id="" required>
                         <option value="<?php echo $acct_use;?>">...</option>
                         <option value="1">GL GROUP</option>
                         <option value="2">GL ACCOUNT</option>
@@ -98,7 +97,7 @@ if(isset($_GET["edit"])) {
                       <label >Manual Entires Allowed</label><br/>
                       <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                          <input class="form-check-input" name="" type="checkbox" value="1">
+                          <input class="form-check-input" name="man_acct" type="checkbox" value="1">
                           <span class="form-check-sign">
                             <span class="check"></span>
                           </span>
@@ -111,7 +110,7 @@ if(isset($_GET["edit"])) {
                       <label >Allow Bank reconciliation?</label><br/>
                       <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                          <input class="form-check-input" name="" type="checkbox" value="1">
+                          <input class="form-check-input" name="allow_bank" type="checkbox" value="1">
                           <span class="form-check-sign">
                             <span class="check"></span>
                           </span>
@@ -124,7 +123,7 @@ if(isset($_GET["edit"])) {
                       <label >Disable</label><br/>
                       <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                          <input class="form-check-input" name="" type="checkbox" value="1">
+                          <input class="form-check-input" name="disable" type="checkbox" value="1">
                           <span class="form-check-sign">
                             <span class="check"></span>
                           </span>
@@ -135,7 +134,7 @@ if(isset($_GET["edit"])) {
                   <div class="col-md-12">
                     <div class="form-group">
                       <label> Description:</label>
-                      <input type="text" value="<?php echo $des; ?>" style="text-transform: uppercase;" class="form-control" name="descript">  
+                      <input type="text" name="descript" value="<?php echo $des; ?>" style="text-transform: uppercase;" class="form-control">  
                     </div>
                   </div>
                 </div>
@@ -153,7 +152,5 @@ if(isset($_GET["edit"])) {
   </div>
 
 <?php
-
 include("footer.php");
-
 ?>
