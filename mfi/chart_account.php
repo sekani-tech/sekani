@@ -166,7 +166,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog">
     <div class="modal-content">
     <div class="modal-header">
     <h5 class="modal-title">Add Chart of Account</h5>
