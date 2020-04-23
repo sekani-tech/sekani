@@ -232,7 +232,7 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);?>
                                 var xm = "5";
                                 $('tit').val(xm+myrnd);
                               }
-                            })
+                            });
                           });
                         </script>
                         <option value="NO">Select an option</option>
