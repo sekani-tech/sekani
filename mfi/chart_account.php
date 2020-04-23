@@ -168,7 +168,13 @@ $_SESSION["lack_of_intfund_$key"] = 0;
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <form action="" method="POST" enctype="multipart/form-data">
+    <div class="modal-header">
+    <h5 class="modal-title">Add Chart of Account</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="modal-body">
+         <form action="" method="POST" enctype="multipart/form-data">
                       <h3>Edit Account</h3>
                 <div class="row">
                   <div class="col-md-6">
@@ -253,6 +259,12 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                         <button class="btn pull-right" onclick="AddDlg()">Close</button>
                       </div>
                       </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
     </div>
   </div>
 </div>
