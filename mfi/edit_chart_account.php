@@ -21,8 +21,8 @@ if(isset($_GET["edit"])) {
     $ext_id = $n['external_id'];
     $acct_tag = $n['tag_id'];
     $acct_use = $n['account_usage'];
-    $dis = $n['description'];
-    $man_ent = $n['manual_jornal_entries_allowed'];
+    $des = $n['description'];
+    $man_ent = $n['manual_journal_entries_allowed'];
     $disable_acct = $n['disabled'];
     $enb_bank_recon = $n['reconciliation_enabled'];
   }
