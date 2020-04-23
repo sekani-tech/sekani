@@ -205,29 +205,24 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                                 $('#tit').val("");
                               } else if (id == "ASSET") {
                                 document.getElementById('tit').readOnly = true;
-                                var myrnd = Math.floor(1000 + Math.random() * 9000);
                                 var xm = "1";
-                                $('tit').val(xm+myrnd);
+                                $('tit').val(xm, Math.floor(1000 + Math.random() * 9000));
                               } else if (id == "LIABILITY") {
                                 document.getElementById('tit').readOnly = true;
-                                var myrnd = Math.floor(1000 + Math.random() * 9000);
                                 var xm = "2";
-                                $('tit').val(xm+myrnd);
+                                $('tit').val(xm, Math.floor(1000 + Math.random() * 9000));
                               } else if (id == "EQUITY") {
                                 document.getElementById('tit').readOnly = true;
-                                var myrnd = Math.floor(1000 + Math.random() * 9000);
                                 var xm = "3";
-                                $('tit').val(xm+myrnd);
+                                $('tit').val(xm, Math.floor(1000 + Math.random() * 9000));
                               } else if (id == "INCOME") {
                                 document.getElementById('tit').readOnly = true;
-                                var myrnd = Math.floor(1000 + Math.random() * 9000);
                                 var xm = "4";
-                                $('tit').val(xm+myrnd);
+                                $('tit').val(xm, Math.floor(1000 + Math.random() * 9000));
                               } else if (id == "EXPENSE") {
                                 document.getElementById('tit').readOnly = true;
-                                var myrnd = Math.floor(1000 + Math.random() * 9000);
                                 var xm = "5";
-                                $('tit').val(xm+myrnd);
+                                $('tit').val(xm, Math.floor(1000 + Math.random() * 9000));
                               } else {
                                 $('tit').val("Nothing");
                               }
