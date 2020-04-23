@@ -1,0 +1,8 @@
+{
+  "useSmtp": false,
+  "host": "mail.sekanisystems.com.ng",
+  "port": 465,
+  "username": "techsupport@sekanisystems.com.ng",
+  "password": "04#CY^#pqYur",
+  "recipientEmail": "techsupport@sekanisystems.com.ng"
+}
