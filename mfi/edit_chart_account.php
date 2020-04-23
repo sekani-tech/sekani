@@ -22,6 +22,7 @@ if(isset($_GET["edit"])) {
     $ext_id = $n['external_id'];
     $acct_tag = $n['tag_id'];
     $acct_use = $n['account_usage'];
+    $dis = $n['description'];
     $man_ent = $n['manual_jornal_entries_allowed'];
     $disable_acct = $n['disabled'];
     $enb_bank_recon = $n['reconciliation_enabled'];
@@ -76,7 +77,7 @@ if(isset($_GET["edit"])) {
                     <div class="form-group">
                       <label >Account Tag</label>
                       <select class="form-control" name="" id="">
-                        <option value="<?php echo $acct_tag; ?>">Select an option</option>
+                        <option value="<?php echo $acct_tag; ?>"><?php echo $acct_tag; ?></option>
                         <option value="">...</option>
                         <option value="">...</option>
                       </select>                    
@@ -86,7 +87,7 @@ if(isset($_GET["edit"])) {
                     <div class="form-group">
                       <label >Account Usage</label>
                       <select class="form-control" name="" id="">
-                        <option value="<?php echo $acct_use;?>">Select an option</option>
+                        <option value="<?php echo $acct_use;?>"><?php echo $acct_use;?></option>
                         <option value="">GL GROUP</option>
                         <option value="">GL ACCOUNT</option>
                       </select>                    
@@ -134,7 +135,7 @@ if(isset($_GET["edit"])) {
                   <div class="col-md-12">
                     <div class="form-group">
                       <label> Description:</label>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" name="middlename">  
+                      <input type="text" value="<?php echo $des; ?>" style="text-transform: uppercase;" class="form-control" name="middlename">  
                     </div>
                   </div>
                 </div>
