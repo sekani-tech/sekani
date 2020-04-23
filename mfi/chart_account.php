@@ -183,21 +183,28 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label >Account name</label>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" name="">
+                      <label >Account name*</label>
+                      <input type="text" style="text-transform: uppercase;" class="form-control" name="acct_name" required>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label >GL Code</label>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" name="">
+                      <label >GL Code*</label>
+                      <?php $digits = 5;
+$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);?>
+                      <input type="text" style="text-transform: uppercase;" class="form-control" value="<?php echo $randms; ?>" name="gl_code" required>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label >Account Type</label>
-                      <select class="form-control" name="" id="">
+                      <label >Account Type*</label>
+                      <select class="form-control" name="acct_type" id="" required>
                         <option value="">Select an option</option>
+                        <option value="">ASSET</option>
+                        <option value="">LIABILITY</option>
+                        <option value="">EQUITY</option>
+                        <option value="">INCOME</option>
+                        <option value="">EXPENSE</option>
                       </select>
                     </div>
                   </div>
@@ -210,7 +217,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >Account Tag</label>
-                      <select class="form-control" name="" id="">
+                      <select class="form-control" name="act_tag" id="">
                         <option value="">Select an option</option>
                       </select>                    
                     </div>
@@ -218,8 +225,11 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >Account Usage</label>
-                      <select class="form-control" name="" id="">
+                      <select class="form-control" name="acct_use" id="">
                         <option value="">Select an option</option>
+                        <option value="">GL GROUP</option>
+                        <option value="">GL ACCOUNT</option>
+
                       </select>                    
                     </div>
                   </div>
