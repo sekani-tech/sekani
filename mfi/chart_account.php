@@ -192,19 +192,55 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                       <label >GL Code*</label>
                       <?php $digits = 8;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);?>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" value="<?php echo $randms; ?>" name="gl_code" required>
+                      <input type="text" id="tit" style="text-transform: uppercase;" class="form-control" value="<?php echo $randms; ?>" name="gl_code" required readonly>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >Account Type*</label>
-                      <select class="form-control" name="acct_type" id="" required>
-                        <option value="">Select an option</option>
-                        <option value="">ASSET</option>
-                        <option value="">LIABILITY</option>
-                        <option value="">EQUITY</option>
-                        <option value="">INCOME</option>
-                        <option value="">EXPENSE</option>
+                      <select class="form-control" name="acct_type" id="" required id="give">
+                        <script>
+                          $(document).ready(function(){
+                            $('#give').change(function() {
+                              var id = $(this).val();
+                              if (id == "NO") {
+                                document.getElementById('tit').readOnly = false;
+                                $('#tit').val("");
+                              } else if (id == "ASSET") {
+                                document.getElementById('tit').readOnly = true;
+                                var myrnd = Math.floor(1000 + Math.random() * 9000);
+                                var xm = "1";
+                                $('tit').val(xm+myrnd);
+                              } else if (id == "LIABILITY") {
+                                document.getElementById('tit').readOnly = true;
+                                var myrnd = Math.floor(1000 + Math.random() * 9000);
+                                var xm = "2";
+                                $('tit').val(xm+myrnd);
+                              } else if (id == "EQUITY") {
+                                document.getElementById('tit').readOnly = true;
+                                var myrnd = Math.floor(1000 + Math.random() * 9000);
+                                var xm = "3";
+                                $('tit').val(xm+myrnd);
+                              } else if (id == "INCOME") {
+                                document.getElementById('tit').readOnly = true;
+                                var myrnd = Math.floor(1000 + Math.random() * 9000);
+                                var xm = "4";
+                                $('tit').val(xm+myrnd);
+                              } else if (id == "EXPENSE") {
+                                document.getElementById('tit').readOnly = true;
+                                var myrnd = Math.floor(1000 + Math.random() * 9000);
+                                var xm = "5";
+                                $('tit').val(xm+myrnd);
+                              }
+                            })
+                          });
+                        </script>
+                        <option value="NO">Select an option</option>
+                        <option value="ASSET">ASSET</option>
+                        <option value="LIABILITY">LIABILITY</option>
+                        <option value="EQUITY">EQUITY</option>
+                        <option value="INCOME">INCOME</option>
+                        <option value="EXPENSE">EXPENSE</option>
                       </select>
                     </div>
                   </div>
