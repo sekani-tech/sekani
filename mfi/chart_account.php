@@ -162,11 +162,13 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           ?>
                       </tbody>
                     </table>
-                    <div class="form-group">
-                      <div id="background">
-                      </div>
-                      <div id="diallbox">
-                      <form action="" method="POST" enctype="multipart/form-data">
+                    <!-- start dialog -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form action="" method="POST" enctype="multipart/form-data">
                       <h3>Edit Account</h3>
                 <div class="row">
                   <div class="col-md-6">
@@ -251,73 +253,10 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                         <button class="btn pull-right" onclick="AddDlg()">Close</button>
                       </div>
                       </form>
-                        <!-- </form> -->
-                        <script>
-                              $(document).ready(function() {
-                                $('#clickit').on("change keyup paste click", function(){
-                                  var id = $(this).val();
-                                  var client_id = $('#client_name').val();
-                                  var colval = $('#colname').val();
-                                  var colname = $('#col_val').val();
-                                  var coldes = $('#col_descr').val();
-                                  $.ajax({
-                                    url:"collateral_upload.php",
-                                    method:"POST",
-                                    data:{id:id, client_id:client_id, colval:colval, colname:colname, coldes:coldes},
-                                    success:function(data){
-                                      $('#coll').html(data);
-                                    }
-                                  })
-                                });
-                              });
-                            </script>
-<script>
-    function AddDlg(){
-        var bg = document.getElementById("background");
-        var dlg = document.getElementById("diallbox");
-        bg.style.display = "none";
-        dlg.style.display = "none";
-    }
-    
-    function showDialog(){
-        var bg = document.getElementById("background");
-        var dlg = document.getElementById("diallbox");
-        bg.style.display = "block";
-        dlg.style.display = "block";
-        
-        var winWidth = window.innerWidth;
-        var winHeight = window.innerHeight;
-        
-        dlg.style.left = (winWidth/2) - 480/2 + "px";
-        dlg.style.top = "120px";
-    }
-</script>
-<style>
-    #background{
-        display: none;
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        top: 0px;
-        left: 0px;
-        background-color: black;
-        opacity: 0.7;
-        z-index: 9999;
-    }
-    
-    #diallbox{
-        /*initially dialog box is hidden*/
-        display: none;
-        position: fixed;
-        width: 480px;
-        z-index: 9999;
-        border-radius: 10px;
-        padding:20px;
-        background-color: #ffffff;
-    }
-</style>
-                      </div>
-                    </div>
+    </div>
+  </div>
+</div>
+                    <!-- end dialog -->
                   </div>
                 </div>
               </div>
