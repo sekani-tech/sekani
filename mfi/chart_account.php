@@ -205,24 +205,19 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                                 $('#tit').val("");
                               } else if (id == "ASSET") {
                                 document.getElementById('tit').readOnly = true;
-                                var xm = "1";
-                                $('tit').val(xm, Math.floor(1000 + Math.random() * 9000));
+                                $('tit').val("1" + Math.floor(1000 + Math.random() * 9000));
                               } else if (id == "LIABILITY") {
                                 document.getElementById('tit').readOnly = true;
-                                var xm = "2";
-                                $('tit').val(xm, Math.floor(1000 + Math.random() * 9000));
+                                $('tit').val("2" + Math.floor(1000 + Math.random() * 9000));
                               } else if (id == "EQUITY") {
                                 document.getElementById('tit').readOnly = true;
-                                var xm = "3";
-                                $('tit').val(xm, Math.floor(1000 + Math.random() * 9000));
+                                $('tit').val("3" + Math.floor(1000 + Math.random() * 9000));
                               } else if (id == "INCOME") {
                                 document.getElementById('tit').readOnly = true;
-                                var xm = "4";
-                                $('tit').val(xm, Math.floor(1000 + Math.random() * 9000));
+                                $('tit').val("4" + Math.floor(1000 + Math.random() * 9000));
                               } else if (id == "EXPENSE") {
                                 document.getElementById('tit').readOnly = true;
-                                var xm = "5";
-                                $('tit').val(xm, Math.floor(1000 + Math.random() * 9000));
+                                $('tit').val("5" + Math.floor(1000 + Math.random() * 9000));
                               } else {
                                 $('tit').val("Nothing");
                               }
