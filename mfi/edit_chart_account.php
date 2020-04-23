@@ -16,15 +16,15 @@ if(isset($_GET["edit"])) {
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
     $vd = $n['id'];
-    $acct_name = $n[''];
-    $cl_code = $n[''];
-    $acct_type = $n[''];
-    $ext_id = $n[''];
-    $acct_tag = $n[''];
-    $acct_use = $n[''];
-    $man_ent = $n[''];
-    $disable_acct = $n[''];
-    $enb_bank_recon = $n[''];
+    $acct_name = $n['name'];
+    $gl_code = $n['gl_code'];
+    $acct_type = $n['account_type'];
+    $ext_id = $n['external_id'];
+    $acct_tag = $n['tag_id'];
+    $acct_use = $n['account_usage'];
+    $man_ent = $n['manual_jornal_entries_allowed'];
+    $disable_acct = $n['disabled'];
+    $enb_bank_recon = $n['reconciliation_enabled'];
   }
 }
 ?>
