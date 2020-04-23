@@ -203,7 +203,7 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);?>
                           $(document).ready(function(){
                             $('#give').change(function() {
                               var id = $(this).val();
-                              if (id == "NO") {
+                              if (id == "") {
                                 document.getElementById('tit').readOnly = false;
                                 $('#tit').val("");
                               } else if (id == "ASSET") {
@@ -235,7 +235,7 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);?>
                             });
                           });
                         </script>
-                        <option value="NO">Select an option</option>
+                        <option value="">Select an option</option>
                         <option value="ASSET">ASSET</option>
                         <option value="LIABILITY">LIABILITY</option>
                         <option value="EQUITY">EQUITY</option>
