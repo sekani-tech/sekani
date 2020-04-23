@@ -202,11 +202,12 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                               var id = $(this).val();
                               if (id == "") {
                                 document.getElementById('tit').readOnly = false;
-                                document.getElementById('tit').val("choose an account type");
+                                $('#tit').val("choose an account type");
                               } else if (id == "ASSET") {
                                 document.getElementById('tit').readOnly = true;
                                 $('#tit').val("1" + Math.floor(1000 + Math.random() * 9000));
                               } else if (id == "LIABILITY") {
+                                document.getElementById('tit').readOnly = true;
                                 $('#tit').val("2" + Math.floor(1000 + Math.random() * 9000));
                               } else if (id == "EQUITY") {
                                 document.getElementById('tit').readOnly = true;
