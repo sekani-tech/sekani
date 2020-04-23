@@ -308,7 +308,8 @@ $_SESSION["lack_of_intfund_$key"] = 0;
     #diallbox{
         /*initially dialog box is hidden*/
         display: none;
-        position: fixed;
+        position:fixed;
+        margin-top: -50px;
         width: 480px;
         z-index: 9999;
         border-radius: 10px;
