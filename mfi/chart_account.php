@@ -190,7 +190,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >GL Code*</label>
-                      <?php $digits = 5;
+                      <?php $digits = 8;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);?>
                       <input type="text" style="text-transform: uppercase;" class="form-control" value="<?php echo $randms; ?>" name="gl_code" required>
                     </div>
