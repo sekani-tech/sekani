@@ -289,7 +289,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
         var winHeight = window.innerHeight;
         
         dlg.style.left = (winWidth/2) - 480/2 + "px";
-        dlg.style.top = "150px";
+        dlg.style.top = "120px";
     }
 </script>
 <style>
