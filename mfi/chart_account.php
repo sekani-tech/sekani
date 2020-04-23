@@ -150,7 +150,11 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           <th><?php echo $row["name"]; ?></th>
                           <th><?php echo $row["account_type"]; ?></th>
                           <th><?php echo $row["tag_id"]; ?></th>
-                          <th><?php echo $row["organization_running_balance_derived"]; ?></th>
+                          <th><?php if ($row["organization_running_balance_derived"] < 0) {
+                            echo '<div style="color: red;">'.$row["organization_running_balance_derived"].'</div>';
+                          } else {
+                            echo $row["organization_running_balance_derived"];
+                          } ?></th>
                           <th><?php echo $row["reconciliation_enabled"]; ?></th>
                           <td><a href="edit_chart_account.php?edit=<?php echo $row["id"];?>" class="btn btn-info" ><i style="color:#ffffff;" class="material-icons">create</i></a></td>
                         </tr>
