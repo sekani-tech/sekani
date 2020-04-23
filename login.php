@@ -89,7 +89,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["employee_status"] = $employee_status;
                             $_SESSION["branch_id"] = $branch_id;
                             // $_SESSION["lastname"] = $lastname;
-                            $compsec = mysqli_query($link, "SELECT * FROM institutions WHERE int_id ='$int_id'");
+                            $compsec = mysqli_query($link, "SELECT * FROM `institutions` WHERE int_id ='$int_id'");
                             if (count([$compsec]) == 1) {
                             $res = mysqli_fetch_array($compsec);
                             $intname = $res["int_name"];
@@ -99,8 +99,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             // begining of mail
                             $mail = new PHPMailer;
                             // from email addreess and name
-                            $mail->From = $intemail;
-                            $mail->FromName = $intname;
+                            $mail->From = "techsupport@sekanisystems.com.ng";
+                            $mail->FromName = "sekani test";
                             // to adress and name
                             $mail->addAddress($email, $username);
                             // reply address
@@ -302,8 +302,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 echo "Message has been sent successfully";
                             }
                             // end of mail
-                            } else {
-                                header("location: mfi/rubbish.php");
                             }
                             session_write_close();                            
                             //run a quick code to show active user
