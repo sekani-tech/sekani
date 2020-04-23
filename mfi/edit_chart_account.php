@@ -1,8 +1,8 @@
 
 <?php
 
-$page_title = "Add Account";
-$destination = "client.php";
+$page_title = "Edit Account";
+$destination = "chart_account.php";
 include("header.php");
 
 ?>
