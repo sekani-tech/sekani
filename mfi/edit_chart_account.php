@@ -14,7 +14,7 @@ include("header.php");
         <div class="col-md-8">
           <div class="card">
             <div class="card-header card-header-primary">
-              <h4 class="card-title">Create a General Ledger Account</h4>
+              <h4 class="card-title">Edit a General Ledger Account</h4>
               <p class="card-category">Fill in all important data</p>
             </div>
             <div class="card-body">
