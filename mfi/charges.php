@@ -94,7 +94,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
                   });
                   </script>
                   <!-- Insert number users institutions -->
-                  <p class="card-category"> Current Charges || <a style = "color: white;" href="create_charge.php">Create New Charge</a></p>
+                  <p class="card-category"> Current Charges || <a style = "color: white;" href="add_charges.php">Create New Charge</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -188,37 +188,33 @@ $_SESSION["lack_of_intfund_$key"] = null;
                       </div>
                       <div id="diallbox">
                       <form action="" method="POST" enctype="multipart/form-data">
-                      <h3>Edit Account</h3>
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label >Account name</label>
+                      <label>Name</label>
                       <input type="text" style="text-transform: uppercase;" class="form-control" name="">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label >GL Code</label>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" name="">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label >Account Type</label>
+                      <label >Product</label>
                       <select class="form-control" name="" id="">
                         <option value="">Select an option</option>
-                      </select>
+                        <option value="">Loans</option>
+                        <option value="">Savings</option>
+                        <option value="">Shares</option>
+                      </select>                    
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label >External ID</label>
+                      <label >Amount</label>
                       <input type="text" style="text-transform: uppercase;" class="form-control" name="">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label >Account Tag</label>
+                      <label >Charge Options</label>
                       <select class="form-control" name="" id="">
                         <option value="">Select an option</option>
                       </select>                    
@@ -226,15 +222,23 @@ $_SESSION["lack_of_intfund_$key"] = null;
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label >Account Usage</label>
+                      <label >Currency</label><br/>
                       <select class="form-control" name="" id="">
                         <option value="">Select an option</option>
-                      </select>                    
+                      </select> 
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label >Manual Entires Allowed</label><br/>
+                      <label >Charge Payment mode</label><br/>
+                      <select class="form-control" name="" id="">
+                        <option value="">Select an option</option>
+                      </select> 
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label >Penalty</label><br/>
                       <div class="form-check form-check-inline">
                       <label class="form-check-label">
                           <input class="form-check-input" name="" type="checkbox" value="1">
@@ -245,9 +249,9 @@ $_SESSION["lack_of_intfund_$key"] = null;
                     </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <div class="form-group">
-                      <label >Allow Bank reconciliation?</label><br/>
+                      <label >Active</label><br/>
                       <div class="form-check form-check-inline">
                       <label class="form-check-label">
                           <input class="form-check-input" name="" type="checkbox" value="1">
@@ -258,40 +262,25 @@ $_SESSION["lack_of_intfund_$key"] = null;
                     </div>
                     </div>
                   </div>
-                  <div class="col-md-12">
+                  <div class="col-md-4">
                     <div class="form-group">
-                      <label> Description:</label>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" name="middlename">  
+                      <label >Allowed to Override</label><br/>
+                      <div class="form-check form-check-inline">
+                      <label class="form-check-label">
+                          <input class="form-check-input" name="" type="checkbox" value="1">
+                          <span class="form-check-sign">
+                            <span class="check"></span>
+                          </span>
+                      </label>
+                    </div>
                     </div>
                   </div>
                 </div>
+                <a href="client.php" class="btn btn-danger">Back</a>
+                <button type="submit" name="submit" id="submit" class="btn btn-primary pull-right">Edit</button>
                 <div class="clearfix"></div>
-                  <div style="float:right;">
-                        <span class="btn btn-primary pull-right" id="clickit" onclick="AddDlg()">Edit</span>
-                        <span class="btn btn-danger pull-right" id="clickit" onclick="AddDlg()">Delete</span>
-                        <button class="btn pull-right" onclick="AddDlg()">Close</button>
-                      </div>
-                      </form>
+              </form>
                         <!-- </form> -->
-                        <script>
-                              $(document).ready(function() {
-                                $('#clickit').on("change keyup paste click", function(){
-                                  var id = $(this).val();
-                                  var client_id = $('#client_name').val();
-                                  var colval = $('#colname').val();
-                                  var colname = $('#col_val').val();
-                                  var coldes = $('#col_descr').val();
-                                  $.ajax({
-                                    url:"collateral_upload.php",
-                                    method:"POST",
-                                    data:{id:id, client_id:client_id, colval:colval, colname:colname, coldes:coldes},
-                                    success:function(data){
-                                      $('#coll').html(data);
-                                    }
-                                  })
-                                });
-                              });
-                            </script>
 <script>
     function AddDlg(){
         var bg = document.getElementById("background");
@@ -339,7 +328,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
 </style>
                       </div>
                     </div>
-                  </div>
+                   </div>
                   </div>
                 </div>
               </div>
