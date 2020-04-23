@@ -253,11 +253,6 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                   </div>
                 </div>
                 <div class="clearfix"></div>
-                  <div style="float:right;">
-                        <span class="btn btn-primary pull-right" id="clickit" onclick="AddDlg()">Edit</span>
-                        <span class="btn btn-danger pull-right" id="clickit" onclick="AddDlg()">Delete</span>
-                        <button class="btn pull-right" onclick="AddDlg()">Close</button>
-                      </div>
                       </form>
       </div>
       <div class="modal-footer">
