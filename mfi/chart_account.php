@@ -106,7 +106,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> Chart of Accounts || <a style = "color: white;" href="add_chart_account.php">Add Account</a></p>
+                   }?> Chart of Accounts || <a style = "color: white;" data-toggle="modal" data-target=".bd-example-modal-lg" href="#">Add Account</a></p>
                   <!-- Insert number users institutions -->
                   <script>
                   $(document).ready(function() {
@@ -152,7 +152,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           <th><?php echo $row["tag_id"]; ?></th>
                           <th><?php echo $row["organization_running_balance_derived"]; ?></th>
                           <th><?php echo $row["reconciliation_enabled"]; ?></th>
-                          <td><a onclick="showDialog()" class="btn btn-info" ><i style="color:#ffffff;" class="material-icons">create</i></a></td>
+                          <td><a href="add_chart_account.php?edit=<?php echo $row["id"];?>" class="btn btn-info" ><i style="color:#ffffff;" class="material-icons">create</i></a></td>
                         </tr>
                         <?php }
                           }
@@ -163,7 +163,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                       </tbody>
                     </table>
                     <!-- start dialog -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
+                    <button type="button" class="btn btn-primary" >Large modal</button>
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog">
