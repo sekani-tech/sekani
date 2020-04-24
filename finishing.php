@@ -22,11 +22,8 @@ echo $passk;
 <?php
 if(isset($_POST["button2"])){
     $code = $_POST['code'];
-    // pronlem
-    // $hash = password_hash($passk, PASSWORD_DEFAULT);
-    $hash = $passk;
     if ($code == $codey) {
-        $updatec = "UPDATE users SET password = '$hash' WHERE username = '$name' && int_id = '$int_id'";
+        $updatec = "UPDATE users SET password = '$passk' WHERE username = '$name' && int_id = '$int_id'";
         $res = mysqli_query($connection, $updatec);
         if ($res) {
             echo '<script type="text/javascript">
