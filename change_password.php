@@ -115,7 +115,6 @@ if(!$mail->send())
                         <div class="input-group-text"><i class="material-icons">done_all</i></div>
                         </div>
                         <input type="password" name="confirm_pass" id="opo2" placeholder="Confirm Password" class="form-control" required>
-                        <div style="color:red;" id="mm" hidden>The Inputed Pasword Doesn't Match</div>
                     </div>
                 </div>
                 <div class="justify-content-center">
