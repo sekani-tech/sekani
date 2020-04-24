@@ -1,5 +1,6 @@
 <?php
 include("material.php");
+include("functions/connect.php");
 require_once "bat/phpmailer/PHPMailerAutoload.php";
 ?>
 <?php
