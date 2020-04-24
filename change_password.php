@@ -38,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $pass = $_POST['pass'];
     $con_pass = $_POST['confirm_pass'];
     // pronlem
-    echo $code;
-    echo $pass;
+    echo $code."I AM A CODE";
+    echo $pass."I AM THE PASSWORD";
     echo $con_pass;
     $hash = password_hash($pass, PASSWORD_DEFAULT);
     if ($code == $codex) {
