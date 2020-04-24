@@ -17,7 +17,6 @@ $int_id = $_SESSION["int_id"];
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $code = $_POST['code'];
     $pass = $_POST['pass'];
-    $con_pass = $_POST['confirm_pass'];
     // pronlem
     $hash = password_hash($pass, PASSWORD_DEFAULT);
     if ($code == $codey) {
