@@ -2,6 +2,7 @@
 include("material.php");
 include("functions/connect.php");
 require_once "bat/phpmailer/PHPMailerAutoload.php";
+session_start();
 ?>
 <?php
 if (isset($_GET["edit"])) {
@@ -26,16 +27,18 @@ if (isset($_GET["edit"])) {
         $intemail = $ix['email'];
         $digits = 5;
         $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+        $_SESSION["codex"] = $randms;
     }
 }
 ?>
 <?php
+$codex = $_SESSION["codex"];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $code = $_POST['code'];
     $pass = $_POST['pass'];
     $con_pass = $_POST['confirm_pass'];
     $hash = password_hash($pass, PASSWORD_DEFAULT);
-    if ($con_pass == $randms && $pass == $con_pass) {
+    if ($con_pass == $codex && $pass == $con_pass) {
         $updatec = "UPDATE users SET password = '$hash' WHERE username = '$username' && int_id = '$int_id'";
         $res = mysqli_query($connection, $updatec);
         if ($res) {
@@ -91,12 +94,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             var id = $('#opo').val();
                             var check = $('#opo2').val();
                             if (id == check) {
-                                document.getElementById("myP").style.visibility = "hidden";
+                                document.getElementById("mm").style.visibility = "hidden";
                             } else {
-                                document.getElementById("myP").style.visibility = "visible";
+                                document.getElementById("mm").style.visibility = "visible";
                             }
-                        })
-                    })
+                        });
+                    });
                 </script>
                 <div class="form-group bmd-form-group">
                      <div class="input-group">
@@ -112,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="input-group-text"><i class="material-icons">done_all</i></div>
                         </div>
                         <input type="password" name="confirm_pass" id="opo2" placeholder="Confirm Password" class="form-control" required>
-                        <div style="color:red;" id="myP" hidden>The Inputed Pasword Doesn't Match</div>
+                        <div style="color:red;" id="mm" hidden>The Inputed Pasword Doesn't Match</div>
                     </div>
                 </div>
                 <div class="form-group bmd-form-group">
@@ -151,7 +154,7 @@ $mail->addReplyTo($intemail, "Reply");
 // Send HTML or Plain Text Email
 $mail->isHTML(true);
 $mail->Subject = "Comfirmation Code";
-$mail->Body = "Your Confirmation Code Number is: $randms";
+$mail->Body = "Your Confirmation Code Number is: $codex";
 $mail->AltBody = "This is the plain text version of the email content";
 // mail system
 if(!$mail->send()) 
