@@ -3,8 +3,8 @@ include("material.php");
 require_once "bat/phpmailer/PHPMailerAutoload.php";
 ?>
 <?php
-if (isset($_GET["editcodex1gen&hsnjn&&Hnjndjnedjnedfjnskjdnjneipqkiiwjejn"])) {
-    $name = $_GET["editcodex1gen&hsnjn&&Hnjndjnedjnedfjnskjdnjneipqkiiwjejn"];
+if (isset($_GET["edit"])) {
+    $name = $_GET["edit"];
     $gettheuser = mysqli_query($connection, "SELECT * FROM staff WHERE username = '$name'");
 
     if (count([$person]) == 1) {
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
                 <div class="justify-content-center">
-                    <a href="#pablo" type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Change Password</a>
+                    <a type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Change Password</a>
                 </div>
             </div>
     </form>
