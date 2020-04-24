@@ -35,11 +35,11 @@ if (isset($_GET["edit"])) {
 $codex = $_SESSION["codex"];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $code = $_POST['code'];
-    // a passowrd
+    // a password
     $pass = $_POST['pass'];
     $con_pass = $_POST['confirm_pass'];
     $hash = password_hash($pass, PASSWORD_DEFAULT);
-    if ($code == $codex && $pass == $con_pass) {
+    if ($code == $codex) {
         $updatec = "UPDATE users SET password = '$hash' WHERE username = '$username' && int_id = '$int_id'";
         $res = mysqli_query($connection, $updatec);
         if ($res) {
