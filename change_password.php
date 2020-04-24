@@ -127,13 +127,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      <div class="input-group">
                         <div class="input-group-prepend">
                         <div class="input-group-text"><i class="material-icons">code</i></div>
+                        <i @click="runcode" class="btn btn-primary">getcode</i>
                         </div>
                         <input type="text" name="code" placeholder="Code" class="form-control" required>
                     </div>
                 </div>
                 <div class="justify-content-center">
                     <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Change Password</button>
-                    <i @click="runcode" class="btn btn-primary"></i>
                 </div>
             </div>
     </form>
