@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $pass = $_POST['pass'];
     $con_pass = $_POST['confirm_pass'];
     $hash = password_hash($pass, PASSWORD_DEFAULT);
-    if ($codn_pass == $randms && $pass == $con_pass) {
+    if ($con_pass == $randms && $pass == $con_pass) {
         $updatec = "UPDATE users SET password = '$hash' WHERE username = '$username' && int_id = '$int_id'";
         $res = mysqli_query($connection, $updatec);
         if ($res) {
