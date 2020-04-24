@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="card-body">
                 <script>
                     $(document).ready(function() {
-                        $('#opo2').on("chnage keyup paste click", function () {
+                        $('#opo2').on("change keyup paste click", function () {
                             var id = $('#opo').val();
                             var check = $('#opo2').val();
                             if (id == check) {
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="input-group-text"><i class="material-icons">done_all</i></div>
                         </div>
                         <input type="password" name="confirm_pass" id="opo2" placeholder="Confirm Password" class="form-control" required>
-                        <p style="color:red;" id="myP" hidden>The Inputed Pasword Doesn't Match</p>
+                        <div style="color:red;" id="myP" hidden>The Inputed Pasword Doesn't Match</div>
                     </div>
                 </div>
                 <div class="form-group bmd-form-group">
