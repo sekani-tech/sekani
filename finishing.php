@@ -12,18 +12,16 @@ $codey = $_SESSION["codex"];
 $name = $_SESSION["name"];
 $int_id = $_SESSION["int_id"];
 // finial finishing
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $tent = password_hash($_POST["password"], PASSWORD_DEFAULT);
-    $_SESSION["password"] = $tent;
-    $passk = $_SESSION["password"];
-}
-echo $passk;
 ?>
 <?php
-if(isset($_POST["button2"])){
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $tent = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    // $_SESSION["password"] = $tent;
+    // $passk = $_SESSION["password"];
+    // check
     $code = $_POST['code'];
     if ($code == $codey) {
-        $updatec = "UPDATE users SET password = '$passk' WHERE username = '$name' && int_id = '$int_id'";
+        $updatec = "UPDATE users SET password = '$tent' WHERE username = '$name' && int_id = '$int_id'";
         $res = mysqli_query($connection, $updatec);
         if ($res) {
             echo '<script type="text/javascript">
@@ -44,6 +42,18 @@ session_destroy();
         $URL="login.php";
         echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
         }
+    } else if ($code == ""){
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "success",
+                title: "Email Confirmation",
+                text: "Check Email For Confirmation",
+                showConfirmButton: false,
+                timer: 2000
+            })
+        });
+        </script>';
     } else {
         echo '<script type="text/javascript">
         $(document).ready(function(){
