@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="input-group-prepend">
                         <div class="input-group-text"><i class="material-icons">code</i></div>
                         </div>
-                        <input type="password" name="code" placeholder="Code" class="form-control" required>
+                        <input type="number" name="code" placeholder="Code" class="form-control" required>
                     </div>
                 </div>
                 <div class="justify-content-center">
