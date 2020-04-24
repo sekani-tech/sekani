@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <a class="nav-link active" href="#0">Active</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#0">Login</a>
+        <a class="nav-link" href="<?php echo $intweb;?>">Login</a>
       </li>
     </ul>
   </div>
@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
                 <div class="justify-content-center">
-                    <a type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Change Password</a>
+                    <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Change Password</button>
                 </div>
             </div>
     </form>
@@ -161,7 +161,7 @@ if(!$mail->send())
     echo "Mailer Error: " . $mail->ErrorInfo;
 } else
 {
-    echo "Message has been sent successfully";
+    echo "Confirmation code has been sent, has been sent successfully";
 }
 // end of mail
 ?>
