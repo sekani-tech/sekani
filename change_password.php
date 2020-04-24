@@ -122,6 +122,7 @@ $mx = '';
   <div class="card-body">
     <h4 class="card-title"><?php echo $fullname; ?></h4>
     <p class="card-text">
+    <button type="submit" name="button2" value="button2" class="btn btn-primary btn-link btn-wd btn-sm">getcode</button>
     <form class="form" method="POST">
         <p class="description text-center" style="color: green;"><?php echo $mx; ?></p>
             <div class="card-body">
@@ -156,7 +157,6 @@ $mx = '';
                     </div>
                 </div>
                 <div class="form-group bmd-form-group">
-                <button type="submit" name="button2" value="button2" class="btn btn-primary btn-link btn-wd btn-sm">getcode</button>
                     <br>
                      <div class="input-group">
                         <div class="input-group-prepend">
