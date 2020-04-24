@@ -37,7 +37,6 @@ if (isset($_GET["edit"])) {
 }
 ?>
 <?php
-if (isset($_POST["button1"])) {
 $digits = 5;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $_SESSION["codex"] = $randms;
@@ -69,7 +68,6 @@ if(!$mail->send())
 } else
 {
     echo "Confirmation code has been sent to your successfully";
-}
 }
 ?>
 <div class="card text-center">
@@ -121,7 +119,7 @@ if(!$mail->send())
                     </div>
                 </div>
                 <div class="justify-content-center">
-                    <button type="submit" name="button1" value="button1" class="btn btn-primary btn-link btn-wd btn-lg">Change Password</button>
+                    <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Change Password</button>
                 </div>
             </div>
     </form>
