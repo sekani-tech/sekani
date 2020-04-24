@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-group bmd-form-group">
                      <div class="input-group">
                         <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="material-icons">verify</i></div>
+                        <div class="input-group-text"><i class="material-icons">done_all</i></div>
                         </div>
                         <input type="password" name="confirm_pass" id="opo2" placeholder="Confirm Password" class="form-control" required>
                         <p style="color:red;" id="myP" hidden>The Inputed Pasword Doesn't Match</p>
@@ -150,7 +150,7 @@ $mail->addReplyTo($intemail, "Reply");
 // $mail->addBCC("bcc@example.com");
 // Send HTML or Plain Text Email
 $mail->isHTML(true);
-$mail->Subject = "LOGGED IN?";
+$mail->Subject = "Comfirmation Code";
 $mail->Body = "Your Confirmation Code Number is: $comcode";
 $mail->AltBody = "This is the plain text version of the email content";
 // mail system
