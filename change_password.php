@@ -37,6 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $code = $_POST['code'];
     $pass = $_POST['pass'];
     $con_pass = $_POST['confirm_pass'];
+    // pronlem
+    echo $code;
+    echo $pass;
+    echo $con_pass;
     $hash = password_hash($pass, PASSWORD_DEFAULT);
     if ($code == $codex) {
         $updatec = "UPDATE users SET password = '$hash' WHERE username = '$username' && int_id = '$int_id'";
