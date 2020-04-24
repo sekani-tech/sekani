@@ -75,7 +75,8 @@ if (isset($_POST['button1'])) {
         </script>';
     }
 }
-if (isset($_POST['button2'])) {
+
+function foo ($intemail, $intname, $email, $name, $codex) {
     // begining of mail
     $mail = new PHPMailer;
     // from email addreess and name
@@ -122,7 +123,7 @@ $mx = '';
   <div class="card-body">
     <h4 class="card-title"><?php echo $fullname; ?></h4>
     <p class="card-text">
-    <button type="submit" name="button2" value="button2" class="btn btn-primary btn-link btn-wd btn-sm">getcode</button>
+    <button type="submit" onClick="foo()" name="button2" value="button2" class="btn btn-primary btn-link btn-wd btn-sm">getcode</button>
     <form class="form" method="POST">
         <p class="description text-center" style="color: green;"><?php echo $mx; ?></p>
             <div class="card-body">
