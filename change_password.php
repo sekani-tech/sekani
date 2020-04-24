@@ -71,7 +71,7 @@ if(!$mail->send())
 }
 ?>
 <?php
-if(isset($_POST["button1"])){
+if($_SERVER["REQUEST_METHOD"] == "POST"){
     $_SESSION["password"] = $_POST['pass'];
 }
 ?>
