@@ -13,10 +13,11 @@ $name = $_SESSION["name"];
 $int_id = $_SESSION["int_id"];
 // finial finishing
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $_SESSION["password"] = $_POST['pass'];
+    $tent = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    $_SESSION["password"] = $tent;
     $passk = $_SESSION["password"];
 }
-echo $passk."pass";
+echo $passk;
 ?>
 <?php
 if(isset($_POST["button2"])){
