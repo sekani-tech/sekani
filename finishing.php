@@ -12,11 +12,12 @@ $codey = $_SESSION["codex"];
 $name = $_SESSION["name"];
 $int_id = $_SESSION["int_id"];
 // finial finishing
+$_SESSION["password"] = $_POST['pass'];
+$pass = $_SESSION["password"];
 ?>
 <?php
 if(isset($_POST["button1"])){
     $code = $_POST['code'];
-    $pass = $_POST['pass'];
     // pronlem
     $hash = password_hash($pass, PASSWORD_DEFAULT);
     if ($code == $codey) {
