@@ -124,10 +124,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
                 <div class="form-group bmd-form-group">
+                <i onclick="runcode" class="btn btn-primary btn-link btn-wd btn-sm">getcode</i>
+                    <br>
                      <div class="input-group">
                         <div class="input-group-prepend">
                         <div class="input-group-text"><i class="material-icons">code</i></div>
-                        <i @click="runcode" class="btn btn-primary">getcode</i>
                         </div>
                         <input type="text" name="code" placeholder="Code" class="form-control" required>
                     </div>
