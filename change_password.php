@@ -120,15 +120,6 @@ if(!$mail->send())
                         <div style="color:red;" id="mm" hidden>The Inputed Pasword Doesn't Match</div>
                     </div>
                 </div>
-                <div class="form-group bmd-form-group">
-                    <br>
-                     <div class="input-group">
-                        <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="material-icons">code</i></div>
-                        </div>
-                        <input type="text" name="code" placeholder="Code" class="form-control" required>
-                    </div>
-                </div>
                 <div class="justify-content-center">
                     <button type="submit" name="button1" value="button1" class="btn btn-primary btn-link btn-wd btn-lg">Change Password</button>
                 </div>
