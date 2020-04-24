@@ -13,6 +13,9 @@ $name = $_SESSION["name"];
 $int_id = $_SESSION["int_id"];
 $passk = $_SESSION["password"];
 // finial finishing
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $_SESSION["password"] = $_POST['pass'];
+}
 echo $passk;
 ?>
 <?php

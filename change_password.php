@@ -70,11 +70,6 @@ if(!$mail->send())
     echo "Confirmation code has been sent to your successfully";
 }
 ?>
-<?php
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $_SESSION["password"] = $_POST['pass'];
-}
-?>
 
 <div class="card text-center">
   <div class="card-header">
