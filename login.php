@@ -9,7 +9,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     exit;
   } 
   elseif($_SESSION["usertype"] == "admin"){
-    header("location: ./modules/admin/dashboard.php");
+    header("location: index.php");
     exit;
   }
 //   elseif($_SESSION["usertype"] == "staff"){

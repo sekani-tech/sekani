@@ -84,6 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </div>
   <div class="card-body">
     <h4 class="card-title"><?php echo $fullname; ?></h4>
+    <?php echo $codex; ?>
     <p class="card-text">
     <form class="form" method="POST">
         <p class="description text-center" style="color: green;">check your mail for confirmation code</p>
