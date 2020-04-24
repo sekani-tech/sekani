@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <a class="nav-link active" href="#0">Active</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo $intweb;?>">Login</a>
+        <a class="nav-link" href="login.php">Login</a>
       </li>
     </ul>
   </div>
@@ -94,9 +94,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             var id = $(this).val();
                             var check = $('#opo').val();
                             if (id == check) {
-                                document.getElementById("mm").style.visibility = "hidden";
+                                $('#opo2').setCustomValidity("Passwords Don't Match");
                             } else {
-                                document.getElementById("mm").style.visibility = "visible";
+                                $('#opo2').setCustomValidity('');
                             }
                         });
                     });
