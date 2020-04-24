@@ -42,8 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo '<script type="text/javascript">
         $(document).ready(function(){
             swal({
-                type: "error",
-                title: "Error",
+                type: "success",
+                title: "Created Password Successfully",
                 text: "Wrong Confrimation Code",
                 showConfirmButton: false,
                 timer: 4000
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             swal({
                 type: "error",
                 title: "Error",
-                text: "Wrong Confrimation Code",
+                text: "Wrong Confrimation Code or Password",
                 showConfirmButton: false,
                 timer: 4000
             })
