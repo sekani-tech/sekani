@@ -26,8 +26,6 @@ if (isset($_GET["edit"])) {
         $intemail = $ix['email'];
         $digits = 5;
         $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-
-        $comcode = $randms;
     }
 }
 ?>
@@ -37,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $pass = $_POST['pass'];
     $con_pass = $_POST['confirm_pass'];
     $hash = password_hash($pass, PASSWORD_DEFAULT);
-    if ($code == $comcode && $pass == $con_pass) {
+    if ($codn_pass == $randms && $pass == $con_pass) {
         $updatec = "UPDATE users SET password = '$hash' WHERE username = '$username' && int_id = '$int_id'";
         $res = mysqli_query($connection, $updatec);
         if ($res) {
@@ -48,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 title: "Error",
                 text: "Wrong Confrimation Code",
                 showConfirmButton: false,
-                timer: 2000
+                timer: 4000
             })
         });
         </script>';
@@ -63,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 title: "Error",
                 text: "Wrong Confrimation Code",
                 showConfirmButton: false,
-                timer: 2000
+                timer: 4000
             })
         });
         </script>';
@@ -153,7 +151,7 @@ $mail->addReplyTo($intemail, "Reply");
 // Send HTML or Plain Text Email
 $mail->isHTML(true);
 $mail->Subject = "Comfirmation Code";
-$mail->Body = "Your Confirmation Code Number is: $comcode";
+$mail->Body = "Your Confirmation Code Number is: $randms";
 $mail->AltBody = "This is the plain text version of the email content";
 // mail system
 if(!$mail->send()) 
