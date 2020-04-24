@@ -35,7 +35,6 @@ if (isset($_GET["edit"])) {
 $codex = $_SESSION["codex"];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $code = $_POST['code'];
-    // a password
     $pass = $_POST['pass'];
     $con_pass = $_POST['confirm_pass'];
     $hash = password_hash($pass, PASSWORD_DEFAULT);
