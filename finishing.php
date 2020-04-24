@@ -18,6 +18,7 @@ $int_id = $_SESSION["int_id"];
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $_SESSION["password"] = $_POST['pass'];
 $pass = $_SESSION["password"];
+echo $pass."this is your password";
 }
 if(isset($_POST["button1"])){
     $code = $_POST['code'];
