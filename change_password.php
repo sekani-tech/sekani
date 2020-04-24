@@ -1,7 +1,7 @@
 <?php
 include("material.php");
 include("functions/connect.php");
-require_once "bat/phpmailer/PHPMailerAutoload.php";
+
 session_start();
 ?>
 <?php
@@ -26,13 +26,10 @@ if (isset($_GET["edit"])) {
         $intweb = $ix['website'];
         $intemail = $ix['email'];
         $digits = 5;
-        $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-        $_SESSION["codex"] = $randms;
     }
 }
 ?>
 <?php
-$codex = $_SESSION["codex"];
 if (isset($_POST['button1'])) {
     $code = $_POST['code'];
     $pass = $_POST['pass'];
@@ -75,8 +72,9 @@ if (isset($_POST['button1'])) {
         </script>';
     }
 }
-
-function foo ($intemail, $intname, $email, $name, $codex) {
+    $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+    $_SESSION["codex"] = $randms;
+    $codex = $_SESSION["codex"];
     // begining of mail
     $mail = new PHPMailer;
     // from email addreess and name
@@ -106,7 +104,6 @@ function foo ($intemail, $intname, $email, $name, $codex) {
         echo $mx = "Confirmation code has been sent to your successfully";
     }
     // end of mail
-}
 $mx = '';
 ?>
 <div class="card text-center">
@@ -123,7 +120,7 @@ $mx = '';
   <div class="card-body">
     <h4 class="card-title"><?php echo $fullname; ?></h4>
     <p class="card-text">
-    <button type="submit" onClick="foo()" name="button2" value="button2" class="btn btn-primary btn-link btn-wd btn-sm">getcode</button>
+    <!-- <a href="getkey.php?getme=<?php echo $codex ?>" target="_blank" value="button2" class="btn btn-primary btn-link btn-wd btn-sm">getcode</a> -->
     <form class="form" method="POST">
         <p class="description text-center" style="color: green;"><?php echo $mx; ?></p>
             <div class="card-body">
