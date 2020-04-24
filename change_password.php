@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             })
         });
         </script>';
-        $URL="https://$intweb";
+        $URL="login.php";
         echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
         }
     } else {
@@ -91,8 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <script>
                     $(document).ready(function() {
                         $('#opo2').on("change keyup paste click", function () {
-                            var id = $('#opo').val();
-                            var check = $('#opo2').val();
+                            var id = $(this).val();
+                            var check = $('#opo').val();
                             if (id == check) {
                                 document.getElementById("mm").style.visibility = "hidden";
                             } else {
