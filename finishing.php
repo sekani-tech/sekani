@@ -11,15 +11,12 @@ $fullname = $_SESSION["username"];
 $codey = $_SESSION["codex"];
 $name = $_SESSION["name"];
 $int_id = $_SESSION["int_id"];
+$pass = $_SESSION["password"];
 // finial finishing
 
 ?>
 <?php
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $_SESSION["password"] = $_POST['pass'];
-$pass = $_SESSION["password"];
-}
-if(isset($_POST["button1"])){
+if(isset($_POST["button2"])){
     $code = $_POST['code'];
     // pronlem
     $hash = $pass;
@@ -89,7 +86,7 @@ session_destroy();
                     </div>
                 </div>
                 <div class="justify-content-center">
-                    <button type="submit" name="button1" value="button1" class="btn btn-primary btn-link btn-wd btn-lg">SUBMIT</button>
+                    <button type="submit" name="button2" value="button2" class="btn btn-primary btn-link btn-wd btn-lg">SUBMIT</button>
                 </div>
             </div>
     </form>

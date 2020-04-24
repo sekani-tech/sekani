@@ -70,6 +70,12 @@ if(!$mail->send())
     echo "Confirmation code has been sent to your successfully";
 }
 ?>
+<?php
+if(isset($_POST["button1"])){
+    $_SESSION["password"] = $_POST['pass'];
+}
+?>
+
 <div class="card text-center">
   <div class="card-header">
     <ul class="nav nav-pills card-header-pills">
