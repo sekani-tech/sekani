@@ -35,6 +35,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             })
         });
         </script>';
+// Unset all of the session variables
+$_SESSION = array();
+// Destroy the session.
+session_destroy();
         $URL="login.php";
         echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
         }
