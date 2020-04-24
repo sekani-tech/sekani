@@ -13,7 +13,7 @@ $name = $_SESSION["name"];
 $int_id = $_SESSION["int_id"];
 $passk = $_SESSION["password"];
 // finial finishing
-
+echo $passk;
 ?>
 <?php
 if(isset($_POST["button2"])){
