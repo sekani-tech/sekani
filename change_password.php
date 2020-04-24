@@ -39,8 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $con_pass = $_POST['confirm_pass'];
     // pronlem
     echo $code."I AM A CODE";
+    echo $codex."I AM A CODEX";
     echo $pass."I AM THE PASSWORD";
-    echo $con_pass;
+    echo $con_pass."I AM THE CONFIRM PASS";
     $hash = password_hash($pass, PASSWORD_DEFAULT);
     if ($code == $codex) {
         $updatec = "UPDATE users SET password = '$hash' WHERE username = '$username' && int_id = '$int_id'";
