@@ -33,7 +33,7 @@ if (isset($_GET["edit"])) {
 ?>
 <?php
 $codex = $_SESSION["codex"];
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (isset($_POST['button1'])) {
     $code = $_POST['code'];
     $pass = $_POST['pass'];
     $con_pass = $_POST['confirm_pass'];
@@ -75,6 +75,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </script>';
     }
 }
+if (isset($_POST['button2'])) {
+    // begining of mail
+    $mail = new PHPMailer;
+    // from email addreess and name
+    $mail->From = $intemail;
+    $mail->FromName = $intname;
+    // to adress and name
+    $mail->addAddress($email, $name);
+    // reply address
+    //Address to which recipient will reply
+    // progressive html images
+    $mail->addReplyTo($intemail, "Reply");
+    // CC and BCC
+    //CC and BCC
+    // $mail->addCC("cc@example.com");
+    // $mail->addBCC("bcc@example.com");
+    // Send HTML or Plain Text Email
+    $mail->isHTML(true);
+    $mail->Subject = "Comfirmation Code";
+    $mail->Body = "Your Confirmation Code Number is: $codex";
+    $mail->AltBody = "This is the plain text version of the email content";
+    // mail system
+    if(!$mail->send()) 
+    {
+        echo "Mailer Error: " . $mail->ErrorInfo;
+    } else
+    {
+        echo $mx = "Confirmation code has been sent to your successfully";
+    }
+    // end of mail
+}
+$mx = '';
 ?>
 <div class="card text-center">
   <div class="card-header">
@@ -91,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h4 class="card-title"><?php echo $fullname; ?></h4>
     <p class="card-text">
     <form class="form" method="POST">
-        <p class="description text-center" style="color: green;">check your mail for confirmation code</p>
+        <p class="description text-center" style="color: green;"><?php echo $mx; ?></p>
             <div class="card-body">
                 <script>
                     $(document).ready(function() {
@@ -124,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
                 <div class="form-group bmd-form-group">
-                <i onclick="runcode" class="btn btn-primary btn-link btn-wd btn-sm">getcode</i>
+                <button type="submit" name="button2" value="button2" class="btn btn-primary btn-link btn-wd btn-sm">getcode</button>
                     <br>
                      <div class="input-group">
                         <div class="input-group-prepend">
@@ -134,47 +166,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
                 <div class="justify-content-center">
-                    <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Change Password</button>
+                    <button type="submit" name="button1" value="button1" class="btn btn-primary btn-link btn-wd btn-lg">Change Password</button>
                 </div>
             </div>
     </form>
     </p>
   </div>
 </div>
-
-<script>
-    function runcode()
-    {
-        <?php
-// begining of mail
-$mail = new PHPMailer;
-// from email addreess and name
-$mail->From = $intemail;
-$mail->FromName = $intname;
-// to adress and name
-$mail->addAddress($email, $name);
-// reply address
-//Address to which recipient will reply
-// progressive html images
-$mail->addReplyTo($intemail, "Reply");
-// CC and BCC
-//CC and BCC
-// $mail->addCC("cc@example.com");
-// $mail->addBCC("bcc@example.com");
-// Send HTML or Plain Text Email
-$mail->isHTML(true);
-$mail->Subject = "Comfirmation Code";
-$mail->Body = "Your Confirmation Code Number is: $codex";
-$mail->AltBody = "This is the plain text version of the email content";
-// mail system
-if(!$mail->send()) 
-{
-    echo "Mailer Error: " . $mail->ErrorInfo;
-} else
-{
-    echo "Confirmation code has been sent, has been sent successfully";
-}
-// end of mail
-?>
-    }
-</script>
