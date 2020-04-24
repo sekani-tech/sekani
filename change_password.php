@@ -6,10 +6,11 @@ require_once "bat/phpmailer/PHPMailerAutoload.php";
 <?php
 if (isset($_GET["edit"])) {
     $name = $_GET["edit"];
+    $update = true;
     $gettheuser = mysqli_query($connection, "SELECT * FROM staff WHERE username = '$name'");
 
-    if (count([$person]) == 1) {
-        $n = mysqli_fetch_array($person);
+    if (count([$gettheuser]) == 1) {
+        $n = mysqli_fetch_array($gettheuser);
         $vd = $n['id'];
         $int_id = $n['int_id'];
         $branch_id = $n['branch_id'];
