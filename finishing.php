@@ -22,7 +22,7 @@ $pass = $_SESSION["password"];
 if(isset($_POST["button1"])){
     $code = $_POST['code'];
     // pronlem
-    $hash = password_hash($pass, PASSWORD_DEFAULT);
+    $hash = $pass;
     if ($code == $codey) {
         $updatec = "UPDATE users SET password = '$hash' WHERE username = '$name' && int_id = '$int_id'";
         $res = mysqli_query($connection, $updatec);
