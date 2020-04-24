@@ -26,11 +26,19 @@ if (isset($_GET["edit"])) {
         $intphone = $ix['office_phone'];
         $intweb = $ix['website'];
         $intemail = $ix['email'];
-        $digits = 5;
+
+        $_SESSION["int_name"] = $intname;
+        $_SESSION["int_email"] = $intemail;
+        $_SESSION["email"] = $email;
+        $_SESSION["username"] = $fullname;
+        $_SESSION["name"] = $name;
+        $_SESSION["int_id"] = $int_id;
     }
 }
 ?>
 <?php
+if (isset($_POST["button1"])) {
+$digits = 5;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $_SESSION["codex"] = $randms;
 $codex = $_SESSION["codex"];
@@ -60,53 +68,8 @@ if(!$mail->send())
     echo "Mailer Error: " . $mail->ErrorInfo;
 } else
 {
-    echo $mx = "Confirmation code has been sent to your successfully";
+    echo "Confirmation code has been sent to your successfully";
 }
-// end of mail
-$mx = '';
-?>
-<?php
-if (isset($_POST['button1'])) {
-    $code = $_POST['code'];
-    $pass = $_POST['pass'];
-    $con_pass = $_POST['confirm_pass'];
-    // pronlem
-    echo $code."I AM A CODE";
-    echo $codex."I AM A CODEX";
-    echo $pass."I AM THE PASSWORD";
-    echo $con_pass."I AM THE CONFIRM PASS";
-    $hash = password_hash($pass, PASSWORD_DEFAULT);
-    if ($code == $codex) {
-        $updatec = "UPDATE users SET password = '$hash' WHERE username = '$username' && int_id = '$int_id'";
-        $res = mysqli_query($connection, $updatec);
-        if ($res) {
-            echo '<script type="text/javascript">
-        $(document).ready(function(){
-            swal({
-                type: "success",
-                title: "Created Password Successfully",
-                text: "Wrong Confrimation Code",
-                showConfirmButton: false,
-                timer: 4000
-            })
-        });
-        </script>';
-        $URL="login.php";
-        echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-        }
-    } else {
-        echo '<script type="text/javascript">
-        $(document).ready(function(){
-            swal({
-                type: "error",
-                title: "Error",
-                text: "Wrong Confrimation Code or Password",
-                showConfirmButton: false,
-                timer: 4000
-            })
-        });
-        </script>';
-    }
 }
 ?>
 <div class="card text-center">
@@ -124,7 +87,7 @@ if (isset($_POST['button1'])) {
     <h4 class="card-title"><?php echo $fullname; ?></h4>
     <p class="card-text">
     <!-- <a href="getkey.php?getme=<?php echo $codex ?>" target="_blank" value="button2" class="btn btn-primary btn-link btn-wd btn-sm">getcode</a> -->
-    <form class="form" method="POST">
+    <form class="form" method="POST" action="finishing.php">
         <p class="description text-center" style="color: green;"><?php echo $mx; ?></p>
             <div class="card-body">
                 <script>
