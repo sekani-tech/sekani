@@ -133,6 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <div class="justify-content-center">
                     <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Change Password</button>
+                    <i @click="runcode" class="btn btn-primary"></i>
                 </div>
             </div>
     </form>
@@ -140,7 +141,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </div>
 </div>
 
-<?php
+<script>
+    function runcode()
+    {
+        <?php
 // begining of mail
 $mail = new PHPMailer;
 // from email addreess and name
@@ -171,3 +175,5 @@ if(!$mail->send())
 }
 // end of mail
 ?>
+    }
+</script>
