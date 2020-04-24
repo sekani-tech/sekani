@@ -14,7 +14,7 @@ $int_id = $_SESSION["int_id"];
 // finial finishing
 ?>
 <?php
-if($_SERVER["REQUEST_METHOD"] == "POST"){
+if(isset($_POST["button1"])){
     $code = $_POST['code'];
     $pass = $_POST['pass'];
     // pronlem
