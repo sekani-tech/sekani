@@ -11,7 +11,7 @@ $fullname = $_SESSION["username"];
 $codey = $_SESSION["codex"];
 $name = $_SESSION["name"];
 $int_id = $_SESSION["int_id"];
-$pass = $_SESSION["password"];
+$passk = $_SESSION["password"];
 // finial finishing
 
 ?>
@@ -19,7 +19,7 @@ $pass = $_SESSION["password"];
 if(isset($_POST["button2"])){
     $code = $_POST['code'];
     // pronlem
-    $hash = $pass;
+    $hash = $passk;
     if ($code == $codey) {
         $updatec = "UPDATE users SET password = '$hash' WHERE username = '$name' && int_id = '$int_id'";
         $res = mysqli_query($connection, $updatec);
