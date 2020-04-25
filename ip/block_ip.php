@@ -2,7 +2,7 @@
 include("material.php");
 ?>
 <?php
-  include("../functions/connect.php");
+  include("connect.php");
 ?>
 
 <?php
@@ -59,19 +59,6 @@ if (count([$getip]) == 1) {
         </script>';
   $xm = "Your Device Are Good To Go";
 }
-?>
-<?php
-echo '<script type="text/javascript">
-$(document).ready(function(){
-    swal({
-        type: "The Internet?",
-        title: "IP",
-        text: "THIS IP IS GOOD TO GO",
-        showConfirmButton: false,
-        timer: 4000
-    })
-});
-</script>';
 ?>
 <div class="card text-center">
   <div class="card-header">
