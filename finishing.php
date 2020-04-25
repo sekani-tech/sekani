@@ -12,12 +12,15 @@ $codey = $_SESSION["codex"];
 $name = $_SESSION["name"];
 $int_id = $_SESSION["int_id"];
 // finial finishing
+if (isset($_POST['pass'])) {
+    $conpass = $_POST["pass"];
+    $_SESSION["pass"] = $conpass;
+}
+$extt = $_SESSION["pass"];
 ?>
 <?php
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $conpass = $_POST["pass"];
-    $tent = password_hash($conpass, PASSWORD_DEFAULT);
-    // $_SESSION["password"] = $tent;
+    $tent = password_hash($extt, PASSWORD_DEFAULT);
     // $passk = $_SESSION["password"];
     // check
     $code = $_POST['code'];
