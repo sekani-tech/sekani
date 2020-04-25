@@ -39,11 +39,10 @@ if (count([$getip]) == 1) {
             })
         });
         </script>';
-  } else {
-      $newcode = $vm + 1;
-      $mmm = mysqli_query($connection, "UPDATE ip_blacklist SET trial = '$newcode' WHERE ip_add = '$ip'");
+    $xm = "Your IP address Has Been Blocked";
   }
 }
+$xm = "";
 ?>
 <div class="card text-center">
   <div class="card-header">
@@ -54,7 +53,7 @@ if (count([$getip]) == 1) {
     </ul>
   </div>
   <div class="card-body">
-    <h4 class="card-title">Your IP address Has Been Blocked</h4>
+    <h4 class="card-title"><?php echo $xm; ?></h4>
     <p class="card-text">
     <form class="form">
         <p class="description text-center" style="color: green;">CONTACT YOUR INSTITUTION FOR UNBLOCK</p>
