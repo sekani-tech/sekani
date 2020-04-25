@@ -81,11 +81,39 @@ session_destroy();
         if (mysqli_num_rows($getip) == 1) {
             $x = mysqli_fetch_array($getip);
             $vm = $n['trial'];
-            
+            // new script
+            $try = 0;
+            $timestamp = date('Y-m-d H:i:s');
+            $takemeup = "INSERT INTO `ip_blacklist` (`id`, `user`, `ip_add`, `time`, `trial`) VALUES ('{$int_id}', '{$name}', '{$ip}', '{$timestamp}', '{$try}')";
+            $res5 = mysqli_query($connection, $takemeup);
+            if ($res5) {
+                echo '<script type="text/javascript">
+            $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "Wrong Confrimation Code",
+                text: "Error You Will Be Blocked After Trying Three Times",
+                showConfirmButton: false,
+                timer: 5000
+            })
+        });
+        </script>';
+            }
             if ($vm >= 3) {
                 $_SESSION = array();
                // Destroy the session.
                session_destroy();
+               echo '<script type="text/javascript">
+            $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "BLOCKED IP",
+                text: "Contact Us For Confirmation and Unblocking",
+                showConfirmButton: false,
+                timer: 5000
+            })
+        });
+        </script>';
                $URL="ip/block_ip.php";
                echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
             } else {
