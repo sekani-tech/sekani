@@ -26,53 +26,31 @@ $destination = "config.php";
                   <div class="tab">
                   <h3> New Product:</h3>
                   <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <div class="form-group">
                         <label>Name *:</label>
                         <input type="text"  name="name" class="form-control"  id="">
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Short Loan Name *</label>
                         <input type="text" class="form-control" name="short_name" value="" placeholder="Short Name..." >
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <div class="form-group">
                         <label for="loanDescription" >Description *</label>
                         <input type="text" class="form-control" name="description" value="" placeholder="Description...." >
                       </div>
                     </div>
-                    <!-- <div class="col-md-4"> 
-                      <div class="form-group">
-                        <label for="fundOrigin">Origin of Funding*</label>
-                        <select class="form-control" name="fund_id" >
-                          <option value="1">Bank</option>
-                          <option value="2"> Cash </option>
-                        </select>
-                      </div>
-                    </div>                             -->
-                    <!--<div class="col-md-4">
-                        <div class="form-group">
-                            <label for="currency" >Currency *</label>
-                            <select class="form-control" name="" >
-                              <option value=""> -- Select an option -- </option>
-                              <option value="">Nigeria Naira [NGN]</option>
-                            </select>
-                          </div>
-                        </div>-->
-                      <!-- <div class="form-group">
-                        <label for="decimal" >To Decimal Place</label>
-                        <input type="text" class="form-control" name="" value="">
-                      </div>-->
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label for="installmentAmount" >Installment Amount in Multiples</label>
                           <input type="text" class="form-control" name="in_amt_multiples" value="">
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label for="principal" >Principal</label>
                           <div class="row">
@@ -88,7 +66,7 @@ $destination = "config.php";
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label for="loanTerms" >Loan Term</label>
                           <div class="row">
@@ -104,21 +82,24 @@ $destination = "config.php";
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <div class="form-group">
-                          <label for="repaymentFrequency" >Repayment Frequency *</label>
+                        <label for="repaymentFrequency" >Repayment Frequency *</label>
+                        <div class="row">
+                        <div class="col-md-8">
                           <input type="text" class="form-control " name="repayment_frequency" value="" >
                         </div>
-                      </div>
-                      <div class="col-md-4">
-                      <label for="repayment_every" >Repayment Every</label>
+                        <div class="col-md-4">
                         <select class="form-control" name="repayment_every">
-                          <option value="day">Day</option>
-                          <option value="week">Week</option>
-                          <option value="month">Month</option>
+                          <option value="day">Days</option>
+                          <option value="week">Weeks</option>
+                          <option value="month">Months</option>
                         </select>
+                        </div>
+                        </div>
+                        </div>
                       </div>                     
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label for="interestRate" >Interest Rate</label>
                           <div class="row">
@@ -134,7 +115,7 @@ $destination = "config.php";
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label for="interestRateApplied" >Interest Rate Applied *</label>
                           <select class="form-control" name="interest_rate_applied" >
@@ -143,7 +124,40 @@ $destination = "config.php";
                           </select>
                         </div>
                       </div>
+
+                        <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="interestRateApplied" >Enable Balloon repayment</label>
+                          <select class="form-control" name="enable" >
+                           <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                          </select>
+                        </div>
+                      </div>
+                    <div class="col-md-6">
+                    <div class="row">
                       <div class="col-md-4">
+                     
+                      <div class="form-group">
+                        <label for="loanDescription" >Grace on principal payment</label>
+                        <input type="text" class="form-control" name="grace_on_principal" value="">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="loanDescription" >Grace on interest payment</label>
+                        <input type="text" class="form-control" name="grace_on_interest" value="">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="loanDescription" >Grace on interest charged</label>
+                        <input type="text" class="form-control" name="grace_on_interest_charged" value="">
+                      </div>
+                    </div>
+                    </div>
+                    </div>
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label for="interestMethodology" >Interest Methodology *</label>
                           <select class="form-control" name="interest_rate_methodoloy" >
@@ -152,7 +166,7 @@ $destination = "config.php";
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label for="amortizatioMethody" >Amortization Method *</label>
                           <select class="form-control" name="ammortization_method" required>
@@ -161,7 +175,7 @@ $destination = "config.php";
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label for="loanCycleCount" >Include In Loan Cycle Count </label>
                           <select class="form-control" name="cycle_count" required>
@@ -170,7 +184,7 @@ $destination = "config.php";
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label for="overPayment" >Automatically Allocate Overpayment </label>
                           <select class="form-control" name="auto_allocate_overpayment" required>
@@ -179,7 +193,7 @@ $destination = "config.php";
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                        <div class="form-group">
                           <label for="additionalCharges" >Allow Additional Charges </label>
                           <select class="form-control" name="additional_charge" required>
@@ -189,7 +203,7 @@ $destination = "config.php";
                         </div>
                       </div>
                       <!-- auto desburse should be disabled -->
-                      <div class="col-md-4" disable>
+                      <div class="col-md-6" disable>
                         <div class="form-group">
                           <label for="autoDisburse" >Auto Disburse </label>
                           <select class="form-control" name="auto_disburse" required>
@@ -197,7 +211,7 @@ $destination = "config.php";
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <div class="form-group">
                             <label for="requireSavingsAcct" >Requires Linked Savings Account </label>
                             <select class="form-control" name="linked_savings_acct" required>
@@ -253,24 +267,50 @@ $destination = "config.php";
                       }
                       return $output;
                       }
+                      function fill_credit($connection)
+                      {
+                      $sint_id = $_SESSION["int_id"];
+                      $org = "SELECT * FROM credit_check WHERE int_id = '$sint_id'";
+                      $res = mysqli_query($connection, $org);
+                      $output = '';
+                      while ($row = mysqli_fetch_array($res))
+                      {
+                        $output .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                      }
+                      return $output;
+                      }
                       ?>
+                      <script>
+                              $(document).ready(function() {
+                                $('#credit').on("change keyup paste click", function(){
+                                  var id = $(this).val();
+                                  $.ajax({
+                                    url:"credit_check.php",
+                                    method:"POST",
+                                    data:{id:id},
+                                    success:function(data){
+                                      $('#show_credit').html(data);
+                                    }
+                                  })
+                                });
+                              });
+                            </script>
                   </div>
                   <!-- Second Tab -->
                   <!-- Third Tab -->
                   <div class="tab">
                     <h3>Credit Checks</h3>
                     <div class="my-3">
-                        <div class="form-group">
-                            <p><label for="">Name: </label> <span></span></p>
-                            <p><label for="">Security Level: </label> <span></span></p>
-                            <p><label for="">Order: </label> <span></span></p>
-                          </div>
-                          <div class="form-group">
-                            <label>Charges:</label>
-                            <select name=""class="form-control" id="">
+                    <div class="form-group">
+                            <label>Credit Checks:</label>
+                            <select name="charge_id"class="form-control" id="credit">
                               <option value="">select an option</option>
+                              <?php echo fill_credit($connection); ?>
                             </select>
                           </div>
+                        <div id="show_credit" class="form-group">
+                          </div>
+                          
 
                           <button class="btn btn-primary">Add To Product</button>
                         </div>

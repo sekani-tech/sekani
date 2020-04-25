@@ -23,12 +23,12 @@ $min_loan_term = $_POST['min_loan_term'];
 $max_loan_term = $_POST['max_loan_term'];
 $repayment_frequency = $_POST['repayment_frequency'];
 $repayment_every = $_POST['repayment_every'];
-$i_r = $_POST['interest_rate'];
-$interest_rate = $i_r;
-$min_i_r = $_POST['min_interest_rate'];
-$min_interest_rate = $min_i_r;
-$max_i_r = $_POST['max_interest_rate'];
-$max_interest_rate = $max_i_r;
+$interest_rate = $_POST['interest_rate'];
+$min_interest_rate = $_POST['min_interest_rate'];
+$max_interest_rate = $_POST['max_interest_rate'];
+$g_principal = $_POST['grace_on_principal'];
+$g_interest = $_POST['grace_on_interest'];
+$g_interest_charged = $_POST['grace_on_interest_charged'];
 $interest_rate_applied = $_POST['interest_rate_applied'];
 $interest_rate_methodoloy = $_POST['interest_rate_methodoloy'];
 $ammortization_method = $_POST['ammortization_method'];
@@ -44,12 +44,12 @@ fund_id, in_amt_multiples, principal_amount, min_principal_amount, max_principal
 loan_term, min_loan_term, max_loan_term, repayment_frequency, repayment_every,
 interest_rate, min_interest_rate, max_interest_rate, interest_rate_applied, interest_rate_methodoloy,
 ammortization_method, cycle_count, auto_allocate_overpayment, additional_charge,
-auto_disburse, linked_savings_acct) VALUES ('{$sessint_id}', '{$charge_id}', '{$name}', '{$short_name}', '{$description}', 
+auto_disburse, linked_savings_acct, grace_on_principal_amount, grace_on_interest_amount, grace_on_interest_charged) VALUES ('{$sessint_id}', '{$charge_id}', '{$name}', '{$short_name}', '{$description}', 
 '{$fund_id}', '{$in_amt_multiples}', '{$principal_amount}', '{$min_principal_amount}', '{$max_principal_amount}',
 '{$loan_term}', '{$min_loan_term}', '{$max_loan_term}', '{$repayment_frequency}', '{$repayment_every}',
 '{$interest_rate}', '{$min_interest_rate}', '{$max_interest_rate}', '{$interest_rate_applied}', '{$interest_rate_methodoloy}',
 '{$ammortization_method}', '{$cycle_count}', '{$auto_allocate_overpayment}', '{$additional_charge}',
-'{$auto_disburse}', '{$linked_savings_acct}')";
+'{$auto_disburse}', '{$linked_savings_acct}', '{$g_principal}', '{$g_interest}', '{$g_interest_charged}')";
 
 $res = mysqli_query($connection, $query);
 
