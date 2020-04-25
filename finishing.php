@@ -79,10 +79,10 @@ session_destroy();
         $getip = mysqli_query($connection, "SELECT * FROM ip_blacklist WHERE ip_add = '$ip'");
 
         if (mysqli_num_rows($getip) == 1) {
-            $getip2 = mysqli_query($connection, "SELECT * FROM ip_blacklist WHERE ip_add = '$ip'");
-            if (count([$getip2]) == 1) {
-            $x = mysqli_fetch_array($getip2);
-            $vm = $n['trial'];
+            $gtp = mysqli_query($connection, "SELECT * FROM ip_blacklist WHERE ip_add = '$ip'");
+            if (count([$gtp]) == 1) {
+            $x = mysqli_fetch_array($gtp);
+            $vm = $x['trial'];
             }
             // new script
             $try = 0;
