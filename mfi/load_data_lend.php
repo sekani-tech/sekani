@@ -60,20 +60,21 @@ if(isset($_POST["id"]))
           </style>
             <div class="col-md-4">
               <div class="form-group">
-                <label>Loan Size *:</label>
+                <div class="row">
+                  <div class="col-md-4">
+                    <label>Loan Size *:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <label>(Min Loan Amt *: N'.$row["min_principal_amount"].')</label>
+                    <label>(Max Loan Amt *: N'.$row["max_principal_amount"].')</label>
+                    <input type="number" hidden readonly value="'.$row["max_principal_amount"].'" name="max_principal_amount" class="form-control" required id="maximum_Lamount">
+                    <input type="number" hidden readonly value="'.$row["min_principal_amount"].'" name="min_principal_amount" class="form-control" required id="minimum_Lamount">
+                  </div>
+                </div>
                 <div id="verifyl"></div>
                 <input type="number"  value="" name="principal_amount" class="form-control" required id="principal_amount">
               </div>
             </div>
-
-      <div class="col-md-4">
-       <div class="form-group">
-        <label>Min Loan Amt *: N'.$row["min_principal_amount"].'</label>
-        <label>Max Loan Amt *: N'.$row["max_principal_amount"].'</label>
-        <input type="number" hidden readonly value="'.$row["max_principal_amount"].'" name="max_principal_amount" class="form-control" required id="maximum_Lamount">
-        <input type="number" hidden readonly value="'.$row["min_principal_amount"].'" name="min_principal_amount" class="form-control" required id="minimum_Lamount">
-        </div>
-      </div>
 
       <div class="col-md-4">
         <div class="form-group">
@@ -97,28 +98,20 @@ if(isset($_POST["id"]))
       <div class="col-md-4">
         <div class="form-group">
           <div class="row">
-          <div id="verifyi"></div>
-            <div class="col-md-5">
-              <label>Interest Rate *(%):</label>
-              <input type="number" step= "1" value="" name="interest_rate" class="form-control" id="interest_rate">
+            <div class="col-md-4">
+              <label>Interest rate *:</label>
             </div>
-            <div class="col-md-5">
-            <label> </label></br>
-            <label> </label></br>
-          <label>% per day</label>
+            <div class="col-md-8">
+              <label>Min Interest Allowed *: '.$row["min_interest_rate"].'%</label>
+              <label>Max Interest Allowed *: '.$row["max_interest_rate"].'%</label>
+              <input type="number" hidden readonly value="'.$row["max_interest_rate"].'" name="max_interest_rate" class="form-control" required id="maximum_intrate">
+              <input type="number" hidden readonly value="'.$row["min_interest_rate"].'" name="min_interest_rate" class="form-control" required id="minimum_intrate">
             </div>
           </div>
+          <div id="verifyi"></div>
+          <input type="number" step= "1" value="" name="interest_rate" class="form-control" id="interest_rate">
         </div>
       </div>
-
-    <div class="col-md-4">
-    <div class="form-group">
-    <label>Min Interest Allowed *: '.$row["min_interest_rate"].'%</label>
-    <input hidden type="number" readonly value="'.$row["min_interest_rate"].'" name="min_interest_rate" class="form-control" required id="minimum_intrate">
-    <label>Max Interest Allowed *: '.$row["max_interest_rate"].'%</label>
-      <input hidden type="number" readonly value="'.$row["max_interest_rate"].'" name="max_interest_rate" class="form-control" required id="maximum_intrate">
-    </div>
-  </div>
 
       <div class="col-md-4">
         <div class="form-group">
