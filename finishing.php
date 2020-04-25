@@ -85,7 +85,7 @@ session_destroy();
             $try = 0;
             $takme = $vm + 1;
             $timestamp = date('Y-m-d H:i:s');
-            $takemeup = "UPDATE ip_blacklist SET trial = '$takme', time = '$timestamp' WHERE user = '$name'";
+            $takemeup = "UPDATE ip_blacklist SET trial = '$takme', time = '$timestamp' WHERE ip_add = '$ip'";
             $res5 = mysqli_query($connection, $takemeup);
             if ($res5) {
                 echo '<script type="text/javascript">
