@@ -15,15 +15,14 @@ $int_id = $_SESSION["int_id"];
 ?>
 <?php
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $tent = password_hash($_POST["pass"], PASSWORD_DEFAULT);
-    $_SESSION["timim"] = $tent;
-    $making = $_SESSION["timim"];
+    $conpass = $_POST["pass"];
+    $tent = password_hash($conpass, PASSWORD_DEFAULT);
     // $_SESSION["password"] = $tent;
     // $passk = $_SESSION["password"];
     // check
     $code = $_POST['code'];
     if ($code == $codey) {
-        $updatec = "UPDATE users SET users.password = '$making' WHERE username = '$name' && int_id = '$int_id'";
+        $updatec = "UPDATE users SET users.password = '$tent' WHERE username = '$name' && int_id = '$int_id'";
         $res = mysqli_query($connection, $updatec);
         if ($res) {
             echo '<script type="text/javascript">
