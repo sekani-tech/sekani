@@ -2,8 +2,12 @@
 include("material.php");
 ?>
 <?php
+  include("../functions/connect.php");
+?>
+
+<?php
 // checking if IP has been Blocked
-function getIPAddress() {  
+function getIPAddress() {
   //whether ip is from the share internet  
    if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
           $ip = $_SERVER['HTTP_CLIENT_IP'];  
@@ -55,7 +59,6 @@ if (count([$getip]) == 1) {
         </script>';
   $xm = "Your Device Are Good To Go";
 }
-$xm = "";
 ?>
 <div class="card text-center">
   <div class="card-header">

@@ -1,8 +1,3 @@
-<?php
-  // get connections for all pages
-  include("../functions/connect.php");
-?>
-
 <head>
   <title><?php echo "Change Password"?></title>
   <!-- Required meta tags -->
