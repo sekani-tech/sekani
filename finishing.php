@@ -80,7 +80,7 @@ session_destroy();
 
         if (mysqli_num_rows($getip) == 1) {
             $getip2 = mysqli_query($connection, "SELECT * FROM ip_blacklist WHERE ip_add = '$ip'");
-            if (count([$getip]) == 1) {
+            if (count([$getip2]) == 1) {
             $x = mysqli_fetch_array($getip2);
             $vm = $n['trial'];
             }
