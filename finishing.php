@@ -60,7 +60,7 @@ session_destroy();
         </script>';
     } else {
 
-        function getIPAddress() {  
+        function getIPAddress() {
             //whether ip is from the share internet  
              if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
                     $ip = $_SERVER['HTTP_CLIENT_IP'];  
