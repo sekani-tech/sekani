@@ -13,15 +13,15 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- Material Kit CSS -->
-  <link href="assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+  <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
   <!-- accordion -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
   <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="datatable/jquery-3.3.2.js"></script>
-  <script src="datatable/jquery.dataTables.min.js"></script>
-  <script src="datatable/dataTables.bootstrap.min.js"></script>
-  <script src="datatable/DropdownSelect.js"></script>
+  <script src="../datatable/jquery-3.3.2.js"></script>
+  <script src="../datatable/jquery.dataTables.min.js"></script>
+  <script src="../datatable/dataTables.bootstrap.min.js"></script>
+  <script src="../datatable/DropdownSelect.js"></script>
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/materia/bootstrap.min.css"> -->
   <style>
     div[data-acc-content] { display: none;  }
