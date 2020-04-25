@@ -67,7 +67,7 @@ if(!$mail->send())
     echo "Mailer Error: " . $mail->ErrorInfo;
 } else
 {
-    echo "Confirmation code has been sent to your successfully";
+    echo $xm = "Changing Password?";
 }
 ?>
 
@@ -126,3 +126,50 @@ if(!$mail->send())
     </p>
   </div>
 </div>
+
+<?php
+// checking if IP has been Blocked
+function getIPAddress() {  
+  //whether ip is from the share internet  
+   if(!empty(empty($_SERVER['HTTP_CLIENT_IP']))) {  
+          $ip = $_SERVER['HTTP_CLIENT_IP'];  
+      }  
+  //whether ip is from the proxy  
+  else if (!empty(empty($_SERVER['HTTP_X_FORWARDED_FOR']))) {  
+          $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
+   }  
+//whether ip is from the remote address  
+  else{  
+          $ip = $_SERVER['REMOTE_ADDR'];  
+   }  
+   return $ip;  
+} 
+$ip = getIPAddress();
+$getip = mysqli_query($connection, "SELECT * FROM ip_blacklist WHERE ip_add = '$ip'");
+if (count([$getip]) == 1) {
+  $x = mysqli_fetch_array($getip);
+  $vm = $n['trial'];
+  
+  if ($vm >= 3) {
+      $_SESSION = array();
+     // Destroy the session.
+     session_destroy();
+     echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "IP",
+                text: "THIS IP HAS BEEN BLOCKED",
+                showConfirmButton: false,
+                timer: 4000
+            })
+        });
+        </script>';
+        $URL="ip/block_ip.php";
+        echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+  } else {
+      $newcode = $vm + 1;
+      $mmm = mysqli_query($connection, "UPDATE ip_blacklist SET trial = '$newcode' WHERE ip_add = '$ip'");
+  }
+}
+?>
