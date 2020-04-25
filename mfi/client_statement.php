@@ -77,6 +77,7 @@ include('header.php');
                           </tr>
                       </tbody>
                     </table>
+                    <a href="" class="btn btn-primary">Print</a>
                 </div>
               </div>
             </div>
