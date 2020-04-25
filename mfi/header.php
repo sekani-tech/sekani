@@ -24,7 +24,7 @@ function getIPAddress() {
 } 
 $ip = getIPAddress();
 $getip = mysqli_query($connection, "SELECT * FROM ip_blacklist WHERE ip_add = '$ip'");
-if (count([$getip]) == 1) {
+if (mysqli_num_rows($getip) == 1) {
   $x = mysqli_fetch_array($getip);
   $vm = $n['trial'];
   
