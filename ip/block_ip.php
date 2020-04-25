@@ -1,5 +1,5 @@
 <?php
-include("../material.php");
+include("material.php");
 ?>
 <?php
 // checking if IP has been Blocked
