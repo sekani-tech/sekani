@@ -60,6 +60,19 @@ if (count([$getip]) == 1) {
   $xm = "Your Device Are Good To Go";
 }
 ?>
+<?php
+echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "The Internet?",
+        title: "IP",
+        text: "THIS IP IS GOOD TO GO",
+        showConfirmButton: false,
+        timer: 4000
+    })
+});
+</script>';
+?>
 <div class="card text-center">
   <div class="card-header">
     <ul class="nav nav-pills card-header-pills">
