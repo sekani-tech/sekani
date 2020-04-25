@@ -139,53 +139,7 @@ input[type=number] {
               <a href="disbursement_approval.php" class="dropdown-item">Loan disbursement</a>
             </div>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-              <i class="material-icons">content_paste</i>
-              Reports
-            </a>
-            <div class="dropdown-menu">
-              <a href="#" class="dropdown-item">Client Report</a>
-              <a href="#" class="dropdown-item">Group Report</a>
-              <a href="#" class="dropdown-item">Savings Report</a>
-              <a href="#" class="dropdown-item">Current Accounts Report</a>
-              <a href="loans.php" class="dropdown-item">Loan reoprts</a>
-              <a href="#" class="dropdown-item">Finacial reoprt</a>
-              <a href="#" class="dropdown-item">Audit</a>
-              <a href="teller.php" class="dropdown-item">Teller</a>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-              <i class="material-icons">bubble_chart</i>
-              Products Summary
-            </a>
-            <div class="dropdown-menu">
-              <a href="#" class="dropdown-item">Savings Account</a>
-              <a href="#" class="dropdown-item">Current Account</a>
-              <a href="#" class="dropdown-item">Fixed Desposit</a>
-              <a href="#" class="dropdown-item">Shares</a>
-              <a href="loans.php" class="dropdown-item">Loans</a>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="material-icons">settings</i>
-              Configuration
-            </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="products_config.php">Products</a>
-              <!-- <a class="dropdown-item" href="config.php">Configuration</a> -->
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="staff_mgmt.php">Staff Mgt.</a>
-              <a class="dropdown-item" href="branch.php">Branch</a>
-              <!-- <a class="dropdown-item" href="#">Group</a> -->
-              <!-- <a class="dropdown-item" href="chart_account.php">Accounting</a> -->
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Alerts</a>
-            </div>
-          </li>
-          <!-- another -->
+          <!-- accounting is here -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               <i class="material-icons">menu_book</i>
@@ -206,6 +160,56 @@ input[type=number] {
               <a class="dropdown-item" href="#">Close Periods</a>
             </div>
           </li>
+          <!-- ending of accounting -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+              <i class="material-icons">bubble_chart</i>
+              Products Summary
+            </a>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item">Savings Account</a>
+              <a href="#" class="dropdown-item">Current Account</a>
+              <a href="#" class="dropdown-item">Fixed Desposit</a>
+              <a href="#" class="dropdown-item">Shares</a>
+              <a href="loans.php" class="dropdown-item">Loans</a>
+            </div>
+          </li>
+          <!-- report is here now -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+              <i class="material-icons">content_paste</i>
+              Reports
+            </a>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item">Client Report</a>
+              <a href="#" class="dropdown-item">Group Report</a>
+              <a href="#" class="dropdown-item">Savings Report</a>
+              <a href="#" class="dropdown-item">Current Accounts Report</a>
+              <a href="loans.php" class="dropdown-item">Loan reoprts</a>
+              <a href="#" class="dropdown-item">Finacial reoprt</a>
+              <a href="#" class="dropdown-item">Audit</a>
+              <a href="teller.php" class="dropdown-item">Teller</a>
+            </div>
+          </li>
+          <!-- end of report -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="material-icons">settings</i>
+              Configuration
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="products_config.php">Products</a>
+              <!-- <a class="dropdown-item" href="config.php">Configuration</a> -->
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="staff_mgmt.php">Staff Mgt.</a>
+              <a class="dropdown-item" href="branch.php">Branch</a>
+              <!-- <a class="dropdown-item" href="#">Group</a> -->
+              <!-- <a class="dropdown-item" href="chart_account.php">Accounting</a> -->
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Alerts</a>
+            </div>
+          </li>
+          <!-- another -->
           <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
             

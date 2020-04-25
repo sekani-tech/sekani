@@ -87,7 +87,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Charges</h4>
+                  <h4 class="card-title ">Credit Checks</h4>
                   <script>
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
