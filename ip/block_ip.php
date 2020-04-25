@@ -41,6 +41,19 @@ if (count([$getip]) == 1) {
         </script>';
     $xm = "Your IP address Has Been Blocked";
   }
+} else {
+  echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "The Internet?",
+                title: "IP",
+                text: "THIS IP IS GOOD TO GO",
+                showConfirmButton: false,
+                timer: 4000
+            })
+        });
+        </script>';
+  $xm = "Your Device Are Good To Go";
 }
 $xm = "";
 ?>
