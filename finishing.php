@@ -15,7 +15,7 @@ $int_id = $_SESSION["int_id"];
 ?>
 <?php
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $tent = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    $tent = password_hash($_POST["pass"], PASSWORD_DEFAULT);
     $_SESSION["timim"] = $tent;
     $making = $_SESSION["timim"];
     // $_SESSION["password"] = $tent;
