@@ -119,7 +119,7 @@ if(!$mail->send())
                     </div>
                 </div>
                 <div class="justify-content-center">
-                    <button type="submit" name="button1" value="button1" class="btn btn-primary btn-link btn-wd btn-lg">Change Password</button>
+                    <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Change Password</button>
                 </div>
             </div>
     </form>
