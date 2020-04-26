@@ -134,9 +134,6 @@ if (mysqli_num_rows($getip) == 1) {
         </script>';
         $URL="ip/block_ip.php";
         echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-  } else {
-      $newcode = $vm + 1;
-      $mmm = mysqli_query($connection, "UPDATE ip_blacklist SET trial = '$newcode' WHERE ip_add = '$ip'");
   }
 } else {
     $digits = 5;

@@ -47,7 +47,10 @@ if (mysqli_num_rows($getip) == 1) {
         });
         </script>';
     $xm = "Your IP address Has Been Blocked";
-  }
+  } else {
+    $newcode = $vm + 1;
+    $mmm = mysqli_query($connection, "UPDATE ip_blacklist SET trial = '$newcode' WHERE ip_add = '$ip'");
+}
 } else {
   echo '<script type="text/javascript">
         $(document).ready(function(){
