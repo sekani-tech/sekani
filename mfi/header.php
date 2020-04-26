@@ -6,6 +6,17 @@
   }
 ?>
 <?php
+  // get connections for all pages
+  include("../functions/connect.php");
+  $sessint_id = $_SESSION["int_id"];
+  $inq = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$sessint_id'");
+    if (count([$inq]) == 1) {
+      $n = mysqli_fetch_array($inq);
+      $int_name = $n['int_name'];
+      $img = $n['img'];
+    }
+?>
+<?php
 // checking if IP has been Blocked
 function getIPAddress() {
   //whether ip is from the share internet  
@@ -40,17 +51,6 @@ if (mysqli_num_rows($getip) == 1) {
       $mmm = mysqli_query($connection, "UPDATE ip_blacklist SET trial = '$newcode' WHERE ip_add = '$ip'");
   }
 }
-?>
-<?php
-  // get connections for all pages
-  include("../functions/connect.php");
-  $sessint_id = $_SESSION["int_id"];
-  $inq = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$sessint_id'");
-    if (count([$inq]) == 1) {
-      $n = mysqli_fetch_array($inq);
-      $int_name = $n['int_name'];
-      $img = $n['img'];
-    }
 ?>
 <?php
 //active user

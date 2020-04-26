@@ -3,6 +3,7 @@ include("material.php");
 ?>
 <?php
   include("connect.php");
+  session_start();
 ?>
 
 <?php
@@ -31,7 +32,6 @@ if (mysqli_num_rows($getip) == 1) {
   $vm = $x['trial'];
   }
   if ($vm >= 3) {
-    session_start();
       $_SESSION = array();
      // Destroy the session.
      session_destroy();
