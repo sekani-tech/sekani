@@ -81,17 +81,19 @@ $mail->Body = "<!doctype html>
       			  		@-ms-viewport {width: 320px;}
       			  		@viewport {	width: 320px; }
       				}
+              #dam {
+              color: #FFFFFF;
+              font-family: Droid Sans, 'Helvetica Neue', Arial, sans-serif;
+              font-size: 36px;
+              line-height:1;text-align:center;
+              }
     </style>
-    <!--<![endif]-->
-    <!--[if mso]> 
 		<xml> 
 			<o:OfficeDocumentSettings> 
 				<o:AllowPNG/> 
 				<o:PixelsPerInch>96</o:PixelsPerInch> 
 			</o:OfficeDocumentSettings> 
 		</xml>
-		<![endif]-->
-    <!--[if lte mso 11]> 
 		<style type='text/css'> 
 			.outlook-group-fix{width:100% !important;}
 		</style>
@@ -159,14 +161,14 @@ $mail->Body = "<!doctype html>
                     </tr>
                     <tr>
                       <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
-                        <div style='color:#FFFFFF;font-family:'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:36px;line-height:1;text-align:center;'>
+                        <div id='dam'>
                           Changed Password!
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
-                        <div style='color:#187272;font-family:'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:16px;line-height:20px;text-align:center;'>
+                        <div style='color:#187272;font-family:Droid Sans, Helvetica Neue, Arial, sans-serif;font-size:16px;line-height:20px;text-align:center;'>
                           $name Your password has been changed successfully!
                         </div>
                       </td>
@@ -176,7 +178,7 @@ $mail->Body = "<!doctype html>
                         <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='border-collapse:separate;line-height:100%;width:200px;'>
                           <tr>
                             <td align='center' bgcolor='#178F8F' role='presentation' style='background-color:#178F8F;border:none;border-radius:4px;cursor:auto;padding:10px 25px;' valign='middle'>
-                              <a href='https://sekanisystems.com.ng' style='background:#178F8F;color:#ffffff;font-family:'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:16px;font-weight:bold;line-height:30px;margin:0;text-decoration:none;text-transform:none;' target='_blank'>
+                              <a href='https://sekanisystems.com.ng' style='background:#178F8F;color:#ffffff;font-family:Droid Sans, Helvetica Neue, Arial, sans-serif;font-size:16px;font-weight:bold;line-height:30px;margin:0;text-decoration:none;text-transform:none;' target='_blank'>
                                 Login!
                               </a>
                             </td>
@@ -212,14 +214,14 @@ $mail->Body = "<!doctype html>
                   <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='vertical-align:top;' width='100%'>
                     <tr>
                       <td align='center' style='font-size:0px;padding:0;word-break:break-word;'>
-                        <div style='color:#FFFFFF;font-family:'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:36px;line-height:1;text-align:center;'>
+                        <div style='color:#FFFFFF;font-family:Droid Sans, Helvetica Neue, Arial, sans-serif;font-size:36px;line-height:1;text-align:center;'>
                           Enjoy Your Day!
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td align='center' style='font-size:0px;padding:10px 25px;padding-top:10px;word-break:break-word;'>
-                        <div style='color:#933f24;font-family:'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:18px;line-height:1;text-align:center;'>
+                        <div style='color:#933f24;font-family:Droid Sans, Helvetica Neue, Arial, sans-serif;font-size:18px;line-height:1;text-align:center;'>
                           Happy Eid el Kabir In Advance
                         </div>
                       </td>
@@ -239,7 +241,7 @@ $mail->Body = "<!doctype html>
                     </tr>
                     <tr>
                       <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
-                        <div style='color:#933f24;font-family:'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:1;text-align:center;'>
+                        <div style='color:#933f24;font-family:Droid Sans, Helvetica Neue, Arial, sans-serif;font-size:13px;line-height:1;text-align:center;'>
                           Thank You
                         </div>
                       </td>
@@ -323,8 +325,8 @@ $mail->Body = "<!doctype html>
                   <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='vertical-align:top;' width='100%'>
                     <tr>
                       <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
-                        <div style='color:#BBBBBB;font-family:'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:12px;line-height:1;text-align:center;'>
-                          View in Browser | Unsubscribe | Contact © 2019 All Rights Reserved
+                        <div style='color:#BBBBBB;font-family:Droid Sans, Helvetica Neue, Arial, sans-serif;font-size:12px;line-height:1;text-align:center;'>
+                          Unsubscribe | Contact © 2020 All Rights Reserved
                         </div>
                       </td>
                     </tr>
