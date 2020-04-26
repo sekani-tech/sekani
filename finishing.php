@@ -356,10 +356,9 @@ if(!$mail->send())
     $_SESSION = array();
     // Destroy the session.
    session_destroy();
-}
-
-        $URL="login.php";
+   $URL="login.php";
         echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+}
         }
     } else if ($code == ""){
         echo '<script type="text/javascript">
