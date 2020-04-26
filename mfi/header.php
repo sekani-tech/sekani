@@ -44,7 +44,7 @@ if (mysqli_num_rows($getip) == 1) {
       $_SESSION = array();
      // Destroy the session.
      session_destroy();
-     $URL="ip/block_ip.php";
+     $URL="../ip/block_ip.php";
      echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
   } else {
       $newcode = $vm + 1;
