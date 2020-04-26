@@ -7,7 +7,7 @@
 ?>
 <?php
 // checking if IP has been Blocked
-function getIPAddress() {  
+function getIPAddress() {
   //whether ip is from the share internet  
    if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
           $ip = $_SERVER['HTTP_CLIENT_IP'];  
@@ -25,9 +25,8 @@ function getIPAddress() {
 $ip = getIPAddress();
 $getip = mysqli_query($connection, "SELECT * FROM ip_blacklist WHERE ip_add = '$ip'");
 if (mysqli_num_rows($getip) == 1) {
-  $gtp = mysqli_query($connection, "SELECT * FROM ip_blacklist WHERE ip_add = '$ip'");
-            if (count([$gtp]) == 1) {
-            $x = mysqli_fetch_array($gtp);
+            if (count([$getip]) == 1) {
+            $x = mysqli_fetch_array($getip);
             $vm = $x['trial'];
             }
   if ($vm >= 3) {
