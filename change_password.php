@@ -36,41 +36,6 @@ if (isset($_GET["edit"])) {
     }
 }
 ?>
-<?php
-$digits = 5;
-$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-$_SESSION["codex"] = $randms;
-$codex = $_SESSION["codex"];
-// begining of mail
-$mail = new PHPMailer;
-// from email addreess and name
-$mail->From = $intemail;
-$mail->FromName = $intname;
-// to adress and name
-$mail->addAddress($email, $name);
-// reply address
-//Address to which recipient will reply
-// progressive html images
-$mail->addReplyTo($intemail, "Reply");
-// CC and BCC
-//CC and BCC
-// $mail->addCC("cc@example.com");
-// $mail->addBCC("bcc@example.com");
-// Send HTML or Plain Text Email
-$mail->isHTML(true);
-$mail->Subject = "Comfirmation Code";
-$mail->Body = "Your Confirmation Code Number is: $codex";
-$mail->AltBody = "This is the plain text version of the email content";
-// mail system
-if(!$mail->send()) 
-{
-    echo "Mailer Error: " . $mail->ErrorInfo;
-} else
-{
-    echo $xm = "Changing Password?";
-}
-?>
-
 <div class="card text-center">
   <div class="card-header">
     <ul class="nav nav-pills card-header-pills">
@@ -173,5 +138,38 @@ if (mysqli_num_rows($getip) == 1) {
       $newcode = $vm + 1;
       $mmm = mysqli_query($connection, "UPDATE ip_blacklist SET trial = '$newcode' WHERE ip_add = '$ip'");
   }
+} else {
+    $digits = 5;
+$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$_SESSION["codex"] = $randms;
+$codex = $_SESSION["codex"];
+// begining of mail
+$mail = new PHPMailer;
+// from email addreess and name
+$mail->From = $intemail;
+$mail->FromName = $intname;
+// to adress and name
+$mail->addAddress($email, $name);
+// reply address
+//Address to which recipient will reply
+// progressive html images
+$mail->addReplyTo($intemail, "Reply");
+// CC and BCC
+//CC and BCC
+// $mail->addCC("cc@example.com");
+// $mail->addBCC("bcc@example.com");
+// Send HTML or Plain Text Email
+$mail->isHTML(true);
+$mail->Subject = "Comfirmation Code";
+$mail->Body = "Your Confirmation Code Number is: $codex";
+$mail->AltBody = "This is the plain text version of the email content";
+// mail system
+if(!$mail->send()) 
+{
+    echo "Mailer Error: " . $mail->ErrorInfo;
+} else
+{
+    echo $xm = "Changing Password?";
+}
 }
 ?>

@@ -12,6 +12,20 @@
     exit;
   }
 ?>
+
+<?php
+  // get connections for all pages
+  include("functions/connect.php");
+?>
+<?php
+//active user
+$activecode = "Active";
+// working on the time stamp right now
+$ts = date('Y-m-d H:i:s');
+$acuser = $_SESSION["username"];
+$activeq = "UPDATE users SET users.status ='$activecode', users.last_logged = '$ts' WHERE users.username ='$acuser'";
+$rezz = mysqli_query($connection, $activeq);
+?>
 <?php
 // checking if IP has been Blocked
 function getIPAddress() {  
@@ -49,19 +63,6 @@ if (mysqli_num_rows($getip) == 1) {
       $mmm = mysqli_query($connection, "UPDATE ip_blacklist SET trial = '$newcode' WHERE ip_add = '$ip'");
   }
 }
-?>
-<?php
-  // get connections for all pages
-  include("functions/connect.php");
-?>
-<?php
-//active user
-$activecode = "Active";
-// working on the time stamp right now
-$ts = date('Y-m-d H:i:s');
-$acuser = $_SESSION["username"];
-$activeq = "UPDATE users SET users.status ='$activecode', users.last_logged = '$ts' WHERE users.username ='$acuser'";
-$rezz = mysqli_query($connection, $activeq);
 ?>
 <!doctype html>
 <html lang="en">
