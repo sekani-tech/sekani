@@ -151,14 +151,14 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           // using the parent_id to sort them out
                           $nameofacct = "";
                           $rid = $row["id"];
-                          $nameid = $row["name"];
+                          $nameid = strtoupper($row["name"]);
                           $pid = $row["parent_id"];
                           if ($pid == "" || $pid == NULL || $pid == 0) {
                             $nameofacct = "<b style='font-size: 21; color: black;'>".$nameid."</b>";
                           } else {
                             $iman = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE id = '$pid' && int_id = '$sessint_id'");
                             $hmm = mysqli_fetch_array($iman);
-                            $gen = $hmm["name"];
+                            $gen = strtoupper($hmm["name"]);
                             $nameofacct = "<b style='font-size: 21; color: black;'>".$gen."</b>"." - ".$nameid;
                           }
                           
