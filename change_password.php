@@ -91,7 +91,7 @@ if (isset($_GET["edit"])) {
                         <div class="input-group-prepend">
                         <div class="input-group-text"><i class="material-icons">lock_outline</i></div>
                         </div>
-                        <input type="text" value="<?php echo $passage; ?>" id="opo4">
+                        <input hidden type="text" value="<?php echo $passage; ?>" id="opo4">
                         <input type="password" name="pass" id="opo" placeholder="Password" class="form-control" required>
                     </div>
                 </div>
