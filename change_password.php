@@ -13,6 +13,10 @@ if (isset($_GET["edit"])) {
 
     if (count([$gettheuser]) == 1) {
         $n = mysqli_fetch_array($gettheuser);
+        $selectpass = mysqli_query($connection, "SELECT * FROM users WHERE username = '$name'");
+        $pop = mysqli_fetch_array($selectpass);
+        $passage = $pop['password'];
+        // password test
         $vd = $n['id'];
         $int_id = $n['int_id'];
         $branch_id = $n['branch_id'];
@@ -70,12 +74,15 @@ if (isset($_GET["edit"])) {
                         });
                         $('#opo').on("change keyup paste click", function () {
                             var id = $(this).val();
-                            var check = $('#opo').val();
-                            if (id == check) {
-                                document.getElementById("myDiv").setAttribute("hidden","");
-                            } else {
-                                document.getElementById("myDiv").removeAttribute("hidden");
-                            }
+                            var check = $('#opo4').val();
+                            $.ajax({
+                                url: "old_pass.php",
+                                method: "POST",
+                                data: {id:id, check: check},
+                                success: function(data) {
+                                  $('#myDiv2').html(data);
+                                }
+                            })
                         });
                     });
                 </script>
@@ -84,6 +91,7 @@ if (isset($_GET["edit"])) {
                         <div class="input-group-prepend">
                         <div class="input-group-text"><i class="material-icons">lock_outline</i></div>
                         </div>
+                        <input type="text" value="<?php echo $passage; ?>" id="opo4">
                         <input type="password" name="pass" id="opo" placeholder="Password" class="form-control" required>
                     </div>
                 </div>
@@ -98,6 +106,8 @@ if (isset($_GET["edit"])) {
                 <p>
                  <div hidden id="myDiv">
                     <i style="color: red;">This Password Doesn't Match</i>
+                 </div>
+                 <div id="myDiv2">
                  </div>
                  </p>
                 <div class="justify-content-center">
