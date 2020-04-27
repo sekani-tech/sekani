@@ -253,8 +253,8 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                       <label >Account Usage</label>
                       <select class="form-control" name="acct_use" id="" required>
                         <option value="">Select an option</option>
-                        <option value="1">GL GROUP</option>
-                        <option value="2">GL ACCOUNT</option>
+                        <option value="1">GL ACCOUNT</option>
+                        <option value="2">GL GROUP</option>
 
                       </select>                    
                     </div>
