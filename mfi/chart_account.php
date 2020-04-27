@@ -147,7 +147,21 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                         <tr>
                         <?php $row["id"]; ?>
                           <th><?php echo $row["gl_code"]; ?></th>
-                          <th><?php echo $row["name"]; ?></th>
+                          <?php
+                          // using the parent_id to sort them out
+                          $nameofacct = "";
+                          $nameid = $row["name"];
+                          $pid = $row["parent_id"];
+                          if ($pid == "" || $pid = NULL) {
+                            $nameofacct = $nameid;
+                          } else {
+                            $select_each = mysqli_query($connection, "SELECT * FORM acc_gl_account WHERE parent_id = '$pid'");
+                            $tt = mysqli_fetch_array($select_each);
+                            $Generel = $tt["name"];
+                            $nameofacct = $Generel."-".$nameid;
+                          }
+                          ?>
+                          <th><?php echo $nameofacct; ?></th>
                           <!-- this is for account type classification_enum -->
                           <?php
                           // get classification for account type using conditions
