@@ -63,9 +63,9 @@ if (isset($_GET["edit"])) {
                             var id = $(this).val();
                             var check = $('#opo').val();
                             if (id == check) {
-                                document.getElementById("mm").style.visibility = "hidden";
+                                document.getElementById("myDiv").setAttribute("hidden","");
                             } else {
-                                document.getElementById("mm").style.visibility = "visible";
+                                document.getElementById("myDiv").removeAttribute("hidden");
                             }
                         });
                     });
@@ -84,8 +84,10 @@ if (isset($_GET["edit"])) {
                         <div class="input-group-text"><i class="material-icons">done_all</i></div>
                         </div>
                         <input type="password" name="confirm_pass" id="opo2" placeholder="Confirm Password" class="form-control" required>
-                        <p hidden id="mm">
+                        <p>
+                            <div hidden id="myDiv">
                             <i>This Password Doesn't Match</i>
+                            </div>
                         </p>
                     </div>
                 </div>
