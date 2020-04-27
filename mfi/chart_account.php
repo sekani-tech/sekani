@@ -155,10 +155,10 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           if ($pid == "" || $pid == NULL || $pid == 0) {
                             $nameofacct = $nameid;
                           } else {
-                            $select_each = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id'  ORDER BY classification_enum ASC, name ASC");
+                            $select_each = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' && parent_id = '$pid'");
                             $tt = mysqli_fetch_array($select_each);
                             $gen = $tt["name"];
-                            $nameofacct = $gen." - ".$nameid;
+                            $nameofacct = $gen." ".$nameid;
                           }
                           ?>
                           <th><?php echo $nameofacct; ?></th>
