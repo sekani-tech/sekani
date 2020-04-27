@@ -463,7 +463,9 @@ if(!$mail->send())
 }
 ?>
 
-<div class="card text-center">
+<div class="row">
+      <div class="col-md-8 ml-auto mr-auto">
+      <div class="card text-center">
   <div class="card-header">
     <ul class="nav nav-pills card-header-pills">
       <li class="nav-item">
@@ -497,4 +499,6 @@ if(!$mail->send())
     </form>
     </p>
   </div>
+</div>
+      </div>
 </div>
