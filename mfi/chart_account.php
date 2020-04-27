@@ -119,7 +119,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                     <table id="tabledat2" class="table" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM acc_gl_account WHERE int_id ='$sessint_id'";
+                        $query = "SELECT * FROM acc_gl_account WHERE int_id ='$sessint_id' ORDER BY classification_enum ASC";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -148,7 +148,24 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                         <?php $row["id"]; ?>
                           <th><?php echo $row["gl_code"]; ?></th>
                           <th><?php echo $row["name"]; ?></th>
-                          <th><?php echo $row["account_type"]; ?></th>
+                          <!-- this is for account type classification_enum -->
+                          <?php
+                          // get classification for account type using conditions
+                          $class = "";
+                          $row["classification_enum"];
+                          if ($row["classification_enum"] == 1 || $row["classification_enum"] == "1") {
+                            $class = "ASSETS";
+                          } else if ($row["classification_enum"] == 2 || $row["classification_enum"] == "2") {
+                            $class = "LIABILITY";
+                          } else if ($row["classification_enum"] == 3 || $row["classification_enum"] == "3") {
+                            $class = "EQUITY";
+                          } else if ($row["classification_enum"] == 4 || $row["classification_enum"] == "4") {
+                            $class = "INCOME";
+                          } else if ($row["classification_enum"] == 5 || $row["classification_enum"] == "5") {
+                            $class = "EXPENSE";
+                          }
+                          ?>
+                          <th><?php echo $class; ?></th>
                           <th><?php echo $row["tag_id"]; ?></th>
                           <th><?php if ($row["organization_running_balance_derived"] < 0) {
                             echo '<div style="color: red;">'.$row["organization_running_balance_derived"].'</div>';
@@ -197,6 +214,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                     <div class="form-group">
                       <label >Account Type*</label>
                       <script>
+                        // coment on later
                           $(document).ready(function(){
                             $('#give').change(function() {
                               var id = $(this).val();
