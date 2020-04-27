@@ -405,8 +405,8 @@ if(!$mail->send())
             $takme = $vm + 1;
             $timestamp = date('Y-m-d H:i:s');
             $takemeup = "UPDATE ip_blacklist SET trial = '$takme', time = '$timestamp' WHERE ip_add = '$ip'";
-            $res5 = mysqli_query($connection, $takemeup);
-            if ($res5) {
+            $res10 = mysqli_query($connection, $takemeup);
+            if ($res10) {
                 echo '<script type="text/javascript">
             $(document).ready(function(){
             swal({
@@ -441,7 +441,7 @@ if(!$mail->send())
                 $mmm = mysqli_query($connection, "UPDATE ip_blacklist SET trial = '$newcode' WHERE ip_add='$ip'");
             }
         } else {
-            $try = 0;
+            $try = 1;
             $timestamp = date('Y-m-d H:i:s');
             $takemeup = "INSERT INTO `ip_blacklist` (`id`, `user`, `ip_add`, `time`, `trial`) VALUES ('{$int_id}', '{$name}', '{$ip}', '{$timestamp}', '{$try}')";
             $res5 = mysqli_query($connection, $takemeup);
