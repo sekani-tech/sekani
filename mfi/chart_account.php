@@ -119,7 +119,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                     <table id="tabledat2" class="table" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM acc_gl_account WHERE int_id ='$sessint_id' ORDER BY classification_enum ASC";
+                        $query = "SELECT * FROM acc_gl_account WHERE int_id ='$sessint_id' ORDER BY classification_enum ASC, name ASC";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -187,7 +187,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                             echo $row["organization_running_balance_derived"];
                           } ?></th>
                           <th><?php echo $row["reconciliation_enabled"]; ?></th>
-                          <td><a href="edit_chart_account.php?edit=<?php echo $row["id"];?>" class="btn btn-info" ><i style="color:#ffffff;" class="material-icons">create</i></a></td>
+                          <td><a href="edit_chart_account.php?edit=<?php echo $row["id"];?>" class="btn btn-info sm" ><i style="color:#ffffff;" class="material-icons">create</i></a></td>
                         </tr>
                         <?php }
                           }
