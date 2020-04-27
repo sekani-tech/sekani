@@ -113,7 +113,7 @@ input[type=number] {
           <div class="card-profile">
             <div class="card-avatar">
                   <a href="#picasso">
-                    <img class="img" src="<?php echo $img; ?>" />
+                    <img class="img" src="<?php echo $img; ?>" width="200px" height="200px" />
                   </a>
                 </div>
           </div>
