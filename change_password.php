@@ -78,7 +78,7 @@ if (isset($_GET["edit"])) {
                             $.ajax({
                                 url: "old_pass.php",
                                 method: "POST",
-                                data: {id:id, check: check},
+                                data: {id:id, check:check},
                                 success: function(data) {
                                   $('#myDiv2').html(data);
                                 }
