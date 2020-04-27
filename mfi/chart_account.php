@@ -152,7 +152,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           $nameofacct = "";
                           $nameid = $row["name"];
                           $pid = $row["parent_id"];
-                          if ($pid == "" || $pid = NULL) {
+                          if ($pid == "" || $pid == NULL || $pid == 0) {
                             $nameofacct = $nameid;
                           } else {
                             $select_each = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id'");
