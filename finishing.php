@@ -215,14 +215,14 @@ $mail->Body = "<!doctype html>
                     <tr>
                       <td align='center' style='font-size:0px;padding:0;word-break:break-word;'>
                         <div style='color:#FFFFFF;font-family:Droid Sans, Helvetica Neue, Arial, sans-serif;font-size:36px;line-height:1;text-align:center;'>
-                          Enjoy Your Day!
+                          STAY SAFE!
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td align='center' style='font-size:0px;padding:10px 25px;padding-top:10px;word-break:break-word;'>
                         <div style='color:#933f24;font-family:Droid Sans, Helvetica Neue, Arial, sans-serif;font-size:18px;line-height:1;text-align:center;'>
-                          Happy Eid el Kabir In Advance
+                          Eid el Kabir
                         </div>
                       </td>
                     </tr>
