@@ -84,13 +84,13 @@ if (isset($_GET["edit"])) {
                         <div class="input-group-text"><i class="material-icons">done_all</i></div>
                         </div>
                         <input type="password" name="confirm_pass" id="opo2" placeholder="Confirm Password" class="form-control" required>
-                        <p>
-                            <div hidden id="myDiv">
-                            <i>This Password Doesn't Match</i>
-                            </div>
-                        </p>
                     </div>
                 </div>
+                <p>
+                 <div hidden id="myDiv">
+                    <i style="color: red;">This Password Doesn't Match</i>
+                 </div>
+                 </p>
                 <div class="justify-content-center">
                     <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Change Password</button>
                 </div>
