@@ -222,7 +222,7 @@ $mail->Body = "<!doctype html>
                     <tr>
                       <td align='center' style='font-size:0px;padding:10px 25px;padding-top:10px;word-break:break-word;'>
                         <div style='color:#933f24;font-family:Droid Sans, Helvetica Neue, Arial, sans-serif;font-size:18px;line-height:1;text-align:center;'>
-                          Eid el Kabir
+                        Ramadan Kareem
                         </div>
                       </td>
                     </tr>
