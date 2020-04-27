@@ -93,7 +93,6 @@ if (isset($_GET["edit"])) {
     </form>
     </p>
   </div>
-  <?php echo $mx; ?>
 </div>
       </div>
 </div>
@@ -172,7 +171,7 @@ if(!$mail->send())
     echo "Mailer Error: " . $mail->ErrorInfo;
 } else
 {
-    $xm = "Changing Password?";
+    echo $xm = "Changing Password?";
 }
 }
 ?>
