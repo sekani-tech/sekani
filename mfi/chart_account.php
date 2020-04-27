@@ -154,12 +154,12 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           $nameid = $row["name"];
                           $pid = $row["parent_id"];
                           if ($pid == "" || $pid == NULL || $pid == 0) {
-                            $nameofacct = $nameid;
+                            $nameofacct = "<b>".$nameid."</b>";
                           } else {
                             $iman = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE id = '$pid' && int_id = '$sessint_id'");
                             $hmm = mysqli_fetch_array($iman);
                             $gen = $hmm["name"];
-                            $nameofacct = $gen." ".$nameid;
+                            $nameofacct = "<b>".$gen."</b>"." - ".$nameid;
                           }
                           
                           ?>
