@@ -155,7 +155,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           if ($pid == "" || $pid = NULL) {
                             $nameofacct = $nameid;
                           } else {
-                            $select_each = mysqli_query($connection, "SELECT * FORM acc_gl_account WHERE parent_id = '$pid'");
+                            $select_each = mysqli_query($connection, "SELECT * FORM acc_gl_account WHERE id = '$pid'");
                             $tt = mysqli_fetch_array($select_each);
                             $Generel = $tt["name"];
                             $nameofacct = $Generel."-".$nameid;
