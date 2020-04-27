@@ -38,7 +38,7 @@ if (isset($_GET["edit"])) {
 ?>
 
 <div class="row">
-      <div class="col-md-6 ml-auto mr-auto">
+      <div class="col-md-4 ml-auto mr-auto">
       <div class="card text-center">
   <div class="card-header">
     <ul class="nav nav-pills card-header-pills">
