@@ -68,6 +68,15 @@ if (isset($_GET["edit"])) {
                                 document.getElementById("myDiv").removeAttribute("hidden");
                             }
                         });
+                        $('#opo').on("change keyup paste click", function () {
+                            var id = $(this).val();
+                            var check = $('#opo').val();
+                            if (id == check) {
+                                document.getElementById("myDiv").setAttribute("hidden","");
+                            } else {
+                                document.getElementById("myDiv").removeAttribute("hidden");
+                            }
+                        });
                     });
                 </script>
                 <div class="form-group bmd-form-group">
