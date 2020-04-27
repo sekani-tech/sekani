@@ -150,20 +150,18 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           <?php
                           // using the parent_id to sort them out
                           $nameofacct = "";
+                          $rid = $row["id"];
                           $nameid = $row["name"];
                           $pid = $row["parent_id"];
                           if ($pid == "" || $pid == NULL || $pid == 0) {
                             $nameofacct = $nameid;
-                          } else {
-                            $select_each = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' && parent_id = '$pid'");
-                            $tt = mysqli_fetch_array($select_each);
-                            $rid = $tt["id"];
-                            $gen = $tt["name"];
-
-                            if ($pid == $rid) {
-                              $nameofacct = $gen." - ".$nameid;
-                            }
+                          } else if ($rid == $pid) {
+                            $iman = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE id = '$pid' && int_id = '$sessint_id'");
+                            $hmm = mysqli_fetch_array($iman);
+                            $gen = $hmm["name"];
+                            $nameofacct = $gen." ".$nameid;
                           }
+                          
                           ?>
                           <th><?php echo $nameofacct; ?></th>
                           <!-- this is for account type classification_enum -->
@@ -196,7 +194,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                         <?php }
                           }
                           else {
-                            echo "0 Staff";
+                            echo "0 Document";
                           }
                           ?>
                       </tbody>
