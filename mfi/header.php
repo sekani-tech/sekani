@@ -5,7 +5,6 @@
       exit;
   }
 ?>
-
 <?php
   // get connections for all pages
   include("../functions/connect.php");
@@ -16,6 +15,39 @@
       $int_name = $n['int_name'];
       $img = $n['img'];
     }
+?>
+<?php
+// checking if IP has been Blocked
+function getIPAddress() {
+  //whether ip is from the share internet  
+   if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
+          $ip = $_SERVER['HTTP_CLIENT_IP'];  
+      }  
+  //whether ip is from the proxy  
+  else if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
+          $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
+   }  
+//whether ip is from the remote address  
+  else{  
+          $ip = $_SERVER['REMOTE_ADDR'];  
+   }  
+   return $ip;  
+} 
+$ip = getIPAddress();
+$getip = mysqli_query($connection, "SELECT * FROM ip_blacklist WHERE ip_add = '$ip'");
+if (mysqli_num_rows($getip) == 1) {
+            if (count([$getip]) == 1) {
+            $x = mysqli_fetch_array($getip);
+            $vm = $x['trial'];
+            }
+  if ($vm >= 3) {
+      $_SESSION = array();
+     // Destroy the session.
+     session_destroy();
+     $URL="../ip/block_ip.php";
+     echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+  }
+}
 ?>
 <?php
 //active user
@@ -77,11 +109,11 @@ input[type=number] {
       Tip 2: you can also add an image using data-image tag
   -->
       <div class="logo">
-        <div class="col-xs-2">
+        <div class="col-xs-2"> ghvj
           <div class="card-profile">
             <div class="card-avatar">
                   <a href="#picasso">
-                    <img class="img" src="../instimg/<?php echo $img; ?>" />
+                    <img class="img" src="<?php echo $img; ?>" max-width="200px" width="100%" />
                   </a>
                 </div>
           </div>

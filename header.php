@@ -12,6 +12,7 @@
     exit;
   }
 ?>
+
 <?php
   // get connections for all pages
   include("functions/connect.php");
@@ -24,6 +25,41 @@ $ts = date('Y-m-d H:i:s');
 $acuser = $_SESSION["username"];
 $activeq = "UPDATE users SET users.status ='$activecode', users.last_logged = '$ts' WHERE users.username ='$acuser'";
 $rezz = mysqli_query($connection, $activeq);
+?>
+<?php
+// checking if IP has been Blocked
+function getIPAddress() {  
+  //whether ip is from the share internet  
+   if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
+          $ip = $_SERVER['HTTP_CLIENT_IP'];  
+      }  
+  //whether ip is from the proxy  
+  else if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
+          $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
+   }  
+//whether ip is from the remote address  
+  else{  
+          $ip = $_SERVER['REMOTE_ADDR'];  
+   }  
+   return $ip;  
+} 
+$ip = getIPAddress();
+$getip = mysqli_query($connection, "SELECT * FROM ip_blacklist WHERE ip_add = '$ip'");
+if (mysqli_num_rows($getip) == 1) {
+  $gtp = mysqli_query($connection, "SELECT * FROM ip_blacklist WHERE ip_add = '$ip'");
+            if (count([$gtp]) == 1) {
+            $x = mysqli_fetch_array($gtp);
+            $vm = $x['trial'];
+            }
+  
+  if ($vm >= 3) {
+      $_SESSION = array();
+     // Destroy the session.
+     session_destroy();
+     $URL="ip/block_ip.php";
+     echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+  }
+}
 ?>
 <!doctype html>
 <html lang="en">

@@ -58,6 +58,75 @@ if(isset($_GET["edit"])) {
             <div class="col-md-12">
             <div class="col-md-12">
               <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Customer Statement</h4>
+                </div>
+                <div class="card-body">
+                  <form action="">
+                    <div class="form-group">
+                      <label for="">Name:</label>
+                      <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="Tunde Biodun" readonly name="display_name">
+                    </div>
+                    
+                  </form>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Account Statement</h4>
+                </div>
+                <div class="card-body">
+                <table id="tabledat4" class="table">
+                        <th>Transfer Date</th>
+                        <th>Value Date</th>
+                        <th>Reference</th>
+                        <th>Debits</th>
+                        <th>Credits</th>
+                        <th>Balance</th>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          </tr>
+                      </tbody>
+                    </table>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Loan Statement</h4>
+                </div>
+                <div class="card-body">
+                <table id="tabledat4" class="table">
+                        <th>Transfer Date</th>
+                        <th>Value Date</th>
+                        <th>Reference</th>
+                        <th>Debits</th>
+                        <th>Credits</th>
+                        <th>Balance</th>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          </tr>
+                      </tbody>
+                    </table>
+                    <a href="" class="btn btn-primary">Print</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card card-profile">
                 <!-- <div class="card-avatar">
                   <a href="#pablo">
                   </a>

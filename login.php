@@ -88,13 +88,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["org_role"] = $org_role;
                             $_SESSION["employee_status"] = $employee_status;
                             $_SESSION["branch_id"] = $branch_id;
+                            // quick one for institution general data
                             // $_SESSION["lastname"] = $lastname;
                             $compsec = mysqli_query($link, "SELECT * FROM `institutions` WHERE int_id ='$int_id'");
                             if (count([$compsec]) == 1) {
                             $res = mysqli_fetch_array($compsec);
                             $intname = $res["int_name"];
                             $intemail = $res["email"];
+                            $web = $res["website"];
+                            $intphone = $res["pc_phone"];
+                            $int_img = $res["img"];
+                            $int_address = $res["office_address"];
 
+                            $_SESSION["int_name"] = $intname;
+                            $_SESSION["int_email"] = $intemail;
+                            $_SESSION["int_web"] = $web;
+                            $_SESSION["int_phone"] = $intphone;
+                            $_SESSION["int_logo"] = $int_img;
+                            $_SESSION["int_address"] = $int_address;
                             // mailin
                             // begining of mail
                             $mail = new PHPMailer;

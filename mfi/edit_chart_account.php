@@ -87,8 +87,8 @@ if(isset($_GET["edit"])) {
                       <label >Account Usage</label>
                       <select class="form-control" name="acct_use" id="" required>
                         <option value="<?php echo $acct_use;?>">...</option>
-                        <option value="1">GL GROUP</option>
-                        <option value="2">GL ACCOUNT</option>
+                        <option value="1">GL ACCOUNT</option>
+                        <option value="2">GL GROUP</option>
                       </select>                    
                     </div>
                   </div>
