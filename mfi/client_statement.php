@@ -10,30 +10,19 @@ if(isset($_GET["edit"])) {
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
     $ctype = $n['client_type'];
+    $branch = $n['branch_id'];
     $display_name = $n['display_name'];
     $first_name = $n['firstname'];
     $middle_name = $n['middlename'];
     $last_name = $n['lastname'];
     $acc_no = $n['account_no'];
     $actype = $n['account_type'];
-    $loanofficer_id = $n['loan_officer_id'];
     $phone = $n['mobile_no'];
     $phone2 = $n['mobile_no_2'];
     $email = $n['email_address'];
-    $address = $n['ADDRESS'];
-    $gender = $n['gender'];
     $date_of_birth = $n['date_of_birth'];
-    $branch = $n['branch_id'];
-    $country = $n['COUNTRY'];
-    $state = $n['STATE_OF_ORIGIN'];
-    $lga = $n['LGA'];
-    $bvn = $n['BVN'];
     $sms_active = $n['SMS_ACTIVE'];
     $email_active = $n['EMAIL_ACTIVE'];
-    $id_card = $n['id_card'];
-    $passport = $n['passport'];
-    $signature = $n['signature'];
-    $id_img_url = $n['id_img_url'];
     $branchid = mysqli_query($connection, "SELECT * FROM branch WHERE id='$branch'");
     if (count([$branchid]) == 1) {
       $a = mysqli_fetch_array($branchid);
@@ -47,6 +36,12 @@ if(isset($_GET["edit"])) {
     }
   }
 }
+session_start();
+                            
+    // Store data in session variables
+    session_regenerate_id();
+    $_SESSION["loggedin"] = true;
+    $_SESSION["client_id"] = $id;
 ?>
 
 <!-- Content added here -->
@@ -64,6 +59,8 @@ if(isset($_GET["edit"])) {
                           <h4><?php echo $branch_name;?></h4>
                         <h6 class="card-category text-gray">Client name</h6>
                           <h4><?php echo $first_name," ", $last_name;?></h4>
+                          <h6 class="card-category text-gray">Client Number</h6>
+                          <h4><?php echo $phone;?></h4>
                         <h6 class="card-category text-gray">Currency</h6>
                           <h4><?php echo $currtype;?></h4>
                         <h6 class="card-category text-gray">Total debit</h6>
@@ -77,6 +74,8 @@ if(isset($_GET["edit"])) {
                     <div class="col-md-6">
                       <h6 class="card-category text-gray">Branch address</h6>
                         <h4><?php echo $branch_address?></h4>
+                        <h6 class="card-category text-gray">Email</h6>
+                        <h4><?php echo $email;?></h4>
                       <h6 class="card-category text-gray">Account number</h6>
                         <h4><?php echo $acc_no;?></h4>
                       <h6 class="card-category text-gray">Opening balance</h6>
@@ -99,9 +98,13 @@ if(isset($_GET["edit"])) {
                 </div>
                 <div class="card-body">
                 <div class="form-group">
+                  <form method="POST" action="../TCPDF/dbtable.php">
                       <label for="">Name:</label>
+                      <input class="form-control" type="text" value=<?php echo $first_name," ", $last_name;?> readonly/>
+                    
+                  <a href="../TCPDF/pdf.php?edit=<?php echo $id;?>" class="btn btn-primary pull-left">Download PDF</a>
+                  </form>
                     </div>
-                    <a href="../TCPDF/pdf.php?edit=<?php echo $id;?>" class="btn btn-primary pull-left">Download PDF</a>
                     <div class="table-responsive">
                     <script>
                   $(document).ready(function() {

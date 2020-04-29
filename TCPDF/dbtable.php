@@ -34,9 +34,10 @@
         $this ->dbconn = $db ->connect();
     }
     public function gettransaction() {
-        if(isset($_GET["echa"])) {
-            $id = $_GET["echa"];}
-        $stmt = $this->dbconn->prepare("SELECT * FROM account_transaction");
+        session_start();
+        if(isset($_SESSION["client_id"])) {
+            $id = $_SESSION["client_id"];}
+        $stmt = $this->dbconn->prepare("SELECT * FROM account_transaction WHERE client_id = '$id'");
         $stmt -> execute();
         $books = $stmt -> fetchAll(PDO::FETCH_ASSOC);
         return $books;
