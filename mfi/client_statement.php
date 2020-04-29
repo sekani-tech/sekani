@@ -57,139 +57,41 @@ if(isset($_GET["edit"])) {
           <div class="row">
             <div class="col-md-12">
             <div class="col-md-12">
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title">Customer Statement</h4>
-                </div>
-                <div class="card-body">
-                  <form action="">
-                    <div class="form-group">
-                      <label for="">Name:</label>
-                      <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="Tunde Biodun" readonly name="display_name">
-                    </div>
-                    
-                  </form>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title">Account Statement</h4>
-                </div>
-                <div class="card-body">
-                <table id="tabledat4" class="table">
-                        <th>Transfer Date</th>
-                        <th>Value Date</th>
-                        <th>Reference</th>
-                        <th>Debits</th>
-                        <th>Credits</th>
-                        <th>Balance</th>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          </tr>
-                      </tbody>
-                    </table>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title">Loan Statement</h4>
-                </div>
-                <div class="card-body">
-                <table id="tabledat4" class="table">
-                        <th>Transfer Date</th>
-                        <th>Value Date</th>
-                        <th>Reference</th>
-                        <th>Debits</th>
-                        <th>Credits</th>
-                        <th>Balance</th>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          </tr>
-                      </tbody>
-                    </table>
-                    <a href="" class="btn btn-primary">Print</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card card-profile">
-                <!-- <div class="card-avatar">
-                  <a href="#pablo">
-                  </a>
-                </div> -->
-                <!-- Get session data and populate user profile -->
-                <div class="card-body">
+                <div style="padding-left:20px;" class="card">
                   <div class="row">
-                    <div class="col-md-6">
-                      <h6 class="card-category text-gray">Branch name</h6>
-                        <h4><?php echo $branch_name;?></h4>
-                      <h6 class="card-category text-gray">Client name</h6>
-                        <h4><?php echo $first_name," ", $last_name;?></h4>
-                      <h6 class="card-category text-gray">Currency</h6>
-                         <h4><?php echo $currtype;?></h4>
-                      <h6 class="card-category text-gray">Total debit</h6>
-                        <!-- <h4><?php echo $actype;?></h4> -->
-                        <h4>N 13145500</h4>
-                      <h6 class="card-category text-gray">Total credit</h6>
-                        <!-- <h4><?php echo $actype;?></h4> -->
-                        <h4>N 12167500</h4>
-                  </div>
+                      <div class="col-md-6">
+                        <h6 class="card-category text-gray">Branch name</h6>
+                          <h4><?php echo $branch_name;?></h4>
+                        <h6 class="card-category text-gray">Client name</h6>
+                          <h4><?php echo $first_name," ", $last_name;?></h4>
+                        <h6 class="card-category text-gray">Currency</h6>
+                          <h4><?php echo $currtype;?></h4>
+                        <h6 class="card-category text-gray">Total debit</h6>
+                          <!-- <h4><?php echo $actype;?></h4> -->
+                          <h4>N 13145500</h4>
+                        <h6 class="card-category text-gray">Total credit</h6>
+                          <!-- <h4><?php echo $actype;?></h4> -->
+                          <h4>N 12167500</h4>
+                    </div>
 
-                  <div class="col-md-6">
-                    <h6 class="card-category text-gray">Branch address</h6>
-                      <h4><?php echo $branch_address?></h4>
-                    <h6 class="card-category text-gray">Account number</h6>
-                      <h4><?php echo $acc_no;?></h4>
-                    <h6 class="card-category text-gray">Opening balance</h6>
+                    <div class="col-md-6">
+                      <h6 class="card-category text-gray">Branch address</h6>
+                        <h4><?php echo $branch_address?></h4>
+                      <h6 class="card-category text-gray">Account number</h6>
+                        <h4><?php echo $acc_no;?></h4>
+                      <h6 class="card-category text-gray">Opening balance</h6>
+                        <!-- <h4><?php echo $actype;?></h4> -->
+                        <h4>N 503965</h4>
+                      <h6 class="card-category text-gray">Closing balance</h6>
                       <!-- <h4><?php echo $actype;?></h4> -->
-                      <h4>N 503965</h4>
-                    <h6 class="card-category text-gray">Closing balance</h6>
-                    <!-- <h4><?php echo $actype;?></h4> -->
-                    <h4>N 493824</h4>
-                    <h6 class="card-category text-gray">Statement period</h6>
-                    <h4>01/01/2020 - 01/30/2020</h4>
+                      <h4>N 493824</h4>
+                      <h6 class="card-category text-gray">Statement period</h6>
+                      <h4>01/01/2020 - 01/30/2020</h4>
+                    </div>
                   </div>
-                </div>
-                </div>
                 <!-- /account statement -->
                 <br>
               </div>
-              <div class="card card-profile">
-                <!-- <div class="card-avatar">
-                  <a href="#pablo">
-                  </a>
-                </div> -->
-                <!-- Get session data and populate user profile
-                <div class="card-body">
-                  <h6 class="card-category text-gray">Statement Period</h6>
-                  <h4>01/01/2020 - 01/04/2020</h4>
-                  <h6 class="card-category text-gray">Branch Name</h6>
-                  <h4>Gudu</h4>
-                  <h6 class="card-category text-gray">Account No</h6>
-                  <h4>0320382454</h4>
-                  <h6 class="card-category text-gray">Account Type</h6>
-                  <h4>Quick Credit</h4>
-                  <h6 class="card-category text-gray">Currency Type</h6>
-                  <h4>Naira</h4>
-                  <h6 class="card-category text-gray">Opening Balance</h6>
-                  <h4>0</h4>
-                   <a href="#pablo" class="btn btn-primary btn-round">Follow</a>
-                </div> -->
-            </div>
           </div>
               <div class="card">
                 <div class="card-header card-header-primary">
