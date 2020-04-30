@@ -330,7 +330,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           method: "POST",
                           data:{gl:gl},
                           success:function(data){
-                            $('#dropping').html(data);
+                            $('#droping').html(data);
                           }
                         })
                       });
