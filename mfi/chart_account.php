@@ -335,6 +335,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           }
                         })
                       });
+                      $('#give').change(function() {
+                        var ch = $(this).val();
+                        var gl = $('#atu').val();
+                        $.ajax({
+                          url:"ajax_post/chart_acct_post.php",
+                          method: "POST",
+                          data:{gl:gl, ch:ch},
+                          success:function(data){
+                            $('#dropping').html(data);
+                          }
+                        })
+                      });
                     });
                   </script>
                   <!-- checking out the group 2 -->
