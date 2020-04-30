@@ -23,8 +23,8 @@ $destination = "index.php";
                             <div class="ripple-container"></div>
                           </a>
                         </li> -->
-                        <li class="nav-item active">
-                          <a class="nav-link" href="#products" data-toggle="tab">
+                        <li class="nav-item">
+                          <a class="nav-link active" href="#products" data-toggle="tab">
                             <i class="material-icons">visibility</i> Products
                             <div class="ripple-container"></div>
                           </a>
@@ -133,6 +133,91 @@ $destination = "index.php";
                       </table>
                     </div>
                     <!-- credit checks -->
+                    <div class="tab-pane" id="messages">
+                    <script>
+                  $(document).ready(function() {
+                  $('#tabledat').DataTable();
+                  });
+                  </script>
+                    <div class="table-responsive">
+                    <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM `credit_check` WHERE int_id = '$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                        <th>
+                          Id
+                        </th>
+                        <th>
+                          Name
+                        </th>
+                        <th>
+                          Entity Name
+                        </th>
+                        <th>
+                         Severity Level
+                        </th>
+                        <th>
+                          Rating Type
+                        </th>
+                        <th>
+                         Value
+                        </th>
+                        <th>View</th>
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                         <th><?php $row["id"]; ?></th>
+                          <th><?php echo $row["name"]; ?></th>
+                          <?php
+                          if ($row["related_entity_enum_value"] == 1) {
+                            $me = "Loan";
+                          }
+                          ?>
+                          <th><?php echo $me; ?></th>
+                          <?php
+                          if ($row["severity_level_enum_value"] == 1) {
+                            $xs = "Block Loan";
+                          } else if ($row["severity_level_enum_value"] == 2) {
+                            $xs = "Warning";
+                          } else if ($row["severity_level_enum_value"] == 3) {
+                            $xs = "Pass";
+                          } 
+                          ?>
+                          <th><?php echo $xs; ?></th>
+                          <?php
+                          if ($row["rating_type"] == 1) {
+                            $rt = "Boolean";
+                          } else if ($row["rating_type"] == 2) {
+                            $rt = "Score";
+                          }
+                          ?>
+                          <th><?php echo $rt; ?></th>
+                          <?php
+                          if ($row["is_active"] == 1) {
+                            $isa = "Active";
+                          } else if ($row["is_active"] == 0) {
+                            $isa = "Not Active";
+                          }
+                          ?>
+                          <th><?php echo $isa; ?></th>
+                          <td><a href="#?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                          <!-- <th></th> -->
+                      </tbody>
+                    </table>
+                  </div>
+                    </div>
+                    <!-- end of credit checkss -->
                   </div>
                 </div>
               </div>
