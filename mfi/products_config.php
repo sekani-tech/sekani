@@ -25,7 +25,8 @@ $destination = "index.php";
                         </li> -->
                         <li class="nav-item">
                           <a class="nav-link active" href="#products" data-toggle="tab">
-                            <i class="material-icons">visibility</i> Products
+                          <!-- visibility -->
+                            <i class="material-icons">attach_money</i> Loan Products
                             <div class="ripple-container"></div>
                           </a>
                         </li>
@@ -37,7 +38,7 @@ $destination = "index.php";
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#credit" data-toggle="tab">
-                            <i class="material-icons">attach_money</i> Credit Check
+                            <i class="material-icons">find_in_page</i> Credit Check
                             <div class="ripple-container"></div>
                           </a>
                         </li>
@@ -133,7 +134,7 @@ $destination = "index.php";
                       </table>
                     </div>
                     <!-- credit checks -->
-                    <div class="tab-pane" id="messages">
+                    <div class="tab-pane" id="credit">
                     <script>
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
