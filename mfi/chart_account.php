@@ -314,7 +314,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >Account Usage</label>
-                      <select class="form-control" name="acct_use" id="atu" required>
+                      <select id="atu" class="form-control" name="acct_use" required>
                         <option value="">Select an option</option>
                         <option value="1">GL ACCOUNT</option>
                         <option value="2">GL GROUP</option>
