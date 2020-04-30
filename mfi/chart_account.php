@@ -323,14 +323,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   </div>
                   <script>
                     $(document).ready(function() {
-                      $('atu').change(function() {
+                      $('#atu').change(function() {
                         var gl = $(this).val();
                         $.ajax({
                           url:"ajax_post/chart_acct_post.php",
                           method: "POST",
                           data:{gl:gl},
                           success:function(data){
-                            $('dropping').html(data);
+                            $('#dropping').html(data);
                           }
                         })
                       });
