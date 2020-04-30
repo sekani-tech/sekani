@@ -322,7 +322,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                   </div>
                   <script>
-                    $(docuemnt).ready(function() {
+                    $(document).ready(function() {
                       $('atu').change(function() {
                         var gl = $(this).val();
                         $.ajax({

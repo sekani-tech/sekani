@@ -2,6 +2,7 @@
 include("../../functions/connect.php");
 $int_id = $_SESSION["int_id"];
 $output2 = '';
+
 if (isset($_POST["gl"]))
 {
     if($_POST["gl"] != '')
