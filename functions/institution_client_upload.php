@@ -2,6 +2,14 @@
 // connection
 include("connect.php");
 session_start();
+require_once "../bat/phpmailer/PHPMailerAutoload.php";
+$int_name = $_SESSION["int_name"];
+$int_email = $_SESSION["int_email"];
+$int_web = $_SESSION["int_web"];
+$int_phone = $_SESSION["int_phone"];
+$int_logo = $_SESSION["int_logo"];
+$int_address = $_SESSION["int_address"];
+
 ?>
 <?php
 $sessint_id = $_SESSION["int_id"];
@@ -562,7 +570,6 @@ table{
             		<td>
             			<div class='text' style='padding: 0 3em; text-align: center;'>
             				<h2 style='text-shadow: #000000 1 0.5;'>Greetings &amp; Welcome to $int_name</h2>
-            				<!-- <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> -->
             				<p><a href='app.sekanisystems.com.ng/change_password.php?edit=$username' class='btn btn-primary'>Change Password!</a></p>
             			</div>
             		</td>
@@ -578,7 +585,7 @@ table{
 		            	<div class='heading-section heading-section-white'>
 		            		<span class='subheading'>Login Credentials</span>
 		              	<h2>Welcome To $int_name</h2>
-                          <p>Username: $username  ||  Password: $password</p>
+                          <p>Name: $last_name $first_name</p>
                           <p>You can now Login to $int_name With this Credentials, Please change your Password With the button above </p>
 		            	</div>
 		            </td>
