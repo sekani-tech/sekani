@@ -116,21 +116,76 @@ $destination = "index.php";
                     <div class="tab-pane" id="messages">
                     <a href="create_charge.php" class="btn btn-primary"> Add Charge</a>
                       <table class="table">
-                        <thead>
-                          <th>Name</th>
-                          <th>Product</th>
-                          <th>Charge Type</th>
-                          <th>Amount</th>
-                          <th>View</th>
-                          <th>Edit</th>
-                        </thead>
-                        <tbody>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                        </tbody>
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM `charge` WHERE int_id = '$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                        <th>
+                          Name
+                        </th>
+                        <th>
+                          Product
+                        </th>
+                        <th>
+                         Active
+                        </th>
+                        <th>
+                          Charge Type
+                        </th>
+                        <th>
+                         Amount
+                        </th>
+                        <th>View</th>
+                        <th>Delete</th>
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                         <?php echo $row["id"]; ?>
+                          <th><?php echo $row["name"]; ?></th>
+                          <?php
+                          if ($row["charge_applies_to_enum"] == 1) {
+                            $me = "Loan";
+                          } else if ($row["charge_applies_to_enum"] == 2) {
+                            $me = "Savings";
+                          }
+                         ?>
+                          <th><?php echo $row["is_active"]; ?></th>
+                          <?php
+                          if ($row["charge_time_enum"] == 1) {
+                            $xs = "Disbursement";
+                          } else if ($row["charge_time_enum"] == 2) {
+                            $xs = "Specified Due Date";
+                          } else if ($row["charge_time_enum"] == 3) {
+                            $xs = "Savings Activiation";
+                          } else if ($row["charge_time_enum"] == 5) {
+                            $xs = "Withdrawal Fee";
+                          } else if ($row["charge_time_enum"] == 6) {
+                            $xs = "Annual Fee";
+                          } else if ($row["charge_time_enum"] == 8) {
+                            $xs = "Installment Fees";
+                          } else if ($row["charge_time_enum"] == 9) {
+                            $xs = "Overdue Installment Fee";
+                          } else if ($row["charge_time_enum"] == 12) {
+                            $xs = "Disbursement - Paid With Repayment";
+                          } else if ($row["charge_time_enum"] == 13) {
+                            $xs = "Loan Rescheduling Fee";
+                          } 
+                         ?>
+                          <th><?php echo $row["amount"]; ?></th>
+                          <td><a href="#?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
+                          <td><a href="#?delete=<?php echo $row["id"];?>" class="btn btn-info">Delete</a></td>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                          <!-- <th></th> -->
+                      </tbody>
                       </table>
                     </div>
                     <!-- credit checks -->
@@ -171,7 +226,7 @@ $destination = "index.php";
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
-                         <th><?php $row["id"]; ?></th>
+                         <th><?php echo $row["id"]; ?></th>
                           <th><?php echo $row["name"]; ?></th>
                           <?php
                           if ($row["related_entity_enum_value"] == 1) {
