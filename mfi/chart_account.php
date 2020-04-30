@@ -340,10 +340,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       $('#give').change(function() {
                         var ch = $(this).val();
                         var gl = $('#atu').val();
+                        var id = $('#int_id').val();
                         $.ajax({
                           url:"ajax_post/chart_acct_post.php",
                           method: "POST",
-                          data:{ch:ch, gl:gl},
+                          data:{ch:ch, gl:gl, id:id},
                           success:function(data){
                             $('#dropping').html(data);
                           }
