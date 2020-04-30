@@ -3,7 +3,7 @@ include("../../functions/connect.php");
 $int_id = $_SESSION["int_id"];
 $output2 = '';
 
-if (isset($_POST["gl"]) && isset($_POST["ch"]) && $_POST["gl"] == "1")
+if (isset($_POST["gl"]) && isset($_POST["ch"]) && $_POST["gl"] == "2")
 {
     if($_POST["gl"] != '' && $_POST["ch"] != '')
     {
@@ -23,7 +23,5 @@ if (isset($_POST["gl"]) && isset($_POST["ch"]) && $_POST["gl"] == "1")
           </select>';
     }
     echo $output2;
-} else {
-    echo "there is a problem with posting";
 }
 ?>
