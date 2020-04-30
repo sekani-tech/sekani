@@ -2,7 +2,7 @@
 include("../functions/connect.php");
 $int_id = $_SESSION["int_id"];
 $output = '';
-
+$output2 = '';
 if(isset($_POST["id"]))
 {
     if($_POST["id"] !='')
@@ -11,12 +11,7 @@ if(isset($_POST["id"]))
     }
     $output = '<div>"'.$rd = "".'"</div>';
     echo $output;
-}
-// session_start();
-//    $_SESSION['load_term'] = "batman";
-$output2 = '';
-
-if (isset($_POST["gl"]) && $_POST["gl"] == "2")
+} else if (isset($_POST["gl"]) && $_POST["gl"] == 2)
 {
     if($_POST["gl"] != '')
     {
