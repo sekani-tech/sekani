@@ -28,6 +28,7 @@ if(isset($_POST["id"]))
             return $out;
         }
     }
+    $res = mysqli_query($connection, $org);
     while ($row = mysqli_fetch_array($res))
     {
         $output2 = '<div class="col-md-6">
