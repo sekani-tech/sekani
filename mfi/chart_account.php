@@ -295,6 +295,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="4">INCOME</option>
                         <option value="5">EXPENSE</option>
                       </select>
+                      <input hidden type="text" id="int_id" value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -326,10 +327,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       $('#atu').change(function() {
                         var gl = $(this).val();
                         var ch = $('#give').val();
+                        var id = $('#int_id').val();
                         $.ajax({
                           url:"ajax_post/chart_acct_post.php",
                           method: "POST",
-                          data:{gl:gl, ch:ch},
+                          data:{gl:gl, ch:ch, id:id},
                           success:function(data){
                             $('#dropping').html(data);
                           }
