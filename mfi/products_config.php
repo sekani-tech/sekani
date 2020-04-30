@@ -143,7 +143,7 @@ $destination = "index.php";
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
-                         <?php echo $row["id"]; ?>
+                         <?php $row["id"]; ?>
                           <th><?php echo $row["name"]; ?></th>
                           <?php
                           if ($row["charge_applies_to_enum"] == 1) {
@@ -152,6 +152,7 @@ $destination = "index.php";
                             $me = "Savings";
                           }
                          ?>
+                         <th><?php echo $me; ?></th>
                           <th><?php echo $row["is_active"]; ?></th>
                           <?php
                           if ($row["charge_time_enum"] == 1) {
