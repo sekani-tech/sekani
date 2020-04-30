@@ -11,7 +11,7 @@ if(isset($_POST["id"]))
     }
     $output = '<div>"'.$rd = "".'"</div>';
     echo $output;
-} else if (isset($_POST["gl"]) && $_POST["gl"] == 2)
+} else if (isset($_POST["gl"]))
 {
     if($_POST["gl"] != '')
     {
