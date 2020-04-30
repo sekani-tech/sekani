@@ -64,7 +64,7 @@ $destination = "index.php";
                         <button class="btn btn-primary">Update</button>
                       </form>
                     </div> -->
-                    <div class="tab-pane" id="products">
+                    <div class="tab-pane active" id="products">
                       <a href="manage_product.php" class="btn btn-primary"> Create New Product</a>
                       <div class="table-responsive">
                   <script>
@@ -112,7 +112,7 @@ $destination = "index.php";
                     </table>
                   </div>
                     </div>
-                    <div class="tab-pane active" id="messages">
+                    <div class="tab-pane" id="messages">
                     <a href="create_charge.php" class="btn btn-primary"> Add Charge</a>
                       <table class="table">
                         <thead>
