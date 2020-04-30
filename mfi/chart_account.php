@@ -99,6 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $gl_code = $_POST['gl_code'];
   $acct_type = $_POST['acct_type'];
   $ext_id = $_POST['ext_id'];
+  $pid = $_POST['parent_id'];
   $acct_tag = $_POST['acct_tag'];
   $acct_use = $_POST['acct_use'];
   $man_ent_all = $_POST['man_ent'];
@@ -110,13 +111,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // alright check this out
 
   $chat_acct = "INSERT INTO `acc_gl_account`
-  (`int_id`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`,
-  `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`,
-  `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`)
+  (`int_id`, `branch_id`, `name`, `parent_id`, `gl_code`,
+  `manual_journal_entries_allowed`, `account_usage`, `classification_enum`,
+  `tag_id`, `description`, `reconciliation_enabled`)
   VALUES ('{$int_id}', '{$bnc_id}', '{$acct_name}',
-  '{replace}', '{}', '{}',
-  '0', '1', '2', '',
-  NULL, NULL, '0', NULL, NULL)";
+  '{$pid}', '{$gl_code}',
+  '{$man_ent_all}', '{$acct_use}', '{$acct_type}',
+  NULL, '{$desc}', '{$bank_rec}')";
+
+  $done = mysqli_query($connection, $chat_acct);
+
+  if ($done) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+         type: "success",
+          title: "CHART OF ACCOUNT",
+            text: "Successfully Created",
+         showConfirmButton: false,
+       timer: 2000
+        })
+        });
+ </script>';
+  } else {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+         type: "error",
+          title: "CHART OF ACCOUNT",
+            text: "Error in Creation",
+         showConfirmButton: false,
+       timer: 2000
+        })
+        });
+ </script>';
+  }
 }
 ?>
 <!-- DONE POSTING -->
@@ -266,19 +295,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               if (id == "") {
                                 document.getElementById('tit').readOnly = false;
                                 $('#tit').val("choose an account type");
-                              } else if (id == "ASSET") {
+                              } else if (id == "1") {
                                 document.getElementById('tit').readOnly = true;
                                 $('#tit').val("1" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "LIABILITY") {
+                              } else if (id == "2") {
                                 document.getElementById('tit').readOnly = true;
                                 $('#tit').val("2" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "EQUITY") {
+                              } else if (id == "3") {
                                 document.getElementById('tit').readOnly = true;
                                 $('#tit').val("3" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "INCOME") {
+                              } else if (id == "4") {
                                 document.getElementById('tit').readOnly = true;
                                 $('#tit').val("4" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "EXPENSE") {
+                              } else if (id == "5") {
                                 document.getElementById('tit').readOnly = true;
                                 $('#tit').val("5" + Math.floor(1000 + Math.random() * 9000));
                               } else {
@@ -295,6 +324,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="4">INCOME</option>
                         <option value="5">EXPENSE</option>
                       </select>
+                      <input hidden type="text" id="int_id" value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -303,18 +333,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       <input type="text" style="text-transform: uppercase;" class="form-control" name="ext_id">
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <!-- <div class="col-md-6">
                     <div class="form-group">
                       <label >Account Tag</label>
                       <select class="form-control" name="acct_tag" id="">
                         <option value="">Select an option</option>
                       </select>                    
                     </div>
-                  </div>
+                  </div> -->
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >Account Usage</label>
-                      <select class="form-control" name="acct_use" id="atu" required>
+                      <select id="atu" class="form-control" name="acct_use" required>
                         <option value="">Select an option</option>
                         <option value="1">GL ACCOUNT</option>
                         <option value="2">GL GROUP</option>
@@ -322,13 +352,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                   </div>
                   <script>
-                    $(docuemnt).ready(function() {
-                      $('atu').change(function() {
+                    $(document).ready(function() {
+                      $('#atu').change(function() {
                         var gl = $(this).val();
+                        var ch = $('#give').val();
+                        var id = $('#int_id').val();
                         $.ajax({
-                          url:"readable.php",
+                          url:"ajax_post/chart_acct_post.php",
                           method: "POST",
-                          data:{gl:gl},
+                          data:{gl:gl, ch:ch, id:id},
+                          success:function(data){
+                            $('#dropping').html(data);
+                          }
+                        })
+                      });
+                      $('#give').change(function() {
+                        var ch = $(this).val();
+                        var gl = $('#atu').val();
+                        var id = $('#int_id').val();
+                        $.ajax({
+                          url:"ajax_post/chart_acct_post.php",
+                          method: "POST",
+                          data:{ch:ch, gl:gl, id:id},
                           success:function(data){
                             $('#dropping').html(data);
                           }
@@ -337,8 +382,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     });
                   </script>
                   <!-- checking out the group 2 -->
-                  <div id="droping"></div>
+                  <div class="col-md-6">
+                    <div class="form-group">    
+                    <div id="dropping"></div>           
+                    </div>
+                  </div>
                   <!-- end of group  -->
+                  <br>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >Manual Entires Allowed</label><br/>
