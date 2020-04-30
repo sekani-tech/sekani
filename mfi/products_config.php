@@ -114,8 +114,13 @@ $destination = "index.php";
                   </div>
                     </div>
                     <div class="tab-pane" id="messages">
+                    <script>
+                  $(document).ready(function() {
+                  $('#tabledat').DataTable();
+                  });
+                  </script>
                     <a href="create_charge.php" class="btn btn-primary"> Add Charge</a>
-                      <table class="table">
+                      <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM `charge` WHERE int_id = '$sessint_id'";
