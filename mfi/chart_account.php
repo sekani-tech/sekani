@@ -101,11 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $ext_id = $_POST['ext_id'];
   $acct_tag = $_POST['acct_tag'];
   $acct_use = $_POST['acct_use'];
-  if ($acct_use == "1") {
- $account_use = 2;
-  } else if ($acct_use == "2") {
-    $account_use = 1;
-  }
   $man_ent_all = $_POST['man_ent'];
   $bank_rec = $_POST['bank_rec'];
   $desc = $_POST['desc'];
