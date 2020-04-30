@@ -278,7 +278,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               } else if (id == "4") {
                                 document.getElementById('tit').readOnly = true;
                                 $('#tit').val("4" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "6") {
+                              } else if (id == "5") {
                                 document.getElementById('tit').readOnly = true;
                                 $('#tit').val("5" + Math.floor(1000 + Math.random() * 9000));
                               } else {
