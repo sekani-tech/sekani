@@ -133,15 +133,22 @@ while ( $results[] = mysqli_fetch_object ( $res ) );
                         <div class="fileinput-new thumbnail img-raised">
                             <!-- <img src="http://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" rel="nofollow" alt="..."> -->
                         </div>
-                        <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
-                        <div>
-                            <span class="btn btn-raised btn-round btn-default btn-file">
-                                <span class="fileinput-new">Select picture</span>
-                                <span class="fileinput-exists">Change</span>
-                                <input type="file" name="imagefile"/>
-                            </span>
-                            <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
-                        </div>
+                        <style>
+                        input[type="file"]{
+                          display: none;
+                        }
+                        .custom-file-upload{
+                          border: 1px solid #ccc;
+                          display: inline-block;
+                          padding: 6px 12px;
+                          cursor: pointer;
+                        }
+                      </style>
+                      <div class="col-md-4">
+                    <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                    <input id ="file-upload" name="img" type="file" class="inputFileHidden"/>
+                    <label> Select Images</label>
+                    </div>
                     </div>
                   </div>
                       <div class="col-md-4">

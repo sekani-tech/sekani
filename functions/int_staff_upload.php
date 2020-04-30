@@ -31,14 +31,14 @@ $org_role = $_POST['org_role'];
 $std = "Not Active";
 $phone = $_POST['phone'];
 $digits = 10;
-$temp = explode(".", $_FILES['imagefile']['name']);
-$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-$imagex = $randms. '.' .end($temp);
+$temp2 = explode(".", $_FILES['idimg']['name']);
+$randms2 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$imagex = $randms2. '.' .end($temp2);
 
-if (move_uploaded_file($_FILES['imagefile']['tmp_name'], "staff/" . $imagex)) {
-    $msg = "Image uploaded successfully";
+if (move_uploaded_file($_FILES['idimg']['tmp_name'], "clients/" . $image2)) {
+$msg = "Image uploaded successfully";
 } else {
-  $msg = "Image Failed";
+$msg = "Image Failed";
 }
 
 $queryuser = "INSERT INTO users (int_id, username, fullname, password, usertype, status, time_created, pics)
