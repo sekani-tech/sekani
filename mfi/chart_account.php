@@ -323,21 +323,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   </div>
                   <script>
                     $(docuemnt).ready(function() {
-                      $('atu').change(function() {
+                      $('#atu').change(function() {
                         var gl = $(this).val();
                         $.ajax({
                           url:"readable.php",
                           method: "POST",
                           data:{gl:gl},
                           success:function(data){
-                            $('#droping').html(data);
+                            $('#dropping').html(data);
                           }
                         })
                       });
                     });
                   </script>
                   <!-- checking out the group 2 -->
-                  <div id="droping"></div>
+                  <div id="dropping"></div>
                   <!-- end of group  -->
                   <div class="col-md-6">
                     <div class="form-group">
