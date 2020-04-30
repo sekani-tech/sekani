@@ -304,14 +304,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       <input type="text" style="text-transform: uppercase;" class="form-control" name="ext_id">
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <!-- <div class="col-md-6">
                     <div class="form-group">
                       <label >Account Tag</label>
                       <select class="form-control" name="acct_tag" id="">
                         <option value="">Select an option</option>
                       </select>                    
                     </div>
-                  </div>
+                  </div> -->
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >Account Usage</label>

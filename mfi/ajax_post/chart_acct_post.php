@@ -25,10 +25,6 @@ if (isset($_POST["gl"]) && isset($_POST["ch"]) && $_POST["gl"] == "1")
             "'.fill_group($connection, $acct_use, $int_id).'"
           </select>';
     echo $output2;
-    } else {
-        echo "empty"." + ".$int_id ;
     }
-} else {
-    echo "check the gl account";
 }
 ?>
