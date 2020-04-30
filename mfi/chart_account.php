@@ -91,6 +91,35 @@ $_SESSION["lack_of_intfund_$key"] = 0;
 }
 ?>
 <!-- Content added here -->
+<!-- POST INTO -->
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  // on her i will be posting data
+  $acct_name = $_POST['acct_name'];
+  $gl_code = $_POST['gl_code'];
+  $acct_type = $_POST['acct_type'];
+  $ext_id = $_POST['ext_id'];
+  $acct_tag = $_POST['acct_tag'];
+  $acct_use = $_POST['acct_use'];
+  $man_ent_all = $_POST['man_ent'];
+  $bank_rec = $_POST['bank_rec'];
+  $desc = $_POST['desc'];
+  $int_id = $sessint_id;
+  $bnc_id = $branch_id;
+
+  // alright check this out
+
+  $chat_acct = "INSERT INTO `acc_gl_account`
+  (`int_id`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`,
+  `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`,
+  `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`)
+  VALUES ('{$int_id}', '{$bnc_id}', '{$acct_name}',
+  '{replace}', '{}', '{}',
+  '0', '1', '2', '',
+  NULL, NULL, '0', NULL, NULL)";
+}
+?>
+<!-- DONE POSTING -->
     <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
@@ -212,7 +241,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
         </button>
     </div>
         <div class="modal-body">
-         <form action="" method="POST" enctype="multipart/form-data">
+         <form method="POST" enctype="multipart/form-data">
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
@@ -260,24 +289,24 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                         </script>
                       <select class="form-control" name="acct_type" id="give">
                         <option value="">Select an option</option>
-                        <option value="ASSET">ASSET</option>
-                        <option value="LIABILITY">LIABILITY</option>
-                        <option value="EQUITY">EQUITY</option>
-                        <option value="INCOME">INCOME</option>
-                        <option value="EXPENSE">EXPENSE</option>
+                        <option value="1">ASSET</option>
+                        <option value="2">LIABILITY</option>
+                        <option value="3">EQUITY</option>
+                        <option value="4">INCOME</option>
+                        <option value="5">EXPENSE</option>
                       </select>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >External ID</label>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" name="">
+                      <input type="text" style="text-transform: uppercase;" class="form-control" name="ext_id">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >Account Tag</label>
-                      <select class="form-control" name="act_tag" id="">
+                      <select class="form-control" name="acct_tag" id="">
                         <option value="">Select an option</option>
                       </select>                    
                     </div>
@@ -285,20 +314,37 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >Account Usage</label>
-                      <select class="form-control" name="acct_use" id="" required>
+                      <select class="form-control" name="acct_use" id="atu" required>
                         <option value="">Select an option</option>
                         <option value="1">GL ACCOUNT</option>
                         <option value="2">GL GROUP</option>
-
                       </select>                    
                     </div>
                   </div>
+                  <script>
+                    $(docuemnt).ready(function() {
+                      $('atu').change(function() {
+                        var gl = $(this).val();
+                        $.ajax({
+                          url:"readable.php",
+                          method: "POST",
+                          data:{gl:gl},
+                          success:function(data){
+                            $('#dropping').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                  <!-- checking out the group 2 -->
+                  <div id="droping"></div>
+                  <!-- end of group  -->
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >Manual Entires Allowed</label><br/>
                       <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                          <input class="form-check-input" name="" type="checkbox" value="1">
+                          <input class="form-check-input" name="man_ent" type="checkbox" value="1">
                           <span class="form-check-sign">
                             <span class="check"></span>
                           </span>
@@ -311,7 +357,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                       <label >Allow Bank reconciliation?</label><br/>
                       <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                          <input class="form-check-input" name="" type="checkbox" value="1">
+                          <input class="form-check-input" name="bank_rec" type="checkbox" value="1">
                           <span class="form-check-sign">
                             <span class="check"></span>
                           </span>
@@ -322,16 +368,16 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                   <div class="col-md-12">
                     <div class="form-group">
                       <label> Description:</label>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" name="middlename">  
+                      <input type="text" style="text-transform: uppercase;" class="form-control" name="desc">  
                     </div>
                   </div>
                 </div>
                 <div class="clearfix"></div>
                   <div style="float:right;">
-                        <span class="btn btn-primary pull-right">Add</span>
+                        <button type="submit" class="btn btn-primary pull-right">Add</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                       </div>
-                      </form>
+                </form>
       </div>
     </div>
   </div>
