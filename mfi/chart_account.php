@@ -325,7 +325,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $(document).ready(function() {
                       $('#atu').change(function() {
                         var gl = $(this).val();
-                        var ch = $('$give').val();
+                        var ch = $('#give').val();
                         $.ajax({
                           url:"ajax_post/chart_acct_post.php",
                           method: "POST",
