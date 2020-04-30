@@ -341,7 +341,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $.ajax({
                           url:"ajax_post/chart_acct_post.php",
                           method: "POST",
-                          data:{gl:gl, ch:ch},
+                          data:{ch:ch, gl:gl},
                           success:function(data){
                             $('#dropping').html(data);
                           }

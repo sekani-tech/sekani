@@ -5,7 +5,7 @@ $output2 = '';
 
 if (isset($_POST["gl"]) && isset($_POST["ch"]) && $_POST["gl"] == "2")
 {
-    if($_POST["gl"] != '')
+    if($_POST["gl"] != '' && $_POST["ch"] != '')
     {
         $acct_use = $_POST["ch"];
         function fill_group($connection, $acct_use)
