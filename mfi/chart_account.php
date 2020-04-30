@@ -266,19 +266,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               if (id == "") {
                                 document.getElementById('tit').readOnly = false;
                                 $('#tit').val("choose an account type");
-                              } else if (id == "ASSET") {
+                              } else if (id == "1") {
                                 document.getElementById('tit').readOnly = true;
                                 $('#tit').val("1" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "LIABILITY") {
+                              } else if (id == "2") {
                                 document.getElementById('tit').readOnly = true;
                                 $('#tit').val("2" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "EQUITY") {
+                              } else if (id == "3") {
                                 document.getElementById('tit').readOnly = true;
                                 $('#tit').val("3" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "INCOME") {
+                              } else if (id == "4") {
                                 document.getElementById('tit').readOnly = true;
                                 $('#tit').val("4" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "EXPENSE") {
+                              } else if (id == "6") {
                                 document.getElementById('tit').readOnly = true;
                                 $('#tit').val("5" + Math.floor(1000 + Math.random() * 9000));
                               } else {
