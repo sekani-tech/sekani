@@ -3,14 +3,15 @@ include("../../functions/connect.php");
 $int_id = $_SESSION["int_id"];
 $output2 = '';
 
-if (isset($_POST["gl"]))
+if (isset($_POST["gl"]) && isset($_POST["ch"]) && $_POST["gl"] == "2")
 {
     if($_POST["gl"] != '')
     {
-        function fill_group($connection)
+        $acct_use = $_POST["ch"];
+        function fill_group($connection, $acct_use)
         {
             $int_id = $_SESSION["int_id"];
-            $org = "SELECT * FROM `acc_gl_account` WHERE parent_id IS NULL  && int_id = '$int_id'";
+            $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$int_id' && account_usage = '$acct_use' && parent_id IS NULL";
             $res = mysqli_query($connection, $org);
             $out = '';
             while ($row = mysqli_fetch_array($res))
@@ -24,15 +25,11 @@ if (isset($_POST["gl"]))
           <label >GL Group</label>
           <select class="form-control" name="parent_id" id="pid" required>
             <option value="0">choose group</option>
-            "'.fill_group($connection).'"
+            "'.fill_group($connection, $acct_use).'"
           </select>                    
         </div>
       </div>';
     echo $output2;
-    } else {
-        echo "BLANK";
     }
-} else {
-    echo "NOT CALLING";
 }
 ?>

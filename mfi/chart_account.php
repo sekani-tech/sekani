@@ -287,7 +287,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             });
                           });
                         </script>
-                      <select class="form-control" name="acct_type" id="give">
+                      <select id="ch" class="form-control" name="acct_type" id="give">
                         <option value="">Select an option</option>
                         <option value="1">ASSET</option>
                         <option value="2">LIABILITY</option>
@@ -325,10 +325,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $(document).ready(function() {
                       $('#atu').change(function() {
                         var gl = $(this).val();
+                        var ch = $('$ch').val();
                         $.ajax({
                           url:"ajax_post/chart_acct_post.php",
                           method: "POST",
-                          data:{gl:gl},
+                          data:{gl:gl, ch:ch},
                           success:function(data){
                             $('#dropping').html(data);
                           }
