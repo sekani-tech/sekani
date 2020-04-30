@@ -109,7 +109,7 @@ input[type=number] {
       Tip 2: you can also add an image using data-image tag
   -->
       <div class="logo">
-        <div class="col-xs-2"> ghvj
+        <div class="col-xs-2">
           <div class="card-profile">
             <div class="card-avatar">
                   <a href="#picasso">
