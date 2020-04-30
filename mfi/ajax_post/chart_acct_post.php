@@ -20,15 +20,12 @@ if (isset($_POST["gl"]) && isset($_POST["ch"]) && $_POST["gl"] == "2")
               }
             return $out;
         }
-        $output2 = '<div class="col-md-6">
-        <div class="form-group">
+        $output2 = '
           <label >GL Group</label>
           <select class="form-control" name="parent_id" id="pid" required>
             <option value="0">choose group</option>
             "'.fill_group($connection, $acct_use).'"
-          </select>                    
-        </div>
-      </div>';
+          </select>';
     echo $output2;
     }
 }

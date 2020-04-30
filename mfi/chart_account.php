@@ -351,16 +351,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   </script>
                   <!-- checking out the group 2 -->
                   <div class="col-md-6">
-                    <div class="form-group">
-                      <label >GL Group</label>
-                      <select class="form-control" name="acct_use" required>
-                        <option value="">Select an option</option>
-                        <option value="1">GL ACCOUNT</option>
-                        <option value="2">GL GROUP</option>
-                      </select>                    
+                    <div class="form-group">    
+                    <div id="dropping"></div>           
                     </div>
                   </div>
-                  <div id="dropping"></div>
                   <!-- end of group  -->
                   <br>
                   <div class="col-md-6">
