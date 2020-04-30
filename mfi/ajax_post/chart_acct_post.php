@@ -29,7 +29,7 @@ if (isset($_POST["gl"]) && isset($_POST["ch"]) && $_POST["gl"] == "1")
           </select>';
     echo $output2;
     } else {
-        echo "empty";
+        echo "empty"." + ".$int_id ;
     }
 } else {
     echo "check the gl account";
