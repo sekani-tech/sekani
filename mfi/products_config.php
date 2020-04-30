@@ -174,6 +174,7 @@ $destination = "index.php";
                             $xs = "Loan Rescheduling Fee";
                           } 
                          ?>
+                         <th><?php echo $xs; ?></th>
                           <th><?php echo $row["amount"]; ?></th>
                           <td><a href="#?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                           <td><a href="#?delete=<?php echo $row["id"];?>" class="btn btn-info">Delete</a></td>
