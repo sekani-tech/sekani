@@ -16,7 +16,7 @@ if (isset($_POST["gl"]) && isset($_POST["ch"]) && $_POST["gl"] == "2")
             $out = '';
             while ($row = mysqli_fetch_array($res))
               {
-                $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                echo $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
               }
             return $out;
         }

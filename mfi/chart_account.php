@@ -340,6 +340,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   <!-- checking out the group 2 -->
                   <div id="dropping"></div>
                   <!-- end of group  -->
+                  <br>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >Manual Entires Allowed</label><br/>
