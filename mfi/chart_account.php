@@ -316,8 +316,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       <label >Account Usage</label>
                       <select id="atu" class="form-control" name="acct_use" required>
                         <option value="">Select an option</option>
-                        <option value="1">GL ACCOUNT</option>
                         <option value="2">GL GROUP</option>
+                        <option value="1">GL ACCOUNT</option>
                       </select>                    
                     </div>
                   </div>
