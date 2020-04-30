@@ -18,10 +18,6 @@ if (isset($_POST["gl"]))
               }
             return $out;
         }
-    }
-    $res = mysqli_query($connection, $org);
-    while ($row = mysqli_fetch_array($res))
-    {
         $output2 = '<div class="col-md-6">
         <div class="form-group">
           <label >GL Group</label>
@@ -31,7 +27,11 @@ if (isset($_POST["gl"]))
           </select>                    
         </div>
       </div>';
-    }
     echo $output2;
+    } else {
+        echo "BLANK";
+    }
+} else {
+    echo "NOT CALLING";
 }
 ?>
