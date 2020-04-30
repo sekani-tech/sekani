@@ -5,7 +5,7 @@ session_start();
 
 $output2 = '';
 
-if (isset($_POST["gl"]) && isset($_POST["ch"]) && $_POST["gl"] == "2")
+if (isset($_POST["gl"]) && isset($_POST["ch"]) && $_POST["gl"] == "1")
 {
     if($_POST["gl"] != '' && $_POST["ch"] != '')
     {
@@ -22,13 +22,16 @@ if (isset($_POST["gl"]) && isset($_POST["ch"]) && $_POST["gl"] == "2")
               }
             return $out;
         }
-        $output2 = '
-          <label >GL Group</label>
+        $output2 = '<label >GL Group</label>
           <select class="form-control" name="parent_id" id="pid">
             <option value="0">choose group</option>
             "'.fill_group($connection, $acct_use).'"
           </select>';
     echo $output2;
+    } else {
+        echo "empty";
     }
+} else {
+    echo "check the gl account";
 }
 ?>
