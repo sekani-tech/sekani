@@ -1,9 +1,95 @@
 <?php
 
-$page_title = "Prducts Configuration";
+$page_title = "Products Configuration";
 $destination = "index.php";
     include("header.php");
 
+?>
+<?php
+//  Sweet alert Function
+
+// If it is successfull, It will show this message
+  if (isset($_GET["message1"])) {
+    $key = $_GET["message1"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "success",
+            title: "Success",
+            text: "Registration Successful",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+}
+// If it is not successfull, It will show this message
+else if (isset($_GET["message2"])) {
+  $key = $_GET["message2"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Error",
+          text: "Error during Registration",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
+if (isset($_GET["message3"])) {
+  $key = $_GET["message3"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Success",
+          text: "Staff was Updated successfully!",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
+else if (isset($_GET["message4"])) {
+$key = $_GET["message4"];
+// $out = $_SESSION["lack_of_intfund_$key"];
+$tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "error",
+        title: "Error",
+        text: "Error updating Staff!",
+        showConfirmButton: false,
+        timer: 2000
+    })
+});
+</script>
+';
+$_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
 ?>
 <!-- Content added here -->
     <div class="content">
@@ -151,15 +237,20 @@ $destination = "index.php";
                          <?php $row["id"]; ?>
                           <th><?php echo $row["name"]; ?></th>
                           <?php
+                          $me="";
                           if ($row["charge_applies_to_enum"] == 1) {
                             $me = "Loan";
                           } else if ($row["charge_applies_to_enum"] == 2) {
                             $me = "Savings";
                           }
+                          else if ($row["charge_applies_to_enum"] == 3) {
+                            $me = "Shares";
+                          }
                          ?>
                          <th><?php echo $me; ?></th>
                           <th><?php echo $row["is_active"]; ?></th>
                           <?php
+                          $xs="";
                           if ($row["charge_time_enum"] == 1) {
                             $xs = "Disbursement";
                           } else if ($row["charge_time_enum"] == 2) {
@@ -202,6 +293,7 @@ $destination = "index.php";
                   $('#tabledat').DataTable();
                   });
                   </script>
+                   <a href="add_credit_check.php" class="btn btn-primary"> Add Credit Check</a>
                     <div class="table-responsive">
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
