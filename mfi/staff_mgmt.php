@@ -252,18 +252,20 @@ $destination = "index.php";
                     <table id="tabledat4" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT teller.id, branch.name, teller_no, till_no, teller.teller_name FROM teller JOIN branch ON branch.id = teller.branch_id WHERE teller.int_id ='$sessint_id'";
+                        $query = "SELECT tellers.id, tellers.branch_id, tellers.name, tellers.description, tellers.till_no, tellers.till FROM tellers JOIN branch ON branch.id = tellers.branch_id WHERE tellers.int_id ='$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
                           Branch
                         </th>
-                        <th>Teller</th>
                         <th>
-                          Teller No
+                          Staff
                         </th>
                         <th>
-                          Till No
+                          Description
+                        </th>
+                        <th>
+                          Till Number
                         </th>
                         <th>Balance</th>
                         <th></th>
@@ -273,12 +275,47 @@ $destination = "index.php";
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
-                          <th><?php echo $row["name"]; ?></th>
-                          <th><?php echo $row["teller_name"]; ?></th>
-                          <th><?php echo $row["teller_no"]; ?></th>
+                        <?php
+                          // tellers
+                          // end of tellers
+                          // $nom = $row["till_no"];
+                          // $cll = strlen($nom);
+                          // $rest = substr("$nom", 0, -1);
+                          $staff2 = $row["branch_id"];
+                          $checking3 = "SELECT * FROM `branch` WHERE id ='$staff2'";
+                          $done3 = mysqli_query($connection, $checking3);
+                          $men3 = mysqli_fetch_array($done3);
+                          $brc = $men3["name"];
+                          ?>
+                          <th><?php echo $brc; ?></th>
+                          <?php
+                          // tellers
+                          // end of tellers
+                          // $nom = $row["till_no"];
+                          // $cll = strlen($nom);
+                          // $rest = substr("$nom", 0, -1);
+                          $staff= $row["name"];
+                          $checking2 = "SELECT * FROM `staff` WHERE id ='$staff'";
+                          $done2 = mysqli_query($connection, $checking2);
+                          $men2 = mysqli_fetch_array($done2);
+                          $name = $men2["display_name"];
+                          ?>
+                          <th><?php echo $name; ?></th>
+                          <th><?php echo $row["description"]; ?></th>
                           <th><?php echo $row["till_no"]; ?></th>
-                          <th></th>
-                          <th></th>
+                          <?php
+                          // tellers
+                          // end of tellers
+                          // $nom = $row["till_no"];
+                          // $cll = strlen($nom);
+                          // $rest = substr("$nom", 0, -1);
+                          $till = $row["till"];
+                          $checking = "SELECT * FROM `acc_gl_account` WHERE gl_code ='$till'";
+                          $done = mysqli_query($connection, $checking);
+                          $men = mysqli_fetch_array($done);
+                          $bal = $men["organization_running_balance_derived"];
+                          ?>
+                          <th><?php echo $bal; ?></th>
                           <th><a href="view_teller.php?id=<?php echo $row["id"];?>" class="btn btn-success">View</a></th>
                         </tr>
                         <?php }

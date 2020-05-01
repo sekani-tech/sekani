@@ -37,11 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $inr = mysqli_num_rows($result);
         $till_no = $checkx.$inr + 1;
     }
+    $till = $checkx;
   // now we will upload
   $sqltell = "INSERT INTO `tellers` (`int_id`, `branch_id`,
-  `name`, `description`, `till_no`, `post_limit`, `valid_from`, `valid_to`, `state`, `is_deleted`) 
+  `name`, `description`, `till_no`, `post_limit`, `valid_from`, `valid_to`, `state`, `is_deleted`, `till`) 
   VALUES ('{$int_id}', '{$branch}', '{$tell_name}', '{$tell_no}',
-  '{$till_no}', '{$post_lim}', '{$vf}', '$vt', '$st', '0')";
+  '{$till_no}', '{$post_lim}', '{$vf}', '$vt', '$st', '0', '{$till}')";
   $done = mysqli_query($connection, $sqltell);
 if ($done) {
   echo '<script type="text/javascript">
@@ -159,7 +160,7 @@ if ($done) {
                         $out = '';
                         while ($row = mysqli_fetch_array($res))
                         {
-                          $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                          $out .= '<option value="'.$row["gl_code"].'">'.$row["name"].'</option>';
                         }
                         return $out;
                         }
