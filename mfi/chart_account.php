@@ -99,25 +99,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $gl_code = $_POST['gl_code'];
   $acct_type = $_POST['acct_type'];
   $ext_id = $_POST['ext_id'];
-  $pid = $_POST['parent_id'];
-  $acct_tag = $_POST['acct_tag'];
   $acct_use = $_POST['acct_use'];
-  $man_ent_all = $_POST['man_ent'];
-  $bank_rec = $_POST['bank_rec'];
+  if ( isset($_POST['man_ent']) ) {
+    $man_ent_all = 1;
+} else {
+    $man_ent_all = 0;
+}
+
+
+if ( isset($_POST['bank_rec']) ) {
+    $bank_rec = 1;
+} else { 
+    $bank_rec = 0;
+}
   $desc = $_POST['desc'];
   $int_id = $sessint_id;
   $bnc_id = $branch_id;
 
-  // alright check this out
-
+  if ( isset($_POST['parent_id']) ) {
+    // alright check this out
   $chat_acct = "INSERT INTO `acc_gl_account`
   (`int_id`, `branch_id`, `name`, `parent_id`, `gl_code`,
-  `manual_journal_entries_allowed`, `account_usage`, `classification_enum`,
-  `tag_id`, `description`, `reconciliation_enabled`)
+  `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `description`, `reconciliation_enabled`)
   VALUES ('{$int_id}', '{$bnc_id}', '{$acct_name}',
   '{$pid}', '{$gl_code}',
-  '{$man_ent_all}', '{$acct_use}', '{$acct_type}',
-  NULL, '{$desc}', '{$bank_rec}')";
+  '{$man_ent_all}', '{$acct_use}', '{$acct_type}', '{$desc}', '{$bank_rec}')";
 
   $done = mysqli_query($connection, $chat_acct);
 
@@ -145,6 +151,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         })
         });
  </script>';
+  }
+  } else {
+      // alright check this out
+  $chat_acct = "INSERT INTO `acc_gl_account`
+  (`int_id`, `branch_id`, `name`, `gl_code`,
+  `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `description`, `reconciliation_enabled`)
+  VALUES ('{$int_id}', '{$bnc_id}', '{$acct_name}', '{$gl_code}',
+  '{$man_ent_all}', '{$acct_use}', '{$acct_type}', '{$desc}', '{$bank_rec}')";
+
+  $done = mysqli_query($connection, $chat_acct);
+
+  if ($done) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+         type: "success",
+          title: "CHART OF ACCOUNT",
+            text: "Successfully Created",
+         showConfirmButton: false,
+       timer: 2000
+        })
+        });
+ </script>';
+  } else {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+         type: "error",
+          title: "CHART OF ACCOUNT",
+            text: "Error in Creation",
+         showConfirmButton: false,
+       timer: 2000
+        })
+        });
+ </script>';
+  }
   }
 }
 ?>
