@@ -252,7 +252,7 @@ $destination = "index.php";
                     <table id="tabledat4" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT tellers.id, tellers.branch_id, tellers.name, tellers.description, tellers.till_no, tellers.till FROM tellers JOIN branch ON branch.id = tellers.branch_id WHERE tellers.int_id ='$sessint_id'";
+                        $query = "SELECT * FROM tellers WHERE int_id ='$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
