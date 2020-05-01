@@ -385,7 +385,7 @@ table{
 .heading-section{
 }
 .heading-section h2{
-	color: #000000;
+	color: #fffffff;
 	font-size: 28px;
 	margin-top: 0;
 	line-height: 1.4;
@@ -559,7 +559,7 @@ table{
       <table align='center' role='presentation' cellspacing='0' cellpadding='0' border='0' width='100%' style='margin: auto;'>
       	<tr>
           <td class='bg_white logo' style='padding: 1em 2.5em; text-align: center'>
-            <img src='$int_logo' alt='' style='width: 100%; max-width: 50px; height: auto; margin: auto; display: block;'>
+            <img src='../instimg/$int_logo' alt='' style='width: 100%; max-width: 50px; height: auto; margin: auto; display: block;'>
             <h1><a href='app.sekanisystems.com.ng'>$int_name</a></h1>
           </td>
 	      </tr><!-- end tr -->
@@ -569,8 +569,7 @@ table{
             	<tr>
             		<td>
             			<div class='text' style='padding: 0 3em; text-align: center;'>
-            				<h2 style='text-shadow: #000000 1 0.5;'>Greetings &amp; Welcome to $int_name</h2>
-            				<p><a href='app.sekanisystems.com.ng/change_password.php?edit=$username' class='btn btn-primary'>Change Password!</a></p>
+            				<h2 style='color:#ffffff; text-shadow: #000000 1 0.5;'>Greetings &amp; Welcome to $int_name</h2>
             			</div>
             		</td>
             	</tr>
