@@ -6,27 +6,24 @@ include("../functions/connect.php");
 //     $a = mysqli_fetch_array($result);
 //     $name = $a['name'];
 //    }
+$output = '';
    function fill_branch($connection)
         {
-        $staff_id = $_POST['tell_name'];
-        $que = "SELECT * FROM staff WHERE id = '$staff_id'";
-        $ans = mysqli_query($connection, $que);
-        if (count([$ans]) == 1) {
-        $a = mysqli_fetch_array($ans);
-        $branch_id = $a['branch_id'];
-       }
-        $org = "SELECT * FROM branch WHERE id = '$branch_id'";
+        $branch_id = $_POST['id'];
+        $int_id = $_POST['int_id'];
+
+        $org = "SELECT * FROM staff WHERE int_id = '$int_id' && branch_id = '$branch_id' ";
         $res = mysqli_query($connection, $org);
         $out = '';
         while ($row = mysqli_fetch_array($res))
         {
-        $out .= '<option name ="branch" value="'.$row["id"].'">'.$row["name"]. '</option>';
+        $out .= '<option name ="staff" value="'.$row["id"].'">'.$row["display_name"]. '</option>';
         }
         return $out;
         }
 // while ($row = mysqli_fetch_array($result))
 //     {
-        echo ''.fill_branch($connection).'';    
+        echo ''.fill_branch($connection).'';
 // }
 
 ?>
