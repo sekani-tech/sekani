@@ -117,6 +117,7 @@ if ( isset($_POST['bank_rec']) ) {
   $bnc_id = $branch_id;
 
   if ( isset($_POST['parent_id']) ) {
+    $pid = $_POST['parent_id'];
     // alright check this out
   $chat_acct = "INSERT INTO `acc_gl_account`
   (`int_id`, `branch_id`, `name`, `parent_id`, `gl_code`,
