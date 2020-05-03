@@ -5,6 +5,7 @@ $destination = "index.php";
 include("header.php");
 ?>
 <?php
+$exp_error = "";
 if (isset($_GET["message"])) {
     $key = $_GET["message"];
     // $out = $_SESSION["lack_of_intfund_$key"];
@@ -15,7 +16,7 @@ if (isset($_GET["message"])) {
         swal({
             type: "success",
             title: "Success",
-            text: "Transaction Successful, Awaiting Approval",
+            text: "Transaction Successful",
             showConfirmButton: false,
             timer: 2000
         })
@@ -43,6 +44,25 @@ if (isset($_GET["message"])) {
     ';
     $_SESSION["lack_of_intfund_$key"] = 0;
   }
+} else if (isset($_GET["messagex2"])) {
+  $key = $_GET["messagex2"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "NOT AUTHURIZED",
+          text: "This is a Tellers Job",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
 } else if (isset($_GET["message3"])) {
     $key = $_GET["message3"];
     // $out = $_SESSION["lack_of_intfund_$key"];
@@ -206,6 +226,25 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
           type: "error",
           title: "No Loan",
           text: "This Account Does not Have Any Active Loan",
+          showConfirmButton: false,
+          timer: 3000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+} else if (isset($_GET["legal"])) {
+  $key = $_GET["legal"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "System Error",
+          text: "Call Us",
           showConfirmButton: false,
           timer: 3000
       })

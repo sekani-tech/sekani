@@ -66,7 +66,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                  $trans_type2 = "debit";
                  $irvs = 0;
   
-              //    account deposite computation
+              //    account deposit computation
                 if($transact_type == "Deposit") {
                   $new_abd = $comp;
                   $iupq = "UPDATE account SET account_balance_derived = '$new_abd',
@@ -87,6 +87,8 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                           $iupqx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod' && int_id = '$sessint_id'";
                           $res4 = mysqli_query($connection, $iupqx);
                           if ($res4) {
+                            // institution account
+                            // institution account transaction
                             echo '<script type="text/javascript">
                             $(document).ready(function(){
                                 swal({
@@ -162,6 +164,8 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                           $iupqx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod' && int_id = '$sessint_id'";
                           $res4 = mysqli_query($connection, $iupqx);
                           if ($res4) {
+                            // institution account
+                            // institution account transaction
                             echo '<script type="text/javascript">
                             $(document).ready(function(){
                                 swal({
