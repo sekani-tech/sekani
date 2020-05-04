@@ -129,6 +129,7 @@ $mail->Body = "
             float: right;
         }
     </style>
+    </head>
     <body>
         <div class='head'>
             

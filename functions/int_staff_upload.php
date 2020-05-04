@@ -459,7 +459,7 @@ table{
       <table align='center' role='presentation' cellspacing='0' cellpadding='0' border='0' width='100%' style='margin: auto;'>
       	<tr>
           <td class='bg_white logo' style='padding: 1em 2.5em; text-align: center'>
-            <img src='../instimg/$int_logo' alt='' style='width: 100%; max-width: 50px; height: auto; margin: auto; display: block;'>
+            <img src='$int_logo' alt='' style='width: 100%; max-width: 50px; height: auto; margin: auto; display: block;'>
             <h1><a href='app.sekanisystems.com.ng'>$int_name</a></h1>
           </td>
 	      </tr><!-- end tr -->
