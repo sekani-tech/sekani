@@ -2,7 +2,8 @@
 include("connect.php");
 session_start();
 require_once "../bat/phpmailer/PHPMailerAutoload.php";
-
+// JUSR DOFNFJn
+// CHECK HTN APPROVAL
 $int_name = $_SESSION["int_name"];
 $int_email = $_SESSION["int_email"];
 $int_web = $_SESSION["int_web"];
@@ -138,7 +139,7 @@ if ($is_del == "0" && $is_del != NULL) {
             $mail->From = $int_email;
             $mail->FromName = $int_name;
             $mail->addAddress($email, $username);
-            $mail->addReplyTo($intemail, "Reply");
+            $mail->addReplyTo($int_email, "Reply");
             $mail->isHTML(true);
             $mail->Subject = "Transaction Alert from $int_name";
             $mail->Body = "<!doctype html>
@@ -308,7 +309,8 @@ if ($is_del == "0" && $is_del != NULL) {
             $mail->addAddress($client_email, $clientt_name);
             $mail->addReplyTo($int_email, "No Reply");
             $mail->isHTML(true);
-            $mail->Subject = "<!doctype html>
+            $mail->Subject = "A Debit Transaction Alert";
+            $mail->Body = "<!doctype html>
             <html lang='en'>
               <head>
                 <!-- Required meta tags -->
@@ -394,7 +396,6 @@ if ($is_del == "0" && $is_del != NULL) {
                 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
               </body>
             </html>";
-            $mail->Body = "";
             $mail->AltBody = "This is the plain text version of the email content";
             // mail system
             if(!$mail->send()) 
