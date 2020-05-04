@@ -111,7 +111,7 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
         swal({
             type: "error",
             title: "Fund Error",
-            text: "Insufficient Fund",
+            text: "Insufficient Fund in the Till",
             showConfirmButton: false,
             timer: 2000
         })

@@ -25,7 +25,7 @@ $test = $_POST['test'];
 $acct_no = $_POST['account_no'];
 $amt = $_POST['amount'];
 $type = $_POST['pay_type'];
-$trs_id = $_POST['transid'];
+$transid = $_POST['transid'];
 // variable for second which is withdrawal
 $test2 = $_POST['test'];
 $acct_no2 = $_POST['account_no'];
@@ -54,9 +54,9 @@ $numberacct2 = number_format("$comp2",2);
 $trans_type = "credit";
 $trans_type2 = "debit";
 $irvs = 0;
-$space = 10;
-$randms2 = str_pad(rand(0, pow(10, $space)-1), $space, '0', STR_PAD_LEFT);
-$transid = $randms2;
+// $space = 10;
+// $randms2 = str_pad(rand(0, pow(10, $space)-1), $space, '0', STR_PAD_LEFT);
+// $transid = $randms2;
 $gen_date = date('Y-m-d H:i:s');
 $gends = date('Y-m-d');
 // we will call the institution account
@@ -451,7 +451,7 @@ if ($is_del == "0" && $is_del != NULL) {
                    $wd = "Withdrawal";
                    $gms = "Pending";
                 $trancache = "INSERT INTO transact_cache (int_id, transact_id, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, product_type, status) VALUES
-                ('{$sessint_id}', '{$trs_id}', '{$acct_no2}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt2}', '{$type2}', '{$wd}', '{$product_id}', '{$gms}') ";
+                ('{$sessint_id}', '{$transid}', '{$acct_no2}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt2}', '{$type2}', '{$wd}', '{$sproduct_id}', '{$gms}') ";
                 $go = mysqli_query($connection, $trancache);
                 if ($go) {
                    $_SESSION["Lack_of_intfund_$randms"] = "Withdrawal Successful!";
