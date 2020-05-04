@@ -139,6 +139,25 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
     ';
     $_SESSION["lack_of_intfund_$key"] = 0;
 }
+} else if (isset($_GET["messagex5"])) {
+  $key = $_GET["messagex5"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Insufficient Fund",
+          text: "Client Has Insufficient Fund",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
 } else if (isset($_GET["message8"])) {
   $key = $_GET["message8"];
   // $out = $_SESSION["lack_of_intfund_$key"];

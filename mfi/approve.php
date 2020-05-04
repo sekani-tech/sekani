@@ -1149,7 +1149,7 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Approve Transaction</h4>
