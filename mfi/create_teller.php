@@ -170,7 +170,7 @@ if ($done) {
                         function fill_gl($connection) {
                         $sint_id = $_SESSION["int_id"];
                         $cla = 1;
-                        $getgl = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && name LIKE 'Teller Fund%' && classification_enum = '$cla' && parent_id IS NOT NULL ORDER BY name ASC";
+                        $getgl = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && name LIKE 'Teller%' && classification_enum = '$cla' && parent_id IS NOT NULL ORDER BY name ASC";
                         $res = mysqli_query($connection, $getgl);
                         $out = '';
                         while ($row = mysqli_fetch_array($res))

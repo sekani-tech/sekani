@@ -379,11 +379,11 @@ $transid1 = $randms1;
               <div class="col-md-12">
                   <div class="card">
                       <div class="card-header card-header-primary">
-                        <h4 class="card-title">Loan Repayment</h4>
+                        <h4 class="card-title">Expense Posting</h4>
                         <!-- <p class="card-category">Fill in all important data</p> -->
                       </div>
                       <div class="card-body">
-                      <form action="../functions/loan_repayment.php" method="post">
+                      <form action="../functions/expense.php" method="post">
     <div class="row">
         <div class="col-md-4">
         <script>
@@ -403,7 +403,7 @@ $transid1 = $randms1;
               });
         </script>
             <div class="form-group">
-                <label for="">Account Number</label>
+                <label for="">GL Number</label>
                 <input type="text" class="form-control" name="account_no" id="acct">
                 <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id;?>" id="int_id">
             </div>
@@ -411,7 +411,7 @@ $transid1 = $randms1;
         <div class="col-md-4">
         <div class="form-group">
           <label for="">Amount Recieved:</label>
-          <input type="number" name="collect" id="" value="" class="form-control">
+          <input type="number" name="amount" id="" value="" class="form-control">
           <span class="help-block" style="color: red;"><?php echo $exp_error;?></span>
         </div>
     </div>
@@ -434,19 +434,19 @@ $transid1 = $randms1;
               </script>
           <select name="payment_method" id="poo" class="form-control">
             <option value="Cash">Cash</option>
-            <option value="Cheque">Cheque</option>
-            <option value="Transfer">Transfer</option>
+            <!-- <option value="Cheque">Cheque</option> -->
+            <!-- <option value="Transfer">Transfer</option> -->
           </select>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="form-group">
-          <label for="">Transaction ID(Cheque no, Transfer Id):</label>
-          <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="tit">
-      </div>
+    <div id="accrep"></div>
     </div>
     <div class="col-md-4">
-    <div id="accrep"></div>
+      <div class="form-group">
+          <label for="">Transaction ID:</label>
+          <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="tit">
+      </div>
     </div>
     </div>    
           <button type="submit" class="btn btn-primary pull-right">Submit</button>
