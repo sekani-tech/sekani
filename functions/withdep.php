@@ -309,7 +309,7 @@ if ($is_del == "0" && $is_del != NULL) {
             $mail->addAddress($client_email, $clientt_name);
             $mail->addReplyTo($int_email, "No Reply");
             $mail->isHTML(true);
-            $mail->Subject = "A Debit Transaction Alert";
+            $mail->Subject = "A Debit Transaction Alert from $int_name";
             $mail->Body = "<!doctype html>
             <html lang='en'>
               <head>
