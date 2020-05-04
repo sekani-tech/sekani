@@ -1,5 +1,6 @@
 <?php
-
+$page_title = "Loan Disbursement Approval";
+$destination = "index.php";
     include("header.php");
 
 ?>

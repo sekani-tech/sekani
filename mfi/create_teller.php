@@ -121,7 +121,6 @@ if ($done) {
                         </select>
                       </div>
                       </div>
-                      <div class="col-md-4 form-group">
                       <script>
                               $(document).ready(function() {
                                 $('#tell_desc').on('change keyup paste click', function(){
@@ -140,11 +139,27 @@ if ($done) {
                                 });
                               })
                         </script>
-                          <label class="bmd-label-floating" >Description</label>
-                          <input type="text" name="teller_no" value="<?php echo "Teller id"; ?>"" id="tell_desc" class="form-control" required>
-                          <div id="tellers"></div>
-                          <input type="text" id="int_id" value="<?php echo $sessint_id; ?>" hidden class="form-control">
-                          <!-- damn -->
+                      <div class="col-md-4 form-group">
+                      <script>
+                              $(document).ready(function() {
+                                $('#input').change(function(){
+                                  var id = $(this).val();
+                                  var tell_name = $('#input').val();
+                                  var int_id = $('#int_id').val();
+                                  $.ajax({
+                                    url:"ajax_post/read_record.php",
+                                    method:"POST",
+                                    data:{id:id, int_id:int_id},
+                                    success:function(data){
+                                      $('#show_read').html(data);
+                                    }
+                                  })
+                                });
+                              })
+                            </script>
+                            <div id="show_read"></div>
+                            <div id="tellers"></div>
+                            <input type="text" id="int_id" value="<?php echo $sessint_id; ?>" hidden class="form-control">
                       </div>
                       <div class="col-md-4 form-group">
                           <label class="bmd-label-floating" >Posting Limit</label>
