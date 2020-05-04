@@ -2,7 +2,7 @@
 include("connect.php");
 session_start();
 require_once "../bat/phpmailer/PHPMailerAutoload.php";
-// JUSR DOFNFJn
+// qwertyuiop
 // CHECK HTN APPROVAL
 $int_name = $_SESSION["int_name"];
 $int_email = $_SESSION["int_email"];
@@ -36,7 +36,7 @@ $appuser_id = $_SESSION['user_id'];
 $branch_id = $_SESSION['branch_id'];
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-
+// 1234567890
 // fetch the clients account
 $getacct = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' && int_id = '$sessint_id'");
 if (count([$getacct]) == 1) {
@@ -64,6 +64,8 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
     if (count([$damn]) == 1) {
         $x = mysqli_fetch_array($damn);
         $int_acct_bal = $x['account_balance_derived'];
+        $tbd = $x['total_deposits_derived'] + $amt;
+        $tbd2 = $x['total_withdrawals_derived'] + $amt2;
         $new_int_bal = $amt + $int_acct_bal;
         $new_int_bal2 = $int_acct_bal - $amt2;
     }
@@ -102,7 +104,7 @@ if ($is_del == "0" && $is_del != NULL) {
     if ($test == "deposit") {
         // update the clients account
         $new_abd = $comp;
-        $iupq = "UPDATE account SET account_balance_derived = '$new_abd', last_deposit = '$amt' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
+        $iupq = "UPDATE account SET account_balance_derived = '$new_abd', last_deposit = '$amt', total_deposits_derived = '$tbd' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
         $iupqres = mysqli_query($connection, $iupq);
         if ($iupqres) {
         // update the clients transaction
@@ -148,7 +150,6 @@ if ($is_del == "0" && $is_del != NULL) {
                 <!-- Required meta tags -->
                 <meta charset='utf-8'>
                 <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-            
                 <!-- Bootstrap CSS -->
                 <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous'>
             
@@ -272,7 +273,7 @@ if ($is_del == "0" && $is_del != NULL) {
             // update the clients account
             $new_abd2 = $comp2;
             $iupq = "UPDATE account SET account_balance_derived = '$new_abd2',
-            last_withdrawal = '$amt' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
+            last_withdrawal = '$amt', total_withdrawals_derived = '$tbd2' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
             $iupqres = mysqli_query($connection, $iupq);
             // update the clients transaction
             if ($iupqres) {
