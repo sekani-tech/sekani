@@ -106,25 +106,25 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Last Deposit:</label>
-                          <input type="text" name="" id="" class="form-control" value="<?php echo $tdd; ?>" readonly>
+                          <input type="text" name="" placeholder="0.000" id="" class="form-control" value="<?php echo $tdd; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Last Withdrawal:</label>
-                          <input type="text" name="" id="" class="form-control" value="<?php echo $twd; ?>" readonly>
+                          <input type="text" placeholder="0.000" name="" id="" class="form-control" value="<?php echo $twd; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Total Outstanding Loan balance:</label>
-                          <input type="text" name="" id="" class="form-control" value="<?php echo $olb; ?>" readonly>
+                          <input type="text" placeholder="0.000" name="" id="" class="form-control" value="<?php echo $olb; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Total Loan Amount payed:</label>
-                          <input type="text" name="" id="" class="form-control" value="<?php echo $prd; ?>" readonly>
+                          <input type="text" placeholder="0.000" name="" id="" class="form-control" value="<?php echo $prd; ?>" readonly>
                         </div>
                       </div>
                     </div>
