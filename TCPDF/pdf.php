@@ -53,13 +53,13 @@ class MYPDF extends TCPDF {
 	// Colored table
 	public function ColoredTable($header,$data) {
 		// Colors, line width and bold font
-		$this->SetFillColor(154, 49, 176);
+		$this->SetFillColor(000, 000, 000);
 		$this->SetTextColor(255);
-		$this->SetDrawColor(128, 0, 0);
+		$this->SetDrawColor(211, 211, 211);
 		$this->SetLineWidth(0.3);
 		$this->SetFont('', 'B');
 		// Header
-		$w = array(25, 25, 50, 30, 30, 30);
+		$w = array(40, 25, 45, 30, 30, 30);
 		$num_headers = count($header);
 		for($i = 0; $i < $num_headers; ++$i) {
 			$this->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
@@ -130,12 +130,12 @@ if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 
 // set font
 $pdf->SetFont('helvetica', '', 12);
-
+$pdf->setCellHeightRatio(1.25);
 // add a page
 $pdf->AddPage();
 
 // column titles
-$header = array('T-Date','Value Date', 'Reference','Debits','Credits','Balance');
+$header = array('Transaction-Date','Value Date', 'Reference','Debits','Credits','Balance');
 
 $html = <<<EOD
 <style>
@@ -144,22 +144,39 @@ th {
 }
 .firstbox {
     color: black;
-    height: 600px;
+    height: auto;
     font-family: helvetica;
     background-color: #eaeaea;
 }
 .tag {
     padding: 10px;
 }
+.grid {
+    display: grid;
+    grid-column-gap: 10px;
+    grid-template-columns: 50px 50px;
+}
+.row{
+    height: 10px;
+    width:50%;
+    border: 1px solid black;
+}
 </style>
 <div class="tag">
 <div class="firstbox">
-       <p>Branch name: $branch_name   Branch address: $branch_address</p>
-        <p>Client name: $fname $lname Currency: $currtype</p>  
-        <p>Currency: $currtype        Account number: $acc_no</p>
-        <p>Total debit: $actype       Opening balance: $actype</p>
-        <p>Total credit: $actype      Closing balance: $actype</p>
-        <p>Statement period:  01/01/2020 - 01/04/2020</p>  
+<div class="grid">
+       <div class="row">Branch name: $branch_name</div>
+       <div class="row">Branch address: $branch_address</div>
+       <div class="row">Client name: $fname $lname</div>
+       <div class="row">Currency: $currtype</div> 
+       <div class="row">Account number: $acc_no</div>
+       <div class="row">Total debit: $actype</div>     
+       <div class="row">Opening balance: $actype</div>
+       <div class="row">Total credit: $actype</div>    
+       <div class="row">Closing balance: $actype</div>
+       <div class="row">Statement period:  01/01/2020 - 01/04/2020</div> 
+        </div>
+    </div>
     </div>
 EOD;
 
