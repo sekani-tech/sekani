@@ -3,7 +3,21 @@
 $page_title = "Approve";
 $destination = "transact_approval.php";
     include("header.php");
-
+    require_once "../bat/phpmailer/PHPMailerAutoload.php";
+?>
+<?php
+// the session
+$int_name = $_SESSION["int_name"];
+$int_email = $_SESSION["int_email"];
+$int_web = $_SESSION["int_web"];
+$int_phone = $_SESSION["int_phone"];
+$int_logo = $_SESSION["int_logo"];
+$int_address = $_SESSION["int_address"];
+$sessint_id = $_SESSION["int_id"];
+$appuser_id = $_SESSION['user_id'];
+$branch_id = $_SESSION['branch_id'];
+$gen_date = date('Y-m-d H:i:s');
+$gends = date('Y-m-d');
 ?>
 <?php
 if (isset($_GET['approve']) && $_GET['approve'] !== '') {
@@ -17,15 +31,28 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $client_id = $x['client_id'];
       $id = $client_id;
       $acct_no = $x['account_no'];
+      $account_display = substr("$acct_no",7)."*****".substr("$acct_no",8);
       $staff_id = $x['staff_id'];
       $ao = $x['account_off_name'];
       $amount = $x['amount'];
+      $famt = number_format("$amount", 2);
       $pay_type = $x['pay_type'];
       $transact_type = $x['transact_type'];
       $transid = $x['transact_id'];
       $product_type = $x['product_type'];
       $stat = $x['status'];
+      $irvs = 0;
   }
+}
+$gen_date = date('Y-m-d H:i:s');
+$gends = date('Y-m-d');
+// we will call the institution account
+$damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id'");
+    if (count([$damn]) == 1) {
+        $x = mysqli_fetch_array($damn);
+        $int_acct_bal = $x['account_balance_derived'];
+        $new_int_bal = $amount + $int_acct_bal;
+        $new_int_bal2 = $int_acct_bal - $amount;
 }
 ?>
 <?php
@@ -43,6 +70,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
           $acct_no = $x['account_no'];
           $staff_id = $x['staff_id'];
           $amount = $x['amount'];
+          $famt = number_format("$amount", 2);
           $pay_type = $x['pay_type'];
           $transact_type = $x['transact_type'];
           $product_type = $x['product_type'];
@@ -61,7 +89,9 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                  $client_id = $y['client_id'];
                  $int_acct_bal = $y['account_balance_derived'];
                  $comp = $amount + $int_acct_bal;
+                 $numberacct = number_format("$comp",2);
                  $comp2 = $int_acct_bal - $amount;
+                 $numberacct2 = number_format("$comp2",2);
                  $trans_type = "credit";
                  $trans_type2 = "debit";
                  $irvs = 0;
@@ -88,19 +118,164 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                           $res4 = mysqli_query($connection, $iupqx);
                           if ($res4) {
                             // institution account
+                            $int_account_trans = "UPDATE institution_account SET account_balance_derived = '$new_int_bal' WHERE int_id = '$sessint_id'";
+                            $query1 = mysqli_query($connection, $int_account_trans);
+                            // check if int account has been updated
+                            if ($query1) {
+                              $trust = "INSERT INTO institution_account_transaction (int_id, branch_id,
+                              client_id, transaction_id, transaction_type, is_reversed,
+                              transaction_date, amount, running_balance_derived, overdraft_amount_derived,
+                              created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
+                             '{$client_id}', '{$transid}', '{$transact_type}', '{$irvs}',
+                             '{$gen_date}', '{$amount}', '{$new_int_bal}', '{$amount}',
+                             '{$gen_date}', '{$appuser_id}')";
+                             $res9 = mysqli_query($connection, $trust);
+                             if ($res9) {
+                              $mail = new PHPMailer;
+                              $mail->From = $int_email;
+                              $mail->FromName = $int_name;
+                              $mail->addAddress($email, $username);
+                              $mail->addReplyTo($int_email, "Reply");
+                              $mail->isHTML(true);
+                              $mail->Subject = "Transaction Alert from $int_name";
+                              $mail->Body = "<!doctype html>
+                              <html lang='en'>
+                                <head>
+                                  <!-- Required meta tags -->
+                                  <meta charset='utf-8'>
+                                  <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+                              
+                                  <!-- Bootstrap CSS -->
+                                  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous'>
+                                  <title>Transaction Alert</title>
+                                </head>
+                                <body>
+                                  <div class='container'>
+                                      <div class='row justify-content-md-center'>
+                                        <div class='col col-lg-6'>
+                                          <div class='shadow p-3 mb-5 bg-white rounded'>
+                                              <!-- int logo -->
+                                              <div class='row justify-content-md-center'>
+                                                  <img src='$int_logo' height='60px' width='60px' alt='int image' class='rounded mx-auto d-block'>
+                                                  <div class='spinner-grow text-primary' role='status'>
+                                                      <span class='sr-only'>Loading...</span>
+                                                    </div>
+                                              </div>
+                                              <span> <b>$int_name</b> </span> || <span class='lead' style='font-size: 13px;'> $int_location </span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class='row'>
+                                        <div class='col col-lg-12'>
+                                          <div class='shadow-sm p-3 mb-5 bg-white rounded'>$gen_date
+                                              <div>
+                                                  <!-- fot the ext bod -->
+                                                  <p><b>Dear $clientt_name</b></p>
+                                                  <p>We wish to inform you that a <b>$trans_type</b> transaction recently occurred on your bank account.
+                                                  Please find below details of the transaction:</p>
+                                              </div>
+                                              <p>
+                                                  <div class='shadow p-3 mb-5 bg-white rounded'>Transaction Details - <b>$trans_type</b></div>
+                                                  <table class='table table-borderless'>
+                                                      <tbody>
+                                                          <div>
+                                                        <tr>
+                                                          <td> <b style='font-size: 12px;'>Account Number</b></td>
+                                                          <td style='font-size: 12px;'>$account_display</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Account Name</b></td>
+                                                          <td style='font-size: 12px;'>$clientt_name</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Reference Id</b></td>
+                                                          <td style='font-size: 12px;'>$transid</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Transaction Amount</b></td>
+                                                          <td style='font-size: 12px;'>$famt</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Transaction Date/Time</b></td>
+                                                          <td style='font-size: 12px;'>$gen_date</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Value Date</b></td>
+                                                          <td style='font-size: 12px;'>$gends</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Account Balance</b></td>
+                                                          <td style='font-size: 12px;'>&#8358; $numberacct</td>
+                                                        </tr>
+                                                      </tbody>
+                                                  </div>
+                                                    </table>
+                                              </p>
+                                              <button type='button' class='btn btn-primary btn-lg btn-block'> <b style='font-size: 15px;'>Print Account Statement</b></button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  <!-- Optional JavaScript -->
+                                  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                                  <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
+                                  <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous'></script>
+                                  <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
+                                </body>
+                              </html>";
+                              $mail->AltBody = "This is the plain text version of the email content";
+                              // mail system
+                              if(!$mail->send()) 
+                                 {
+                                     echo "Mailer Error: " . $mail->ErrorInfo;
+                                 } else
+                                 {
+                                  echo '<script type="text/javascript">
+                                  $(document).ready(function(){
+                                      swal({
+                                          type: "success",
+                                          title: "Success",
+                                          text: "Transaction Successfully Approved",
+                                          showConfirmButton: false,
+                                          timer: 2000
+                                      })
+                                  });
+                                  </script>
+                                  ';
+                                  $URL="transact_approval.php";
+                                  echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                                 }
+                              //  here we go
+                             } else {
+                              echo '<script type="text/javascript">
+                              $(document).ready(function(){
+                                  swal({
+                                      type: "error",
+                                      title: "System Error",
+                                      text: "Call - Check the institution account",
+                                      showConfirmButton: false,
+                                      timer: 2000
+                                  })
+                              });
+                              </script>
+                              ';
+                             }
+                            } else {
+                              // system error
+                              echo '<script type="text/javascript">
+                              $(document).ready(function(){
+                                  swal({
+                                      type: "error",
+                                      title: "System Error",
+                                      text: "Call - Check the institution account",
+                                      showConfirmButton: false,
+                                      timer: 2000
+                                  })
+                              });
+                              </script>
+                              ';
+                            }
                             // institution account transaction
-                            echo '<script type="text/javascript">
-                            $(document).ready(function(){
-                                swal({
-                                    type: "success",
-                                    title: "Success",
-                                    text: "Transaction Successfully Approved",
-                                    showConfirmButton: false,
-                                    timer: 2000
-                                })
-                            });
-                            </script>
-                            ';
                           } else {
                             echo '<script type="text/javascript">
                             $(document).ready(function(){
@@ -166,18 +341,165 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                           if ($res4) {
                             // institution account
                             // institution account transaction
-                            echo '<script type="text/javascript">
-                            $(document).ready(function(){
-                                swal({
-                                    type: "success",
-                                    title: "Success",
-                                    text: "Transaction Successfully Approved",
-                                    showConfirmButton: false,
-                                    timer: 2000
-                                })
-                            });
-                            </script>
-                            ';
+                            $int_account_trans = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2' WHERE int_id = '$sessint_id'";
+                            $query1 = mysqli_query($connection, $int_account_trans);
+                            // check if int account has been updated
+                            if ($query1) {
+                              $trust = "INSERT INTO institution_account_transaction (int_id, branch_id,
+                              client_id, transaction_id, transaction_type, is_reversed,
+                              transaction_date, amount, running_balance_derived, overdraft_amount_derived,
+                              created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
+                             '{$client_id}', '{$transid}', '{$transact_type}', '{$irvs}',
+                             '{$gen_date}', '{$amount}', '{$new_int_bal2}', '{$amount}',
+                             '{$gen_date}', '{$appuser_id}')";
+                             $res9 = mysqli_query($connection, $trust);
+                             if ($res9) {
+                              $mail = new PHPMailer;
+                              $mail->From = $int_email;
+                              $mail->FromName = $int_name;
+                              $mail->addAddress($client_email, $clientt_name);
+                              $mail->addReplyTo($int_email, "No Reply");
+                              $mail->isHTML(true);
+                              $mail->Subject = "A Debit Transaction Alert from $int_name";
+                              $mail->Body = "<!doctype html>
+                              <html lang='en'>
+                                <head>
+                                  <!-- Required meta tags -->
+                                  <meta charset='utf-8'>
+                                  <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+                              
+                                  <!-- Bootstrap CSS -->
+                                  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous'>
+                              
+                                  <title>Transaction Alert</title>
+                                </head>
+                                <body>
+                                  <div class='container'>
+                                      <div class='row justify-content-md-center'>
+                                        <div class='col col-lg-6'>
+                                          <div class='shadow p-3 mb-5 bg-white rounded'>
+                                              <!-- int logo -->
+                                              <div class='row justify-content-md-center'>
+                                                  <img src='$int_logo' height='60px' width='60px' alt='int image' class='rounded mx-auto d-block'>
+                                                  <div class='spinner-grow text-primary' role='status'>
+                                                      <span class='sr-only'>Loading...</span>
+                                                    </div>
+                                              </div>
+                                              <span> <b>$int_name</b> </span> || <span class='lead' style='font-size: 13px;'> $int_location </span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class='row'>
+                                        <div class='col col-lg-12'>
+                                          <div class='shadow-sm p-3 mb-5 bg-white rounded'>$gen_date
+                                              <div>
+                                                  <!-- fot the ext bod -->
+                                                  <p><b>Dear $clientt_name</b></p>
+                                                  <p>We wish to inform you that a <b>$trans_type2</b> transaction recently occurred on your bank account.
+                                                  Please find below details of the transaction:</p>
+                                              </div>
+                                              <p>
+                                                  <div class='shadow p-3 mb-5 bg-white rounded'>Transaction Details - <b>$trans_type2</b></div>
+                                                  <table class='table table-borderless'>
+                                                      <tbody>
+                                                          <div>
+                                                        <tr>
+                                                          <td> <b style='font-size: 12px;'>Account Number</b></td>
+                                                          <td style='font-size: 12px;'>$account_display</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Account Name</b></td>
+                                                          <td style='font-size: 12px;'>$clientt_name</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Reference Id</b></td>
+                                                          <td style='font-size: 12px;'>$transid</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Transaction Amount</b></td>
+                                                          <td style='font-size: 12px;'>$famt</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Transaction Date/Time</b></td>
+                                                          <td style='font-size: 12px;'>$gen_date</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Value Date</b></td>
+                                                          <td style='font-size: 12px;'>$gends</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Account Balance</b></td>
+                                                          <td style='font-size: 12px;'>&#8358; $numberacct2</td>
+                                                        </tr>
+                                                      </tbody>
+                                                  </div>
+                                                    </table>
+                                              </p>
+                                              <button type='button' class='btn btn-primary btn-lg btn-block'> <b style='font-size: 15px;'>Print Account Statement</b></button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  <!-- Optional JavaScript -->
+                                  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                                  <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
+                                  <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous'></script>
+                                  <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
+                                </body>
+                              </html>";
+                              $mail->AltBody = "This is the plain text version of the email content";
+                              // mail system
+                              if(!$mail->send()) 
+                                 {
+                                     echo "Mailer Error: " . $mail->ErrorInfo;
+                                 } else
+                                 {
+                                     $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
+                                     echo header ("Location: ../mfi/transact.php?message=$randms");
+                                     echo '<script type="text/javascript">
+                              $(document).ready(function(){
+                                  swal({
+                                      type: "success",
+                                      title: "Success",
+                                      text: "Transaction Successfully Approved",
+                                      showConfirmButton: false,
+                                      timer: 2000
+                                  })
+                              });
+                              </script>
+                              ';
+                              $URL="transact_approval.php";
+                              echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                                 }
+                             } else {
+                              echo '<script type="text/javascript">
+                              $(document).ready(function(){
+                                  swal({
+                                      type: "error",
+                                      title: "System Error",
+                                      text: "Call - Check the institution account",
+                                      showConfirmButton: false,
+                                      timer: 2000
+                                  })
+                              });
+                              </script>
+                              ';
+                             }
+                            } else {
+                              // system error
+                              echo '<script type="text/javascript">
+                              $(document).ready(function(){
+                                  swal({
+                                      type: "error",
+                                      title: "System Error",
+                                      text: "Call - Check the institution account",
+                                      showConfirmButton: false,
+                                      timer: 2000
+                                  })
+                              });
+                              </script>
+                              ';
+                            }
                           } else {
                             echo '<script type="text/javascript">
                             $(document).ready(function(){
