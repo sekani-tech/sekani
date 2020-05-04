@@ -9,6 +9,8 @@ $int_web = $_SESSION["int_web"];
 $int_phone = $_SESSION["int_phone"];
 $int_logo = $_SESSION["int_logo"];
 $int_address = $_SESSION["int_address"];
+$ekaniN = $_SESSION["sek_name"];
+$ekaniE = $_SESSION["sek_email"];
 // alright i am done
 ?>
 <?php
@@ -65,7 +67,7 @@ if ($result) {
   // Start mail
 $mail = new PHPMailer;
 // from email addreess and name
-$mail->From = $int_email;
+$mail->From = $ekaniE;
 $mail->FromName = $int_name;
 // to adress and name
 $mail->addAddress($email, $username);
@@ -459,7 +461,7 @@ table{
       <table align='center' role='presentation' cellspacing='0' cellpadding='0' border='0' width='100%' style='margin: auto;'>
       	<tr>
           <td class='bg_white logo' style='padding: 1em 2.5em; text-align: center'>
-            <img src='$int_logo' alt='' style='width: 100%; max-width: 50px; height: auto; margin: auto; display: block;'>
+            <img src='../instimg/$int_logo' alt='' style='width: 100%; max-width: 50px; height: auto; margin: auto; display: block;'>
             <h1><a href='app.sekanisystems.com.ng'>$int_name</a></h1>
           </td>
 	      </tr><!-- end tr -->

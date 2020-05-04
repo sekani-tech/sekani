@@ -92,6 +92,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             // quick one for institution general data
                             // $_SESSION["lastname"] = $lastname;
                             $compsec = mysqli_query($link, "SELECT * FROM `institutions` WHERE int_id ='$int_id'");
+                            $altemail = mysqli_query($link, "SELECT * FROM `institutions` WHERE int_id ='1'");
                             if (count([$compsec]) == 1) {
                             $res = mysqli_fetch_array($compsec);
                             $intname = $res["int_name"];
@@ -107,6 +108,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["int_phone"] = $intphone;
                             $_SESSION["int_logo"] = $int_img;
                             $_SESSION["int_address"] = $int_address;
+                            $altemail = mysqli_query($link, "SELECT * FROM `institutions` WHERE int_id ='1'");
+                            if (count([$altemail]) == 1) {
+                            $alt = mysqli_fetch_array($altemail);
+                            $ekaniname = $alt["int_name"];
+                            $ekaniemail = $alt["email"];
+
+                            $_SESSION["sek_name"] = $ekaniname;
+                            $_SESSION["sek_email"] = $ekaniemail;
+                            }
                             // mailin
                             // begining of mail
                             $mail = new PHPMailer;

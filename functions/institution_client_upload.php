@@ -9,6 +9,8 @@ $int_web = $_SESSION["int_web"];
 $int_phone = $_SESSION["int_phone"];
 $int_logo = $_SESSION["int_logo"];
 $int_address = $_SESSION["int_address"];
+$ekaniN = $_SESSION["sek_name"];
+$ekaniE = $_SESSION["sek_email"];
 
 ?>
 <?php
@@ -165,7 +167,7 @@ $res = mysqli_query($connection, $query);
             // Start mail
 $mail = new PHPMailer;
 // from email addreess and name
-$mail->From = $int_email;
+$mail->From = $ekaniE;
 $mail->FromName = $int_name;
 // to adress and name
 $mail->addAddress($email, $username);
