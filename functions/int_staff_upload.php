@@ -62,8 +62,6 @@ $result = mysqli_query($connection, $qrys);
 
 if ($result) {
    // If 'result' is successful, it will send the required message to client.php
-   $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was created successfully!";
-   echo header ("Location: ../mfi/users.php?message1=$randms");
   // Start mail
 $mail = new PHPMailer;
 // from email addreess and name
@@ -847,7 +845,8 @@ if(!$mail->send())
     echo "Mailer Error: " . $mail->ErrorInfo;
 } else
 {
-    echo $xm = "Changing Password?";
+  $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was created successfully!";
+  echo header ("Location: ../mfi/users.php?message1=$randms");
 }
   // end Mail system
  } else {

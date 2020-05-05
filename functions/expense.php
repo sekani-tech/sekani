@@ -44,6 +44,7 @@ $till_no = $ex["till_no"];
 // we will call the GL
 $gl_man = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$gl_code' && int_id = '$sessint_id'");
 $gl = mysqli_fetch_array($gl_man);
+$gl_name = $gl["name"];
 $l_acct_bal = $gl["organization_running_balance_derived"];
 $new_gl_bal = $l_acct_bal + $gl_amt;
 // remeber the institution account
@@ -75,10 +76,10 @@ if ($is_del == "0" && $is_del != NULL) {
                     $irvs = 0;
                     $gen_date = date('Y-m-d H:i:s');
                     $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
-            transaction_id, transaction_type, is_reversed,
+            teller_id, transaction_id, transaction_type, is_reversed,
             transaction_date, amount, running_balance_derived, overdraft_amount_derived,
             created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
-            '{$trans_id}', '{$trans_type2}', '{$irvs}',
+            '{$till_no}', '{$trans_id}', 'Debit', '{$irvs}',
             '{$gen_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
             '{$gen_date}', '{$staff_id}')";
                 $res4 = mysqli_query($connection, $iat2);
@@ -106,7 +107,7 @@ if ($is_del == "0" && $is_del != NULL) {
             $trancache = "INSERT INTO transact_cache (int_id, transact_id, account_no,
             client_name, staff_id, account_off_name,
             amount, pay_type, transact_type, status) VALUES
-            ('{$sessint_id}', '{$trans_id}', '{$gl_code}', 'EXPENSE',
+            ('{$sessint_id}', '{$trans_id}', '{$gl_code}', '{$gl_name}',
             '{$staff_id}', '{$till_no}', '{$gl_amt}', '{$pym}',
             'EXPENSE', 'Pending') ";
             $go = mysqli_query($connection, $trancache);
