@@ -487,7 +487,8 @@ table{
 		            		<span class='subheading'>Login Credentials</span>
 		              	<h2>Welcome To $int_name</h2>
                           <p>Username: $username  ||  Password: $password</p>
-                          <p>You can now Login to $int_name With this Credentials, Please change your Password With the button above </p>
+                          <p>You can now Login to $int_name With this Credentials, Please change your Password With the button above or link below</p>
+            				<p><a href='app.sekanisystems.com.ng/change_password.php?edit=$username' class='btn btn-primary'>Change Password!</a></p>
 		            	</div>
 		            </td>
 		          </tr><!-- end: tr -->
