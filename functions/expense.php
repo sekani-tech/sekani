@@ -12,7 +12,6 @@ $int_logo = $_SESSION["int_logo"];
 $int_address = $_SESSION["int_address"];
 $sessint_id = $_SESSION["int_id"];
 $m_id = $_SESSION["user_id"];
-$branch_id = $_SESSION['branch_id'];
 $getacct1 = mysqli_query($connection, "SELECT * FROM staff WHERE user_id = '$m_id' && int_id = '$sessint_id'");
 if (count([$getacct1]) == 1) {
     $uw = mysqli_fetch_array($getacct1);
@@ -37,6 +36,7 @@ $check_me_men = mysqli_query($connection, $taketeller);
 if ($check_me_men) {
 $ex = mysqli_fetch_array($check_me_men);
 $is_del = $ex["is_deleted"];
+$branch_id = $ex['branch_id'];
 $till = $ex["till"];
 $post_limit = $ex["post_limit"];
 $gl_code = $ex["till"];
