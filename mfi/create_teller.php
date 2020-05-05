@@ -17,6 +17,14 @@ $destination = "staff_mgmt.php";
     }
 
 ?>
+<?php
+$m_id = $_SESSION["user_id"];
+$getacct1 = mysqli_query($connection, "SELECT * FROM staff WHERE user_id = '$m_id' && int_id = '$sessint_id'");
+if (count([$getacct1]) == 1) {
+    $uw = mysqli_fetch_array($getacct1);
+    $staff_id = $uw["id"];
+}
+?>
 <!-- Content added here -->
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -51,11 +59,15 @@ $account_no = $int_id.$branch.$randms;
 // done with account number preparation
 $submitted_on = date("Y-m-d");
 $currency = "NGN";
-  $queryx = "INSERT INTO institution_account (int_id, account_no,
+$abdc = 0;
+  $queryx = "INSERT INTO institution_account (int_id, branch_id, account_no,
+  teller_id, account_balance_derived,
     submittedon_date, submittedon_userid, currency_code) VALUES ('{$int_id}',
-    '{$account_no}', '{$submitted_on}', '{$ldi}', '{$currency}')";
+    '{$branch}', '{$account_no}',
+    '{$tell_name}', '{$abdc}', '{$submitted_on}', '{$staff_id}', '{$currency}')";
     $gogoo = mysqli_query($connection, $queryx);
-  echo '<script type="text/javascript">
+    if ($gogoo) {
+      echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
        type: "success",
@@ -66,6 +78,19 @@ $currency = "NGN";
       })
       });
 </script>';
+    } else {
+      echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+       type: "error",
+        title: "TELLER",
+          text: "Error in Creation",
+       showConfirmButton: false,
+     timer: 2000
+      })
+      });
+</script>';
+    }
 } else {
   echo '<script type="text/javascript">
   $(document).ready(function(){

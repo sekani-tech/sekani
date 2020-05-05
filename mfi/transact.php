@@ -186,8 +186,27 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   $(document).ready(function(){
       swal({
           type: "success",
-          title: "Loan",
-          text: "Loan Repayment Successful, Awaiting Approval",
+          title: "EXPENSE POSTING",
+          text: "Expense Posting Successful",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+} else if (isset($_GET["loan2"])) {
+  $key = $_GET["loan2"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "EXPENSE POSTING",
+          text: "Expense Posting Successful, Awaiting Approval",
           showConfirmButton: false,
           timer: 2000
       })
@@ -243,8 +262,8 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   $(document).ready(function(){
       swal({
           type: "error",
-          title: "No Loan",
-          text: "This Account Does not Have Any Active Loan",
+          title: "Error",
+          text: "Your Have an Error",
           showConfirmButton: false,
           timer: 3000
       })
@@ -404,7 +423,7 @@ $transid1 = $randms1;
         </script>
             <div class="form-group">
                 <label for="">GL Number</label>
-                <input type="text" class="form-control" name="account_no" id="acct">
+                <input type="text" class="form-control" name="gl_no" id="acct">
                 <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id;?>" id="int_id">
             </div>
         </div>

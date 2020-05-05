@@ -47,6 +47,8 @@ $acct_no = $y['account_no'];
 $sproduct_id = $y['product_id'];
 $client_id = $y['client_id'];
 $client_acct_bal = $y['account_balance_derived'];
+$tbd = $y['total_deposits_derived'] + $amt;
+$tbd2 = $y['total_withdrawals_derived'] + $amt2;
 $comp = $amt + $client_acct_bal;
 $numberacct = number_format("$comp",2);
 $comp2 = $client_acct_bal - $amt2;
@@ -60,12 +62,12 @@ $irvs = 0;
 $gen_date = date('Y-m-d H:i:s');
 $gends = date('Y-m-d');
 // we will call the institution account
-$damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id'");
+$damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
     if (count([$damn]) == 1) {
         $x = mysqli_fetch_array($damn);
         $int_acct_bal = $x['account_balance_derived'];
-        $tbd = $x['total_deposits_derived'] + $amt;
-        $tbd2 = $x['total_withdrawals_derived'] + $amt2;
+        $tbdx = $x['total_deposits_derived'] + $amt;
+        $tbd2x = $x['total_withdrawals_derived'] + $amt2;
         $new_int_bal = $amt + $int_acct_bal;
         $new_int_bal2 = $int_acct_bal - $amt2;
     }
@@ -119,7 +121,7 @@ if ($is_del == "0" && $is_del != NULL) {
         $res3 = mysqli_query($connection, $iat);
         if ($res3) {
         // update the institution account
-        $iupq2 = "UPDATE institution_account SET account_balance_derived = '$new_int_bal' WHERE int_id = '$sessint_id'";
+        $iupq2 = "UPDATE institution_account SET account_balance_derived = '$new_int_bal', total_deposits_derived = '$tbdx' WHERE int_id = '$sessint_id' && teller_id = '$staff_id'";
         $iupqres2 = mysqli_query($connection, $iupq2);
         // update the institution transaction
         if ($iupqres2) {
@@ -288,7 +290,7 @@ if ($is_del == "0" && $is_del != NULL) {
             $res3 = mysqli_query($connection, $iat);
             if ($res3) {
             // update the institution account
-            $iupq2 = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2' WHERE int_id = '$sessint_id'";
+            $iupq2 = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2', total_withdrawals_derived = '$tbd2x' WHERE int_id = '$sessint_id' && teller_id = '$staff_id'";
             $iupqres2 = mysqli_query($connection, $iupq2);
             if ($iupqres2) {
                 // update the institution transaction
