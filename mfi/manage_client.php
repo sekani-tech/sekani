@@ -222,22 +222,64 @@ include("header.php");
                           cursor: pointer;
                         }
                       </style>
+                      
                       <div class="col-md-4">
                     <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
                     <input id ="file-upload" name="passport" type="file" class="inputFileHidden"/>
                     <label> Select Passport</label>
+                    <div id="file-upload-filename"></div>
+                    <script>
+                      var input1 = document.getElementById( 'file-upload' );
+var infoArea = document.getElementById( 'file-upload-filename' );
+
+input1.addEventListener( 'change', showFileName1 );
+
+function showFileName1( event ) {
+  
+  // the change event gives us the input it occurred in 
+  var input = event.srcElement;
+  
+  // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
+  var fileName = input.files[0].name;
+  
+  // use fileName however fits your app best, i.e. add it into a div
+  infoArea.textContent = 'File name: ' + fileName;
+}
+                    </script>
+                    <!-- <span class="fileinput-new">Add Image</span> -->
                     </div>
                     
                     <div class="col-md-4">
                     <label for="file-insert" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
                     <input id ="file-insert" name="signature" type="file" class="inputFileHidden"/>
                     <label> Select Signature</label>
+                    <div id="iup"></div>
                     </div>
-                    
+                    <script>
+                      var changeq = document.getElementById( 'file-insert' );
+                      var check = document.getElementById( 'iup' );
+                      changeq.addEventListener( 'change', showme );
+                      function showme( event ) {
+                        var one = event.srcElement;
+                        var fname = one.files[0].name;
+                        check.textContent = 'File name: ' + fname;
+                      }
+                    </script>
                     <div class="col-md-4">
                     <label for="file-enter" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
                     <input id ="file-enter" type="file" name="id_img_url" class="inputFileHidden"/>
                     <label> Select ID</label>
+                    <div id="rated"></div>
+                    <script>
+                      var changeq1 = document.getElementById( 'file-enter' );
+                      var check1 = document.getElementById( 'rated' );
+                      changeq1.addEventListener( 'change', showme1 );
+                      function showme1( event ) {
+                        var one1 = event.srcElement;
+                        var fname1 = one1.files[0].name;
+                        check1.textContent = 'File name: ' + fname1;
+                      }
+                    </script>
                     </div>
                   <div class="col-md-4">
                     <label for="">Id Type</label>

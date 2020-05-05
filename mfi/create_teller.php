@@ -17,6 +17,14 @@ $destination = "staff_mgmt.php";
     }
 
 ?>
+<?php
+$m_id = $_SESSION["user_id"];
+$getacct1 = mysqli_query($connection, "SELECT * FROM staff WHERE user_id = '$m_id' && int_id = '$sessint_id'");
+if (count([$getacct1]) == 1) {
+    $uw = mysqli_fetch_array($getacct1);
+    $staff_id = $uw["id"];
+}
+?>
 <!-- Content added here -->
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -45,7 +53,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   '{$till_no}', '{$post_lim}', '{$vf}', '$vt', '$st', '0', '{$till}')";
   $done = mysqli_query($connection, $sqltell);
 if ($done) {
-  echo '<script type="text/javascript">
+  $digits = 4;
+$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$account_no = $int_id.$branch.$randms;
+// done with account number preparation
+$submitted_on = date("Y-m-d");
+$currency = "NGN";
+$abdc = 0;
+  $queryx = "INSERT INTO institution_account (int_id, branch_id, account_no,
+  teller_id, account_balance_derived,
+    submittedon_date, submittedon_userid, currency_code) VALUES ('{$int_id}',
+    '{$branch}', '{$account_no}',
+    '{$tell_name}', '{$abdc}', '{$submitted_on}', '{$staff_id}', '{$currency}')";
+    $gogoo = mysqli_query($connection, $queryx);
+    if ($gogoo) {
+      echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
        type: "success",
@@ -56,6 +78,19 @@ if ($done) {
       })
       });
 </script>';
+    } else {
+      echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+       type: "error",
+        title: "TELLER",
+          text: "Error in Creation",
+       showConfirmButton: false,
+     timer: 2000
+      })
+      });
+</script>';
+    }
 } else {
   echo '<script type="text/javascript">
   $(document).ready(function(){
@@ -170,7 +205,7 @@ if ($done) {
                         function fill_gl($connection) {
                         $sint_id = $_SESSION["int_id"];
                         $cla = 1;
-                        $getgl = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && name LIKE 'Teller Fund%' && classification_enum = '$cla' && parent_id IS NOT NULL ORDER BY name ASC";
+                        $getgl = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && name LIKE 'Teller%' && classification_enum = '$cla' && parent_id IS NOT NULL ORDER BY name ASC";
                         $res = mysqli_query($connection, $getgl);
                         $out = '';
                         while ($row = mysqli_fetch_array($res))

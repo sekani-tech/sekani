@@ -9,6 +9,7 @@ $int_web = $_SESSION["int_web"];
 $int_phone = $_SESSION["int_phone"];
 $int_logo = $_SESSION["int_logo"];
 $int_address = $_SESSION["int_address"];
+$branch_id = $_SESSION["branch_id"];
 $ekaniN = $_SESSION["sek_name"];
 $ekaniE = $_SESSION["sek_email"];
 // alright i am done
@@ -54,16 +55,14 @@ $res = mysqli_query($connection, $qrys);
 $row = mysqli_fetch_array($res);
 $ui = $row["id"];
  if ($res) {
-    $qrys = "INSERT INTO staff (int_id, user_id, int_name, username, display_name, email, first_name, last_name,
-description, address, date_joined, org_role, phone, img) VALUES ('{$sessint_id}', '{$ui}', '{$int_n}', '{$username}', '{$display_name}', '{$email}',
+    $qrys = "INSERT INTO staff (int_id, branch_id, user_id, int_name, username, display_name, email, first_name, last_name,
+description, address, date_joined, org_role, phone, img) VALUES ('{$sessint_id}', '{$branch_id}', '{$ui}', '{$int_n}', '{$username}', '{$display_name}', '{$email}',
 '{$first_name}', '{$last_name}', '{$description}', '{$address}', '{$date_joined}', '{$org_role}', '{$phone}', '{$imagex}')";
 
 $result = mysqli_query($connection, $qrys);
 
 if ($result) {
    // If 'result' is successful, it will send the required message to client.php
-   $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was created successfully!";
-   echo header ("Location: ../mfi/users.php?message1=$randms");
   // Start mail
 $mail = new PHPMailer;
 // from email addreess and name
@@ -489,7 +488,8 @@ table{
 		            		<span class='subheading'>Login Credentials</span>
 		              	<h2>Welcome To $int_name</h2>
                           <p>Username: $username  ||  Password: $password</p>
-                          <p>You can now Login to $int_name With this Credentials, Please change your Password With the button above </p>
+                          <p>You can now Login to $int_name With this Credentials, Please change your Password With the button above or link below</p>
+            				<p><a href='app.sekanisystems.com.ng/change_password.php?edit=$username' class='btn btn-primary'>Change Password!</a></p>
 		            	</div>
 		            </td>
 		          </tr><!-- end: tr -->
@@ -847,7 +847,8 @@ if(!$mail->send())
     echo "Mailer Error: " . $mail->ErrorInfo;
 } else
 {
-    echo $xm = "Changing Password?";
+  $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was created successfully!";
+  echo header ("Location: ../mfi/users.php?message1=$randms");
 }
   // end Mail system
  } else {
