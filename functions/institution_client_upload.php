@@ -75,11 +75,11 @@ if (move_uploaded_file($_FILES['signature']['tmp_name'], "clients/sign/" . $imag
 // $image2 = $_FILES['idimg']['name'];
 // $target2 = "clients/".basename($image2);
 
-$temp2 = explode(".", $_FILES['idimg']['name']);
+$temp2 = explode(".", $_FILES['id_img_url']['name']);
 $randms2 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $image2 = $randms2. '.' .end($temp2);
 
-if (move_uploaded_file($_FILES['idimg']['tmp_name'], "clients/id/" . $image2)) {
+if (move_uploaded_file($_FILES['id_img_url']['tmp_name'], "clients/id/" . $image2)) {
 $msg = "Image uploaded successfully";
 } else {
 $msg = "Image Failed";
