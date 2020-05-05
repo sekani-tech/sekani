@@ -155,12 +155,22 @@
                           cursor: pointer;
                         }
                       </style>
-                        <div class="col-md-6">
-                    <label for="file-enter" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
-                    <input id ="file-enter" type="file" name="int_logo" class="inputFileHidden"/>
-                    <input type="text" hidden value="<?php echo $int_img;?>" name="int_img">
-                    <label> Select Logo</label>
+                    <div class="col-md-4">
+                    <label for="file-insert" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                    <input id ="file-insert" name="int_logo" type="file" class="inputFileHidden"/>
+                    <label> Select Signature</label>
+                    <div id="iup"></div>
                     </div>
+                    <script>
+                      var changeq = document.getElementById( 'file-insert' );
+                      var check = document.getElementById( 'iup' );
+                      changeq.addEventListener( 'change', showme );
+                      function showme( event ) {
+                        var one = event.srcElement;
+                        var fname = one.files[0].name;
+                        check.textContent = 'File name: ' + fname;
+                      }
+                    </script>
                     </div>
                     <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
                     <button type="reset" class="btn btn_default">Reset</button>
@@ -173,7 +183,7 @@
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="./instimg/<?php echo $img; ?>" />
+                    <img class="img" src="<?php echo $img; ?>" />
                   </a>
                 </div>
                 <?php
