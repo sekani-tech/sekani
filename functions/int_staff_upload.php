@@ -9,6 +9,7 @@ $int_web = $_SESSION["int_web"];
 $int_phone = $_SESSION["int_phone"];
 $int_logo = $_SESSION["int_logo"];
 $int_address = $_SESSION["int_address"];
+$branch_id = $_SESSION["branch_id"];
 $ekaniN = $_SESSION["sek_name"];
 $ekaniE = $_SESSION["sek_email"];
 // alright i am done
@@ -54,8 +55,8 @@ $res = mysqli_query($connection, $qrys);
 $row = mysqli_fetch_array($res);
 $ui = $row["id"];
  if ($res) {
-    $qrys = "INSERT INTO staff (int_id, user_id, int_name, username, display_name, email, first_name, last_name,
-description, address, date_joined, org_role, phone, img) VALUES ('{$sessint_id}', '{$ui}', '{$int_n}', '{$username}', '{$display_name}', '{$email}',
+    $qrys = "INSERT INTO staff (int_id, branch_id, user_id, int_name, username, display_name, email, first_name, last_name,
+description, address, date_joined, org_role, phone, img) VALUES ('{$sessint_id}', '{$branch_id}', '{$ui}', '{$int_n}', '{$username}', '{$display_name}', '{$email}',
 '{$first_name}', '{$last_name}', '{$description}', '{$address}', '{$date_joined}', '{$org_role}', '{$phone}', '{$imagex}')";
 
 $result = mysqli_query($connection, $qrys);
