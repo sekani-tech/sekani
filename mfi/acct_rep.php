@@ -22,7 +22,7 @@ if (isset($_POST["id"]))
       // hello
       $output = '<div class="form-group">
       <label>Account Name:</label>
-      <select class="form-control" name="acct_gl" class="form-control" id="">
+      <select class="form-control" name="gl_no" class="form-control" id="">
         "'.fill_acct($connection, $gl_code, $int_id, $out).'"
       </select>
     </div>';

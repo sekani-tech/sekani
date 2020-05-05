@@ -423,7 +423,7 @@ $transid1 = $randms1;
         </script>
             <div class="form-group">
                 <label for="">GL Number</label>
-                <input type="text" class="form-control" name="gl_no" id="acct">
+                <input type="text" class="form-control" name="acct_gl" id="acct">
                 <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id;?>" id="int_id">
             </div>
         </div>
