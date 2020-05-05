@@ -45,6 +45,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   '{$till_no}', '{$post_lim}', '{$vf}', '$vt', '$st', '0', '{$till}')";
   $done = mysqli_query($connection, $sqltell);
 if ($done) {
+  $digits = 4;
+$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$account_no = $int_id.$branch.$randms;
+// done with account number preparation
+$submitted_on = date("Y-m-d");
+$currency = "NGN";
+  $queryx = "INSERT INTO institution_account (int_id, account_no,
+    submittedon_date, submittedon_userid, currency_code) VALUES ('{$int_id}',
+    '{$account_no}', '{$submitted_on}', '{$ldi}', '{$currency}')";
+    $gogoo = mysqli_query($connection, $queryx);
   echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
