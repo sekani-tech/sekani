@@ -106,30 +106,30 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Last Deposit:</label>
-                          <input type="text" name="" id="" class="form-control" value="<?php echo $tdd; ?>" readonly>
+                          <input type="text" name="" placeholder="0.000" id="" class="form-control" value="<?php echo $tdd; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Last Withdrawal:</label>
-                          <input type="text" name="" id="" class="form-control" value="<?php echo $twd; ?>" readonly>
+                          <input type="text" placeholder="0.000" name="" id="" class="form-control" value="<?php echo $twd; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Total Outstanding Loan balance:</label>
-                          <input type="text" name="" id="" class="form-control" value="<?php echo $olb; ?>" readonly>
+                          <input type="text" placeholder="0.000" name="" id="" class="form-control" value="<?php echo $olb; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Total Loan Amount payed:</label>
-                          <input type="text" name="" id="" class="form-control" value="<?php echo $prd; ?>" readonly>
+                          <input type="text" placeholder="0.000" name="" id="" class="form-control" value="<?php echo $prd; ?>" readonly>
                         </div>
                       </div>
                     </div>
                     <a href="lend.php" class="btn btn-primary">Disburse Loan</a>
-                    <a href="#" class="btn btn-primary">Generate Account Report</a>
+                    <a href="client_statement.php?edit=<?php echo $id;?>" class="btn btn-primary">Generate Account Report</a>
                     <a href="update_client.php?edit=<?php echo $id;?>" class="btn btn-primary">Edit CLient</a>
                     <a href="client.php" class="btn btn-primary pull-right">Back</a>
                   </form>
@@ -140,7 +140,7 @@ if(isset($_GET["edit"])) {
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $passport;?>" />
+                    <img class="img" src="../functions/clients/passport/<?php echo $passport;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->
@@ -155,7 +155,7 @@ if(isset($_GET["edit"])) {
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $id_img_url;?>" />
+                    <img class="img" src="../functions/clients/id/<?php echo $id_img_url;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->
@@ -169,7 +169,7 @@ if(isset($_GET["edit"])) {
                 <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $signature;?>" />
+                    <img class="img" src="../functions/clients/sign/<?php echo $signature;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->

@@ -5,6 +5,7 @@ $destination = "index.php";
 include("header.php");
 ?>
 <?php
+$exp_error = "";
 if (isset($_GET["message"])) {
     $key = $_GET["message"];
     // $out = $_SESSION["lack_of_intfund_$key"];
@@ -15,7 +16,7 @@ if (isset($_GET["message"])) {
         swal({
             type: "success",
             title: "Success",
-            text: "Transaction Successful, Awaiting Approval",
+            text: "Transaction Successful",
             showConfirmButton: false,
             timer: 2000
         })
@@ -43,6 +44,25 @@ if (isset($_GET["message"])) {
     ';
     $_SESSION["lack_of_intfund_$key"] = 0;
   }
+} else if (isset($_GET["messagex2"])) {
+  $key = $_GET["messagex2"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "NOT AUTHURIZED",
+          text: "This is a Tellers Job",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
 } else if (isset($_GET["message3"])) {
     $key = $_GET["message3"];
     // $out = $_SESSION["lack_of_intfund_$key"];
@@ -91,7 +111,7 @@ if (isset($_GET["message"])) {
         swal({
             type: "error",
             title: "Fund Error",
-            text: "Insufficient Fund",
+            text: "Insufficient Fund in the Till",
             showConfirmButton: false,
             timer: 2000
         })
@@ -118,6 +138,25 @@ if (isset($_GET["message"])) {
     </script>
     ';
     $_SESSION["lack_of_intfund_$key"] = 0;
+}
+} else if (isset($_GET["messagex5"])) {
+  $key = $_GET["messagex5"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Insufficient Fund",
+          text: "Client Has Insufficient Fund",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
 }
 } else if (isset($_GET["message8"])) {
   $key = $_GET["message8"];
@@ -147,8 +186,27 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   $(document).ready(function(){
       swal({
           type: "success",
-          title: "Loan",
-          text: "Loan Repayment Successful, Awaiting Approval",
+          title: "EXPENSE POSTING",
+          text: "Expense Posting Successful",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+} else if (isset($_GET["loan2"])) {
+  $key = $_GET["loan2"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "EXPENSE POSTING",
+          text: "Expense Posting Successful, Awaiting Approval",
           showConfirmButton: false,
           timer: 2000
       })
@@ -204,8 +262,27 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   $(document).ready(function(){
       swal({
           type: "error",
-          title: "No Loan",
-          text: "This Account Does not Have Any Active Loan",
+          title: "Error",
+          text: "Your Have an Error",
+          showConfirmButton: false,
+          timer: 3000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+} else if (isset($_GET["legal"])) {
+  $key = $_GET["legal"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "System Error",
+          text: "Call Us",
           showConfirmButton: false,
           timer: 3000
       })
@@ -321,11 +398,11 @@ $transid1 = $randms1;
               <div class="col-md-12">
                   <div class="card">
                       <div class="card-header card-header-primary">
-                        <h4 class="card-title">Loan Repayment</h4>
+                        <h4 class="card-title">Expense Posting</h4>
                         <!-- <p class="card-category">Fill in all important data</p> -->
                       </div>
                       <div class="card-body">
-                      <form action="../functions/loan_repayment.php" method="post">
+                      <form action="../functions/expense.php" method="post">
     <div class="row">
         <div class="col-md-4">
         <script>
@@ -345,15 +422,15 @@ $transid1 = $randms1;
               });
         </script>
             <div class="form-group">
-                <label for="">Account Number</label>
-                <input type="text" class="form-control" name="account_no" id="acct">
+                <label for="">GL Number</label>
+                <input type="text" class="form-control" name="acct_gl" id="acct">
                 <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id;?>" id="int_id">
             </div>
         </div>
         <div class="col-md-4">
         <div class="form-group">
           <label for="">Amount Recieved:</label>
-          <input type="number" name="collect" id="" value="" class="form-control">
+          <input type="number" name="amount" id="" value="" class="form-control">
           <span class="help-block" style="color: red;"><?php echo $exp_error;?></span>
         </div>
     </div>
@@ -376,19 +453,19 @@ $transid1 = $randms1;
               </script>
           <select name="payment_method" id="poo" class="form-control">
             <option value="Cash">Cash</option>
-            <option value="Cheque">Cheque</option>
-            <option value="Transfer">Transfer</option>
+            <!-- <option value="Cheque">Cheque</option> -->
+            <!-- <option value="Transfer">Transfer</option> -->
           </select>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="form-group">
-          <label for="">Transaction ID(Cheque no, Transfer Id):</label>
-          <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="tit">
-      </div>
+    <div id="accrep"></div>
     </div>
     <div class="col-md-4">
-    <div id="accrep"></div>
+      <div class="form-group">
+          <label for="">Transaction ID:</label>
+          <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="tit">
+      </div>
     </div>
     </div>    
           <button type="submit" class="btn btn-primary pull-right">Submit</button>

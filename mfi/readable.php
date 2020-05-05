@@ -1,7 +1,6 @@
 <?php
-
+$int_id = $_SESSION["int_id"];
 $output = '';
-
 if(isset($_POST["id"]))
 {
     if($_POST["id"] !='')
@@ -11,8 +10,4 @@ if(isset($_POST["id"]))
     $output = '<div>"'.$rd = "".'"</div>';
     echo $output;
 }
-// session_start();
-//    $_SESSION['load_term'] = "batman";
-//    $_SESSION['interest_rate'] = "batman";
-//    $_SESSION['disbursment_date'] = "batman";
 ?>

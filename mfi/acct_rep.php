@@ -7,30 +7,26 @@ if (isset($_POST["id"]))
 {
     if ($_POST["id"] != '')
     {
-      $sql = "SELECT loan.interest_rate, client.id, client.display_name, client.account_no, loan.id, client.branch_id, loan.product_id, principal_amount, loan_term, loan.interest_rate FROM loan JOIN client ON loan.client_id = client.id WHERE client.int_id ='".$_POST["ist"]."' && loan.account_no = '".$_POST["id"]."'";
-      $person = mysqli_query($connection, $sql);
-      if (count([$person]) == 1) {
-        $x = mysqli_fetch_array($person);
-        $pa = $x['principal_amount'];
-        $brh = $x['branch_id'];
-        $p_id = $x['product_id'];
-        $account_no = $x['account_no'];
-        $dn = $x['display_name'];
-        $interest_R = $x['interest_rate'];
-        $lt = $x['loan_term'];
-        $ln_id = $x['id'];
-        $expa = $pa / $lt;
+      $gl_code = $_POST['id'];
+      $int_id = $_POST['ist'];
+      $out = '';
+      function fill_acct($connection, $gl_code, $int_id, $out) {
+        $sql = "SELECT * FROM `acc_gl_account` WHERE gl_code LIKE '$gl_code%' && int_id='$int_id' && classification_enum LIKE '5%' && parent_id IS NOT NULL";
+        $result = mysqli_query($connection, $sql);
+        while ($row = mysqli_fetch_array($result))
+          {
+            $out .= '<option value="'.$row["gl_code"].'">'.strtoupper($row["name"]).'</option>';
+          }
+        return $out;
       }
-    }
-     $result = mysqli_query($connection, $sql);
-    while ($row = mysqli_fetch_array($result))
-    {
-      $output = '
-      <div class="form-group">
-          <label for="">Expected Amount:</label>
-          <input type="text" name="exp_amt" class="form-control" id="" value="'.$expa.'" readonly>
-      </div>';
+      // hello
+      $output = '<div class="form-group">
+      <label>Account Name:</label>
+      <select class="form-control" name="gl_no" class="form-control" id="">
+        "'.fill_acct($connection, $gl_code, $int_id, $out).'"
+      </select>
+    </div>';
       echo $output;
-    }
+  }
 }
 ?>

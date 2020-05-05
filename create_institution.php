@@ -115,19 +115,11 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                          <div class="form-group form-file-upload form-file-multiple">
-                            <label for="">Logo</label>
-                            <input type="file" multiple="" class="inputFileHidden">
-                            <div class="input-group">
-                                <input type="file" name="int_logo" class="form-control inputFileVisible" placeholder="Insert Logo">
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-fab btn-round btn-primary">
-                                        <i class="material-icons">attach_file</i>
-                                    </button>
-                                </span>
-                            </div>
-                          </div>
-                        </div>
+                    <label for="file-insert" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                    <input id ="file-insert" name="int_logo" type="file" class="inputFileHidden"/>
+                    <label> Select Signature</label>
+                    <div id="iup"></div>
+                    </div>
                     </div>
                     <button type="submit" class="btn btn-primary pull-right">Create Institution</button>
                     <button type="reset" class="btn btn_danger">Reset</button>

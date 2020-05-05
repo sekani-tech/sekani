@@ -14,7 +14,7 @@ if(isset($_GET["edit"])) {
 // joke
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
-    $vd = $n['id'];
+    $id = $n['id'];
     $acct_name = $n['name'];
     $gl_code = $n['gl_code'];
     $acct_type = $n['account_type'];
@@ -25,6 +25,13 @@ if(isset($_GET["edit"])) {
     $man_ent = $n['manual_journal_entries_allowed'];
     $disable_acct = $n['disabled'];
     $enb_bank_recon = $n['reconciliation_enabled'];
+    $class_enum = $n['classification_enum'];
+  }
+  if($acct_use == 1){
+    $acct_use_name = "GL ACCOUNT";
+  }
+  else if($acct_use == 2){
+    $acct_use_name = "GL GROUP";
   }
 }
 ?>
@@ -39,8 +46,14 @@ if(isset($_GET["edit"])) {
               <p class="card-category">Fill in all important data</p>
             </div>
             <div class="card-body">
-              <form action="" method="POST" enctype="multipart/form-data">
+              <form action="../functions/update_chart_account.php" method="POST" enctype="multipart/form-data">
                 <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label >ID</label>
+                      <input type="text" style="text-transform: uppercase;" class="form-control" readonly value="<?php echo $id; ?>" name="id">                  
+                    </div>
+                  </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account name</label>
@@ -56,13 +69,13 @@ if(isset($_GET["edit"])) {
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account Type</label>
-                      <select class="form-control" name="acct_type" id="" required>
-                        <option value="">Select an option</option>
-                        <option value="">ASSET</option>
-                        <option value="">LIABILITY</option>
-                        <option value="">EQUITY</option>
-                        <option value="">INCOME</option>
-                        <option value="">EXPENSE</option>
+                      <select class="form-control" name="class_enum" id="" required>
+                        <option value="<?php echo $class_enum?>"><?php echo $acct_type?></option>
+                        <option value="1">ASSET</option>
+                        <option value="2">LIABILITY</option>
+                        <option value="3">EQUITY</option>
+                        <option value="4">INCOME</option>
+                        <option value="5">EXPENSE</option>
                       </select>
                     </div>
                   </div>
@@ -72,23 +85,14 @@ if(isset($_GET["edit"])) {
                       <input type="text" name="ext_id" value="<?php echo $ext_id; ?>" style="text-transform: uppercase;" class="form-control" required>
                     </div>
                   </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label >Account Tag</label>
-                      <select class="form-control" name="acct_tag" id="" required>
-                        <option value="<?php echo $acct_tag; ?>"><?php echo $acct_tag; ?></option>
-                        <option value="">...</option>
-                        <option value="">...</option>
-                      </select>                    
-                    </div>
-                  </div>
+                  
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account Usage</label>
                       <select class="form-control" name="acct_use" id="" required>
-                        <option value="<?php echo $acct_use;?>">...</option>
-                        <option value="1">GL GROUP</option>
-                        <option value="2">GL ACCOUNT</option>
+                        <option value="<?php echo $acct_use;?>"><?php echo $acct_use_name;?></option>
+                        <option value="1">GL ACCOUNT</option>
+                        <option value="2">GL GROUP</option>
                       </select>                    
                     </div>
                   </div>
@@ -97,7 +101,7 @@ if(isset($_GET["edit"])) {
                       <label >Manual Entires Allowed</label><br/>
                       <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                          <input class="form-check-input" name="man_acct" type="checkbox" value="1">
+                          <input type="checkbox" class="form-check-input" name="man_allow" type="checkbox" value="0">
                           <span class="form-check-sign">
                             <span class="check"></span>
                           </span>
@@ -105,19 +109,7 @@ if(isset($_GET["edit"])) {
                     </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label >Allow Bank reconciliation?</label><br/>
-                      <div class="form-check form-check-inline">
-                      <label class="form-check-label">
-                          <input class="form-check-input" name="allow_bank" type="checkbox" value="1">
-                          <span class="form-check-sign">
-                            <span class="check"></span>
-                          </span>
-                      </label>
-                    </div>
-                    </div>
-                  </div>
+
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Disable</label><br/>
@@ -139,7 +131,7 @@ if(isset($_GET["edit"])) {
                   </div>
                 </div>
                 <a href="client.php" class="btn btn-danger">Back</a>
-                <button type="submit" name="submit" id="submit" class="btn btn-primary pull-right">Add Account</button>
+                <button type="submit" name="submit" id="submit" class="btn btn-primary pull-right">Update Account</button>
                 <div class="clearfix"></div>
               </form>
             </div>

@@ -226,14 +226,18 @@ $destination = "config.php";
                   <!-- Second Tab -->
                   <div class="tab">
                     <h3>Charges</h3>
+                    <input type="text" id="int_id" value="<?php echo $sessint_id; ?>">
+                    <input type="text" id="branch_id" value="<?php echo $branch_id; ?>">
                     <script>
                       $(document).ready(function() {
                         $('#charges').change(function(){
                           var id = $(this).val();
+                          var int_id = $('#int_id').val();
+                          var branch_id = $('#branch_id').val();
                           $.ajax({
                             url:"load_data.php",
                             method:"POST",
-                            data:{id:id},
+                            data:{id:id, int_id:int_id, branch_id:branch_id},
                             success:function(data){
                               $('#show_charges').html(data);
                             }
@@ -258,7 +262,7 @@ $destination = "config.php";
                       function fill_charges($connection)
                       {
                       $sint_id = $_SESSION["int_id"];
-                      $org = "SELECT * FROM charge WHERE int_id = '$sint_id'";
+                      $org = "SELECT * FROM charge WHERE int_id = '$sint_id' && charge_applies_to_enum = '1'";
                       $res = mysqli_query($connection, $org);
                       $output = '';
                       while ($row = mysqli_fetch_array($res))

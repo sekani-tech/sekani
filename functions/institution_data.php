@@ -36,7 +36,7 @@ $temp = explode(".", $_FILES['int_logo']['name']);
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $imagex = $randms. '.' .end($temp);
 
-if (move_uploaded_file($_FILES['imagefile']['tmp_name'], "instimg/" . $imagex)) {
+if (move_uploaded_file($_FILES['int_logo']['tmp_name'], "instimg/" . $imagex)) {
     $msg = "Image uploaded successfully";
 } else {
   $msg = "Image Failed";
@@ -56,10 +56,11 @@ if ($result) {
     if (count([$verify]) == 1) {
         $x = mysqli_fetch_array($verify);
         $int_id = $x['int_id'];
-
-        $queryx = "INSERT INTO institution_account (int_id, account_no,
-    submittedon_date, submittedon_userid, currency_code) VALUES ('{$int_id}',
-    '{$account_no}', '{$submitted_on}', '{$ldi}', '{$currency}')";
+        $mvamt = 10000000.00;
+        $bal = 0.00;
+        $queryx = "INSERT INTO int_vault (int_id, account_no,
+    movable_amount, balance, date, last_withdrawal, last_deposit) VALUES ('{$int_id}',
+    '{$account_no}', '{$mvamt}', '{$bal}', '{$submitted_on}', '{$bal}', '{$bal}')";
     $gogoo = mysqli_query($connection, $queryx);
     if ($gogoo) {
         echo header("Location: ../institution.php");
