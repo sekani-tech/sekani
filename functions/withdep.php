@@ -296,7 +296,7 @@ if ($is_del == "0" && $is_del != NULL) {
                    $dd = "Deposit";
                    $ogs = "Pending";
                    $trancache = "INSERT INTO transact_cache (int_id, transact_id, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, product_type, status) 
-                   VALUES ('{$sessint_id}', '{$trs_id}', '{$acct_no}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt}', '{$type}', '{$dd}', '{$product_id}', '{$ogs}')";
+                   VALUES ('{$sessint_id}', '{$transid}', '{$acct_no}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt}', '{$type}', '{$dd}', '{$product_id}', '{$ogs}')";
                    $go = mysqli_query($connection, $trancache);
                    if ($go) {
                      $_SESSION["Lack_of_intfund_$randms"] = "Deposit Has Been Done, Awaiting Approval!";
