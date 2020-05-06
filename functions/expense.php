@@ -16,12 +16,14 @@ $getacct1 = mysqli_query($connection, "SELECT * FROM staff WHERE user_id = '$m_i
 if (count([$getacct1]) == 1) {
     $uw = mysqli_fetch_array($getacct1);
     $staff_id = $uw["id"];
+    $staff_name = $uw['firstname'].' '.$a['middlename'].' '.$a['lastname'];
 }
 $staff_name  = strtoupper($_SESSION["username"]);
+$gen_date = date('Y-m-d H:i:s');
 ?>
 <?php
 // GET ALL THE POSTED FORM FOR THIS
-$gl_code = $_POST['gl_no'];
+$gl_codex = $_POST['gl_no'];
 $gl_amt = $_POST['amount'];
 $pym = $_POST['payment_method'];
 $trans_id = $_POST['transid'];
@@ -42,7 +44,7 @@ $post_limit = $ex["post_limit"];
 $gl_code = $ex["till"];
 $till_no = $ex["till_no"];
 // we will call the GL
-$gl_man = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$gl_code' && int_id = '$sessint_id'");
+$gl_man = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$gl_codex' && int_id = '$sessint_id'");
 $gl = mysqli_fetch_array($gl_man);
 $gl_name = $gl["name"];
 $l_acct_bal = $gl["organization_running_balance_derived"];
@@ -66,7 +68,7 @@ if ($is_del == "0" && $is_del != NULL) {
         // check if it exceed the posting limit
         if ($gl_amt <= $post_limit) {
             // update the account gl
-            $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_code'";
+            $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_codex'";
             $dbgl = mysqli_query($connection, $upglacct);
             if ($dbgl) {
                 $upinta = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2', total_withdrawals_derived = '$tbd2' WHERE int_id = '$sessint_id' && teller_id = '$staff_id'";
@@ -79,7 +81,7 @@ if ($is_del == "0" && $is_del != NULL) {
             teller_id, transaction_id, transaction_type, is_reversed,
             transaction_date, amount, running_balance_derived, overdraft_amount_derived,
             created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
-            '{$till_no}', '{$trans_id}', 'Debit', '{$irvs}',
+            '{$gl_codex}', '{$trans_id}', 'Debit', '{$irvs}',
             '{$gen_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
             '{$gen_date}', '{$staff_id}')";
                 $res4 = mysqli_query($connection, $iat2);
@@ -104,12 +106,12 @@ if ($is_del == "0" && $is_del != NULL) {
            }
         } else {
             // run the expense for approval
-            $trancache = "INSERT INTO transact_cache (int_id, transact_id, account_no,
+            $trancache = "INSERT INTO transact_cache (int_id, branch_id, transact_id, account_no,
             client_name, staff_id, account_off_name,
-            amount, pay_type, transact_type, status) VALUES
-            ('{$sessint_id}', '{$trans_id}', '{$gl_code}', '{$gl_name}',
-            '{$staff_id}', '{$till_no}', '{$gl_amt}', '{$pym}',
-            'EXPENSE', 'Pending') ";
+            amount, pay_type, transact_type, status, date) VALUES
+            ('{$sessint_id}', '{$branch_id}', '{$trans_id}', '{$gl_codex}', '{$gl_name}',
+            '{$staff_id}', '{$staff_name}', '{$gl_amt}', '{$pym}',
+            'Deposit', 'Pending', '{$gen_date}') ";
             $go = mysqli_query($connection, $trancache);
             if ($go) {
                 $_SESSION["Lack_of_intfund_$randms"] = "Expense Successful!";

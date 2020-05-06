@@ -33,7 +33,7 @@ $account_display = substr("$acct_no",7)."*****".substr("$acct_no",8);
 $amt2 = $_POST['amount'];
 $type2 = $_POST['pay_type'];
 $appuser_id = $_SESSION['user_id'];
-$branch_id = $_SESSION['branch_id'];
+// $branch_id = $_SESSION['branch_id'];
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 // 1234567890
@@ -43,6 +43,7 @@ if (count([$getacct]) == 1) {
 $y = mysqli_fetch_array($getacct);
 $branch_id = $y['branch_id'];
 $acct_no = $y['account_no'];
+$tryacc = $y['account_no'];
 // get the savings product id
 $sproduct_id = $y['product_id'];
 $client_id = $y['client_id'];
@@ -75,6 +76,7 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
 $dbclient = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' && int_id = '$sessint_id'");
 if (count([$dbclient]) == 1) {
     $a = mysqli_fetch_array($dbclient);
+    $branch_id = $a['branch_id'];
     $clientt_name = $a['firstname'].' '.$a['middlename'].' '.$a['lastname'];
     $clientt_name = strtoupper($clientt_name);
     $client_email = $a["email_address"];
@@ -101,9 +103,25 @@ $l_acct_bal = $gl["organization_running_balance_derived"];
 $new_gl_bal = $l_acct_bal + $amt;
 $new_gl_bal2 = $l_acct_bal - $amt2;
 // checking if the teller is not deleted
+
+// checke three places to see if the transaction has been done
+$q1 = mysqli_query($connection, "SELECT * FROM `institution_account_transaction` WHERE transaction_id = '$transid' && int_id='$sessint_id'");
+$q2 = mysqli_query($connection, "SELECT * FROM `account_transaction` WHERE transaction_id = '$transid' && int_id='$sessint_id'");
+$q2 = mysqli_query($connection, "SELECT * FROM `transact_cache` WHERE transact_id = '$transid' && int_id='$sessint_id'");
+// run the query
+$resx1 = mysqli_num_rows($q1);
+$resx2 = mysqli_num_rows($q2);
+$resx3 = mysqli_num_rows($q3);
+// we will execute the statement
+if ($resx1 == 0 && $resx2 == 0 && $resx3 == 0) {
+  // check if exsist
 if ($is_del == "0" && $is_del != NULL) {
-    // check if the teller posting limit matches in the range of the withdrawal amount
-    if ($test == "deposit") {
+  if ($amt2 <= $post_limit && $test == "deposit") {
+     // check if the teller posting limit matches in the range of the withdrawal amount
+    //  check accoutn
+    if ($acct_no == $tryacc) {
+      // after checkng if number exsitsi
+       if ($test == "deposit") {
         // update the clients account
         $new_abd = $comp;
         $iupq = "UPDATE account SET account_balance_derived = '$new_abd', last_deposit = '$amt', total_deposits_derived = '$tbd' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
@@ -115,7 +133,7 @@ if ($is_del == "0" && $is_del != NULL) {
         client_id, transaction_id, transaction_type, is_reversed,
         transaction_date, amount, running_balance_derived, overdraft_amount_derived,
         created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
-        '{$acct_no}', '{$sproduct_id}', '{$till_no}', '{$client_id}', '{$transid}', '{$trans_type}', '{$irvs}',
+        '{$acct_no}', '{$sproduct_id}', '{$staff_id}', '{$client_id}', '{$transid}', '{$trans_type}', '{$irvs}',
         '{$gen_date}', '{$amt}', '{$new_abd}', '{$amt}',
         '{$gen_date}', '{$appuser_id}')";
         $res3 = mysqli_query($connection, $iat);
@@ -236,6 +254,8 @@ if ($is_del == "0" && $is_del != NULL) {
             if(!$mail->send()) 
                {
                    echo "Mailer Error: " . $mail->ErrorInfo;
+                   $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
+                   echo header ("Location: ../mfi/transact.php?message=$randms");
                } else
                {
                    $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
@@ -267,7 +287,59 @@ if ($is_del == "0" && $is_del != NULL) {
         $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
         echo header ("Location: ../mfi/transact.php?legal=$randms");
     }
-    } else if ($test == "withdraw" && $int_acct_bal >= $amt2) {
+    } 
+    } else {
+      // display wrong acount number
+      $_SESSION["Lack_of_intfund_$randms"] = "Account not Found";
+      echo header ("Location: ../mfi/transact.php?message7=$randms");
+    }
+  } else if ($amt2 > $post_limit && $test == "deposit") {
+    $new_abd = $comp;
+    $runaccount = mysqli_query($connection, "SELECT * FROM account WHERE account_no ='$acct_no' && int_id = '$sessint_id' ");
+    if (count([$runaccount]) == 1) {
+        $x = mysqli_fetch_array($runaccount);
+        $brnid = $x['branch_id'];
+        $tryacc = $x['account_no'];
+        $product_id = $x['product_id'];
+        $acct_b_d = $x['account_balance_derived'];
+        $client_id = $x['client_id'];
+  
+        $clientfn =  mysqli_query($connection, "SELECT client.id, client.firstname, client.middlename, client.lastname FROM client JOIN account ON account.client_id = client.id && account.account_no ='$acct_no' && client.int_id = '$sessint_id' ");
+        if (count([$clientfn]) == 1) {
+            $py = mysqli_fetch_array($clientfn);
+            $clientt_name = $py['firstname'].' '.$py['middlename'].' '.$py['lastname'];
+                $clientt_name = strtoupper($clientt_name);
+                $brh= $py['branch_id'];
+                $nin = mysqli_query($connection, "SELECT name FROM branch WHERE id ='$brh'");
+  if (count([$nin]) == 1) {
+    $g = mysqli_fetch_array($nin);
+    $branch_name = $g['name'];
+  }
+        }
+        if ($acct_no == $tryacc) {
+           if ($test == "deposit") {
+               $dd = "Deposit";
+               $ogs = "Pending";
+               $trancache = "INSERT INTO transact_cache (int_id, branch_id, transact_id, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, product_type, status, date)
+               VALUES ('{$sessint_id}', '{$branch_id}', '{$transid}', '{$acct_no}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt}', '{$type}', '{$dd}', '{$product_id}', '{$ogs}', '{$gen_date}')";
+               $go = mysqli_query($connection, $trancache);
+               if ($go) {
+                 $_SESSION["Lack_of_intfund_$randms"] = "Deposit Has Been Done, Awaiting Approval!";
+                  echo header ("Location: ../mfi/transact.php?messagep=$randms");
+               } else {
+                  $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
+                  echo header ("Location: ../mfi/transact.php?message2=$randms");
+               }
+           } else {
+               echo "Not equal to deposit";
+           }
+        } else {
+           $_SESSION["Lack_of_intfund_$randms"] = "Account not Found";
+           echo header ("Location: ../mfi/transact.php?message7=$randms");
+        }
+   }
+  }
+    else if ($test == "withdraw" && $int_acct_bal >= $amt2) {
         // check if the POSTING-LIMIT
         // check if client has cash
         if ($client_acct_bal >=  $amt2) {
@@ -284,7 +356,7 @@ if ($is_del == "0" && $is_del != NULL) {
             client_id, transaction_id, transaction_type, is_reversed,
             transaction_date, amount, running_balance_derived, overdraft_amount_derived,
             created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
-            '{$acct_no}', '{$sproduct_id}', '{$till_no}', '{$client_id}', '{$transid}', '{$trans_type2}', '{$irvs}',
+            '{$acct_no}', '{$sproduct_id}', '{$staff_id}', '{$client_id}', '{$transid}', '{$trans_type2}', '{$irvs}',
             '{$gen_date}', '{$amt2}', '{$new_abd2}', '{$amt}',
             '{$gen_date}', '{$appuser_id}')";
             $res3 = mysqli_query($connection, $iat);
@@ -495,6 +567,10 @@ if ($is_del == "0" && $is_del != NULL) {
     $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
     echo header ("Location: ../mfi/transact.php?messagex2=$randms");
 }
+} else {
+  $_SESSION["Lack_of_intfund_$randms"] = "System Error";
+  echo header ("Location: ../mfi/transact.php?legalq=$randms");
+}
 // cont.
 } else {
 // you're not authorized not a teller
@@ -505,49 +581,5 @@ echo header ("Location: ../mfi/transact.php?messagex2=$randms");
 
 ?>
 <?php
-//  if ($test == "deposit") {
-//     $runaccount = mysqli_query($connection, "SELECT * FROM account WHERE account_no ='$acct_no' && int_id = '$sessint_id' ");
-//     if (count([$runaccount]) == 1) {
-//         $x = mysqli_fetch_array($runaccount);
-//         $brnid = $x['branch_id'];
-//         $tryacc = $x['account_no'];
-//         $product_id = $x['product_id'];
-//         $acct_b_d = $x['account_balance_derived'];
-//         $client_id = $x['client_id'];
-
-//         $clientfn =  mysqli_query($connection, "SELECT client.id, client.firstname, client.middlename, client.lastname FROM client JOIN account ON account.client_id = client.id && account.account_no ='$acct_no' && client.int_id = '$sessint_id' ");
-//         if (count([$clientfn]) == 1) {
-//             $py = mysqli_fetch_array($clientfn);
-//             $clientt_name = $py['firstname'].' '.$py['middlename'].' '.$py['lastname'];
-//                 $clientt_name = strtoupper($clientt_name);
-//                 $brh= $py['branch_id'];
-//                 $nin = mysqli_query($connection, "SELECT name FROM branch WHERE id ='$brh'");
-//  if (count([$nin]) == 1) {
-//     $g = mysqli_fetch_array($nin);
-//     $branch_name = $g['name'];
-//  }
-//         }
-//         if ($acct_no == $tryacc) {
-//            if ($test == "deposit") {
-//                $dd = "Deposit";
-//                $ogs = "Pending";
-//                $trancache = "INSERT INTO transact_cache (int_id, transact_id, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, product_type, status) 
-//                VALUES ('{$sessint_id}', '{$trs_id}', '{$acct_no}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt}', '{$type}', '{$dd}', '{$product_id}', '{$ogs}')";
-//                $go = mysqli_query($connection, $trancache);
-//                if ($go) {
-//                  $_SESSION["Lack_of_intfund_$randms"] = "Deposit Has Been Done, Awaiting Approval!";
-//                   echo header ("Location: ../mfi/transact.php?message=$randms");
-//                } else {
-//                   $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
-//                   echo header ("Location: ../mfi/transact.php?message2=$randms");
-//                }
-//            } else {
-//                echo "Not equal to deposit";
-//            }
-//         } else {
-//            $_SESSION["Lack_of_intfund_$randms"] = "Account not Found";
-//            echo header ("Location: ../mfi/transact.php?message7=$randms");
-//         }
-//    }
-//  }
+// 
 ?>

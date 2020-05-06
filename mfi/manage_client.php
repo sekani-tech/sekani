@@ -81,7 +81,7 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Phone No</label>
-                      <input type="tel" class="form-control" name="phone">
+                      <input type="tel" class="form-control" name="phone" readonly>
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -93,7 +93,7 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Email address</label>
-                      <input type="email" class="form-control" name="email">
+                      <input type="email" class="form-control" name="email" readonly>
                     </div>
                   </div>
                   <div class="col-md-12">

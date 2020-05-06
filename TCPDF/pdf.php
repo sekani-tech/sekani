@@ -20,6 +20,7 @@ if(isset($_GET["edit"])) {
             $b = mysqli_fetch_array($query2);
             $intname = $b['int_name'];
             $logo = $b['img'];
+            $web = $b['website'];
         }
         $branchid = mysqli_query($connection, "SELECT * FROM branch WHERE id='$branch'");
         if (count([$branchid]) == 1) {
@@ -37,6 +38,7 @@ if(isset($_GET["edit"])) {
         $e = mysqli_fetch_array($trans);
         $client_id = $e['client_id'];
         }
+        
     }
 }
 // extend TCPF with custom functions
@@ -53,7 +55,7 @@ class MYPDF extends TCPDF {
 	// Colored table
 	public function ColoredTable($header,$data) {
 		// Colors, line width and bold font
-		$this->SetFillColor(000, 000, 000);
+		$this->SetFillColor(194, 100, 201);
 		$this->SetTextColor(255);
 		$this->SetDrawColor(211, 211, 211);
 		$this->SetLineWidth(0.3);
@@ -66,7 +68,7 @@ class MYPDF extends TCPDF {
 		}
 		$this->Ln();
 		// Color and font restoration
-		$this->SetFillColor(224, 235, 255);
+		$this->SetFillColor();
 		$this->SetTextColor(0);
 		$this->SetFont('');
 		// Data
@@ -96,8 +98,8 @@ $pdf->SetSubject('Client statement for '.$fname, $lname.'');
 $pdf->SetKeywords('');
 
 // set default header data
-$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, 'Client Statment by '.$intname, PDF_HEADER_STRING);
-// $pdf->SetHeaderData('../instimg/'.$logo, '30', 'Client Statment by '.$intname, PDF_HEADER_STRING);
+// $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 061', PDF_HEADER_STRING);
+$pdf->SetHeaderData('../instimg/'.$logo, '13', PDF_HEADER_TITLE.$intname, PDF_HEADER_STRING.$web);
 
 // set header and footer fonts
 $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -138,50 +140,106 @@ $pdf->AddPage();
 $header = array('Transaction-Date','Value Date', 'Reference','Debits','Credits','Balance');
 
 $html = <<<EOD
-<style>
-th {
-    font-size: 13px;
-}
-.firstbox {
-    color: black;
-    height: auto;
-    font-family: helvetica;
-    background-color: #eaeaea;
-}
-.tag {
-    padding: 10px;
-}
-.grid {
-    display: grid;
-    grid-column-gap: 10px;
-    grid-template-columns: 50px 50px;
-}
-.row{
-    height: 10px;
-    width:50%;
-    border: 1px solid black;
-}
-</style>
-<div class="tag">
-<div class="firstbox">
-<div class="grid">
-       <div class="row">Branch name: $branch_name</div>
-       <div class="row">Branch address: $branch_address</div>
-       <div class="row">Client name: $fname $lname</div>
-       <div class="row">Currency: $currtype</div> 
-       <div class="row">Account number: $acc_no</div>
-       <div class="row">Total debit: $actype</div>     
-       <div class="row">Opening balance: $actype</div>
-       <div class="row">Total credit: $actype</div>    
-       <div class="row">Closing balance: $actype</div>
-       <div class="row">Statement period:  01/01/2020 - 01/04/2020</div> 
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .head {
+                color: black;
+                font-family: helvetica;
+                background-color: #eaeaea;
+                width: 100%;
+                display:inline-flex ;
+                padding: 10px;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
+            .grid {
+                display: grid;
+                grid-column-gap: 10px;
+                grid-template-columns: 50px 50px;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
+            .cname{
+                margin-left: 70%;
+                text-align:left;
+                padding:10px;
+                font-size: 20px;
+                font-weight: bolder;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
+            .customer-info {
+                display:inline-flex ;
+                padding: 10px;
+                width: 100%;
+                border: 1px solid black;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
+            .right{
+                text-align:right;
+            }
+            .left{
+                text-align:left;
+                padding-left:10px;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
+            .tablea{
+                width:100%;
+            }
+            th{
+                color: white;
+                background-color:#c264c9;
+                border: 1px solid #c0c0c0;
+                text-align:center;
+            }
+            td{
+                border: 1px solid #c0c0c0;
+            }
+            .table{
+                width:100%;
+            }
+            </style>
+    </head>
+    <body>
+            <div class="cname">Customer Name: $lname $fname</div> 
+        <div class="customer-info-box">
+            <div class="customer-info">
+                <span class="left">
+                <br/><span>Branch name:        <b>$branch_name</b></span><br/> 
+                <span>Branch address: <b>$branch_address</b></span><br/>
+                <span>Client name: <b>$lname $fname</b></span><br/> 
+                <span>Currency: <b>$currtype</b></span><br/>
+                <span>Account number:<b> $acc_no</b></span><br/> 
+                <span>Total debit <b></span></b><br/>
+                <span>Total credit <b></span></b><br/> 
+                <span>Statement period: <b> 04/04/2020 - 05/05/2020</b></span><br/> 
+            </span>
+            </div>
         </div>
-    </div>
-    </div>
+        <div class="table">
+            <table class="tablea">
+                <thead>
+                    <tr>
+                        <th>Opening Balance</th>
+                        <th>Closing Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2,000,000</td>
+                        <td>2,600,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            
+        </div>
+    </body>
+</html>
 EOD;
 
 // print a block of text using Write()
-$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+$pdf->writeHTML($html, true, false, true, false, '');
 
 // data loading
 $data = $pdf->LoadData();

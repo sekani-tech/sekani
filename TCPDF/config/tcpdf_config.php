@@ -109,12 +109,12 @@ define ('PDF_AUTHOR', 'Sekani Systems');
 /**
  * Header title.
  */
-define ('PDF_HEADER_TITLE', 'Client Statement');
+define ('PDF_HEADER_TITLE', 'Client Statement by ');
 
 /**
  * Header description string.
  */
-define ('PDF_HEADER_STRING', "by Sekani Systems");
+define ('PDF_HEADER_STRING', "by Sekani Systems\nwebite: ");
 
 /**
  * Document unit of measure [pt=point, mm=millimeter, cm=centimeter, in=inch].
@@ -124,7 +124,7 @@ define ('PDF_UNIT', 'mm');
 /**
  * Header margin.
  */
-define ('PDF_MARGIN_HEADER', 5);
+define ('PDF_MARGIN_HEADER', 0.1);
 
 /**
  * Footer margin.
