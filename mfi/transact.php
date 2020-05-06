@@ -384,7 +384,7 @@ $transid1 = $randms1;
         <div class="col-md-4">
             <div class="form-group">
                 <label for="">Transaction ID(Cheque no, Transfer Id, Deposit Id):</label>
-                <input type="text" readonly="true" value="<?php echo $transid1; ?>" name="transid" class="form-control" id="ti">
+                <input type="text" readonly="false" value="<?php echo $transid1; ?>" name="transid" class="form-control" id="ti">
             </div>
           </div>
     </div>
