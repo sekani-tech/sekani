@@ -81,7 +81,7 @@ if ($is_del == "0" && $is_del != NULL) {
             teller_id, transaction_id, transaction_type, is_reversed,
             transaction_date, amount, running_balance_derived, overdraft_amount_derived,
             created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
-            '{$till_no}', '{$trans_id}', 'Debit', '{$irvs}',
+            '{$gl_codex}', '{$trans_id}', 'Debit', '{$irvs}',
             '{$gen_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
             '{$gen_date}', '{$staff_id}')";
                 $res4 = mysqli_query($connection, $iat2);
