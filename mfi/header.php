@@ -218,8 +218,8 @@ input[type=number] {
               <a href="#" class="dropdown-item">Group Report</a>
               <a href="#" class="dropdown-item">Savings Report</a>
               <a href="#" class="dropdown-item">Current Accounts Report</a>
-              <a href="loans.php" class="dropdown-item">Loan reoprts</a>
-              <a href="#" class="dropdown-item">Finacial reoprt</a>
+              <a href="loans.php" class="dropdown-item">Loan reports</a>
+              <a href="#" class="dropdown-item">Financial report</a>
               <a href="#" class="dropdown-item">Audit</a>
               <a href="teller.php" class="dropdown-item">Teller</a>
             </div>
