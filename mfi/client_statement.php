@@ -36,10 +36,10 @@ if(isset($_GET["edit"])) {
     }
   }
 }
-session_start();
+// session_start();
                             
-    // Store data in session variables
-    session_regenerate_id();
+//     // Store data in session variables
+//     session_regenerate_id();
     $_SESSION["loggedin"] = true;
     $_SESSION["client_id"] = $id;
 ?>
@@ -114,7 +114,7 @@ session_start();
                     <table id="tabledat2" class="table" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT users.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id WHERE users.int_id ='$sessint_id'";
+                        $query = "SELECT transaction_date, created_date, amount, debit, credit, cumulative_balance_derived FROM account_transaction WHERE client_id ='$id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -129,39 +129,22 @@ session_start();
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>
-                        <tr>
-                          <th>01/04/2020</th>
-                          <th>01/04/2020</th>
-                          <th>Credit transaction</th>
-                          <th>34500</th>
-                          <th></th>
-                          <th>497965</th>
-                        </tr>
-                        <tr>
-                          <th>01/07/2020</th>
-                          <th>01/07/2020</th>
-                          <th>Function Party</th>
-                          <th></th>
-                          <th>35000</th>
-                          <th>463965</th>
-                        </tr>
-                      <!-- <?php if (mysqli_num_rows($result) > 0) {
+                      <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
-                        <?php $row["id"]; ?>
-                          <th><?php echo $row["display_name"]; ?></th>
-                          <th><?php echo $row["username"]; ?></th>
-                          <th><?php echo $row["int_name"]; ?></th>
-                          <th><?php echo $row["email"]; ?></th>
-                          <th><?php echo $row["status"]; ?></th>
-                          <th><?php echo $row["employee_status"]; ?></th>
+                          <th><?php echo $row["transaction_date"]; ?></th>
+                          <th><?php echo $row["created_date"]; ?></th>
+                          <th><?php echo $row["amount"]; ?></th>
+                          <th><?php echo $row["debit"]; ?></th>
+                          <th><?php echo $row["credit"]; ?></th>
+                          <th><?php echo $row["cumulative_balance_derived"]; ?></th>
                         </tr>
                         <?php }
                           }
                           else {
                             echo "0 Staff";
                           }
-                          ?> -->
+                          ?>
                       </tbody>
                     </table>
                   </div>
