@@ -105,9 +105,16 @@ $new_gl_bal2 = $l_acct_bal - $amt2;
 // checking if the teller is not deleted
 
 // checke three places to see if the transaction has been done
-$q1 = "SELECT * FROM `institution_account_transaction`";
-$q2 = "SELECT * FROM `account_transaction`";
-$q2 = "SELECT * FROM `transact_cache`";
+$q1 = mysqli_query($connection, "SELECT * FROM `institution_account_transaction` WHERE transaction_id = '$transid' && int_id='$sessint_id'");
+$q2 = mysqli_query($connection, "SELECT * FROM `account_transaction` WHERE transaction_id = '$transid' && int_id='$sessint_id'");
+$q2 = mysqli_query($connection, "SELECT * FROM `transact_cache` WHERE transact_id = '$transid' && int_id='$sessint_id'");
+// run the query
+$resx1 = mysqli_num_rows($q1);
+$resx2 = mysqli_num_rows($q2);
+$resx3 = mysqli_num_rows($q3);
+// we will execute the statement
+if ($resx1 == 0 && $resx2 == 0 && $resx3 == 0) {
+  // check if exsist
 if ($is_del == "0" && $is_del != NULL) {
   if ($amt2 <= $post_limit && $test == "deposit") {
      // check if the teller posting limit matches in the range of the withdrawal amount
@@ -559,6 +566,10 @@ if ($is_del == "0" && $is_del != NULL) {
     // echo this teller is not authorized
     $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
     echo header ("Location: ../mfi/transact.php?messagex2=$randms");
+}
+} else {
+  $_SESSION["Lack_of_intfund_$randms"] = "System Error";
+  echo header ("Location: ../mfi/transact.php?legalq=$randms");
 }
 // cont.
 } else {

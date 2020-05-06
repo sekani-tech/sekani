@@ -310,6 +310,25 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   ';
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
+} else if (isset($_GET["legalq"])) {
+  $key = $_GET["legalq"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Transaction Has Been Posted",
+          text: "You Have Made This Transaction Before",
+          showConfirmButton: false,
+          timer: 3000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
 } else {
     echo "";
 }
