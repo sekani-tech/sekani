@@ -44,6 +44,25 @@ if (isset($_GET["message"])) {
     ';
     $_SESSION["lack_of_intfund_$key"] = 0;
   }
+} else if (isset($_GET["messagep"])) {
+  $key = $_GET["messagep"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Deposit",
+          text: "Transaction Successful, Awaiting Approval",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
 } else if (isset($_GET["messagex2"])) {
   $key = $_GET["messagex2"];
   // $out = $_SESSION["lack_of_intfund_$key"];

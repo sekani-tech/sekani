@@ -9,7 +9,6 @@ $int_web = $_SESSION["int_web"];
 $int_phone = $_SESSION["int_phone"];
 $int_logo = $_SESSION["int_logo"];
 $int_address = $_SESSION["int_address"];
-$branch_id = $_SESSION["branch_id"];
 $ekaniN = $_SESSION["sek_name"];
 $ekaniE = $_SESSION["sek_email"];
 // alright i am done
@@ -32,6 +31,7 @@ $address = $_POST['address'];
 $date_joined = $_POST['date_joined'];
 $org_role = $_POST['org_role'];
 $std = "Not Active";
+$branch_id = $_SESSION['branch_id'];
 $phone = $_POST['phone'];
 $digits = 10;
 $temp2 = explode(".", $_FILES['idimg']['name']);
@@ -44,8 +44,8 @@ $msg = "Image uploaded successfully";
 $msg = "Image Failed";
 }
 
-$queryuser = "INSERT INTO users (int_id, username, fullname, password, usertype, status, time_created, pics)
-VALUES ('{$sessint_id}', '{$username}', '{$display_name}', '{$hash}', '{$user_t}', '{$std}', '{$date_joined}', '{$imagex}')";
+$queryuser = "INSERT INTO users (int_id, branch_id, username, fullname, password, usertype, status, time_created, pics)
+VALUES ('{$sessint_id}', '{$branch_id}', '{$username}', '{$display_name}', '{$hash}', '{$user_t}', '{$std}', '{$date_joined}', '{$imagex}')";
 
 $result = mysqli_query($connection, $queryuser);
 
