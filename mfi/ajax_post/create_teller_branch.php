@@ -16,6 +16,7 @@ $output = '';
         return $out;
         }
         $output = '
+        <label class="bmd-label-floating">Teller</label>
           <select class="form-control" name="teller1" id="till">
             <option value="">choose teller</option>
             "'.fill_branch($connection).'"
