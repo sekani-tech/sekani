@@ -400,7 +400,7 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
                     if ($res4) {
                       // REMEMBER TO SEND A MAIL
                       $v = "Verified";
-                      $updateTrans = "UPDATE transact_cache SET `status` = '$v' WHERE int_id = '$sessint_id' && WHERE id='$appod'";
+                      $updateTrans = "UPDATE transact_cache SET `status` = '$v' WHERE int_id = '$sessint_id' && id='$appod'";
                       $resl = mysqli_query($connection, $updateTrans);
                       // FINAL
                       if ($resl) {
