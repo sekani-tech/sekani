@@ -15,7 +15,7 @@ include('header.php');
             <div class="col-md-12">
             <div class="card">
                 <div class="card-header card-header-primary">
-                <h4 class="card-title">Reports - Daily Trial Balance</h4>
+                <h4 class="card-title">Reports - Trial Balance</h4>
             </div>
                 <div class="card-body">
                   <form action="">
@@ -66,7 +66,7 @@ include('header.php');
               </div>
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Assets</h4>
+                  <h4 class="card-title">Trial Balance Report</h4>
                 </div>
                 <div class="card-body">
                   <table class="table">

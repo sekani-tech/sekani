@@ -168,7 +168,7 @@ input[type=number] {
               Approval
             </a>
             <div class="dropdown-menu">
-              <a href="#" class="dropdown-item">Account Opening</a>
+              <a href="client_approval.php" class="dropdown-item">Account Opening</a>
               <a href="transact_approval.php" class="dropdown-item">Transactions</a>
               <a href="disbursement_approval.php" class="dropdown-item">Loan disbursement</a>
             </div>
