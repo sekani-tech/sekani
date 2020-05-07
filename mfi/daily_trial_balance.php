@@ -66,7 +66,7 @@ include('header.php');
               </div>
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Assets</h4>
+                  <h4 class="card-title">Trial Balance Report</h4>
                 </div>
                 <div class="card-body">
                   <table class="table">
