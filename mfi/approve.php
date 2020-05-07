@@ -399,7 +399,12 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
                     $res4 = mysqli_query($connection, $iat2);
                     if ($res4) {
                       // REMEMBER TO SEND A MAIL
-                      echo '<script type="text/javascript">
+                      $v = "Verified";
+                      $updateTrans = "UPDATE transact_cache SET `status` = '$v' WHERE int_id = '$sessint_id' && WHERE id='$appod'";
+                      $resl = mysqli_query($connection, $updateTrans);
+                      // FINAL
+                      if ($resl) {
+                        echo '<script type="text/javascript">
                               $(document).ready(function(){
                                   swal({
                                       type: "success",
@@ -411,8 +416,23 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
                               });
                               </script>
                               ';
-                    $URL="transact_approval.php";
+                              $URL="transact_approval.php";
                     echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                      } else {
+                        // echo error in transact cache
+                        echo '<script type="text/javascript">
+                        $(document).ready(function(){
+                            swal({
+                                type: "error",
+                                title: "Error",
+                                text: "Error in Account Transaction Cache",
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        });
+                        </script>
+                        ';
+                      }
                     } else {
                       // echo error at institution account transaction
                       echo '<script type="text/javascript">
