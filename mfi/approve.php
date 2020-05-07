@@ -97,210 +97,92 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
 <!-- STARTING THE SERVER -->
 <?php
  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-   $approve = $_POST['submit'];
-   $decline = $_POST['submit'];
-   if ($approve == 'approve') {
-    if (isset($_GET['approve']) && $_GET['approve'] !== '') {
-      $appod = $_GET['approve'];
-      $checkm = mysqli_query($connection, "SELECT * FROM transact_cache WHERE id = '$appod' && int_id = '$sessint_id'");
-      if (count([$checkm]) == 1) {
-          $x = mysqli_fetch_array($checkm);
-          $ssint_id = $_SESSION["int_id"];
-          $appuser_id = $_SESSION["user_id"];
-          $acct_no = $x['account_no'];
-          $staff_id = $x['staff_id'];
-          $amount = $x['amount'];
-          $famt = number_format("$amount", 2);
-          $pay_type = $x['pay_type'];
-          $transact_type = $x['transact_type'];
-          $product_type = $x['product_type'];
-          $stat = $x['status'];
-          $gen_date = date("Y-m-d");
-          $digits = 10;
-          $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-          $transid = $transid;
-  
-          if ($stat == "Pending") {
-              $getacct = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' && int_id = '$sessint_id'");
-              if (count([$getacct]) == 1) {
-                 $y = mysqli_fetch_array($getacct);
-                 $branch_id = $y['branch_id'];
-                 $acct_no = $y['account_no'];
-                 $client_id = $y['client_id'];
-                 $int_acct_bal = $y['account_balance_derived'];
-                 $comp = $amount + $int_acct_bal;
-                 $numberacct = number_format("$comp",2);
-                 $comp2 = $int_acct_bal - $amount;
-                 $numberacct2 = number_format("$comp2",2);
-                 $trans_type = "credit";
-                 $trans_type2 = "debit";
-                 $irvs = 0;
-                //  select the acccount
-              //    account deposit computation
-                if($transact_type == "Deposit") {
-                  $new_abd = $comp;
-                  $iupq = "UPDATE account SET account_balance_derived = '$new_abd',
-                  last_deposit = '$amount' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
-                  $iupqres = mysqli_query($connection, $iupq);
-                  if ($iupqres) {
-                      $iat = "INSERT INTO account_transaction (int_id, branch_id,
-                      account_no, product_id,
-                      client_id, teller_id, transaction_id, transaction_type, is_reversed,
-                      transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-                      created_date, appuser_id) VALUES ('{$ssint_id}', '{$branch_id}',
-                      '{$acct_no}', '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$trans_type}', '{$irvs}',
-                      '{$transaction_date}', '{$amount}', '{$new_abd}', '{$amount}',
-                      '{$gen_date}', '{$appuser_id}')";
-                      $res3 = mysqli_query($connection, $iat);
-                      if ($res3) {
-                          $v = "Verified";
-                          $iupqx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod' && int_id = '$sessint_id'";
-                          $res4 = mysqli_query($connection, $iupqx);
-                          if ($res4) {
-                            // institution account
-                            $int_account_trans = "UPDATE institution_account SET account_balance_derived = '$new_int_bal' WHERE teller_id = '$teller_id' && int_id = '$sessint_id'";
-                            $query1 = mysqli_query($connection, $int_account_trans);
-                            // check if int account has been updated
-                            if ($query1) {
-                              $trust = "INSERT INTO institution_account_transaction (int_id, branch_id,
-                              client_id, transaction_id, transaction_type, teller_id, is_reversed,
-                              transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-                              created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
-                             '{$client_id}', '{$transid}', '{$transact_type}', '{$teller_id}', '{$irvs}',
-                             '{$gen_date}', '{$amount}', '{$new_int_bal}', '{$amount}',
-                             '{$gen_date}', '{$appuser_id}')";
-                             $res9 = mysqli_query($connection, $trust);
-                             if ($res9) {
-                            //  MAILING SYSTEMS WILL COME IN LATER
-                             //  REMEMBER MAILING SYSTEMS
-                             echo '<script type="text/javascript">
-                             $(document).ready(function(){
-                                 swal({
-                                     type: "success",
-                                     title: "Deposit Transaction",
-                                     text: "Transaction Approval Successful",
-                                     showConfirmButton: false,
-                                     timer: 2000
-                                 })
-                             });
-                             </script>
-                             ';
-                             $URL="transact_approval.php";
-                             echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-                             } else {
-                              echo '<script type="text/javascript">
-                              $(document).ready(function(){
-                                  swal({
-                                      type: "error",
-                                      title: "System Error",
-                                      text: "Call - Check the institution account",
-                                      showConfirmButton: false,
-                                      timer: 2000
-                                  })
-                              });
-                              </script>
-                              ';
-                             }
-                            } else {
-                              // system error
-                              echo '<script type="text/javascript">
-                              $(document).ready(function(){
-                                  swal({
-                                      type: "error",
-                                      title: "System Error",
-                                      text: "Call - Check the institution account",
-                                      showConfirmButton: false,
-                                      timer: 2000
-                                  })
-                              });
-                              </script>
-                              ';
-                            }
-                            // institution account transaction
-                          } else {
-                            echo '<script type="text/javascript">
-                            $(document).ready(function(){
-                                swal({
-                                    type: "error",
-                                    title: "Error",
-                                    text: "Error updating Cache",
-                                    showConfirmButton: false,
-                                    timer: 2000
-                                })
-                            });
-                            </script>
-                            ';
-                          }
-                          
-                      } else {
-                        echo '<script type="text/javascript">
-                        $(document).ready(function(){
-                            swal({
-                                type: "error",
-                                title: "Error",
-                                text: "Error in Transaction",
-                                showConfirmButton: false,
-                                timer: 2000
-                            })
-                        });
-                        </script>
-                        ';
-                      }
-                  } else {
-                    echo '<script type="text/javascript">
-                    $(document).ready(function(){
-                        swal({
-                            type: "error",
-                            title: "Error",
-                            text: "Error in Account",
-                            showConfirmButton: false,
-                            timer: 2000
-                        })
-                    });
-                    </script>
-                    ';
-                  }
-                } else if ($transact_type == "Withdrawal") {
-                  $new_abd2 = $comp2;
-                  $iupq = "UPDATE account SET account_balance_derived = '$new_abd2',
-                  last_withdrawal = '$amount' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
-                  $iupqres = mysqli_query($connection, $iupq);
-                  if ($iupqres) {
-                      $iat = "INSERT INTO account_transaction (int_id, branch_id,
-                      account_no, product_id,
-                      client_id, teller_id, transaction_id, transaction_type, is_reversed,
-                      transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-                      created_date, appuser_id) VALUES ('{$ssint_id}', '{$branch_id}',
-                      '{$acct_no}', '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$trans_type2}', '{$irvs}',
-                      '{$transaction_date}', '{$amount}', '{$new_abd}', '{$amount}',
-                      '{$gen_date}', '{$appuser_id}')";
-                      $res3 = mysqli_query($connection, $iat);
-                      if ($res3) {
-                          $v = "Verified";
-                          $iupqx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod' && int_id = '$sessint_id'";
-                          $res4 = mysqli_query($connection, $iupqx);
-                          if ($res4) {
-                            // institution account
-                            // institution account transaction
-                            $int_account_trans = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2' WHERE teller_id = '$teller_id' && int_id = '$sessint_id'";
-                            $query1 = mysqli_query($connection, $int_account_trans);
-                            // check if int account has been updated
-                            if ($query1) {
-                              $trust = "INSERT INTO institution_account_transaction (int_id, branch_id,
-                              client_id, transaction_id, transaction_type, teller_id, is_reversed,
-                              transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-                              created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
-                             '{$client_id}', '{$transid}', '{$trans_type2}', '{$teller_id}', '{$irvs}',
-                             '{$gen_date}', '{$amount}', '{$new_int_bal2}', '{$amount}',
-                             '{$gen_date}', '{$appuser_id}')";
-                             $res9 = mysqli_query($connection, $trust);
-                             if ($res9) {
+  //  RUN A QUERY TO CHECK IF THE TRANSACTION HAS BEEN DONE BEFORE
+$q1 = mysqli_query($connection, "SELECT * FROM `institution_account_transaction` WHERE transaction_id = '$transid' && int_id='$sessint_id'");
+$resx1 = mysqli_num_rows($q1);
+  if ($resx1 == 0) {
+    // Lets geit on
+    $approve = $_POST['submit'];
+    $decline = $_POST['submit'];
+    if ($approve == 'approve') {
+     if (isset($_GET['approve']) && $_GET['approve'] !== '') {
+       $appod = $_GET['approve'];
+       $checkm = mysqli_query($connection, "SELECT * FROM transact_cache WHERE id = '$appod' && int_id = '$sessint_id'");
+       if (count([$checkm]) == 1) {
+           $x = mysqli_fetch_array($checkm);
+           $ssint_id = $_SESSION["int_id"];
+           $appuser_id = $_SESSION["user_id"];
+           $acct_no = $x['account_no'];
+           $staff_id = $x['staff_id'];
+           $amount = $x['amount'];
+           $famt = number_format("$amount", 2);
+           $pay_type = $x['pay_type'];
+           $transact_type = $x['transact_type'];
+           $product_type = $x['product_type'];
+           $stat = $x['status'];
+           $gen_date = date("Y-m-d");
+           $digits = 10;
+           $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+           $transid = $transid;
+   
+           if ($stat == "Pending") {
+               $getacct = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' && int_id = '$sessint_id'");
+               if (count([$getacct]) == 1) {
+                  $y = mysqli_fetch_array($getacct);
+                  $branch_id = $y['branch_id'];
+                  $acct_no = $y['account_no'];
+                  $client_id = $y['client_id'];
+                  $int_acct_bal = $y['account_balance_derived'];
+                  $comp = $amount + $int_acct_bal;
+                  $numberacct = number_format("$comp",2);
+                  $comp2 = $int_acct_bal - $amount;
+                  $numberacct2 = number_format("$comp2",2);
+                  $trans_type = "credit";
+                  $trans_type2 = "debit";
+                  $irvs = 0;
+                 //  select the acccount
+               //    account deposit computation
+                 if($transact_type == "Deposit") {
+                   $new_abd = $comp;
+                   $iupq = "UPDATE account SET account_balance_derived = '$new_abd',
+                   last_deposit = '$amount' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
+                   $iupqres = mysqli_query($connection, $iupq);
+                   if ($iupqres) {
+                       $iat = "INSERT INTO account_transaction (int_id, branch_id,
+                       account_no, product_id,
+                       client_id, teller_id, transaction_id, transaction_type, is_reversed,
+                       transaction_date, amount, running_balance_derived, overdraft_amount_derived,
+                       created_date, appuser_id) VALUES ('{$ssint_id}', '{$branch_id}',
+                       '{$acct_no}', '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$trans_type}', '{$irvs}',
+                       '{$transaction_date}', '{$amount}', '{$new_abd}', '{$amount}',
+                       '{$gen_date}', '{$appuser_id}')";
+                       $res3 = mysqli_query($connection, $iat);
+                       if ($res3) {
+                           $v = "Verified";
+                           $iupqx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod' && int_id = '$sessint_id'";
+                           $res4 = mysqli_query($connection, $iupqx);
+                           if ($res4) {
+                             // institution account
+                             $int_account_trans = "UPDATE institution_account SET account_balance_derived = '$new_int_bal' WHERE teller_id = '$teller_id' && int_id = '$sessint_id'";
+                             $query1 = mysqli_query($connection, $int_account_trans);
+                             // check if int account has been updated
+                             if ($query1) {
+                               $trust = "INSERT INTO institution_account_transaction (int_id, branch_id,
+                               client_id, transaction_id, transaction_type, teller_id, is_reversed,
+                               transaction_date, amount, running_balance_derived, overdraft_amount_derived,
+                               created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
+                              '{$client_id}', '{$transid}', '{$transact_type}', '{$teller_id}', '{$irvs}',
+                              '{$gen_date}', '{$amount}', '{$new_int_bal}', '{$amount}',
+                              '{$gen_date}', '{$appuser_id}')";
+                              $res9 = mysqli_query($connection, $trust);
+                              if ($res9) {
+                             //  MAILING SYSTEMS WILL COME IN LATER
                               //  REMEMBER MAILING SYSTEMS
                               echo '<script type="text/javascript">
                               $(document).ready(function(){
                                   swal({
                                       type: "success",
-                                      title: "Withdrawal Transaction",
+                                      title: "Deposit Transaction",
                                       text: "Transaction Approval Successful",
                                       showConfirmButton: false,
                                       timer: 2000
@@ -310,176 +192,453 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
                               ';
                               $URL="transact_approval.php";
                               echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                              } else {
+                               echo '<script type="text/javascript">
+                               $(document).ready(function(){
+                                   swal({
+                                       type: "error",
+                                       title: "System Error",
+                                       text: "Call - Check the institution account",
+                                       showConfirmButton: false,
+                                       timer: 2000
+                                   })
+                               });
+                               </script>
+                               ';
+                              }
                              } else {
-                              echo '<script type="text/javascript">
-                              $(document).ready(function(){
-                                  swal({
-                                      type: "error",
-                                      title: "System Error",
-                                      text: "Call - Check the institution account",
-                                      showConfirmButton: false,
-                                      timer: 2000
-                                  })
-                              });
-                              </script>
-                              ';
+                               // system error
+                               echo '<script type="text/javascript">
+                               $(document).ready(function(){
+                                   swal({
+                                       type: "error",
+                                       title: "System Error",
+                                       text: "Call - Check the institution account",
+                                       showConfirmButton: false,
+                                       timer: 2000
+                                   })
+                               });
+                               </script>
+                               ';
                              }
-                            } else {
-                              // system error
-                              echo '<script type="text/javascript">
-                              $(document).ready(function(){
-                                  swal({
-                                      type: "error",
-                                      title: "System Error",
-                                      text: "Call - Check the institution account",
-                                      showConfirmButton: false,
-                                      timer: 2000
-                                  })
-                              });
-                              </script>
-                              ';
-                            }
-                          } else {
-                            echo '<script type="text/javascript">
-                            $(document).ready(function(){
-                                swal({
-                                    type: "error",
-                                    title: "Error",
-                                    text: "Error updating Cache",
-                                    showConfirmButton: false,
-                                    timer: 2000
-                                })
-                            });
-                            </script>
-                            ';
-                          }
-                      } else {
-                        echo '<script type="text/javascript">
-                        $(document).ready(function(){
-                            swal({
-                                type: "error",
-                                title: "Error",
-                                text: "Error in Transaction",
-                                showConfirmButton: false,
-                                timer: 2000
-                            })
-                        });
-                        </script>
-                        ';
-                      }
-                  } else {
-                    echo '<script type="text/javascript">
-                    $(document).ready(function(){
-                        swal({
-                            type: "error",
-                            title: "Error",
-                            text: "Error in Account",
-                            showConfirmButton: false,
-                            timer: 2000
-                        })
-                    });
-                    </script>
-                    ';
+                             // institution account transaction
+                           } else {
+                             echo '<script type="text/javascript">
+                             $(document).ready(function(){
+                                 swal({
+                                     type: "error",
+                                     title: "Error",
+                                     text: "Error updating Cache",
+                                     showConfirmButton: false,
+                                     timer: 2000
+                                 })
+                             });
+                             </script>
+                             ';
+                           }
+                           
+                       } else {
+                         echo '<script type="text/javascript">
+                         $(document).ready(function(){
+                             swal({
+                                 type: "error",
+                                 title: "Error",
+                                 text: "Error in Transaction",
+                                 showConfirmButton: false,
+                                 timer: 2000
+                             })
+                         });
+                         </script>
+                         ';
+                       }
+                   } else {
+                     echo '<script type="text/javascript">
+                     $(document).ready(function(){
+                         swal({
+                             type: "error",
+                             title: "Error",
+                             text: "Error in Account",
+                             showConfirmButton: false,
+                             timer: 2000
+                         })
+                     });
+                     </script>
+                     ';
+                   }
+                 } else if ($transact_type == "Withdrawal") {
+                   $new_abd2 = $comp2;
+                   $iupq = "UPDATE account SET account_balance_derived = '$new_abd2',
+                   last_withdrawal = '$amount' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
+                   $iupqres = mysqli_query($connection, $iupq);
+                   if ($iupqres) {
+                       $iat = "INSERT INTO account_transaction (int_id, branch_id,
+                       account_no, product_id,
+                       client_id, teller_id, transaction_id, transaction_type, is_reversed,
+                       transaction_date, amount, running_balance_derived, overdraft_amount_derived,
+                       created_date, appuser_id) VALUES ('{$ssint_id}', '{$branch_id}',
+                       '{$acct_no}', '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$trans_type2}', '{$irvs}',
+                       '{$transaction_date}', '{$amount}', '{$new_abd}', '{$amount}',
+                       '{$gen_date}', '{$appuser_id}')";
+                       $res3 = mysqli_query($connection, $iat);
+                       if ($res3) {
+                           $v = "Verified";
+                           $iupqx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod' && int_id = '$sessint_id'";
+                           $res4 = mysqli_query($connection, $iupqx);
+                           if ($res4) {
+                             // institution account
+                             // institution account transaction
+                             $int_account_trans = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2' WHERE teller_id = '$teller_id' && int_id = '$sessint_id'";
+                             $query1 = mysqli_query($connection, $int_account_trans);
+                             // check if int account has been updated
+                             if ($query1) {
+                               $trust = "INSERT INTO institution_account_transaction (int_id, branch_id,
+                               client_id, transaction_id, transaction_type, teller_id, is_reversed,
+                               transaction_date, amount, running_balance_derived, overdraft_amount_derived,
+                               created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
+                              '{$client_id}', '{$transid}', '{$trans_type2}', '{$teller_id}', '{$irvs}',
+                              '{$gen_date}', '{$amount}', '{$new_int_bal2}', '{$amount}',
+                              '{$gen_date}', '{$appuser_id}')";
+                              $res9 = mysqli_query($connection, $trust);
+                              if ($res9) {
+                               //  REMEMBER MAILING SYSTEMS
+                               echo '<script type="text/javascript">
+                               $(document).ready(function(){
+                                   swal({
+                                       type: "success",
+                                       title: "Withdrawal Transaction",
+                                       text: "Transaction Approval Successful",
+                                       showConfirmButton: false,
+                                       timer: 2000
+                                   })
+                               });
+                               </script>
+                               ';
+                               $URL="transact_approval.php";
+                               echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                              } else {
+                               echo '<script type="text/javascript">
+                               $(document).ready(function(){
+                                   swal({
+                                       type: "error",
+                                       title: "System Error",
+                                       text: "Call - Check the institution account",
+                                       showConfirmButton: false,
+                                       timer: 2000
+                                   })
+                               });
+                               </script>
+                               ';
+                              }
+                             } else {
+                               // system error
+                               echo '<script type="text/javascript">
+                               $(document).ready(function(){
+                                   swal({
+                                       type: "error",
+                                       title: "System Error",
+                                       text: "Call - Check the institution account",
+                                       showConfirmButton: false,
+                                       timer: 2000
+                                   })
+                               });
+                               </script>
+                               ';
+                             }
+                           } else {
+                             echo '<script type="text/javascript">
+                             $(document).ready(function(){
+                                 swal({
+                                     type: "error",
+                                     title: "Error",
+                                     text: "Error updating Cache",
+                                     showConfirmButton: false,
+                                     timer: 2000
+                                 })
+                             });
+                             </script>
+                             ';
+                           }
+                       } else {
+                         echo '<script type="text/javascript">
+                         $(document).ready(function(){
+                             swal({
+                                 type: "error",
+                                 title: "Error",
+                                 text: "Error in Transaction",
+                                 showConfirmButton: false,
+                                 timer: 2000
+                             })
+                         });
+                         </script>
+                         ';
+                       }
+                   } else {
+                     echo '<script type="text/javascript">
+                     $(document).ready(function(){
+                         swal({
+                             type: "error",
+                             title: "Error",
+                             text: "Error in Account",
+                             showConfirmButton: false,
+                             timer: 2000
+                         })
+                     });
+                     </script>
+                     ';
+                   }
+                 } else if ($transact_type == "Expense") {
+                   // importing the needed on the gl
+                   $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_codex'";
+                   $dbgl = mysqli_query($connection, $upglacct);
+                   if ($dbgl) {
+                     $upinta = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2', total_withdrawals_derived = '$tbd2' WHERE int_id = '$sessint_id' && teller_id = '$staff_id'";
+                     $res1 = mysqli_query($connection, $upinta);
+                     if ($res1) {
+                       $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
+             teller_id, transaction_id, transaction_type, is_reversed,
+             transaction_date, amount, running_balance_derived, overdraft_amount_derived,
+             created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
+             '{$gl_codex}', '{$trans_id}', 'Debit', '{$irvs}',
+             '{$gen_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
+             '{$gen_date}', '{$staff_id}')";
+                     $res4 = mysqli_query($connection, $iat2);
+                     if ($res4) {
+                       // REMEMBER TO SEND A MAIL
+                       $v = "Verified";
+                       $updateTrans = "UPDATE transact_cache SET `status` = '$v' WHERE int_id = '$sessint_id' && id='$appod'";
+                       $resl = mysqli_query($connection, $updateTrans);
+                       // FINAL
+                       if ($resl) {
+                         echo '<script type="text/javascript">
+                               $(document).ready(function(){
+                                   swal({
+                                       type: "success",
+                                       title: "Expense",
+                                       text: "Expense Transaction Approval Successful",
+                                       showConfirmButton: false,
+                                       timer: 2000
+                                   })
+                               });
+                               </script>
+                               ';
+                               $URL="transact_approval.php";
+                     echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                       } else {
+                         // echo error in transact cache
+                         echo '<script type="text/javascript">
+                         $(document).ready(function(){
+                             swal({
+                                 type: "error",
+                                 title: "Error",
+                                 text: "Error in Account Transaction Cache",
+                                 showConfirmButton: false,
+                                 timer: 2000
+                             })
+                         });
+                         </script>
+                         ';
+                       }
+                     } else {
+                       // echo error at institution account transaction
+                       echo '<script type="text/javascript">
+                     $(document).ready(function(){
+                         swal({
+                             type: "error",
+                             title: "Error",
+                             text: "Error in Account Transaction",
+                             showConfirmButton: false,
+                             timer: 2000
+                         })
+                     });
+                     </script>
+                     ';
+                     }
+                     } else {
+                       // echo error institution account
+                       echo '<script type="text/javascript">
+                     $(document).ready(function(){
+                         swal({
+                             type: "error",
+                             title: "Error",
+                             text: "Error in Teller Account",
+                             showConfirmButton: false,
+                             timer: 2000
+                         })
+                     });
+                     </script>
+                     ';
+                     }
+                   } else {
+                     // echo error in account gl
+                     echo '<script type="text/javascript">
+                     $(document).ready(function(){
+                         swal({
+                             type: "error",
+                             title: "Error",
+                             text: "Error in Expense GL Account",
+                             showConfirmButton: false,
+                             timer: 2000
+                         })
+                     });
+                     </script>
+                     ';
+                   }
+                 }
+ 
+ else {
+                   echo '<script type="text/javascript">
+                   $(document).ready(function(){
+                       swal({
+                           type: "error",
+                           title: "Error",
+                           text: "No Deposit or Withdrawal",
+                           showConfirmButton: false,
+                           timer: 2000
+                       })
+                   });
+                   </script>
+                   ';
                   }
-                } else if ($transact_type == "Expense") {
-                  // importing the needed on the gl
-                  $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_codex'";
-                  $dbgl = mysqli_query($connection, $upglacct);
-                  if ($dbgl) {
-                    $upinta = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2', total_withdrawals_derived = '$tbd2' WHERE int_id = '$sessint_id' && teller_id = '$staff_id'";
-                    $res1 = mysqli_query($connection, $upinta);
-                    if ($res1) {
-                      $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
-            teller_id, transaction_id, transaction_type, is_reversed,
-            transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-            created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
-            '{$gl_codex}', '{$trans_id}', 'Debit', '{$irvs}',
-            '{$gen_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
-            '{$gen_date}', '{$staff_id}')";
-                    $res4 = mysqli_query($connection, $iat2);
-                    if ($res4) {
-                      // REMEMBER TO SEND A MAIL
-                      $v = "Verified";
-                      $updateTrans = "UPDATE transact_cache SET `status` = '$v' WHERE int_id = '$sessint_id' && id='$appod'";
-                      $resl = mysqli_query($connection, $updateTrans);
-                      // FINAL
-                      if ($resl) {
-                        echo '<script type="text/javascript">
-                              $(document).ready(function(){
-                                  swal({
-                                      type: "success",
-                                      title: "Expense",
-                                      text: "Expense Transaction Approval Successful",
-                                      showConfirmButton: false,
-                                      timer: 2000
-                                  })
-                              });
-                              </script>
-                              ';
-                              $URL="transact_approval.php";
-                    echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-                      } else {
-                        // echo error in transact cache
-                        echo '<script type="text/javascript">
-                        $(document).ready(function(){
-                            swal({
-                                type: "error",
-                                title: "Error",
-                                text: "Error in Account Transaction Cache",
-                                showConfirmButton: false,
-                                timer: 2000
-                            })
-                        });
-                        </script>
-                        ';
-                      }
-                    } else {
-                      // echo error at institution account transaction
-                      echo '<script type="text/javascript">
-                    $(document).ready(function(){
-                        swal({
-                            type: "error",
-                            title: "Error",
-                            text: "Error in Account Transaction",
-                            showConfirmButton: false,
-                            timer: 2000
-                        })
-                    });
-                    </script>
-                    ';
-                    }
-                    } else {
-                      // echo error institution account
-                      echo '<script type="text/javascript">
-                    $(document).ready(function(){
-                        swal({
-                            type: "error",
-                            title: "Error",
-                            text: "Error in Teller Account",
-                            showConfirmButton: false,
-                            timer: 2000
-                        })
-                    });
-                    </script>
-                    ';
-                    }
-                  } else {
-                    // echo error in account gl
-                    echo '<script type="text/javascript">
-                    $(document).ready(function(){
-                        swal({
-                            type: "error",
-                            title: "Error",
-                            text: "Error in Expense GL Account",
-                            showConfirmButton: false,
-                            timer: 2000
-                        })
-                    });
-                    </script>
-                    ';
-                  }
-                }
+   
+               }
+           } else {
+               // a message
+               echo '<script type="text/javascript">
+                     $(document).ready(function(){
+                         swal({
+                             type: "error",
+                             title: "Error",
+                             text: "Transaction Has Been Approved Already",
+                             showConfirmButton: false,
+                             timer: 2000
+                         })
+                     });
+                     </script>
+                     ';
+           }
+       }
+   }
+    } else {
+     $digits = 10;
+     $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+      if (isset($_GET['approve']) && $_GET['approve'] !== '') {
+        $appe = $_GET['approve'];
+        $dc = "declined";
+        $take = "UPDATE transact_cache SET `status` = '$dc' WHERE id = '$appe' && int_id = '$sessint_id'";
+        $deny = mysqli_query($connection, $take);
+        if ($deny) {
+         echo '<script type="text/javascript">
+                             $(document).ready(function(){
+                                 swal({
+                                     type: "success",
+                                     title: "Success",
+                                     text: "Transaction Declined",
+                                     showConfirmButton: false,
+                                     timer: 2000
+                                 })
+                             });
+                             </script>
+         ';
+        } else {
+         echo '<script type="text/javascript">
+                             $(document).ready(function(){
+                                 swal({
+                                     type: "error",
+                                     title: "Error",
+                                     text: "Error Not Declined",
+                                     showConfirmButton: false,
+                                     timer: 2000
+                                 })
+                             });
+                             </script>
+       ';
+        }
+      }
+    }
+  } else {
+  // echo this transaction has been done already
+  echo '<script type="text/javascript">
+                             $(document).ready(function(){
+                                 swal({
+                                     type: "error",
+                                     title: "Transaction Already Done!",
+                        text: "This transaction has been done already",
+                     showConfirmButton: false,
+                  timer: 2000
+         })
+        });
+    </script>
+       ';
+       $URL="transact_approval.php";
+       echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+  }
+  
+ }
+?>
+<!-- Content added here -->
 
+    <div class="content">
+        <div class="container-fluid">
+          <!-- your content here -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Approve Transaction</h4>
+                  <p class="card-category">Make sure everything is in order</p>
+                </div>
+                <div class="card-body">
+                  <form method="post">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Transaction Type:</label>
+                          <input type="text" class="form-control" name="name" value="<?php echo $transact_type; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Posted By</label>
+                          <input type="text" class="form-control" name="email" value="<?php echo $ao; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Client</label>
+                          <input type="text" class="form-control" name="phone" value="<?php echo $cn; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Amount</label>
+                          <input type="text" class="form-control" name="location" value="<?php echo $amount; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Transaction ID</label>
+                          <input type="text" class="form-control" name="transidddd" value="<?php echo $transid; ?>" readonly>
+                        </div>
+                      </div>
+                      </div>
+                      <a href="client.php" class="btn btn-secondary">Back</a>
+                      <button type="submit" name="submit" value="decline" class="btn btn-danger pull-right">Decline</button>
+                    <button type="submit" name="submit" value="approve" class="btn btn-primary pull-right">Approve</button>
+                    <div class="clearfix"></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /content -->
+        </div>
+      </div>
+
+<?php
+
+    include("footer.php");
+
+    
             // for the loan it has been commented for future purpose ------
 // else if ($transact_type == "Loan Repayment") {
 //                   $person = mysqli_query($connection, "SELECT loan.interest_rate, client.id, client.account_no, loan.id, client.branch_id, loan.product_id, principal_amount, loan_term, loan.interest_rate FROM loan JOIN client ON loan.client_id = client.id WHERE client.int_id ='$sessint_id' && client_id = '$client_id'");
@@ -1012,139 +1171,4 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
 //     echo 'Nothing';
 //   }
 //                 } 
-else {
-                  echo '<script type="text/javascript">
-                  $(document).ready(function(){
-                      swal({
-                          type: "error",
-                          title: "Error",
-                          text: "No Deposit or Withdrawal",
-                          showConfirmButton: false,
-                          timer: 2000
-                      })
-                  });
-                  </script>
-                  ';
-                 }
-  
-              }
-          } else {
-              // a message
-              echo '<script type="text/javascript">
-                    $(document).ready(function(){
-                        swal({
-                            type: "error",
-                            title: "Error",
-                            text: "Transaction Has Been Approved Already",
-                            showConfirmButton: false,
-                            timer: 2000
-                        })
-                    });
-                    </script>
-                    ';
-          }
-      }
-  }
-   } else {
-    $digits = 10;
-    $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-     if (isset($_GET['approve']) && $_GET['approve'] !== '') {
-       $appe = $_GET['approve'];
-       $dc = "declined";
-       $take = "UPDATE transact_cache SET `status` = '$dc' WHERE id = '$appe' && int_id = '$sessint_id'";
-       $deny = mysqli_query($connection, $take);
-       if ($deny) {
-        echo '<script type="text/javascript">
-                            $(document).ready(function(){
-                                swal({
-                                    type: "success",
-                                    title: "Success",
-                                    text: "Transaction Declined",
-                                    showConfirmButton: false,
-                                    timer: 2000
-                                })
-                            });
-                            </script>
-        ';
-       } else {
-        echo '<script type="text/javascript">
-                            $(document).ready(function(){
-                                swal({
-                                    type: "error",
-                                    title: "Error",
-                                    text: "Error Not Declined",
-                                    showConfirmButton: false,
-                                    timer: 2000
-                                })
-                            });
-                            </script>
-      ';
-       }
-     }
-   }
- }
-?>
-<!-- Content added here -->
-
-    <div class="content">
-        <div class="container-fluid">
-          <!-- your content here -->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title">Approve Transaction</h4>
-                  <p class="card-category">Make sure everything is in order</p>
-                </div>
-                <div class="card-body">
-                  <form method="post">
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Transaction Type:</label>
-                          <input type="text" class="form-control" name="name" value="<?php echo $transact_type; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Posted By</label>
-                          <input type="text" class="form-control" name="email" value="<?php echo $ao; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Client</label>
-                          <input type="text" class="form-control" name="phone" value="<?php echo $cn; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Amount</label>
-                          <input type="text" class="form-control" name="location" value="<?php echo $amount; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Transaction ID</label>
-                          <input type="text" class="form-control" name="transidddd" value="<?php echo $transid; ?>" readonly>
-                        </div>
-                      </div>
-                      </div>
-                      <a href="client.php" class="btn btn-secondary">Back</a>
-                      <button type="submit" name="submit" value="decline" class="btn btn-danger pull-right">Decline</button>
-                    <button type="submit" name="submit" value="approve" class="btn btn-primary pull-right">Approve</button>
-                    <div class="clearfix"></div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /content -->
-        </div>
-      </div>
-
-<?php
-
-    include("footer.php");
-
 ?>
