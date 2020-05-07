@@ -68,7 +68,7 @@ class MYPDF extends TCPDF {
 		}
 		$this->Ln();
 		// Color and font restoration
-		$this->SetFillColor();
+		$this->SetFillColor(212, 188, 209);
 		$this->SetTextColor(0);
 		$this->SetFont('');
 		// Data
@@ -98,8 +98,8 @@ $pdf->SetSubject('Client statement for '.$fname, $lname.'');
 $pdf->SetKeywords('');
 
 // set default header data
-// $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 061', PDF_HEADER_STRING);
-$pdf->SetHeaderData('../instimg/'.$logo, '13', PDF_HEADER_TITLE.$intname, PDF_HEADER_STRING.$web);
+$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 061', PDF_HEADER_STRING);
+// $pdf->SetHeaderData($logo, '13', PDF_HEADER_TITLE.$intname, PDF_HEADER_STRING.$web);
 
 // set header and footer fonts
 $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
