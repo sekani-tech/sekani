@@ -44,6 +44,25 @@ if (isset($_GET["message"])) {
     ';
     $_SESSION["lack_of_intfund_$key"] = 0;
   }
+} else if (isset($_GET["messagep"])) {
+  $key = $_GET["messagep"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Deposit",
+          text: "Transaction Successful, Awaiting Approval",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
 } else if (isset($_GET["messagex2"])) {
   $key = $_GET["messagex2"];
   // $out = $_SESSION["lack_of_intfund_$key"];
@@ -291,6 +310,25 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   ';
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
+} else if (isset($_GET["legalq"])) {
+  $key = $_GET["legalq"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Transaction Has Been Posted",
+          text: "You Have Made This Transaction Before",
+          showConfirmButton: false,
+          timer: 3000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
 } else {
     echo "";
 }
@@ -384,7 +422,7 @@ $transid1 = $randms1;
         <div class="col-md-4">
             <div class="form-group">
                 <label for="">Transaction ID(Cheque no, Transfer Id, Deposit Id):</label>
-                <input type="text" readonly="true" value="<?php echo $transid1; ?>" name="transid" class="form-control" id="ti">
+                <input type="text" value="<?php echo $transid1; ?>" name="transid" class="form-control" id="ti">
             </div>
           </div>
     </div>

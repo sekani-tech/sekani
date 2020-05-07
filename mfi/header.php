@@ -66,6 +66,7 @@ $rezz = mysqli_query($connection, $activeq);
   <title><?php echo "$int_name - $page_title"?></title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
+  <meta http-equiv="refresh" content="1000;url=../functions/logout.php" />
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <!--     Fonts and icons     -->
@@ -167,7 +168,7 @@ input[type=number] {
               Approval
             </a>
             <div class="dropdown-menu">
-              <a href="#" class="dropdown-item">Account Opening</a>
+              <a href="client_approval.php" class="dropdown-item">Account Opening</a>
               <a href="transact_approval.php" class="dropdown-item">Transactions</a>
               <a href="disbursement_approval.php" class="dropdown-item">Loan disbursement</a>
             </div>
@@ -218,8 +219,8 @@ input[type=number] {
               <a href="#" class="dropdown-item">Group Report</a>
               <a href="#" class="dropdown-item">Savings Report</a>
               <a href="#" class="dropdown-item">Current Accounts Report</a>
-              <a href="loans.php" class="dropdown-item">Loan reoprts</a>
-              <a href="#" class="dropdown-item">Finacial reoprt</a>
+              <a href="loans.php" class="dropdown-item">Loan reports</a>
+              <a href="#" class="dropdown-item">Financial report</a>
               <a href="#" class="dropdown-item">Audit</a>
               <a href="teller.php" class="dropdown-item">Teller</a>
             </div>

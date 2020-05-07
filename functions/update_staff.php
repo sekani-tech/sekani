@@ -48,14 +48,6 @@ if (move_uploaded_file($_FILES['imagefile']['tmp_name'], "staff/" . $imagex)) {
         first_name = '$first_name', last_name = '$last_name', phone = '$phone', employee_status = '$status', address = '$address', date_joined = '$date_joined',
         org_role = '$org_role', img = '$img' WHERE id = '$staff_id'";
         $res = mysqli_query($connection, $sec);
-        // if ($connection->error) {
-        //     try {   
-        //                     throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $msqli->errno);   
-        //                 } catch(Exception $e ) {
-        //                     echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-        //                     echo nl2br($e->getTraceAsString());
-        //                 }
-        // }
         if ($res) {
           $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
           echo header ("Location: ../mfi/users.php?message3=$randms");

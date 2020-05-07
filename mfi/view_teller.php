@@ -8,15 +8,15 @@ $destination = "staff_mgmt.php";
 if(isset($_GET["id"])) {
   $id = $_GET["id"];
   $update = true;
-  $query = mysqli_query($connection, "SELECT * FROM teller WHERE id='$id' && int_id='$sessint_id'");
+  $query = mysqli_query($connection, "SELECT * FROM tellers WHERE name ='$id' && int_id='$sessint_id'");
   if (count([$query]) == 1) {
     $ans = mysqli_fetch_array($query);
     $id = $ans['id'];
     $int_id = $ans['int_id'];
-    $tell_name = $ans['teller_name'];
-    $postlimit = $ans['posting_limit'];
-    $tellerno = $ans['teller_no'];
-    $tillno = $ans['till_no'];
+    $tell_name = $ans['name'];
+    $postlimit = $ans['post_limit'];
+    $tellerno = $ans['till_no'];
+    $tillno = $ans['till'];
     $startdate = $ans['valid_from'];
     $endate = $ans['valid_to'];
     $branch_id = $ans['branch_id'];
@@ -45,38 +45,65 @@ if(isset($_GET["id"])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Start Date</label>
-                          <input type="date" value="<?php echo $startdate;?>" name="" class="form-control" id="">
+                          <input type="date" value="<?php echo $startdate;?>" name="" class="form-control" id="start">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">End Date</label>
-                          <input type="date" value="<?php echo $endate;?>" name="" class="form-control" id="">
+                          <input type="date" value="<?php echo $endate;?>" name="" class="form-control" id="end">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                             <!-- populate from db -->
                           <label class="bmd-label-floating">Branch</label>
-                          <input type="text" name="" value="<?php echo $branch;?>" id="" class="form-control" readonly>
+                          <input type="text" id="branch" name="" value="<?php echo $branch;?>" class="form-control" readonly>
                         </div>
                       </div>
                       <div class=" col-md-4 form-group">
                           <!-- populate from db -->
                           <label for="bmd-label-floating">Teller ID</label>
-                          <input type="text" name="" value="<?php echo $tellerno;?>" id="" class="form-control" readonly>
+                          <input type="text" id="till" name="" value="<?php echo $tellerno;?>" class="form-control" readonly>
+                          <input type="text" id="int_id" name="" value="<?php echo $sessint_id;?>" class="form-control" readonly>
                       </div>
                       </div>
-                      <button type="reset" class="btn btn-danger pull-left">Reset</button>
-                    <button type="submit" class="btn btn-primary pull-right">Run Report</button>
+                      <!-- <button type="reset" class="btn btn-danger pull-left">Reset</button> -->
+                    <!-- <button class="btn btn-primary pull-right">Run Report</button> -->
                     <div class="clearfix"></div>
                   </form>
+                  <button type="reset" class="btn btn-danger pull-left">Reset</button>
+                  <button id="run" class="btn btn-primary pull-right">Run Report</button>
+                  <!-- writing a code to the run the reort at click -->
+                  <script>
+                    $(document).ready(function () {
+                      $('#run').on("click", function () {
+                        var start = $('#start').val();
+                        var end = $('#end').val();
+                        var branch = $('#branch').val();
+                        var teller = $('#till').val();
+                        var int_id = $('#int_id').val();
+                        $.ajax({
+                          url: "run_teller_report.php",
+                          method: "POST",
+                          data:{start:start, end:end, branch:branch, teller:teller, int_id:int_id},
+                          success: function (data) {
+                            $('#outjournal').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                  <!-- this section is the end of run report -->
                 </div>
               </div>
             </div>
             <!-- teller report -->
             <!-- populate for print with above data -->
             <div class="col-md-12">
+              <!-- DISPLAY TELLER HERE -->
+              <div id="outjournal"></div>
+              <!-- END DISPLAY OF TELLER -->
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Name of Institution</h4>

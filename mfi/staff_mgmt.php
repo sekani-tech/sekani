@@ -308,15 +308,20 @@ $destination = "index.php";
                           // end of tellers
                           // $nom = $row["till_no"];
                           // $cll = strlen($nom);
+                          // $till = $row["till"];
+                          // $checking = "SELECT * FROM `acc_gl_account` WHERE gl_code ='$till'";
+                          // $done = mysqli_query($connection, $checking);
+                          // $men = mysqli_fetch_array($done);
+                          // $bal = $men["organization_running_balance_derived"];
                           // $rest = substr("$nom", 0, -1);
-                          $till = $row["till"];
-                          $checking = "SELECT * FROM `acc_gl_account` WHERE gl_code ='$till'";
+                          $till = $row["name"];
+                          $checking = "SELECT * FROM `institution_account` WHERE teller_id ='$till' && int_id = '$sessint_id'";
                           $done = mysqli_query($connection, $checking);
                           $men = mysqli_fetch_array($done);
-                          $bal = $men["organization_running_balance_derived"];
+                          $bal = $men["account_balance_derived"];
                           ?>
                           <th><?php echo $bal; ?></th>
-                          <th><a href="view_teller.php?id=<?php echo $row["id"];?>" class="btn btn-success">View</a></th>
+                          <th><a href="view_teller.php?id=<?php echo $row["name"];?>" class="btn btn-success">View</a></th>
                         </tr>
                         <?php }
                           }

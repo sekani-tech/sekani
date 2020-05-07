@@ -152,7 +152,6 @@ $abdc = 0;
                         <label class="bmd-label-floating">Teller Name</label>
                         <!-- <div id="show_branch"></div> -->
                         <select id="show_branch" name="tell_name" class="form-control" required>
-
                         </select>
                       </div>
                       </div>
