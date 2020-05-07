@@ -244,7 +244,7 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
                           if ($res4) {
                             // institution account
                             // institution account transaction
-                            $int_account_trans = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2' WHERE teller_id = '$teller_id' int_id = '$sessint_id'";
+                            $int_account_trans = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2' WHERE teller_id = '$teller_id' && int_id = '$sessint_id'";
                             $query1 = mysqli_query($connection, $int_account_trans);
                             // check if int account has been updated
                             if ($query1) {
@@ -252,7 +252,7 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
                               client_id, transaction_id, transaction_type, teller_id, is_reversed,
                               transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                               created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
-                             '{$client_id}', '{$transid}', '{$transact_type}', '{$teller_id}', '{$irvs}',
+                             '{$client_id}', '{$transid}', '{$trans_type2}', '{$teller_id}', '{$irvs}',
                              '{$gen_date}', '{$amount}', '{$new_int_bal2}', '{$amount}',
                              '{$gen_date}', '{$appuser_id}')";
                              $res9 = mysqli_query($connection, $trust);
