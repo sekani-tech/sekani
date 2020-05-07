@@ -80,7 +80,7 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
           $gen_date = date("Y-m-d");
           $digits = 10;
           $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-          $transid = $sessint_id."-".$randms;
+          $transid = $transid;
   
           if ($stat == "Pending") {
               $getacct = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' && int_id = '$sessint_id'");
@@ -125,10 +125,10 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
                             // check if int account has been updated
                             if ($query1) {
                               $trust = "INSERT INTO institution_account_transaction (int_id, branch_id,
-                              client_id, transaction_id, transaction_type, is_reversed,
+                              client_id, transaction_id, transaction_type, teller_id, is_reversed,
                               transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                               created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
-                             '{$client_id}', '{$transid}', '{$transact_type}', '{$irvs}',
+                             '{$client_id}', '{$transid}', '{$transact_type}', '{$teller_id}', '{$irvs}',
                              '{$gen_date}', '{$amount}', '{$new_int_bal}', '{$amount}',
                              '{$gen_date}', '{$appuser_id}')";
                              $res9 = mysqli_query($connection, $trust);
@@ -139,7 +139,7 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
                              $(document).ready(function(){
                                  swal({
                                      type: "success",
-                                     title: "Debit Transaction",
+                                     title: "Deposit Transaction",
                                      text: "Transaction Approval Successful",
                                      showConfirmButton: false,
                                      timer: 2000
@@ -249,10 +249,10 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
                             // check if int account has been updated
                             if ($query1) {
                               $trust = "INSERT INTO institution_account_transaction (int_id, branch_id,
-                              client_id, transaction_id, transaction_type, is_reversed,
+                              client_id, transaction_id, transaction_type, teller_id, is_reversed,
                               transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                               created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
-                             '{$client_id}', '{$transid}', '{$transact_type}', '{$irvs}',
+                             '{$client_id}', '{$transid}', '{$transact_type}', '{$teller_id}', '{$irvs}',
                              '{$gen_date}', '{$amount}', '{$new_int_bal2}', '{$amount}',
                              '{$gen_date}', '{$appuser_id}')";
                              $res9 = mysqli_query($connection, $trust);
@@ -262,7 +262,7 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
                               $(document).ready(function(){
                                   swal({
                                       type: "success",
-                                      title: "Debit Transaction",
+                                      title: "Withdrawal Transaction",
                                       text: "Transaction Approval Successful",
                                       showConfirmButton: false,
                                       timer: 2000
