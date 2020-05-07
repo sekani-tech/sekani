@@ -143,7 +143,28 @@ $_SESSION["lack_of_intfund_$key"] = null;
                           <th><?php echo $row["firstname"]; ?></th>
                           <th><?php echo $row["lastname"]; ?></th>
                           <th><?php echo strtoupper($row["first_name"]." ".$row["last_name"]); ?></th>
-                          <th><?php echo $row["account_type"]; ?></th>
+                          <?php
+                            $class = "";
+                            $row["account_type"];
+                            $cid= $row["id"];
+                            $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
+                            if (count([$atype]) == 1) {
+                                $yxx = mysqli_fetch_array($atype);
+                                $actype = $yxx['account_type'];
+                            }
+                            if ($actype == 1 || $actype == "1") {
+                              $class = "SAVINGS";
+                            } else if ($actype == 2 || $actype == "2") {
+                              $class = "LIABILITY";
+                            } else if ($actype == 3 || $actype == "3") {
+                              $class = "EQUITY";
+                            } else if ($actype == 4 || $actype == "4") {
+                              $class = "INCOME";
+                            } else if ($actype == 5 || $actype == "5") {
+                              $class = "EXPENSE";
+                            }
+                            ?>
+                          <th><?php echo $class; ?></th>
                           <th><?php echo $row["account_no"]; ?></th>
                           <th><?php echo $row["mobile_no"]; ?></th>
                           <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
