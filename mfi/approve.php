@@ -5,6 +5,7 @@ $destination = "transact_approval.php";
     include("header.php");
     require_once "../bat/phpmailer/PHPMailerAutoload.php";
 ?>
+<!-- IMPORTING FO THE EXPENSE -->
 <?php
 // the session
 $int_name = $_SESSION["int_name"];
@@ -57,6 +58,43 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
         $new_int_bal2 = $int_acct_bal - $amount;
 }
 ?>
+<!-- THIS IS BEGINING OF THE EXPENSE -->
+<?php
+// making expense transaction
+// get all important things first
+$taketeller = "SELECT * FROM tellers WHERE name = '$staff_id' && int_id = '$sessint_id'";
+$check_me_men = mysqli_query($connection, $taketeller);
+if ($check_me_men) {
+$ex = mysqli_fetch_array($check_me_men);
+$is_del = $ex["is_deleted"];
+$branch_id = $ex['branch_id'];
+$till = $ex["till"];
+$post_limit = $ex["post_limit"];
+$gl_code = $ex["till"];
+$till_no = $ex["till_no"];
+// we will call the GL
+$gl_codex = $acct_no;
+$gl_amt = $amount;
+$pym = $pay_type;
+$trans_id = $transid;
+// MININ IMOORT
+$gl_man = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$gl_codex' && int_id = '$sessint_id'");
+$gl = mysqli_fetch_array($gl_man);
+$gl_name = $gl["name"];
+$l_acct_bal = $gl["organization_running_balance_derived"];
+$new_gl_bal = $l_acct_bal + $gl_amt;
+// remeber the institution account
+$damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
+    if (count([$damn]) == 1) {
+        $x = mysqli_fetch_array($damn);
+        $int_acct_bal = $x['account_balance_derived'];
+        // $tbd = $x['total_deposits_derived'] + $amt;
+        $tbd2 = $x['total_withdrawals_derived'] + $gl_amt;
+        $new_int_bal2 = $int_acct_bal - $gl_amt;
+    }
+}
+?>
+<!-- STARTING THE SERVER -->
 <?php
  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    $approve = $_POST['submit'];
@@ -343,7 +381,85 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
                     </script>
                     ';
                   }
-                } 
+                } else if ($transact_type == "Expense") {
+                  // importing the needed on the gl
+                  $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_codex'";
+                  $dbgl = mysqli_query($connection, $upglacct);
+                  if ($dbgl) {
+                    $upinta = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2', total_withdrawals_derived = '$tbd2' WHERE int_id = '$sessint_id' && teller_id = '$staff_id'";
+                    $res1 = mysqli_query($connection, $upinta);
+                    if ($res1) {
+                      $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
+            teller_id, transaction_id, transaction_type, is_reversed,
+            transaction_date, amount, running_balance_derived, overdraft_amount_derived,
+            created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
+            '{$gl_codex}', '{$trans_id}', 'Debit', '{$irvs}',
+            '{$gen_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
+            '{$gen_date}', '{$staff_id}')";
+                    $res4 = mysqli_query($connection, $iat2);
+                    if ($res4) {
+                      // REMEMBER TO SEND A MAIL
+                      echo '<script type="text/javascript">
+                              $(document).ready(function(){
+                                  swal({
+                                      type: "success",
+                                      title: "Expense",
+                                      text: "Expense Transaction Approval Successful",
+                                      showConfirmButton: false,
+                                      timer: 2000
+                                  })
+                              });
+                              </script>
+                              ';
+                    $URL="transact_approval.php";
+                    echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                    } else {
+                      // echo error at institution account transaction
+                      echo '<script type="text/javascript">
+                    $(document).ready(function(){
+                        swal({
+                            type: "error",
+                            title: "Error",
+                            text: "Error in Account Transaction",
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    });
+                    </script>
+                    ';
+                    }
+                    } else {
+                      // echo error institution account
+                      echo '<script type="text/javascript">
+                    $(document).ready(function(){
+                        swal({
+                            type: "error",
+                            title: "Error",
+                            text: "Error in Teller Account",
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    });
+                    </script>
+                    ';
+                    }
+                  } else {
+                    // echo error in account gl
+                    echo '<script type="text/javascript">
+                    $(document).ready(function(){
+                        swal({
+                            type: "error",
+                            title: "Error",
+                            text: "Error in Expense GL Account",
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    });
+                    </script>
+                    ';
+                  }
+                }
+
             // for the loan it has been commented for future purpose ------
 // else if ($transact_type == "Loan Repayment") {
 //                   $person = mysqli_query($connection, "SELECT loan.interest_rate, client.id, client.account_no, loan.id, client.branch_id, loan.product_id, principal_amount, loan_term, loan.interest_rate FROM loan JOIN client ON loan.client_id = client.id WHERE client.int_id ='$sessint_id' && client_id = '$client_id'");
@@ -949,6 +1065,7 @@ else {
  }
 ?>
 <!-- Content added here -->
+
     <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
