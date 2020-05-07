@@ -111,7 +111,7 @@ if ($is_del == "0" && $is_del != NULL) {
             amount, pay_type, transact_type, status, date) VALUES
             ('{$sessint_id}', '{$branch_id}', '{$trans_id}', '{$gl_codex}', '{$gl_name}',
             '{$staff_id}', '{$staff_name}', '{$gl_amt}', '{$pym}',
-            'Deposit', 'Pending', '{$gen_date}') ";
+            'Expense', 'Pending', '{$gen_date}') ";
             $go = mysqli_query($connection, $trancache);
             if ($go) {
                 $_SESSION["Lack_of_intfund_$randms"] = "Expense Successful!";

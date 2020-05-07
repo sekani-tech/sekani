@@ -107,7 +107,7 @@ $new_gl_bal2 = $l_acct_bal - $amt2;
 // checke three places to see if the transaction has been done
 $q1 = mysqli_query($connection, "SELECT * FROM `institution_account_transaction` WHERE transaction_id = '$transid' && int_id='$sessint_id'");
 $q2 = mysqli_query($connection, "SELECT * FROM `account_transaction` WHERE transaction_id = '$transid' && int_id='$sessint_id'");
-$q2 = mysqli_query($connection, "SELECT * FROM `transact_cache` WHERE transact_id = '$transid' && int_id='$sessint_id'");
+$q3 = mysqli_query($connection, "SELECT * FROM `transact_cache` WHERE transact_id = '$transid' && int_id='$sessint_id'");
 // run the query
 $resx1 = mysqli_num_rows($q1);
 $resx2 = mysqli_num_rows($q2);
@@ -144,10 +144,10 @@ if ($is_del == "0" && $is_del != NULL) {
         // update the institution transaction
         if ($iupqres2) {
             $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
-        client_id, transaction_id, transaction_type, is_reversed,
+        client_id, transaction_id, transaction_type, teller_id, is_reversed,
         transaction_date, amount, running_balance_derived, overdraft_amount_derived,
         created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
-        '{$client_id}', '{$transid}', '{$trans_type}', '{$irvs}',
+        '{$client_id}', '{$transid}', '{$trans_type}', '{$staff_id}', '{$irvs}',
         '{$gen_date}', '{$amt}', '{$new_int_bal}', '{$amt}',
         '{$gen_date}', '{$appuser_id}')";
         $res4 = mysqli_query($connection, $iat2);
@@ -367,10 +367,10 @@ if ($is_del == "0" && $is_del != NULL) {
             if ($iupqres2) {
                 // update the institution transaction
              $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
-            client_id, transaction_id, transaction_type, is_reversed,
+            client_id, transaction_id, transaction_type, teller_id, is_reversed,
             transaction_date, amount, running_balance_derived, overdraft_amount_derived,
             created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
-            '{$client_id}', '{$transid}', '{$trans_type2}', '{$irvs}',
+            '{$client_id}', '{$transid}', '{$trans_type2}', '{$staff_id}', '{$irvs}',
             '{$gen_date}', '{$amt2}', '{$new_int_bal2}', '{$amt2}',
             '{$gen_date}', '{$appuser_id}')";
             $res4 = mysqli_query($connection, $iat2);
@@ -411,7 +411,7 @@ if ($is_del == "0" && $is_del != NULL) {
                                         <span class='sr-only'>Loading...</span>
                                       </div>
                                 </div>
-                                <span> <b>$int_name</b> </span> || <span class='lead' style='font-size: 13px;'> $int_location </span>
+                                <span> <b>$int_name</b> </span> || <span class='lead' style='font-size: 13px;'></span>
                             </div>
                           </div>
                         </div>
@@ -478,6 +478,8 @@ if ($is_del == "0" && $is_del != NULL) {
                 if(!$mail->send()) 
                    {
                        echo "Mailer Error: " . $mail->ErrorInfo;
+                       $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
+                       echo header ("Location: ../mfi/transact.php?message=$randms");
                    } else
                    {
                        $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
