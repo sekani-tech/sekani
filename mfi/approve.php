@@ -171,7 +171,7 @@ $resx1 = mysqli_num_rows($q1);
                                client_id, transaction_id, transaction_type, teller_id, is_reversed,
                                transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                                created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
-                              '{$client_id}', '{$transid}', '{$transact_type}', '{$teller_id}', '{$irvs}',
+                              '{$client_id}', '{$transid}', '{$trans_type}', '{$teller_id}', '{$irvs}',
                               '{$gen_date}', '{$amount}', '{$new_int_bal}', '{$amount}',
                               '{$gen_date}', '{$appuser_id}')";
                               $res9 = mysqli_query($connection, $trust);

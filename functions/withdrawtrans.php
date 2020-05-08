@@ -46,15 +46,7 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
                  } else {
                     $_SESSION["Lack_of_intfund_$randms"] = "Withdrawal Failed";
                    echo header ("Location: ../mfi/transact.php?message4=$randms");
-     
-                //      if ($connection->error) {
-                //          try {
-                //              throw new Exception("MYSQL error $connection->error <br> $trancache ", $mysqli->error);
-                //          } catch (Exception $e) {
-                //              echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
-                //              echo n12br($e->getTraceAsString());
-                //          }
-                //  }
+    
                  }
                 } else {
                     $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";

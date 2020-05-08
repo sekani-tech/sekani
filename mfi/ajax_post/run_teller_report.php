@@ -50,14 +50,12 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
       if (count([$query]) == 1 && count([$branchquery]) == 1) {
         // here we will some data
         if ($transaction_type == "vault_in") {
-          // money from the vault
-          $vin = $amount;
           $client_name = "Valut In";
+          $amt = number_format($amount, 2);
         }
         if ($transaction_type == "valut_out") {
-          // money going out from the vault
-          $vout = $amount;
           $client_name = "Valut Out";
+          $amt = number_format($amount, 2);
         }
         if ($transaction_type == "credit" || "Credit") {
           // credit
