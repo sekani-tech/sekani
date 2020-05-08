@@ -17,19 +17,47 @@ include('header.php');
                 <div class="card-header card-header-primary">
                     <h4 class="card-title">Pending Approval</h4>
                 </div>
+                <?php
+                  function fill_branch($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"]. '</option>';
+                  }
+                  return $out;
+                  }
+                  function fill_officer($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM staff WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["display_name"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
                 <div class="card-body">
                 <form action="">
                     <div class="row">
                       <div class="form-group col-md-6">
                         <label for="">Branch</label>
                         <select name="" id="" class="form-control">
-                            <option value="">Head Office</option>
+                            <option value="">select an option</option>
+                            <?php echo fill_branch($connection); ?>
                         </select>
                       </div>
                       <div class="form-group col-md-6">
                         <label for="">Account Officer</label>
                         <select name="" id="" class="form-control">
-                            <option value="">.....</option>
+                            <option value="">select an option</option>
+                            <?php echo fill_officer($connection); ?>
                         </select>
                       </div>
                     </div>
@@ -49,7 +77,7 @@ include('header.php');
                     <table id="tabledat4" class="table">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id'";
+                        $query = "SELECT client.id, client.account_type, client.account_no, client.branch_id, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -82,7 +110,22 @@ include('header.php');
                         <th><?php echo $row["firstname"]; ?></th>
                           <th><?php echo $row["lastname"]; ?></th>
                           <th></th>
-                          <th></th>
+                          <?php 
+                          $so = $row["branch_id"];
+                           $que = mysqli_query($connection, "SELECT * FROM branch WHERE id = '$so'");
+                          if (count([$que]) == 1) {
+                            $yxx = mysqli_fetch_array($que);
+                            $bid = $yxx['id'];
+                            $brname = $yxx['name'];
+                        }
+                          $class = "";
+                          if ( $row["branch_id"] == $bid || $row["branch_id"] == "1") {
+                            $class = $brname;
+                          } else {
+                            $class = "LIABILITY";
+                          }
+                          ?>
+                          <th><?php echo $class; ?></th>
                           <th><?php echo strtoupper($row["first_name"]." ".$row["last_name"]); ?></th>
                           <th><?php echo "4/4/2020" ?></th>
                           <th><?php echo $row["account_no"]; ?></th>
@@ -100,11 +143,6 @@ include('header.php');
                 </div>
               </div>
                <!--//report ends here -->
-               <div class="card">
-                 <div class="card-body">
-                  <a href="" class="btn btn-primary">Print</a>
-                 </div>
-               </div>
             </div>
           </div>
         </div>

@@ -100,12 +100,17 @@ if (isset($_GET["message1"])) {
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM transact_cache WHERE int_id='$sessint_id'";
+                   $query = "SELECT * FROM transact_cache WHERE int_id='$sessint_id' && status = 'Pending'";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
-                     echo $inr;
-                   }?> Transaction on the platform || Approve Transaction</p>
+                     if($inr == '0'){ 
+                        echo 'No Transactions need of approval';
+                      }else{
+                        echo ''.$inr.' Transactions on the platform';
+                      }
+                   }
+                   ?>  || Approve Transaction</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
