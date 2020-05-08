@@ -95,7 +95,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM client WHERE int_id = '$sessint_id'";
+                   $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved'";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -107,7 +107,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id'";
+                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
