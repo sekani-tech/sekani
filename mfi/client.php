@@ -150,21 +150,16 @@ $_SESSION["lack_of_intfund_$key"] = null;
                             $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
                             if (count([$atype]) == 1) {
                                 $yxx = mysqli_fetch_array($atype);
-                                $actype = $yxx['account_type'];
+                                $actype = $yxx['product_id'];
+                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
+                           if (count([$spn])) {
+                             $d = mysqli_fetch_array($spn);
+                             $savingp = $d["name"];
+                           }
                             }
-                            if ($actype == 1 || $actype == "1") {
-                              $class = "SAVINGS";
-                            } else if ($actype == 2 || $actype == "2") {
-                              $class = "LIABILITY";
-                            } else if ($actype == 3 || $actype == "3") {
-                              $class = "EQUITY";
-                            } else if ($actype == 4 || $actype == "4") {
-                              $class = "INCOME";
-                            } else if ($actype == 5 || $actype == "5") {
-                              $class = "EXPENSE";
-                            }
+                           
                             ?>
-                          <th><?php echo $class; ?></th>
+                          <th><?php echo $savingp; ?></th>
                           <th><?php echo $row["account_no"]; ?></th>
                           <th><?php echo $row["mobile_no"]; ?></th>
                           <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
