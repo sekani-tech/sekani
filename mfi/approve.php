@@ -152,10 +152,10 @@ $resx1 = mysqli_num_rows($q1);
                        account_no, product_id,
                        client_id, teller_id, transaction_id, transaction_type, is_reversed,
                        transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-                       created_date, appuser_id) VALUES ('{$ssint_id}', '{$branch_id}',
+                       created_date, appuser_id, credit) VALUES ('{$ssint_id}', '{$branch_id}',
                        '{$acct_no}', '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$trans_type}', '{$irvs}',
                        '{$transaction_date}', '{$amount}', '{$new_abd}', '{$amount}',
-                       '{$gen_date}', '{$appuser_id}')";
+                       '{$gen_date}', '{$appuser_id}', '{$amount}')";
                        $res3 = mysqli_query($connection, $iat);
                        if ($res3) {
                            $v = "Verified";
@@ -170,10 +170,10 @@ $resx1 = mysqli_num_rows($q1);
                                $trust = "INSERT INTO institution_account_transaction (int_id, branch_id,
                                client_id, transaction_id, transaction_type, teller_id, is_reversed,
                                transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-                               created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
+                               created_date, appuser_id, credit) VALUES ('{$sessint_id}', '{$branch_id}',
                               '{$client_id}', '{$transid}', '{$trans_type}', '{$teller_id}', '{$irvs}',
                               '{$gen_date}', '{$amount}', '{$new_int_bal}', '{$amount}',
-                              '{$gen_date}', '{$appuser_id}')";
+                              '{$gen_date}', '{$appuser_id}', '{$amount}')";
                               $res9 = mysqli_query($connection, $trust);
                               if ($res9) {
                              //  MAILING SYSTEMS WILL COME IN LATER
@@ -275,10 +275,10 @@ $resx1 = mysqli_num_rows($q1);
                        account_no, product_id,
                        client_id, teller_id, transaction_id, transaction_type, is_reversed,
                        transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-                       created_date, appuser_id) VALUES ('{$ssint_id}', '{$branch_id}',
+                       created_date, appuser_id, debit) VALUES ('{$ssint_id}', '{$branch_id}',
                        '{$acct_no}', '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$trans_type2}', '{$irvs}',
-                       '{$transaction_date}', '{$amount}', '{$new_abd}', '{$amount}',
-                       '{$gen_date}', '{$appuser_id}')";
+                       '{$transaction_date}', '{$amount}', '{$comp2}', '{$amount}',
+                       '{$gen_date}', '{$appuser_id}', '{$amount}')";
                        $res3 = mysqli_query($connection, $iat);
                        if ($res3) {
                            $v = "Verified";
@@ -294,10 +294,10 @@ $resx1 = mysqli_num_rows($q1);
                                $trust = "INSERT INTO institution_account_transaction (int_id, branch_id,
                                client_id, transaction_id, transaction_type, teller_id, is_reversed,
                                transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-                               created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
+                               created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
                               '{$client_id}', '{$transid}', '{$trans_type2}', '{$teller_id}', '{$irvs}',
                               '{$gen_date}', '{$amount}', '{$new_int_bal2}', '{$amount}',
-                              '{$gen_date}', '{$appuser_id}')";
+                              '{$gen_date}', '{$appuser_id}', '{$amount}')";
                               $res9 = mysqli_query($connection, $trust);
                               if ($res9) {
                                //  REMEMBER MAILING SYSTEMS
@@ -397,10 +397,10 @@ $resx1 = mysqli_num_rows($q1);
                        $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
              teller_id, transaction_id, transaction_type, is_reversed,
              transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-             created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
+             created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
              '{$gl_codex}', '{$trans_id}', 'Debit', '{$irvs}',
              '{$gen_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
-             '{$gen_date}', '{$staff_id}')";
+             '{$gen_date}', '{$staff_id}', '{$gl_amt}')";
                      $res4 = mysqli_query($connection, $iat2);
                      if ($res4) {
                        // REMEMBER TO SEND A MAIL

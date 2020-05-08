@@ -132,10 +132,10 @@ if ($is_del == "0" && $is_del != NULL) {
         account_no, product_id, teller_id,
         client_id, transaction_id, transaction_type, is_reversed,
         transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-        created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
+        created_date, appuser_id, credit) VALUES ('{$sessint_id}', '{$branch_id}',
         '{$acct_no}', '{$sproduct_id}', '{$staff_id}', '{$client_id}', '{$transid}', '{$trans_type}', '{$irvs}',
         '{$gen_date}', '{$amt}', '{$new_abd}', '{$amt}',
-        '{$gen_date}', '{$appuser_id}')";
+        '{$gen_date}', '{$appuser_id}', {$amt})";
         $res3 = mysqli_query($connection, $iat);
         if ($res3) {
         // update the institution account
@@ -146,10 +146,10 @@ if ($is_del == "0" && $is_del != NULL) {
             $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
         client_id, transaction_id, transaction_type, teller_id, is_reversed,
         transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-        created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
+        created_date, appuser_id, credit) VALUES ('{$sessint_id}', '{$branch_id}',
         '{$client_id}', '{$transid}', '{$trans_type}', '{$staff_id}', '{$irvs}',
         '{$gen_date}', '{$amt}', '{$new_int_bal}', '{$amt}',
-        '{$gen_date}', '{$appuser_id}')";
+        '{$gen_date}', '{$appuser_id}', '{$amt}')";
         $res4 = mysqli_query($connection, $iat2);
         if ($res4) {
         // update the GL
@@ -355,10 +355,10 @@ if ($is_del == "0" && $is_del != NULL) {
             account_no, product_id, teller_id,
             client_id, transaction_id, transaction_type, is_reversed,
             transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-            created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
+            created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
             '{$acct_no}', '{$sproduct_id}', '{$staff_id}', '{$client_id}', '{$transid}', '{$trans_type2}', '{$irvs}',
             '{$gen_date}', '{$amt2}', '{$new_abd2}', '{$amt}',
-            '{$gen_date}', '{$appuser_id}')";
+            '{$gen_date}', '{$appuser_id}', '{$amt2}')";
             $res3 = mysqli_query($connection, $iat);
             if ($res3) {
             // update the institution account
@@ -369,10 +369,10 @@ if ($is_del == "0" && $is_del != NULL) {
              $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
             client_id, transaction_id, transaction_type, teller_id, is_reversed,
             transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-            created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
+            created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
             '{$client_id}', '{$transid}', '{$trans_type2}', '{$staff_id}', '{$irvs}',
             '{$gen_date}', '{$amt2}', '{$new_int_bal2}', '{$amt2}',
-            '{$gen_date}', '{$appuser_id}')";
+            '{$gen_date}', '{$appuser_id}', '{$amt2}')";
             $res4 = mysqli_query($connection, $iat2);
             if ($res4) {
                // update the GL
