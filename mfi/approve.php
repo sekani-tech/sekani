@@ -50,13 +50,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
 $gen_date = date('Y-m-d H:i:s');
 $gends = date('Y-m-d');
 // we will call the institution account
-$damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id'");
-    if (count([$damn]) == 1) {
-        $x = mysqli_fetch_array($damn);
-        $int_acct_bal = $x['account_balance_derived'];
-        $new_int_bal = $amount + $int_acct_bal;
-        $new_int_bal2 = $int_acct_bal - $amount;
-}
+
 ?>
 <!-- THIS IS BEGINING OF THE EXPENSE -->
 <?php
@@ -91,6 +85,7 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
         // $tbd = $x['total_deposits_derived'] + $amt;
         $tbd2 = $x['total_withdrawals_derived'] + $gl_amt;
         $new_int_bal2 = $int_acct_bal - $gl_amt;
+        $new_int_bal = $amount + $int_acct_bal;
     }
 }
 ?>
