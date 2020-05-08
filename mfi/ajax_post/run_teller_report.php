@@ -44,26 +44,31 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
         //   $client_name = $w["name"];
         // }
         // then we will be fixing
-        function fillreport($connection, $int_id, $start, $end, $branch_id, $teller)
+        $genb = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE teller_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
+        $m = mysqli_fetch_array($genb);
+
+        function fill_report($connection, $int_id, $start, $end, $branch_id, $teller)
         {
           // import
           $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE teller_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
           // $q = mysqli_fetch_array($querytoget);
-          
+          $out = '';
+            
           
           while ($q = mysqli_fetch_array($querytoget))
           {
-            $out = '';
             $client_id = $q["client_id"];
-          $client_query = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' && int_id = '$int_id'");
-          $nx = mysqli_fetch_array($client_query);
+            $client_query = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' && int_id = '$int_id'");
+            $nx = mysqli_fetch_array($client_query);
+            
           // wertyui
           $client_name = $nx["firstname"]." ".$nx["middlename"]." ".$nx["lastname"];
           // qwert
           $transact_id = $q["transaction_id"];
           $transaction_type = $q["transaction_type"];
           $transaction_date = $q["transaction_date"];
-          $amount = $q["amount"];
+          $camt = $q["credit"];
+          $damt = $q["debit"];
           $balance = $q["running_balance_derived"];
          //  test
           $teller_id = $q["teller_id"];
@@ -71,56 +76,30 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
           // the next
           if ($transaction_type == "vault_in") {
             $client_name = "Valut In";
-            $amt = number_format($amount, 2);
+            $amt = number_format($damt, 2);
           }
           if ($transaction_type == "valut_out") {
             $client_name = "Valut Out";
-            $amt = number_format($amount, 2);
+            $amt = number_format($camt, 2);
           }
-          $amt = 0;
-          $amt2 = 0;
-          if ($transaction_type == "credit" || "Credit" || "Deposit") {
-            // credit
-            $tcdp = number_format(round($amt), 2);
-            $tddp = 0.00;
+          $amt = $camt;
+          $amt2 = $damt;
+            // $tcdp = number_format(round($amt), 2);
             $amt = number_format($amt, 2);
-            $amt = 0.00;
-          } else if ($transaction_type == "debit" || "Debit") {
-            $tddp = number_format(round($amt2, 2));
+            // $tddp = number_format(round($amt2, 2));
             $amt2 = number_format($amt2, 2);
-            $tcdp = 0.00;
-            $amt = 0.00;
-          }
           
-          $balran = number_format(round($teller_run_bal), 2);
 
-            echo $out .= '
-            <table id="tabledat4" class="table" style="width: 100%;">
-            <thead class=" text-primary">
-              <th>Account Name</th>
-              <th>Deposit</th>
-              <th>
-                Withdrawal
-              </th>
-              <th>Balance</th>
-            </thead>
-            <tbody>
-          <tr>
+            $out .= '
+            <tr>
             <th>'.$client_name.'</th>
             <th>'.$amt.'</th>
-            <th>'.$amt.'</th>
-            <td>'.number_format($teller_run_bal, 2).'</td>
-          </tr>
-          <tr>
-              <th>Total</th>
-              <th>'.$tcdp.'</th>
-              <th>'.$tddp.'</th>
-              <th>'.$balran.'</th>
-          </tr>
-        </tbody>
-        </table>
-            </div>';
+            <th>'.$amt2.'</th>
+            <td>'.number_format($balance, 2).'</td>
+            </tr>
+          ';
           }
+          return $out;
         }
         // NOTHIG
         $output = '<div class="col-md-12">
@@ -161,7 +140,15 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
                   </th>
                   <th>Balance</th>
                 </thead>
-                "'.fillreport($connection, $int_id, $start, $end, $branch_id, $teller).'
+                <tbody>
+                "'.fill_report($connection, $int_id, $start, $end, $branch_id, $teller).'"
+                <tr>
+              <th>Total</th>
+               <th>'.$tcdp.'</th>
+               <th>'.$tddp.'</th>
+            <th>'.$balran.'</th>
+              </tr>
+                </tbody>
               </table>
             </div>
             <p><b>Opening Balance:</b>  </p>
