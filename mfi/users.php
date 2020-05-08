@@ -172,9 +172,13 @@ input:checked + .slider:before {
                    $query = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
-                     $inr = mysqli_num_rows($result);
-                     echo $inr;
-                   }?> Users on the platform || <a style ="color: white;" href="user.php">Create New user</a></p>
+                    $inr = mysqli_num_rows($result);
+                    if($inr == '0'){ 
+                       echo ' No Users on this platfrom yet';
+                     }else{
+                       echo ''.$inr.' Users on the platform';
+                     }
+                  }?> || <a style ="color: white;" href="user.php">Create New user</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
