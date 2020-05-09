@@ -1,11 +1,84 @@
 <?php
 
-$page_title = "Client Approval";
+$page_title = "Account Opening Approval";
 $destination = "client.php";
 include('header.php');
 
 ?>
+<?php
+//  Sweet alert Function
 
+// If it is successfull, It will show this message
+  if (isset($_GET["message"])) {
+    $key = $_GET["message"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "success",
+            title: "Success",
+            text: "Client Approved!",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = null;
+}
+// If it is not successfull, It will show this message
+else if (isset($_GET["message2"])) {
+  $key = $_GET["message2"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Error",
+          text: "Error approving client",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = null;
+}
+if (isset($_GET["message3"])) {
+  $key = $_GET["message3"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Success",
+          text: "Client was Updated successfully!",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = null;
+}
+else if (isset($_GET["message4"])) {
+$key = $_GET["message4"];
+// $out = $_SESSION["lack_of_intfund_$key"];
+echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "error",
+        title: "Error",
+        text: "Error updating client!",
+        showConfirmButton: false,
+        timer: 2000
+    })
+});
+</script>
+';
+$_SESSION["lack_of_intfund_$key"] = null;
+}
+?>
 <!-- Content added here -->
 <!-- print content -->
 <div class="content">
@@ -48,18 +121,53 @@ include('header.php');
                     <div class="row">
                       <div class="form-group col-md-6">
                         <label for="">Branch</label>
-                        <select name="" id="" class="form-control">
-                            <option value="">select an option</option>
-                            <?php echo fill_branch($connection); ?>
+                        <select name="" id="brid" class="form-control">
+                            <option value="0">select an option</option>
+                            <?php echo fill_branch($connection);?>
                         </select>
                       </div>
                       <div class="form-group col-md-6">
                         <label for="">Account Officer</label>
-                        <select name="" id="" class="form-control">
-                            <option value="">select an option</option>
+                        <select name="" id="account" class="form-control">
+                            <option value="0">select an option</option>
                             <?php echo fill_officer($connection); ?>
                         </select>
                       </div>
+                      <script>
+                              $(document).ready(function() {
+                                $('#brid').on("change keyup paste", function(){
+                                  var id = $(this).val();
+                                  var branchid = $('#brid').val();
+                                  var acctid = $('#account').val();
+                                  $.ajax({
+                                    url:"./ajax_post/clientapproval_input.php",
+                                    method:"POST",
+                                    data:{id:id, branchid:branchid, acctid:acctid},
+                                    success:function(data){
+                                      $('#coll').html(data);
+                                    }
+                                  })
+                                });
+                              });
+                              $(document).ready(function() {
+                                $('#account').on("change keyup paste", function(){
+                                  var id = $(this).val();
+                                  var branchid = $('#brid').val();
+                                  var acctid = $('#account').val();
+                                  $.ajax({
+                                    url:"./ajax_post/clientapproval_input.php",
+                                    method:"POST",
+                                    data:{id:id, branchid:branchid, acctid:acctid},
+                                    success:function(data){
+                                      $('#coll').html(data);
+                                    }
+                                  })
+                                });
+                              });
+                            </script>
+                    </div>
+                    <div id="coll">
+
                     </div>
                     <button type="reset" class="btn btn-danger">Reset</button>
                     <button type="submit" class="btn btn-primary">Search</button>
@@ -77,7 +185,7 @@ include('header.php');
                     <table id="tabledat4" class="table">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.branch_id, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id'";
+                        $query = "SELECT client.id, client.account_type, client.account_no, client.branch_id, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = '' || client.status = 'Not Approved'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -101,6 +209,7 @@ include('header.php');
                           Account Number
                         </th>
                         <th>View</th>
+                        <th>Approve</th>
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
@@ -130,6 +239,7 @@ include('header.php');
                           <th><?php echo "4/4/2020" ?></th>
                           <th><?php echo $row["account_no"]; ?></th>
                           <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
+                          <td><a href="../functions/approveClient.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
                           </tr>
                         <?php }
                           }
