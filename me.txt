@@ -1,0 +1,8 @@
+CODES TO WRITE ON THE SYSTEM
+Transact_cache Approval
+. Withdrawal - transaction_id, date -- DONE
+. Deposit - transaction_id, date -- DONE
+. Expense -- DONE
+. Make sure it reflect in the institution account, and institution account transaction -- DONE
+. Make sure Expense reflect in ACCOUNT GL for the gl_code as - Account Number -- DONE
+. Account Opening Will Go For Approval

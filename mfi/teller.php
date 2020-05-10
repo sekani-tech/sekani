@@ -76,7 +76,7 @@ function fill_client($connection) {
                           <div class="form-group">
                           <div id="show_branchx"></div>
                           </div>
-                      </div>
+                      </div> 
                       <div class="clearfix"></div>
                     </div>
                   </form>

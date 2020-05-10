@@ -43,10 +43,19 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
         //   $w = mysqli_fetch_array($runglq);
         //   $client_name = $w["name"];
         // }
+        $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM institution_account_transaction WHERE teller_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
         // then we will be fixing
-        $genb = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE teller_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
+        $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM institution_account_transaction WHERE teller_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
+        $m1 = mysqli_fetch_array($genb1);
         $m = mysqli_fetch_array($genb);
 
+        $tcp = $m1["credit"];
+        $tdp = $m["debit"];
+        // summing
+        $finalbal = number_format(($tcp - $tdp), 2);
+        $tcdp = number_format(round($tcp), 2);
+        $tddp = number_format(round($tdp), 2);
+        // total
         function fill_report($connection, $int_id, $start, $end, $branch_id, $teller)
         {
           // import
@@ -84,9 +93,9 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
           }
           $amt = $camt;
           $amt2 = $damt;
-            // $tcdp = number_format(round($amt), 2);
+            
             $amt = number_format($amt, 2);
-            // $tddp = number_format(round($amt2, 2));
+            
             $amt2 = number_format($amt2, 2);
           
 
@@ -146,7 +155,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
               <th>Total</th>
                <th>'.$tcdp.'</th>
                <th>'.$tddp.'</th>
-            <th>'.$balran.'</th>
+            <th>'.$finalbal.'</th>
               </tr>
                 </tbody>
               </table>
@@ -157,7 +166,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
             <p><b>Closing Balance:</b> 129 </p>
             <hr>
             <p><b>Teller Sign:</b> 129                        <b>Date:</b></p>
-            <p><b>Checked By:</b>                             <b>Date/Sign:</b></p>
+            <p><b>Checked By: '.$_SESSION["username"].'</b>                             <b>Date/Sign: '.$start." - ".$end.' </b></p>
           </div>
         </div>
       </div>';
