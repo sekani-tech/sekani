@@ -3,7 +3,6 @@
 $page_title = "Teller Report";
 $destination = "index.php";
     include("header.php");
-
 ?>
 
 <?php

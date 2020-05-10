@@ -111,6 +111,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
           return $out;
         }
         // NOTHIG
+
         $output = '<div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
@@ -167,9 +168,14 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
             <hr>
             <p><b>Teller Sign:</b> 129                        <b>Date:</b></p>
             <p><b>Checked By: '.$_SESSION["username"].'</b>                             <b>Date/Sign: '.$start." - ".$end.' </b></p>
+
+            <p>
+            <a href="../composer/pdftest.php?edit=" class="btn btn-primary pull-right">PDF print</a>
+            </p>
           </div>
         </div>
-      </div>';
+      </div>
+      ';
       echo $output;
       } else {
         echo 'Not Seeing Data';
