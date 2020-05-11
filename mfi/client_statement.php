@@ -122,6 +122,7 @@ if(isset($_GET["edit"])) {
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>
+                        
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>

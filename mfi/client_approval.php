@@ -198,7 +198,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
                           Last Name
                         </th>
                         <th>Group</th>
-                        <th>Branch</th>
+                        <th>Account Type</th>
                         <th>
                           Account officer
                         </th>

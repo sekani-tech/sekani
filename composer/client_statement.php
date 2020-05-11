@@ -4,25 +4,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 require_once('../functions/connect.php');
 ?>
 <?php
-if (isset($_GET["message1"])) {
-    $key = $_GET["message1"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    echo '<script type="text/javascript">
-    $(document).ready(function(){
-        swal({
-            type: "success",
-            title: "Success",
-            text: "Statement Download complete!",
-            showConfirmButton: false,
-            timer: 2000
-        })
-    });
-    </script>
-    ';
-    $_SESSION["lack_of_intfund_$key"] = null;
-  }
-?>
-<?php
 if(isset($_GET["edit"])) {
     $id = $_GET["edit"];
     $query1 = mysqli_query($connection, "SELECT * FROM client WHERE id='$id'");
@@ -39,6 +20,7 @@ if(isset($_GET["edit"])) {
             $b = mysqli_fetch_array($query2);
             $intname = $b['int_name'];
             $logo = $b['int_name'];
+            $full = $b['int_full'];
             $web = $b['website'];
         }
         $branchid = mysqli_query($connection, "SELECT * FROM branch WHERE id='$branch'");
@@ -62,25 +44,54 @@ if(isset($_GET["edit"])) {
 
     $mpdf = new \Mpdf\Mpdf();
     $mpdf->WriteHTML('
+    <html>
+
         <link rel="stylesheet" media="print"  href="pdf/util.css">
         <link rel="stylesheet" href="pdf/main.css">    
         <header class="clearfix">
         <div id="logo">
           <img src="'.$_SESSION["int_logo"].'" height="80" width="80">
         </div>
-        <h1>'.$_SESSION["int_name"].' - Client Statement</h1>
+        <h1>'.$full.'<br/> Client Statement</h1>
         <div id="project" class="clearfix">
-            <div><span>Branch name</span>'.$branch_name.'</div>
-            <div><span>Branch address</span>'.$branch_address.'</div>
-            <div><span>Client name</span>'.$fname.' '.$lname.'</div>
-            <div><span>Currency</span>'.$currtype.'</div>
-            <div><span>Account number</span>'.$acc_no.'</div>
-            <div><span>Total debit </span> Head Office Branch</div>
-            <div><span>Total credit </span> August 17, 2015</div>
-            <div><span>Statement period:</span> September 17, 2015</div>
+        <table cellpadding="4" cellpacing="15" class="tbl">
+        <tr>
+            <th style="color:white;">CELL SPACING AREA</th>
+            <th style="color:white;">CELL SPACING AREA</th>
+            <th style="color:white;">CELL SPACING AREA</th>
+        </tr>
+        <tr>
+            <td><div class="head"><span>Branch Name: </span>'.$branch_name.'</div></td>
+            <td></td>
+            <td><div class="head"><span>Client name: </span>'.$fname.' '.$lname.'</div></td>
+        </tr>
+        <tr>
+            <td><div class="head"><span>Currency: </span>'.$currtype.'</div></td> 
+            <td></td>
+            <td><div class="tail"><span>Total credit: </span> August 17, 2015</div></td>
+            
+        </tr>
+        <tr>
+            <td><div class="tail"><span>Account number: </span>'.$acc_no.'</div></td>
+            <td></td>
+            <td><div class="tail"><span>Total debit: </span> Head Office Branch</div></td> 
+        </tr>
+        <tr>
+        <td><div class="tail"><span>Statement period:</span> September 17, 2015</div></td>
+        <td></td>
+        <td></td>
+        </tr>
+            
+            
+            
+            
+            
+            
+            
+         </table>
         </div>
         </header>
-    
+
     <div class="limiter">
         <div class="wrap-table100">
             <div class="table100">
@@ -214,7 +225,11 @@ if(isset($_GET["edit"])) {
             </div>
         </div>
     </div>
+
+    </html>
     ');
+    $mpdf->SetWatermarkImage('../instimg/DGMFB.jpg');
+    $mpdf->showWatermarkImage = true;
     // $stylesheet = file_get_contents('style.css');
     
     // $mpdf->WriteHTML($stylesheet,\Mpdf\HTMLParserMode::HEADER_CSS);

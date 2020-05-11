@@ -61,15 +61,29 @@ h1 {
 
 #project {
   float: left;
+  display:grid inline-grid;
+  grid-column-gap: 10px;
+  grid-template-columns: 50px 50px;
+}
+#tbl tr {
+  padding: 40px;
+  width: 50%;
+}
+.head {
+  color: #5D6975;
+  text-align: left;
+  padding: 40px;
+  width: 450px;
+  margin-right: 10px;
+  font-size: 14px;
 }
 
-#project span {
+.tail {
   color: #5D6975;
-  text-align: right;
-  width: 52px;
+  text-align:left;
+  padding: 40px;
   margin-right: 10px;
-  display: inline-block;
-  font-size: 11px;
+  font-size: 14px;
 }
 
 #company {
@@ -97,7 +111,6 @@ footer {
   padding: 8px 0;
   text-align: center;
 }
-
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 * {
