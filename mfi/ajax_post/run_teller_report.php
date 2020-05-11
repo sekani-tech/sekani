@@ -32,13 +32,12 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
     }
   }
 
-      
       //  Always Check the vault
       if (count([$query]) == 1 && count([$branchquery]) == 1) {
         // here we will some data
-        $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM institution_account_transaction WHERE teller_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
+        $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
         // then we will be fixing
-        $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM institution_account_transaction WHERE teller_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
+        $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
         $m1 = mysqli_fetch_array($genb1);
         $m = mysqli_fetch_array($genb);
         // qwerty
@@ -52,7 +51,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
         function fill_report($connection, $int_id, $start, $end, $branch_id, $teller)
         {
           // import
-          $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE teller_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
+          $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
           // $q = mysqli_fetch_array($querytoget);
           $out = '';
             
@@ -60,11 +59,18 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
           while ($q = mysqli_fetch_array($querytoget))
           {
             $client_id = $q["client_id"];
+            if ($client_id == 0) {
+              $intq = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
+              $qa = mysqli_fetch_array($intq);
+              $expno = $qa["teller_id"];
+              $expq = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$expno'");
+              $cc = mysqli_fetch_array($expq);
+              $client_name = $cc["name"];
+            } else {
             $client_query = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' && int_id = '$int_id'");
             $nx = mysqli_fetch_array($client_query);
-            
-          // wertyui
           $client_name = $nx["firstname"]." ".$nx["middlename"]." ".$nx["lastname"];
+            }
           // qwert
           $transact_id = $q["transaction_id"];
           $transaction_type = $q["transaction_type"];
@@ -94,6 +100,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
 
             $out .= '
             <tr>
+            <th>'.$transaction_date.'</th>
             <th>'.$client_name.'</th>
             <th>'.$amt.'</th>
             <th>'.$amt2.'</th>
@@ -141,6 +148,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
             <div class="table-responsive">
               <table id="tabledat4" class="table" style="width: 100%;">
                 <thead class=" text-primary">
+                <th>Date/Time</th>
                   <th>Account Name</th>
                   <th>Deposit</th>
                   <th>
