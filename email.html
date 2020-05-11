@@ -1,93 +1,234 @@
-<!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" media="print" href="./composer/pdf/style.css" media="all"/>
         <style>
-            .head {
-                color: black;
-                font-family: helvetica;
-                background-color: #eaeaea;
-                width: 100%;
-                display:inline-flex ;
-                padding: 10px;
-            }
-            .grid {
-                display: grid;
-                grid-column-gap: 10px;
-                grid-template-columns: 50px 50px;
-            }
-            .cname{
-                margin-left: 70%;
-                text-align:right;
-            }
-            .customer-info {
-                display:inline-block ;
-                width:100%;
-            }
-            .customer-info-box {
-                display:inline-flex ;
-                padding: 10px;
-                width: 100%;
-                font-weight: bolder;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            }
-            .right{
-                text-align:right;
-            }
-            .left{
-                text-align:left;
-            }
-            .tablea{
-                width:100%;
-            }
-            th{
-                color: white;
-                background-color: black;
-                border: 1px solid white;
-            }
-            .table{
-                width:100%;
-                font-family: Garamond (Headings);
-            }
-            </style>
+            .clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+a {
+  color: #5D6975;
+  text-decoration: underline;
+}
+
+body {
+  position: relative;
+  width: 21cm;  
+  height: 29.7cm; 
+  margin: 0 auto; 
+  color: #001028;
+  background: #FFFFFF; 
+  font-family: Arial, sans-serif; 
+  font-size: 12px; 
+  font-family: Arial;
+}
+
+header {
+  padding: 10px 0;
+  margin-bottom: 30px;
+}
+
+#logo {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#logo img {
+  width: 90px;
+}
+
+h1 {
+  border-top: 1px solid  #5D6975;
+  border-bottom: 1px solid  #5D6975;
+  color: #5D6975;
+  font-size: 2.4em;
+  line-height: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  margin: 0 0 20px 0;
+  background: url(dimension.png);
+}
+
+#project {
+  float: left;
+}
+
+#project span {
+  color: #5D6975;
+  text-align: right;
+  width: 52px;
+  margin-right: 10px;
+  display: inline-block;
+  font-size: 0.8em;
+}
+
+#company {
+  float: right;
+  text-align: right;
+}
+
+#project div,
+#company div {
+  white-space: nowrap;        
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
+}
+
+table tr:nth-child(2n-1) td {
+  background: #F5F5F5;
+}
+
+table th,
+table td {
+  text-align: center;
+}
+
+table th {
+  padding: 5px 20px;
+  color: #5D6975;
+  border-bottom: 1px solid #C1CED9;
+  white-space: nowrap;        
+  font-weight: normal;
+}
+
+table .service,
+table .desc {
+  text-align: left;
+}
+
+table td {
+  padding: 20px;
+  text-align: right;
+}
+
+table td.service,
+table td.desc {
+  vertical-align: top;
+}
+
+table td.unit,
+table td.qty,
+table td.total {
+  font-size: 1.2em;
+}
+
+table td.grand {
+  border-top: 1px solid #5D6975;;
+}
+
+#notices .notice {
+  color: #5D6975;
+  font-size: 1.2em;
+}
+
+footer {
+  color: #5D6975;
+  width: 100%;
+  height: 30px;
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid #C1CED9;
+  padding: 8px 0;
+  text-align: center;
+}
+        </style>
     </head>
     <body>
-        <div class="head">
-            <div class="cname"><h1>Company Name</h1></div> 
-        </div>
-        <div class="customer-info-box">
-            <div style="background-color:c264c9;"class="customer-info">
-                <span class="left">
-                <span>Branch name</span><br/> 
-                <span>Branch address</span><br/>
-                <span>Client name</span><br/> 
-                <span>Currency</span><br/>
-            </span>
-            <span class="left">
-                <span>Account number</span><br/> 
-                <span>Total debit</span><br/>
-                <span>Statement period</span><br/> 
-                <span>Total credit</span><br/> 
-            </span>
-            </div>
-        </div>
-        <div class="table">
-            <table class="tablea">
-                <thead>
-                    <tr>
-                        <th>Opening Balance</th>
-                        <th>Closing Balance</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>2,000,000</td>
-                        <td>2,600,000</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div>
-            
-        </div>
+<header class="clearfix">
+<div id="logo">
+  <img src="'.$_SESSION["int_logo"].'" height="80" width="80">
+</div>
+<h1>'.$_SESSION["int_name"].' - Client Statement</h1>
+<div id="company" class="clearfix">
+  <div>Company Name</div>
+  <div>455 Foggy Heights,<br /> AZ 85004, US</div>
+  <div>(602) 519-0450</div>
+  <div><a href="mailto:c@example.com">company@example.com</a></div>
+</div>
+<div id="project">
+  <div><span>TELLER NAME</span> Teller 1</div>
+  <div><span>BRANCH</span> Head Office Branch</div>
+  <div><span>FROM</span> August 17, 2015</div>
+  <div><span>AS AT</span> September 17, 2015</div>
+</div>
+</header>
+<main>
+<table>
+<thead>
+  <tr>
+    <th class="service">Transaction-Date</th>
+    <th class="desc">Value Date</th>
+    <th>Reference</th>
+    <th>Debits</th>
+    <th>Credits</th>
+    <th>Balance</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="service">Design</td>
+    <td class="desc">Creating a recognizable design solution based on the companys existing visual identity</td>
+    <td class="unit">$40.00</td>
+    <td class="qty">26</td>
+    <td class="total">$1,040.00</td>
+  </tr>
+  <tr>
+    <td class="service">Development</td>
+    <td class="desc">Developing a Content Management System-based Website</td>
+    <td class="unit">$40.00</td>
+    <td class="qty">80</td>
+    <td class="total">$3,200.00</td>
+  </tr>
+  <tr>
+    <td class="service">SEO</td>
+    <td class="desc">Optimize the site for search engines (SEO)</td>
+    <td class="unit">$40.00</td>
+    <td class="qty">20</td>
+    <td class="total">$800.00</td>
+  </tr>
+  <tr>
+    <td class="service">Training</td>
+    <td class="desc">Initial training sessions for staff responsible for uploading web content</td>
+    <td class="unit">$40.00</td>
+    <td class="qty">4</td>
+    <td class="total">$160.00</td>
+  </tr>
+  <tr>
+    <td colspan="4">SUBTOTAL</td>
+    <td class="total">$5,200.00</td>
+  </tr>
+  <tr>
+    <td colspan="4">TAX 25%</td>
+    <td class="total">$1,300.00</td>
+  </tr>
+  <tr>
+    <td colspan="4" class="grand total">GRAND TOTAL</td>
+    <td class="grand total">$6,500.00</td>
+  </tr>
+</tbody>
+</table>
+<div id="notices">
+<div>Opening Balance: </div>
+<div>Total Deposit: </div>
+<div>Total Withdrawal: </div>
+<div>Closing Balance: </div>
+<br/>
+<div>Teller Sign:</div>
+<div id="company" class="clearfix">
+Date:
+</div>
+<div>Checked by:</div>
+<div id="company" class="clearfix">
+Date and Sign:
+</div>
+</div>
+</main>
     </body>
 </html>

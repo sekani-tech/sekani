@@ -19,7 +19,7 @@ if(isset($_GET["edit"])) {
         if (count([$query2]) == 1) {
             $b = mysqli_fetch_array($query2);
             $intname = $b['int_name'];
-            $logo = $b['img'];
+            $logo = $b['int_name'];
             $web = $b['website'];
         }
         $branchid = mysqli_query($connection, "SELECT * FROM branch WHERE id='$branch'");
@@ -98,8 +98,8 @@ $pdf->SetSubject('Client statement for '.$fname, $lname.'');
 $pdf->SetKeywords('');
 
 // set default header data
-$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 061', PDF_HEADER_STRING);
-// $pdf->SetHeaderData($logo, '13', PDF_HEADER_TITLE.$intname, PDF_HEADER_STRING.$web);
+// $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 061', PDF_HEADER_STRING);
+$pdf->SetHeaderData('../instimg/'.$logo.'.jpg', '13', PDF_HEADER_TITLE.$intname, PDF_HEADER_STRING.$web);
 
 // set header and footer fonts
 $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));

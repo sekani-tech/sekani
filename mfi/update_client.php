@@ -432,7 +432,7 @@ if(isset($_GET["edit"])) {
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $passport;?>" />
+                    <img class="img" src="../functions/clients/passport/<?php echo $passport;?>" />
                   </a>
                 </div>
                 <!-- Get client data -->
@@ -455,7 +455,7 @@ if(isset($_GET["edit"])) {
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $id_img_url;?>" />
+                    <img class="img" src="../functions/clients/id/<?php echo $id_img_url;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->
@@ -468,7 +468,7 @@ if(isset($_GET["edit"])) {
                 <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $signature;?>" />
+                    <img class="img" src="../functions/clients/sign/<?php echo $signature;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->

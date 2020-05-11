@@ -185,7 +185,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
                     <table id="tabledat4" class="table">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.branch_id, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = '' || client.status = 'Not Approved'";
+                        $query = "SELECT client.id, client.account_type, client.account_no, client.branch_id, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Not Approved'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -219,22 +219,23 @@ $_SESSION["lack_of_intfund_$key"] = null;
                         <th><?php echo $row["firstname"]; ?></th>
                           <th><?php echo $row["lastname"]; ?></th>
                           <th></th>
-                          <?php 
-                          $so = $row["branch_id"];
-                           $que = mysqli_query($connection, "SELECT * FROM branch WHERE id = '$so'");
-                          if (count([$que]) == 1) {
-                            $yxx = mysqli_fetch_array($que);
-                            $bid = $yxx['id'];
-                            $brname = $yxx['name'];
-                        }
-                          $class = "";
-                          if ( $row["branch_id"] == $bid || $row["branch_id"] == "1") {
-                            $class = $brname;
-                          } else {
-                            $class = "LIABILITY";
-                          }
-                          ?>
-                          <th><?php echo $class; ?></th>
+                          <?php
+                            $class = "";
+                            $row["account_type"];
+                            $cid= $row["id"];
+                            $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
+                            if (count([$atype]) == 1) {
+                                $yxx = mysqli_fetch_array($atype);
+                                $actype = $yxx['product_id'];
+                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
+                           if (count([$spn])) {
+                             $d = mysqli_fetch_array($spn);
+                             $savingp = $d["name"];
+                           }
+                            }
+                           
+                            ?>
+                          <th><?php echo $savingp; ?></th>
                           <th><?php echo strtoupper($row["first_name"]." ".$row["last_name"]); ?></th>
                           <th><?php echo "4/4/2020" ?></th>
                           <th><?php echo $row["account_no"]; ?></th>

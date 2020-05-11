@@ -59,31 +59,27 @@ if(isset($_GET["edit"])) {
                           <h4><?php echo $branch_name;?></h4>
                         <h6 class="card-category text-gray">Client name</h6>
                           <h4><?php echo $first_name," ", $last_name;?></h4>
-                          <h6 class="card-category text-gray">Client Number</h6>
-                          <h4><?php echo $phone;?></h4>
                         <h6 class="card-category text-gray">Currency</h6>
                           <h4><?php echo $currtype;?></h4>
                         <h6 class="card-category text-gray">Total debit</h6>
                           <!-- <h4><?php echo $actype;?></h4> -->
-                          <h4>N 13145500</h4>
+                          <h4>&#8358; 13145500</h4>
                         <h6 class="card-category text-gray">Total credit</h6>
                           <!-- <h4><?php echo $actype;?></h4> -->
-                          <h4>N 12167500</h4>
+                          <h4>&#8358; 12167500</h4>
                     </div>
 
                     <div class="col-md-6">
                       <h6 class="card-category text-gray">Branch address</h6>
                         <h4><?php echo $branch_address?></h4>
-                        <h6 class="card-category text-gray">Email</h6>
-                        <h4><?php echo $email;?></h4>
                       <h6 class="card-category text-gray">Account number</h6>
                         <h4><?php echo $acc_no;?></h4>
                       <h6 class="card-category text-gray">Opening balance</h6>
                         <!-- <h4><?php echo $actype;?></h4> -->
-                        <h4>N 503965</h4>
+                        <h4>&#8358; 503965</h4>
                       <h6 class="card-category text-gray">Closing balance</h6>
                       <!-- <h4><?php echo $actype;?></h4> -->
-                      <h4>N 493824</h4>
+                      <h4>&#8358; 493824</h4>
                       <h6 class="card-category text-gray">Statement period</h6>
                       <h4>01/01/2020 - 01/30/2020</h4>
                     </div>
@@ -98,11 +94,8 @@ if(isset($_GET["edit"])) {
                 </div>
                 <div class="card-body">
                 <div class="form-group">
-                  <form method="POST" action="../TCPDF/dbtable.php">
-                      <label for="">Name:</label>
-                      <input class="form-control" type="text" value=<?php echo $first_name," ", $last_name;?> readonly/>
-                    
-                  <a href="../TCPDF/pdf.php?edit=<?php echo $id;?>" class="btn btn-primary pull-left">Download PDF</a>
+                  <form method="POST" action="../TCPDF/dbtable.php">                    
+                  <a href="../composer/client_statement.php?edit=<?php echo $id;?>" class="btn btn-primary pull-left">Download PDF</a>
                   </form>
                     </div>
                     <div class="table-responsive">
