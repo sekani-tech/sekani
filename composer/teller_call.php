@@ -112,6 +112,8 @@ if (isset($_POST["start1"]) && isset($_POST["branch1"]) && isset($_POST["teller1
     // NOTHIG
 require_once __DIR__ . '/vendor/autoload.php';
 $mpdf = new \Mpdf\Mpdf();
+$mpdf->SetWatermarkImage(''.$_SESSION["int_logo"].'');
+$mpdf->showWatermarkImage = true;
 $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" media="all"/>
 <header class="clearfix">
 <div id="logo">
