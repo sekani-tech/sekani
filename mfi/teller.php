@@ -105,11 +105,12 @@ function fill_client($connection) {
                     });
                   </script>
                   <!-- this section is the end of run report -->
+                  
                 </div>
               </div>
             </div>
             <!-- teller report -->
-            <!-- populate for print with above data -->
+            <!-- populate for print with above data --> 
             <div id="outjournal"></div>
             <!-- end  -->
           </div>

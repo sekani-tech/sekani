@@ -8,7 +8,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
     $int_id = $_POST["int_id"];
     if($_POST["start"] != '' && $_POST["teller"] != '')
     {
-        $start = $_POST["start"];
+       $start = $_POST["start"];
        $end = $_POST["end"];
        $branch = $_POST["branch"];
        $teller = $_POST["teller"];
@@ -36,19 +36,12 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
       //  Always Check the vault
       if (count([$query]) == 1 && count([$branchquery]) == 1) {
         // here we will some data
-       
-        // DONE HERE
-        // if ($teller_id != $teller) {
-        //   $runglq = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$teller_id'");
-        //   $w = mysqli_fetch_array($runglq);
-        //   $client_name = $w["name"];
-        // }
         $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM institution_account_transaction WHERE teller_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
         // then we will be fixing
         $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM institution_account_transaction WHERE teller_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
         $m1 = mysqli_fetch_array($genb1);
         $m = mysqli_fetch_array($genb);
-
+        // qwerty
         $tcp = $m1["credit"];
         $tdp = $m["debit"];
         // summing
@@ -126,11 +119,11 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
                   <div class="col-md-4 form-group">
                       <label for="">Name of Teller</label>
                       <input type="text" name="" value="'.$tell_name.'" id="" class="form-control" readonly>
-                      <input type="text" name="" value="'.$tell_name.'" id="start1" class="form-control" hidden>
-                      <input type="text" name="" value="'.$tell_name.'" id="end1" class="form-control" hidden>
-                      <input type="text" name="" value="'.$tell_name.'" id="branch1" class="form-control" hidden>
-                      <input type="text" name="" value="'.$tell_name.'" id="teller1" class="form-control" hidden>
-                      <input type="text" name="" value="'.$tell_name.'" id="int_id1" class="form-control" hidden>
+                      <input type="text" name="" value="'.$start.'" id="start1" class="form-control" hidden>
+                      <input type="text" name="" value="'.$end.'" id="end1" class="form-control" hidden>
+                      <input type="text" name="" value="'.$branch_id.'" id="branch1" class="form-control" hidden>
+                      <input type="text" name="" value="'.$teller.'" id="teller1" class="form-control" hidden>
+                      <input type="text" name="" value="'.$int_id.'" id="int_id1" class="form-control" hidden>
                   </div>
                   <div class="col-md-4 form-group">
                       <label for="">Branch</label>
@@ -167,39 +160,20 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
               </table>
             </div>
             <p><b>Opening Balance:</b>  </p>
-            <p><b>Total Deposit:</b>  </p>
-            <p><b>Total Withdrawal:</b>  </p>
-            <p><b>Closing Balance:</b> 129 </p>
+            <p><b>Total Deposit:</b> '.$tcdp.' </p>
+            <p><b>Total Withdrawal:</b> '.$tddp.' </p>
+            <p><b>Closing Balance:</b> '.$finalbal.' </p>
             <hr>
             <p><b>Teller Sign:</b> 129                        <b>Date:</b></p>
             <p><b>Checked By: '.$_SESSION["username"].'</b>                             <b>Date/Sign: '.$start." - ".$end.' </b></p>
 
             <p>
-            <button id="pdf" class="btn btn-primary pull-right">PDF print</button>
+            <button id="pddf" class="btn btn-primary pull-right">PDF print</button>
+            <div id="outreport"></div>
             </p>
           </div>
         </div>
       </div>
-      <div id="outreport"></div>
-      <script>
-        $(document).ready(function () {
-        $("#pdf").on("change click", function () {
-           var start = $("#start1").val();
-           var end = $("#end1").val();
-           var branch = $("#branch1").val();
-           var teller = $("#teller1").val();
-          var int_id = $("#int_id1").val();
-           $.ajax({
-           url: "../../composer/teller_call.php",
-           method: "POST",
-            data:{start:start, end:end, branch:branch, teller:teller, int_id:int_id},
-             success: function (data) {
-               $("#outreport").html(data);
-            }
-          })
-         });
-       });
-     </script>
       ';
       echo $output;
       } else {
@@ -208,3 +182,42 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
     }
 }
 ?>
+
+<script>
+        $(document).ready(function () {
+        $('#pddf').on("click", function () {
+         
+           var start1 = $('#start1').val();
+           var end1 = $('#end1').val();
+           var branch1 = $('#branch1').val();
+           var teller1 = $('#teller1').val();
+          var int_id1 = $('#int_id1').val();
+          swal({
+              type: "success",
+              title: "TELLER REPORT",
+              text: "From " + start1 + " to " + end1,
+              showConfirmButton: false,
+              timer: 3000
+                    
+            })
+           $.ajax({
+           url: "../composer/teller_call.php",
+           method: "POST",
+            data:{start1:start1, end1:end1, branch1:branch1, teller1:teller1, int_id1:int_id1},
+             success: function (data) {
+               $('#outreport').html(data);
+            },
+            error: function(data){
+            swal({
+              type: "error",
+              title: "TELLER REPORT 404",
+              text: "From " + start1 + " to " + end1,
+              showConfirmButton: false,
+              timer: 2000
+                    
+            })
+            }
+          })
+         });
+       });
+     </script>
