@@ -114,10 +114,21 @@
                                 <input type="email" name="pc_email" class="form-control" id="">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <style>
+                        input[type="file"]{
+                          display: none;
+                        }
+                        .custom-file-upload{
+                          border: 1px solid #ccc;
+                          display: inline-block;
+                          padding: 6px 12px;
+                          cursor: pointer;
+                        }
+                      </style>
+                    <div class="col-md-4">
                     <label for="file-insert" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
                     <input id ="file-insert" name="int_logo" type="file" class="inputFileHidden"/>
-                    <label> Select Signature</label>
+                    <label> Select Logo</label>
                     <div id="iup"></div>
                     </div>
                     </div>
