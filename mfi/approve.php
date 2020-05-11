@@ -41,7 +41,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $transid = $x['transact_id'];
       $product_type = $x['product_type'];
       $stat = $x['status'];
-      $branch_id = $x['branch_id'];
+      $branch_idm = $x['branch_id'];
       $teller_id = $x['staff_id'];
       $transaction_date = $x['date'];
       $irvs = 0;
@@ -392,7 +392,7 @@ $resx1 = mysqli_num_rows($q1);
                        $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
              teller_id, transaction_id, transaction_type, is_reversed,
              transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-             created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
+             created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_idm}',
              '{$gl_codex}', '{$trans_id}', 'Debit', '{$irvs}',
              '{$gen_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
              '{$gen_date}', '{$staff_id}', '{$gl_amt}')";

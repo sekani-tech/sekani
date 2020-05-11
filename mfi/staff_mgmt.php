@@ -268,7 +268,6 @@ $destination = "index.php";
                           Till Number
                         </th>
                         <th>Balance</th>
-                        <th></th>
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
@@ -318,10 +317,10 @@ $destination = "index.php";
                           $checking = "SELECT * FROM `institution_account` WHERE teller_id ='$till' && int_id = '$sessint_id'";
                           $done = mysqli_query($connection, $checking);
                           $men = mysqli_fetch_array($done);
-                          $bal = $men["account_balance_derived"];
+                          $bal = number_format($men["account_balance_derived"], 2);
                           ?>
                           <th><?php echo $bal; ?></th>
-                          <th><a href="view_teller.php?id=<?php echo $row["name"];?>" class="btn btn-success">View</a></th>
+                          <!-- <th><a href="view_teller.php?id=<?php $row["name"];?>" class="btn btn-success">View</a></th> -->
                         </tr>
                         <?php }
                           }
