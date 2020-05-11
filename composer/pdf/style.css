@@ -84,7 +84,7 @@ table tr:nth-child(2n-1) td {
 
 table th,
 table td {
-  text-align: center;
+  text-align: left;
 }
 
 table th {
@@ -102,7 +102,7 @@ table .desc {
 
 table td {
   padding: 20px;
-  text-align: right;
+  text-align: left;
 }
 
 table td.service,
