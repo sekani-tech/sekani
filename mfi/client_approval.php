@@ -1,95 +1,92 @@
 <?php
 
-$page_title = "Account Opening Approval";
-$destination = "client.php";
-include('header.php');
+$page_title = "Branch";
+$destination = "index.php";
+    include("header.php");
 
 ?>
 <?php
-//  Sweet alert Function
-
-// If it is successfull, It will show this message
-  if (isset($_GET["message"])) {
-    $key = $_GET["message"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    echo '<script type="text/javascript">
-    $(document).ready(function(){
-        swal({
-            type: "success",
-            title: "Success",
-            text: "Client Approved!",
-            showConfirmButton: false,
-            timer: 2000
-        })
-    });
-    </script>
-    ';
-    $_SESSION["lack_of_intfund_$key"] = null;
-}
-// If it is not successfull, It will show this message
-else if (isset($_GET["message2"])) {
-  $key = $_GET["message2"];
-  // $out = $_SESSION["lack_of_intfund_$key"];
-  echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "error",
-          title: "Error",
-          text: "Error approving client",
-          showConfirmButton: false,
-          timer: 2000
-      })
-  });
-  </script>
-  ';
-  $_SESSION["lack_of_intfund_$key"] = null;
-}
-if (isset($_GET["message3"])) {
-  $key = $_GET["message3"];
-  // $out = $_SESSION["lack_of_intfund_$key"];
-  echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "success",
-          title: "Success",
-          text: "Client was Updated successfully!",
-          showConfirmButton: false,
-          timer: 2000
-      })
-  });
-  </script>
-  ';
-  $_SESSION["lack_of_intfund_$key"] = null;
-}
-else if (isset($_GET["message4"])) {
-$key = $_GET["message4"];
-// $out = $_SESSION["lack_of_intfund_$key"];
-echo '<script type="text/javascript">
-$(document).ready(function(){
-    swal({
-        type: "error",
-        title: "Error",
-        text: "Error updating client!",
-        showConfirmButton: false,
-        timer: 2000
-    })
-});
-</script>
-';
-$_SESSION["lack_of_intfund_$key"] = null;
-}
-?>
+          if (isset($_GET["message"])) {
+            $key = $_GET["message"];
+            $tt = 0;
+            if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+              echo '<script type="text/javascript">
+                    $(document).ready(function(){
+                        swal({
+                            type: "success",
+                            title: "Success",
+                            text: "Teller Created Successfully",
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    });
+                    </script>
+                    ';
+              $_SESSION["lack_of_intfund_$key"] = 0;
+            }
+          }else if (isset($_GET["message2"])) {
+            $key = $_GET["message2"];
+            $tt = 0;
+            if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+              echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Error",
+                        text: "Error in Posting For Approval",
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                });
+                </script>
+                ';
+            $_SESSION["lack_of_intfund_$key"] = 0;
+            }
+          }
+        ?>
 <!-- Content added here -->
-<!-- print content -->
-<div class="content">
+    <div class="content">
         <div class="container-fluid">
+          <!-- your content here -->
+          <div class="row">
+            <div class="col-lg-12 col-md-12">
+              <div class="card">
+                <div class="card-header card-header-tabs card-header-primary">
+                  <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                      <!-- <span class="nav-tabs-title">Staff Management:</span> -->
+                      <ul class="nav nav-tabs" data-tabs="tabs">
+                        <!-- <li class="nav-item">
+                          <a class="nav-link active" href="#profile" data-toggle="tab">
+                            <i class="material-icons">bug_report</i> Password Settings
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li> -->
+                        <li class="nav-item">
+                          <a class="nav-link active" href="#messages" data-toggle="tab">
+                            <i class="material-icons">check</i> Approval
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#products" data-toggle="tab">
+                            <i class="material-icons">cancel</i>Rejections
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="messages">
+                    <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
             <div class="col-md-12">
             <div class="card">
-                <div class="card-header card-header-primary">
-                    <h4 class="card-title">Pending Approval</h4>
-                </div>
+
                 <?php
                   function fill_branch($connection)
                   {
@@ -197,7 +194,6 @@ $_SESSION["lack_of_intfund_$key"] = null;
                         <th>
                           Last Name
                         </th>
-                        <th>Group</th>
                         <th>Account Type</th>
                         <th>
                           Account officer
@@ -218,7 +214,6 @@ $_SESSION["lack_of_intfund_$key"] = null;
                         <?php $row["id"]; ?>
                         <th><?php echo $row["firstname"]; ?></th>
                           <th><?php echo $row["lastname"]; ?></th>
-                          <th></th>
                           <?php
                             $class = "";
                             $row["account_type"];
@@ -239,7 +234,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
                           <th><?php echo strtoupper($row["first_name"]." ".$row["last_name"]); ?></th>
                           <th><?php echo "4/4/2020" ?></th>
                           <th><?php echo $row["account_no"]; ?></th>
-                          <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
+                          <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">visibility</i></a></td>
                           <td><a href="../functions/approveClient.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
                           </tr>
                         <?php }
@@ -257,10 +252,63 @@ $_SESSION["lack_of_intfund_$key"] = null;
             </div>
           </div>
         </div>
+                      </div>
+                    <div class="tab-pane" id="products">
+                      <a href="manage_product.php" class="btn btn-primary"> Create New Role</a>
+                      <div class="table-responsive">
+                  <script>
+                  $(document).ready(function() {
+                  $('#tabledat4').DataTable();
+                  });
+                  </script>
+                    <table id="tabledat4" class="table" style="width: 100%;">
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM product WHERE int_id ='$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                        <!-- <th>
+                          ID
+                        </th> -->
+                        <th>Name</th>
+                        <th>
+                          Description
+                        </th>
+                        <th>Active</th>
+                        <th>
+                          Edit
+                        </th>
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                          <th><?php echo $row["name"]; ?></th>
+                          <th><?php echo $row["description"]; ?></th>
+                          <th><?php echo $row["short_name"]; ?></th>
+                          <td><a href="update_product.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                      </tbody>
+                    </table>
+                  </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- / -->
+        </div>
       </div>
 
 <?php
 
-include('footer.php');
+    include("footer.php");
 
 ?>
