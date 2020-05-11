@@ -126,6 +126,11 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
                   <div class="col-md-4 form-group">
                       <label for="">Name of Teller</label>
                       <input type="text" name="" value="'.$tell_name.'" id="" class="form-control" readonly>
+                      <input type="text" name="" value="'.$tell_name.'" id="start1" class="form-control" hidden>
+                      <input type="text" name="" value="'.$tell_name.'" id="end1" class="form-control" hidden>
+                      <input type="text" name="" value="'.$tell_name.'" id="branch1" class="form-control" hidden>
+                      <input type="text" name="" value="'.$tell_name.'" id="teller1" class="form-control" hidden>
+                      <input type="text" name="" value="'.$tell_name.'" id="int_id1" class="form-control" hidden>
                   </div>
                   <div class="col-md-4 form-group">
                       <label for="">Branch</label>
@@ -170,11 +175,31 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
             <p><b>Checked By: '.$_SESSION["username"].'</b>                             <b>Date/Sign: '.$start." - ".$end.' </b></p>
 
             <p>
-            <a href="../composer/pdftest.php?edit=" class="btn btn-primary pull-right">PDF print</a>
+            <button id="pdf" class="btn btn-primary pull-right">PDF print</button>
             </p>
           </div>
         </div>
       </div>
+      <div id="outreport"></div>
+      <script>
+        $(document).ready(function () {
+        $("#pdf").on("change click", function () {
+           var start = $("#start1").val();
+           var end = $("#end1").val();
+           var branch = $("#branch1").val();
+           var teller = $("#teller1").val();
+          var int_id = $("#int_id1").val();
+           $.ajax({
+           url: "../../composer/teller_call.php",
+           method: "POST",
+            data:{start:start, end:end, branch:branch, teller:teller, int_id:int_id},
+             success: function (data) {
+               $("#outreport").html(data);
+            }
+          })
+         });
+       });
+     </script>
       ';
       echo $output;
       } else {
