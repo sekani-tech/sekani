@@ -34,6 +34,16 @@ if(isset($_GET["edit"])) {
       $b = mysqli_fetch_array($acount);
       $currtype = $b['currency_code'];
     }
+
+      $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE client_id = '$id'");
+      $deb = mysqli_fetch_array($totald);
+      $tdp = $deb['debit'];
+      $totaldb = number_format($tdp, 2);
+
+      $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE client_id = '$id'");
+      $cred = mysqli_fetch_array($totalc);
+      $tcp = $cred['credit'];
+      $totalcd = number_format($tcp, 2);
   }
 }
 // session_start();
@@ -62,11 +72,9 @@ if(isset($_GET["edit"])) {
                         <h6 class="card-category text-gray">Currency</h6>
                           <h4><?php echo $currtype;?></h4>
                         <h6 class="card-category text-gray">Total debit</h6>
-                          <!-- <h4><?php echo $actype;?></h4> -->
-                          <h4>&#8358; 13145500</h4>
+                          <h4>&#8358;<?php echo $totaldb;?></h4>
                         <h6 class="card-category text-gray">Total credit</h6>
-                          <!-- <h4><?php echo $actype;?></h4> -->
-                          <h4>&#8358; 12167500</h4>
+                          <h4>&#8358;<?php echo $totalcd;?></h4>
                     </div>
 
                     <div class="col-md-6">
@@ -107,7 +115,7 @@ if(isset($_GET["edit"])) {
                     <table id="tabledat2" class="table" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT transaction_date, created_date, amount, debit, credit, cumulative_balance_derived FROM account_transaction WHERE client_id ='$id'";
+                        $query = "SELECT transaction_date, created_date, transaction_id, debit, credit, running_balance_derived FROM account_transaction WHERE client_id ='$id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -128,10 +136,10 @@ if(isset($_GET["edit"])) {
                         <tr>
                           <th><?php echo $row["transaction_date"]; ?></th>
                           <th><?php echo $row["created_date"]; ?></th>
-                          <th><?php echo $row["amount"]; ?></th>
+                          <th><?php echo $row["transaction_id"]; ?></th>
                           <th><?php echo $row["debit"]; ?></th>
                           <th><?php echo $row["credit"]; ?></th>
-                          <th><?php echo $row["cumulative_balance_derived"]; ?></th>
+                          <th><?php echo $row["running_balance_derived"]; ?></th>
                         </tr>
                         <?php }
                           }
