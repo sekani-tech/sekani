@@ -81,7 +81,7 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Phone No</label>
-                      <input type="tel" class="form-control" name="phone" >
+                      <input type="tel" class="form-control" name="phone">
                     </div>
                   </div>
                   <div class="col-md-4">

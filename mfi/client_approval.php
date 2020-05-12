@@ -70,7 +70,7 @@ $destination = "index.php";
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#products" data-toggle="tab">
-                            <i class="material-icons">cancel</i>Rejections
+                            <i class="material-icons">cancel</i>Pending
                             <div class="ripple-container"></div>
                           </a>
                         </li>
@@ -206,7 +206,7 @@ $destination = "index.php";
                         </th>
                         <th>View</th>
                         <th>Approve</th>
-                        <th>Reject</th>
+                        <th>Pending</th>
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
