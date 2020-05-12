@@ -243,10 +243,10 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   $(document).ready(function(){
       swal({
           type: "error",
-          title: "Loan",
-          text: "Loan Repayment Failed",
+          title: "Expense Not Found",
+          text: "(^_^) Dont Post Like That, Else i will Notify Someone.",
           showConfirmButton: false,
-          timer: 2000
+          timer: 5000
       })
   });
   </script>

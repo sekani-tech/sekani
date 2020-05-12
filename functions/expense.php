@@ -62,6 +62,10 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
 ?>
 <?php
 // check if the teller is deleted or active
+$q3 = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$gl_codex' && int_id='$sessint_id'");
+// run the query
+$resx1 = mysqli_num_rows($q3);
+if ($resx1 != 0) {
 if ($is_del == "0" && $is_del != NULL) {
     // check if the teller account is greater the gl amount else insufficient fund
     if ($int_acct_bal >= $gl_amt) {
@@ -130,6 +134,11 @@ if ($is_del == "0" && $is_del != NULL) {
 // echo a you are not authorized message
 $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
 echo header ("Location: ../mfi/transact.php?messagex2=$randms");
+}
+} else {
+    // Making now
+    $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
+    echo header ("Location: ../mfi/transact.php?loan2=$randms");
 }
 ?>
 <!-- THINGS TO DO JUST --DONE WHERE IF HAS BEEN DONE -->
