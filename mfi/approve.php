@@ -382,7 +382,11 @@ $resx1 = mysqli_num_rows($q1);
                      ';
                    }
                  } else if ($transact_type == "Expense") {
+                   $getaccount = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
+                   $getbal = mysqli_fetch_array($getaccount);
+                   $runtellb = $getbal["account_balance_derived"];
                    // importing the needed on the gl
+                   if ($runtellb >= $amount) {
                    $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_codex'";
                    $dbgl = mysqli_query($connection, $upglacct);
                    if ($dbgl) {
@@ -478,7 +482,23 @@ $resx1 = mysqli_num_rows($q1);
                      </script>
                      ';
                    }
+                  } else {
+                    echo '<script type="text/javascript">
+                   $(document).ready(function(){
+                       swal({
+                           type: "error",
+                           title: "Teller",
+                           text: "Insufficient Fund",
+                           showConfirmButton: false,
+                           timer: 2000
+                       })
+                   });
+                   </script>
+                   ';
+                  }
+                  //  insire
                  }
+                //  an else goes here
  
  else {
                    echo '<script type="text/javascript">
