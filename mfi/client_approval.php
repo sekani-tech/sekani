@@ -15,7 +15,7 @@ $destination = "index.php";
                         swal({
                             type: "success",
                             title: "Success",
-                            text: "Teller Created Successfully",
+                            text: "Client Approved",
                             showConfirmButton: false,
                             timer: 2000
                         })
@@ -31,9 +31,9 @@ $destination = "index.php";
               echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
-                        type: "error",
-                        title: "Error",
-                        text: "Error in Posting For Approval",
+                        type: "success",
+                        title: "Success",
+                        text: "Client Rejected",
                         showConfirmButton: false,
                         timer: 2000
                     })
@@ -206,6 +206,7 @@ $destination = "index.php";
                         </th>
                         <th>View</th>
                         <th>Approve</th>
+                        <th>Reject</th>
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
@@ -234,8 +235,10 @@ $destination = "index.php";
                           <th><?php echo strtoupper($row["first_name"]." ".$row["last_name"]); ?></th>
                           <th><?php echo "4/4/2020" ?></th>
                           <th><?php echo $row["account_no"]; ?></th>
-                          <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">visibility</i></a></td>
-                          <td><a href="../functions/approveClient.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
+                          <td><a href="client_approvalEdit.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">visibility</i></a></td>
+                          <td><a href="../functions/approveClient.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">check</i></a></td>
+                          <td><a href="../functions/rejectClient.php?edit=<?php echo $row["id"];?>" class="btn btn-danger"><i class="material-icons">cancel</i></a></td>
+
                           </tr>
                         <?php }
                           }
@@ -254,41 +257,77 @@ $destination = "index.php";
         </div>
                       </div>
                     <div class="tab-pane" id="products">
-                      <a href="manage_product.php" class="btn btn-primary"> Create New Role</a>
-                      <div class="table-responsive">
+                    <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+              <div class="card-header card-header-primary">
+                    <h4 class="card-title">Rejected Clients</h4>
+                </div>
+                <div class="card-body">
+                <div class="table-responsive">
                   <script>
                   $(document).ready(function() {
                   $('#tabledat4').DataTable();
                   });
                   </script>
-                    <table id="tabledat4" class="table" style="width: 100%;">
+                    <table id="tabledat4" class="table">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM product WHERE int_id ='$sessint_id'";
+                        $query = "SELECT client.id, client.account_type, client.account_no, client.branch_id, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Pending'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
                           ID
                         </th> -->
-                        <th>Name</th>
                         <th>
-                          Description
+                          First Name
                         </th>
-                        <th>Active</th>
                         <th>
-                          Edit
+                          Last Name
                         </th>
+                        <th>Account Type</th>
+                        <th>
+                          Account officer
+                        </th>
+                        <th>
+                          Registration date
+                        </th>
+                        <th>
+                          Account Number
+                        </th>
+                        <th>Edit</th>
+                        <th>Approve</th>
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
-                          <th><?php echo $row["name"]; ?></th>
-                          <th><?php echo $row["description"]; ?></th>
-                          <th><?php echo $row["short_name"]; ?></th>
-                          <td><a href="update_product.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
-                        </tr>
+                        <th><?php echo $row["firstname"]; ?></th>
+                          <th><?php echo $row["lastname"]; ?></th>
+                          <?php
+                            $class = "";
+                            $row["account_type"];
+                            $cid= $row["id"];
+                            $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
+                            if (count([$atype]) == 1) {
+                                $yxx = mysqli_fetch_array($atype);
+                                $actype = $yxx['product_id'];
+                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
+                           if (count([$spn])) {
+                             $d = mysqli_fetch_array($spn);
+                             $savingp = $d["name"];
+                           }
+                            }
+                           
+                            ?>
+                          <th><?php echo $savingp; ?></th>
+                          <th><?php echo strtoupper($row["first_name"]." ".$row["last_name"]); ?></th>
+                          <th><?php echo "4/4/2020" ?></th>
+                          <th><?php echo $row["account_no"]; ?></th>
+                          <td><a href="client_approvalEdit.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">edit</i></a></td>
+                          <td><a href="../functions/approveClient.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">check</i></a></td>
+                          </tr>
                         <?php }
                           }
                           else {
@@ -298,8 +337,11 @@ $destination = "index.php";
                       </tbody>
                     </table>
                   </div>
-                    </div>
                 </div>
+              </div>
+               <!--//report ends here -->
+            </div>
+          </div>
               </div>
             </div>
           </div>
