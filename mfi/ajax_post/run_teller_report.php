@@ -45,7 +45,10 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
         $tcp = $m1["credit"];
         $tdp = $m["debit"];
         // summing
-        $finalbal = number_format(($tcp - $tdp), 2);
+        $fas = mysqli_query($connection, "SELECT * FROM institution_account WHERE teller_id = '$teller'");
+        $fx = mysqli_fetch_array($fas);
+        $famt =  $fx["account_balance_derived"];
+        $finalbal = number_format(($famt), 2);
         $tcdp = number_format(round($tcp), 2);
         $tddp = number_format(round($tdp), 2);
         // total
@@ -210,9 +213,9 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
           swal({
               type: "success",
               title: "TELLER REPORT",
-              text: "From " + start1 + " to " + end1,
+              text: "From " + start1 + " to " + end1 + "Loading...",
               showConfirmButton: false,
-              timer: 3000
+              timer: 5000
                     
             })
            $.ajax({

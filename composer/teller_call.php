@@ -51,9 +51,12 @@ if (isset($_POST["start1"]) && isset($_POST["branch1"]) && isset($_POST["teller1
     $tcp = $m1["credit"];
     $tdp = $m["debit"];
     // summing
-    $finalbal = number_format(($tcp - $tdp), 2);
-    $tcdp = number_format(round($tcp), 2);
-    $tddp = number_format(round($tdp), 2);
+    $fas = mysqli_query($connection, "SELECT * FROM institution_account WHERE teller_id = '$teller'");
+        $fx = mysqli_fetch_array($fas);
+        $famt =  $fx["account_balance_derived"];
+        $finalbal = number_format(($famt), 2);
+        $tcdp = number_format(round($tcp), 2);
+        $tddp = number_format(round($tdp), 2);
     // total
     function fill_report($connection, $int_id, $start, $end, $branch_id, $teller)
     {
@@ -160,6 +163,7 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
 "'.fill_report($connection, $int_id, $start, $end, $branch_id, $teller).'"
 <tr>
 <th>Total</th>
+<th></th>
  <th>&#8358; '.$tcdp.'</th>
  <th>&#8358; '.$tddp.'</th>
 <th>&#8358; '.$finalbal.'</th>
