@@ -42,35 +42,49 @@ if (isset($_POST["start1"]) && isset($_POST["branch1"]) && isset($_POST["teller1
    //  Always Check the vault
    if (count([$query]) == 1 && count([$branchquery]) == 1) {
     // here we will some data
-    $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM institution_account_transaction WHERE teller_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
-    // then we will be fixing
-    $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM institution_account_transaction WHERE teller_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
-    $m1 = mysqli_fetch_array($genb1);
-    $m = mysqli_fetch_array($genb);
+    $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
+        // then we will be fixing
+        $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
+        $m1 = mysqli_fetch_array($genb1);
+        $m = mysqli_fetch_array($genb);
     // qwerty
     $tcp = $m1["credit"];
     $tdp = $m["debit"];
     // summing
-    $finalbal = number_format(($tcp - $tdp), 2);
-    $tcdp = number_format(round($tcp), 2);
-    $tddp = number_format(round($tdp), 2);
+    $fas = mysqli_query($connection, "SELECT * FROM institution_account WHERE teller_id = '$teller'");
+        $fx = mysqli_fetch_array($fas);
+        $famt =  $fx["account_balance_derived"];
+        $finalbal = number_format(($famt), 2);
+        $tcdp = number_format(round($tcp), 2);
+        $tddp = number_format(round($tdp), 2);
     // total
     function fill_report($connection, $int_id, $start, $end, $branch_id, $teller)
     {
       // import
-      $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE teller_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
+      $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
       // $q = mysqli_fetch_array($querytoget);
       $out = '';
-        
-      
+      $q = mysqli_fetch_array($querytoget);
+      $client_name = "Expense";
       while ($q = mysqli_fetch_array($querytoget))
       {
         $client_id = $q["client_id"];
+        if ($client_id == 0) {
+          $xm = $q["teller_id"];
+          
+            $expq = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$xm'");
+          // }
+          $cc = mysqli_fetch_array($expq);
+          $client_name = $cc["name"];
+          // while ($cc = mysqli_fetch_array($expq)) {
+          //   
+          //   }
+        } 
+          else {
         $client_query = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' && int_id = '$int_id'");
         $nx = mysqli_fetch_array($client_query);
-        
-      // wertyui
-      $client_name = $nx["firstname"]." ".$nx["middlename"]." ".$nx["lastname"];
+        $client_name = $nx["firstname"]." ".$nx["middlename"]." ".$nx["lastname"];
+          }
       // qwert
       $transact_id = $q["transaction_id"];
       $transaction_type = $q["transaction_type"];
@@ -100,6 +114,7 @@ if (isset($_POST["start1"]) && isset($_POST["branch1"]) && isset($_POST["teller1
 
         $out .= '
         <tr>
+        <th>'.$transaction_date.'</th>
         <th>'.$client_name.'</th>
         <th>&#8358; '.$amt.'</th>
         <th>&#8358; '.$amt2.'</th>
@@ -137,6 +152,7 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
 <table>
 <thead>
   <tr>
+  <th class="service">Date/Time</th>
     <th class="service">Account Name</th>
     <th class="desc">Deposit</th>
     <th>Withdrawal</th>
@@ -147,6 +163,7 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
 "'.fill_report($connection, $int_id, $start, $end, $branch_id, $teller).'"
 <tr>
 <th>Total</th>
+<th></th>
  <th>&#8358; '.$tcdp.'</th>
  <th>&#8358; '.$tddp.'</th>
 <th>&#8358; '.$finalbal.'</th>

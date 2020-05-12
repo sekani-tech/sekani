@@ -268,6 +268,7 @@ $destination = "index.php";
                           Till Number
                         </th>
                         <th>Balance</th>
+                        <th></th>
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
@@ -320,7 +321,7 @@ $destination = "index.php";
                           $bal = number_format($men["account_balance_derived"], 2);
                           ?>
                           <th><?php echo $bal; ?></th>
-                          <!-- <th><a href="view_teller.php?id=<?php $row["name"];?>" class="btn btn-success">View</a></th> -->
+                          <th><button class="btn btn-success">View</button></th>
                         </tr>
                         <?php }
                           }

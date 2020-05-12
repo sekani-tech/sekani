@@ -8,6 +8,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
     $int_id = $_POST["int_id"];
     if($_POST["start"] != '' && $_POST["teller"] != '')
     {
+      // $std = date("Y-m-d",strtotime($start));
        $start = $_POST["start"];
        $end = $_POST["end"];
        $branch = $_POST["branch"];
@@ -44,7 +45,10 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
         $tcp = $m1["credit"];
         $tdp = $m["debit"];
         // summing
-        $finalbal = number_format(($tcp - $tdp), 2);
+        $fas = mysqli_query($connection, "SELECT * FROM institution_account WHERE teller_id = '$teller'");
+        $fx = mysqli_fetch_array($fas);
+        $famt =  $fx["account_balance_derived"];
+        $finalbal = number_format(($famt), 2);
         $tcdp = number_format(round($tcp), 2);
         $tddp = number_format(round($tdp), 2);
         // total
@@ -54,23 +58,28 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
           $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
           // $q = mysqli_fetch_array($querytoget);
           $out = '';
-            
-          
+          $q = mysqli_fetch_array($querytoget);
+          $client_name = "Expense";
           while ($q = mysqli_fetch_array($querytoget))
           {
             $client_id = $q["client_id"];
             if ($client_id == 0) {
-              $intq = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
-              $qa = mysqli_fetch_array($intq);
-              $expno = $qa["teller_id"];
-              $expq = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$expno'");
+              $xm = $q["teller_id"];
+              
+                $expq = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$xm'");
+              // }
               $cc = mysqli_fetch_array($expq);
               $client_name = $cc["name"];
-            } else {
+              // while ($cc = mysqli_fetch_array($expq)) {
+              //   
+              //   }
+            } 
+              else {
             $client_query = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' && int_id = '$int_id'");
             $nx = mysqli_fetch_array($client_query);
-          $client_name = $nx["firstname"]." ".$nx["middlename"]." ".$nx["lastname"];
-            }
+            $client_name = $nx["firstname"]." ".$nx["middlename"]." ".$nx["lastname"];
+              }
+            // }
           // qwert
           $transact_id = $q["transaction_id"];
           $transaction_type = $q["transaction_type"];
@@ -160,6 +169,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
                 "'.fill_report($connection, $int_id, $start, $end, $branch_id, $teller).'"
                 <tr>
               <th>Total</th>
+              <th></th>
                <th>'.$tcdp.'</th>
                <th>'.$tddp.'</th>
             <th>'.$finalbal.'</th>
@@ -203,9 +213,9 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
           swal({
               type: "success",
               title: "TELLER REPORT",
-              text: "From " + start1 + " to " + end1,
+              text: "From " + start1 + " to " + end1 + "Loading...",
               showConfirmButton: false,
-              timer: 3000
+              timer: 5000
                     
             })
            $.ajax({
