@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Branch";
+$page_title = "Approval";
 $destination = "index.php";
     include("header.php");
 
