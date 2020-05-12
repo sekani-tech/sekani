@@ -234,8 +234,8 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   ';
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
-} else if (isset($_GET["loan2"])) {
-  $key = $_GET["loan2"];
+} else if (isset($_GET["loan2c"])) {
+  $key = $_GET["loan2c"];
   // $out = $_SESSION["lack_of_intfund_$key"];
   $tt = 0;
 if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
