@@ -261,6 +261,11 @@ $resx1 = mysqli_num_rows($q1);
                      ';
                    }
                  } else if ($transact_type == "Withdrawal") {
+                  $getaccount = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
+                  $getbal = mysqli_fetch_array($getaccount);
+                  $runtellb = $getbal["account_balance_derived"];
+                  // importing the needed on the gl
+                  if ($runtellb >= $amount) {
                    $new_abd2 = $comp2;
                    $iupq = "UPDATE account SET account_balance_derived = '$new_abd2',
                    last_withdrawal = '$amount' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
@@ -381,6 +386,21 @@ $resx1 = mysqli_num_rows($q1);
                      </script>
                      ';
                    }
+                  } else {
+                    // ec
+                    echo '<script type="text/javascript">
+                   $(document).ready(function(){
+                       swal({
+                           type: "error",
+                           title: "Teller",
+                           text: "Insufficient Fund",
+                           showConfirmButton: false,
+                           timer: 2000
+                       })
+                   });
+                   </script>
+                   ';
+                  }
                  } else if ($transact_type == "Expense") {
                    $getaccount = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
                    $getbal = mysqli_fetch_array($getaccount);

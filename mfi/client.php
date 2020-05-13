@@ -110,9 +110,6 @@ $_SESSION["lack_of_intfund_$key"] = null;
                         $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <!-- <th>
-                          ID
-                        </th> -->
                         <th>
                           First Name
                         </th>
