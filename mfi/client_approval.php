@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Branch";
+$page_title = "Approval";
 $destination = "index.php";
     include("header.php");
 
@@ -70,7 +70,7 @@ $destination = "index.php";
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#products" data-toggle="tab">
-                            <i class="material-icons">cancel</i>Rejections
+                            <i class="material-icons">cancel</i>Pending
                             <div class="ripple-container"></div>
                           </a>
                         </li>
@@ -206,7 +206,7 @@ $destination = "index.php";
                         </th>
                         <th>View</th>
                         <th>Approve</th>
-                        <th>Reject</th>
+                        <th>Pending</th>
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
@@ -234,7 +234,22 @@ $destination = "index.php";
                           <th><?php echo $savingp; ?></th>
                           <th><?php echo strtoupper($row["first_name"]." ".$row["last_name"]); ?></th>
                           <th><?php echo "4/4/2020" ?></th>
-                          <th><?php echo $row["account_no"]; ?></th>
+                          <?php
+                          $soc = $row["account_no"];
+                          $length = strlen($soc);
+                          if ($length == 8) {
+                            $acc ="00" . $soc;
+                          }
+                          elseif ($length == 9) {
+                            $acc ="0" . $soc;
+                          }
+                          elseif ($length == 10) {
+                            $acc = $row["account_no"];
+                          }else{
+                            $acc = $row["account_no"];
+                          }
+                          ?>
+                          <th><?php echo $acc; ?></th>
                           <td><a href="client_approvalEdit.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">visibility</i></a></td>
                           <td><a href="../functions/approveClient.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">check</i></a></td>
                           <td><a href="../functions/rejectClient.php?edit=<?php echo $row["id"];?>" class="btn btn-danger"><i class="material-icons">cancel</i></a></td>
@@ -324,7 +339,22 @@ $destination = "index.php";
                           <th><?php echo $savingp; ?></th>
                           <th><?php echo strtoupper($row["first_name"]." ".$row["last_name"]); ?></th>
                           <th><?php echo "4/4/2020" ?></th>
-                          <th><?php echo $row["account_no"]; ?></th>
+                          <?php
+                          $soc = $row["account_no"];
+                          $length = strlen($soc);
+                          if ($length == 8) {
+                            $acc ="00" . $soc;
+                          }
+                          elseif ($length == 9) {
+                            $acc ="0" . $soc;
+                          }
+                          elseif ($length == 10) {
+                            $acc = $row["account_no"];
+                          }else{
+                            $acc = $row["account_no"];
+                          }
+                          ?>
+                          <th><?php echo $acc; ?></th>
                           <td><a href="client_approvalEdit.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">edit</i></a></td>
                           <td><a href="../functions/approveClient.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">check</i></a></td>
                           </tr>

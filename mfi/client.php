@@ -157,7 +157,22 @@ $_SESSION["lack_of_intfund_$key"] = null;
                            
                             ?>
                           <th><?php echo $savingp; ?></th>
-                          <th><?php echo $row["account_no"]; ?></th>
+                          <?php
+                          $soc = $row["account_no"];
+                          $length = strlen($soc);
+                          if ($length == 8) {
+                            $acc ="00" . $soc;
+                          }
+                          elseif ($length == 9) {
+                            $acc ="0" . $soc;
+                          }
+                          elseif ($length == 10) {
+                            $acc = $row["account_no"];
+                          }else{
+                            $acc = $row["account_no"];
+                          }
+                          ?>
+                          <th><?php echo $acc; ?></th>
                           <th><?php echo $row["mobile_no"]; ?></th>
                           <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                           <td><a href="update_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Close</a></td>
