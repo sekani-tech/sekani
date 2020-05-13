@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Create Credit Check";
+$page_title = "Create Charge";
 $destination = "products_config.php";
     include("header.php");
 
@@ -13,7 +13,7 @@ $destination = "products_config.php";
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Add Credit Check</h4>
+                  <h4 class="card-title">Create Charge</h4>
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">

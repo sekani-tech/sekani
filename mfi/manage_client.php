@@ -37,7 +37,7 @@ include("header.php");
                   return $out;
                   }
                   ?>
-                        <select name="acct_type" class="form-control" data-style="btn btn-link" id="collat">
+                        <select required name="acct_type" class="form-control" data-style="btn btn-link" id="collat">
                           <option value="">select a Account Type</option>
                           <?php echo fill_savings($connection); ?>
                         </select>
@@ -46,7 +46,7 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Client Type</label>
-                      <select name="ctype" class="form-control" id="collat">
+                      <select required name="ctype" class="form-control" id="collat">
                           <option value="Individual">Individual</option>
                           <option value="Joint">Joint Account</option>
                           <option value="Student">Cooperate Account</option>
@@ -57,31 +57,31 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Display name</label>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" name="display_name">
+                      <input required type="text" required style="text-transform: uppercase;" class="form-control" name="display_name">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >First Name</label>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" name="firstname">
+                      <input required type="text" style="text-transform: uppercase;" class="form-control" name="firstname">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Middle Name</label>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" name="middlename">
+                      <input required type="text" style="text-transform: uppercase;" class="form-control" name="middlename">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Last Name</label>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" name="lastname">
+                      <input required type="text" style="text-transform: uppercase;" class="form-control" name="lastname">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Phone No</label>
-                      <input type="tel" class="form-control" name="phone">
+                      <input required type="tel" class="form-control" name="phone">
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -93,7 +93,7 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Email address</label>
-                      <input type="email" class="form-control" name="email">
+                      <input required type="email" class="form-control" name="email">
                     </div>
                   </div>
                   <div class="col-md-12">
@@ -105,7 +105,7 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Gender:</label>
-                      <select class="form-control" name="gender" id="">
+                      <select required class="form-control" name="gender" id="">
                         <option value="MALE">MALE</option>
                         <option value="FEMALE">FEMALE</option>
                       </select>
@@ -114,7 +114,7 @@ include("header.php");
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="">Date of Birth:</label>
-                      <input type="date" class="form-control" name="date_of_birth">
+                      <input required type="date" class="form-control" name="date_of_birth">
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -134,7 +134,7 @@ include("header.php");
                   ?>
                     <div class="form-group">
                       <label class="">Branch:</label>
-                      <select name="branch" class="form-control " id="collat">
+                      <select required name="branch" class="form-control " id="collat">
                           <option value="">select a Branch</option>
                           <?php echo fill_branch($connection); ?>
                         </select>
@@ -165,7 +165,7 @@ include("header.php");
                   </div>
                   <div class="col-md-4">
                     <label for="">BVN:</label>
-                    <input type="text" style="text-transform: uppercase;" name="bvn" class="form-control" id="">
+                    <input required type="text" style="text-transform: uppercase;" name="bvn" class="form-control" id="">
                   </div>
                   <div class="col-md-4">
                     <p><label for="">Active Alerts:</label></p>
@@ -205,7 +205,7 @@ include("header.php");
                   ?>
                     <div class="form-group">
                       <label for="">Account Officer:</label>
-                      <select name="acct_of" class="form-control" id="">
+                      <select required name="acct_of" class="form-control" id="">
                         <option value="">select account officer</option>
                         <?php echo fill_officer($connection); ?>
                       </select>
@@ -283,7 +283,7 @@ function showFileName1( event ) {
                     </div>
                   <div class="col-md-4">
                     <label for="">Id Type</label>
-                    <select name="id_card" class="form-control " id="">
+                    <select required name="id_card" class="form-control " id="">
                       <option value="National ID">National ID</option>
                       <option value="Voters ID">Voters ID</option>
                       <option value="International Passport">International Passport</option>
