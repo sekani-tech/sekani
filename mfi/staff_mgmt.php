@@ -174,7 +174,7 @@ $destination = "index.php";
                   </div>
                     </div>
                     <div class="tab-pane" id="products">
-                      <a href="manage_product.php" class="btn btn-primary"> Create New Role</a>
+                      <a href="role.php" class="btn btn-primary"> Create New Role</a>
                       <div class="table-responsive">
                   <script>
                   $(document).ready(function() {
@@ -184,17 +184,18 @@ $destination = "index.php";
                     <table id="tabledat4" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM product WHERE int_id ='$sessint_id'";
+                        $query = "SELECT staff.id, staff.first_name, staff.last_name, staff.description, staff.org_role, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id WHERE users.int_id ='$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
                           ID
                         </th> -->
-                        <th>Name</th>
+                        <th>Fullname</th>
                         <th>
                           Description
                         </th>
-                        <th>Active</th>
+                        <th>Role</th>
+                        <th>Status</th>
                         <th>
                           Edit
                         </th>
@@ -204,10 +205,19 @@ $destination = "index.php";
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
-                          <th><?php echo $row["name"]; ?></th>
+                          <th><?php echo strtoupper($row["first_name"] . ' ' . $row["last_name"]); ?></th>
                           <th><?php echo $row["description"]; ?></th>
-                          <th><?php echo $row["short_name"]; ?></th>
-                          <td><a href="update_product.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                          <?php
+                          // display role name
+                          $role_id = $row["org_role"];
+                          $getrole = mysqli_query($connection, "SELECT * FROM org_role WHERE id = '$role_id'");
+                          $xm = mysqli_fetch_array($getrole);
+                          // nexr
+                          $role_name = $xm["name"];
+                          ?>
+                          <th><?php echo $role_name; ?></th>
+                          <th><?php echo $row["employee_status"]; ?></th>
+                          <td><a href="update_product.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Permission</a></td>
                         </tr>
                         <?php }
                           }

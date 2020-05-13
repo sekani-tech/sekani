@@ -3,23 +3,38 @@
 $page_title = "Valut Transaction";
 $destination = "index.php";
     include("header.php");
-$staff_id = $_SESSION["staff_id"];
 ?>
 <!-- Content added here -->
 <?php
 // right now we will program
 // first step - check if this person is authorized
-// check the branch_name
+if ($valut == 1 || $valut == "1") {
+?>
+<?php
+// output the branch name
+  $bch_name =  mysqli_query($connection, "SELECT * FROM branch WHERE id = '$bch_id' && int_id = '$sessint_id'");
+  $grn = mysqli_fetch_array($bch_name);
+  $get_b_r_n = $grn['name'];
+// Ending branch_name
+
 // check the current balance
-$getpermission = mysqli_query($connection, "SELECT * FROM `permisson` WHERE staff_id = '$staff_id' && int_id = '$sessint_id'");
+$int_balance = mysqli_query($connection, "SELECT * FROM int_vault WHERE branch_id = '$bch_id' && int_id = '$sessint_id'");
+$itb = mysqli_fetch_array($int_balance);
+$g_i_t_b = $itb['balance'];
+$vault_limit = $itb['movable_amount'];
+$vault_last_with = $itb['last_withdrawal'];
+$vault_last_dep = $itb['last_deposit'];
 
-
-// when posting you can now check again who posted if the person is authorized or not
+// For the Transaction ID auto generated
+$digits = 10;
+$transaction_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+// check if every data is active
 // then we will do the transaction - stored 
 // then if will reflect inside of int_transaction for the teller that will be picked
 // then you can display a message that the transaction is successful.
+// remember to add code of making institution branch add a vualt and also Super Admin
 ?>
-    <div class="content">
+<div class="content">
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
@@ -47,34 +62,51 @@ $getpermission = mysqli_query($connection, "SELECT * FROM `permisson` WHERE staf
                         <div class="form-group">
                           <label class="bmd-label-floating">Branch Name</label>
                           <!-- populate available balance -->
-                          <input type="text" name="" id="" class="form-control" readonly>
+                          <input type="text" value="<?php echo $get_b_r_n; ?>" name="" id="branch_id" class="form-control" readonly>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                             <!-- populate from db -->
+                            <?php 
+                            function fill_teller($connection, $bch_id) {
+                              $sint_id = $_SESSION["int_id"];
+                              $org = "SELECT * FROM tellers WHERE int_id = '$sint_id' && branch_id = '$bch_id'";
+                              $res = mysqli_query($connection, $org);
+                              $out = '';
+                              while ($row = mysqli_fetch_array($res))
+                              {
+                                $out .= '<option value="'.$row["name"].'">'.$row["description"].'</option>';
+                              }
+                              return $out;
+                            }
+                            ?>
+                            ?>
                           <label class="bmd-label-floating"> Teller Name</label>
-                          <input type="text" class="form-control" name="name">
+                          <select name="teller_name" id="" class="form-control">
+                            <option value="0">SELECT A TELLER</option>
+                            <?php echo fill_teller($connection, $bch_id); ?>
+                          </select>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Amount</label>
-                          <input type="number" name="" id="" class="form-control">
+                          <input type="number" name="amount" id="" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Current Balance</label>
                           <!-- populate available balance -->
-                          <input type="text" name="" id="" class="form-control" readonly>
+                          <input type="text" value="<?php echo $g_i_t_b; ?>" name="" id="" class="form-control" readonly>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Transaction id</label>
                           <!-- populate available balance -->
-                          <input type="text" name="" id="" class="form-control" readonly>
+                          <input type="text" value="<?php echo $transaction_id; ?>" name="transact_id" id="" class="form-control" readonly>
                         </div>
                       </div>
                       </div>
@@ -89,9 +121,29 @@ $getpermission = mysqli_query($connection, "SELECT * FROM `permisson` WHERE staf
           <!-- /content -->
         </div>
       </div>
-
-<?php
-
+      <?php
     include("footer.php");
+?>
+<?php
+} else {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+   swal({
+    type: "error",
+    title: "Vault Authorization",
+    text: "You Dont Have permission to Make Transaction From Vault",
+   showConfirmButton: false,
+    timer: 2000
+    }).then(
+    function (result) {
+      history.go(-1);
+    }
+    )
+    });
+   </script>
+  ';
+  // $URL="transact.php";
+  // echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+}
 
 ?>

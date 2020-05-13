@@ -4,7 +4,9 @@
       header("location: ../login.php");
       exit;
   }
+  $staff_id = $_SESSION["staff_id"];
 ?>
+
 <?php
   // get connections for all pages
   include("../functions/connect.php");
@@ -16,6 +18,22 @@
       $int_name = $n['int_name'];
       $img = $n['img'];
     }
+?>
+<?php
+// this section is for permissions
+$getpermission = mysqli_query($connection, "SELECT * FROM `permisson` WHERE staff_id = '$staff_id' && int_id = '$sessint_id'");
+if (count([$getpermission]) == 1) {
+  $pms = mysqli_fetch_array($getpermission);
+  $can_transact = $pms['trans_appv'];
+  $trans_post = $pms['trans_post'];
+  $loan_appv = $pms['loan_appv'];
+  $acct_appv = $pms['acct_appv'];
+  $valut = $pms['valut'];
+  $view_report = $pms['view_report'];
+  $view_dashboard = $pms['view_dashboard'];
+  $configuration = $pms['configuration'];
+  $bch_id = $_SESSION["branch_id"];
+}
 ?>
 <?php
 // checking if IP has been Blocked
