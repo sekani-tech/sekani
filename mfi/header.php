@@ -159,7 +159,7 @@ input[type=number] {
               <a href="#" class="dropdown-item">FTD Booking</a>
               <a href="lend.php" class="dropdown-item">Book Loan</a>
               <!-- <a href="#" class="dropdown-item">Expense Posting</a> -->
-              <a href="teller_journal.php" class="dropdown-item">Internal Posting</a>
+              <a href="teller_journal.php" class="dropdown-item">Vault</a>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -222,7 +222,7 @@ input[type=number] {
               <a href="loans.php" class="dropdown-item">Loan reports</a>
               <a href="#" class="dropdown-item">Financial report</a>
               <a href="#" class="dropdown-item">Audit</a>
-              <a href="teller.php" class="dropdown-item">Teller</a>
+              <a href="teller.php" class="dropdown-item">Teller Report</a>
             </div>
           </li>
           <!-- end of report -->
