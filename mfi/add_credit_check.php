@@ -115,6 +115,7 @@ $destination = "products_config.php";
               </div>
             </div>
           </div>
+          <div></div>
           <!-- /content -->
         </div>
       </div>

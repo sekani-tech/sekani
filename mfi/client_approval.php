@@ -237,7 +237,28 @@ $destination = "index.php";
                           <?php
                           $soc = $row["account_no"];
                           $length = strlen($soc);
-                          if ($length == 8) {
+                          if ($length == 1) {
+                            $acc ="000000000" . $soc;
+                          }
+                          elseif ($length == 2) {
+                            $acc ="00000000" . $soc;
+                          }
+                          elseif ($length == 3) {
+                            $acc ="00000000" . $soc;
+                          }
+                          elseif ($length == 4) {
+                            $acc ="0000000" . $soc;
+                          }
+                          elseif ($length == 5) {
+                            $acc ="000000" . $soc;
+                          }
+                          elseif ($length == 6) {
+                            $acc ="0000" . $soc;
+                          }
+                          elseif ($length == 7) {
+                            $acc ="000" . $soc;
+                          }
+                          elseif ($length == 8) {
                             $acc ="00" . $soc;
                           }
                           elseif ($length == 9) {
@@ -342,7 +363,28 @@ $destination = "index.php";
                           <?php
                           $soc = $row["account_no"];
                           $length = strlen($soc);
-                          if ($length == 8) {
+                          if ($length == 1) {
+                            $acc ="000000000" . $soc;
+                          }
+                          elseif ($length == 2) {
+                            $acc ="00000000" . $soc;
+                          }
+                          elseif ($length == 3) {
+                            $acc ="00000000" . $soc;
+                          }
+                          elseif ($length == 4) {
+                            $acc ="0000000" . $soc;
+                          }
+                          elseif ($length == 5) {
+                            $acc ="000000" . $soc;
+                          }
+                          elseif ($length == 6) {
+                            $acc ="0000" . $soc;
+                          }
+                          elseif ($length == 7) {
+                            $acc ="000" . $soc;
+                          }
+                          elseif ($length == 8) {
                             $acc ="00" . $soc;
                           }
                           elseif ($length == 9) {
