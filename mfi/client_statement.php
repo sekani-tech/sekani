@@ -54,32 +54,7 @@ if(isset($_GET["edit"])) {
       $totalcd = number_format($tcp, 2);
   }
 }
-function fill_data($connection, $id){
-  $accountquery = "SELECT * FROM account_transaction WHERE client_id ='$id'";
-      $resul = mysqli_query($connection, $accountquery);
-      $out = '';
 
-      while ($q = mysqli_fetch_array($resul))
-      {
-        $transaction_date = $q["transaction_date"];
-        $value_date = $q["created_date"]; 
-        $transact_id = $q["transaction_id"];
-        $amt2 = $q["debit"];
-        $amt = $q["credit"];
-        $balance = $q["running_balance_derived"]; 
-        $out .= '
-        <tr>
-            <td class="column1"> '.$transaction_date.'</td>
-            <td class="column2">'.$value_date.'</td>
-            <td class="column3">'.$transact_id .'</td>
-            <td class="column4">'.$amt2.'</td>
-            <td class="column5">'.$amt.'</td>
-            <td class="column6">'.$balance.'</td>
-        </tr>
-      ';
-      }
-      return $out;
-}
 // session_start();
                             
 //     // Store data in session variables
@@ -139,8 +114,17 @@ function fill_data($connection, $id){
     <div class="ody">
         <div class="wrap-table100">
             <div class="table100">
-                <table>
-                    <thead>
+            <script>
+                  $(document).ready(function() {
+                  $('#tabledat').DataTable();
+                  });
+                </script>
+            <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+                        <thead>
+                        <?php
+                         $query = "SELECT * FROM account_transaction WHERE client_id ='$id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
                         <tr class="table100-head">
                             <th class="column1">Transaction-Date</th>
                             <th class="column2">Value Date</th>
@@ -150,10 +134,26 @@ function fill_data($connection, $id){
                             <th class="column6">Balance(&#8358;)</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    <?php echo fill_data($connection, $id)?>
-                    </tbody>
-                </table>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                          <td class="column1"><?php echo $row["transaction_date"]; ?></td>
+                          <td class="column2"><?php echo $row["created_date"]; ?></td>
+                          <td class="column3"><?php echo $row["transaction_id"]; ?></td>
+                          <td class="column4"><?php echo $row["debit"]; ?></td>
+                          <td class="column5"><?php echo $row["credit"]; ?></td>
+                          <td class="column6"><?php echo $row["running_balance_derived"]; ?></td>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                          <!-- <th></th> -->
+                      </tbody>
+                    </table>
             </div>
         </div>
     </div>
