@@ -174,28 +174,115 @@ $destination = "index.php";
                   </div>
                     </div>
                     <div class="tab-pane" id="products">
-                      <a href="role.php" class="btn btn-primary"> Create New Role</a>
-                      <div class="table-responsive">
+                      <!-- <a href="role.php" class="btn btn-primary"> Create New Role</a> -->
+                      <?php
+                    // we are gonna post to get the name of the button
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                      // check the button value
+                      $role = $_POST['submit'];
+                      $update_role = $_POST['update_role'];
+                      if ($role == 'role') {
+                        $r_n = $_POST["role_name"];
+                        $r_d = $_POST["descript"];
+                        // check if this role exists
+                        $selectrole = mysqli_query($connection, "SELECT * FROM org_role WHERE int_id = '$sessint_id' && role = '$r_n'");
+                        $cs = mysqli_num_rows($selectrole);
+                        if ($cs == 0 || $cs == "0") {
+                          $getrole = "INSERT INTO `org_role` (`int_id`, `role`, `description`) VALUES ('{$sessint_id}', '{$r_n}', '{$r_d}')";
+                        $MIB = mysqli_query($connection, $getrole);
+                        if ($MIB) {
+                          // echo success
+                          echo '<script type="text/javascript">
+                     $(document).ready(function(){
+                         swal({
+                             type: "success",
+                             title: "Role Created",
+                             text: " Created Successfully",
+                             showConfirmButton: false,
+                             timer: 2000
+                         })
+                     });
+                     </script>
+                     ';
+                        } else {
+                          // echo error
+                          echo '<script type="text/javascript">
+                     $(document).ready(function(){
+                         swal({
+                             type: "error",
+                             title: "Error During Creation",
+                             text: "Couldnt Create",
+                             showConfirmButton: false,
+                             timer: 2000
+                         })
+                     });
+                     </script>
+                     ';
+                        }
+                        }
+                        else {
+                          // echo something
+                          echo '<script type="text/javascript">
+                     $(document).ready(function(){
+                         swal({
+                             type: "error",
+                             title: "(*_*)",
+                             text: "Role Exists Already",
+                             showConfirmButton: false,
+                             timer: 2000
+                         })
+                     });
+                     </script>
+                     ';
+                        }
+                      } else if ($update_role == 'update_role') {
+                        // If its an update
+                        // do something
+                      } else {
+                        // echo no add or update
+                      }
+                    } else {
+                      echo "";
+                    }
+                    ?>
+                      <div class="card-title">Create A Role</div>
+                      <br>
+                      <form method="POST">
+                          <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="">Role Name</label>
+                                <input type="text" name="role_name" id="" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="">Description</label>
+                                <input type="text" name="descript" id="" class="form-control">
+                            </div> 
+                          </div>
+                          <!-- use if statements to print permission definitions -->
+                        <button type="submit" value="role" name="submit" class="btn btn-primary pull-right">Create New Role</button>
+                      </form>
+                      <!-- A new stuff -->
+                  <div class="table-responsive">
                   <script>
                   $(document).ready(function() {
                   $('#tabledat4').DataTable();
                   });
                   </script>
+                  <br>
+                  <div class="card-title">Role List</div>
                     <table id="tabledat4" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT staff.id, staff.first_name, staff.last_name, staff.description, staff.org_role, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id WHERE users.int_id ='$sessint_id'";
+                        $query = "SELECT * FROM org_role WHERE int_id ='$sessint_id' ORDER BY id ASC";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
                           ID
                         </th> -->
-                        <th>Fullname</th>
+                        <th>Name</th>
                         <th>
                           Description
                         </th>
-                        <th>Role</th>
-                        <th>Status</th>
                         <th>
                           Edit
                         </th>
@@ -205,19 +292,9 @@ $destination = "index.php";
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
-                          <th><?php echo strtoupper($row["first_name"] . ' ' . $row["last_name"]); ?></th>
+                          <th><?php echo strtoupper($row["role"]); ?></th>
                           <th><?php echo $row["description"]; ?></th>
-                          <?php
-                          // display role name
-                          $role_id = $row["org_role"];
-                          $getrole = mysqli_query($connection, "SELECT * FROM org_role WHERE id = '$role_id'");
-                          $xm = mysqli_fetch_array($getrole);
-                          // nexr
-                          $role_name = $xm["name"];
-                          ?>
-                          <th><?php echo $role_name; ?></th>
-                          <th><?php echo $row["employee_status"]; ?></th>
-                          <td><a href="update_product.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Permission</a></td>
+                          <td><a href="update_product.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
                         <?php }
                           }
@@ -232,23 +309,317 @@ $destination = "index.php";
                     <!-- /roles -->
                     <div class="tab-pane" id="per">
                       <div class="card-title">Permissions</div>
-                      <form action="">
-                          <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label for="">Select Role</label>
-                                <select name="" class="form-control" id="">
-                                    <option value="On">Super USer</option>
-                                    <option value="Off">GM</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="">Description</label>
-                                <input type="text" name="" id="" class="form-control">
-                            </div>   
-                          </div>
-                          <!-- use if statements to print permission definitions -->
-                        <button class="btn btn-primary">Update</button>
-                      </form>
+                        <button data-toggle="modal" data-target="#exampleModal" class="btn btn-primary pull-left">Add Permission</button>
+                      <!-- form of staff -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Assign Permission to a Staff</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form action="../functions/client_update.php" method="POST" enctype="multipart/form-data">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+               <label class="bmd-label-floating">Role</label>
+               <input type="text" style="text-transform: uppercase;" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+               <label class="bmd-label-floating">Staff</label>
+               <input type="text" style="text-transform: uppercase;" class="form-control">
+              </div>
+            </div>
+           <!-- Next -->
+           <div class="col-md-12">
+           </div>
+           <div class="col-md-12">
+             <span>Permission</span>
+           </div>
+           <div class="col-md-12">
+             <div>
+               <p>
+               <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="0" name="sms_active" id="all">
+                Check All
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+           <br>
+               </p>
+             </div>
+           </div>
+           <!-- Javascript for the code -->
+           <script>
+             $(document).ready(function () {
+               $('#all').change(function () {
+                if ($(this).is(':checked')) {
+                  document.getElementById('n1').checked = true;
+                  document.getElementById('n2').checked = true;
+                  document.getElementById('n3').checked = true;
+                  document.getElementById('n4').checked = true;
+                  document.getElementById('n5').checked = true;
+                  document.getElementById('n6').checked = true;
+                  document.getElementById('n7').checked = true;
+                  document.getElementById('n8').checked = true;
+                } else {
+                  document.getElementById('n1').checked = false;
+                  document.getElementById('n2').checked = false;
+                  document.getElementById('n3').checked = false;
+                  document.getElementById('n4').checked = false;
+                  document.getElementById('n5').checked = false;
+                  document.getElementById('n6').checked = false;
+                  document.getElementById('n7').checked = false;
+                  document.getElementById('n8').checked = false;
+                }
+               });
+             })
+           </script>
+           <!-- End of Javascript for the codes -->
+            <!-- for the permission -->
+            <div class="col-md-5">
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="" name="sms_active" id="n1">
+                Approve Transaction
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+           <!-- Next -->
+           <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="" name="sms_active" id="n2">
+                Post Transaction
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+           <!-- Next -->
+           <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="" name="sms_active" id="n3">
+                Access Configuration
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+           <!-- Last -->
+           <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="" name="sms_active" id="n4">
+                Approve Loan
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+            </div>
+            <!-- Another -->
+            <div class="col-md-5">
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="" name="sms_active" id="n5">
+                Approve Account
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+           <!-- Next -->
+           <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="" name="sms_active" id="n6">
+                Vault Transaction
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+           <!-- Next -->
+           <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="" name="sms_active" id="n7">
+                View Report
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+           <!-- Last -->
+           <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="" name="sms_active" id="n8">
+                Dashboard
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+            </div>
+            <!-- End for Permission -->
+        </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+                      <!-- Table Below -->
+                      <div class="table-responsive">
+                  <script>
+                  $(document).ready(function() {
+                  $('#tabledat1').DataTable();
+                  });
+                  </script>
+                  <br>
+                  <div class="card-title">Create Permission to Staff</div>
+                    <table id="tabledat1" class="table" style="width: 100%;">
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT staff.id, permission.trans_appv, permission.trans_post, permission.loan_appv, permission.acct_appv, permission.valut, permission.view_report, permission.view_dashboard, permission.configuration, staff.first_name, staff.last_name, staff.org_role, staff.employee_status FROM staff JOIN permission ON staff.id = permission.staff_id WHERE staff.int_id = '$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                        <!-- <th>
+                          ID
+                        </th> -->
+                        <th>Fullname</th>
+                        <th>Role</th>
+                        <th>Approve Transaction</th>
+                        <th>Post Transaction</th>
+                        <th>Approve Loan</th>
+                        <th>Approve Account</th>
+                        <th>vault Transaction</th>
+                        <th>View Report</th>
+                        <th>Dashboard</th>
+                        <th>Access Config.</th>
+                        <th>Status</th>
+                        <th>
+                          Edit
+                        </th>
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                          <th><?php echo strtoupper($row["first_name"] . ' ' . $row["last_name"]); ?></th>
+                          <?php
+                          // display role name
+                          $role_id = $row["org_role"];
+                          $getrole = mysqli_query($connection, "SELECT * FROM org_role WHERE id = '$role_id'");
+                          $xm = mysqli_fetch_array($getrole);
+                          // nexr
+                          $role_name = $xm["name"];
+                          ?>
+                          <th><?php echo $role_name; ?></th>
+                          <th>
+                          <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                          </label>
+                        </div>
+                          </th>
+                          <th>
+                          <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                          </label>
+                        </div>
+                          </th>
+                          <th>
+                          <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                          </label>
+                        </div>
+                          </th>
+                          <th>
+                          <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                          </label>
+                        </div>
+                          </th>
+                          <th>
+                          <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                          </label>
+                        </div>
+                          </th>
+                          <th>
+                          <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                          </label>
+                        </div>
+                          </th>
+                          <th>
+                          <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                          </label>
+                        </div>
+                          </th>
+                          <th>
+                          <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                          </label>
+                        </div>
+                          </th>
+                          <th><?php echo $row["employee_status"]; ?></th>
+                          <td><button class="btn btn-info">Update</button></td>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                      </tbody>
+                    </table>
+                  </div>
                     </div>
                     <!-- /permission -->
                     <div class="tab-pane" id="teller">
