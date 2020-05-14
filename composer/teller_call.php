@@ -204,7 +204,8 @@ Date and Sign:__________________________________
 </div>
 </main>
 ');
-$mpdf->Output();
+$file_name = 'Teller_Call_Over_'.$tell_name.'.pdf';
+$mpdf->Output($file_name, 'D');
   } else {
     echo 'Not Seeing Data';
   }
