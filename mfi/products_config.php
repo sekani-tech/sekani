@@ -399,7 +399,7 @@ else if (isset($_GET["message5"])) {
                           }
                           ?>
                           <th><?php echo $isa; ?></th>
-                          <td><a href="creditcheck_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
+                          <td><a href="creditcheck_edit.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
                         <?php }
                           }
