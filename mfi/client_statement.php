@@ -133,6 +133,7 @@ if(isset($_GET["edit"])) {
                             <th class="column5">Credits(&#8358;)</th>
                             <th class="column6">Balance(&#8358;)</th>
                         </tr>
+                        
                     </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
