@@ -9,10 +9,15 @@ if (isset($_POST["start1"]) && isset($_POST["branch1"]) && isset($_POST["teller1
     $int_id = $_POST["int_id1"];
     if($_POST["start1"] != '' && $_POST["teller1"] != '')
     {
-      $start = $_POST["start1"];
-      $std = date("Y-M-d",strtotime($start));
-       $end = $_POST["end1"];
-       $etd = date("Y-M-d",strtotime($end));
+      $std = $_POST["start1"];
+      $datex= strtotime($std); 
+      $sdate = date("Y-m-d", $datex);
+       $start = $sdate;
+      //  echo $start;
+       $endx = $_POST["end1"];
+       $datey= strtotime($endx); 
+       $eyd= date("Y-m-d", strtotime('-1 day', $datey));
+       $end = $eyd;
        $branch = $_POST["branch1"];
        $teller = $_POST["teller1"];
        $int_name = $_SESSION["int_name"];
@@ -42,17 +47,17 @@ if (isset($_POST["start1"]) && isset($_POST["branch1"]) && isset($_POST["teller1
    //  Always Check the vault
    if (count([$query]) == 1 && count([$branchquery]) == 1) {
     // here we will some data
-    $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
-        // then we will be fixing
-        $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
-        $m1 = mysqli_fetch_array($genb1);
-        $m = mysqli_fetch_array($genb);
+    $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date BETWEEN '$start' AND '$end'  ORDER BY transaction_date ASC");
+    // then we will be fixing
+    $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
+    $m1 = mysqli_fetch_array($genb1);
+    $m = mysqli_fetch_array($genb);
     // qwerty
     $tcp = $m1["credit"];
     $tdp = $m["debit"];
     // summing
     $fas = mysqli_query($connection, "SELECT * FROM institution_account WHERE teller_id = '$teller'");
-        $fx = mysqli_fetch_array($fas);
+    $fx = mysqli_fetch_array($fas);
         $famt =  $fx["account_balance_derived"];
         $finalbal = number_format(($famt), 2);
         $tcdp = number_format(round($tcp), 2);
@@ -61,7 +66,7 @@ if (isset($_POST["start1"]) && isset($_POST["branch1"]) && isset($_POST["teller1
     function fill_report($connection, $int_id, $start, $end, $branch_id, $teller)
     {
       // import
-      $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
+      $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
       // $q = mysqli_fetch_array($querytoget);
       $out = '';
       $q = mysqli_fetch_array($querytoget);
@@ -69,25 +74,31 @@ if (isset($_POST["start1"]) && isset($_POST["branch1"]) && isset($_POST["teller1
       while ($q = mysqli_fetch_array($querytoget))
       {
         $client_id = $q["client_id"];
-        if ($client_id == 0) {
-          $xm = $q["teller_id"];
-          
-            $expq = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$xm'");
-          // }
-          $cc = mysqli_fetch_array($expq);
-          $client_name = $cc["name"];
-          // while ($cc = mysqli_fetch_array($expq)) {
-          //   
-          //   }
-        } 
-          else {
-        $client_query = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' && int_id = '$int_id'");
-        $nx = mysqli_fetch_array($client_query);
-        $client_name = $nx["firstname"]." ".$nx["middlename"]." ".$nx["lastname"];
-          }
+            if ($client_id == 0) {
+              if ($q["transaction_type"] == "Debit" || $q["transaction_type"] == "debit") {
+              $xm = $q["teller_id"];
+              
+                $expq = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$xm'");
+              // }
+              $cc = mysqli_fetch_array($expq);
+              $client_name = $cc["name"];
+              // while ($cc = mysqli_fetch_array($expq)) {
+              //   
+              //   }
+            } else if ($q["transaction_type"] == "vault-in") {
+              $client_name = "VAULT IN";
+            } else if ($q["transaction_type"] == "vault-out") {
+              $client_name = "VAULT OUT";
+            }
+            } 
+              else {
+            $client_query = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' && int_id = '$int_id'");
+            $nx = mysqli_fetch_array($client_query);
+            $client_name = $nx["firstname"]." ".$nx["middlename"]." ".$nx["lastname"];
+              }
       // qwert
       $transact_id = $q["transaction_id"];
-      $transaction_type = $q["transaction_type"];
+      // $transaction_type = $q["transaction_type"];
       $transaction_date = $q["transaction_date"];
       $camt = $q["credit"];
       $damt = $q["debit"];
@@ -96,14 +107,14 @@ if (isset($_POST["start1"]) && isset($_POST["branch1"]) && isset($_POST["teller1
       $teller_id = $q["teller_id"];
       $teller_run_bal = $q["running_balance_derived"];
       // the next
-      if ($transaction_type == "vault_in") {
-        $client_name = "Valut In";
-        $amt = number_format($damt, 2);
-      }
-      if ($transaction_type == "valut_out") {
-        $client_name = "Valut Out";
-        $amt = number_format($camt, 2);
-      }
+      // if ($transaction_type == "vault_in") {
+      //   $client_name = "Valut In";
+      //   $amt = number_format($damt, 2);
+      // }
+      // if ($transaction_type == "valut_out") {
+      //   $client_name = "Valut Out";
+      //   $amt = number_format($camt, 2);
+      // }
       $amt = $camt;
       $amt2 = $damt;
         

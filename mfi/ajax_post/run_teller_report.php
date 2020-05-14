@@ -12,12 +12,12 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
       $datex= strtotime($std); 
       $sdate = date("Y-m-d", $datex);
        $start = $sdate;
-       echo $start;
+      //  echo $start;
        $endx = $_POST["end"];
        $datey= strtotime($endx); 
        $eyd= date("Y-m-d", strtotime('-1 day', $datey));
        $end = $eyd;
-       echo $end;
+      //  echo $end;
        $branch = $_POST["branch"];
        $teller = $_POST["teller"];
        $int_name = $_SESSION["int_name"];
