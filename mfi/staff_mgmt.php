@@ -294,7 +294,7 @@ $destination = "index.php";
                         <?php $row["id"]; ?>
                           <th><?php echo strtoupper($row["role"]); ?></th>
                           <th><?php echo $row["description"]; ?></th>
-                          <td><a href="update_product.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                          <td><div data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-info">Edit</div></td>
                         </tr>
                         <?php }
                           }
@@ -305,6 +305,65 @@ $destination = "index.php";
                       </tbody>
                     </table>
                   </div>
+                  <script>
+                        // coment on later
+                          $(document).ready(function(){
+                            $('#give').change(function() {
+                              var id = $(this).val();
+                              if (id == "") {
+                                document.getElementById('tit').readOnly = false;
+                                $('#tit').val("choose an account type");
+                              } else if (id == "1") {
+                                document.getElementById('tit').readOnly = true;
+                                $('#tit').val("1" + Math.floor(1000 + Math.random() * 9000));
+                              } else if (id == "2") {
+                                document.getElementById('tit').readOnly = true;
+                                $('#tit').val("2" + Math.floor(1000 + Math.random() * 9000));
+                              } else if (id == "3") {
+                                document.getElementById('tit').readOnly = true;
+                                $('#tit').val("3" + Math.floor(1000 + Math.random() * 9000));
+                              } else if (id == "4") {
+                                document.getElementById('tit').readOnly = true;
+                                $('#tit').val("4" + Math.floor(1000 + Math.random() * 9000));
+                              } else if (id == "5") {
+                                document.getElementById('tit').readOnly = true;
+                                $('#tit').val("5" + Math.floor(1000 + Math.random() * 9000));
+                              } else {
+                                $('#tit').val("Nothing");
+                              }
+                            });
+                          });
+                        </script>
+                  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Edit Role</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form method="POST" enctype="multipart/form-data">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label >Account name*</label>
+                                  <input type="text" id="give" style="text-transform: uppercase;" class="form-control" name="acct_name" required>
+                                </div>
+                              </div>
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label >Description</label>
+                                  <input  id = "tit" type="text" style="text-transform: uppercase;" class="form-control" name="descript" required>
+                                </div>
+                              </div>
+                            </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                     </div>
                     <!-- /roles -->
                     <div class="tab-pane" id="per">
