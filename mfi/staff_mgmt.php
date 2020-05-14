@@ -322,7 +322,7 @@ $destination = "index.php";
         </button>
       </div>
       <div class="modal-body">
-      <form action="../functions/client_update.php" method="POST" enctype="multipart/form-data">
+      <form method="POST" enctype="multipart/form-data">
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
@@ -525,13 +525,13 @@ $destination = "index.php";
                           $getrole = mysqli_query($connection, "SELECT * FROM org_role WHERE id = '$role_id'");
                           $xm = mysqli_fetch_array($getrole);
                           // nexr
-                          $role_name = $xm["name"];
+                          $role_name = $xm["role"];
                           ?>
                           <th><?php echo $role_name; ?></th>
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
