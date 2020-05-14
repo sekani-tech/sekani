@@ -325,15 +325,49 @@ $destination = "index.php";
       <form method="POST" enctype="multipart/form-data">
           <div class="row">
             <div class="col-md-12">
+            <?php
+                  function fill_role($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM org_role WHERE int_id = '$sint_id' ORDER BY id ASC";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">' .$row["role"]. '</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
               <div class="form-group">
                <label class="bmd-label-floating">Role</label>
-               <input type="text" style="text-transform: uppercase;" class="form-control">
+               <select name="org_role" id="role" class="form-control">
+                 <option value="0">choose a role</option>
+                <?php echo fill_role($connection); ?>
+             </select>
+             <input type="text" id="int_id" hidden  value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
               </div>
             </div>
             <div class="col-md-12">
+              <!-- a script to get the staff -->
+          <script>
+            $(document).ready(function() {
+              $('#role').change(function(){
+                var id = $(this).val();
+                var int_id = $('#int_id').val();
+                $.ajax({
+                  url:"ajax_post/role_function.php",
+                  method:"POST",
+                  data:{id:id, int_id:int_id},
+                  success:function(data) {
+                  $('#show_role_staff').html(data);
+                }
+              })
+            });
+           })
+          </script>
               <div class="form-group">
-               <label class="bmd-label-floating">Staff</label>
-               <input type="text" style="text-transform: uppercase;" class="form-control">
+               <div id="show_role_staff"></div>
               </div>
             </div>
            <!-- Next -->
@@ -541,7 +575,7 @@ $destination = "index.php";
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
@@ -551,7 +585,7 @@ $destination = "index.php";
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
@@ -561,7 +595,7 @@ $destination = "index.php";
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
@@ -571,7 +605,7 @@ $destination = "index.php";
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
@@ -581,7 +615,7 @@ $destination = "index.php";
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
@@ -591,7 +625,7 @@ $destination = "index.php";
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
@@ -601,7 +635,7 @@ $destination = "index.php";
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
