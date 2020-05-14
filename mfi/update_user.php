@@ -127,11 +127,21 @@ if (isset($_GET["edit"])) {
                         </div>
                       </div>
                       <div class="col-md-4">
+                      <?php
+// load user role data
+$sint_id = $_SESSION["int_id"];
+$org = "SELECT * FROM org_role WHERE int_id = '$sint_id'";
+$res = mysqli_query($connection, $org);
+while ( $results[] = mysqli_fetch_object ( $res ) );
+  array_pop ( $results );
+?>
                         <div class="form-group">
                           <label class="bmd-label-floating">Organization Role:</label>
                           <select name="org_role" id="" class="form-control">
-                              <option value="<?php echo $org_role; ?>"><?php echo $org_role; ?></option>
-                              <option value="">Staff</option>
+                          <option value="<?php echo $org_role;?>">...</option>
+                              <?php foreach ( $results as $option ) : ?>
+                              <option value="<?php echo $option->role; ?>"><?php echo $option->role; ?></option>
+                              <?php endforeach; ?>
                           </select>
                         </div>
                       </div>
