@@ -329,13 +329,31 @@ $destination = "index.php";
                   function fill_role($connection)
                   {
                   $sint_id = $_SESSION["int_id"];
+
                   $org = "SELECT * FROM org_role WHERE int_id = '$sint_id' ORDER BY id ASC";
                   $res = mysqli_query($connection, $org);
-                  $out = '';
+                  $row = mysqli_fetch_array($res);
+                  $role_id = $row["id"];
+                  $orgx = mysqli_query($connection, "SELECT * FROM permission WHERE role_id = '$role_id' && int_id = '$sint_id'");
+                  $resx1 = mysqli_num_rows($orgx);
+                  if ($resx1 == 0 || $resx1 == NULL) {
+                    $out = '';
                   while ($row = mysqli_fetch_array($res))
                   {
-                    $out .= '<option value="'.$row["id"].'">' .$row["role"]. '</option>';
+                    $out .= '<option value="'.$row["id"].'">' .strtoupper($row["role"]). '</option>';
                   }
+                  } else {
+                    $o1 = "SELECT * FROM org_role WHERE int_id = '$sint_id' && id != '$role_id' ORDER BY id ASC";
+                  $r1 = mysqli_query($connection, $o1);
+                  $ro1 = mysqli_fetch_array($r1);
+                    // push something
+                    $out = '';
+                    while ($ro1 = mysqli_fetch_array($r1))
+                  {
+                    $out .= '<option value="'.$ro1["id"].'">' .strtoupper($ro1["role"]). '</option>';
+                  }
+                  }
+                  // alright
                   return $out;
                   }
                   ?>
@@ -351,24 +369,24 @@ $destination = "index.php";
             <div class="col-md-12">
               <!-- a script to get the staff -->
           <script>
-            $(document).ready(function() {
-              $('#role').change(function(){
-                var id = $(this).val();
-                var int_id = $('#int_id').val();
-                $.ajax({
-                  url:"ajax_post/role_function.php",
-                  method:"POST",
-                  data:{id:id, int_id:int_id},
-                  success:function(data) {
-                  $('#show_role_staff').html(data);
-                }
-              })
-            });
-           })
+          //   $(document).ready(function() {
+          //     $('#role').change(function(){
+          //       var id = $(this).val();
+          //       var int_id = $('#int_id').val();
+          //       $.ajax({
+          //         url:"ajax_post/role_function.php",
+          //         method:"POST",
+          //         data:{id:id, int_id:int_id},
+          //         success:function(data) {
+          //         $('#show_role_staff').html(data);
+          //       }
+          //     })
+          //   });
+          //  })
           </script>
-              <div class="form-group">
+              <!-- <div class="form-group">
                <div id="show_role_staff"></div>
-              </div>
+              </div> -->
             </div>
            <!-- Next -->
            <div class="col-md-12">
@@ -382,7 +400,7 @@ $destination = "index.php";
                <div class="form-check form-check-inline">
               <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" value="0" name="sms_active" id="all">
-                Check All
+                Check & Uncheck All
                 <span class="form-check-sign">
                 <span class="check"></span>
                 </span>
@@ -526,14 +544,14 @@ $destination = "index.php";
                     <table id="tabledat1" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT staff.id, permission.trans_appv, permission.trans_post, permission.loan_appv, permission.acct_appv, permission.valut, permission.view_report, permission.view_dashboard, permission.configuration, staff.first_name, staff.last_name, staff.org_role, staff.employee_status FROM staff JOIN permission ON staff.id = permission.staff_id WHERE staff.int_id = '$sessint_id'";
+                        $query = "SELECT org_role.id, permission.trans_appv, permission.trans_post, permission.loan_appv, permission.acct_appv, permission.valut, permission.view_report, permission.view_dashboard, permission.configuration, org_role.role, org_role.description FROM org_role JOIN permission ON org_role.id = permission.role_id WHERE org_role.int_id = '$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
                           ID
                         </th> -->
-                        <th>Fullname</th>
-                        <th>Role</th>
+                        <th>Role Name</th>
+                        <th>Description</th>
                         <th>Approve Transaction</th>
                         <th>Post Transaction</th>
                         <th>Approve Loan</th>
@@ -542,7 +560,7 @@ $destination = "index.php";
                         <th>View Report</th>
                         <th>Dashboard</th>
                         <th>Access Config.</th>
-                        <th>Status</th>
+                        <!-- <th>Status</th> -->
                         <th>
                           Edit
                         </th>
@@ -552,16 +570,8 @@ $destination = "index.php";
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
-                          <th><?php echo strtoupper($row["first_name"] . ' ' . $row["last_name"]); ?></th>
-                          <?php
-                          // display role name
-                          $role_id = $row["org_role"];
-                          $getrole = mysqli_query($connection, "SELECT * FROM org_role WHERE id = '$role_id'");
-                          $xm = mysqli_fetch_array($getrole);
-                          // nexr
-                          $role_name = $xm["role"];
-                          ?>
-                          <th><?php echo $role_name; ?></th>
+                          <th><?php echo strtoupper($row["role"]); ?></th>
+                          <th><?php echo strtoupper($row["description"]); ?></th>
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
@@ -642,7 +652,6 @@ $destination = "index.php";
                           </label>
                         </div>
                           </th>
-                          <th><?php echo $row["employee_status"]; ?></th>
                           <td><button class="btn btn-info">Update</button></td>
                         </tr>
                         <?php }
