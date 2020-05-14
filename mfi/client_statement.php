@@ -64,6 +64,10 @@ if(isset($_GET["edit"])) {
             <div class="col-md-12">
                 <div style="padding-left:20px;" class="card">
                   <div class="row">
+                    <div class="col-md-12">
+                    <h1>Client statement</h1>
+                      <h1>Client statement</h1>
+                    </div>
                       <div class="col-md-6">
                         <h6 class="card-category text-gray">Branch name</h6>
                           <h4><?php echo $branch_name;?></h4>
