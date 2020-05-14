@@ -305,35 +305,7 @@ $destination = "index.php";
                       </tbody>
                     </table>
                   </div>
-                  <script>
-                        // coment on later
-                          $(document).ready(function(){
-                            $('#give').change(function() {
-                              var id = $(this).val();
-                              if (id == "") {
-                                document.getElementById('tit').readOnly = false;
-                                $('#tit').val("choose an account type");
-                              } else if (id == "1") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("1" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "2") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("2" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "3") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("3" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "4") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("4" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "5") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("5" + Math.floor(1000 + Math.random() * 9000));
-                              } else {
-                                $('#tit').val("Nothing");
-                              }
-                            });
-                          });
-                        </script>
+
                   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
@@ -387,34 +359,43 @@ $destination = "index.php";
             <?php
                   function fill_role($connection)
                   {
-                  $sint_id = $_SESSION["int_id"];
+                    $sint_id = $_SESSION["int_id"];
+                    // $query = "SELECT * FROM org_role WHERE int_id = '$sint_id'";
+                    $query = "SELECT org_role.id, org_role.role FROM org_role LEFT JOIN permission ON permission.role_id = org_role.id WHERE permission.id IS NULL && org_role.int_id = 5";
+                    $result = mysqli_query($connection, $query);
+                    $row = mysqli_fetch_array($result);
+                    while($row = mysqli_fetch_array($result)){
+                      $out .= '<option value="'.$row["id"].'">' .strtoupper($row["role"]). '</option>';
+                    }
+                    return $out;
+                  // $sint_id = $_SESSION["int_id"];
 
-                  $org = "SELECT * FROM org_role WHERE int_id = '$sint_id' ORDER BY id ASC";
-                  $res = mysqli_query($connection, $org);
-                  $row = mysqli_fetch_array($res);
-                  $role_id = $row["id"];
-                  $orgx = mysqli_query($connection, "SELECT * FROM permission WHERE role_id = '$role_id' && int_id = '$sint_id'");
-                  $resx1 = mysqli_num_rows($orgx);
-                  if ($resx1 == 0 || $resx1 == NULL) {
-                    $out = '';
-                  while ($row = mysqli_fetch_array($res))
-                  {
-                    $out .= '<option value="'.$row["id"].'">' .strtoupper($row["role"]). '</option>';
-                  }
-                  } else {
-                    $o1 = "SELECT * FROM org_role WHERE int_id = '$sint_id' && id != '$role_id' ORDER BY id ASC";
-                  $r1 = mysqli_query($connection, $o1);
-                  $ro1 = mysqli_fetch_array($r1);
-                    // push something
-                    $out = '';
-                    while ($ro1 = mysqli_fetch_array($r1))
-                  {
-                    $out .= '<option value="'.$ro1["id"].'">' .strtoupper($ro1["role"]). '</option>';
-                  }
-                  }
-                  // alright
-                  return $out;
-                  }
+                  // $org = "SELECT * FROM org_role WHERE int_id = '$sint_id' ORDER BY id ASC";
+                  // $res = mysqli_query($connection, $org);
+                  // $row = mysqli_fetch_array($res);
+                  // $role_id = $row["id"];
+                  // $orgx = mysqli_query($connection, "SELECT * FROM permission WHERE role_id = '$role_id' && int_id = '$sint_id'");
+                  // $resx1 = mysqli_num_rows($orgx);
+                  // if ($resx1 == 0 || $resx1 == NULL) {
+                  //   $out = '';
+                  // while ($row = mysqli_fetch_array($res))
+                  // {
+                  //   $out .= '<option value="'.$row["id"].'">' .strtoupper($row["role"]). '</option>';
+                  // }
+                  // } else {
+                  //   $o1 = "SELECT * FROM org_role WHERE int_id = '$sint_id' && id != '$role_id' ORDER BY id ASC";
+                  // $r1 = mysqli_query($connection, $o1);
+                  // $ro1 = mysqli_fetch_array($r1);
+                  //   // push something
+                  //   $out = '';
+                  //   while ($ro1 = mysqli_fetch_array($r1))
+                  // {
+                  //   $out .= '<option value="'.$ro1["id"].'">' .strtoupper($ro1["role"]). '</option>';
+                  // }
+                  // }
+                  // // alright
+                  // return $out;
+                   }
                   ?>
               <div class="form-group">
                <label class="bmd-label-floating">Role</label>
