@@ -104,7 +104,7 @@
                 <div class="card-footer">
                   <div class="stats">
                     <!-- Get current update time and display -->
-                    <!-- <i class="material-icons">update</i> Just Updated -->
+                    <!-- new noe -->
                   </div>
                 </div>
               </div>
