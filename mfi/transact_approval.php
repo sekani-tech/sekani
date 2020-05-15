@@ -169,7 +169,6 @@ if (isset($_GET["message1"])) {
           </div>
         </div>
       </div>
-
 <?php
 
     include("footer.php");
