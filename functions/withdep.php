@@ -16,6 +16,7 @@ $getacct1 = mysqli_query($connection, "SELECT * FROM staff WHERE user_id = '$m_i
 if (count([$getacct1]) == 1) {
     $uw = mysqli_fetch_array($getacct1);
     $staff_id = $uw["id"];
+    $staff_email = $uw["email"];
     echo $staff_id;
 }
 $staff_name  = strtoupper($_SESSION["username"]);
@@ -95,6 +96,7 @@ $till = $ex["till"];
 $post_limit = $ex["post_limit"];
 $gl_code = $ex["till"];
 $till_no = $ex["till_no"];
+$till_name = $ex["name"];
 // we will call the GL
 $gl_man = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$gl_code' && int_id = '$sessint_id'");
 $gl = mysqli_fetch_array($gl_man);
@@ -161,6 +163,7 @@ if ($is_del == "0" && $is_del != NULL) {
             $mail->From = $int_email;
             $mail->FromName = $int_name;
             $mail->addAddress($client_email, $clientt_name);
+            $mail->addAddress($staff_email, $staff_name);
             $mail->addReplyTo($int_email, "Reply");
             $mail->isHTML(true);
             $mail->Subject = "Transaction Alert from $int_name";

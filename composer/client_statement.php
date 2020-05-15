@@ -141,7 +141,9 @@ if(isset($_GET["edit"])) {
     // $stylesheet = file_get_contents('style.css');
     
     // $mpdf->WriteHTML($stylesheet,\Mpdf\HTMLParserMode::HEADER_CSS);
-    $mpdf->Output();
+    $file_name = 'Client Statement '.$lname.' '.$fname.'.pdf';
+    $mpdf->Output($file_name, 'D');
+
 }
 else{
     echo 'Data not found';
