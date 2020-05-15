@@ -90,13 +90,13 @@
                   <p class="card-category">Outstanding Loan Balance</p>
                   <!-- Populate with the total value of outstanding loans -->
                   <?php
-                  $re = "SELECT SUM(principal_amount) AS principal_amount FROM loan WHERE int_id = '$sessint_id'";
+                  $re = "SELECT SUM(total_outstanding_derived) AS total_outstanding_derived FROM loan WHERE int_id = '$sessint_id'";
                   $resultxx = mysqli_query($connection, $re);
                   if (count([$resultxx]) == 1) {
                   $jk = mysqli_fetch_array($resultxx); 
-                  $sum = $jk['principal_amount'];
+                  $sum = $jk['total_outstanding_derived'];
                   ?>
-                  <h3 class="card-title">NGN - <?php echo round($sum); ?></h3>
+                  <h3 class="card-title">NGN - <?php echo number_format(round($sum), 2); ?></h3>
                   <?php
                   }
                   ?>

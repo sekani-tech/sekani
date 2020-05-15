@@ -202,6 +202,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
 
             <p>
             <button id="pddf" class="btn btn-primary pull-right">PDF print</button>
+            <div id=""></div>
             </p>
           </div>
         </div>
