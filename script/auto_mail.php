@@ -5,6 +5,7 @@ require_once "../bat/phpmailer/PHPMailerAutoload.php";
 <?php 
 $getall = "SELECT * FROM staff WHERE int_id = 3";
 $getmail = mysqli_query($connection, $getall);
+
 while ($res = mysqli_fetch_assoc($getmail)) {
     $usermail = $res["email"]; 
     $mail = new PHPMailer;
@@ -32,7 +33,7 @@ while ($res = mysqli_fetch_assoc($getmail)) {
      echo "Mailer Error: " . $mail->ErrorInfo;
    } else
    {
-    echo $xm = "Yeppppy";
+    echo $xm = "<h1>404 ERROR PAGE NOT FOUND</h1>";
    }
 } 
 ?>
