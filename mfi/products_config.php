@@ -294,11 +294,11 @@ else if (isset($_GET["message5"])) {
                           if ($row["charge_time_enum"] == 1) {
                             $xs = "Disbursement";
                           } else if ($row["charge_time_enum"] == 2) {
-                            $xs = "Specified Due Date";
+                            $xs = "Manual Charge";
                           } else if ($row["charge_time_enum"] == 3) {
                             $xs = "Savings Activiation";
                           } else if ($row["charge_time_enum"] == 5) {
-                            $xs = "Withdrawal Fee";
+                            $xs = "Deposit Fee";
                           } else if ($row["charge_time_enum"] == 6) {
                             $xs = "Annual Fee";
                           } else if ($row["charge_time_enum"] == 8) {
