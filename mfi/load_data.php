@@ -1,26 +1,35 @@
 <?php
 include("../functions/connect.php");
-
 $output = '';
 
 if(isset($_POST["id"]))
 {
     if($_POST["id"] !='')
     {
-        $sql1 = "SELECT * FROM charge WHERE id = '".$_POST["id"]."'";
+      
+      $sql1 = "SELECT * FROM charge WHERE id = '".$_POST["id"]."'";
+      $xs = '';
+      $chg = '';
         $result = mysqli_query($connection, $sql1);
         $o = mysqli_fetch_array($result);
         $values = $o["charge_time_enum"];
         $nameofc = $o["name"];
         $forp = $o["charge_calculation_enum"];
+        $main_p = $_POST["main_p"];
+        $amt = number_format($o["amount"], 2);
+        if ($forp == 1) {
+          $chg = $amt." Flat";
+        } else {
+          $chg = $forp. "% of Loan Principal";
+        }
         if ($values == 1) {
             $xs = "Disbursement";
           } else if ($values == 2) {
-            $xs = "Specified Due Date";
+            $xs = "Manual Charge";
           } else if ($values == 3) {
             $xs = "Savings Activiation";
           } else if ($values == 5) {
-            $xs = "Withdrawal Fee";
+            $xs = "Deposit Fee";
           } else if ($values == 6) {
             $xs = "Annual Fee";
           } else if ($values == 8) {
@@ -40,22 +49,60 @@ if(isset($_POST["id"]))
         (`int_id`, `branch_id`, `charge_id`, `name`, `charge`, `collected_on`,
         `date`, `is_status`, `cache_prod_id`)
         VALUES ('{$int_id}', '{$branch_id}', '{$charge_id}',
-        '{$nameofc}', '{$charge}', '1', NULL, '0', NULL)");
+        '{$nameofc}', '{$chg}', '{$xs}', NULL, '0', '{$main_p}')");
         $sql = "SELECT * FROM charge WHERE id = '".$_POST["id"]."'";
-        $table = "SELECT * FROM `charges_cache` WHERE cache_prod_id = '".$_POST["prod_id"]."'";
     }
     else
     {
-        $sql = "SELECT * FROM charge";
+        $sql = "SELECT * FROM charges_cache WHERE int_id = '$int_id' && cache_prod_id = '$main_p' ";
     }
+    $sql = "SELECT * FROM charges_cache WHERE int_id = '$int_id' && cache_prod_id = '$main_p' ";
     $result = mysqli_query($connection, $sql);
-
-    while ($row = mysqli_fetch_array($result))
-    {
-        $output = '<p><label>Name: '.$row["name"].' </label> <span></span></p>
-        <p><label>Charge: '.$row["amount"].' </label> <span></span></p>
-        <p><label>Collected on: '.$row["fee_on_day"].' </label> <span></span></p>';
-    }
+    ?>
+    
+    <div class="table-responsive">
+  <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+  <thead class=" text-primary">
+    <th>Name</th>
+    <th>Charge</th>
+    <th>Collected On</th>
+  </thead>
+  <tbody>
+    <?php if (mysqli_num_rows($result) > 0) {
+      while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?> 
+      <tr>
+        <th> <?php echo $row["name"] ?></th>
+        <th><?php echo $row["charge"] ?></th>
+        <th> <?php echo $row["collected_on"] ?></th>
+      </tr>
+      <?php
+      }
+    } else {
+      // echo something
+    }?>
+  </tbody>
+</table>
+</div>
+  <?php
     echo $output;
 }
 ?>
+
+<script>
+                      $(document).ready(function() {
+                        $('#getdiv').change(function(){
+                          var id = $(this).val();
+                          var int_id = $('#int_id').val();
+                          var branch_id = $('#branch_id').val();
+                          var main_p = $('#main_p').val();
+                          $.ajax({
+                            url:"load_data.php",
+                            method:"POST",
+                            data:{id:id, int_id:int_id, branch_id:branch_id, main_p: main_p},
+                            success:function(data){
+                              $('#damn_men').html(data);
+                            }
+                          })
+                        });
+                      })
+                    </script>
