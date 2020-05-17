@@ -137,24 +137,83 @@ if(isset($_GET["edit"])) {
               </div>
             </div>
             <div class="col-md-4">
-              <div class="card card-profile">
+              <!-- Dialog box for signature -->
+              <div id="sig" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title"><?php echo $first_name; ?></h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                        <img  src="../functions/clients/sign/<?php echo $signature;?>"/>
+                      </div>
+                    </div>
+                  </div>      
+                </div>
+                <!-- dialog ends -->
+                <!-- Dialog box for passport -->
+              <div id="pas" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title"><?php echo $first_name; ?></h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                        <img  src="../functions/clients/passport/<?php echo $passport;?>"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- dialog ends -->
+                <!-- Dialog box for id img -->
+              <div id="id" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title"><?php echo $first_name; ?></h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                        <img  src="../functions/clients/id/<?php echo $id_img_url;?>"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- dialog ends -->
+                <div class="card card-profile">
                 <div class="card-avatar">
-                  <a href="#pablo">
+                  <a data-toggle="modal" data-target="#pas">
                     <img class="img" src="../functions/clients/passport/<?php echo $passport;?>" />
                   </a>
                 </div>
-                <!-- Get session data and populate user profile -->
+                <!-- Get client data -->
                 <div class="card-body">
-                  <h6 class="card-category text-gray">Account Name</h6>
-                  <h4><?php echo $display_name; ?></h4>
+                  <h6 class="card-category text-gray">Clients Profile Picture</h6>
+                  <h4 class="card-title"><?php echo $display_name; ?></h4>
+                  <p class="card-description">
+                  <?php
+                $inq = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$sessint_id'");
+                if (count([$inq]) == 1) {
+                  $n = mysqli_fetch_array($inq);
+                  $int_name = $n['int_name'];
+                }
+              ?>
+            <?php echo $int_name; ?>
+                  </p>
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>
-                <!-- passport -->
-                <br>
               </div>
               <div class="card card-profile">
                 <div class="card-avatar">
-                  <a href="#pablo">
+                  <a data-toggle="modal" data-target="#id">
                     <img class="img" src="../functions/clients/id/<?php echo $id_img_url;?>" />
                   </a>
                 </div>
@@ -164,11 +223,10 @@ if(isset($_GET["edit"])) {
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>
               </div>
-              <br>
                 <!-- /id card -->
                 <div class="card card-profile">
                 <div class="card-avatar">
-                  <a href="#pablo">
+                  <a data-toggle="modal" data-target="#sig">
                     <img class="img" src="../functions/clients/sign/<?php echo $signature;?>" />
                   </a>
                 </div>

@@ -180,7 +180,7 @@ $destination = "index.php";
                     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       // check the button value
                       $role = $_POST['submit'];
-                      $update_role = $_POST['update_role'];
+                      $update_role = $_POST['submit'];
                       if ($role == 'role') {
                         $r_n = $_POST["role_name"];
                         $r_d = $_POST["descript"];
@@ -188,7 +188,7 @@ $destination = "index.php";
                         $selectrole = mysqli_query($connection, "SELECT * FROM org_role WHERE int_id = '$sessint_id' && role = '$r_n'");
                         $cs = mysqli_num_rows($selectrole);
                         if ($cs == 0 || $cs == "0") {
-                          $getrole = "INSERT INTO `org_role` (`int_id`, `role`, `description`) VALUES ('{$sessint_id}', '{$r_n}', '{$r_d}')";
+                          $getrole = "INSERT INTO org_role (int_id, role, description) VALUES ('{$sessint_id}', '{$r_n}', '{$r_d}')";
                         $MIB = mysqli_query($connection, $getrole);
                         if ($MIB) {
                           // echo success
@@ -236,11 +236,68 @@ $destination = "index.php";
                      ';
                         }
                       } else if ($update_role == 'update_role') {
-                        // If its an update
-                        // do something
+                        if ( isset($_POST['approve']) ) {
+                          $approve = 1;
+                      } else {
+                          $approve = 0;
+                      }
+                      if ( isset($_POST['post_transact']) ) {
+                        $post_transact = 1;
+                      } else {
+                        $post_transact = 0;
+                      }
+                      if ( isset($_POST['access_config']) ) {
+                      $access_config = 1;
+                      } else {
+                      $access_config = 0;
+                      }
+                      if ( isset($_POST['approve_loan']) ) {
+                      $approve_loan = 1;
+                      } else {
+                      $approve_loan = 0;
+                      }
+                      if ( isset($_POST['approve_acc']) ) {
+                      $approve_acc = 1;
+                      } else {
+                      $approve_acc = 0;
+                      }
+                      if ( isset($_POST['vault_trans']) ) {
+                      $vault_trans = 1;
+                      } else {
+                      $vault_trans = 0;
+                      }
                       } else {
                         // echo no add or update
                       }
+                      if ( isset($_POST['view_report']) ) {
+                      $view_report = 1;
+                      } else {
+                      $view_report = 0;
+                      }
+                      if ( isset($_POST['dash']) ) {
+                      $dash = 1;
+                      } else {
+                      $dash = 0;
+                      }
+                      $rid = $_POST["org_role"];
+                      $perm = "INSERT INTO permission (int_id, role_id, trans_appv, trans_post, loan_appv, acct_appv, valut, view_report, view_dashboard, configuration)
+                       VALUES ('{$sessint_id}', '{$rid}', '{$approve}', '{$post_transact}', '{$approve_loan}', '$approve_acc', '$vault_trans', '$view_report', '$dash', '{$access_config}')";
+                      $permm = mysqli_query($connection, $perm);
+                      if ($MIB) {
+                        // echo success
+                        echo '<script type="text/javascript">
+                   $(document).ready(function(){
+                       swal({
+                           type: "success",
+                           title: "Permission Granted",
+                           text: " Created Successfully",
+                           showConfirmButton: false,
+                           timer: 2000
+                       })
+                   });
+                   </script>
+                   ';
+                  }
                     } else {
                       echo "";
                     }
@@ -481,7 +538,7 @@ $destination = "index.php";
             <div class="col-md-5">
             <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="sms_active" id="n1">
+                <input class="form-check-input" type="checkbox" value="" name="approve" id="n1">
                 Approve Transaction
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -491,7 +548,7 @@ $destination = "index.php";
            <!-- Next -->
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="sms_active" id="n2">
+                <input class="form-check-input" type="checkbox" value="" name="post_transact" id="n2">
                 Post Transaction
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -501,7 +558,7 @@ $destination = "index.php";
            <!-- Next -->
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="sms_active" id="n3">
+                <input class="form-check-input" type="checkbox" value="" name="access_config" id="n3">
                 Access Configuration
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -511,7 +568,7 @@ $destination = "index.php";
            <!-- Last -->
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="sms_active" id="n4">
+                <input class="form-check-input" type="checkbox" value="" name="approve_loan" id="n4">
                 Approve Loan
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -523,7 +580,7 @@ $destination = "index.php";
             <div class="col-md-5">
             <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="sms_active" id="n5">
+                <input class="form-check-input" type="checkbox" value="" name="approve_acc" id="n5">
                 Approve Account
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -533,7 +590,7 @@ $destination = "index.php";
            <!-- Next -->
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="sms_active" id="n6">
+                <input class="form-check-input" type="checkbox" value="" name="vault_trans" id="n6">
                 Vault Transaction
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -543,7 +600,7 @@ $destination = "index.php";
            <!-- Next -->
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="sms_active" id="n7">
+                <input class="form-check-input" type="checkbox" value="" name="view_report" id="n7">
                 View Report
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -553,7 +610,7 @@ $destination = "index.php";
            <!-- Last -->
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="sms_active" id="n8">
+                <input class="form-check-input" type="checkbox" value="" name="dash" id="n8">
                 Dashboard
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -563,11 +620,11 @@ $destination = "index.php";
             </div>
             <!-- End for Permission -->
         </div>
-      </form>
-      </div>
-      <div class="modal-footer">
+        <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" name="submit" value="update_role" type="button" class="btn btn-primary">Save changes</button>
+      </div>
+      </form>
       </div>
     </div>
   </div>
@@ -615,81 +672,169 @@ $destination = "index.php";
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input class="form-check-input" disabled type="checkbox" value="" name="sms_active" id="app">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
                           </label>
+                          <input type="text"  value="<?php echo $row['trans_appv'];?>" id="appr"/>
+                        <script>
+                         $(document).ready(function() {
+                              var appr = document.getElementById("appr").value;
+                              if (appr == '1') {
+                                document.getElementById('app').checked = true;
+                              } else if (appr == '0') {
+                                document.getElementById('app').checked = false;
+                              } 
+                          });
+                        </script>
                         </div>
                           </th>
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input class="form-check-input" disabled type="checkbox" value="" name="sms_active" id="ptr">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
                           </label>
+                          <input type="text"  value="<?php echo $row['trans_post'];?>" id="ptrans">
+                        <script>
+                         $(document).ready(function() {
+                          var ptrans = document.getElementById("ptrans").value;
+                          if (ptrans == '1') {
+                                document.getElementById('ptr').checked = true;
+                              } else if (ptrans == '0') {
+                                document.getElementById('ptr').checked = false;
+                              }
+                          });
+                        </script>
                         </div>
                           </th>
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input class="form-check-input" disabled type="checkbox" value="" name="sms_active" id="apl">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
                           </label>
+                          <input type="text"  value="<?php echo $row['loan_appv'];?>" id="accg">
+                        <script>
+                         $(document).ready(function() {
+                          var accg = document.getElementById("accg").value;
+                          if (accg == '1') {
+                                document.getElementById('apl').checked = true;
+                              } else if (accg == '0') {
+                                document.getElementById('apl').checked = false;
+                              }
+                          });
+                        </script>
                         </div>
                           </th>
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="apa">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
                           </label>
+                          <input type="text"  value="<?php echo $row['acct_appv'];?>" id="appl">
+                        <script>
+                         $(document).ready(function() {
+                          var appl = document.getElementById("appl").value;
+                          if (appl == '1') {
+                                document.getElementById('apa').checked = true;
+                              } else if (appl == '0') {
+                                document.getElementById('apa').checked = false;
+                              }
+                          });
+                        </script>
                         </div>
                           </th>
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="vtr">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
                           </label>
+                          <input type="text"  value="<?php echo $row['valut'];?>" id="appac">
+                        <script>
+                         $(document).ready(function() {
+                          var appac = document.getElementById("appac").value;
+                          if (appac == '1') {
+                                document.getElementById('vtr').checked = true;
+                              } else if (appac == '0') {
+                                document.getElementById('vtr').checked = false;
+                              }
+                          });
+                        </script>
                         </div>
                           </th>
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="vrp">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
                           </label>
+                          <input type="text"  value="<?php echo $row['view_report'];?>" id="vtrans">
+                        <script>
+                         $(document).ready(function() {
+                          var vtrans = document.getElementById("vtrans").value;
+                          if (vtrans == '1') {
+                                document.getElementById('vrp').checked = true;
+                              } else if (vtrans == '0') {
+                                document.getElementById('vrp').checked = false;
+                              } 
+                          });
+                        </script>
                         </div>
                           </th>
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="ds">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
                           </label>
+                          <input type="text"  value="<?php echo $row['view_dashboard'];?>" id="vrep">
+                        <script>
+                         $(document).ready(function() {
+                          var vrep = document.getElementById("vrep").value;
+                          if (vrep == '1') {
+                                document.getElementById('ds').checked = true;
+                              } else if (vrep == '0') {
+                                document.getElementById('ds').checked = false;
+                              }
+                          });
+                        </script>
                         </div>
                           </th>
                           <th>
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="sms">
+                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="acc">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
                           </label>
+                          <input type="text"  value="<?php echo $row['configuration'];?>" id="das">
+                        <script>
+                         $(document).ready(function() {
+                          var das = document.getElementById("das").value;
+                          if (das == '1') {
+                                document.getElementById('acc').checked = true;
+                              } else if (das == '0') {
+                                document.getElementById('acc').checked = false;
+                              }
+                          });
+                        </script>
                         </div>
                           </th>
                           <td><button class="btn btn-info">Update</button></td>
