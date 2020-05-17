@@ -41,14 +41,18 @@ if(isset($_GET["edit"])) {
     if (count([$acount]) == 1) {
       $b = mysqli_fetch_array($acount);
       $currtype = $b['currency_code'];
+      $quer = "SELECT * FROM account WHERE client_id ='$id'";
+      $resuo = mysqli_query($connection, $quer);
+      $o = mysqli_fetch_array($resuo);
+      $acc_id = $o['id'];
     }
 
-      $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE client_id = '$id'");
+      $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE account_id = '$acc_id'");
       $deb = mysqli_fetch_array($totald);
       $tdp = $deb['debit'];
       $totaldb = number_format($tdp, 2);
 
-      $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE client_id = '$id'");
+      $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE account_id = '$acc_id'");
       $cred = mysqli_fetch_array($totalc);
       $tcp = $cred['credit'];
       $totalcd = number_format($tcp, 2);
@@ -62,6 +66,42 @@ if(isset($_GET["edit"])) {
     $_SESSION["loggedin"] = true;
     $_SESSION["client_id"] = $id;
 ?>
+<?php
+                          $soc = $n["account_no"];
+                          $length = strlen($soc);
+                          if ($length == 1) {
+                            $acc ="000000000" . $soc;
+                          }
+                          elseif ($length == 2) {
+                            $acc ="00000000" . $soc;
+                          }
+                          elseif ($length == 3) {
+                            $acc ="00000000" . $soc;
+                          }
+                          elseif ($length == 4) {
+                            $acc ="0000000" . $soc;
+                          }
+                          elseif ($length == 5) {
+                            $acc ="000000" . $soc;
+                          }
+                          elseif ($length == 6) {
+                            $acc ="0000" . $soc;
+                          }
+                          elseif ($length == 7) {
+                            $acc ="000" . $soc;
+                          }
+                          elseif ($length == 8) {
+                            $acc ="00" . $soc;
+                          }
+                          elseif ($length == 9) {
+                            $acc ="0" . $soc;
+                          }
+                          elseif ($length == 10) {
+                            $acc = $n["account_no"];
+                          }else{
+                            $acc = $n["account_no"];
+                          }
+                          ?>
 <!-- Content added here -->
 <!-- print content -->
 <div class="content">
@@ -96,7 +136,7 @@ if(isset($_GET["edit"])) {
                         <h6 >Currency</h6>
                           <h4><?php echo $currtype;?></h4>
                           <h6 >Account number</h6>
-                        <h4><?php echo $acc_no;?></h4> 
+                        <h4><?php echo $acc;?></h4> 
                     </div>
                     <div class="col-md-6">
                     <h6 >Client name</h6>
@@ -122,7 +162,11 @@ if(isset($_GET["edit"])) {
             <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                         <thead>
                         <?php
-                         $query = "SELECT * FROM account_transaction WHERE client_id ='$id'";
+                        $que = "SELECT * FROM account WHERE client_id ='$id'";
+                        $resui = mysqli_query($connection, $que);
+                        $q = mysqli_fetch_array($resui);
+                        $acc_id = $q['id'];
+                         $query = "SELECT * FROM account_transaction WHERE account_id ='$acc_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <tr class="table100-head">

@@ -127,6 +127,7 @@ $resx1 = mysqli_num_rows($q1);
                   $branch_id = $y['branch_id'];
                   $acct_no = $y['account_no'];
                   $client_id = $y['client_id'];
+                  $acc_id = $y['id'];
                   $int_acct_bal = $y['account_balance_derived'];
                   $comp = $amount + $int_acct_bal;
                   $numberacct = number_format("$comp",2);
@@ -144,11 +145,11 @@ $resx1 = mysqli_num_rows($q1);
                    $iupqres = mysqli_query($connection, $iupq);
                    if ($iupqres) {
                        $iat = "INSERT INTO account_transaction (int_id, branch_id,
-                       account_no, product_id,
+                       account_no, account_id product_id,
                        client_id, teller_id, transaction_id, transaction_type, is_reversed,
                        transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                        created_date, appuser_id, credit) VALUES ('{$ssint_id}', '{$branch_id}',
-                       '{$acct_no}', '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$trans_type}', '{$irvs}',
+                       '{$acct_no}','{$acc_id}', '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$trans_type}', '{$irvs}',
                        '{$transaction_date}', '{$amount}', '{$new_abd}', '{$amount}',
                        '{$gen_date}', '{$appuser_id}', '{$amount}')";
                        $res3 = mysqli_query($connection, $iat);
@@ -272,11 +273,11 @@ $resx1 = mysqli_num_rows($q1);
                    $iupqres = mysqli_query($connection, $iupq);
                    if ($iupqres) {
                        $iat = "INSERT INTO account_transaction (int_id, branch_id,
-                       account_no, product_id,
+                       account_no, account_id product_id,
                        client_id, teller_id, transaction_id, transaction_type, is_reversed,
                        transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                        created_date, appuser_id, debit) VALUES ('{$ssint_id}', '{$branch_id}',
-                       '{$acct_no}', '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$trans_type2}', '{$irvs}',
+                       '{$acct_no}', '{$acc_id}', '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$trans_type2}', '{$irvs}',
                        '{$transaction_date}', '{$amount}', '{$comp2}', '{$amount}',
                        '{$gen_date}', '{$appuser_id}', '{$amount}')";
                        $res3 = mysqli_query($connection, $iat);

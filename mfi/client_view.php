@@ -51,6 +51,7 @@ if(isset($_GET["edit"])) {
       $gogo = mysqli_query($connection, "SELECT * FROM loan WHERE account_no = '$acc_no' && int_id='$sessint_id'");
       if (count([$gogo]) == 1) {
         $ppo = mysqli_fetch_array($gogo);
+        $sum = $jk['total_outstanding_derived'];
         $olb = $ppo['principal_amount'];
         $prd = $ppo['principal_repaid_derived'];
         $cv = "Null";
@@ -118,7 +119,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Total Outstanding Loan balance:</label>
-                          <input type="text" placeholder="0.000" name="" id="" class="form-control" value="<?php echo $olb; ?>" readonly>
+                          <input type="text" placeholder="0.000" name="" id="" class="form-control" value="<?php echo $sum; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
