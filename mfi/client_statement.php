@@ -43,8 +43,8 @@ if(isset($_GET["edit"])) {
       $currtype = $b['currency_code'];
       $quer = "SELECT * FROM account WHERE client_id ='$id'";
       $resuo = mysqli_query($connection, $quer);
-      $o = mysqli_fetch_array($resuo);
-      $acc_id = $o['id'];
+      $u = mysqli_fetch_array($resuo);
+      $acc_id = $u['id'];
     }
 
       $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE account_id = '$acc_id'");
