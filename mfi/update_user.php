@@ -27,6 +27,7 @@ if (isset($_GET["edit"])) {
     $status = $n['employee_status'];
     $org_role = $n['org_role'];
     $img = $n['img'];
+    $imagefileL = $n['img'];
     $ut = mysqli_query($connection, "SELECT * FROM users WHERE id='$user_id' && int_id='$sessint_id");
     if (count([$ut]) == 1) {
       $j = mysqli_fetch_array($ut);
@@ -157,23 +158,23 @@ if (isset($_GET["edit"])) {
                       </div>
                     </div>
                     <div class="row">
-                    <div class="col-md-8">
-                    <!-- insert passport -->
-                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                        <div class="fileinput-new thumbnail img-raised">
-                            <!-- <img src="http://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" rel="nofollow" alt="..."> -->
-                        </div>
-                        <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
-                        <div>
-                            <span class="btn btn-raised btn-round btn-default btn-file">
-                                <span class="fileinput-new">Select picture</span>
-                                <span class="fileinput-exists">Change</span>
-                                <input type="file" name="imagefile"/>
-                            </span>
-                            <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
-                        </div>
+                    <div class="col-md-4">
+                    <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                    <input id ="file-upload" name="imagefile" type="file" class="inputFileHidden"/>
+                    <input type="text" hidden value="<?php echo $imagefileL;?>" name="imagefileL">
+                    <label> Select Passport</label>
                     </div>
-                  </div>
+                    <style>
+                        input[type="file"]{
+                          display: none;
+                        }
+                        .custom-file-upload{
+                          border: 1px solid #ccc;
+                          display: inline-block;
+                          padding: 6px 12px;
+                          cursor: pointer;
+                        }
+                      </style>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">UserType</label>

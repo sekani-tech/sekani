@@ -222,7 +222,7 @@ input:checked + .slider:before {
                           <th><?php echo $row["employee_status"]; ?></th>
                           <th>
                           <label class="switch">
-                                <input type="checkbox" name="employee_status[]" value="<?php echo $row["employee_status"]; ?>">
+                                <input type="checkbox" checked name="employee_status" value="<?php echo $row["employee_status"]; ?>">
                                 <span class="slider round"></span>
                               </label>
                               <script>

@@ -118,7 +118,6 @@ $destination = "index.php";
                         </th>
                         <th>Active</th>
                         <th>Employee Status</th>
-                        <th>Action</th>
                         <th>Edit</th>
                         <!-- <th>Phone</th> -->
                       </thead>
@@ -133,34 +132,6 @@ $destination = "index.php";
                           <th><?php echo $row["email"]; ?></th>
                           <th><?php echo $row["status"]; ?></th>
                           <th><?php echo $row["employee_status"]; ?></th>
-                          <th>
-                          <label class="switch">
-                                <input type="checkbox" name="employee_status[]" value="<?php echo $row["employee_status"]; ?>">
-                                <span class="slider round"></span>
-                              </label>
-                              <script>
-                                var button = new Ext.button({
-                                  text: 'test',
-                                  enableToggle: true,
-                                  stateful: true
-                              });
-                              
-                              button.getState = function() {
-                                  if (this.enableToggle == true) {
-                                      var config = {};
-                                      config.pressed = this.pressed;
-                                      return config;
-                                  }
-                                  return null;
-                              }
-                                </script>
-                          </th>
-                          <!-- <a href="update_user.php?edit=<?php echo $row["id"];?>"><form action="../functions/update_staff.php"><label class="switch">
-                                <input type="checkbox" name="employee_status" value="<?php echo $row["employee_status"]; ?>">
-                                <span class="slider round"></span>
-                              </label>
-                              </form>
-                              </a> -->
                           <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
                         <?php }
@@ -418,10 +389,10 @@ $destination = "index.php";
                   {
                     $sint_id = $_SESSION["int_id"];
                     // $query = "SELECT * FROM org_role WHERE int_id = '$sint_id'";
-                    $query = "SELECT org_role.id, org_role.role FROM org_role LEFT JOIN permission ON permission.role_id = org_role.id WHERE permission.id IS NULL && org_role.int_id = 5";
+                    $query = "SELECT org_role.id, org_role.role FROM org_role LEFT JOIN permission ON permission.role_id = org_role.id WHERE permission.id IS NULL && org_role.int_id = '$sint_id'";
                     $result = mysqli_query($connection, $query);
                     $row = mysqli_fetch_array($result);
-                    while($row = mysqli_fetch_array($result)){
+                    while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                       $out .= '<option value="'.$row["id"].'">' .strtoupper($row["role"]). '</option>';
                     }
                     return $out;
@@ -670,171 +641,153 @@ $destination = "index.php";
                           <th><?php echo strtoupper($row["role"]); ?></th>
                           <th><?php echo strtoupper($row["description"]); ?></th>
                           <th>
+                          <?php
+                          if($row['trans_appv'] == '1'){
+                            $check = "checked";
+                          }
+                          elseif($row['trans_appv'] == '0'){
+                            $check = "unchecked";
+                          }
+                          ?>   
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" disabled type="checkbox" value="" name="sms_active" id="app">
+                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="app">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
-                          </label>
-                          <input type="text"  value="<?php echo $row['trans_appv'];?>" id="appr"/>
-                        <script>
-                         $(document).ready(function() {
-                              var appr = document.getElementById("appr").value;
-                              if (appr == '1') {
-                                document.getElementById('app').checked = true;
-                              } else if (appr == '0') {
-                                document.getElementById('app').checked = false;
-                              } 
-                          });
-                        </script>
+                          </label>                     
                         </div>
                           </th>
                           <th>
+                          <?php
+                          if($row['trans_post'] == '1'){
+                            $check = "checked";
+                          }
+                          elseif($row['trans_post'] == '0'){
+                            $check = "unchecked";
+                          }
+                          ?>   
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" disabled type="checkbox" value="" name="sms_active" id="ptr">
+                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="ptr">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
                           </label>
-                          <input type="text"  value="<?php echo $row['trans_post'];?>" id="ptrans">
-                        <script>
-                         $(document).ready(function() {
-                          var ptrans = document.getElementById("ptrans").value;
-                          if (ptrans == '1') {
-                                document.getElementById('ptr').checked = true;
-                              } else if (ptrans == '0') {
-                                document.getElementById('ptr').checked = false;
-                              }
-                          });
-                        </script>
                         </div>
                           </th>
+
                           <th>
+                          <?php
+                          if($row['loan_appv'] == '1'){
+                            $check = "checked";
+                          }
+                          elseif($row['loan_appv'] == '0'){
+                            $check = "unchecked";
+                          }
+                          ?>   
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" disabled type="checkbox" value="" name="sms_active" id="apl">
+                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="apl">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
                           </label>
-                          <input type="text"  value="<?php echo $row['loan_appv'];?>" id="accg">
-                        <script>
-                         $(document).ready(function() {
-                          var accg = document.getElementById("accg").value;
-                          if (accg == '1') {
-                                document.getElementById('apl').checked = true;
-                              } else if (accg == '0') {
-                                document.getElementById('apl').checked = false;
-                              }
-                          });
-                        </script>
                         </div>
+
                           </th>
                           <th>
+                          <?php
+                          if($row['acct_appv'] == '1'){
+                            $check = "checked";
+                          }
+                          elseif($row['acct_appv'] == '0'){
+                            $check = "unchecked";
+                          }
+                          ?>   
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="apa">
+                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="apa">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
                           </label>
-                          <input type="text"  value="<?php echo $row['acct_appv'];?>" id="appl">
-                        <script>
-                         $(document).ready(function() {
-                          var appl = document.getElementById("appl").value;
-                          if (appl == '1') {
-                                document.getElementById('apa').checked = true;
-                              } else if (appl == '0') {
-                                document.getElementById('apa').checked = false;
-                              }
-                          });
-                        </script>
                         </div>
                           </th>
+
                           <th>
+                          <?php
+                          if($row['valut'] == '1'){
+                            $check = "checked";
+                          }
+                          elseif($row['valut'] == '0'){
+                            $check = "unchecked";
+                          }
+                          ?>   
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="vtr">
+                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="vtr">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
                           </label>
-                          <input type="text"  value="<?php echo $row['valut'];?>" id="appac">
-                        <script>
-                         $(document).ready(function() {
-                          var appac = document.getElementById("appac").value;
-                          if (appac == '1') {
-                                document.getElementById('vtr').checked = true;
-                              } else if (appac == '0') {
-                                document.getElementById('vtr').checked = false;
-                              }
-                          });
-                        </script>
                         </div>
                           </th>
+
                           <th>
+                          <?php
+                          if($row['view_report'] == '1'){
+                            $check = "checked";
+                          }
+                          elseif($row['view_report'] == '0'){
+                            $check = "unchecked";
+                          }
+                          ?>   
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="vrp">
+                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="vrp">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
                           </label>
-                          <input type="text"  value="<?php echo $row['view_report'];?>" id="vtrans">
-                        <script>
-                         $(document).ready(function() {
-                          var vtrans = document.getElementById("vtrans").value;
-                          if (vtrans == '1') {
-                                document.getElementById('vrp').checked = true;
-                              } else if (vtrans == '0') {
-                                document.getElementById('vrp').checked = false;
-                              } 
-                          });
-                        </script>
                         </div>
                           </th>
+
                           <th>
+                          <?php
+                          if($row['view_dashboard'] == '1'){
+                            $check = "checked";
+                          }
+                          elseif($row['view_dashboard'] == '0'){
+                            $check = "unchecked";
+                          }
+                          ?>   
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="ds">
+                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="ds">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
                           </label>
-                          <input type="text"  value="<?php echo $row['view_dashboard'];?>" id="vrep">
-                        <script>
-                         $(document).ready(function() {
-                          var vrep = document.getElementById("vrep").value;
-                          if (vrep == '1') {
-                                document.getElementById('ds').checked = true;
-                              } else if (vrep == '0') {
-                                document.getElementById('ds').checked = false;
-                              }
-                          });
-                        </script>
                         </div>
                           </th>
+
                           <th>
+                          <?php
+                          if($row['configuration'] == '1'){
+                            $check = "checked";
+                          }
+                          elseif($row['configuration'] == '0'){
+                            $check = "unchecked";
+                          }
+                          ?>   
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                              <input class="form-check-input" disabled type="checkbox" value="<?php echo $sms_active;?>" name="sms_active" id="acc">
+                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="acc">
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
                           </label>
-                          <input type="text"  value="<?php echo $row['configuration'];?>" id="das">
-                        <script>
-                         $(document).ready(function() {
-                          var das = document.getElementById("das").value;
-                          if (das == '1') {
-                                document.getElementById('acc').checked = true;
-                              } else if (das == '0') {
-                                document.getElementById('acc').checked = false;
-                              }
-                          });
-                        </script>
                         </div>
                           </th>
                           <td><button class="btn btn-info">Update</button></td>

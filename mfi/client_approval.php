@@ -206,7 +206,7 @@ $destination = "index.php";
                         </th>
                         <th>View</th>
                         <th>Approve</th>
-                        <th>Pending</th>
+                        <th>Move to Pending</th>
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
