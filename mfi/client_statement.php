@@ -41,7 +41,7 @@ if(isset($_GET["edit"])) {
     if (count([$acount]) == 1) {
       $b = mysqli_fetch_array($acount);
       $currtype = $b['currency_code'];
-      $quer = "SELECT * FROM account WHERE client_id ='$id'";
+      $quer = "SELECT * FROM account WHERE client_id ='$id' && account_no = '$acc_no'";
       $resuo = mysqli_query($connection, $quer);
       $u = mysqli_fetch_array($resuo);
       $acc_id = $u['id'];
