@@ -57,6 +57,41 @@ if(isset($_GET["edit"])) {
         $cv = "Null";
       }
     }
+
+      $soc = $n["account_no"];
+      $length = strlen($soc);
+      if ($length == 1) {
+        $acc ="000000000" . $soc;
+      }
+      elseif ($length == 2) {
+        $acc ="00000000" . $soc;
+      }
+      elseif ($length == 3) {
+        $acc ="00000000" . $soc;
+      }
+      elseif ($length == 4) {
+        $acc ="0000000" . $soc;
+      }
+      elseif ($length == 5) {
+        $acc ="000000" . $soc;
+      }
+      elseif ($length == 6) {
+        $acc ="0000" . $soc;
+      }
+      elseif ($length == 7) {
+        $acc ="000" . $soc;
+      }
+      elseif ($length == 8) {
+        $acc ="00" . $soc;
+      }
+      elseif ($length == 9) {
+        $acc ="0" . $soc;
+      }
+      elseif ($length == 10) {
+        $acc = $n["account_no"];
+      }else{
+        $acc = $n["account_no"];
+      }
   }
 }
 ?>
@@ -80,7 +115,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Account No:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $acc_no; ?>" readonly>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $acc; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">

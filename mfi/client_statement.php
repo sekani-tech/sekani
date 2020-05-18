@@ -162,7 +162,7 @@ if(isset($_GET["edit"])) {
             <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                         <thead>
                         <?php
-                        $que = "SELECT * FROM account WHERE client_id ='$id'";
+                        $que = "SELECT * FROM account WHERE account_no = '$acc_no' && client_id ='$id'";
                         $resui = mysqli_query($connection, $que);
                         $q = mysqli_fetch_array($resui);
                         $acc_id = $q['id'];
@@ -188,7 +188,7 @@ if(isset($_GET["edit"])) {
                           <td class="column3"><?php echo $row["transaction_id"]; ?></td>
                           <td class="column4"><?php echo $row["debit"]; ?></td>
                           <td class="column5"><?php echo $row["credit"]; ?></td>
-                          <td class="column6"><?php echo $row["running_balance_derived"]; ?></td>
+                          <td class="column6"><?php echo number_format($row["running_balance_derived"]); ?></td>
                         </tr>
                         <?php }
                           }

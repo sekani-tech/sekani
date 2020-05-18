@@ -34,20 +34,21 @@ if(isset($_GET["edit"])) {
         $d = mysqli_fetch_array($acount);
         $currtype = $d['currency_code'];
         $client_id = $d['client_id'];
+        $acc_id = $d['id'];
         }
-        $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE client_id = '$client_id'");
+        $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE account_id = '$acc_id'");
         $deb = mysqli_fetch_array($totald);
         $tdp = $deb['debit'];
         $totaldb = number_format($tdp, 2);
   
-        $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE client_id = '$client_id'");
+        $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE account_id = '$acc_id'");
         $cred = mysqli_fetch_array($totalc);
         $tcp = $cred['credit'];
         $totalcd = number_format($tcp, 2);
-        function fill_data($connection){
+        function fill_data($connection, $acc_id){
         $id = $_GET["edit"];
       // import
-      $accountquery = "SELECT * FROM account_transaction WHERE client_id ='$id'";
+      $accountquery = "SELECT * FROM account_transaction WHERE account_id ='$acc_id'";
       $resul = mysqli_query($connection, $accountquery);
       $out = '';
 
@@ -127,7 +128,7 @@ if(isset($_GET["edit"])) {
                         </tr>
                     </thead>
                     <tbody>
-                    "'.fill_data($connection).'"
+                    "'.fill_data($connection, $acc_id).'"
                     </tbody>
                 </table>
             </div>
