@@ -34,7 +34,7 @@ $currency = "NGN";
 $digits = 10;
 $temp = explode(".", $_FILES['int_logo']['name']);
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-$imagex = $randms. '.' .end($temp);
+$imagex = $int_name. '.' .end($temp);
 
 if (move_uploaded_file($_FILES['int_logo']['tmp_name'], "instimg/" . $imagex)) {
     $msg = "Image uploaded successfully";

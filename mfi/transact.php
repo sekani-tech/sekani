@@ -234,8 +234,8 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   ';
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
-} else if (isset($_GET["loan2"])) {
-  $key = $_GET["loan2"];
+} else if (isset($_GET["loan2c"])) {
+  $key = $_GET["loan2c"];
   // $out = $_SESSION["lack_of_intfund_$key"];
   $tt = 0;
 if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
@@ -243,10 +243,10 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   $(document).ready(function(){
       swal({
           type: "error",
-          title: "Loan",
-          text: "Loan Repayment Failed",
+          title: "Expense Not Found",
+          text: "(^_^) Dont Post Like That, Else i will Notify Someone.",
           showConfirmButton: false,
-          timer: 2000
+          timer: 5000
       })
   });
   </script>
@@ -411,6 +411,7 @@ $transid1 = $randms1;
                   });
                 });
               </script>
+              <label>Transaction Method</label>
                <select class="form-control" name="pay_type" id="opo">
                   <option value="Cash">Cash</option>
                   <option value="Bank">Bank</option>
@@ -423,6 +424,12 @@ $transid1 = $randms1;
             <div class="form-group">
                 <label for="">Transaction ID(Cheque no, Transfer Id, Deposit Id):</label>
                 <input type="text" value="<?php echo $transid1; ?>" name="transid" class="form-control" id="ti">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Description</label>
+                <input type="text" value="" name="description" class="form-control" id="ti">
             </div>
           </div>
     </div>

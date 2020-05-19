@@ -16,6 +16,7 @@ $getacct1 = mysqli_query($connection, "SELECT * FROM staff WHERE user_id = '$m_i
 if (count([$getacct1]) == 1) {
     $uw = mysqli_fetch_array($getacct1);
     $staff_id = $uw["id"];
+    $staff_email = $uw["email"];
     echo $staff_id;
 }
 $staff_name  = strtoupper($_SESSION["username"]);
@@ -26,6 +27,7 @@ $acct_no = $_POST['account_no'];
 $amt = $_POST['amount'];
 $type = $_POST['pay_type'];
 $transid = $_POST['transid'];
+$description = $_POST['description'];
 // variable for second which is withdrawal
 $test2 = $_POST['test'];
 $acct_no2 = $_POST['account_no'];
@@ -95,6 +97,7 @@ $till = $ex["till"];
 $post_limit = $ex["post_limit"];
 $gl_code = $ex["till"];
 $till_no = $ex["till_no"];
+$till_name = $ex["name"];
 // we will call the GL
 $gl_man = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$gl_code' && int_id = '$sessint_id'");
 $gl = mysqli_fetch_array($gl_man);
@@ -130,10 +133,10 @@ if ($is_del == "0" && $is_del != NULL) {
         // update the clients transaction
         $iat = "INSERT INTO account_transaction (int_id, branch_id,
         account_no, product_id, teller_id,
-        client_id, transaction_id, transaction_type, is_reversed,
+        client_id, transaction_id, description, transaction_type, is_reversed,
         transaction_date, amount, running_balance_derived, overdraft_amount_derived,
         created_date, appuser_id, credit) VALUES ('{$sessint_id}', '{$branch_id}',
-        '{$acct_no}', '{$sproduct_id}', '{$staff_id}', '{$client_id}', '{$transid}', '{$trans_type}', '{$irvs}',
+        '{$acct_no}', '{$sproduct_id}', '{$staff_id}', '{$client_id}', '{$transid}', '{$description}', '{$trans_type}', '{$irvs}',
         '{$gen_date}', '{$amt}', '{$new_abd}', '{$amt}',
         '{$gen_date}', '{$appuser_id}', {$amt})";
         $res3 = mysqli_query($connection, $iat);
@@ -144,10 +147,10 @@ if ($is_del == "0" && $is_del != NULL) {
         // update the institution transaction
         if ($iupqres2) {
             $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
-        client_id, transaction_id, transaction_type, teller_id, is_reversed,
+        client_id, transaction_id, description, transaction_type, teller_id, is_reversed,
         transaction_date, amount, running_balance_derived, overdraft_amount_derived,
         created_date, appuser_id, credit) VALUES ('{$sessint_id}', '{$branch_id}',
-        '{$client_id}', '{$transid}', '{$trans_type}', '{$staff_id}', '{$irvs}',
+        '{$client_id}', '{$transid}','{$description}', '{$trans_type}', '{$staff_id}', '{$irvs}',
         '{$gen_date}', '{$amt}', '{$new_int_bal}', '{$amt}',
         '{$gen_date}', '{$appuser_id}', '{$amt}')";
         $res4 = mysqli_query($connection, $iat2);
@@ -161,6 +164,7 @@ if ($is_del == "0" && $is_del != NULL) {
             $mail->From = $int_email;
             $mail->FromName = $int_name;
             $mail->addAddress($client_email, $clientt_name);
+            $mail->addAddress($staff_email, $staff_name);
             $mail->addReplyTo($int_email, "Reply");
             $mail->isHTML(true);
             $mail->Subject = "Transaction Alert from $int_name";
@@ -212,6 +216,10 @@ if ($is_del == "0" && $is_del != NULL) {
                                       <tr>
                                         <td style='font-size: 12px;'> <b>Account Name</b></td>
                                         <td style='font-size: 12px;'>$clientt_name</td>
+                                      </tr>
+                                      <tr>
+                                        <td style='font-size: 12px;'> <b>Reference</b></td>
+                                        <td style='font-size: 12px;'>$description</td>
                                       </tr>
                                       <tr>
                                         <td style='font-size: 12px;'> <b>Reference Id</b></td>
@@ -320,8 +328,8 @@ if ($is_del == "0" && $is_del != NULL) {
            if ($test == "deposit") {
                $dd = "Deposit";
                $ogs = "Pending";
-               $trancache = "INSERT INTO transact_cache (int_id, branch_id, transact_id, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, product_type, status, date)
-               VALUES ('{$sessint_id}', '{$branch_id}', '{$transid}', '{$acct_no}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt}', '{$type}', '{$dd}', '{$product_id}', '{$ogs}', '{$gen_date}')";
+               $trancache = "INSERT INTO transact_cache (int_id, branch_id, transact_id, description, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, product_type, status, date)
+               VALUES ('{$sessint_id}', '{$branch_id}', '{$transid}', '{$description}', '{$acct_no}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt}', '{$type}', '{$dd}', '{$product_id}', '{$ogs}', '{$gen_date}')";
                $go = mysqli_query($connection, $trancache);
                if ($go) {
                  $_SESSION["Lack_of_intfund_$randms"] = "Deposit Has Been Done, Awaiting Approval!";
@@ -353,10 +361,10 @@ if ($is_del == "0" && $is_del != NULL) {
             if ($iupqres) {
                 $iat = "INSERT INTO account_transaction (int_id, branch_id,
             account_no, product_id, teller_id,
-            client_id, transaction_id, transaction_type, is_reversed,
+            client_id, transaction_id, description, transaction_type, is_reversed,
             transaction_date, amount, running_balance_derived, overdraft_amount_derived,
             created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
-            '{$acct_no}', '{$sproduct_id}', '{$staff_id}', '{$client_id}', '{$transid}', '{$trans_type2}', '{$irvs}',
+            '{$acct_no}', '{$sproduct_id}', '{$staff_id}', '{$client_id}', '{$transid}', '{$description}', '{$trans_type2}', '{$irvs}',
             '{$gen_date}', '{$amt2}', '{$new_abd2}', '{$amt}',
             '{$gen_date}', '{$appuser_id}', '{$amt2}')";
             $res3 = mysqli_query($connection, $iat);
@@ -367,10 +375,10 @@ if ($is_del == "0" && $is_del != NULL) {
             if ($iupqres2) {
                 // update the institution transaction
              $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
-            client_id, transaction_id, transaction_type, teller_id, is_reversed,
+            client_id, transaction_id, description, transaction_type, teller_id, is_reversed,
             transaction_date, amount, running_balance_derived, overdraft_amount_derived,
             created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
-            '{$client_id}', '{$transid}', '{$trans_type2}', '{$staff_id}', '{$irvs}',
+            '{$client_id}', '{$transid}', '{$description}', '{$trans_type2}', '{$staff_id}', '{$irvs}',
             '{$gen_date}', '{$amt2}', '{$new_int_bal2}', '{$amt2}',
             '{$gen_date}', '{$appuser_id}', '{$amt2}')";
             $res4 = mysqli_query($connection, $iat2);
@@ -437,6 +445,10 @@ if ($is_del == "0" && $is_del != NULL) {
                                             <td style='font-size: 12px;'> <b>Account Name</b></td>
                                             <td style='font-size: 12px;'>$clientt_name</td>
                                           </tr>
+                                          <tr>
+                                        <td style='font-size: 12px;'> <b>Reference</b></td>
+                                        <td style='font-size: 12px;'>$description</td>
+                                      </tr>
                                           <tr>
                                             <td style='font-size: 12px;'> <b>Reference Id</b></td>
                                             <td style='font-size: 12px;'>$transid</td>
@@ -530,8 +542,8 @@ if ($is_del == "0" && $is_del != NULL) {
                        $wd = "Withdrawal";
                        $gms = "Pending";
                       //  STOPPED HERE
-                    $trancache = "INSERT INTO transact_cache (int_id, branch_id, transact_id, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, product_type, status, date) VALUES
-                    ('{$sessint_id}', '{$branch_id}', '{$transid}', '{$acct_no2}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt2}', '{$type2}', '{$wd}', '{$sproduct_id}', '{$gms}', '$gen_date') ";
+                    $trancache = "INSERT INTO transact_cache (int_id, branch_id, transact_id, description, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, product_type, status, date) VALUES
+                    ('{$sessint_id}', '{$branch_id}', '{$transid}','{$description}', '{$acct_no2}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt2}', '{$type2}', '{$wd}', '{$sproduct_id}', '{$gms}', '$gen_date') ";
                     $go = mysqli_query($connection, $trancache);
                     if ($go) {
                        $_SESSION["Lack_of_intfund_$randms"] = "Withdrawal Successful!";

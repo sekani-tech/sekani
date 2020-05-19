@@ -155,11 +155,11 @@
                           cursor: pointer;
                         }
                       </style>
-                    <div class="col-md-4">
-                    <label for="file-insert" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
-                    <input id ="file-insert" name="int_logo" type="file" class="inputFileHidden"/>
-                    <label> Select Signature</label>
-                    <div id="iup"></div>
+                      <div class="col-md-4">
+                    <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                    <input id ="file-upload" name="passport" type="file" class="inputFileHidden"/>
+                    <input type="text" hidden value="<?php echo $int_img;?>" name="int_img">
+                    <label> Select Logo</label>
                     </div>
                     <script>
                       var changeq = document.getElementById( 'file-insert' );

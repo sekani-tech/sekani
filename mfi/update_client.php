@@ -367,50 +367,6 @@ if(isset($_GET["edit"])) {
                     <input type="text" hidden value="<?php echo $idimg;?>" name="idimg">
                     <label> Select ID</label>
                     </div>
-                    <!-- </div>
-                    <div class="row"> -->
-                     <!-- <div class="col-md-4">
-                      <div class="form-group form-file-upload form-file-multiple">
-                      <label for="">ID</label>
-                      <input type="file" class="inputFileHidden">
-                      <div class="input-group">
-                          <input type="text" name="idimg" class="form-control inputFileVisible" placeholder="Insert Signature">
-                          <span class="input-group-btn">
-                              <button type="button" class="btn btn-fab btn-round btn-primary">
-                                  <i class="material-icons">attach_file</i>
-                              </button>
-                          </span>
-                      </div>
-                    </div>
-                      </div>
-                        <div class="col-md-4">
-                       <div class="form-group form-file-upload form-file-multiple">
-                      <label for="">Signature</label>
-                      <input type="file" multiple="" class="inputFileHidden">
-                      <div class="input-group">
-                          <input type="text" name="signature" class="form-control inputFileVisible" placeholder="Insert Signature">
-                          <span class="input-group-btn">
-                              <button type="button" class="btn btn-fab btn-round btn-primary">
-                                  <i class="material-icons">attach_file</i>
-                              </button>
-                          </span>
-                      </div>
-                    </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group form-file-upload form-file-multiple">
-                          <label for="">Passport</label>
-                          <input type="file" multiple="" class="inputFileHidden">
-                          <div class="input-group">
-                              <input type="text" name="passort" class="form-control inputFileVisible" placeholder="Insert Signature">
-                              <span class="input-group-btn">
-                                  <button type="button" class="btn btn-fab btn-round btn-primary">
-                                      <i class="material-icons">attach_file</i>
-                                  </button>
-                              </span>
-                          </div>
-                        </div>
-                      </div> -->
                       <div class="col-md-4">
                         <label for="">Select ID</label>
                          <select class="form-control" name="id_card">
@@ -429,10 +385,61 @@ if(isset($_GET["edit"])) {
               </div>
             </div>
             <div class="col-md-4">
-              <div class="card card-profile">
+              <!-- Dialog box for signature -->
+              <div id="sig" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title"><?php echo $first_name; ?></h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                        <img  src="../functions/clients/sign/<?php echo $signature;?>"/>
+                      </div>
+                    </div>
+                  </div>      
+                </div>
+                <!-- dialog ends -->
+                <!-- Dialog box for passport -->
+              <div id="pas" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title"><?php echo $first_name; ?></h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                        <img  src="../functions/clients/passport/<?php echo $passport;?>"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- dialog ends -->
+                <!-- Dialog box for id img -->
+              <div id="id" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title"><?php echo $first_name; ?></h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                        <img  src="../functions/clients/id/<?php echo $id_img_url;?>"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- dialog ends -->
+                <div class="card card-profile">
                 <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $passport;?>" />
+                  <a data-toggle="modal" data-target="#pas">
+                    <img class="img" src="../functions/clients/passport/<?php echo $passport;?>" />
                   </a>
                 </div>
                 <!-- Get client data -->
@@ -454,8 +461,8 @@ if(isset($_GET["edit"])) {
               </div>
               <div class="card card-profile">
                 <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $id_img_url;?>" />
+                  <a data-toggle="modal" data-target="#id">
+                    <img class="img" src="../functions/clients/id/<?php echo $id_img_url;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->
@@ -467,8 +474,8 @@ if(isset($_GET["edit"])) {
                 <!-- /id card -->
                 <div class="card card-profile">
                 <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="../functions/clients/<?php echo $signature;?>" />
+                  <a data-toggle="modal" data-target="#sig">
+                    <img class="img" src="../functions/clients/sign/<?php echo $signature;?>" />
                   </a>
                 </div>
                 <!-- Get session data and populate user profile -->

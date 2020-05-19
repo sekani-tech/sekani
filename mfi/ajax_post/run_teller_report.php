@@ -8,8 +8,16 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
     $int_id = $_POST["int_id"];
     if($_POST["start"] != '' && $_POST["teller"] != '')
     {
-        $start = $_POST["start"];
-       $end = $_POST["end"];
+      $std = $_POST["start"];
+      $datex= strtotime($std); 
+      $sdate = date("Y-m-d", $datex);
+       $start = $sdate;
+      //  echo $start;
+       $endx = $_POST["end"];
+       $datey= strtotime($endx); 
+       $eyd= date("Y-m-d", strtotime('-1 day', $datey));
+       $end = $eyd;
+      //  echo $end;
        $branch = $_POST["branch"];
        $teller = $_POST["teller"];
        $int_name = $_SESSION["int_name"];
@@ -32,40 +40,63 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
     }
   }
 
-      
       //  Always Check the vault
       if (count([$query]) == 1 && count([$branchquery]) == 1) {
         // here we will some data
-       
-        // DONE HERE
-        // if ($teller_id != $teller) {
-        //   $runglq = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$teller_id'");
-        //   $w = mysqli_fetch_array($runglq);
-        //   $client_name = $w["name"];
-        // }
+        $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date BETWEEN '$start' AND '$end'  ORDER BY transaction_date ASC");
         // then we will be fixing
-        $genb = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE teller_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
+        $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
+        $m1 = mysqli_fetch_array($genb1);
         $m = mysqli_fetch_array($genb);
-
+        // qwerty
+        $tcp = $m1["credit"];
+        $tdp = $m["debit"];
+        // summing
+        $fas = mysqli_query($connection, "SELECT * FROM institution_account WHERE teller_id = '$teller'");
+        $fx = mysqli_fetch_array($fas);
+        $famt =  $fx["account_balance_derived"];
+        $finalbal = number_format(($famt), 2);
+        $tcdp = number_format(round($tcp), 2);
+        $tddp = number_format(round($tdp), 2);
+        // total
         function fill_report($connection, $int_id, $start, $end, $branch_id, $teller)
         {
           // import
-          $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE teller_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date >= '$start' AND transaction_date <= '$end' ORDER BY id ASC");
+          $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
           // $q = mysqli_fetch_array($querytoget);
           $out = '';
-            
-          
-          while ($q = mysqli_fetch_array($querytoget))
+          $q = mysqli_fetch_array($querytoget);
+          $client_name = "Expense";
+          if (mysqli_num_rows($querytoget) > 0){
+          while ($q = mysqli_fetch_array($querytoget, MYSQLI_ASSOC))
           {
             $client_id = $q["client_id"];
+            if ($client_id == 0) {
+              if ($q["transaction_type"] == "Debit" || $q["transaction_type"] == "debit") {
+              $xm = $q["teller_id"];
+              
+                $expq = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$xm'");
+              // }
+              $cc = mysqli_fetch_array($expq);
+              $client_name = $cc["name"];
+              // while ($cc = mysqli_fetch_array($expq)) {
+              //   
+              //   }
+            } else if ($q["transaction_type"] == "vault-in") {
+              $client_name = "VAULT IN";
+            } else if ($q["transaction_type"] == "vault-out") {
+              $client_name = "VAULT OUT";
+            }
+            } 
+              else {
             $client_query = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' && int_id = '$int_id'");
             $nx = mysqli_fetch_array($client_query);
-            
-          // wertyui
-          $client_name = $nx["firstname"]." ".$nx["middlename"]." ".$nx["lastname"];
+            $client_name = $nx["firstname"]." ".$nx["middlename"]." ".$nx["lastname"];
+              }
+            // }
           // qwert
           $transact_id = $q["transaction_id"];
-          $transaction_type = $q["transaction_type"];
+          // $transaction_type = $q["transaction_type"];
           $transaction_date = $q["transaction_date"];
           $camt = $q["credit"];
           $damt = $q["debit"];
@@ -74,24 +105,25 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
           $teller_id = $q["teller_id"];
           $teller_run_bal = $q["running_balance_derived"];
           // the next
-          if ($transaction_type == "vault_in") {
-            $client_name = "Valut In";
-            $amt = number_format($damt, 2);
-          }
-          if ($transaction_type == "valut_out") {
-            $client_name = "Valut Out";
-            $amt = number_format($camt, 2);
-          }
+          // if ($transaction_type == "vault_in") {
+          //   $client_name = "Valut In";
+          //   $amt = number_format($damt, 2);
+          // }
+          // if ($transaction_type == "valut_out") {
+          //   $client_name = "Valut Out";
+          //   $amt = number_format($camt, 2);
+          // }
           $amt = $camt;
           $amt2 = $damt;
-            // $tcdp = number_format(round($amt), 2);
+            
             $amt = number_format($amt, 2);
-            // $tddp = number_format(round($amt2, 2));
+            
             $amt2 = number_format($amt2, 2);
           
 
             $out .= '
             <tr>
+            <th>'.$transaction_date.'</th>
             <th>'.$client_name.'</th>
             <th>'.$amt.'</th>
             <th>'.$amt2.'</th>
@@ -99,9 +131,11 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
             </tr>
           ';
           }
+        }
           return $out;
         }
         // NOTHIG
+
         $output = '<div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
@@ -116,6 +150,11 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
                   <div class="col-md-4 form-group">
                       <label for="">Name of Teller</label>
                       <input type="text" name="" value="'.$tell_name.'" id="" class="form-control" readonly>
+                      <input type="text" name="" value="'.$start.'" id="start1" class="form-control" hidden>
+                      <input type="text" name="" value="'.$end.'" id="end1" class="form-control" hidden>
+                      <input type="text" name="" value="'.$branch_id.'" id="branch1" class="form-control" hidden>
+                      <input type="text" name="" value="'.$teller.'" id="teller1" class="form-control" hidden>
+                      <input type="text" name="" value="'.$int_id.'" id="int_id1" class="form-control" hidden>
                   </div>
                   <div class="col-md-4 form-group">
                       <label for="">Branch</label>
@@ -133,6 +172,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
             <div class="table-responsive">
               <table id="tabledat4" class="table" style="width: 100%;">
                 <thead class=" text-primary">
+                <th>Date/Time</th>
                   <th>Account Name</th>
                   <th>Deposit</th>
                   <th>
@@ -144,23 +184,30 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
                 "'.fill_report($connection, $int_id, $start, $end, $branch_id, $teller).'"
                 <tr>
               <th>Total</th>
+              <th></th>
                <th>'.$tcdp.'</th>
                <th>'.$tddp.'</th>
-            <th>'.$balran.'</th>
+            <th>'.$finalbal.'</th>
               </tr>
                 </tbody>
               </table>
             </div>
             <p><b>Opening Balance:</b>  </p>
-            <p><b>Total Deposit:</b>  </p>
-            <p><b>Total Withdrawal:</b>  </p>
-            <p><b>Closing Balance:</b> 129 </p>
+            <p><b>Total Deposit:</b> '.$tcdp.' </p>
+            <p><b>Total Withdrawal:</b> '.$tddp.' </p>
+            <p><b>Closing Balance:</b> '.$finalbal.' </p>
             <hr>
             <p><b>Teller Sign:</b> 129                        <b>Date:</b></p>
-            <p><b>Checked By:</b>                             <b>Date/Sign:</b></p>
+            <p><b>Checked By: '.$_SESSION["username"].'</b>                             <b>Date/Sign: '.$start." - ".$end.' </b></p>
+
+            <p>
+            <button id="pddf" class="btn btn-primary pull-right">PDF print</button>
+            <div id=""></div>
+            </p>
           </div>
         </div>
-      </div>';
+      </div>
+      ';
       echo $output;
       } else {
         echo 'Not Seeing Data';
@@ -168,3 +215,42 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
     }
 }
 ?>
+
+<script>
+        $(document).ready(function () {
+        $('#pddf').on("click", function () {
+         
+           var start1 = $('#start1').val();
+           var end1 = $('#end1').val();
+           var branch1 = $('#branch1').val();
+           var teller1 = $('#teller1').val();
+          var int_id1 = $('#int_id1').val();
+          swal({
+              type: "success",
+              title: "TELLER REPORT",
+              text: "From " + start1 + " to " + end1 + "Loading...",
+              showConfirmButton: false,
+              timer: 5000
+                    
+            })
+           $.ajax({
+           url: "../composer/teller_call.php",
+           method: "POST",
+            data:{start1:start1, end1:end1, branch1:branch1, teller1:teller1, int_id1:int_id1},
+             success: function (data) {
+               $('#outreport').html(data);
+            },
+            error: function(data){
+            swal({
+              type: "error",
+              title: "TELLER REPORT 404",
+              text: "From " + start1 + " to " + end1,
+              showConfirmButton: false,
+              timer: 2000
+                    
+            })
+            }
+          })
+         });
+       });
+     </script>

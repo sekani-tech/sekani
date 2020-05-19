@@ -585,8 +585,10 @@ table{
 		            <td class='bg_dark email-section' style='text-align:center;'>
 		            	<div class='heading-section heading-section-white'>
 		            		<span class='subheading'>Login Credentials</span>
-		              	<h2>Welcome To $int_name</h2>
-                          <p>Name: $last_name $first_name</p>
+						  <h2>Welcome To $int_name</h2>
+						  
+						  <p>Name: $last_name $first_name</p>
+						  <p>Your new Account Number is : $account_no</p>
                           <p>You can now Login to $int_name With this Credentials, Please change your Password With the button above </p>
 		            	</div>
 		            </td>

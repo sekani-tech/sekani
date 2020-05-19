@@ -38,10 +38,11 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $famt = number_format("$amount", 2);
       $pay_type = $x['pay_type'];
       $transact_type = $x['transact_type'];
+      $description = $x['description'];
       $transid = $x['transact_id'];
       $product_type = $x['product_type'];
       $stat = $x['status'];
-      $branch_id = $x['branch_id'];
+      $branch_idm = $x['branch_id'];
       $teller_id = $x['staff_id'];
       $transaction_date = $x['date'];
       $irvs = 0;
@@ -127,6 +128,7 @@ $resx1 = mysqli_num_rows($q1);
                   $branch_id = $y['branch_id'];
                   $acct_no = $y['account_no'];
                   $client_id = $y['client_id'];
+                  $acc_id = $y['id'];
                   $int_acct_bal = $y['account_balance_derived'];
                   $comp = $amount + $int_acct_bal;
                   $numberacct = number_format("$comp",2);
@@ -143,12 +145,13 @@ $resx1 = mysqli_num_rows($q1);
                    last_deposit = '$amount' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
                    $iupqres = mysqli_query($connection, $iupq);
                    if ($iupqres) {
-                       $iat = "INSERT INTO account_transaction (int_id, branch_id,
+                       $iat = "INSERT INTO account_transaction (int_id, branch_id, account_id,
                        account_no, product_id,
-                       client_id, teller_id, transaction_id, transaction_type, is_reversed,
+                       client_id, teller_id, transaction_id, description, transaction_type, is_reversed,
                        transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                        created_date, appuser_id, credit) VALUES ('{$ssint_id}', '{$branch_id}',
-                       '{$acct_no}', '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$trans_type}', '{$irvs}',
+                       '{$acc_id}', '{$acct_no}', '{$product_type}', '{$client_id}', '{$teller_id}',
+                       '{$transid}', '{$description}', '{$trans_type}', '{$irvs}',
                        '{$transaction_date}', '{$amount}', '{$new_abd}', '{$amount}',
                        '{$gen_date}', '{$appuser_id}', '{$amount}')";
                        $res3 = mysqli_query($connection, $iat);
@@ -163,10 +166,10 @@ $resx1 = mysqli_num_rows($q1);
                              // check if int account has been updated
                              if ($query1) {
                                $trust = "INSERT INTO institution_account_transaction (int_id, branch_id,
-                               client_id, transaction_id, transaction_type, teller_id, is_reversed,
+                               client_id, transaction_id, description, transaction_type, teller_id, is_reversed,
                                transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                                created_date, appuser_id, credit) VALUES ('{$sessint_id}', '{$branch_id}',
-                              '{$client_id}', '{$transid}', '{$trans_type}', '{$teller_id}', '{$irvs}',
+                              '{$client_id}', '{$transid}', '{$description}', '{$trans_type}', '{$teller_id}', '{$irvs}',
                               '{$gen_date}', '{$amount}', '{$new_int_bal}', '{$amount}',
                               '{$gen_date}', '{$appuser_id}', '{$amount}')";
                               $res9 = mysqli_query($connection, $trust);
@@ -238,7 +241,7 @@ $resx1 = mysqli_num_rows($q1);
                              swal({
                                  type: "error",
                                  title: "Error",
-                                 text: "Error in Transaction",
+                                 text: "Error in Transaction 1",
                                  showConfirmButton: false,
                                  timer: 2000
                              })
@@ -261,17 +264,22 @@ $resx1 = mysqli_num_rows($q1);
                      ';
                    }
                  } else if ($transact_type == "Withdrawal") {
+                  $getaccount = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
+                  $getbal = mysqli_fetch_array($getaccount);
+                  $runtellb = $getbal["account_balance_derived"];
+                  // importing the needed on the gl
+                  if ($runtellb >= $amount) {
                    $new_abd2 = $comp2;
                    $iupq = "UPDATE account SET account_balance_derived = '$new_abd2',
                    last_withdrawal = '$amount' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
                    $iupqres = mysqli_query($connection, $iupq);
                    if ($iupqres) {
-                       $iat = "INSERT INTO account_transaction (int_id, branch_id,
+                       $iat = "INSERT INTO account_transaction (int_id, branch_id, account_id
                        account_no, product_id,
-                       client_id, teller_id, transaction_id, transaction_type, is_reversed,
+                       client_id, teller_id, transaction_id, description, transaction_type, is_reversed,
                        transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                        created_date, appuser_id, debit) VALUES ('{$ssint_id}', '{$branch_id}',
-                       '{$acct_no}', '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$trans_type2}', '{$irvs}',
+                       '{$acc_id}', '{$acct_no}',  '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$description}', '{$trans_type2}', '{$irvs}',
                        '{$transaction_date}', '{$amount}', '{$comp2}', '{$amount}',
                        '{$gen_date}', '{$appuser_id}', '{$amount}')";
                        $res3 = mysqli_query($connection, $iat);
@@ -287,10 +295,10 @@ $resx1 = mysqli_num_rows($q1);
                              // check if int account has been updated
                              if ($query1) {
                                $trust = "INSERT INTO institution_account_transaction (int_id, branch_id,
-                               client_id, transaction_id, transaction_type, teller_id, is_reversed,
+                               client_id, transaction_id, description, transaction_type, teller_id, is_reversed,
                                transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                                created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
-                              '{$client_id}', '{$transid}', '{$trans_type2}', '{$teller_id}', '{$irvs}',
+                              '{$client_id}', '{$transid}', '{$description}', '{$trans_type2}', '{$teller_id}', '{$irvs}',
                               '{$gen_date}', '{$amount}', '{$new_int_bal2}', '{$amount}',
                               '{$gen_date}', '{$appuser_id}', '{$amount}')";
                               $res9 = mysqli_query($connection, $trust);
@@ -359,7 +367,7 @@ $resx1 = mysqli_num_rows($q1);
                              swal({
                                  type: "error",
                                  title: "Error",
-                                 text: "Error in Transaction",
+                                 text: "Error in Transaction 2",
                                  showConfirmButton: false,
                                  timer: 2000
                              })
@@ -381,8 +389,27 @@ $resx1 = mysqli_num_rows($q1);
                      </script>
                      ';
                    }
+                  } else {
+                    // ec
+                    echo '<script type="text/javascript">
+                   $(document).ready(function(){
+                       swal({
+                           type: "error",
+                           title: "Teller",
+                           text: "Insufficient Fund",
+                           showConfirmButton: false,
+                           timer: 2000
+                       })
+                   });
+                   </script>
+                   ';
+                  }
                  } else if ($transact_type == "Expense") {
+                   $getaccount = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
+                   $getbal = mysqli_fetch_array($getaccount);
+                   $runtellb = $getbal["account_balance_derived"];
                    // importing the needed on the gl
+                   if ($runtellb >= $amount) {
                    $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_codex'";
                    $dbgl = mysqli_query($connection, $upglacct);
                    if ($dbgl) {
@@ -390,10 +417,10 @@ $resx1 = mysqli_num_rows($q1);
                      $res1 = mysqli_query($connection, $upinta);
                      if ($res1) {
                        $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
-             teller_id, transaction_id, transaction_type, is_reversed,
+             teller_id, transaction_id, description, transaction_type, is_reversed,
              transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-             created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
-             '{$gl_codex}', '{$trans_id}', 'Debit', '{$irvs}',
+             created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_idm}',
+             '{$gl_codex}', '{$trans_id}', '{$description}', 'Debit', '{$irvs}',
              '{$gen_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
              '{$gen_date}', '{$staff_id}', '{$gl_amt}')";
                      $res4 = mysqli_query($connection, $iat2);
@@ -478,7 +505,23 @@ $resx1 = mysqli_num_rows($q1);
                      </script>
                      ';
                    }
+                  } else {
+                    echo '<script type="text/javascript">
+                   $(document).ready(function(){
+                       swal({
+                           type: "error",
+                           title: "Teller",
+                           text: "Insufficient Fund",
+                           showConfirmButton: false,
+                           timer: 2000
+                       })
+                   });
+                   </script>
+                   ';
+                  }
+                  //  insire
                  }
+                //  an else goes here
  
  else {
                    echo '<script type="text/javascript">
@@ -599,14 +642,20 @@ $resx1 = mysqli_num_rows($q1);
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Client</label>
+                          <label class="bmd-label-floating">Client Name</label>
                           <input type="text" class="form-control" name="phone" value="<?php echo $cn; ?>" readonly>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Amount</label>
                           <input type="text" class="form-control" name="location" value="<?php echo $amount; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Description</label>
+                          <input type="text" class="form-control" name="descript" value="<?php echo $description; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-4">

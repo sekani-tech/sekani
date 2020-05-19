@@ -3,7 +3,6 @@
 $page_title = "Teller Report";
 $destination = "index.php";
     include("header.php");
-
 ?>
 
 <?php
@@ -76,7 +75,7 @@ function fill_client($connection) {
                           <div class="form-group">
                           <div id="show_branchx"></div>
                           </div>
-                      </div>
+                      </div> 
                       <div class="clearfix"></div>
                     </div>
                   </form>
@@ -106,11 +105,12 @@ function fill_client($connection) {
                     });
                   </script>
                   <!-- this section is the end of run report -->
+                  
                 </div>
               </div>
             </div>
             <!-- teller report -->
-            <!-- populate for print with above data -->
+            <!-- populate for print with above data --> 
             <div id="outjournal"></div>
             <!-- end  -->
           </div>

@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "New Product";
-$destination = "config.php";
+$destination = "index.php";
     include("header.php");
 
 ?>
@@ -203,7 +203,7 @@ $destination = "config.php";
                         </div>
                       </div>
                       <!-- auto desburse should be disabled -->
-                      <div class="col-md-6" disable>
+                      <div class="col-md-6" hidden>
                         <div class="form-group">
                           <label for="autoDisburse" >Auto Disburse </label>
                           <select class="form-control" name="auto_disburse" required>
@@ -226,18 +226,19 @@ $destination = "config.php";
                   <!-- Second Tab -->
                   <div class="tab">
                     <h3>Charges</h3>
-                    <input type="text" id="int_id" value="<?php echo $sessint_id; ?>">
-                    <input type="text" id="branch_id" value="<?php echo $branch_id; ?>">
+                    <input type="text" hidden readonly id="int_id" value="<?php echo $sessint_id; ?>">
+                    <input type="text" hidden readonly id="branch_id" value="<?php echo $branch_id; ?>">
                     <script>
                       $(document).ready(function() {
                         $('#charges').change(function(){
                           var id = $(this).val();
                           var int_id = $('#int_id').val();
                           var branch_id = $('#branch_id').val();
+                          var main_p = $('#main_p').val();
                           $.ajax({
                             url:"load_data.php",
                             method:"POST",
-                            data:{id:id, int_id:int_id, branch_id:branch_id},
+                            data:{id:id, int_id:int_id, branch_id:branch_id, main_p: main_p},
                             success:function(data){
                               $('#show_charges').html(data);
                             }
@@ -246,35 +247,39 @@ $destination = "config.php";
                       })
                     </script>
                     <div class="form-group">
-                    <div id="show_charges">
-                            <!-- reveals those stuffsh -->
-                    </div>
+                      <?php
+                      $digits = 6;
+                      $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+                      $_SESSION["product_temp"] = $randms;
+                      $main_p = $_SESSION["product_temp"];
+                      ?>
                     </div>
                     <div class="form-group">
+                      <div class="row">
+                      <div class="col-md-4">
                       <label>Charges:</label>
+                      <div id="damn_men"></div>
+                      <div id="takeme">
+                      <input type="text" hidden value="<?php echo $main_p; ?>" id="main_p">
                       <select name="charge_id"class="form-control" id="charges">
                         <option value="">select an option</option>
                         <?php echo fill_charges($connection); ?>
                       </select>
+                      </div>
+                      </div>
+                      <div class="col-md-6">
+                      <div id="show_charges">
+                      </div>
+                      </div>
+                      </div>
                     </div>
                     <?php
                       // load user role data
                       function fill_charges($connection)
                       {
                       $sint_id = $_SESSION["int_id"];
-                      $org = "SELECT * FROM charge WHERE int_id = '$sint_id' && charge_applies_to_enum = '1'";
-                      $res = mysqli_query($connection, $org);
-                      $output = '';
-                      while ($row = mysqli_fetch_array($res))
-                      {
-                        $output .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
-                      }
-                      return $output;
-                      }
-                      function fill_credit($connection)
-                      {
-                      $sint_id = $_SESSION["int_id"];
-                      $org = "SELECT * FROM credit_check WHERE int_id = '$sint_id'";
+                      $main_p  = $_SESSION["product_temp"];
+                      $org = "SELECT * FROM charge WHERE int_id = '$sint_id' && charge_applies_to_enum = '1' && is_active = '1'";
                       $res = mysqli_query($connection, $org);
                       $output = '';
                       while ($row = mysqli_fetch_array($res))
@@ -304,20 +309,86 @@ $destination = "config.php";
                   <!-- Third Tab -->
                   <div class="tab">
                     <h3>Credit Checks</h3>
-                    <div class="my-3">
-                    <div class="form-group">
-                            <label>Credit Checks:</label>
-                            <select name="charge_id"class="form-control" id="credit">
-                              <option value="">select an option</option>
-                              <?php echo fill_credit($connection); ?>
-                            </select>
-                          </div>
-                        <div id="show_credit" class="form-group">
-                          </div>
-                          
-
-                          <button class="btn btn-primary">Add To Product</button>
-                        </div>
+                    <div class="row">
+                     <div class="col-md-8">
+        <h4>SUBJECTIVE/STATISTIC SCOREING CREDIT CHECK MODEL</h4>
+        <p>Read the Guide in Running this Model</p>
+        <p>Have it in <b>MIND</b> this scoring model is used for new customers or Manual Entries by Loan Officers</p>
+        </div>
+        <div class="col-md-12">
+        <p>Find Details Below</p>
+        <script>
+    $(document).ready(function() {
+    $('#tabledat').DataTable();
+    });
+</script>
+         <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+         <thead>
+           <th> <b> Name </b></th>
+           <th> <b>Risk Level <b></th>
+           <th> <b>Severity Level <b></th>
+           <th> <b> Description <b></th>
+         </thead>
+         <tbody>
+           <tr>
+             <th> <h5> Delinquency Counter </h5></th>
+             <th> <h5>High </h5></th>
+             <th> <h5>Warning</h5></th>
+             <th> <h5>Counting Over Due Repayment</h5> </th>
+           </tr>
+           <tr>
+             <th> <h5>Loan History Status</h5> </th>
+             <th> <h5>High</h5> </th>
+             <th> <h5>Warning</h5> </th>
+             <th> <h5>Check Hisotry of collection, Closed, Written off, Active and Same Product</h5> </th>
+           </tr>
+           <tr>
+             <th> <h5>Psychometric Data</h5> </th>
+             <th> <h5>Normal</h5> </th>
+             <th> <h5>Warning</h5> </th>
+             <th> <h5>Amplitude Test for measuring intelligence</h5> </th>
+           </tr>
+           <tr>
+             <th> <h5>Savings Behaviour</h5> </th>
+             <th> <h5>High</h5> </th>
+             <th> <h5>Block Loan</h5> </th>
+             <th> <h5>Study of Avg. Savings and also Transaction Cycle of the Applicant</h5> </th>
+           </tr>
+           <tr>
+             <th> <h5>Guarantors Savings Behaviour</h5> </th>
+             <th> <h5>Normal</h5> </th>
+             <th> <h5>Pass</h5> </th>
+             <th> <h5>Track Guarantors Transaction and Give Feedback</h5> </th>
+           </tr>
+           <tr>
+             <th> <h5>Outstanding Loan Balance</h5> </th>
+             <th> <h5>Normal</h5> </th>
+             <th> <h5>Warning</h5> </th>
+             <th> <h5>Check for Any Loan Outstanding Balance, Reduction of Lend Limit</h5> </th>
+           </tr>
+           <tr>
+             <th> <h5>KYC</h5> </th>
+             <th> <h5>High</h5> </th>
+             <th> <h5>Block</h5> </th>
+             <th> <h5>Checks for Important Details of Customers Bio Data</h5> </th>
+           </tr>
+          <!-- <tr>
+             <th> <h5></h5> </th>
+             <th> <h5></h5> </th>
+             <th> <h5></h5> </th>
+             <th> <h5></h5> </th>
+           </tr>
+           <tr>
+             <th> <h5></h5> </th>
+             <th> <h5></h5> </th>
+             <th> <h5></h5> </th>
+             <th> <h5></h5> </th>
+           </tr>  -->
+         </tbody>
+         </table>
+        <p>Table Description</p>
+        </div>
+                    </div>
                   </div>
                   <!-- Third Tab -->
                   <!-- Fourth Tab -->

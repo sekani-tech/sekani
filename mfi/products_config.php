@@ -90,6 +90,46 @@ $(document).ready(function(){
 $_SESSION["lack_of_intfund_$key"] = 0;
 }
 }
+else if (isset($_GET["message5"])) {
+  $key = $_GET["message5"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Deleted",
+          text: "Charge was Deleted Successfully!",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+  }
+  else if (isset($_GET["message6"])) {
+    $key = $_GET["message6"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "Error",
+            text: "Error deleting Staff!",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+    }
 ?>
 <!-- Content added here -->
     <div class="content">
@@ -254,11 +294,11 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           if ($row["charge_time_enum"] == 1) {
                             $xs = "Disbursement";
                           } else if ($row["charge_time_enum"] == 2) {
-                            $xs = "Specified Due Date";
+                            $xs = "Manual Charge";
                           } else if ($row["charge_time_enum"] == 3) {
                             $xs = "Savings Activiation";
                           } else if ($row["charge_time_enum"] == 5) {
-                            $xs = "Withdrawal Fee";
+                            $xs = "Deposit Fee";
                           } else if ($row["charge_time_enum"] == 6) {
                             $xs = "Annual Fee";
                           } else if ($row["charge_time_enum"] == 8) {
@@ -273,8 +313,8 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                          ?>
                          <th><?php echo $xs; ?></th>
                           <th><?php echo $row["amount"]; ?></th>
-                          <td><a href="#?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
-                          <td><a href="#?delete=<?php echo $row["id"];?>" class="btn btn-info">Delete</a></td>
+                          <td><a href="charge_edit.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
+                          <td><a href="../functions/charge_delete.php?delete=<?php echo $row["id"];?>" class="btn btn-danger">Delete</a></td>
                         </tr>
                         <?php }
                           }
@@ -298,7 +338,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM `credit_check` WHERE int_id = '$sessint_id'";
+                        $query = "SELECT * FROM credit_check WHERE int_id = '$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -359,7 +399,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           }
                           ?>
                           <th><?php echo $isa; ?></th>
-                          <td><a href="#?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
+                          <td><a href="creditcheck_edit.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
                         <?php }
                           }

@@ -1,0 +1,7 @@
+{
+    
+    "require": {
+        "mpdf/mpdf": "^8.0",
+        "yabacon/paystack-php": "^2.2"
+    }
+}

@@ -1,0 +1,47 @@
+CREDIT CHECK ALGORITHMS
+Subjecting Scoreing
+or Statistic Scoreing - Took Loan Before
+
+1. Client Written-Off Loans Check
+2. Grace Period Check
+3. Timely Repayment - Delinquency counters
+4. Loan Status (Active, Closed, Written off, Same Product)
+5. Rejected and withdrawn loans
+6. Number of credit Loan Collected - cards
+7. Psychometric data
+8. Savings Behaviour (KYC) -
+• Average savings balance
+• Maximum savings balance
+• Minimum savings balance
+• Number of deposits
+• Average deposit size
+• Number of withdrawals
+• Average withdrawal size
+
+9. Group - Documentr (ID, GROUP BIO DATA),
+10. Individual (KYC)
+• Age
+• Residence (own, rent)
+• Number of years at residence
+• Occupation
+• Phone ownership
+• Income
+• Years in current job
+• Previous employment
+• Years in previous job
+• Number of dependents
+• Credit history
+• Banking account ownership
+• Credit outstanding
+• Outstanding debts
+• Purpose of loan
+• Type of loan
+
+11. Guarantors Savings Behaviour
+12. Grace Period
+13. Outstanding Loan Balance
+15. Total collateral items value
+
+// ALGORITHMS
+
+1. Add the credit Check to the Product Table

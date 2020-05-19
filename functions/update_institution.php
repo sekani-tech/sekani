@@ -21,7 +21,7 @@ $digits = 10;
 if($_FILES['int_logo']['name']) {
   $temp = explode(".", $_FILES['int_logo']['name']);
   $randmst = str_pad(rand(0, pow(10, 7)-1), 10, '0', STR_PAD_LEFT);
-  $img = $randmst. '.' .end($temp);
+  $img = $int_name. '.' .end($temp);
   if (move_uploaded_file($_FILES['int_logo']['tmp_name'], "../instimg/" . $img)) {
       $msg = "Image uploaded successfully";
   } else {
