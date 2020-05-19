@@ -49,10 +49,11 @@ include("header.php");
                       <select required name="ctype" class="form-control" id="collat">
                           <option value="Individual">Individual</option>
                           <option value="Joint">Joint Account</option>
-                          <option value="Student">Cooperate Account</option>
+                          <option value="Corporate">Corporate Account</option>
                         </select>
                     </div>
                   </div>
+                  
                   <!-- </div> -->
                   <div class="col-md-4">
                     <div class="form-group">
@@ -228,26 +229,7 @@ include("header.php");
                     <input id ="file-upload" name="passport" type="file" class="inputFileHidden"/>
                     <label> Select Passport</label>
                     <div id="file-upload-filename"></div>
-                    <script>
-                      var input1 = document.getElementById( 'file-upload' );
-var infoArea = document.getElementById( 'file-upload-filename' );
-
-input1.addEventListener( 'change', showFileName1 );
-
-function showFileName1( event ) {
-  
-  // the change event gives us the input it occurred in 
-  var input = event.srcElement;
-  
-  // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
-  var fileName = input.files[0].name;
-  
-  // use fileName however fits your app best, i.e. add it into a div
-  infoArea.textContent = 'File name: ' + fileName;
-}
-                    </script>
-                    <!-- <span class="fileinput-new">Add Image</span> -->
-                    </div>
+                     </div>
                     
                     <div class="col-md-4">
                     <label for="file-insert" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
@@ -268,7 +250,7 @@ function showFileName1( event ) {
                     <div class="col-md-4">
                     <label for="file-enter" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
                     <input id ="file-enter" type="file" name="id_img_url" class="inputFileHidden"/>
-                    <label> Select ID</label>
+                    <label id="rated"> Select ID</label>
                     <div id="rated"></div>
                     <script>
                       var changeq1 = document.getElementById( 'file-enter' );

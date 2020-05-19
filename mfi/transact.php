@@ -411,6 +411,7 @@ $transid1 = $randms1;
                   });
                 });
               </script>
+              <label>Transaction Method</label>
                <select class="form-control" name="pay_type" id="opo">
                   <option value="Cash">Cash</option>
                   <option value="Bank">Bank</option>
@@ -423,6 +424,12 @@ $transid1 = $randms1;
             <div class="form-group">
                 <label for="">Transaction ID(Cheque no, Transfer Id, Deposit Id):</label>
                 <input type="text" value="<?php echo $transid1; ?>" name="transid" class="form-control" id="ti">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Description</label>
+                <input type="text" value="" name="description" class="form-control" id="ti">
             </div>
           </div>
     </div>

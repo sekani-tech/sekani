@@ -38,6 +38,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $famt = number_format("$amount", 2);
       $pay_type = $x['pay_type'];
       $transact_type = $x['transact_type'];
+      $description = $x['description'];
       $transid = $x['transact_id'];
       $product_type = $x['product_type'];
       $stat = $x['status'];
@@ -146,10 +147,11 @@ $resx1 = mysqli_num_rows($q1);
                    if ($iupqres) {
                        $iat = "INSERT INTO account_transaction (int_id, branch_id, account_id,
                        account_no, product_id,
-                       client_id, teller_id, transaction_id, transaction_type, is_reversed,
+                       client_id, teller_id, transaction_id, description, transaction_type, is_reversed,
                        transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                        created_date, appuser_id, credit) VALUES ('{$ssint_id}', '{$branch_id}',
-                       '{$acc_id}', '{$acct_no}', '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$trans_type}', '{$irvs}',
+                       '{$acc_id}', '{$acct_no}', '{$product_type}', '{$client_id}', '{$teller_id}',
+                       '{$transid}', '{$description}', '{$trans_type}', '{$irvs}',
                        '{$transaction_date}', '{$amount}', '{$new_abd}', '{$amount}',
                        '{$gen_date}', '{$appuser_id}', '{$amount}')";
                        $res3 = mysqli_query($connection, $iat);
@@ -164,10 +166,10 @@ $resx1 = mysqli_num_rows($q1);
                              // check if int account has been updated
                              if ($query1) {
                                $trust = "INSERT INTO institution_account_transaction (int_id, branch_id,
-                               client_id, transaction_id, transaction_type, teller_id, is_reversed,
+                               client_id, transaction_id, description, transaction_type, teller_id, is_reversed,
                                transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                                created_date, appuser_id, credit) VALUES ('{$sessint_id}', '{$branch_id}',
-                              '{$client_id}', '{$transid}', '{$trans_type}', '{$teller_id}', '{$irvs}',
+                              '{$client_id}', '{$transid}', '{$description}', '{$trans_type}', '{$teller_id}', '{$irvs}',
                               '{$gen_date}', '{$amount}', '{$new_int_bal}', '{$amount}',
                               '{$gen_date}', '{$appuser_id}', '{$amount}')";
                               $res9 = mysqli_query($connection, $trust);
@@ -239,7 +241,7 @@ $resx1 = mysqli_num_rows($q1);
                              swal({
                                  type: "error",
                                  title: "Error",
-                                 text: "Error in Transaction",
+                                 text: "Error in Transaction 1",
                                  showConfirmButton: false,
                                  timer: 2000
                              })
@@ -274,10 +276,10 @@ $resx1 = mysqli_num_rows($q1);
                    if ($iupqres) {
                        $iat = "INSERT INTO account_transaction (int_id, branch_id, account_id
                        account_no, product_id,
-                       client_id, teller_id, transaction_id, transaction_type, is_reversed,
+                       client_id, teller_id, transaction_id, description, transaction_type, is_reversed,
                        transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                        created_date, appuser_id, debit) VALUES ('{$ssint_id}', '{$branch_id}',
-                       '{$acc_id}', '{$acct_no}',  '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$trans_type2}', '{$irvs}',
+                       '{$acc_id}', '{$acct_no}',  '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$description}', '{$trans_type2}', '{$irvs}',
                        '{$transaction_date}', '{$amount}', '{$comp2}', '{$amount}',
                        '{$gen_date}', '{$appuser_id}', '{$amount}')";
                        $res3 = mysqli_query($connection, $iat);
@@ -293,10 +295,10 @@ $resx1 = mysqli_num_rows($q1);
                              // check if int account has been updated
                              if ($query1) {
                                $trust = "INSERT INTO institution_account_transaction (int_id, branch_id,
-                               client_id, transaction_id, transaction_type, teller_id, is_reversed,
+                               client_id, transaction_id, description, transaction_type, teller_id, is_reversed,
                                transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                                created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
-                              '{$client_id}', '{$transid}', '{$trans_type2}', '{$teller_id}', '{$irvs}',
+                              '{$client_id}', '{$transid}', '{$description}', '{$trans_type2}', '{$teller_id}', '{$irvs}',
                               '{$gen_date}', '{$amount}', '{$new_int_bal2}', '{$amount}',
                               '{$gen_date}', '{$appuser_id}', '{$amount}')";
                               $res9 = mysqli_query($connection, $trust);
@@ -365,7 +367,7 @@ $resx1 = mysqli_num_rows($q1);
                              swal({
                                  type: "error",
                                  title: "Error",
-                                 text: "Error in Transaction",
+                                 text: "Error in Transaction 2",
                                  showConfirmButton: false,
                                  timer: 2000
                              })
@@ -415,10 +417,10 @@ $resx1 = mysqli_num_rows($q1);
                      $res1 = mysqli_query($connection, $upinta);
                      if ($res1) {
                        $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
-             teller_id, transaction_id, transaction_type, is_reversed,
+             teller_id, transaction_id, description, transaction_type, is_reversed,
              transaction_date, amount, running_balance_derived, overdraft_amount_derived,
              created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_idm}',
-             '{$gl_codex}', '{$trans_id}', 'Debit', '{$irvs}',
+             '{$gl_codex}', '{$trans_id}', '{$description}', 'Debit', '{$irvs}',
              '{$gen_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
              '{$gen_date}', '{$staff_id}', '{$gl_amt}')";
                      $res4 = mysqli_query($connection, $iat2);
@@ -640,14 +642,20 @@ $resx1 = mysqli_num_rows($q1);
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Client</label>
+                          <label class="bmd-label-floating">Client Name</label>
                           <input type="text" class="form-control" name="phone" value="<?php echo $cn; ?>" readonly>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Amount</label>
                           <input type="text" class="form-control" name="location" value="<?php echo $amount; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Description</label>
+                          <input type="text" class="form-control" name="descript" value="<?php echo $description; ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-4">
