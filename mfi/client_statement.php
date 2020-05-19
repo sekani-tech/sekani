@@ -184,6 +184,7 @@ $sessint_id = $_SESSION['int_id'];
                         // $querytoget = "SELECT * FROM account_transaction WHERE account_id = '65' && int_id = '5' && branch_id = '1' && transaction_date BETWEEN '2019-01-01' AND '2020-03-03' ORDER BY transaction_date ASC";
                         $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
 
+                        
                         // $result = mysqli_query($connection, $querytoget);
                       ?>
                         <tr class="table100-head">
