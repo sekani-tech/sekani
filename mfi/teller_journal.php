@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Valut Transaction";
+$page_title = "Vault Transaction";
 $destination = "index.php";
     include("header.php");
 ?>
@@ -8,6 +8,17 @@ $destination = "index.php";
 <?php
 // right now we will program
 // first step - check if this person is authorized
+$org_role = $_SESSION['org_role'];
+$query = "SELECT * FROM org_role WHERE role = '$org_role'";
+$process = mysqli_query($connection, $query);
+$role = mysqli_fetch_array($process);
+$role_id = $role['id'];
+
+$query2 = "SELECT * FROM permission WHERE role_id = '$role_id'";
+$process2 = mysqli_query($connection, $query2);
+$proce = mysqli_fetch_array($process2);
+$valut = $proce['valut'];
+
 if ($valut == 1 || $valut == "1") {
 ?>
 <?php
@@ -27,7 +38,7 @@ $vault_last_dep = $itb['last_deposit'];
 
 // For the Transaction ID auto generated
 $digits = 10;
-$transaction_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$transaction_id = str_pad(rand(0, pow(10, 7)-1), 7, '0', STR_PAD_LEFT);
 // check if every data is active
 // then we will do the transaction - stored 
 // then if will reflect inside of int_transaction for the teller that will be picked
@@ -41,20 +52,20 @@ $transaction_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEF
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Valut Transaction (In & Out)</h4>
+                  <h4 class="card-title">Vault Transaction (In & Out)</h4>
                   <!-- <p class="card-category">Fill in all important data</p> -->
                 </div>
                 <div class="card-body">
-                  <form action="" method="post">
+                  <form action="../functions/vaulttrans.php" method="POST">
                     <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <!-- populate from db -->
                           <label class="bmd-label-floating"> Transaction Type</label>
                           <select name="type" id="" class="form-control">
-                            <option value="0">SELECT A TRANSACTION TYPE IN/OUT</option>
-                            <option value="valut_in">DEPOSIT INTO VALUT</option>
-                            <option value="valut_out">WITHDRAW FROM VALUT</option>
+                            <option value="0">select a transaction type in/out</option>
+                            <option value="valut_in">DEPOSIT INTO VAULT</option>
+                            <option value="valut_out">WITHDRAW FROM VAULT</option>
                           </select>
                         </div>
                       </div>
@@ -62,7 +73,7 @@ $transaction_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEF
                         <div class="form-group">
                           <label class="bmd-label-floating">Branch Name</label>
                           <!-- populate available balance -->
-                          <input type="text" value="<?php echo $get_b_r_n; ?>" name="" id="branch_id" class="form-control" readonly>
+                          <input type="text" value="<?php echo $get_b_r_n; ?>" name="branch" id="branch_id" class="form-control" readonly>
                         </div>
                       </div>
                       <div class="col-md-4">
@@ -81,7 +92,7 @@ $transaction_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEF
                               return $out;
                             }
                             ?>
-                            ?>
+
                           <label class="bmd-label-floating"> Teller Name</label>
                           <select name="teller_name" id="" class="form-control">
                             <option value="0">SELECT A TELLER</option>
@@ -99,7 +110,7 @@ $transaction_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEF
                         <div class="form-group">
                           <label class="bmd-label-floating">Current Balance</label>
                           <!-- populate available balance -->
-                          <input type="text" value="<?php echo $g_i_t_b; ?>" name="" id="" class="form-control" readonly>
+                          <input type="text" value="<?php echo $g_i_t_b; ?>" name="balance" id="" class="form-control" readonly>
                         </div>
                       </div>
                       <div class="col-md-4">

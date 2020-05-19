@@ -165,9 +165,33 @@ if(isset($_GET["edit"])) {
                       </div>
                     </div>
                     <a href="lend.php" class="btn btn-primary">Disburse Loan</a>
-                    <a href="client_statement.php?edit=<?php echo $id;?>" class="btn btn-primary">Generate Account Report</a>
                     <a href="update_client.php?edit=<?php echo $id;?>" class="btn btn-primary">Edit CLient</a>
                     <a href="client.php" class="btn btn-primary pull-right">Back</a>
+                  </form>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Generate Account Report</h4>
+                </div>
+                <div class="card-body">
+                <form method = "POST" action="client_statement.php">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Start Date:</label>
+                          <input type="text" name="id" class="form-control" hidden value="<?php echo $id;?>">
+                          <input type="date" name="start" id="" class="form-control" value="">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">End Date:</label>
+                          <input type="date" name="end" id="" class="form-control" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Generate Account Report</button>
                   </form>
                 </div>
               </div>

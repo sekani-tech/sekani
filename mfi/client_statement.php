@@ -4,8 +4,19 @@ $page_title = "Client Statement";
 $destination = "client.php";
 include('header.php');
 
-if(isset($_GET["edit"])) {
-  $id = $_GET["edit"];
+$sessint_id = $_SESSION['int_id'];
+  $id = $_POST["id"];
+
+  $std = $_POST["start"];
+      $datex= strtotime($std); 
+      $sdate = date("Y-m-d", $datex);
+       $start = $sdate;
+      //  echo $start;
+       $endx = $_POST["end"];
+       $datey= strtotime($endx); 
+       $eyd= date("Y-m-d", strtotime('-1 day', $datey));
+       $end = $eyd;
+  
   $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id' && int_id ='$sessint_id'");
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
@@ -37,27 +48,23 @@ if(isset($_GET["edit"])) {
       $branch_name = strtoupper($a['name']);
       $branch_address = $a['location'];
     }
-    $acount = mysqli_query($connection, "SELECT * FROM account WHERE account_no='$acc_no'");
+    $acount = mysqli_query($connection, "SELECT * FROM account WHERE client_id ='$id' && account_no='$acc_no'");
     if (count([$acount]) == 1) {
       $b = mysqli_fetch_array($acount);
       $currtype = $b['currency_code'];
-      $quer = "SELECT * FROM account WHERE client_id ='$id' && account_no = '$acc_no'";
-      $resuo = mysqli_query($connection, $quer);
-      $u = mysqli_fetch_array($resuo);
-      $acc_id = $u['id'];
+      $acc_id = $b['id'];
     }
 
-      $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE account_id = '$acc_id'");
+      $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
       $deb = mysqli_fetch_array($totald);
       $tdp = $deb['debit'];
       $totaldb = number_format($tdp, 2);
-
-      $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE account_id = '$acc_id'");
+      
+      $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
       $cred = mysqli_fetch_array($totalc);
       $tcp = $cred['credit'];
       $totalcd = number_format($tcp, 2);
   }
-}
 
 // session_start();
                             
@@ -120,8 +127,13 @@ if(isset($_GET["edit"])) {
             <link rel="stylesheet" media="print"  href="../composer/pdf/util.css">
             <div class="card-body">
             <div class="form-group">
-              <a href="../composer/client_statement.php?edit=<?php echo $id;?>" class="btn btn-primary pull-left">Download PDF</a>
-                </div>
+              <form method = "POST" action = "../composer/client_statement.php">
+              <input name ="id" type="text" value="<?php echo $id;?>"/>
+              <input name ="start" type="text" value="<?php echo $start;?>"/>
+              <input name ="end" type="text" value="<?php echo $end;?>"/>
+              <button type="submit" class="btn btn-primary pull-left">Download PDF</button>
+            </form>
+            </div>
                 <div>
                 <header class="clearfix">
                   <div id="logo">
@@ -137,6 +149,8 @@ if(isset($_GET["edit"])) {
                           <h4><?php echo $currtype;?></h4>
                           <h6 >Account number</h6>
                         <h4><?php echo $acc;?></h4> 
+                        <h6 >Statement period</h6>
+                        <h5><?php echo $start,' - ',$end;?></h5> 
                     </div>
                     <div class="col-md-6">
                     <h6 >Client name</h6>
@@ -161,13 +175,16 @@ if(isset($_GET["edit"])) {
                 </script>
             <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                         <thead>
+                          <!-- <input type='text' value='<?php echo $branch;?>'/> -->
                         <?php
                         $que = "SELECT * FROM account WHERE account_no = '$acc_no' && client_id ='$id'";
                         $resui = mysqli_query($connection, $que);
                         $q = mysqli_fetch_array($resui);
                         $acc_id = $q['id'];
-                         $query = "SELECT * FROM account_transaction WHERE account_id ='$acc_id'";
-                        $result = mysqli_query($connection, $query);
+                        // $querytoget = "SELECT * FROM account_transaction WHERE account_id = '65' && int_id = '5' && branch_id = '1' && transaction_date BETWEEN '2019-01-01' AND '2020-03-03' ORDER BY transaction_date ASC";
+                        $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
+
+                        // $result = mysqli_query($connection, $querytoget);
                       ?>
                         <tr class="table100-head">
                             <th class="column1">Transaction-Date</th>
@@ -177,7 +194,6 @@ if(isset($_GET["edit"])) {
                             <th class="column5">Credits(&#8358;)</th>
                             <th class="column6">Balance(&#8358;)</th>
                         </tr>
-                        
                     </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
@@ -185,7 +201,7 @@ if(isset($_GET["edit"])) {
                         <tr>
                           <td class="column1"><?php echo $row["transaction_date"]; ?></td>
                           <td class="column2"><?php echo $row["created_date"]; ?></td>
-                          <td class="column3"><?php echo $row["transaction_id"]; ?></td>
+                          <td class="column3"><?php echo $row["description"]; ?></td>
                           <td class="column4"><?php echo $row["debit"]; ?></td>
                           <td class="column5"><?php echo $row["credit"]; ?></td>
                           <td class="column6"><?php echo number_format($row["running_balance_derived"]); ?></td>

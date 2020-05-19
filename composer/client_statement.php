@@ -4,8 +4,12 @@ require_once __DIR__ . '/vendor/autoload.php';
 require_once('../functions/connect.php');
 ?>
 <?php
-if(isset($_GET["edit"])) {
-    $id = $_GET["edit"];
+$sessint_id = $_SESSION['int_id'];
+if(isset($_POST["id"])) {
+    $id = $_POST["id"];
+    $start = $_POST["start"];
+    $end = $_POST["end"];
+
     $query1 = mysqli_query($connection, "SELECT * FROM client WHERE id='$id'");
     if (count([$query1]) == 1) {
         $a = mysqli_fetch_array($query1);
@@ -36,19 +40,21 @@ if(isset($_GET["edit"])) {
         $client_id = $d['client_id'];
         $acc_id = $d['id'];
         }
-        $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE account_id = '$acc_id'");
+        $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
         $deb = mysqli_fetch_array($totald);
         $tdp = $deb['debit'];
         $totaldb = number_format($tdp, 2);
   
-        $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE account_id = '$acc_id'");
+        $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
         $cred = mysqli_fetch_array($totalc);
         $tcp = $cred['credit'];
         $totalcd = number_format($tcp, 2);
-        function fill_data($connection, $acc_id){
+
+
+        function fill_data($connection, $acc_id, $sessint_id, $start, $end, $branch){
         $id = $_GET["edit"];
       // import
-      $accountquery = "SELECT * FROM account_transaction WHERE account_id ='$acc_id'";
+      $accountquery = "SELECT * FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC";
       $resul = mysqli_query($connection, $accountquery);
       $out = '';
 
@@ -56,7 +62,7 @@ if(isset($_GET["edit"])) {
       {
         $transaction_date = $q["transaction_date"];
         $value_date = $q["created_date"]; 
-        $transact_id = $q["transaction_id"];
+        $description = $q["description"];
         $amt2 = $q["debit"];
         $amt = $q["credit"];
         $balance = $q["running_balance_derived"]; 
@@ -64,7 +70,7 @@ if(isset($_GET["edit"])) {
         <tr>
             <td class="column1"> '.$transaction_date.'</td>
             <td class="column2">'.$value_date.'</td>
-            <td class="column3">'.$transact_id .'</td>
+            <td class="column3">'.$description .'</td>
             <td class="column4">'.$amt2.'</td>
             <td class="column5">'.$amt.'</td>
             <td class="column6">'.$balance.'</td>
@@ -109,6 +115,11 @@ if(isset($_GET["edit"])) {
             <td></td>
             <td><div class="tail"><span>Total debit: '.$totaldb.'</span></div></td> 
         </tr>
+        <tr>
+            <td><div class="tail"><span>Statement Period: </span>'.$start.' - '.$end.'</div></td>
+            <td></td>
+            <td></td> 
+        </tr>
          </table>
         </div>
         </header>
@@ -128,7 +139,7 @@ if(isset($_GET["edit"])) {
                         </tr>
                     </thead>
                     <tbody>
-                    "'.fill_data($connection, $acc_id).'"
+                    "'.fill_data($connection, $acc_id, $sessint_id, $start, $end, $branch).'"
                     </tbody>
                 </table>
             </div>

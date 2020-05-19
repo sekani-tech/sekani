@@ -21,7 +21,7 @@
 ?>
 <?php
 // this section is for permissions
-$getpermission = mysqli_query($connection, "SELECT * FROM `permission` WHERE staff_id = '$staff_id' && int_id = '$sessint_id'");
+$getpermission = mysqli_query($connection, "SELECT * FROM `permission` WHERE role_id = '$staff_id' && int_id = '$sessint_id'");
 if (count([$getpermission]) == 1) {
   $pms = mysqli_fetch_array($getpermission);
   $can_transact = $pms['trans_appv'];
