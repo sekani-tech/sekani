@@ -128,9 +128,9 @@ $sessint_id = $_SESSION['int_id'];
             <div class="card-body">
             <div class="form-group">
               <form method = "POST" action = "../composer/client_statement.php">
-              <input name ="id" type="text" value="<?php echo $id;?>"/>
-              <input name ="start" type="text" value="<?php echo $start;?>"/>
-              <input name ="end" type="text" value="<?php echo $end;?>"/>
+              <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
+              <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
+              <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
               <button type="submit" class="btn btn-primary pull-left">Download PDF</button>
             </form>
             </div>
