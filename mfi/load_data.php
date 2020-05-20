@@ -59,7 +59,26 @@ if(isset($_POST["id"]))
     $sql = "SELECT * FROM charges_cache WHERE int_id = '$int_id' && cache_prod_id = '$main_p' ";
     $result = mysqli_query($connection, $sql);
     ?>
-    
+    <input type="text" id="idq" value="<?php echo $charge_id; ?>" hidden>
+    <input type="text" id="int_idq" value="<?php echo $int_id; ?>" hidden>
+    <input type="text" id="main_pq" value="<?php echo $main_p; ?>" hidden>
+    <script>
+  $(document).ready(function() {
+        var id = $('#idq').val();
+        var int_id = $('#int_idq').val();
+          var branch_id = $('#branch_idq').val();
+          var main_p = $('#main_pq').val();
+          $.ajax({
+          url:"ajax_post/check_up.php",
+          method:"POST",
+          data:{id:id, int_id:int_id, branch_id:branch_id, main_p: main_p},
+          success:function(data){
+          $('#damn_men').html(data);
+       }
+   })
+})
+</script>
+
     <div class="table-responsive">
   <table id="tabledat" class="table" cellspacing="0" style="width:100%">
   <thead class=" text-primary">
@@ -87,22 +106,4 @@ if(isset($_POST["id"]))
     echo $output;
 }
 ?>
-
-<script>
-                      $(document).ready(function() {
-                        $('#getdiv').change(function(){
-                          var id = $(this).val();
-                          var int_id = $('#int_id').val();
-                          var branch_id = $('#branch_id').val();
-                          var main_p = $('#main_p').val();
-                          $.ajax({
-                            url:"load_data.php",
-                            method:"POST",
-                            data:{id:id, int_id:int_id, branch_id:branch_id, main_p: main_p},
-                            success:function(data){
-                              $('#damn_men').html(data);
-                            }
-                          })
-                        });
-                      })
-                    </script>
+<!-- posting now -->

@@ -240,12 +240,7 @@ input[type=number] {
               <a href="loan_report.php" class="dropdown-item">Loan reports</a>
               <a href="#" class="dropdown-item">Financial report</a>
               <a href="#" class="dropdown-item">Audit</a>
-<<<<<<< HEAD
-              <a href="teller.php" class="dropdown-item">Teller</a>
-              <a href="institutional_report.php" class="dropdown-item">Insitutional Report</a>
-=======
               <a href="teller.php" class="dropdown-item">Teller Report</a>
->>>>>>> 908e95a31e21876a044abbe7b2f9ff4f2cf6872a
             </div>
           </li>
           <!-- end of report -->

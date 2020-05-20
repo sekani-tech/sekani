@@ -396,33 +396,6 @@ $destination = "index.php";
                       $out .= '<option value="'.$row["id"].'">' .strtoupper($row["role"]). '</option>';
                     }
                     return $out;
-                  // $sint_id = $_SESSION["int_id"];
-
-                  // $org = "SELECT * FROM org_role WHERE int_id = '$sint_id' ORDER BY id ASC";
-                  // $res = mysqli_query($connection, $org);
-                  // $row = mysqli_fetch_array($res);
-                  // $role_id = $row["id"];
-                  // $orgx = mysqli_query($connection, "SELECT * FROM permission WHERE role_id = '$role_id' && int_id = '$sint_id'");
-                  // $resx1 = mysqli_num_rows($orgx);
-                  // if ($resx1 == 0 || $resx1 == NULL) {
-                  //   $out = '';
-                  // while ($row = mysqli_fetch_array($res))
-                  // {
-                  //   $out .= '<option value="'.$row["id"].'">' .strtoupper($row["role"]). '</option>';
-                  // }
-                  // } else {
-                  //   $o1 = "SELECT * FROM org_role WHERE int_id = '$sint_id' && id != '$role_id' ORDER BY id ASC";
-                  // $r1 = mysqli_query($connection, $o1);
-                  // $ro1 = mysqli_fetch_array($r1);
-                  //   // push something
-                  //   $out = '';
-                  //   while ($ro1 = mysqli_fetch_array($r1))
-                  // {
-                  //   $out .= '<option value="'.$ro1["id"].'">' .strtoupper($ro1["role"]). '</option>';
-                  // }
-                  // }
-                  // // alright
-                  // return $out;
                    }
                   ?>
               <div class="form-group">
