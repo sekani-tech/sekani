@@ -333,7 +333,7 @@ else if (isset($_GET["message5"])) {
                   $('#tabledat').DataTable();
                   });
                   </script>
-                   <a href="add_credit_check.php" class="btn btn-primary"> Add Credit Check</a>
+                   <!-- <a href="add_credit_check.php" class="btn btn-primary"> Add Credit Check</a> -->
                     <div class="table-responsive">
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">

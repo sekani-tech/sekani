@@ -211,7 +211,7 @@ $destination = "index.php";
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <!-- <div class="col-md-6">
                         <div class="form-group">
                             <label for="requireSavingsAcct" >Requires Linked Savings Account </label>
                             <select class="form-control" name="linked_savings_acct" required>
@@ -219,7 +219,7 @@ $destination = "index.php";
                               <option value="Lagos Savings Group">Lagos Savings Group</option>
                             </select>
                           </div>
-                      </div>
+                      </div> -->
                   </div>
                   </div>
                   <!-- First Tab -->
@@ -241,6 +241,8 @@ $destination = "index.php";
                             data:{id:id, int_id:int_id, branch_id:branch_id, main_p: main_p},
                             success:function(data){
                               $('#show_charges').html(data);
+                              document.getElementById("takeme").setAttribute("hidden", "");
+                              document.getElementById("damn_men").removeAttribute("hidden");
                             }
                           })
                         });
@@ -258,7 +260,8 @@ $destination = "index.php";
                       <div class="row">
                       <div class="col-md-4">
                       <label>Charges:</label>
-                      <div id="damn_men"></div>
+                      <div id="damn_men" hidden>
+                      </div>
                       <div id="takeme">
                       <input type="text" hidden value="<?php echo $main_p; ?>" id="main_p">
                       <select name="charge_id"class="form-control" id="charges">
@@ -395,95 +398,383 @@ $destination = "index.php";
                   <div class="tab">
                     <div class="row">
                           <!-- replace values with loan data -->
-                          <div class="col-md-6">
+                          <div class="col-md-12">
                       <h5 class="card-title">Accounting Rules</h5>
                         <div class="position-relative form-group ">
                             <div>
                                 <div class="custom-radio custom-control">
-                                    <input type="radio" id="cashBased" name="acc" class="custom-control-input">
+                                    <input type="radio" id="cashBased" checked name="acc" class="custom-control-input">
                                     <label class="custom-control-label" for="cashBased">Cash Based</label>
                                 </div>
                                 <div class="custom-radio custom-control">
-                                    <input type="radio" id="accuralP" name="acc" class="custom-control-input">
+                                    <input type="radio" id="accuralP" disabled name="acc" class="custom-control-input">
                                     <label class="custom-control-label" for="accuralP">Accural (Periodic)</label>
                                 </div>
                                 <div class="custom-radio custom-control">
-                                    <input type="radio" id="accuralU" name="acc" class="custom-control-input">
+                                    <input type="radio" id="accuralU" disabled name="acc" class="custom-control-input">
                                     <label class="custom-control-label" for="accuralU">Accural (Upfront)</label>
                                 </div>
                             </div>
                         </div>
-                        <h5 class="card-title">Expenses</h5>
+                          </div>
+                          <div class="col-md-6">
+                            <br>
+                        <h5 class="card-title">Assets</h5>
                           <div class="position-relative form-group">
                             <div class="form-group">
-                              <label for="charge" class="form-align ">Losses Written Off</label>
+                              <?php 
+                              function fill_asset($connection)
+                              {
+                                $sint_id = $_SESSION["int_id"];
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '1' ORDER BY name ASC";
+                                $res = mysqli_query($connection, $org);
+                                $output = '';
+                                while ($row = mysqli_fetch_array($res))
+                                {
+                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+                                }
+                                return $output;
+                              }
+                              ?>
+                              <div class="col-md-8">
+                              <label for="charge" class="form-align ">Fund Source</label>
                               <select class="form-control form-control-sm" name="">
                                 <option value="">--</option>
+                                <?php echo fill_asset($connection) ?>
                               </select>
+                              </div>
+                              <!-- <span>
+                              <a type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="
+The Fund Source is the pool of funds used to disburse loans from (such as your bank account). This account is credited when the loan is disbursed and debited when a repayment is made.">
+                                Read
+                              </a>
+                                </span> -->
+                              <!-- <span class="input-group-btn">
+                                     <button type="button" class="btn btn-fab btn-round btn-primary">
+                                      <i class="material-icons">attach_file</i>
+                                     </button>
+                                     </span> -->
                             </div>
-                          </div>
-                      <h5 class="card-title">Assets</h5>
-                      <div class="position-relative form-group">
-                        <div class="form-group">
-                            <label for="charge" class="form-align ">Fund Source</label>
-                            <select class="form-control form-control-sm" name="">
-                              <option value="">--</option>
-                            </select>
-                          </div>
-                          <div class=" input-group">
+                            <div class="form-group">
+                            <div class="col-md-8">
                             <label for="charge" class="form-align ">Loan Portfolio</label>
                             <select class="form-control form-control-sm" name="">
                               <option value="">--</option>
+                              <?php echo fill_asset($connection) ?>
                             </select>
+                            </div>
                           </div>
-                      </div>                             
+                          </div>
                       <h5 class="card-title">Liabilities</h5>
+                      <?php 
+                              function fill_lia($connection)
+                              {
+                                $sint_id = $_SESSION["int_id"];
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '2' ORDER BY name ASC";
+                                $res = mysqli_query($connection, $org);
+                                $output = '';
+                                while ($row = mysqli_fetch_array($res))
+                                {
+                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+                                }
+                                return $output;
+                              }
+                              ?>
                       <div class="position-relative form-group">
                         <div class="form-group">
-                          <label for="charge" class="form-align ">Over Payment</label>
-                          <select class="form-control form-control-sm" name="">
-                            <option value="">--</option>
-                          </select>
-                        </div>  
-                      </div>
+                        <div class="col-md-8">
+                            <label for="charge" class="form-align ">Overpayments</label>
+                            <select class="form-control form-control-sm" name="">
+                              <option value="">--</option>
+                              <?php echo fill_lia($connection)?>
+                            </select>
+                        </div>
                           </div>
-                          <div class="col-md-6">
-                      <h5 class="card-title">Income</h5>
-                        <div class="position-relative form-group">
                           <div class="form-group">
+                          <div class="col-md-8">
+                            <label for="charge" class="form-align ">Suspended Income</label>
+                            <select class="form-control form-control-sm" name="">
+                              <option value="">--</option>
+                              <?php echo fill_lia($connection)?>
+                            </select>
+                          </div>
+                          </div>
+                      </div>                 
+                          </div>
+                      <div class="col-md-6">
+                      <p>
+                        <b style="font-size: 20px">
+                        Accounting Instruction
+                      </b>
+                        </p>
+                              <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal"><i class="material-icons">add</i></button>
+                              <span>
+                              Configure Fund sources for payment channels
+                              </span>
+                              <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+         <thead>
+           <th> <b> Payment Type </b></th>
+           <th> <b>Assets Account <b></th>
+         </thead>
+         <tbody>
+           <tr>
+             <th> <h5> Eco Bank </h5></th>
+             <th> <h5>GL </h5></th>
+           </tr>
+         </tbody>
+         </table>
+                            <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal2"><i class="material-icons">add</i></button>
+                            <span>
+                            Map Fees to Specific Income accounts
+                            </span>
+                              <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+         <thead>
+           <th> <b> Fee </b></th>
+           <th> <b>Income Account <b></th>
+         </thead>
+         <tbody>
+           <tr>
+             <th> <h5> Eco Bank </h5></th>
+             <th> <h5>GL </h5></th>
+           </tr>
+         </tbody>
+         </table>
+                            <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal3"><i class="material-icons">add</i></button>
+                            <span>
+                            Map Penalties to Specific income accounts
+                            </span>
+                              <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+         <thead>
+           <th> <b> Penalty </b></th>
+           <th> <b> Income Account <b></th>
+         </thead>
+         <tbody>
+           <tr>
+             <th> <h5> Eco Bank </h5></th>
+             <th> <h5>GL </h5></th>
+           </tr>
+         </tbody>
+         </table>
+                            </div>
+                          <!-- <div class="col-md-8"> -->
+                          <!-- </div> -->
+                        </div>
+                        <div class="row">
+                        <div class="col-md-6">            
+                      <h5 class="card-title">Income</h5>
+                      <div class="position-relative form-group">
+                          <div class="form-group">
+                          <?php 
+                              function fill_in($connection)
+                              {
+                                $sint_id = $_SESSION["int_id"];
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '4' ORDER BY name ASC";
+                                $res = mysqli_query($connection, $org);
+                                $output = '';
+                                while ($row = mysqli_fetch_array($res))
+                                {
+                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+                                }
+                                return $output;
+                              }
+                              ?>
+                          <div class="col-md-8">
                               <label for="charge" class="form-align ">Income for Interest</label>
                               <select class="form-control form-control-sm" name="">
                                 <option value="">--</option>
+                                <?php echo fill_in($connection) ?>
                               </select> 
                           </div>
+                          </div>
                           <div class="form-group">
+                          <div class="col-md-8">
                               <label for="charge" class="form-align ">Income from Fees</label>
                               <select class="form-control form-control-sm" name="">
                                 <option value="">--</option>
+                                <?php echo fill_in($connection) ?>
                               </select>
                           </div>
+                          </div>
                           <div class="form-group">
+                          <div class="col-md-8">
                               <label for="charge" class="form-align ">Income from Penalties</label>
                               <select class="form-control form-control-sm" name="">
                                 <option value="">--</option>
+                                <?php echo fill_in($connection) ?>
                               </select>
                           </div>
+                          </div>
                           <div class="form-group">
+                          <div class="col-md-8">
                               <label for="charge" class="form-align ">Income from Recovery</label>
                               <select class="form-control form-control-sm" name="">
                                 <option value="">--</option>
+                                <?php echo fill_in($connection) ?>
                               </select>
                           </div>
+                          </div>
                           <div class="form-group">
+                          <div class="col-md-8">
                               <label for="charge" class="form-align ">Income from Recovery</label>
                               <select class="form-control form-control-sm" name="">
                                 <option value="">--</option>
+                                <?php echo fill_in($connection) ?>
                               </select>
                           </div>
-                        </div>
-                        
                           </div>
                         </div>
+                        <!-- next -->
+                        <h5 class="card-title">Expenses</h5>
+                        <div class="position-relative form-group">
+                        <?php 
+                              function fill_exp($connection)
+                              {
+                                $sint_id = $_SESSION["int_id"];
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '5' ORDER BY name ASC";
+                                $res = mysqli_query($connection, $org);
+                                $output = '';
+                                while ($row = mysqli_fetch_array($res))
+                                {
+                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+                                }
+                                return $output;
+                              }
+                              ?>
+                          <div class="form-group">
+                          <div class="col-md-8">
+                              <label for="charge" class="form-align ">Losses Written Off</label>
+                              <select class="form-control form-control-sm" name="">
+                                <option value="">--</option>
+                                <?php echo fill_exp($connection) ?>
+                              </select> 
+                          </div>
+                          </div>
+                          <div class="form-group">
+                          <div class="col-md-8">
+                              <label for="charge" class="form-align ">Interest Written Off</label>
+                              <select class="form-control form-control-sm" name="">
+                                <option value="">--</option>
+                                <?php echo fill_exp($connection) ?>
+                              </select>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                        </div>
+                        <!-- <div class="row"> -->
+                          
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Accounting Insturction</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+          <div class="form-group">
+         <label for="charge" class="form-align ">Payment</label>
+              <select class="form-control form-control-sm" name="">
+              <option value="">--</option>
+            </select> 
+          </div>
+          </div>
+          <div class="col-md-6">
+          <div class="form-group">
+         <label for="charge" class="form-align ">Asset Account</label>
+              <select class="form-control form-control-sm" name="">
+              <option value="">--</option>
+            </select> 
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal2 -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">Add Fee To Income Account Rule</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+          <div class="form-group">
+         <label for="charge" class="form-align ">Fee</label>
+              <select class="form-control form-control-sm" name="">
+              <option value="">--</option>
+            </select> 
+          </div>
+          </div>
+          <div class="col-md-6">
+          <div class="form-group">
+         <label for="charge" class="form-align ">Income Account</label>
+              <select class="form-control form-control-sm" name="">
+              <option value="">--</option>
+            </select> 
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Modal3 -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Penalty To Income Account Rule</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+          <div class="form-group">
+         <label for="charge" class="form-align ">Penalty</label>
+              <select class="form-control form-control-sm" name="">
+              <option value="">--</option>
+            </select> 
+          </div>
+          </div>
+          <div class="col-md-6">
+          <div class="form-group">
+         <label for="charge" class="form-align ">Income Account</label>
+              <select class="form-control form-control-sm" name="">
+              <option value="">--</option>
+            </select> 
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+                          <!-- </div> -->
                       </div>
                   </div>
                   <!-- Fourth Tab -->
