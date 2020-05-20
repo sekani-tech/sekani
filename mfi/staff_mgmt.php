@@ -207,71 +207,96 @@ $destination = "index.php";
                      ';
                         }
                       } else if ($update_role == 'update_role') {
-                        if ( isset($_POST['approve']) ) {
-                          $approve = 1;
-                      } else {
-                          $approve = 0;
-                      }
-                      if ( isset($_POST['post_transact']) ) {
-                        $post_transact = 1;
-                      } else {
-                        $post_transact = 0;
-                      }
-                      if ( isset($_POST['access_config']) ) {
-                      $access_config = 1;
-                      } else {
-                      $access_config = 0;
-                      }
-                      if ( isset($_POST['approve_loan']) ) {
-                      $approve_loan = 1;
-                      } else {
-                      $approve_loan = 0;
-                      }
-                      if ( isset($_POST['approve_acc']) ) {
-                      $approve_acc = 1;
-                      } else {
-                      $approve_acc = 0;
-                      }
-                      if ( isset($_POST['vault_trans']) ) {
-                      $vault_trans = 1;
-                      } else {
-                      $vault_trans = 0;
-                      }
-                      } else {
-                        // echo no add or update
-                      }
-                      if ( isset($_POST['view_report']) ) {
-                      $view_report = 1;
-                      } else {
-                      $view_report = 0;
-                      }
-                      if ( isset($_POST['dash']) ) {
-                      $dash = 1;
-                      } else {
-                      $dash = 0;
-                      }
-                      $rid = $_POST["org_role"];
-                      $perm = "INSERT INTO permission (int_id, role_id, trans_appv, trans_post, loan_appv, acct_appv, valut, view_report, view_dashboard, configuration)
-                       VALUES ('{$sessint_id}', '{$rid}', '{$approve}', '{$post_transact}', '{$approve_loan}', '$approve_acc', '$vault_trans', '$view_report', '$dash', '{$access_config}')";
-                      $permm = mysqli_query($connection, $perm);
-                      if ($MIB) {
-                        // echo success
-                        echo '<script type="text/javascript">
-                   $(document).ready(function(){
-                       swal({
-                           type: "success",
-                           title: "Permission Granted",
-                           text: " Created Successfully",
-                           showConfirmButton: false,
-                           timer: 2000
-                       })
-                   });
-                   </script>
-                   ';
-                  }
+                        $rid = $_POST["org_role"];
+                        $rop = "SELECT role_id FROM permission WHERE int_id = '$sessint_id' && role_id = '$rid'";
+                        $one = mysqli_query($connection, $rop);
+                        $don = mysqli_fetch_array($one);
+                        $roleo = $don['role_id'];
+                        if($one == $roleo){
+                          echo '<script type="text/javascript">
+                          $(document).ready(function(){
+                              swal({
+                                  type: "error",
+                                  title: "Cannot add Permission",
+                                  text: "The permissions has been added to this role",
+                                  showConfirmButton: false,
+                                  timer: 2000
+                              })
+                          });
+                          </script>
+                          ';
+                        } elseif($one =! $roleo){
+                          if ( isset($_POST['approve']) ) {
+                            $approve = 1;
+                        } else {
+                            $approve = 0;
+                        }
+                        if ( isset($_POST['post_transact']) ) {
+                          $post_transact = 1;
+                        } else {
+                          $post_transact = 0;
+                        }
+                        if ( isset($_POST['access_config']) ) {
+                        $access_config = 1;
+                        } else {
+                        $access_config = 0;
+                        }
+                        if ( isset($_POST['approve_loan']) ) {
+                        $approve_loan = 1;
+                        } else {
+                        $approve_loan = 0;
+                        }
+                        if ( isset($_POST['approve_acc']) ) {
+                        $approve_acc = 1;
+                        } else {
+                        $approve_acc = 0;
+                        }
+                        if ( isset($_POST['vault_trans']) ) {
+                        $vault_trans = 1;
+                        } else {
+                        $vault_trans = 0;
+                        }
+  
+  
+                        
+                        if ( isset($_POST['view_report']) ) {
+                        $view_report = 1;
+                        } else {
+                        $view_report = 0;
+                        }
+                        if ( isset($_POST['dash']) ) {
+                        $dash = 1;
+                        } else {
+                        $dash = 0;
+                        }
+                       
+                        $perm = "INSERT INTO permission (int_id, role_id, trans_appv, trans_post, loan_appv, acct_appv, valut, view_report, view_dashboard, configuration)
+                         VALUES ('{$sessint_id}', '{$rid}', '{$approve}', '{$post_transact}', '{$approve_loan}', '$approve_acc', '$vault_trans', '$view_report', '$dash', '{$access_config}')";
+                        $permm = mysqli_query($connection, $perm);
+                        if ($permm) {
+                          // echo success
+                          echo '<script type="text/javascript">
+                     $(document).ready(function(){
+                         swal({
+                             type: "success",
+                             title: "Permission Granted",
+                             text: " Created Successfully",
+                             showConfirmButton: false,
+                             timer: 2000
+                         })
+                     });
+                     </script>
+                     ';
+                     
+                    }
+                        }
+                        
                     } else {
                       echo "";
                     }
+                  } else {
+                    // echo no add or update
+                  }
                     ?>
                       <div class="card-title">Create A Role</div>
                       <br>
