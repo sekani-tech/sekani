@@ -4,6 +4,114 @@ $page_title = "Vault Transaction";
 $destination = "index.php";
     include("header.php");
 ?>
+<?php
+//  Sweet alert Function
+
+// If it is successfull, It will show this message
+  if (isset($_GET["message"])) {
+    $key = $_GET["message"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "Transaction Denied",
+            text: "Movable Amount Exceeded",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = null;
+}
+else if (isset($_GET["message1"])) {
+  $key = $_GET["message1"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Transaction Successful",
+          text: "Amount has been withdrawn from teller",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = null;
+}
+// If it is not successfull, It will show this message
+else if (isset($_GET["message2"])) {
+  $key = $_GET["message2"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Error",
+          text: "Not enough Loan in the teller Account",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = null;
+}
+if (isset($_GET["message3"])) {
+  $key = $_GET["message3"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Success",
+          text: "Amount has been deposited to teller",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = null;
+}
+else if (isset($_GET["message4"])) {
+$key = $_GET["message4"];
+// $out = $_SESSION["lack_of_intfund_$key"];
+echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "error",
+        title: "Error",
+        text: "Not enough Amount in the vault",
+        showConfirmButton: false,
+        timer: 2000
+    })
+});
+</script>
+';
+$_SESSION["lack_of_intfund_$key"] = null;
+}
+else if (isset($_GET["message5"])) {
+  $key = $_GET["message5"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Error",
+          text: "No transaction type selected",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = null;
+  }
+?>
 <!-- Content added here -->
 <?php
 // right now we will program
@@ -25,7 +133,7 @@ if ($valut == 1 || $valut == "1") {
 // output the branch name
   $bch_name =  mysqli_query($connection, "SELECT * FROM branch WHERE id = '$bch_id' && int_id = '$sessint_id'");
   $grn = mysqli_fetch_array($bch_name);
-  $get_b_r_n = $grn['name'];
+  $get_b_r_n = $grn['id'];
 // Ending branch_name
 
 // check the current balance
@@ -64,8 +172,8 @@ $transaction_id = str_pad(rand(0, pow(10, 7)-1), 7, '0', STR_PAD_LEFT);
                           <label class="bmd-label-floating"> Transaction Type</label>
                           <select name="type" id="" class="form-control">
                             <option value="0">select a transaction type in/out</option>
-                            <option value="valut_in">DEPOSIT INTO VAULT</option>
-                            <option value="valut_out">WITHDRAW FROM VAULT</option>
+                            <option value="vault_in">DEPOSIT INTO VAULT</option>
+                            <option value="vault_out">WITHDRAW FROM VAULT</option>
                           </select>
                         </div>
                       </div>
@@ -77,7 +185,9 @@ $transaction_id = str_pad(rand(0, pow(10, 7)-1), 7, '0', STR_PAD_LEFT);
                         </div>
                       </div>
                       <div class="col-md-4">
-                        <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-6">
+                          <div class="form-group">
                             <!-- populate from db -->
                             <?php 
                             function fill_teller($connection, $bch_id) {
@@ -94,10 +204,28 @@ $transaction_id = str_pad(rand(0, pow(10, 7)-1), 7, '0', STR_PAD_LEFT);
                             ?>
 
                           <label class="bmd-label-floating"> Teller Name</label>
-                          <select name="teller_name" id="" class="form-control">
+                          <select name="teller_id" id="tell" class="form-control">
                             <option value="0">SELECT A TELLER</option>
                             <?php echo fill_teller($connection, $bch_id); ?>
                           </select>
+                        </div>
+                          </div>
+                          <script>
+                              $(document).ready(function() {
+                                $('#tell').change(function(){
+                                  var id = $(this).val();
+                                  $.ajax({
+                                    url:"ajax_post/teller_balance.php",
+                                    method:"POST",
+                                    data:{id:id},
+                                    success:function(data){
+                                      $('#tell_acc').html(data);
+                                    }
+                                  })
+                                });
+                              })
+                            </script>
+                          <div id = "tell_acc"></div>
                         </div>
                       </div>
                       <div class="col-md-4">
