@@ -510,23 +510,21 @@ if(isset($_POST['id'])){
             <div class="col-md-4">
             <div class="form-group">
                 <label for="">State:</label>
-                <select class="form-control " style="text-transform: uppercase;" name="state" id="selState" onchange="configureDropDownLists()">
-                </select>
+                <input type="text" class="form-control" style="text-transform: uppercase;" name="state"/>
+                <! --<select class="form-control " style="text-transform: uppercase;" name="state" id="selState" onchange="configureDropDownLists()">
+                </select> -->
                 
             </div>
             </div>
-            <!-- <div class="col-md-4">
-            <label for="">State:</label>
-            <input type="text"  class="form-control" id="">
-            </div> -->
             <div class="col-md-4">
             <label for="">LGA:</label>
-                <select  class="form-control" style="text-transform: uppercase;" name="lga" id="selCity">
-                </select>
+                <input type="text" class="form-control" style="text-transform: uppercase;" name="lga"/>
+                <! --<select class="form-control" style="text-transform: uppercase;" name="lga" id="selCity">
+                </select> -->
             </div>
             <div class="col-md-4">
             <label for="">BVN:</label>
-            <input  type="text" style="text-transform: uppercase;" name="bvn" class="form-control" id="">
+            <input type="text" style="text-transform: uppercase;" name="bvn" class="form-control" id="">
             </div>
             <div class="col-md-4">
             <p><label for="">Active Alerts:</label></p>

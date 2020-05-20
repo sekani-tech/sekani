@@ -6,6 +6,7 @@ $destination = "client.php";
 include("header.php");
 
 ?>
+<script src="../datatable/DropdownSelect.js"></script>
 <!-- Content added here -->
 <div class="content">
     <div class="container-fluid">
@@ -72,7 +73,21 @@ include("header.php");
                  
                 </div>
                 <div id="client">
-                    
+                    </div>
+                    <div id="maenn" hidden>
+                    <div class="col-md-4">
+            <div class="form-group">
+                <label for="">State:</label>
+                <select class="form-control" style="text-transform: uppercase;" name="state" id="selState" onchange="configureDropDownLists()">
+                </select>
+                
+            </div>
+            </div>
+            <div class="col-md-4">
+            <label for="">LGA:</label>
+                <select  class="form-control" style="text-transform: uppercase;" name="lga" id="selCity">
+                </select>
+            </div>
                     </div>
                 <a href="client.php" class="btn btn-danger">Back</a>
                 <button type="submit" name="submit" id="submit" class="btn btn-primary pull-right">Create Client</button>
