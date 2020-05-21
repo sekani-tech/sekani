@@ -31,7 +31,10 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
     $rock = mysqli_query($connection, $que);
     $yn = mysqli_fetch_array($rock);
     $tellbalance = $yn['account_balance_derived'];
-    $tellname = $yn['description'];
+    $quet = "SELECT * FROM tellers WHERE name = '$tid'";
+    $rocka = mysqli_query($connection, $quet);
+    $yy = mysqli_fetch_array($rocka);
+    $tellname = $yy['description'];
     $transdate = date('Y-m-d');
     $crdate = date('Y-m-d H:m:s');
     $vault = mysqli_query($connection, "SELECT * FROM int_vault WHERE branch_id = '$branchid' && int_id = '$sint_id'");
@@ -152,12 +155,12 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                {
                 $_SESSION["Lack_of_intfund_$randms"] = "";
                 echo "error";
-                echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
+                echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
                } else
                {
                 $_SESSION["Lack_of_intfund_$randms"] = "";
                 echo "error";
-                echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
+                echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
                }
                     }
                     else{
@@ -293,12 +296,12 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                {
                 $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
                 echo "error";
-                echo header ("Location: ../mfi/teller_journal.php?message3=$randms");
+                echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
                } else
                {
                 $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
                 echo "error";
-                echo header ("Location: ../mfi/teller_journal.php?messag6=$randms");
+                echo header ("Location: ../mfi/teller_journal.php?messag3=$randms");
                }
                     }
                     else{
