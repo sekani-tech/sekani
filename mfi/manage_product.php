@@ -715,12 +715,22 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
                var id = $(this).val();
                var int_id = $('#int_id').val();
                var main_p = $('#main_p').val();
+               $.ajax({
+                 url: "ajax_post/payment_product.php",
+                 method: "POST",
+                 data:{id:id, int_id:int_id, main_p:main_p},
+                 success: function (data) {
+                   $('#show_payment').html(data);
+                   document.getElementById("ipayment_id").setAttribute("hidden", "");
+                   document.getElementById("real_payment").removeAttribute("hidden");
+                 }
+               })
              });
            });
          </script>
          <div id="real_payment" hidden></div>
-         <div id="payment_id">
-              <select class="form-control form-control-sm" name="">
+         <div id="ipayment_id">
+              <select id="payment_id" class="form-control form-control-sm" name="">
               <option value="">--</option>
               <?php echo fill_payment($connection)?>
             </select>
