@@ -45,7 +45,8 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
             if($tellbalance >= $amount){
                 $new_tellbalance = $tellbalance - $amount;
                 $new_vaultbalance = $balance + $amount;
-    
+                $blnc = number_format($new_vaultbalance);
+                $amt = number_format($amount);
                 $vaultinquery = "UPDATE institution_account SET account_balance_derived = '$new_tellbalance' WHERE teller_id = '$tid'";
                 $ein = mysqli_query($connection, $vaultinquery);
                 $description = "Deposited into Vault";
@@ -124,7 +125,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                       </tr>
                                       <tr>
                                         <td style='font-size: 12px;'> <b>Transaction Amount</b></td>
-                                        <td style='font-size: 12px;'>$amount</td>
+                                        <td style='font-size: 12px;'>$amt</td>
                                       </tr>
                                       <tr>
                                         <td style='font-size: 12px;'> <b>Transaction Date/Time</b></td>
@@ -132,7 +133,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                       </tr>
                                       <tr>
                                         <td style='font-size: 12px;'> <b>Account Balance</b></td>
-                                        <td style='font-size: 12px;'>&#8358; $new_vaultbalance</td>
+                                        <td style='font-size: 12px;'>&#8358; $blnc</td>
                                       </tr>
                                     </tbody>
                                 </div>
@@ -187,7 +188,8 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
             else{
                 $new_tellbalance = $tellbalance + $amount;
                 $new_vaultbalance = $balance - $amount;
-    
+                $blnc = number_format($new_vaultbalance);
+                $amt = number_format($amount);
                 $vaultinquery = "UPDATE institution_account SET account_balance_derived = '$new_tellbalance' WHERE teller_id = '$tid' && int_id = '$sint_id'";
                 $ein = mysqli_query($connection, $vaultinquery);
                 $description = "Withdrawn from vault";
@@ -265,7 +267,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                       </tr>
                                       <tr>
                                         <td style='font-size: 12px;'> <b>Transaction Amount</b></td>
-                                        <td style='font-size: 12px;'>$amount</td>
+                                        <td style='font-size: 12px;'>$amt</td>
                                       </tr>
                                       <tr>
                                         <td style='font-size: 12px;'> <b>Transaction Date/Time</b></td>
@@ -273,7 +275,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                       </tr>
                                       <tr>
                                         <td style='font-size: 12px;'> <b>Account Balance</b></td>
-                                        <td style='font-size: 12px;'>&#8358; $new_vaultbalance</td>
+                                        <td style='font-size: 12px;'>&#8358; $blnc</td>
                                       </tr>
                                     </tbody>
                                 </div>
