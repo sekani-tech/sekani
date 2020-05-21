@@ -78,7 +78,7 @@ if (isset($_GET["message3"])) {
       swal({
           type: "success",
           title: "Success",
-          text: "Amount has been deposited to teller",
+          text: "Amount has been deposited to teller, Email has been sent.",
           showConfirmButton: false,
           timer: 2000
       })
@@ -128,6 +128,26 @@ else if (isset($_GET["message5"])) {
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
   }
+  else if (isset($_GET["message6"])) {
+    $key = $_GET["message6"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+      if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "success",
+                title: "Success",
+                text: "Amount has been deposited to teller, email not sent",
+                showConfirmButton: false,
+                timer: 2000
+            })
+        });
+        </script>
+        ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+    }
 ?>
 <!-- Content added here -->
 <?php

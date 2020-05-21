@@ -31,7 +31,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
     $rock = mysqli_query($connection, $que);
     $yn = mysqli_fetch_array($rock);
     $tellbalance = $yn['account_balance_derived'];
-    $tellname = $yn['descrption'];
+    $tellname = $yn['description'];
     $transdate = date('Y-m-d');
     $crdate = date('Y-m-d H:m:s');
     $vault = mysqli_query($connection, "SELECT * FROM int_vault WHERE branch_id = '$branchid' && int_id = '$sint_id'");
@@ -89,7 +89,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                     <span class='sr-only'>Loading...</span>
                                   </div>
                             </div>
-                            <span> <b>$int_name</b> </span> || <span class='lead' style='font-size: 13px;'> $int_location </span>
+                            <span> <b>$int_name</b> </span> || <span class='lead' style='font-size: 13px;'> $int_address </span>
                         </div>
                       </div>
                     </div>
@@ -135,7 +135,6 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                 </div>
                                   </table>
                             </p>
-                            <button type='button' class='btn btn-primary btn-lg btn-block'> <b style='font-size: 15px;'>Print Account Statement</b></button>
                         </div>
                       </div>
                     </div>
@@ -158,7 +157,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                {
                 $_SESSION["Lack_of_intfund_$randms"] = "";
                 echo "error";
-                echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
+                echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
                }
                     }
                     else{
@@ -231,7 +230,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                     <span class='sr-only'>Loading...</span>
                                   </div>
                             </div>
-                            <span> <b>$int_name</b> </span> || <span class='lead' style='font-size: 13px;'> $int_location </span>
+                            <span> <b>$int_name</b> </span> || <span class='lead' style='font-size: 13px;'> $int_address </span>
                         </div>
                       </div>
                     </div>
@@ -241,7 +240,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                             <div>
                                 <!-- fot the ext bod -->
                                 <p><b>Dear Director/b></p>
-                                <p>We wish to inform you that a <b>Vault - In</b> transaction recently occurred in your Vault.
+                                <p>We wish to inform you that a <b>Vault - Out</b> transaction recently occurred in your Vault.
                                 Please find below details of the transaction:</p>
                             </div>
                             <p>
@@ -277,7 +276,6 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                 </div>
                                   </table>
                             </p>
-                            <button type='button' class='btn btn-primary btn-lg btn-block'> <b style='font-size: 15px;'>Print Account Statement</b></button>
                         </div>
                       </div>
                     </div>
@@ -300,7 +298,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                {
                 $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
                 echo "error";
-                echo header ("Location: ../mfi/teller_journal.php?message3=$randms");
+                echo header ("Location: ../mfi/teller_journal.php?messag6=$randms");
                }
                     }
                     else{
