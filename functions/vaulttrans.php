@@ -29,13 +29,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
     $vault_limit = $itb['movable_amount'];
 
     if($type == "vault_in"){
-        if($amount >= $vault_limit){
-            $_SESSION["Lack_of_intfund_$randms"] = "";
-               echo "error";
-              echo header ("Location: ../mfi/teller_journal.php?message=$randms");
-        }
-        else{
-            if($tellbalance > $amount){
+            if($tellbalance >= $amount){
                 $new_tellbalance = $tellbalance - $amount;
                 $new_vaultbalance = $balance + $amount;
     
@@ -47,14 +41,15 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                     $on = mysqli_query($connection, $vaultinquery2);
                     if($on){
                         $record ="INSERT INTO institution_account_transaction (int_id, branch_id,
-                        transaction_id, description, transaction_type, teller_id, is_reversed,
+                        transaction_id, description, transaction_type, teller_id,is_vault, is_reversed,
                         transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                         created_date, appuser_id, credit) VALUES ('{$sint_id}','{$branchid}', '{$transact_id}','{$description}',
-                        '{$type}', '{$tid}', '0', '{$transdate}', '{$amount}', '{$amount}','{$amount}', '{$crdate}',
+                        '{$type}', '{$tid}', '1', '0', '{$transdate}', '{$amount}', '{$new_vaultbalance}','{$amount}', '{$crdate}',
                         '{$tid}', '{$amount}')";
                        $rin = mysqli_query($connection, $record);
                     if($rin){
                         $_SESSION["Lack_of_intfund_$randms"] = "";
+
                         echo "error";
                         echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
                     }
@@ -64,17 +59,22 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         echo header ("Location: ../mfi/teller_journal.php?message5=$randms");
                     }
                 }
-                }
             }
-            elseif($amount >= $tellbalance){
-                $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-               echo "error";
-              echo header ("Location: ../mfi/teller_journal.php?message2=$randms");
-            }
+        }
+        else if($amount >= $tellbalance){
+            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+           echo "error";
+          echo header ("Location: ../mfi/teller_journal.php?message2=$randms");
         }
     }
     else if($type == "vault_out"){
-        if($balance > $amount){
+        if($balance >= $amount){
+            if($amount >= $vault_limit){
+                $_SESSION["Lack_of_intfund_$randms"] = "";
+                   echo "error";
+                  echo header ("Location: ../mfi/teller_journal.php?message=$randms");
+            }
+            else{
                 $new_tellbalance = $tellbalance + $amount;
                 $new_vaultbalance = $balance - $amount;
     
@@ -86,10 +86,10 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                     $on = mysqli_query($connection, $vaultinquery2);
                     if($on){
                         $record ="INSERT INTO institution_account_transaction (int_id, branch_id,
-                        transaction_id, description, transaction_type, teller_id, is_reversed,
+                        transaction_id, description, transaction_type, teller_id, is_vault, is_reversed,
                         transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                         created_date, appuser_id, debit) VALUES ('{$sint_id}','{$branchid}', '{$transact_id}','{$description}',
-                        '{$type}', '{$tid}', '0', '{$transdate}', '{$amount}', '{$amount}','{$amount}', '{$crdate}',
+                        '{$type}', '{$tid}', '1', '0', '{$transdate}', '{$amount}', '{$new_vaultbalance}','{$amount}', '{$crdate}',
                         '{$tid}', '{$amount}')";
                         $rin = mysqli_query($connection, $record);
                     if($rin){
@@ -102,6 +102,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         echo "error";
                         echo header ("Location: ../mfi/teller_journal.php?message5=$randms");
                     }
+                }
                 }
                 }
         }
