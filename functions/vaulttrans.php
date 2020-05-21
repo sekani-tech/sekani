@@ -125,7 +125,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                       </tr>
                                       <tr>
                                         <td style='font-size: 12px;'> <b>Transaction Amount</b></td>
-                                        <td style='font-size: 12px;'>$amt</td>
+                                        <td style='font-size: 12px;'>&#8358; $amt</td>
                                       </tr>
                                       <tr>
                                         <td style='font-size: 12px;'> <b>Transaction Date/Time</b></td>
@@ -267,7 +267,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                       </tr>
                                       <tr>
                                         <td style='font-size: 12px;'> <b>Transaction Amount</b></td>
-                                        <td style='font-size: 12px;'>$amt</td>
+                                        <td style='font-size: 12px;'>&#8358; $amt</td>
                                       </tr>
                                       <tr>
                                         <td style='font-size: 12px;'> <b>Transaction Date/Time</b></td>

@@ -37,7 +37,7 @@ else if (isset($_GET["message1"])) {
       swal({
           type: "success",
           title: "Transaction Successful",
-          text: "Amount has been withdrawn from teller",
+          text: "Amount has been withdrawn from teller, Email has been sent.",
           showConfirmButton: false,
           timer: 2000
       })
