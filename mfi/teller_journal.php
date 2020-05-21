@@ -10,7 +10,8 @@ $destination = "index.php";
 // If it is successfull, It will show this message
   if (isset($_GET["message"])) {
     $key = $_GET["message"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
     echo '<script type="text/javascript">
     $(document).ready(function(){
         swal({
@@ -23,11 +24,14 @@ $destination = "index.php";
     });
     </script>
     ';
-    $_SESSION["lack_of_intfund_$key"] = null;
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
 }
 else if (isset($_GET["message1"])) {
   $key = $_GET["message1"];
   // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
@@ -40,12 +44,15 @@ else if (isset($_GET["message1"])) {
   });
   </script>
   ';
-  $_SESSION["lack_of_intfund_$key"] = null;
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
 }
 // If it is not successfull, It will show this message
 else if (isset($_GET["message2"])) {
   $key = $_GET["message2"];
   // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
@@ -58,11 +65,14 @@ else if (isset($_GET["message2"])) {
   });
   </script>
   ';
-  $_SESSION["lack_of_intfund_$key"] = null;
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
 }
 if (isset($_GET["message3"])) {
   $key = $_GET["message3"];
   // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
@@ -75,11 +85,14 @@ if (isset($_GET["message3"])) {
   });
   </script>
   ';
-  $_SESSION["lack_of_intfund_$key"] = null;
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
 }
 else if (isset($_GET["message4"])) {
 $key = $_GET["message4"];
 // $out = $_SESSION["lack_of_intfund_$key"];
+$tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
 echo '<script type="text/javascript">
 $(document).ready(function(){
     swal({
@@ -92,11 +105,14 @@ $(document).ready(function(){
 });
 </script>
 ';
-$_SESSION["lack_of_intfund_$key"] = null;
+$_SESSION["lack_of_intfund_$key"] = 0;
+    }
 }
 else if (isset($_GET["message5"])) {
   $key = $_GET["message5"];
   // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
@@ -109,7 +125,8 @@ else if (isset($_GET["message5"])) {
   });
   </script>
   ';
-  $_SESSION["lack_of_intfund_$key"] = null;
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
   }
 ?>
 <!-- Content added here -->
@@ -134,6 +151,7 @@ if ($valut == 1 || $valut == "1") {
   $bch_name =  mysqli_query($connection, "SELECT * FROM branch WHERE id = '$bch_id' && int_id = '$sessint_id'");
   $grn = mysqli_fetch_array($bch_name);
   $get_b_r_n = $grn['id'];
+  $bname = $grn['name'];
 // Ending branch_name
 
 // check the current balance
@@ -181,7 +199,8 @@ $transaction_id = str_pad(rand(0, pow(10, 7)-1), 7, '0', STR_PAD_LEFT);
                         <div class="form-group">
                           <label class="bmd-label-floating">Branch Name</label>
                           <!-- populate available balance -->
-                          <input type="text" value="<?php echo $get_b_r_n; ?>" name="branch" id="branch_id" class="form-control" readonly>
+                          <input type="text" value="<?php echo $bname; ?>" name="dd" id="branch_id" class="form-control"  readonly>
+                          <input type="text" value="<?php echo $get_b_r_n; ?>" name="branch" hidden id="branch_id" class="form-control" readonly>
                         </div>
                       </div>
                       <div class="col-md-4">

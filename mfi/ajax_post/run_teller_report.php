@@ -145,16 +145,16 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
           <div class="card-body">
             <!-- sup -->
             <!-- hello -->
-            <form action="" method="post">
+            <form action="../composer/teller_call.php" method="post">
               <div class="row">
                   <div class="col-md-4 form-group">
                       <label for="">Name of Teller</label>
                       <input type="text" name="" value="'.$tell_name.'" id="" class="form-control" readonly>
-                      <input type="text" name="" value="'.$start.'" id="start1" class="form-control" hidden>
-                      <input type="text" name="" value="'.$end.'" id="end1" class="form-control" hidden>
-                      <input type="text" name="" value="'.$branch_id.'" id="branch1" class="form-control" hidden>
-                      <input type="text" name="" value="'.$teller.'" id="teller1" class="form-control" hidden>
-                      <input type="text" name="" value="'.$int_id.'" id="int_id1" class="form-control" hidden>
+                      <input type="text" name="start1" value="'.$start.'" id="start1" class="form-control" hidden>
+                      <input type="text" name="end1" value="'.$end.'" id="end1" class="form-control" hidden>
+                      <input type="text" name="branch1" value="'.$branch_id.'" id="branch1" class="form-control" hidden>
+                      <input type="text" name="teller1" value="'.$teller.'" id="teller1" class="form-control" hidden>
+                      <input type="text" name="int_id1" value="'.$int_id.'" id="int_id1" class="form-control" hidden>
                   </div>
                   <div class="col-md-4 form-group">
                       <label for="">Branch</label>
@@ -168,7 +168,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
                 </div>
                 </div>
               <div class="clearfix"></div>
-            </form>
+            
             <div class="table-responsive">
               <table id="tabledat4" class="table" style="width: 100%;">
                 <thead class=" text-primary">
@@ -201,9 +201,10 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
             <p><b>Checked By: '.$_SESSION["username"].'</b>                             <b>Date/Sign: '.$start." - ".$end.' </b></p>
 
             <p>
-            <button id="pddf" class="btn btn-primary pull-right">PDF print</button>
+            <button id="pddf" type="sumbit" class="btn btn-primary pull-right">PDF print</button>
             <div id=""></div>
             </p>
+            </form>
           </div>
         </div>
       </div>
@@ -233,24 +234,6 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
               timer: 5000
                     
             })
-           $.ajax({
-           url: "../composer/teller_call.php",
-           method: "POST",
-            data:{start1:start1, end1:end1, branch1:branch1, teller1:teller1, int_id1:int_id1},
-             success: function (data) {
-               $('#outreport').html(data);
-            },
-            error: function(data){
-            swal({
-              type: "error",
-              title: "TELLER REPORT 404",
-              text: "From " + start1 + " to " + end1,
-              showConfirmButton: false,
-              timer: 2000
-                    
-            })
-            }
-          })
          });
        });
      </script>
