@@ -314,9 +314,8 @@ $destination = "index.php";
                     <h3>Credit Checks</h3>
                     <div class="row">
                      <div class="col-md-8">
-        <h4>SUBJECTIVE/STATISTIC SCOREING CREDIT CHECK MODEL</h4>
-        <p>Read the Guide in Running this Model</p>
-        <p>Have it in <b>MIND</b> this scoring model is used for new customers or Manual Entries by Loan Officers</p>
+        <h5>SUBJECTIVE/STATISTIC SCOREING CREDIT CHECK MODEL</h5>
+        <p>Read the Guide in Running this Model Have it in <b>MIND</b> this scoring model is used for new customers or Manual Entries by Loan Officers</p>
         </div>
         <div class="col-md-12">
         <p>Find Details Below</p>
@@ -664,7 +663,21 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
                         <!-- <div class="row"> -->
                           
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<?php 
+                              function fill_all($connection)
+                              {
+                                $sint_id = $_SESSION["int_id"];
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' ORDER BY name ASC";
+                                $res = mysqli_query($connection, $org);
+                                $output = '';
+                                while ($row = mysqli_fetch_array($res))
+                                {
+                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+                                }
+                                return $output;
+                              }
+                              ?>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -677,10 +690,41 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
         <div class="row">
           <div class="col-md-6">
           <div class="form-group">
+          <?php 
+                              function fill_payment($connection)
+                              {
+                                $sint_id = $_SESSION["int_id"];
+                                $getacct = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE name LIKE '%due from bank%' && int_id = '$sint_id'");
+                                $cx = mysqli_fetch_array($getacct);
+                                $dfb = $cx["id"];
+
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '1' && parent_id = '$dfb' ORDER BY name ASC";
+                                $res = mysqli_query($connection, $org);
+                                $output = '';
+                                while ($row = mysqli_fetch_array($res))
+                                {
+                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+                                }
+                                return $output;
+                              }
+                              ?>
          <label for="charge" class="form-align ">Payment</label>
+         <script>
+           $(document).ready(function () {
+             $('#payment_id').change(function () {
+               var id = $(this).val();
+               var int_id = $('#int_id').val();
+               var main_p = $('#main_p').val();
+             });
+           });
+         </script>
+         <div id="real_payment" hidden></div>
+         <div id="payment_id">
               <select class="form-control form-control-sm" name="">
               <option value="">--</option>
-            </select> 
+              <?php echo fill_payment($connection)?>
+            </select>
+         </div>
           </div>
           </div>
           <div class="col-md-6">
@@ -688,6 +732,7 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
          <label for="charge" class="form-align ">Asset Account</label>
               <select class="form-control form-control-sm" name="">
               <option value="">--</option>
+              <?php echo fill_all($connection) ?>
             </select> 
           </div>
           </div>
@@ -701,7 +746,7 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
   </div>
 </div>
 <!-- Modal2 -->
-<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -714,9 +759,28 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
         <div class="row">
           <div class="col-md-6">
           <div class="form-group">
+          <?php 
+                              function fill_fee($connection)
+                              {
+                                $sint_id = $_SESSION["int_id"];
+                                $getacct = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE name LIKE '%FEE%' && parent_id = '0' && int_id = '$sint_id'");
+                                $cx = mysqli_fetch_array($getacct);
+                                $dfb = $cx["id"];
+
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && parent_id = '$dfb' ORDER BY name ASC";
+                                $res = mysqli_query($connection, $org);
+                                $output = '';
+                                while ($row = mysqli_fetch_array($res))
+                                {
+                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+                                }
+                                return $output;
+                              }
+                              ?>
          <label for="charge" class="form-align ">Fee</label>
               <select class="form-control form-control-sm" name="">
               <option value="">--</option>
+              <?php echo fill_fee($connection) ?>
             </select> 
           </div>
           </div>
@@ -725,6 +789,7 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
          <label for="charge" class="form-align ">Income Account</label>
               <select class="form-control form-control-sm" name="">
               <option value="">--</option>
+              <?php echo fill_all($connection) ?>
             </select> 
           </div>
           </div>
@@ -738,7 +803,7 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
   </div>
 </div>
   <!-- Modal3 -->
-<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -751,9 +816,24 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
         <div class="row">
           <div class="col-md-6">
           <div class="form-group">
+          <?php 
+                              function fill_pen($connection)
+                              {
+                                $sint_id = $_SESSION["int_id"];
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && name LIKE '%penalty%' ORDER BY name ASC";
+                                $res = mysqli_query($connection, $org);
+                                $output = '';
+                                while ($row = mysqli_fetch_array($res))
+                                {
+                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+                                }
+                                return $output;
+                              }
+                              ?>
          <label for="charge" class="form-align ">Penalty</label>
               <select class="form-control form-control-sm" name="">
               <option value="">--</option>
+              <?php echo fill_pen($connection) ?>
             </select> 
           </div>
           </div>
@@ -762,6 +842,7 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
          <label for="charge" class="form-align ">Income Account</label>
               <select class="form-control form-control-sm" name="">
               <option value="">--</option>
+              <?php echo fill_all($connection) ?>
             </select> 
           </div>
           </div>
