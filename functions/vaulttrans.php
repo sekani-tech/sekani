@@ -5,6 +5,7 @@ require_once "../bat/phpmailer/PHPMailerAutoload.php";
 ?>
 
 <?php
+$emailu = $_SESSION["email"]; 
 $int_name = $_SESSION["int_name"];
 $int_email = $_SESSION["int_email"];
 $int_web = $_SESSION["int_web"];
@@ -66,7 +67,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
             $mail = new PHPMailer;
             $mail->From = $int_email;
             $mail->FromName = $int_name;
-            $mail->addAddress('hesanmal316@gmail.com');
+            $mail->addAddress($emailu);
             $mail->addReplyTo($int_email, "Reply");
             $mail->isHTML(true);
             $mail->Subject = "Transaction Alert from $int_name";
@@ -208,7 +209,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         $mail = new PHPMailer;
             $mail->From = $int_email;
             $mail->FromName = $int_name;
-            $mail->addAddress('hesanmal316@gmail.com');
+            $mail->addAddress($emailu);
             $mail->addReplyTo($int_email, "Reply");
             $mail->isHTML(true);
             $mail->Subject = "Transaction Alert from $int_name";
@@ -249,7 +250,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                 Please find below details of the transaction:</p>
                             </div>
                             <p>
-                                <div class='shadow p-3 mb-5 bg-white rounded'>Transaction Details - <b>Vault - In</b></div>
+                                <div class='shadow p-3 mb-5 bg-white rounded'>Transaction Details - <b>Vault - Out</b></div>
                                 <table class='table table-borderless'>
                                     <tbody>
                                         <div>
