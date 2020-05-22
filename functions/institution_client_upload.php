@@ -1130,13 +1130,13 @@ $query = "INSERT INTO client  (int_id, loan_officer_id, loan_status, branch_id, 
     sig_gender_one, sig_gender_two, sig_gender_three, sig_state_one, sig_state_two, sig_state_three, sig_lga_one, sig_lga_two, sig_lga_three,
      sig_bvn_one, sig_bvn_two, sig_bvn_three, sms_active_one, sms_active_two, sms_active_three, email_active_one, email_active_two,
       email_active_three, sig_passport_one, sig_passport_two, sig_passport_three, sig_signature_one, sig_signature_two, sig_signature_three,
-       sig_id_img_one, sig_id_img_two, sig_id_img_three, sig_id_card_one, sig_id_card_two, sig_id_card_three) 
+       sig_id_img_one, sig_id_img_two, sig_id_img_three, sig_id_card_one, sig_id_card_two, sig_id_card_three,status) 
   VALUES ('{$sessint_id}', '{$loan_officer_id}', '{$loan_status}', '{$branch}', '{$ctype}', '{$account_no}','{$acct_type}', '{$activation_date}', '{$display_name}', '{$display_name}', '{$date_of_birth}',
   '{$submitted_on}', '{$email}', '{$address}','{$country}', '{$rc_number}','{$sig_one}','{$sig_two}','{$sig_three}','{$sig_address_one}','{$sig_address_two}','{$sig_address_three}',
   '{$sig_phone_one}','{$sig_phone_two}','{$sig_phone_three}','{$sig_gender_one}','{$sig_gender_two}','{$sig_gender_three}','{$sig_state_one}','{$sig_state_two}','{$sig_state_three}',
   '{$sig_lga_one}','{$sig_lga_two}','{$sig_lga_three}','{$sig_bvn_one}','{$sig_bvn_two}','{$sig_bvn_three}','{$sms_active_one}','{$sms_active_two}','{$sms_active_three}',
   '{$email_active_one}','{$email_active_two}','{$email_active_three}','{$sig_passport_one}','{$sig_passport_two}','{$sig_passport_three}','{$sig_signature_one}','{$sig_signature_two}',
-  '{$sig_signature_three}','{$sig_id_img_one}','{$sig_id_img_two}','{$sig_id_img_three}','{$sig_id_card_one}','{$sig_id_card_two}','{$sig_id_card_three}')";
+  '{$sig_signature_three}','{$sig_id_img_one}','{$sig_id_img_two}','{$sig_id_img_three}','{$sig_id_card_one}','{$sig_id_card_two}','{$sig_id_card_three}','Not Approved')";
 
 $res = mysqli_query($connection, $query);
 

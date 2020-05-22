@@ -147,7 +147,7 @@ mobile_no = '$phone', mobile_no_2 = '$phone2', ADDRESS = '$address', gender = '$
 date_of_birth = '$date_of_birth', branch_id = '$branch', COUNTRY = '$country', STATE_OF_ORIGIN = '$state',
 LGA = '$lga', BVN = '$bvn', SMS_ACTIVE = '$sms_active',
 EMAIL_ACTIVE = '$email_active', id_card = '$id_card', updated_by = '$updated_by', updated_on = '$updated_on',
-id_img_url = '$img2', passport = '$img3', signature = '$img1' WHERE id = '$id'";
+id_img_url = '$img2', passport = '$img3', signature = '$img1', status = 'Not Approved' WHERE id = '$id'";
 
 $result = mysqli_query($connection, $queryx);
 if($result) {

@@ -256,9 +256,16 @@ $destination = "index.php";
                         } else {
                         $vault_trans = 0;
                         }
-  
-  
-                        
+                        if ( isset($_POST['emai']) ) {
+                          $emai = 1;
+                          } else {
+                          $emai = 0;
+                          }
+                        if ( isset($_POST['update']) ) {
+                          $update = 1;
+                          } else {
+                          $update = 0;
+                          }
                         if ( isset($_POST['view_report']) ) {
                         $view_report = 1;
                         } else {
@@ -270,8 +277,8 @@ $destination = "index.php";
                         $dash = 0;
                         }
                        
-                        $perm = "INSERT INTO permission (int_id, role_id, trans_appv, trans_post, loan_appv, acct_appv, valut, view_report, view_dashboard, configuration)
-                         VALUES ('{$sessint_id}', '{$rid}', '{$approve}', '{$post_transact}', '{$approve_loan}', '$approve_acc', '$vault_trans', '$view_report', '$dash', '{$access_config}')";
+                        $perm = "INSERT INTO permission (int_id, role_id, trans_appv, trans_post, loan_appv, acct_appv, valut, vault_email, view_report, view_dashboard, update_client, configuration)
+                         VALUES ('{$sessint_id}', '{$rid}', '{$approve}', '{$post_transact}', '{$approve_loan}', '{$approve_acc}', '{$vault_trans}', '{$emai}', '{$view_report}', '{$dash}','{$update}', '{$access_config}')";
                         $permm = mysqli_query($connection, $perm);
                         if ($permm) {
                           // echo success
@@ -489,6 +496,8 @@ $destination = "index.php";
                   document.getElementById('n6').checked = true;
                   document.getElementById('n7').checked = true;
                   document.getElementById('n8').checked = true;
+                  document.getElementById('n9').checked = true;
+                  document.getElementById('n10').checked = true;
                 } else {
                   document.getElementById('n1').checked = false;
                   document.getElementById('n2').checked = false;
@@ -498,6 +507,8 @@ $destination = "index.php";
                   document.getElementById('n6').checked = false;
                   document.getElementById('n7').checked = false;
                   document.getElementById('n8').checked = false;
+                  document.getElementById('n9').checked = false;
+                  document.getElementById('n10').checked = false;
                 }
                });
              })
@@ -544,6 +555,15 @@ $destination = "index.php";
                 </span>
               </label>
            </div>
+           <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="" name="update" id="n10">
+               Client Update Approval
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
             </div>
             <!-- Another -->
             <div class="col-md-5">
@@ -576,11 +596,20 @@ $destination = "index.php";
                 </span>
               </label>
            </div>
-           <!-- Last -->
            <div class="form-check form-check-inline">
               <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" value="" name="dash" id="n8">
                 Dashboard
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+           <!-- Last -->
+           <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="" name="emai" id="n9">
+                Vault Email
                 <span class="form-check-sign">
                 <span class="check"></span>
                 </span>
@@ -610,7 +639,7 @@ $destination = "index.php";
                     <table id="tabledat1" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT org_role.id, permission.trans_appv, permission.trans_post, permission.loan_appv, permission.acct_appv, permission.valut, permission.view_report, permission.view_dashboard, permission.configuration, org_role.role, org_role.description FROM org_role JOIN permission ON org_role.id = permission.role_id WHERE org_role.int_id = '$sessint_id'";
+                        $query = "SELECT permission.vault_email, org_role.id, permission.trans_appv, permission.trans_post, permission.loan_appv, permission.acct_appv, permission.valut, permission.view_report, permission.view_dashboard, permission.update_client, permission.configuration, org_role.role, org_role.description FROM org_role JOIN permission ON org_role.id = permission.role_id WHERE org_role.int_id = '$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -625,8 +654,9 @@ $destination = "index.php";
                         <th>vault Transaction</th>
                         <th>View Report</th>
                         <th>Dashboard</th>
+                        <th>Client Update Approval</th>
                         <th>Access Config.</th>
-                        <!-- <th>Status</th> -->
+                        <th>Vault Email</th>
                         <th>
                           Edit
                         </th>
@@ -750,7 +780,6 @@ $destination = "index.php";
                           </label>
                         </div>
                           </th>
-
                           <th>
                           <?php
                           if($row['view_dashboard'] == '1'){
@@ -769,7 +798,24 @@ $destination = "index.php";
                           </label>
                         </div>
                           </th>
-
+                          <th>
+                          <?php
+                          if($row['update_client'] == '1'){
+                            $check = "checked";
+                          }
+                          elseif($row['update_client'] == '0'){
+                            $check = "unchecked";
+                          }
+                          ?>   
+                          <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="cc">
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                          </label>
+                        </div>
+                          </th>
                           <th>
                           <?php
                           if($row['configuration'] == '1'){
@@ -782,6 +828,24 @@ $destination = "index.php";
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
                               <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="acc">
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                          </label>
+                        </div>
+                          </th>
+                          <th>
+                          <?php
+                          if($row['vault_email'] == '1'){
+                            $check = "checked";
+                          }
+                          elseif($row['vault_email'] == '0'){
+                            $check = "unchecked";
+                          }
+                          ?>   
+                          <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="ema"/>
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>

@@ -206,94 +206,101 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         '{$tid}', '{$amount}')";
                         $rin = mysqli_query($connection, $record);
                     if($rin){
-                        $mail = new PHPMailer;
-            $mail->From = $int_email;
-            $mail->FromName = $int_name;
-            $mail->addAddress($emailu);
-            $mail->addReplyTo($int_email, "Reply");
-            $mail->isHTML(true);
-            $mail->Subject = "Transaction Alert from $int_name";
-            $mail->Body = "<!doctype html>
-            <html lang='en'>
-              <head>
-                <!-- Required meta tags -->
-                <meta charset='utf-8'>
-                <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-                <!-- Bootstrap CSS -->
-                <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous'>
-            
-                <title>Transaction Alert</title>
-              </head>
-              <body>
-                <div class='container'>
-                    <div class='row justify-content-md-center'>
-                      <div class='col col-lg-6'>
-                        <div class='shadow p-3 mb-5 bg-white rounded'>
-                            <!-- int logo -->
-                            <div class='row justify-content-md-center'>
-                                <img src='$int_logo' height='60px' width='60px' alt='int image' class='rounded mx-auto d-block'>
-                                <div class='spinner-grow text-primary' role='status'>
-                                    <span class='sr-only'>Loading...</span>
-                                  </div>
-                            </div>
-                            <span> <b>$int_name</b> </span> || <span class='lead' style='font-size: 13px;'> $int_address </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class='row'>
-                      <div class='col col-lg-12'>
-                        <div class='shadow-sm p-3 mb-5 bg-white rounded'>$crdate
-                            <div>
-                                <!-- fot the ext bod -->
-                                <p><b>Dear Director/b></p>
-                                <p>We wish to inform you that a <b>Vault - Out</b> transaction recently occurred in your Vault.
-                                Please find below details of the transaction:</p>
-                            </div>
-                            <p>
-                                <div class='shadow p-3 mb-5 bg-white rounded'>Transaction Details - <b>Vault - Out</b></div>
-                                <table class='table table-borderless'>
-                                    <tbody>
-                                        <div>
-                                      <tr>
-                                        <td style='font-size: 12px;'> <b>Transfer From</b></td>
-                                        <td style='font-size: 12px;'>$tellname</td>
-                                      </tr>
-                                      <tr>
-                                        <td style='font-size: 12px;'> <b>Description</b></td>
-                                        <td style='font-size: 12px;'>$description</td>
-                                      </tr>
-                                      <tr>
-                                        <td style='font-size: 12px;'> <b>Reference Id</b></td>
-                                        <td style='font-size: 12px;'>$transact_id</td>
-                                      </tr>
-                                      <tr>
-                                        <td style='font-size: 12px;'> <b>Transaction Amount</b></td>
-                                        <td style='font-size: 12px;'>&#8358; $amt</td>
-                                      </tr>
-                                      <tr>
-                                        <td style='font-size: 12px;'> <b>Transaction Date/Time</b></td>
-                                        <td style='font-size: 12px;'>$transdate</td>
-                                      </tr>
-                                      <tr>
-                                        <td style='font-size: 12px;'> <b>Account Balance</b></td>
-                                        <td style='font-size: 12px;'>&#8358; $blnc</td>
-                                      </tr>
-                                    </tbody>
-                                </div>
-                                  </table>
-                            </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                <!-- Optional JavaScript -->
-                <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-                <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
-                <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous'></script>
-                <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
-              </body>
-            </html>";
-            $mail->AltBody = "This is the plain text version of the email content";
+                      $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' && org_role ='MD'";
+                      $rult = mysqli_query($connection, $quy);
+                      if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_array($rult))
+                            {
+                              $mail = new PHPMailer;
+                              $mail->From = $int_email;
+                              $mail->FromName = $int_name;
+                              $mail->addAddress($row["email"]);
+                              $mail->addReplyTo($int_email, "Reply");
+                              $mail->isHTML(true);
+                              $mail->Subject = "Transaction Alert from $int_name";
+                              $mail->Body = "<!doctype html>
+                              <html lang='en'>
+                                <head>
+                                  <!-- Required meta tags -->
+                                  <meta charset='utf-8'>
+                                  <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+                                  <!-- Bootstrap CSS -->
+                                  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous'>
+                              
+                                  <title>Transaction Alert</title>
+                                </head>
+                                <body>
+                                  <div class='container'>
+                                      <div class='row justify-content-md-center'>
+                                        <div class='col col-lg-6'>
+                                          <div class='shadow p-3 mb-5 bg-white rounded'>
+                                              <!-- int logo -->
+                                              <div class='row justify-content-md-center'>
+                                                  <img src='$int_logo' height='60px' width='60px' alt='int image' class='rounded mx-auto d-block'>
+                                                  <div class='spinner-grow text-primary' role='status'>
+                                                      <span class='sr-only'>Loading...</span>
+                                                    </div>
+                                              </div>
+                                              <span> <b>$int_name</b> </span> || <span class='lead' style='font-size: 13px;'> $int_address </span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class='row'>
+                                        <div class='col col-lg-12'>
+                                          <div class='shadow-sm p-3 mb-5 bg-white rounded'>$crdate
+                                              <div>
+                                                  <!-- fot the ext bod -->
+                                                  <p><b>Dear Director/b></p>
+                                                  <p>We wish to inform you that a <b>Vault - Out</b> transaction recently occurred in your Vault.
+                                                  Please find below details of the transaction:</p>
+                                              </div>
+                                              <p>
+                                                  <div class='shadow p-3 mb-5 bg-white rounded'>Transaction Details - <b>Vault - Out</b></div>
+                                                  <table class='table table-borderless'>
+                                                      <tbody>
+                                                          <div>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Transfer From</b></td>
+                                                          <td style='font-size: 12px;'>$tellname</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Description</b></td>
+                                                          <td style='font-size: 12px;'>$description</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Reference Id</b></td>
+                                                          <td style='font-size: 12px;'>$transact_id</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Transaction Amount</b></td>
+                                                          <td style='font-size: 12px;'>&#8358; $amt</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Transaction Date/Time</b></td>
+                                                          <td style='font-size: 12px;'>$transdate</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td style='font-size: 12px;'> <b>Account Balance</b></td>
+                                                          <td style='font-size: 12px;'>&#8358; $blnc</td>
+                                                        </tr>
+                                                      </tbody>
+                                                  </div>
+                                                    </table>
+                                              </p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  <!-- Optional JavaScript -->
+                                  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                                  <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
+                                  <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous'></script>
+                                  <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
+                                </body>
+                              </html>";
+                              $mail->AltBody = "This is the plain text version of the email content";
+                            }
+                          } 
             // mail system
             if(!$mail->send()) 
                {

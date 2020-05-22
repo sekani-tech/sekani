@@ -224,7 +224,7 @@ if (isset($_GET["edit"])) {
                         </div>
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
+                    <button value="staff" type="submit" class="btn btn-primary pull-right">Update Profile</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>
