@@ -218,7 +218,7 @@ $destination = "index.php";
                               swal({
                                   type: "error",
                                   title: "Cannot add Permission",
-                                  text: "The permissions has been added to this role",
+                                  text: "The permissions has already been added to this role",
                                   showConfirmButton: false,
                                   timer: 2000
                               })

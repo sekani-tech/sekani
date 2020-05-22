@@ -208,7 +208,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                     if($rin){
                       $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' && org_role ='MD'";
                       $rult = mysqli_query($connection, $quy);
-                      if (mysqli_num_rows($result) > 0) {
+                      if (mysqli_num_rows($rult) > 0) {
                         while ($row = mysqli_fetch_array($rult))
                             {
                               $mail = new PHPMailer;
