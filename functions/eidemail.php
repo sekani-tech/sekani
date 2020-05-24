@@ -12,6 +12,7 @@ $sessint_id = $_SESSION["int_id"];
 $mail = new PHPMailer;
 $mail->From = $int_email;
 $mail->FromName = $int_name;
+$int_email = $_SESSION["int_email"];
 $mail->addAddress($remail);
 $mail->addReplyTo($int_email, "No-Reply");
 $mail->isHTML(true);
