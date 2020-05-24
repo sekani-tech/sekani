@@ -64,10 +64,34 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                        $rin = mysqli_query($connection, $record);
                     if($rin){
                         // echo a successful message
+
+                      $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' && org_role ='MD'";
+                      $rult = mysqli_query($connection, $quy);
+                      if (mysqli_num_rows($rult) > 0) {
+                        while ($row = mysqli_fetch_array($rult))
+                            {
+                              $remail = $row['email'];
+                              $qemail = "SELECT * FROM staff WHERE email = '$remail'";
+                              $qemail2 = mysqli_query($connection, $qemail);
+                              $rt = mysqli_fetch_array($qemail2);
+                              $role = $rt['org_role'];
+
+                              $org_role = $role;
+                              $queory = "SELECT * FROM org_role WHERE role = '$org_role'";
+                              $process = mysqli_query($connection, $queory);
+                              $rol = mysqli_fetch_array($process);
+                              $role_id = $rol['id'];
+
+                              $query2 = "SELECT * FROM permission WHERE role_id = '$role_id'";
+                              $process2 = mysqli_query($connection, $query2);
+                              $proce = mysqli_fetch_array($process2);
+                              $valut = $proce['vault_email'];
+
+                              if ($valut == 1 || $valut == "1") {
             $mail = new PHPMailer;
             $mail->From = $int_email;
             $mail->FromName = $int_name;
-            $mail->addAddress($emailu);
+            $mail->addAddress($remail);
             $mail->addReplyTo($int_email, "Reply");
             $mail->isHTML(true);
             $mail->Subject = "Transaction Alert from $int_name";
@@ -87,14 +111,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                     <div class='row justify-content-md-center'>
                       <div class='col col-lg-6'>
                         <div class='shadow p-3 mb-5 bg-white rounded'>
-                            <!-- int logo -->
-                            <div class='row justify-content-md-center'>
-                                <img src='$int_logo' height='60px' width='60px' alt='int image' class='rounded mx-auto d-block'>
-                                <div class='spinner-grow text-primary' role='status'>
-                                    <span class='sr-only'>Loading...</span>
-                                  </div>
-                            </div>
-                            <span> <b>$int_name</b> </span> || <span class='lead' style='font-size: 13px;'> $int_address </span>
+                            <span> <b>$int_name</b> </span>
                         </div>
                       </div>
                     </div>
@@ -103,7 +120,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         <div class='shadow-sm p-3 mb-5 bg-white rounded'>$crdate
                             <div>
                                 <!-- fot the ext bod -->
-                                <p><b>Dear Director/b></p>
+                                <p><b>Dear Director</b></p>
                                 <p>We wish to inform you that a <b>Vault - In</b> transaction recently occurred in your Vault.
                                 Please find below details of the transaction:</p>
                             </div>
@@ -111,7 +128,6 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                 <div class='shadow p-3 mb-5 bg-white rounded'>Transaction Details - <b>Vault - In</b></div>
                                 <table class='table table-borderless'>
                                     <tbody>
-                                        <div>
                                       <tr>
                                         <td style='font-size: 12px;'> <b>Transfer From</b></td>
                                         <td style='font-size: 12px;'>$tellname</td>
@@ -137,13 +153,13 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                         <td style='font-size: 12px;'>&#8358; $blnc</td>
                                       </tr>
                                     </tbody>
-                                </div>
+                                
                                   </table>
-                            </p>
+                                </p>
+                                </div>
                         </div>
                       </div>
                     </div>
-                  </div>
                 <!-- Optional JavaScript -->
                 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
                 <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
@@ -151,6 +167,9 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
               </body>
             </html>";
+                              }
+                            }
+                          }
             $mail->AltBody = "This is the plain text version of the email content";
             // mail system
             if(!$mail->send()) 
@@ -211,10 +230,28 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                       if (mysqli_num_rows($rult) > 0) {
                         while ($row = mysqli_fetch_array($rult))
                             {
+                              $remail = $row['email'];
+                              $qemail = "SELECT * FROM staff WHERE email = '$remail'";
+                              $qemail2 = mysqli_query($connection, $qemail);
+                              $rt = mysqli_fetch_array($qemail2);
+                              $role = $rt['org_role'];
+
+                              $org_role = $role;
+                              $queory = "SELECT * FROM org_role WHERE role = '$org_role'";
+                              $process = mysqli_query($connection, $queory);
+                              $rol = mysqli_fetch_array($process);
+                              $role_id = $rol['id'];
+
+                              $query2 = "SELECT * FROM permission WHERE role_id = '$role_id'";
+                              $process2 = mysqli_query($connection, $query2);
+                              $proce = mysqli_fetch_array($process2);
+                              $valut = $proce['valut'];
+
+                              if ($valut == 1 || $valut == "1") {
                               $mail = new PHPMailer;
                               $mail->From = $int_email;
                               $mail->FromName = $int_name;
-                              $mail->addAddress($row["email"]);
+                              $mail->addAddress($remail);
                               $mail->addReplyTo($int_email, "Reply");
                               $mail->isHTML(true);
                               $mail->Subject = "Transaction Alert from $int_name";
@@ -234,14 +271,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                       <div class='row justify-content-md-center'>
                                         <div class='col col-lg-6'>
                                           <div class='shadow p-3 mb-5 bg-white rounded'>
-                                              <!-- int logo -->
-                                              <div class='row justify-content-md-center'>
-                                                  <img src='$int_logo' height='60px' width='60px' alt='int image' class='rounded mx-auto d-block'>
-                                                  <div class='spinner-grow text-primary' role='status'>
-                                                      <span class='sr-only'>Loading...</span>
-                                                    </div>
-                                              </div>
-                                              <span> <b>$int_name</b> </span> || <span class='lead' style='font-size: 13px;'> $int_address </span>
+                                              <span> <b>$int_name</b> </span>
                                           </div>
                                         </div>
                                       </div>
@@ -250,7 +280,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                           <div class='shadow-sm p-3 mb-5 bg-white rounded'>$crdate
                                               <div>
                                                   <!-- fot the ext bod -->
-                                                  <p><b>Dear Director/b></p>
+                                                  <p><b>Dear Director</b></p>
                                                   <p>We wish to inform you that a <b>Vault - Out</b> transaction recently occurred in your Vault.
                                                   Please find below details of the transaction:</p>
                                               </div>
@@ -258,7 +288,6 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                                   <div class='shadow p-3 mb-5 bg-white rounded'>Transaction Details - <b>Vault - Out</b></div>
                                                   <table class='table table-borderless'>
                                                       <tbody>
-                                                          <div>
                                                         <tr>
                                                           <td style='font-size: 12px;'> <b>Transfer From</b></td>
                                                           <td style='font-size: 12px;'>$tellname</td>
@@ -284,13 +313,13 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                                           <td style='font-size: 12px;'>&#8358; $blnc</td>
                                                         </tr>
                                                       </tbody>
-                                                  </div>
+                                                  
                                                     </table>
-                                              </p>
+                                                  </p>
+                                                  </div>
                                           </div>
                                         </div>
                                       </div>
-                                    </div>
                                   <!-- Optional JavaScript -->
                                   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
                                   <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
@@ -300,6 +329,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                               </html>";
                               $mail->AltBody = "This is the plain text version of the email content";
                             }
+                          }
                           } 
             // mail system
             if(!$mail->send()) 
@@ -311,7 +341,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                {
                 $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
                 echo "error";
-                echo header ("Location: ../mfi/teller_journal.php?messag3=$randms");
+                echo header ("Location: ../mfi/teller_journal.php?message3=$randms");
                }
                     }
                     else{

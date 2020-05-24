@@ -263,7 +263,7 @@ if ($is_del == "0" && $is_del != NULL) {
                {
                    echo "Mailer Error: " . $mail->ErrorInfo;
                    $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
-                   echo header ("Location: ../mfi/transact.php?message=$randms");
+                   echo header ("Location: ../mfi/transact.php?message0=$randms");
                } else
                {
                    $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
