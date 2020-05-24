@@ -14,8 +14,11 @@ $ekaniE = $_SESSION["sek_email"];
 
 ?>
 <?php
+$rigits = 7;
 $sessint_id = $_SESSION["int_id"];
 $ctype = strtoupper($_POST['ctype']);
+$rand = str_pad(rand(0, pow(10, $rigits)-1), $rigits, '0', STR_PAD_LEFT);
+
 
 if($ctype == 'INDIVIDUAL')
 {
@@ -40,8 +43,8 @@ $address = $_POST['address'];
 $gender = $_POST['gender'];
 $date_of_birth = $_POST['date_of_birth'];
 $country = $_POST['country'];
-$state = $_POST['state'];
-$lga = $_POST['lga'];
+$state = $_POST['stated'];
+$lga = $_POST['lgka'];
 $bvn = $_POST['bvn'];
 $loan_status = "Not Active";
 $activation_date = date("Y-m-d");
@@ -100,7 +103,7 @@ $msg = "Image Failed";
 $query = "INSERT INTO client (int_id, loan_officer_id, client_type, account_type,
 display_name, account_no,
 firstname, lastname, middlename, mobile_no, mobile_no_2, email_address, address, gender, date_of_birth,
-branch_id, country, state_of_origin, lga, bvn, sms_active, email_active, id_card,
+branch_id, country, STATE_OF_ORIGIN, lga, bvn, sms_active, email_active, id_card,
 passport, signature, id_img_url, loan_status, submittedon_date, activation_date) VALUES ('{$sessint_id}', '{$loan_officer_id}', '{$ctype}',
 '{$acct_type}', '{$display_name}', '{$account_no}', '{$first_name}', '{$last_name}', '{$middlename}', '{$phone}', '{$phone2}',
 '{$email}', '{$address}', '{$gender}', '{$date_of_birth}', '{$branch}',
@@ -1189,10 +1192,13 @@ if ($connection->error) {
         }
     }
 }
-else {
-  $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-  echo "error";
- echo header ("Location: ../mfi/client.php?message5=$randms");
-   // echo header("location: ../mfi/client.php");
+else if
+  ($connection->error) {
+    try {   
+        throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
+    } catch(Exception $e ) {
+        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+        echo nl2br($e->getTraceAsString());
+    }
 }
 ?>
