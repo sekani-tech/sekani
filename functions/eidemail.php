@@ -2,13 +2,22 @@
 include("connect.php");
 session_start();
 require_once "../bat/phpmailer/PHPMailerAutoload.php";
+
+$emailu = $_SESSION["email"]; 
+$int_name = $_SESSION["int_name"];
+$int_email = $_SESSION["int_email"];
+$int_web = $_SESSION["int_web"];
+$int_phone = $_SESSION["int_phone"];
+$int_logo = $_SESSION["int_logo"];
+$int_address = $_SESSION["int_address"];
 $sessint_id = $_SESSION["int_id"];
-  $quy = "SELECT * FROM client WHERE int_id = '$sessint_id'";
+
+  $quy = "SELECT * FROM client WHERE int_id = '5'";
   $rult = mysqli_query($connection, $quy);
   if (mysqli_num_rows($rult) > 0) {
     while ($row = mysqli_fetch_array($rult))
         {
-          $remail = $row['email'];
+          $remail = $row['email_address'];
 $mail = new PHPMailer;
 $mail->From = $int_email;
 $mail->FromName = $int_name;
