@@ -163,9 +163,8 @@ if ($is_del == "0" && $is_del != NULL) {
             $mail = new PHPMailer;
             $mail->From = $int_email;
             $mail->FromName = $int_name;
-            $mail->addAddress($client_email, $clientt_name);
-            $mail->addAddress($staff_email, $staff_name);
-            $mail->addReplyTo($int_email, "Reply");
+            $mail->addAddress($client_email);
+            $mail->addReplyTo($int_email, "No Reply");
             $mail->isHTML(true);
             $mail->Subject = "Transaction Alert from $int_name";
             $mail->Body = "<!doctype html>
