@@ -12,7 +12,7 @@ $int_logo = $_SESSION["int_logo"];
 $int_address = $_SESSION["int_address"];
 $sessint_id = $_SESSION["int_id"];
 
-  $quy = "SELECT * FROM client WHERE int_id = '5'";
+  $quy = "SELECT * FROM client WHERE id = '1' && id = '132'";
   $rult = mysqli_query($connection, $quy);
   if (mysqli_num_rows($rult) > 0) {
     while ($row = mysqli_fetch_array($rult))
@@ -49,8 +49,8 @@ $mail->Body = "<!doctype html>
 <div class='row'>
   <div class='col col-lg-12'>
     <div class='shadow-sm p-3 mb-5 bg-white rounded'>
-      <img src='instimg/msg2.jpg'></img>
-      <img src='instimg/msg1.jpg'></img>
+      <img src='https://firebasestorage.googleapis.com/v0/b/recipeapp-6e1ce.appspot.com/o/msg2.jpg?alt=media&token=4d4ca2cf-4403-4ee6-8465-dec2335fad9e'></img>
+      <img src='https://firebasestorage.googleapis.com/v0/b/recipeapp-6e1ce.appspot.com/o/msg1.jpg?alt=media&token=a74042b2-be41-4534-8c1e-bfd127c7c2b0'></img>
     </div>
   </div>
 </div>
