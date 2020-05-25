@@ -117,8 +117,6 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                       width: 550px;
                                       height: auto;
                                       background-color: white;
-                                      border-top: 4px solid  #5d6a9e;
-                                      border-bottom: 4px solid  #5d6a9e;
                                   }
                                   .logo{
                                       margin-right:auto;
@@ -146,7 +144,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                     <div class='lon'>
                                       <div class='header'>
                                           <div class='logo'>
-                                          <img  style='height:100px; width:100px;'class='img' src='$int_logo'/>
+                                          <img style='margin-left: 225px; margin-right: auto; height:100px; width:100px;'class='img' src='$int_logo'/>
                                       </div>
                                   </div>
                                       <div class='main'>
@@ -316,8 +314,6 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                       width: 550px;
                                       height: auto;
                                       background-color: white;
-                                      border-top: 4px solid  #5d6a9e;
-                                      border-bottom: 4px solid  #5d6a9e;
                                   }
                                   .logo{
                                       margin-right:auto;
@@ -345,7 +341,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                     <div class='lon'>
                                       <div class='header'>
                                           <div class='logo'>
-                                          <img  style='height:100px; width:100px;'class='img' src='$int_logo'/>
+                                          <img style='margin-left: 225px; margin-right: auto; height:100px; width:100px;'class='img' src='$int_logo'/>
                                       </div>
                                   </div>
                                       <div class='main'>
