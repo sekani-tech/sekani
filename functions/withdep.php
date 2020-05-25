@@ -338,94 +338,113 @@ if ($is_del == "0" && $is_del != NULL) {
                 $mail->addReplyTo($int_email, "No Reply");
                 $mail->isHTML(true);
                 $mail->Subject = "Transaction Alert from $int_name";
-                $mail->Body = "<!doctype html>
-                <html lang='en'>
-                  <head>
-                    <!-- Required meta tags -->
-                    <meta charset='utf-8'>
-                    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-                    <!-- Bootstrap CSS -->
-                    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous'>
+                $mail->Body = "<!DOCTYPE html>
+                <html>
+                    <head>
+                        <style>
+                            body{
+                                background-color: #eceff3;
+                                font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                            }
+                            .main{
+                                margin-right: 25%;
+                                margin-left: 35%;
+                                width: 40%;
+                                height: 500px;
+                                background-color: white;
                 
-                    <title>Transaction Alert</title>
-                  </head>
-                  <body>
-                    <div class='container'>
-                        <div class='row justify-content-md-center'>
-                          <div class='col col-lg-6'>
-                            <div class='shadow p-3 mb-5 bg-white rounded'>
-                                <!-- int logo -->
-                                <div class='row justify-content-md-center'>
-                                    <img src='$int_logo' height='60px' width='60px' alt='int image' class='rounded mx-auto d-block'>
-                                    <div class='spinner-grow text-primary' role='status'>
-                                        <span class='sr-only'>Loading...</span>
-                                      </div>
-                                </div>
-                                <span> <b>$int_name</b> </span> || <span class='lead' style='font-size: 13px;'> $int_location </span>
-                            </div>
-                          </div>
+                            }
+                            .header{
+                                margin-right: 25%;
+                                margin-top: 5%;
+                                margin-left: 35%;
+                                width: 40%;
+                                height: auto;
+                                background-color: white;
+                                border-top: 4px solid  #5d6a9e;
+                                border-bottom: 4px solid  #5d6a9e;
+                            }
+                            .logo{
+                                margin-right: 25%;
+                                margin-left: 40%;
+                                width: 40%;
+                                height: auto;
+                                background-color: white;
+                
+                            }
+                            .text{
+                                padding: 20px;
+                                font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                            }
+                            table{
+                                padding:30px;
+                                width: 100%;
+                            }
+                            table td{
+                                font-size: 15px;
+                                color:rgb(65, 65, 65);
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class='header'>
+                            <div class='logo'>
+                            <img  style='height:100px; width:100px;'class='img' src=$int_logo/>
                         </div>
-                        <div class='row'>
-                          <div class='col col-lg-12'>
-                            <div class='shadow-sm p-3 mb-5 bg-white rounded'>$gen_date
-                                <div>
-                                    <!-- fot the ext bod -->
-                                    <p><b>Dear $clientt_name</b></p>
-                                    <p>We wish to inform you that a <b>$trans_type</b> transaction recently occurred on your bank account.
-                                    Please find below details of the transaction:</p>
-                                </div>
-                                <p>
-                                    <div class='shadow p-3 mb-5 bg-white rounded'>Transaction Details - <b>$trans_type</b></div>
-                                    <table class='table table-borderless'>
-                                        <tbody>
-                                            <div>
-                                          <tr>
-                                            <td> <b style='font-size: 12px;'>Account Number</b></td>
-                                            <td style='font-size: 12px;'>$account_display</td>
-                                          </tr>
-                                          <tr>
-                                            <td style='font-size: 12px;'> <b>Account Name</b></td>
-                                            <td style='font-size: 12px;'>$clientt_name</td>
-                                          </tr>
-                                          <tr>
-                                            <td style='font-size: 12px;'> <b>Reference</b></td>
-                                            <td style='font-size: 12px;'>$description</td>
-                                          </tr>
-                                          <tr>
-                                            <td style='font-size: 12px;'> <b>Reference Id</b></td>
-                                            <td style='font-size: 12px;'>$transid</td>
-                                          </tr>
-                                          <tr>
-                                            <td style='font-size: 12px;'> <b>Transaction Amount</b></td>
-                                            <td style='font-size: 12px;'>$amt</td>
-                                          </tr>
-                                          <tr>
-                                            <td style='font-size: 12px;'> <b>Transaction Date/Time</b></td>
-                                            <td style='font-size: 12px;'>$gen_date</td>
-                                          </tr>
-                                          <tr>
-                                            <td style='font-size: 12px;'> <b>Value Date</b></td>
-                                            <td style='font-size: 12px;'>$gends</td>
-                                          </tr>
-                                          <tr>
-                                            <td style='font-size: 12px;'> <b>Account Balance</b></td>
-                                            <td style='font-size: 12px;'>&#8358; $numberacct</td>
-                                          </tr>
-                                        </tbody>
-                                    </div>
-                                      </table>
-                                </p>
-                                <button type='button' class='btn btn-primary btn-lg btn-block'> <b style='font-size: 15px;'>Print Account Statement</b></button>
+                    </div>
+                        <div class='main'>
+                            <div class='text'>
+                                Dear $clientt_name,
+                                <h2 style='text-align:center;'>Notification of Debit Alert</h2>
+                                this is to notify you of an incoming credit to your account $acct_no,
+                                 by $int_name Kindly confirm with your bank.<br/><br/>
+                                 Please see the details below
                             </div>
-                          </div>
+                            <table>
+                                <tbody>
+                                    <div>
+                                  <tr>
+                                    <td> <b >Account Number</b></td>
+                                    <td >$account_display</td>
+                                  </tr>
+                                  <tr>
+                                    <td > <b>Account Name</b></td>
+                                    <td >$clientt_name</td>
+                                  </tr>
+                                  <tr>
+                                    <td > <b>Reference</b></td>
+                                    <td >$description</td>
+                                  </tr>
+                                  <tr>
+                                    <td > <b>Reference Id</b></td>
+                                    <td >$transid</td>
+                                  </tr>
+                                  <tr>
+                                    <td> <b>Transaction Amount</b></td>
+                                    <td>$amt</td>
+                                  </tr>
+                                  <tr>
+                                    <td> <b>Transaction Date/Time</b></td>
+                                    <td>$gen_date</td>
+                                  </tr>
+                                  <tr>
+                                    <td> <b>Value Date</b></td>
+                                    <td>$gends</td>
+                                  </tr>
+                                  <tr>
+                                    <td> <b>Account Balance</b></td>
+                                    <td>&#8358; $numberacct</td>
+                                  </tr>
+                                </tbody>
+                                <!-- Optional JavaScript -->
+                                <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                                <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
+                                <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous'></script>
+                                <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
+                              </body>
+                            </table>
                         </div>
-                      </div>
-                    <!-- Optional JavaScript -->
-                    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-                    <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
-                    <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous'></script>
-                    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
-                  </body>
+                    </body>
                 </html>";
                 $mail->AltBody = "This is the plain text version of the email content";
                 // mail system
@@ -659,94 +678,113 @@ if ($is_del == "0" && $is_del != NULL) {
             $mail->addReplyTo($int_email, "No Reply");
             $mail->isHTML(true);
             $mail->Subject = "Transaction Alert from $int_name";
-            $mail->Body = "<!doctype html>
-            <html lang='en'>
-              <head>
-                <!-- Required meta tags -->
-                <meta charset='utf-8'>
-                <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-                <!-- Bootstrap CSS -->
-                <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous'>
+            $mail->Body = "<!DOCTYPE html>
+            <html>
+                <head>
+                    <style>
+                        body{
+                            background-color: #eceff3;
+                            font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                        }
+                        .main{
+                            margin-right: 25%;
+                            margin-left: 35%;
+                            width: 40%;
+                            height: 500px;
+                            background-color: white;
             
-                <title>Transaction Alert</title>
-              </head>
-              <body>
-                <div class='container'>
-                    <div class='row justify-content-md-center'>
-                      <div class='col col-lg-6'>
-                        <div class='shadow p-3 mb-5 bg-white rounded'>
-                            <!-- int logo -->
-                            <div class='row justify-content-md-center'>
-                                <img src='$int_logo' height='60px' width='60px' alt='int image' class='rounded mx-auto d-block'>
-                                <div class='spinner-grow text-primary' role='status'>
-                                    <span class='sr-only'>Loading...</span>
-                                  </div>
-                            </div>
-                            <span> <b>$int_name</b> </span> || <span class='lead' style='font-size: 13px;'> $int_location </span>
-                        </div>
-                      </div>
+                        }
+                        .header{
+                            margin-right: 25%;
+                            margin-top: 5%;
+                            margin-left: 35%;
+                            width: 40%;
+                            height: auto;
+                            background-color: white;
+                            border-top: 4px solid  #5d6a9e;
+                            border-bottom: 4px solid  #5d6a9e;
+                        }
+                        .logo{
+                            margin-right: 25%;
+                            margin-left: 40%;
+                            width: 40%;
+                            height: auto;
+                            background-color: white;
+            
+                        }
+                        .text{
+                            padding: 20px;
+                            font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                        }
+                        table{
+                            padding:30px;
+                            width: 100%;
+                        }
+                        table td{
+                            font-size: 15px;
+                            color:rgb(65, 65, 65);
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class='header'>
+                        <div class='logo'>
+                        <img  style='height:100px; width:100px;'class='img' src=$int_logo/>
                     </div>
-                    <div class='row'>
-                      <div class='col col-lg-12'>
-                        <div class='shadow-sm p-3 mb-5 bg-white rounded'>$gen_date
-                            <div>
-                                <!-- fot the ext bod -->
-                                <p><b>Dear $clientt_name</b></p>
-                                <p>We wish to inform you that a <b>$trans_type</b> transaction recently occurred on your bank account.
-                                Please find below details of the transaction:</p>
-                            </div>
-                            <p>
-                                <div class='shadow p-3 mb-5 bg-white rounded'>Transaction Details - <b>$trans_type</b></div>
-                                <table class='table table-borderless'>
-                                    <tbody>
-                                        <div>
-                                      <tr>
-                                        <td> <b style='font-size: 12px;'>Account Number</b></td>
-                                        <td style='font-size: 12px;'>$account_display</td>
-                                      </tr>
-                                      <tr>
-                                        <td style='font-size: 12px;'> <b>Account Name</b></td>
-                                        <td style='font-size: 12px;'>$clientt_name</td>
-                                      </tr>
-                                      <tr>
-                                        <td style='font-size: 12px;'> <b>Reference</b></td>
-                                        <td style='font-size: 12px;'>$description</td>
-                                      </tr>
-                                      <tr>
-                                        <td style='font-size: 12px;'> <b>Reference Id</b></td>
-                                        <td style='font-size: 12px;'>$transid</td>
-                                      </tr>
-                                      <tr>
-                                        <td style='font-size: 12px;'> <b>Transaction Amount</b></td>
-                                        <td style='font-size: 12px;'>$amt</td>
-                                      </tr>
-                                      <tr>
-                                        <td style='font-size: 12px;'> <b>Transaction Date/Time</b></td>
-                                        <td style='font-size: 12px;'>$gen_date</td>
-                                      </tr>
-                                      <tr>
-                                        <td style='font-size: 12px;'> <b>Value Date</b></td>
-                                        <td style='font-size: 12px;'>$gends</td>
-                                      </tr>
-                                      <tr>
-                                        <td style='font-size: 12px;'> <b>Account Balance</b></td>
-                                        <td style='font-size: 12px;'>&#8358; $numberacct</td>
-                                      </tr>
-                                    </tbody>
-                                </div>
-                                  </table>
-                            </p>
-                            <button type='button' class='btn btn-primary btn-lg btn-block'> <b style='font-size: 15px;'>Print Account Statement</b></button>
+                </div>
+                    <div class='main'>
+                        <div class='text'>
+                            Dear $clientt_name,
+                            <h2 style='text-align:center;'>Notification of Debit Alert</h2>
+                            this is to notify you of an incoming credit to your account $acct_no,
+                             by $int_name Kindly confirm with your bank.<br/><br/>
+                             Please see the details below
                         </div>
-                      </div>
+                        <table>
+                            <tbody>
+                                <div>
+                              <tr>
+                                <td> <b >Account Number</b></td>
+                                <td >$account_display</td>
+                              </tr>
+                              <tr>
+                                <td > <b>Account Name</b></td>
+                                <td >$clientt_name</td>
+                              </tr>
+                              <tr>
+                                <td > <b>Reference</b></td>
+                                <td >$description</td>
+                              </tr>
+                              <tr>
+                                <td > <b>Reference Id</b></td>
+                                <td >$transid</td>
+                              </tr>
+                              <tr>
+                                <td > <b>Transaction Amount</b></td>
+                                <td >$amt</td>
+                              </tr>
+                              <tr>
+                                <td > <b>Transaction Date/Time</b></td>
+                                <td >$gen_date</td>
+                              </tr>
+                              <tr>
+                                <td > <b>Value Date</b></td>
+                                <td >$gends</td>
+                              </tr>
+                              <tr>
+                                <td > <b>Account Balance</b></td>
+                                <td >&#8358; $numberacct</td>
+                              </tr>
+                            </tbody>
+                            <!-- Optional JavaScript -->
+                            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                            <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
+                            <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous'></script>
+                            <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
+                          </body>
+                        </table>
                     </div>
-                  </div>
-                <!-- Optional JavaScript -->
-                <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-                <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
-                <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous'></script>
-                <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
-              </body>
+                </body>
             </html>";
             $mail->AltBody = "This is the plain text version of the email content";
             // mail system
