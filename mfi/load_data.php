@@ -6,7 +6,6 @@ if(isset($_POST["id"]))
 {
     if($_POST["id"] !='')
     {
-      
       $sql1 = "SELECT * FROM charge WHERE id = '".$_POST["id"]."'";
       $xs = '';
       $chg = '';
@@ -106,4 +105,3 @@ if(isset($_POST["id"]))
     echo $output;
 }
 ?>
-<!-- posting now -->

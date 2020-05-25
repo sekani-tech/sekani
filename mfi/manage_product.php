@@ -16,8 +16,8 @@ $destination = "index.php";
                   <h4 class="card-title">Create new Product</h4>
                   <p class="card-category">Fill in all important data</p>
                 </div>
-                <div class="card-body">
                 <form id="form" action="../functions/int_product_upload.php" method="POST">
+                <div class="card-body">
                 <div class = "row">
                     <div class = "col-md-12">
                       <div class = "form-group">
@@ -510,18 +510,17 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
                               <span>
                               Configure Fund sources for payment channels
                               </span>
-                              <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+                              <div id="acct_int">
+                              <div class="table-responsive">
+<table id="tabledat" class="table" cellspacing="0" style="width:100%">
          <thead>
            <th> <b> Payment Type </b></th>
            <th> <b>Assets Account <b></th>
          </thead>
-         <tbody>
-           <tr>
-             <th> <h5> Eco Bank </h5></th>
-             <th> <h5>GL </h5></th>
-           </tr>
-         </tbody>
-         </table>
+           </table>
+  </div>
+  </div>
+  <div id="show_payment"></div>
                             <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal2"><i class="material-icons">add</i></button>
                             <span>
                             Map Fees to Specific Income accounts
@@ -711,20 +710,26 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
          <label for="charge" class="form-align ">Payment</label>
          <script>
            $(document).ready(function () {
-             $('#payment_id').change(function () {
-               var id = $(this).val();
+             $('#run_pay').on("change keyup paste click", function () {
+               var id = $('#payment_id').val();
                var int_id = $('#int_id').val();
                var main_p = $('#main_p').val();
-               $.ajax({
+               var idx = $('#payment_id_x').val();
+              //  new
+               if (idx != '' && id !=  '') {
+                $.ajax({
                  url: "ajax_post/payment_product.php",
                  method: "POST",
-                 data:{id:id, int_id:int_id, main_p:main_p},
+                 data:{id:id, int_id:int_id, main_p:main_p, idx:idx},
                  success: function (data) {
                    $('#show_payment').html(data);
                    document.getElementById("ipayment_id").setAttribute("hidden", "");
                    document.getElementById("real_payment").removeAttribute("hidden");
                  }
                })
+               } else {
+                //  poor the internet
+               }
              });
            });
          </script>
@@ -739,10 +744,10 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
           </div>
           <div class="col-md-6">
           <div class="form-group">
-         <label for="charge" class="form-align ">Asset Account</label>
-              <select class="form-control form-control-sm" name="">
+         <label for="charge" class="form-align">Asset Account</label>
+              <select class="form-control form-control-sm" name="" id="payment_id_x">
               <option value="">--</option>
-              <?php echo fill_all($connection) ?>
+              <?php echo fill_asset($connection) ?>
             </select> 
           </div>
           </div>
@@ -750,7 +755,8 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" id="run_pay">Save changes</button>
+        <button type="button" class="btn btn-primary" id="run_pay2" hidden>Save changes</button>
       </div>
     </div>
   </div>
@@ -799,7 +805,7 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
          <label for="charge" class="form-align ">Income Account</label>
               <select class="form-control form-control-sm" name="">
               <option value="">--</option>
-              <?php echo fill_all($connection) ?>
+              <?php echo fill_in($connection) ?>
             </select> 
           </div>
           </div>
@@ -852,7 +858,7 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
          <label for="charge" class="form-align ">Income Account</label>
               <select class="form-control form-control-sm" name="">
               <option value="">--</option>
-              <?php echo fill_all($connection) ?>
+              <?php echo fill_in($connection) ?>
             </select> 
           </div>
           </div>
