@@ -66,18 +66,8 @@ if (isset($_GET["message1"])) {
 <?php
 // right now we will program
 // first step - check if this person is authorized
-$org_role = $_SESSION['org_role'];
-$query = "SELECT * FROM org_role WHERE role = '$org_role'";
-$process = mysqli_query($connection, $query);
-$role = mysqli_fetch_array($process);
-$role_id = $role['id'];
 
-$query2 = "SELECT * FROM permission WHERE role_id = '$role_id'";
-$process2 = mysqli_query($connection, $query2);
-$proce = mysqli_fetch_array($process2);
-$valut = $proce['loan_appv'];
-
-if ($valut == 1 || $valut == "1") {
+if ($loan_appv == 1 || $loan_appv == "1") {
 ?>
 <!-- <link href="vendor/css/addons/datatables.min.css" rel="stylesheet">
 <script type="text/javascript" src="vendor/js/addons/datatables.min.js"></script> -->

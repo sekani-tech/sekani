@@ -8,18 +8,7 @@ $destination = "client.php";
 <?php
 // right now we will program
 // first step - check if this person is authorized
-$org_role = $_SESSION['org_role'];
-$query = "SELECT * FROM org_role WHERE role = '$org_role'";
-$process = mysqli_query($connection, $query);
-$role = mysqli_fetch_array($process);
-$role_id = $role['id'];
-
-$query2 = "SELECT * FROM permission WHERE role_id = '$role_id'";
-$process2 = mysqli_query($connection, $query2);
-$proce = mysqli_fetch_array($process2);
-$valut = $proce['update_client'];
-$vali = 'corporate';
-if ($valut == 1 || $valut == "1") {
+if ($client_update == 1 || $client_update == "1") {
 ?>
 <?php
   $id = $_GET["edit"];
@@ -1456,7 +1445,7 @@ else if($ctype = 'CORPORATE'){
   $(document).ready(function(){
    swal({
     type: "error",
-    title: "Vault Authorization",
+    title: "Client Update Authority",
     text: "You Dont Have permission to Update clients",
    showConfirmButton: false,
     timer: 2000

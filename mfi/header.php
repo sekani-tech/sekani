@@ -32,6 +32,8 @@ if (count([$getpermission]) == 1) {
   $valut = $pms['valut'];
   $view_report = $pms['view_report'];
   $view_dashboard = $pms['view_dashboard'];
+  $client_update = $pms['update_client'];
+  $vault_email = $pms['vault_email'];
   $per_con = $pms['configuration'];
   $bch_id = $_SESSION["branch_id"];
 }
@@ -173,7 +175,7 @@ input[type=number] {
               Transaction
             </a>
             <div class="dropdown-menu">
-              <a href="transact.php" class="dropdown-item">Deposit/Withdrwal</a>
+              <a href="transact.php" class="dropdown-item">Deposit/Withdrawal</a>
               <a href="#" class="dropdown-item">FTD Booking</a>
               <a href="lend.php" class="dropdown-item">Book Loan</a>
               <!-- <a href="#" class="dropdown-item">Expense Posting</a> -->
