@@ -63,9 +63,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         '{$tid}', '{$amount}')";
                        $rin = mysqli_query($connection, $record);
                     if($rin){
-                        // echo a successful message
-
-                      $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' && org_role ='1'";
+                      $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' && org_role ='MD'";
                       $rult = mysqli_query($connection, $quy);
                       if (mysqli_num_rows($rult) > 0) {
                         while ($row = mysqli_fetch_array($rult))
@@ -86,135 +84,139 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                               $query2 = "SELECT * FROM permission WHERE role_id = '$role_id'";
                               $process2 = mysqli_query($connection, $query2);
                               $proce = mysqli_fetch_array($process2);
-                              $valut = $proce['vault_email'];
+                              $valut = $proce['valut'];
 
                               if ($valut == 1 || $valut == "1") {
-            $mail = new PHPMailer;
-            $mail->From = $int_email;
-            $mail->FromName = $int_name;
-            $mail->addAddress($remail);
-            $mail->addReplyTo($int_email, "Reply");
-            $mail->isHTML(true);
-            $mail->Subject = "Transaction Alert from $int_name";
-            $mail->Body = "<!DOCTYPE html>
-            <html>
-                <head>
-                    <style>
-                        .lon{
-                          height: 100%;
-                            background-color: #eceff3;
-                            font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                        }
-                        .main{
-                            margin-left: 35%;
-                            width: 400px;
-                            height: auto;
-                            background-color: white;
-            
-                        }
-                        .header{
-                            margin-left: 35%;
-                            width: 400px;
-                            height: auto;
-                            background-color: white;
-                            border-top: 4px solid  #5d6a9e;
-                            border-bottom: 4px solid  #5d6a9e;
-                        }
-                        .logo{
-                            width:auto;
-                            height: auto;
-                            background-color: white;
-            
-                        }
-                        .text{
-                            padding: 20px;
-                            font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                        }
-                        table{
-                            padding:30px;
-                            width: 100%;
-                        }
-                        table td{
-                            font-size: 15px;
-                            color:rgb(65, 65, 65);
-                        }
-                    </style>
-                </head>
-                <body>
-                  <div class='lon'>
-                    <div class='header'>
-                        <div class='logo'>
-                        <img  style='height:100px; width:100px;'class='img' src='$int_logo'/>
-                    </div>
-                </div>
-                    <div class='main'>
-                        <div class='text'>
-                            Dear $clientt_name,
-                            <h2 style='text-align:center;'>Notification of Vault Alert</h2>
-                            this is to notify you that a vault-In transaction has been made in $int_name,
-                             by $int_name Kindly confirm with your bank.<br/><br/>
-                             Please see the details below
-                        </div>
-                        <table>
-                            <tbody>
-                                <div>
-                              <tr>
-                                <td> <b >Account Number</b></td>
-                                <td >$account_display</td>
-                              </tr>
-                              <tr>
-                                <td > <b>Teller Name</b></td>
-                                <td >$tellname</td>
-                              </tr>
-                              <tr>
-                                <td > <b>Reference</b></td>
-                                <td >$description</td>
-                              </tr>
-                              <tr>
-                                <td > <b>Reference Id</b></td>
-                                <td >$transid</td>
-                              </tr>
-                              <tr>
-                                <td> <b>Transaction Amount</b></td>
-                                <td>$amt</td>
-                              </tr>
-                              <tr>
-                                <td> <b>Transaction Date/Time</b></td>
-                                <td>$transact_id</td>
-                              </tr>
-                              <tr>
-                                <td> <b>Value Date</b></td>
-                                <td>$transdate</td>
-                              </tr>
-                              <tr>
-                                <td> <b>Account Balance</b></td>
-                                <td>&#8358; $blnc</td>
-                              </tr>
-                            </tbody>
-                            <!-- Optional JavaScript -->
-                            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-                            <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
-                            <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous'></script>
-                            <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
-                          </body>
-                        </table>
-                    </div>
-                  </div>
-                </body>
-            </html>";
-                              }
+                              $mail = new PHPMailer;
+                              $mail->From = $int_email;
+                              $mail->FromName = $int_name;
+                              $mail->addAddress($remail);
+                              $mail->addReplyTo($int_email, "Reply");
+                              $mail->isHTML(true);
+                              $mail->Subject = "Transaction Alert from $int_name";
+                              $mail->Body = "<!DOCTYPE html>
+                              <html>
+                                  <head>
+                                  <style>
+                                  .lon{
+                                    height: 100%;
+                                      background-color: #eceff3;
+                                      font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                                  }
+                                  .main{
+                                      margin-right: auto;
+                                      margin-left: auto;
+                                      width: 550px;
+                                      height: auto;
+                                      background-color: white;
+                      
+                                  }
+                                  .header{
+                                      margin-right: auto;
+                                      margin-left: auto;
+                                      width: 550px;
+                                      height: auto;
+                                      background-color: white;
+                                      border-top: 4px solid  #5d6a9e;
+                                      border-bottom: 4px solid  #5d6a9e;
+                                  }
+                                  .logo{
+                                      margin-right:auto;
+                                      margin-left: auto;
+                                      width:auto;
+                                      height: auto;
+                                      background-color: white;
+                      
+                                  }
+                                  .text{
+                                      padding: 20px;
+                                      font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                                  }
+                                  table{
+                                      padding:30px;
+                                      width: 100%;
+                                  }
+                                  table td{
+                                      font-size: 15px;
+                                      color:rgb(65, 65, 65);
+                                  }
+                              </style>
+                                  </head>
+                                  <body>
+                                    <div class='lon'>
+                                      <div class='header'>
+                                          <div class='logo'>
+                                          <img  style='height:100px; width:100px;'class='img' src='$int_logo'/>
+                                      </div>
+                                  </div>
+                                      <div class='main'>
+                                          <div class='text'>
+                                              Dear $clientt_name,
+                                              <h2 style='text-align:center;'>Notification of Vault Alert</h2>
+                                              this is to notify you that a vault-In transaction has been made in $int_name,
+                                               by $int_name Kindly confirm with your bank.<br/><br/>
+                                               Please see the details below
+                                          </div>
+                                          <table>
+                                              <tbody>
+                                                  <div>
+                                                <tr>
+                                                  <td> <b >Account Number</b></td>
+                                                  <td >$account_display</td>
+                                                </tr>
+                                                <tr>
+                                                  <td > <b>Teller Name</b></td>
+                                                  <td >$tellname</td>
+                                                </tr>
+                                                <tr>
+                                                  <td > <b>Reference</b></td>
+                                                  <td >$description</td>
+                                                </tr>
+                                                <tr>
+                                                  <td > <b>Reference Id</b></td>
+                                                  <td >$transid</td>
+                                                </tr>
+                                                <tr>
+                                                  <td> <b>Transaction Amount</b></td>
+                                                  <td>$amt</td>
+                                                </tr>
+                                                <tr>
+                                                  <td> <b>Transaction Date/Time</b></td>
+                                                  <td>$transact_id</td>
+                                                </tr>
+                                                <tr>
+                                                  <td> <b>Value Date</b></td>
+                                                  <td>$transdate</td>
+                                                </tr>
+                                                <tr>
+                                                  <td> <b>Account Balance</b></td>
+                                                  <td>&#8358; $blnc</td>
+                                                </tr>
+                                              </tbody>
+                                              <!-- Optional JavaScript -->
+                                              <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                                              <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
+                                              <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous'></script>
+                                              <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
+                                            </body>
+                                          </table>
+                                      </div>
+                                    </div>
+                                  </body>
+                              </html>";
+                              $mail->AltBody = "This is the plain text version of the email content";
                             }
                           }
-            $mail->AltBody = "This is the plain text version of the email content";
+                          } 
             // mail system
             if(!$mail->send()) 
                {
-                $_SESSION["Lack_of_intfund_$randms"] = "";
+                $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
                 echo "error";
                 echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
                } else
                {
-                $_SESSION["Lack_of_intfund_$randms"] = "";
+                $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
                 echo "error";
                 echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
                }
@@ -294,46 +296,50 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                               $mail->Body = "<!DOCTYPE html>
                               <html>
                                   <head>
-                                      <style>
-                                          .lon{
-                                            height: 100%;
-                                              background-color: #eceff3;
-                                              font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                                          }
-                                          .main{
-                                              margin-left: 35%;
-                                              width: 400px;
-                                              height: auto;
-                                              background-color: white;
-                              
-                                          }
-                                          .header{
-                                              margin-left: 35%;
-                                              width: 400px;
-                                              height: auto;
-                                              background-color: white;
-                                              border-top: 4px solid  #5d6a9e;
-                                              border-bottom: 4px solid  #5d6a9e;
-                                          }
-                                          .logo{
-                                              width:auto;
-                                              height: auto;
-                                              background-color: white;
-                              
-                                          }
-                                          .text{
-                                              padding: 20px;
-                                              font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                                          }
-                                          table{
-                                              padding:30px;
-                                              width: 100%;
-                                          }
-                                          table td{
-                                              font-size: 15px;
-                                              color:rgb(65, 65, 65);
-                                          }
-                                      </style>
+                                  <style>
+                                  .lon{
+                                    height: 100%;
+                                      background-color: #eceff3;
+                                      font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                                  }
+                                  .main{
+                                      margin-right: auto;
+                                      margin-left: auto;
+                                      width: 550px;
+                                      height: auto;
+                                      background-color: white;
+                      
+                                  }
+                                  .header{
+                                      margin-right: auto;
+                                      margin-left: auto;
+                                      width: 550px;
+                                      height: auto;
+                                      background-color: white;
+                                      border-top: 4px solid  #5d6a9e;
+                                      border-bottom: 4px solid  #5d6a9e;
+                                  }
+                                  .logo{
+                                      margin-right:auto;
+                                      margin-left: auto;
+                                      width:auto;
+                                      height: auto;
+                                      background-color: white;
+                      
+                                  }
+                                  .text{
+                                      padding: 20px;
+                                      font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                                  }
+                                  table{
+                                      padding:30px;
+                                      width: 100%;
+                                  }
+                                  table td{
+                                      font-size: 15px;
+                                      color:rgb(65, 65, 65);
+                                  }
+                              </style>
                                   </head>
                                   <body>
                                     <div class='lon'>

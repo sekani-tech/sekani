@@ -341,51 +341,50 @@ if ($is_del == "0" && $is_del != NULL) {
                 $mail->Body = "<!DOCTYPE html>
                 <html>
                     <head>
-                        <style>
-                            .lon{
-                              height: 100%;
-                                background-color: #eceff3;
-                                font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                            }
-                            .main{
-                                /* margin-right: 25%; */
-                                margin-left: 35%;
-                                width: 400px;
-                                height: auto;
-                                background-color: white;
-                
-                            }
-                            .header{
-                                /* margin-right: 25%;
-                                margin-top: 5%; */
-                                margin-left: 35%;
-                                width: 400px;
-                                height: auto;
-                                background-color: white;
-                                border-top: 4px solid  #5d6a9e;
-                                border-bottom: 4px solid  #5d6a9e;
-                            }
-                            .logo{
-                                /* margin-right: 25%;
-                                margin-left: 40%; */
-                                width:auto;
-                                height: auto;
-                                background-color: white;
-                
-                            }
-                            .text{
-                                padding: 20px;
-                                font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                            }
-                            table{
-                                padding:30px;
-                                width: 100%;
-                            }
-                            table td{
-                                font-size: 15px;
-                                color:rgb(65, 65, 65);
-                            }
-                        </style>
+                    <style>
+                    .lon{
+                      height: 100%;
+                        background-color: #eceff3;
+                        font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                    }
+                    .main{
+                        margin-right: auto;
+                        margin-left: auto;
+                        width: 550px;
+                        height: auto;
+                        background-color: white;
+        
+                    }
+                    .header{
+                        margin-right: auto;
+                        margin-left: auto;
+                        width: 550px;
+                        height: auto;
+                        background-color: white;
+                        border-top: 4px solid  #5d6a9e;
+                        border-bottom: 4px solid  #5d6a9e;
+                    }
+                    .logo{
+                        margin-right:auto;
+                        margin-left: auto;
+                        width:auto;
+                        height: auto;
+                        background-color: white;
+        
+                    }
+                    .text{
+                        padding: 20px;
+                        font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                    }
+                    table{
+                        padding:30px;
+                        width: 100%;
+                    }
+                    table td{
+                        font-size: 15px;
+                        color:rgb(65, 65, 65);
+                    }
+                </style>
                     </head>
                     <body>
                       <div class='lon'>
@@ -684,51 +683,50 @@ if ($is_del == "0" && $is_del != NULL) {
             $mail->Body = "<!DOCTYPE html>
             <html>
                 <head>
-                    <style>
-                        .lon{
-                          height: 100%;
-                            background-color: #eceff3;
-                            font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                        }
-                        .main{
-                            /* margin-right: 25%; */
-                            margin-left: 35%;
-                            width: 400px;
-                            height: auto;
-                            background-color: white;
-            
-                        }
-                        .header{
-                            /* margin-right: 25%;
-                            margin-top: 5%; */
-                            margin-left: 35%;
-                            width: 400px;
-                            height: auto;
-                            background-color: white;
-                            border-top: 4px solid  #5d6a9e;
-                            border-bottom: 4px solid  #5d6a9e;
-                        }
-                        .logo{
-                            /* margin-right: 25%;
-                            margin-left: 40%; */
-                            width:auto;
-                            height: auto;
-                            background-color: white;
-            
-                        }
-                        .text{
-                            padding: 20px;
-                            font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                        }
-                        table{
-                            padding:30px;
-                            width: 100%;
-                        }
-                        table td{
-                            font-size: 15px;
-                            color:rgb(65, 65, 65);
-                        }
-                    </style>
+                <style>
+                .lon{
+                  height: 100%;
+                    background-color: #eceff3;
+                    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                }
+                .main{
+                    margin-right: auto;
+                    margin-left: auto;
+                    width: 550px;
+                    height: auto;
+                    background-color: white;
+    
+                }
+                .header{
+                    margin-right: auto;
+                    margin-left: auto;
+                    width: 550px;
+                    height: auto;
+                    background-color: white;
+                    border-top: 4px solid  #5d6a9e;
+                    border-bottom: 4px solid  #5d6a9e;
+                }
+                .logo{
+                    margin-right:auto;
+                    margin-left: auto;
+                    width:auto;
+                    height: auto;
+                    background-color: white;
+    
+                }
+                .text{
+                    padding: 20px;
+                    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                }
+                table{
+                    padding:30px;
+                    width: 100%;
+                }
+                table td{
+                    font-size: 15px;
+                    color:rgb(65, 65, 65);
+                }
+            </style>
                 </head>
                 <body>
                   <div class='lon'>
