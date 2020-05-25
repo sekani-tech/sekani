@@ -134,18 +134,12 @@ else if (isset($_GET["message5"])) {
 <?php
 // right now we will program
 // first step - check if this person is authorized
-$org_role = $_SESSION['org_role'];
-$query = "SELECT * FROM org_role WHERE role = '$org_role'";
-$process = mysqli_query($connection, $query);
-$role = mysqli_fetch_array($process);
-$role_id = $role['id'];
+// $query = "SELECT * FROM org_role WHERE role = '$org_role'";
+// $process = mysqli_query($connection, $query);
+// $role = mysqli_fetch_array($process);
+// $role_id = $role['id'];
 
-$query2 = "SELECT * FROM permission WHERE role_id = '$role_id'";
-$process2 = mysqli_query($connection, $query2);
-$proce = mysqli_fetch_array($process2);
-$valut = $proce['configuration'];
-
-if ($valut == 1 || $valut == "1") {
+if ($per_con == 1 || $per_con == "1") {
 ?>
   <!-- Content added here -->
   <div class="content">
@@ -449,8 +443,8 @@ if ($valut == 1 || $valut == "1") {
   $(document).ready(function(){
    swal({
     type: "error",
-    title: "Vault Authorization",
-    text: "You Dont Have Access to configurations",
+    title: "Configuration Permission Denied",
+    text: "You Dont Have Access to configuration",
    showConfirmButton: false,
     timer: 2000
     }).then(

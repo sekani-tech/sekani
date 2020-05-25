@@ -21,7 +21,8 @@
 ?>
 <?php
 // this section is for permissions
-$getpermission = mysqli_query($connection, "SELECT * FROM `permission` WHERE role_id = '$staff_id' && int_id = '$sessint_id'");
+$org_role = $_SESSION['org_role'];
+$getpermission = mysqli_query($connection, "SELECT * FROM `permission` WHERE role_id = '$org_role' && int_id = '$sessint_id'");
 if (count([$getpermission]) == 1) {
   $pms = mysqli_fetch_array($getpermission);
   $can_transact = $pms['trans_appv'];
@@ -31,7 +32,7 @@ if (count([$getpermission]) == 1) {
   $valut = $pms['valut'];
   $view_report = $pms['view_report'];
   $view_dashboard = $pms['view_dashboard'];
-  $configuration = $pms['configuration'];
+  $per_con = $pms['configuration'];
   $bch_id = $_SESSION["branch_id"];
 }
 ?>

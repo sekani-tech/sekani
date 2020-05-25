@@ -137,7 +137,7 @@ if (isset($_GET["edit"])) {
                   $out = '';
                   while ($row = mysqli_fetch_array($res))
                   {
-                    $out .= '<option value="'.$row["role"].'">' .$row["role"]. '</option>';
+                    $out .= '<option value="'.$row["id"].'">' .$row["role"]. '</option>';
                   }
                   return $out;
                   }
