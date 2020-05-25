@@ -29,25 +29,25 @@ $destination = "index.php";
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Name *:</label>
-                        <input type="text"  name="name" class="form-control"  id="">
+                        <input type="text"  name="name" class="form-control"  id="" required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Short Loan Name *</label>
-                        <input type="text" class="form-control" name="short_name" value="" placeholder="Short Name..." >
+                        <input type="text" class="form-control" name="short_name" value="" placeholder="Short Name..." required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="loanDescription" >Description *</label>
-                        <input type="text" class="form-control" name="description" value="" placeholder="Description...." >
+                        <input type="text" class="form-control" name="description" value="" placeholder="Description...." required>
                       </div>
                     </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="installmentAmount" >Installment Amount in Multiples</label>
-                          <input type="text" class="form-control" name="in_amt_multiples" value="">
+                          <input type="text" class="form-control" name="in_amt_multiples" value="" required>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -55,13 +55,13 @@ $destination = "index.php";
                           <label for="principal" >Principal</label>
                           <div class="row">
                             <div class="col-md-4">
-                              <input type="text" class="form-control" name="principal_amount" value="" placeholder="Default" >
+                              <input type="text" class="form-control" name="principal_amount" value="" placeholder="Default" required>
                             </div>
                             <div class="col-md-4">
-                             <input type="text" class="form-control" name="min_principal_amount" value="" placeholder="Min" >
+                             <input type="text" class="form-control" name="min_principal_amount" value="" placeholder="Min" required>
                             </div>
                             <div class="col-md-4">
-                              <input type="text" class="form-control" name="max_principal_amount" value="" placeholder="Max" >
+                              <input type="text" class="form-control" name="max_principal_amount" value="" placeholder="Max" required>
                             </div>
                           </div>
                         </div>
@@ -71,13 +71,13 @@ $destination = "index.php";
                           <label for="loanTerms" >Loan Term</label>
                           <div class="row">
                             <div class="col-md-4">
-                              <input type="text" class="form-control" name="loan_term" value="" placeholder="Default" >
+                              <input type="text" class="form-control" name="loan_term" value="" placeholder="Default" required>
                             </div>
                             <div class="col-md-4">
-                              <input type="text" class="form-control" name="min_loan_term" value="" placeholder="Min" >
+                              <input type="text" class="form-control" name="min_loan_term" value="" placeholder="Min" required>
                           </div>
                             <div class="col-md-4">
-                              <input type="text" class="form-control" name="max_loan_term" value="" placeholder="Max" >
+                              <input type="text" class="form-control" name="max_loan_term" value="" placeholder="Max" required>
                             </div>
                           </div>
                         </div>
@@ -87,7 +87,7 @@ $destination = "index.php";
                         <label for="repaymentFrequency" >Repayment Frequency *</label>
                         <div class="row">
                         <div class="col-md-8">
-                          <input type="text" class="form-control " name="repayment_frequency" value="" >
+                          <input type="text" class="form-control " name="repayment_frequency" value="" required>
                         </div>
                         <div class="col-md-4">
                         <select class="form-control" name="repayment_every">
@@ -104,13 +104,13 @@ $destination = "index.php";
                           <label for="interestRate" >Interest Rate</label>
                           <div class="row">
                             <div class="col-md-4">
-                              <input type="text" class="form-control" name="interest_rate" value="" placeholder="Default" >
+                              <input type="text" class="form-control" name="interest_rate" value="" placeholder="Default" required>
                             </div>
                             <div class="col-md-4">
-                              <input type="text" class="form-control" name="min_interest_rate" value="" placeholder="Min" >
+                              <input type="text" class="form-control" name="min_interest_rate" value="" placeholder="Min" required>
                             </div>
                             <div class="col-md-4">
-                              <input type="text" class="form-control" name="max_interest_rate" value="" placeholder="Max" >
+                              <input type="text" class="form-control" name="max_interest_rate" value="" placeholder="Max" required>
                             </div>
                           </div>
                         </div>
@@ -140,19 +140,19 @@ $destination = "index.php";
                      
                       <div class="form-group">
                         <label for="loanDescription" >Grace on principal payment</label>
-                        <input type="text" class="form-control" name="grace_on_principal" value="">
+                        <input type="text" class="form-control" name="grace_on_principal" value="" required>
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="loanDescription" >Grace on interest payment</label>
-                        <input type="text" class="form-control" name="grace_on_interest" value="">
+                        <input type="text" class="form-control" name="grace_on_interest" value="" required>
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="loanDescription" >Grace on interest charged</label>
-                        <input type="text" class="form-control" name="grace_on_interest_charged" value="">
+                        <input type="text" class="form-control" name="grace_on_interest_charged" value="" required>
                       </div>
                     </div>
                     </div>
@@ -203,14 +203,14 @@ $destination = "index.php";
                         </div>
                       </div>
                       <!-- auto desburse should be disabled -->
-                      <div class="col-md-6" hidden>
+                      <!-- <div class="col-md-6" hidden>
                         <div class="form-group">
                           <label for="autoDisburse" >Auto Disburse </label>
                           <select class="form-control" name="auto_disburse" required>
                             <option value="yes">yes</option>
                           </select>
                         </div>
-                      </div>
+                      </div> -->
                       <!-- <div class="col-md-6">
                         <div class="form-group">
                             <label for="requireSavingsAcct" >Requires Linked Savings Account </label>
@@ -264,7 +264,7 @@ $destination = "index.php";
                       </div>
                       <div id="takeme">
                       <input type="text" hidden value="<?php echo $main_p; ?>" id="main_p">
-                      <select name="charge_id"class="form-control" id="charges">
+                      <select name="charge_id" class="form-control" id="charges">
                         <option value="">select an option</option>
                         <?php echo fill_charges($connection); ?>
                       </select>
@@ -436,28 +436,17 @@ $destination = "index.php";
                               }
                               ?>
                               <div class="col-md-8">
-                              <label for="charge" class="form-align ">Fund Source</label>
-                              <select class="form-control form-control-sm" name="">
+                              <label for="charge" class="form-align">Fund Source</label>
+                              <select class="form-control form-control-sm" name="asst_fund_src">
                                 <option value="">--</option>
                                 <?php echo fill_asset($connection) ?>
                               </select>
                               </div>
-                              <!-- <span>
-                              <a type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="
-The Fund Source is the pool of funds used to disburse loans from (such as your bank account). This account is credited when the loan is disbursed and debited when a repayment is made.">
-                                Read
-                              </a>
-                                </span> -->
-                              <!-- <span class="input-group-btn">
-                                     <button type="button" class="btn btn-fab btn-round btn-primary">
-                                      <i class="material-icons">attach_file</i>
-                                     </button>
-                                     </span> -->
                             </div>
                             <div class="form-group">
                             <div class="col-md-8">
                             <label for="charge" class="form-align ">Loan Portfolio</label>
-                            <select class="form-control form-control-sm" name="">
+                            <select class="form-control form-control-sm" name="asst_loan_port">
                               <option value="">--</option>
                               <?php echo fill_asset($connection) ?>
                             </select>
@@ -465,7 +454,7 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
                           </div>
                           </div>
                       <h5 class="card-title">Liabilities</h5>
-                      <?php 
+                      <?php
                               function fill_lia($connection)
                               {
                                 $sint_id = $_SESSION["int_id"];
@@ -483,7 +472,7 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
                         <div class="form-group">
                         <div class="col-md-8">
                             <label for="charge" class="form-align ">Overpayments</label>
-                            <select class="form-control form-control-sm" name="">
+                            <select class="form-control form-control-sm" name="li_overpayment">
                               <option value="">--</option>
                               <?php echo fill_lia($connection)?>
                             </select>
@@ -492,7 +481,7 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
                           <div class="form-group">
                           <div class="col-md-8">
                             <label for="charge" class="form-align ">Suspended Income</label>
-                            <select class="form-control form-control-sm" name="">
+                            <select class="form-control form-control-sm" name="li_suspended_income">
                               <option value="">--</option>
                               <?php echo fill_lia($connection)?>
                             </select>
@@ -525,44 +514,48 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
                             <span>
                             Map Fees to Specific Income accounts
                             </span>
+                            <div id="acct_2">
+                              <div class="table-responsive">
                               <table id="tabledat" class="table" cellspacing="0" style="width:100%">
          <thead>
            <th> <b> Fee </b></th>
            <th> <b>Income Account <b></th>
          </thead>
-         <tbody>
-           <tr>
-             <th> <h5> Eco Bank </h5></th>
-             <th> <h5>GL </h5></th>
-           </tr>
-         </tbody>
          </table>
+                              </div>
+                            </div>
+                              <div id="show_payment2"></div>
                             <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal3"><i class="material-icons">add</i></button>
                             <span>
                             Map Penalties to Specific income accounts
                             </span>
+                            <div id="acct_3">
+                              <div class="table-responsive">
                               <table id="tabledat" class="table" cellspacing="0" style="width:100%">
          <thead>
            <th> <b> Penalty </b></th>
            <th> <b> Income Account <b></th>
          </thead>
-         <tbody>
+         <!-- <tbody>
            <tr>
              <th> <h5> Eco Bank </h5></th>
              <th> <h5>GL </h5></th>
            </tr>
-         </tbody>
+         </tbody> -->
          </table>
+                              </div>
+                            </div>
+                              <div id="show_payment3"></div>
                             </div>
                           <!-- <div class="col-md-8"> -->
                           <!-- </div> -->
                         </div>
                         <div class="row">
-                        <div class="col-md-6">            
+                        <div class="col-md-6">
                       <h5 class="card-title">Income</h5>
                       <div class="position-relative form-group">
                           <div class="form-group">
-                          <?php 
+                          <?php
                               function fill_in($connection)
                               {
                                 $sint_id = $_SESSION["int_id"];
@@ -578,16 +571,16 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
                               ?>
                           <div class="col-md-8">
                               <label for="charge" class="form-align ">Income for Interest</label>
-                              <select class="form-control form-control-sm" name="">
+                              <select class="form-control form-control-sm" name="inc_interest">
                                 <option value="">--</option>
                                 <?php echo fill_in($connection) ?>
-                              </select> 
+                              </select>
                           </div>
                           </div>
                           <div class="form-group">
                           <div class="col-md-8">
                               <label for="charge" class="form-align ">Income from Fees</label>
-                              <select class="form-control form-control-sm" name="">
+                              <select class="form-control form-control-sm" name="inc_fees">
                                 <option value="">--</option>
                                 <?php echo fill_in($connection) ?>
                               </select>
@@ -596,7 +589,7 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
                           <div class="form-group">
                           <div class="col-md-8">
                               <label for="charge" class="form-align ">Income from Penalties</label>
-                              <select class="form-control form-control-sm" name="">
+                              <select class="form-control form-control-sm" name="inc_penalties">
                                 <option value="">--</option>
                                 <?php echo fill_in($connection) ?>
                               </select>
@@ -605,21 +598,20 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
                           <div class="form-group">
                           <div class="col-md-8">
                               <label for="charge" class="form-align ">Income from Recovery</label>
-                              <select class="form-control form-control-sm" name="">
+                              <select class="form-control form-control-sm" name="inc_recovery">
                                 <option value="">--</option>
                                 <?php echo fill_in($connection) ?>
                               </select>
                           </div>
                           </div>
-                          <div class="form-group">
+                          <!-- <div class="form-group">
                           <div class="col-md-8">
                               <label for="charge" class="form-align ">Income from Recovery</label>
                               <select class="form-control form-control-sm" name="">
                                 <option value="">--</option>
-                                <?php echo fill_in($connection) ?>
                               </select>
                           </div>
-                          </div>
+                          </div> -->
                         </div>
                         <!-- next -->
                         <h5 class="card-title">Expenses</h5>
@@ -641,7 +633,7 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
                           <div class="form-group">
                           <div class="col-md-8">
                               <label for="charge" class="form-align ">Losses Written Off</label>
-                              <select class="form-control form-control-sm" name="">
+                              <select class="form-control form-control-sm" name="exp_loss_written_off">
                                 <option value="">--</option>
                                 <?php echo fill_exp($connection) ?>
                               </select> 
@@ -650,7 +642,7 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
                           <div class="form-group">
                           <div class="col-md-8">
                               <label for="charge" class="form-align ">Interest Written Off</label>
-                              <select class="form-control form-control-sm" name="">
+                              <select class="form-control form-control-sm" name="exp_interest_written_off">
                                 <option value="">--</option>
                                 <?php echo fill_exp($connection) ?>
                               </select>
@@ -776,8 +768,8 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
           <div class="col-md-6">
           <div class="form-group">
           <?php 
-                              function fill_fee($connection)
-                              {
+              function fill_fee($connection)
+                {
                                 $sint_id = $_SESSION["int_id"];
                                 $getacct = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE name LIKE '%FEE%' && parent_id = '0' && int_id = '$sint_id'");
                                 $cx = mysqli_fetch_array($getacct);
@@ -794,16 +786,44 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
                               }
                               ?>
          <label for="charge" class="form-align ">Fee</label>
-              <select class="form-control form-control-sm" name="">
+         <script>
+           $(document).ready(function () {
+             $('#run_pay3').on("change keyup paste click", function () {
+               var id2 = $('#payment_id2').val();
+               var int_id = $('#int_id').val();
+               var main_p = $('#main_p').val();
+               var idx2 = $('#payment_id_x2').val();
+              //  new
+               if (idx2 != '' && id2 !=  '') {
+                $.ajax({
+                 url: "ajax_post/payment_fee.php",
+                 method: "POST",
+                 data:{id2:id2, int_id:int_id, main_p:main_p, idx2:idx2},
+                 success: function (data) {
+                   $('#show_payment2').html(data);
+                   document.getElementById("ipayment_id2").setAttribute("hidden", "");
+                   document.getElementById("real_payment2").removeAttribute("hidden");
+                 }
+               })
+               } else {
+                //  poor the internet
+               }
+             });
+           });
+         </script>
+         <div id="real_payment2" hidden></div>
+         <div id="ipayment_id2">
+         <select class="form-control form-control-sm" name="" id="payment_id2">
               <option value="">--</option>
               <?php echo fill_fee($connection) ?>
-            </select> 
+            </select>
+         </div>
           </div>
           </div>
           <div class="col-md-6">
           <div class="form-group">
          <label for="charge" class="form-align ">Income Account</label>
-              <select class="form-control form-control-sm" name="">
+              <select class="form-control form-control-sm" name="" id="payment_id_x2">
               <option value="">--</option>
               <?php echo fill_in($connection) ?>
             </select> 
@@ -813,7 +833,8 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" id="run_pay3">Save changes</button>
+        <button type="button" class="btn btn-primary" id="run_pay4" hidden>Save changes</button>
       </div>
     </div>
   </div>
@@ -847,16 +868,44 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
                               }
                               ?>
          <label for="charge" class="form-align ">Penalty</label>
-              <select class="form-control form-control-sm" name="">
+         <script>
+           $(document).ready(function () {
+             $('#run_pay5').on("change keyup paste click", function () {
+               var id2 = $('#payment_id3').val();
+               var int_id = $('#int_id').val();
+               var main_p = $('#main_p').val();
+               var idx2 = $('#payment_id_x3').val();
+              //  new
+               if (idx2 != '' && id2 !=  '') {
+                $.ajax({
+                 url: "ajax_post/payment_pen.php",
+                 method: "POST",
+                 data:{id2:id2, int_id:int_id, main_p:main_p, idx2:idx2},
+                 success: function (data) {
+                   $('#show_payment3').html(data);
+                   document.getElementById("ipayment_id3").setAttribute("hidden", "");
+                   document.getElementById("real_payment3").removeAttribute("hidden");
+                 }
+               })
+               } else {
+                //  poor the internet
+               }
+             });
+           });
+         </script>
+         <div id="real_payment3"></div>
+         <div id="ipayment_id3">
+         <select class="form-control form-control-sm" name="" id="payment_id3">
               <option value="">--</option>
               <?php echo fill_pen($connection) ?>
             </select> 
+         </div>
           </div>
           </div>
           <div class="col-md-6">
           <div class="form-group">
          <label for="charge" class="form-align ">Income Account</label>
-              <select class="form-control form-control-sm" name="">
+              <select class="form-control form-control-sm" name="" id="payment_id_x3">
               <option value="">--</option>
               <?php echo fill_in($connection) ?>
             </select> 
@@ -866,7 +915,8 @@ The Fund Source is the pool of funds used to disburse loans from (such as your b
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" id="run_pay5">Save changes</button>
+        <button type="button" class="btn btn-primary" id="run_pay6" hidden>Save changes</button>
       </div>
     </div>
   </div>
