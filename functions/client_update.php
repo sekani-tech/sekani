@@ -350,7 +350,7 @@ else if($ctype == 'CORPORATE'){
         $updated_by = $_SESSION["user_id"];
         $updated_on = date("Y-m-d");
 
-        $queryx = "UPDATE client SET loan_officer_id = '$account_officer', branch_id = '$bran', account_no = '$acc_of', account_type = '$acct_type',
+        $queryx = "UPDATE client SET loan_officer_id = '$account_officer', branch_id = '$bran', account_no = '$account_no', account_type = '$acct_type',
         firstname = '$regname', display_name = '$regname', date_of_birth = '$regdate', updated_on = '$updated_on', updated_by = '$updated_by', email_address = '$regemail', ADDRESS = '$regaddress', COUNTRY = '$',
           rc_number = '$rcno', sig_one = '$signame1', sig_two = '$signame2', sig_three = '$signame3', sig_address_one = '$address1', sig_address_two = '$address2', sig_address_three = '$address3', sig_phone_one = '$phone1', sig_phone_two = '$phone2', sig_phone_three = '$phone3',
            sig_gender_one = '$gender1', sig_gender_two = '$gender2', sig_gender_three = '$gender3', sig_state_one = '$state1', sig_state_two = '$state2', sig_state_three = '$state3', sig_lga_one = '$lga1', sig_lga_two = '$lga2', sig_lga_three = '$lga3',
