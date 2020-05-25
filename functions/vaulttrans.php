@@ -65,7 +65,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                     if($rin){
                         // echo a successful message
 
-                      $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' && org_role ='MD'";
+                      $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' && org_role ='1'";
                       $rult = mysqli_query($connection, $quy);
                       if (mysqli_num_rows($rult) > 0) {
                         while ($row = mysqli_fetch_array($rult))
