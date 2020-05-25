@@ -13,6 +13,7 @@ $int_phone = $_SESSION["int_phone"];
 $int_logo = $_SESSION["int_logo"];
 $int_address = $_SESSION["int_address"];
 $sessint_id = $_SESSION["int_id"];
+$nm = $_SESSION["username"];
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $sint_id = $_SESSION['int_id'];
@@ -152,7 +153,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                               Dear $clientt_name,
                                               <h2 style='text-align:center;'>Notification of Vault Alert</h2>
                                               this is to notify you that a vault-In transaction has been made in $int_name,
-                                               by $int_name Kindly confirm with your bank.<br/><br/>
+                                               by $nm Kindly confirm with your bank.<br/><br/>
                                                Please see the details below
                                           </div>
                                           <table>
@@ -163,7 +164,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                                   <td >$account_display</td>
                                                 </tr>
                                                 <tr>
-                                                  <td > <b>Teller Name</b></td>
+                                                  <td > <b>From</b></td>
                                                   <td >$tellname</td>
                                                 </tr>
                                                 <tr>
@@ -349,7 +350,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                               Dear $clientt_name,
                                               <h2 style='text-align:center;'>Notification of Vault Alert</h2>
                                               this is to notify you that a vault-Out transaction has been made in $int_name,
-                                               by $int_name Kindly confirm with your bank.<br/><br/>
+                                               by $nm Kindly confirm with your bank.<br/><br/>
                                                Please see the details below
                                           </div>
                                           <table>
@@ -360,7 +361,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                                   <td >$account_display</td>
                                                 </tr>
                                                 <tr>
-                                                  <td > <b>Teller Name</b></td>
+                                                  <td > <b>To</b></td>
                                                   <td >$tellname</td>
                                                 </tr>
                                                 <tr>
