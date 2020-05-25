@@ -388,7 +388,7 @@ if ($is_del == "0" && $is_del != NULL) {
                       <div class='lon'>
                         <div class='header'>
                           <div class='logo'>
-                          <img  style='margin-left: 225px; margin-right: auto; height:100px; width:100px;'class='img' src= '$int_logo'/>
+                          <img  style='margin-left: 200px; margin-right: auto; height:150px; width:150px;'class='img' src= '$int_logo'/>
                       </div>
                   </div>
                       <div class='main'>
@@ -728,7 +728,7 @@ if ($is_del == "0" && $is_del != NULL) {
                   <div class='lon'>
                     <div class='header'>
                       <div class='logo'>
-                      <img  style='margin-left: 225px; margin-right: auto; height:100px; width:100px;'class='img' src='$int_logo'/>
+                      <img  style='margin-left: 200px; margin-right: auto; height:150px; width:150px;'class='img' src='$int_logo'/>
                   </div>
               </div>
                   <div class='main'>

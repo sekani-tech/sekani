@@ -144,7 +144,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                     <div class='lon'>
                                       <div class='header'>
                                           <div class='logo'>
-                                          <img style='margin-left: 225px; margin-right: auto; height:100px; width:100px;'class='img' src='$int_logo'/>
+                                          <img style='margin-left: 200px; margin-right: auto; height:150px; width:150px;'class='img' src='$int_logo'/>
                                       </div>
                                   </div>
                                       <div class='main'>
@@ -341,7 +341,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                     <div class='lon'>
                                       <div class='header'>
                                           <div class='logo'>
-                                          <img style='margin-left: 225px; margin-right: auto; height:100px; width:100px;'class='img' src='$int_logo'/>
+                                          <img style='margin-left: 200px; margin-right: auto; height:150px; width:150px;'class='img' src='$int_logo'/>
                                       </div>
                                   </div>
                                       <div class='main'>
