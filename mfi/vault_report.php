@@ -6,6 +6,22 @@ $destination = "index.php";
 ?>
 
 <?php
+// right now we will program
+// first step - check if this person is authorized
+$org_role = $_SESSION['org_role'];
+$query = "SELECT * FROM org_role WHERE role = '$org_role'";
+$process = mysqli_query($connection, $query);
+$role = mysqli_fetch_array($process);
+$role_id = $role['id'];
+
+$query2 = "SELECT * FROM permission WHERE role_id = '$role_id'";
+$process2 = mysqli_query($connection, $query2);
+$proce = mysqli_fetch_array($process2);
+$valut = $proce['view_report'];
+
+if ($valut == 1 || $valut == "1") {
+?>
+<?php
 function fill_client($connection) {
   $sint_id = $_SESSION["int_id"];
   $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
@@ -99,5 +115,28 @@ function fill_client($connection) {
 <?php
 
     include("footer.php");
+
+?>
+<?php
+} else {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+   swal({
+    type: "error",
+    title: "Vault Authorization",
+    text: "You Dont Have permission to View this report",
+   showConfirmButton: false,
+    timer: 2000
+    }).then(
+    function (result) {
+      history.go(-1);
+    }
+    )
+    });
+   </script>
+  ';
+  // $URL="transact.php";
+  // echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+}
 
 ?>

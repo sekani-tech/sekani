@@ -329,9 +329,44 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   ';
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
+} else if (isset($_GET["message0"])) {
+  $key = $_GET["message0"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Success",
+          text: "Transaction Successful, Email not sent",
+          showConfirmButton: false,
+          timer: 3000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
 } else {
     echo "";
 }
+?>
+<?php
+// right now we will program
+// first step - check if this person is authorized
+$org_role = $_SESSION['org_role'];
+$query = "SELECT * FROM org_role WHERE role = '$org_role'";
+$process = mysqli_query($connection, $query);
+$role = mysqli_fetch_array($process);
+$role_id = $role['id'];
+
+$query2 = "SELECT * FROM permission WHERE role_id = '$role_id'";
+$process2 = mysqli_query($connection, $query2);
+$proce = mysqli_fetch_array($process2);
+$valut = $proce['trans_post'];
+
+if ($valut == 1 || $valut == "1") {
 ?>
 <?php
 $digits = 6;
@@ -523,4 +558,27 @@ $transid1 = $randms1;
       </div>
 <?php
 include("footer.php");
+?>
+<?php
+} else {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+   swal({
+    type: "error",
+    title: "Vault Authorization",
+    text: "You Dont Have permission to Make Transactions",
+   showConfirmButton: false,
+    timer: 2000
+    }).then(
+    function (result) {
+      history.go(-1);
+    }
+    )
+    });
+   </script>
+  ';
+  // $URL="transact.php";
+  // echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+}
+
 ?>

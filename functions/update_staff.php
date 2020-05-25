@@ -65,7 +65,7 @@ if (isset($_POST['employee_status']) && ($_POST['employee_status'] == "Employed"
   
   $form = mysqli_query($connection, $query);
   if ($form) {
-    echo header("location: ../mfi/users.php");
+    echo header("location: ../mfi/staff_mgmt.php");
   } else {
     echo "there is an error here on sanusi end";
   }

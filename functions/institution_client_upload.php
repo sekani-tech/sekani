@@ -14,8 +14,11 @@ $ekaniE = $_SESSION["sek_email"];
 
 ?>
 <?php
+$rigits = 7;
 $sessint_id = $_SESSION["int_id"];
 $ctype = strtoupper($_POST['ctype']);
+$rand = str_pad(rand(0, pow(10, $rigits)-1), $rigits, '0', STR_PAD_LEFT);
+
 
 if($ctype == 'INDIVIDUAL')
 {
@@ -40,8 +43,8 @@ $address = $_POST['address'];
 $gender = $_POST['gender'];
 $date_of_birth = $_POST['date_of_birth'];
 $country = $_POST['country'];
-$state = $_POST['state'];
-$lga = $_POST['lga'];
+$state = $_POST['stated'];
+$lga = $_POST['lgka'];
 $bvn = $_POST['bvn'];
 $loan_status = "Not Active";
 $activation_date = date("Y-m-d");
@@ -100,7 +103,7 @@ $msg = "Image Failed";
 $query = "INSERT INTO client (int_id, loan_officer_id, client_type, account_type,
 display_name, account_no,
 firstname, lastname, middlename, mobile_no, mobile_no_2, email_address, address, gender, date_of_birth,
-branch_id, country, state_of_origin, lga, bvn, sms_active, email_active, id_card,
+branch_id, country, STATE_OF_ORIGIN, lga, bvn, sms_active, email_active, id_card,
 passport, signature, id_img_url, loan_status, submittedon_date, activation_date) VALUES ('{$sessint_id}', '{$loan_officer_id}', '{$ctype}',
 '{$acct_type}', '{$display_name}', '{$account_no}', '{$first_name}', '{$last_name}', '{$middlename}', '{$phone}', '{$phone2}',
 '{$email}', '{$address}', '{$gender}', '{$date_of_birth}', '{$branch}',
@@ -1130,13 +1133,13 @@ $query = "INSERT INTO client  (int_id, loan_officer_id, loan_status, branch_id, 
     sig_gender_one, sig_gender_two, sig_gender_three, sig_state_one, sig_state_two, sig_state_three, sig_lga_one, sig_lga_two, sig_lga_three,
      sig_bvn_one, sig_bvn_two, sig_bvn_three, sms_active_one, sms_active_two, sms_active_three, email_active_one, email_active_two,
       email_active_three, sig_passport_one, sig_passport_two, sig_passport_three, sig_signature_one, sig_signature_two, sig_signature_three,
-       sig_id_img_one, sig_id_img_two, sig_id_img_three, sig_id_card_one, sig_id_card_two, sig_id_card_three) 
+       sig_id_img_one, sig_id_img_two, sig_id_img_three, sig_id_card_one, sig_id_card_two, sig_id_card_three,status) 
   VALUES ('{$sessint_id}', '{$loan_officer_id}', '{$loan_status}', '{$branch}', '{$ctype}', '{$account_no}','{$acct_type}', '{$activation_date}', '{$display_name}', '{$display_name}', '{$date_of_birth}',
   '{$submitted_on}', '{$email}', '{$address}','{$country}', '{$rc_number}','{$sig_one}','{$sig_two}','{$sig_three}','{$sig_address_one}','{$sig_address_two}','{$sig_address_three}',
   '{$sig_phone_one}','{$sig_phone_two}','{$sig_phone_three}','{$sig_gender_one}','{$sig_gender_two}','{$sig_gender_three}','{$sig_state_one}','{$sig_state_two}','{$sig_state_three}',
   '{$sig_lga_one}','{$sig_lga_two}','{$sig_lga_three}','{$sig_bvn_one}','{$sig_bvn_two}','{$sig_bvn_three}','{$sms_active_one}','{$sms_active_two}','{$sms_active_three}',
   '{$email_active_one}','{$email_active_two}','{$email_active_three}','{$sig_passport_one}','{$sig_passport_two}','{$sig_passport_three}','{$sig_signature_one}','{$sig_signature_two}',
-  '{$sig_signature_three}','{$sig_id_img_one}','{$sig_id_img_two}','{$sig_id_img_three}','{$sig_id_card_one}','{$sig_id_card_two}','{$sig_id_card_three}')";
+  '{$sig_signature_three}','{$sig_id_img_one}','{$sig_id_img_two}','{$sig_id_img_three}','{$sig_id_card_one}','{$sig_id_card_two}','{$sig_id_card_three}','Not Approved')";
 
 $res = mysqli_query($connection, $query);
 
@@ -1189,10 +1192,13 @@ if ($connection->error) {
         }
     }
 }
-else {
-  $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-  echo "error";
- echo header ("Location: ../mfi/client.php?message5=$randms");
-   // echo header("location: ../mfi/client.php");
+else if
+  ($connection->error) {
+    try {   
+        throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
+    } catch(Exception $e ) {
+        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+        echo nl2br($e->getTraceAsString());
+    }
 }
 ?>

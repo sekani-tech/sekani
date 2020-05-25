@@ -4,7 +4,6 @@ $output1 = '';
 $output2 = '';
 $output3 = '';
 session_start();
-
 if(isset($_POST['id'])){
     function fill_branch($connection)
         {
@@ -30,6 +29,17 @@ if(isset($_POST['id'])){
             }
             return $out;
         }
+        function fill_state($connection)
+                  {
+                  $org = "SELECT * FROM states";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["name"].'">' .$row["name"]. '</option>';
+                  }
+                  return $out;
+                  }
         //  Data for Corporate
     if($_POST['id'] == 'Corporate'){
         $output1 ='
@@ -128,17 +138,20 @@ if(isset($_POST['id'])){
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group">
-                    <label >State</label>
-                    <input  type="text" style="text-transform: uppercase;" class="form-control" name="sig_state_one">
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                    <label >LGA</label>
-                    <input  type="text" style="text-transform: uppercase;" class="form-control" name="sig_lga_one">
-                    </div>
-                </div>
+            <div class="form-group">
+              <label for="">State:</label>
+              <select id="sig_one" class="form-control" style="text-transform: uppercase;" name="sig_state_one">
+              '.fill_state($connection).'
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="">LGA:</label>
+              <select class="form-control" name="sig_lga_one" id="sigone">
+              </select>
+            </div>
+          </div>
                 <div class="col-md-12">
                     <div class="form-group">
                     <label >BVN</label>
@@ -202,6 +215,7 @@ if(isset($_POST['id'])){
                     <select  name="sig_id_card_one" class="form-control " id="">
                         <option value="National ID">National ID</option>
                         <option value="Voters ID">Voters ID</option>
+                        <option value="Drivers License">Drivers license</option>
                         <option value="International Passport">International Passport</option>
                     </select>
                 </div>
@@ -232,17 +246,20 @@ if(isset($_POST['id'])){
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group">
-                    <label >State</label>
-                    <input  type="text" style="text-transform: uppercase;" class="form-control" name="sig_state two">
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                    <label >LGA</label>
-                    <input  type="text" style="text-transform: uppercase;" class="form-control" name="sig_lga_two">
-                    </div>
-                </div>
+            <div class="form-group">
+              <label for="">State:</label>
+              <select id="sig_two" class="form-control" style="text-transform: uppercase;" name="sig_state_two">
+              '.fill_state($connection).'
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="">LGA:</label>
+              <select class="form-control" name="sig_lga_two" id="sigtwo">
+              </select>
+            </div>
+          </div>
                 <div class="col-md-12">
                     <div class="form-group">
                     <label >BVN</label>
@@ -306,6 +323,7 @@ if(isset($_POST['id'])){
                     <select  name="sig_id_card_two" class="form-control " id="">
                         <option value="National ID">National ID</option>
                         <option value="Voters ID">Voters ID</option>
+                        <option value="Drivers License">Drivers license</option>
                         <option value="International Passport">International Passport</option>
                     </select>
                 </div>
@@ -337,17 +355,20 @@ if(isset($_POST['id'])){
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group">
-                    <label >State</label>
-                    <input  type="text" style="text-transform: uppercase;" class="form-control" name="sig_state three">
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                    <label >LGA</label>
-                    <input  type="text" style="text-transform: uppercase;" class="form-control" name="sig_lga_three">
-                    </div>
-                </div>
+            <div class="form-group">
+              <label for="">State:</label>
+              <select id="sig_three" class="form-control" style="text-transform: uppercase;" name="sig_state_three">
+              '.fill_state($connection).'
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="">LGA:</label>
+              <select class="form-control" name="sig_lga_three" id="sigthree">
+              </select>
+            </div>
+          </div>
                 <div class="col-md-12">
                     <div class="form-group">
                     <label >BVN</label>
@@ -411,6 +432,7 @@ if(isset($_POST['id'])){
                     <select  name="sig_id_card_three" class="form-control " id="">
                         <option value="National ID">National ID</option>
                         <option value="Voters ID">Voters ID</option>
+                        <option value="Drivers License">Drivers license</option>
                         <option value="International Passport">International Passport</option>
                     </select>
                 </div>
@@ -509,19 +531,19 @@ if(isset($_POST['id'])){
             </div>
             <div class="col-md-4">
             <div class="form-group">
-                <label for="">State:</label>
-                <input type="text" class="form-control" style="text-transform: uppercase;" name="state"/>
-                <! --<select class="form-control " style="text-transform: uppercase;" name="state" id="selState" onchange="configureDropDownLists()">
-                </select> -->
-                
+              <label for="">State:</label>
+              <select id="static" class="form-control" style="text-transform: uppercase;" name="stated">
+              '.fill_state($connection).'
+              </select>
             </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="">LGA:</label>
+              <select class="form-control" name="lgka" id="showme">
+              </select>
             </div>
-            <div class="col-md-4">
-            <label for="">LGA:</label>
-                <input type="text" class="form-control" style="text-transform: uppercase;" name="lga"/>
-                <! --<select class="form-control" style="text-transform: uppercase;" name="lga" id="selCity">
-                </select> -->
-            </div>
+          </div>
             <div class="col-md-4">
             <label for="">BVN:</label>
             <input type="text" style="text-transform: uppercase;" name="bvn" class="form-control" id="">
@@ -606,6 +628,66 @@ if(isset($_POST['id'])){
         
 }
 ?>
+<script>
+    $(document).ready(function() {
+        $('#static').on("change", function(){
+        var id = $(this).val();
+        $.ajax({
+            url:"ajax_post/lga.php",
+            method:"POST",
+            data:{id:id},
+            success:function(data){
+            $('#showme').html(data);
+            }
+        })
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#sig_one').on("change keyup paste click", function(){
+        var id = $(this).val();
+        $.ajax({
+            url:"ajax_post/lga.php",
+            method:"POST",
+            data:{id:id},
+            success:function(data){
+            $('#sigone').html(data);
+            }
+        })
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#sig_two').on("change keyup paste click", function(){
+        var id = $(this).val();
+        $.ajax({
+            url:"ajax_post/lga.php",
+            method:"POST",
+            data:{id:id},
+            success:function(data){
+            $('#sigtwo').html(data);
+            }
+        })
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#sig_three').on("change keyup paste click", function(){
+        var id = $(this).val();
+        $.ajax({
+            url:"ajax_post/lga.php",
+            method:"POST",
+            data:{id:id},
+            success:function(data){
+            $('#sigthree').html(data);
+            }
+        })
+        });
+    });
+</script>
 <script>
     var changeq = document.getElementById( 'file-upload' );
     var check2 = document.getElementById( 'upload' );

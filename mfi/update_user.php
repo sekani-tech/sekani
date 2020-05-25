@@ -137,7 +137,7 @@ if (isset($_GET["edit"])) {
                   $out = '';
                   while ($row = mysqli_fetch_array($res))
                   {
-                    $out .= '<option value="'.$row["id"].'">' .$row["role"]. '</option>';
+                    $out .= '<option value="'.$row["role"].'">' .$row["role"]. '</option>';
                   }
                   return $out;
                   }
@@ -145,7 +145,7 @@ if (isset($_GET["edit"])) {
                         <div class="form-group">
                           <label class="bmd-label-floating">Organization Role:</label>
                           <select name="org_role" id="" class="form-control">
-                          <option value="<?php echo $org_role;?>">...</option>
+                          <option value="<?php echo $org_role;?>"><?php echo $org_role;?></option>
                           <?php echo fill_role($connection); ?>
                           </select>
                         </div>
@@ -224,7 +224,7 @@ if (isset($_GET["edit"])) {
                         </div>
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
+                    <button value="staff" type="submit" class="btn btn-primary pull-right">Update Profile</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>

@@ -99,7 +99,6 @@ $rezz = mysqli_query($connection, $activeq);
   <script src="../datatable/jquery-3.3.2.js"></script>
   <script src="../datatable/jquery.dataTables.min.js"></script>
   <script src="../datatable/dataTables.bootstrap.min.js"></script>
-  <script src="../datatable/DropdownSelect.js"></script>
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/materia/bootstrap.min.css"> -->
   <style>
     div[data-acc-content] { display: none;  }
