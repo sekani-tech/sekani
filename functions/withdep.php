@@ -389,13 +389,13 @@ if ($is_del == "0" && $is_del != NULL) {
                     <body>
                         <div class='header'>
                             <div class='logo'>
-                            <img  style='height:100px; width:100px;'class='img' src=$int_logo/>
+                            <img  style='height:100px; width:100px;'class='img' src= '$int_logo'/>
                         </div>
                     </div>
                         <div class='main'>
                             <div class='text'>
                                 Dear $clientt_name,
-                                <h2 style='text-align:center;'>Notification of Debit Alert</h2>
+                                <h2 style='text-align:center;'>Notification of Credit Alert</h2>
                                 this is to notify you of an incoming credit to your account $acct_no,
                                  by $int_name Kindly confirm with your bank.<br/><br/>
                                  Please see the details below
@@ -729,14 +729,14 @@ if ($is_del == "0" && $is_del != NULL) {
                 <body>
                     <div class='header'>
                         <div class='logo'>
-                        <img  style='height:100px; width:100px;'class='img' src=$int_logo/>
+                        <img  style='height:100px; width:100px;'class='img' src='$int_logo'/>
                     </div>
                 </div>
                     <div class='main'>
                         <div class='text'>
                             Dear $clientt_name,
                             <h2 style='text-align:center;'>Notification of Debit Alert</h2>
-                            this is to notify you of an incoming credit to your account $acct_no,
+                            this is to notify you of an incoming debit to your account $acct_no,
                              by $int_name Kindly confirm with your bank.<br/><br/>
                              Please see the details below
                         </div>
