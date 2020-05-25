@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Deposit/ Withdrwal";
+$page_title = "Deposit/ Withdrawal";
 $destination = "index.php";
 include("header.php");
 ?>
