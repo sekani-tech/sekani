@@ -51,7 +51,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT users.id, staff.user_id, staff.id, users.int_id, users.branch_id, staff.email, users.username, users.fullname, users.usertype,staff.employee_status, users.password, org_role, display_name FROM staff JOIN users ON users.id = staff.user_id WHERE users.username = ?";
+        $sql = "SELECT users.id, staff.user_id, staff.id, users.int_id, users.branch_id, staff.email, users.username, users.fullname, users.usertype, staff.employee_status, users.password, staff.org_role, display_name FROM staff JOIN users ON users.id = staff.user_id WHERE users.username = ?";
         // $sqlj = "SELECT users.id, users.int_id, users.username, users.fullname, users.usertype, users.password, org_role, display_name FROM staff JOIN users ON users.id = staff.user_id WHERE users.username = "sam"";
         
         if($stmt = mysqli_prepare($link, $sql)){
