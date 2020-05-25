@@ -12,7 +12,7 @@ $int_logo = $_SESSION["int_logo"];
 $int_address = $_SESSION["int_address"];
 $sessint_id = $_SESSION["int_id"];
 
-  $quy = "SELECT * FROM client WHERE id = '1' && id = '132'";
+  $quy = "SELECT * FROM client WHERE int_id = '5'";
   $rult = mysqli_query($connection, $quy);
   if (mysqli_num_rows($rult) > 0) {
     while ($row = mysqli_fetch_array($rult))
