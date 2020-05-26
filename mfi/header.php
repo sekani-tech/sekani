@@ -235,13 +235,13 @@ input[type=number] {
               Reports
             </a>
             <div class="dropdown-menu">
-              <a href="#" class="dropdown-item">Client Report</a>
+              <a href="statement_of_income.php" class="dropdown-item">Client Report</a>
               <a href="#" class="dropdown-item">Group Report</a>
               <a href="#" class="dropdown-item">Savings Report</a>
               <a href="#" class="dropdown-item">Current Accounts Report</a>
               <a href="loan_report.php" class="dropdown-item">Loan reports</a>
-              <a href="#" class="dropdown-item">Financial report</a>
-              <a href="#" class="dropdown-item">Audit</a>
+              <a href="statement_of_fp.php" class="dropdown-item">Financial report</a>
+              <a href="institutional_report.php" class="dropdown-item">Audit</a>
               <a href="vault_report.php" class="dropdown-item">Vault Report</a>
               <a href="teller.php" class="dropdown-item">Teller Report</a>
             </div>

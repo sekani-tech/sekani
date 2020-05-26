@@ -15,7 +15,7 @@ include('header.php');
             <div class="col-md-12">
             <div class="card">
                 <div class="card-header card-header-primary">
-                    <h4 class="card-title">Statement of Financial Position</h4>
+                    <h4 class="card-title">Statement of Income</h4>
                 </div>
                 <div class="card-body">
                 <form action="">
