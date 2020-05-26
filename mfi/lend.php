@@ -178,6 +178,14 @@ $destination = "loans.php";
                                     success:function(data){
                                       $('#show_product').html(data);
                                     }
+                                  });
+                                  $.ajax({
+                                    url:"ajax_post/lend_charge.php",
+                                    method:"POST",
+                                    data:{id:id},
+                                    success:function(data){
+                                      $('#lend_charge').html(data);
+                                    }
                                   })
                                 });
                               })
@@ -212,136 +220,10 @@ $destination = "loans.php";
                     </div>
                     <div class="col-md-12" id="show_product"></div>
                     </div>
-                    <!-- First Tab Ends -->
-                    <!-- Second Tab Begins -->
-                    <!-- <div class="tab"><h3> Settings:</h3>
-                          <div class="row">
-                             <div class="my-3"> 
-                               replace values with loan data
-                              <div class=" col-md-4 form-group">
-                                <label class = "bmd-label-floating">Description:</label>
-                                <input type="number" value="" name="principal_amount" class="form-control" required id="ls">
-                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">Origin of Funding:</label>
-                                <select class="form-control" name="" id="">
-                                  <option>Bank</option>
-                                </select>
-                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">Currency:</label>
-                                <input type="text" value="" name="repay_every" class="form-control" id="irp">
-                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">To Decimal place:</label>
-                                <input type="number" name="interest_rate" class="form-control" id="ir">
-                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">In Multiples of:</label>
-                                <input type="number" name="disbursement_date" class="form-control" id="db">
-                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">Installment Amount in Multiples of:</label>
-                                <input type="number" name="loan_officer" class="form-control" id="lo">
-                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">Principal:</label>
-                                <input type="number" name="loan_purpose" class="form-control" id="lp">
-                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">Loan Term:</label>
-                                <input type="text" name="linked_savings_acct" class="form-control" id="lsa">
-                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">Repayment Frequency:</label>
-                                <input type="date" name="repay_start" class="form-control" id="rsd">
-                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">Repayment Frequency type:</label>
-                                <select class="form-control" name="" id="">
-                                  <option>Months</option>
-                                </select>
-                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">Interest Rate:</label>
-                                <input type="number" name="repay_start" class="form-control" id="rsd">
-                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">Interest Rate Applied:</label>
-                                <input type="number" name="repay_start" class="form-control" id="rsd">%
-                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">Interest Methodology:</label>
-                                <select class="form-control" name="" id="">
-                                  <option>Flat</option>
-                                </select>
-                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">Ammortization Method:</label>
-                                <select class="form-control" name="" id="">
-                                  <option>Equal installments</option>
-                                </select>                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">Days in Year:</label>
-                                <input type="date" name="repay_start" class="form-control" id="rsd">
-                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">Days in Month Type:</label>
-                                <input type="date" name="repay_start" class="form-control" id="rsd">
-                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">Transaction Processing Strategy:</label>
-                                <input type="date" name="repay_start" class="form-control" id="rsd">
-                              </div>
-                              <div class="col-md-4 form-group">
-                                <label class = "bmd-label-floating">Include Loan cycle:</label>
-                                <select class="form-control" name="" id="">
-                                  <option>Yes</option>
-                                </select> </div>
-                             </div>
-                          </div>
-                    </div>  -->
-                    <!-- Second Tab Ends -->
-                    <!-- Third Tab Begins -->
+                    <!-- charge -->
                     <div class="tab"><h3> Charges:</h3>
-                    <table class="table table-bordered">
-                    <?php
-                   $query = "SELECT * FROM charge WHERE int_id = '$sessint_id'";
-                   $result = mysqli_query($connection, $query);
-                   if ($result) {
-                     $inr = mysqli_num_rows($result);
-                     echo $inr;
-                   }?>
-                          <thead>
-                            <tr>
-                              <th>Name</th>
-                              <th>Charge</th>
-                              <th>Amount</th>
-                              <th>Collected On</th>
-                              <th>Date</th>
-                              <th>Payment Mode</th>
-                            </tr>
-                          </thead>
-                          <tbody> 
-                          <?php if (mysqli_num_rows($result) > 0) {
-                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
-                        <tr>
-                        <?php $row["id"]; ?>
-                          <td><?php echo $row["name"]; ?></td>
-                          <td><?php echo $row["currency_code"]; ?></td>
-                          <td><?php echo $row["amount"]; ?></td>
-                          <td><?php echo $row["charge_applies_to_enum"]; ?></td>
-                          <td><?php echo $row["charge_time_enum"]; ?></td>
-                          <td>Cash</th>
-                        </tr>
-                        <?php }
-                          }
-                          else {
-                            // echo "0 Document";
-                          }
-                          ?>   
-                          </tbody>
-                        </table>
+                    <div id="lend_charge">
+                        </div>
                         <div class="col-md-6">
                         <label class = "bmd-label-floating" for="charge" class="form-align mr-3">Charges</label>
                           <select class="form-control" name="charge"> 

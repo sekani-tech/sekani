@@ -1,12 +1,12 @@
 <?php
 include("../../functions/connect.php");
 $output = '';
-
+session_start();
 if(isset($_POST["id"]))
 {
     if($_POST["id"] !='')
     {
-        $main_p = $_POST["main_p"];
+        $main_p = $_SESSION["product_temp"];
         $sint_id = $_POST["int_id"];
 ?>
 <?php

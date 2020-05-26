@@ -25,12 +25,15 @@ $add_date = "";
 if($rep_every == "month"){
     $table_day = "Months";
     $add_date = "30";
-}else if($rep_every == "day"){
+} else if($rep_every == "day") {
     $table_day = "Days";
     $add_date = "1";
-}else if($rep_every == "year"){
+} else if($rep_every == "year"){
     $table_day = "Years";
     $add_date = "365";
+} else if($rep_every == "week"){
+  $table_day = "Weeks";
+  $add_date = "7";
 }
 else{
     $table_day = "days";

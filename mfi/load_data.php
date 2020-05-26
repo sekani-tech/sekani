@@ -1,7 +1,8 @@
 <?php
 include("../functions/connect.php");
 $output = '';
-
+session_start();
+// work
 if(isset($_POST["id"]))
 {
     if($_POST["id"] !='')
@@ -14,7 +15,7 @@ if(isset($_POST["id"]))
         $values = $o["charge_time_enum"];
         $nameofc = $o["name"];
         $forp = $o["charge_calculation_enum"];
-        $main_p = $_POST["main_p"];
+        $main_p = $_SESSION["product_temp"];
         $amt = number_format($o["amount"], 2);
         if ($forp == 1) {
           $chg = $amt." Flat";

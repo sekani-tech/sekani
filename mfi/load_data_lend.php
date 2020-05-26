@@ -86,15 +86,15 @@ if(isset($_POST["id"]))
             <div class="col-md-5">
             <label> </label>
               <select id="repay" class="form-control">
-                <option value ="day">Months</option>
-                <option value ="month">Days</option>
+                <option value ="day">Days</option>
+                <option value ="week">Weeks</option>
+                <option value ="month">Months</option>
                 <option value ="year">Years</option>
               </select>
             </div>
           </div>
         </div>
       </div>
-
       <div class="col-md-4">
         <div class="form-group">
           <div class="row">
@@ -123,7 +123,8 @@ if(isset($_POST["id"]))
             <div class="col-md-5">
             <label> </label></br>
             <label> </label></br>
-            <label>Days</label>
+            <div id="change_term">
+            </div>
             </div>
           </div>
         </div>
@@ -144,7 +145,7 @@ if(isset($_POST["id"]))
       </div>
       <div class="col-md-4">
       <div class="form-group">
-        <label>Loan Officer:</label>
+        <label>Account Officer:</label>
         <select type="text" value="" name="loan_officer" class="form-control" id="lof">
         '.fill_loanofficer($connection).'
         </select>
@@ -195,6 +196,18 @@ if(isset($_POST["id"]))
 ?>
 <script>
   $(document).ready(function() {
+    $('#principal_amount').on("change keyup paste click", function(){
+      var id = $('#charges').val();
+      var prin = $(this).val();
+      $.ajax({
+        url: "ajax_post/lend_charge.php",
+        method: "POST",
+        data:{id:id, prin:prin},
+        success:function(data) {
+          $('#lend_charge').html(data);
+        }
+      });
+    });
     $('#act').on("change keyup paste click", function(){
       var id = $(this).val();
       var ist = $('#int_id').val();
@@ -379,10 +392,19 @@ if(isset($_POST["id"]))
         success:function(data){
           $('#sekat').html(data);
         }
-      })
+      });
     });
   });
   $(document).ready(function() {
+    var id = $('#repay').val();
+    $.ajax({
+        url:"ajax_post/change_term.php",
+        method:"POST",
+        data:{id:id},
+        success:function(data){
+          $('#change_term').html(data);
+        }
+      });
     $('#repay').on("change keyup paste click", function(){
       var id = $(this).val();
       var ist = $('#int_id').val();
@@ -397,7 +419,15 @@ if(isset($_POST["id"]))
         success:function(data){
           $('#sekat').html(data);
         }
-      })
+      });
+      $.ajax({
+        url:"ajax_post/change_term.php",
+        method:"POST",
+        data:{id:id},
+        success:function(data){
+          $('#change_term').html(data);
+        }
+      });
     });
   });
   $(document).ready(function() {
