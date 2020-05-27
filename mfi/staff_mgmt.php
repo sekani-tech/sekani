@@ -290,6 +290,8 @@ if ($per_con == 1 || $per_con == "1") {
                          VALUES ('{$sessint_id}', '{$rid}', '{$approve}', '{$post_transact}', '{$approve_loan}', '{$approve_acc}', '{$vault_trans}', '{$emai}', '{$view_report}', '{$dash}','{$update}', '{$access_config}')";
                         $permm = mysqli_query($connection, $perm);
                         if ($permm) {
+                          $permu = "UPDATE org_role SET permission = '1' WHERE int_id = '$sessint_id' && id = '$rid'";
+                        $permmj = mysqli_query($connection, $permu);
                           // echo success
                           echo '<script type="text/javascript">
                      $(document).ready(function(){
