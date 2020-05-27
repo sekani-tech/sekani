@@ -5,7 +5,7 @@ define('DB_PASSWORD', '4r6WY#JP+rnl67');
 define('DB_CHARSET', 'utf8');
 define('DB_NAME', 'sekanisy_admin');
 // test
-// define('DB_SERVER', 'localhost');
+// define('DB_SERVER', 'localhost'); 
 // define('DB_USERNAME', 'root');
 // define('DB_PASSWORD', 'password');
 // define('DB_CHARSET', 'utf8');
