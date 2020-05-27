@@ -48,17 +48,10 @@ $destination = "index.php";
 // right now we will program
 // first step - check if this person is authorized
 $org_role = $_SESSION['org_role'];
-$query = "SELECT * FROM org_role WHERE role = '$org_role'";
-$process = mysqli_query($connection, $query);
-$role = mysqli_fetch_array($process);
-$role_id = $role['id'];
 
-$query2 = "SELECT * FROM permission WHERE role_id = '$role_id'";
-$process2 = mysqli_query($connection, $query2);
-$proce = mysqli_fetch_array($process2);
 $valut = $proce['configuration'];
 
-if ($valut == 1 || $valut == "1") {
+if ($per_con == 1 || $per_con == "1") {
 ?>
 <!-- Content added here -->
 <div class="content">
