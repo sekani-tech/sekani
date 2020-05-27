@@ -167,7 +167,7 @@ if ($per_con == 1 || $per_con == "1") {
   $(document).ready(function(){
    swal({
     type: "error",
-    title: "Vault Authorization",
+    title: "Access Config. Authorization",
     text: "You Dont Have  Access to configurations",
    showConfirmButton: false,
     timer: 2000

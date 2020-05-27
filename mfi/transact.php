@@ -553,7 +553,7 @@ include("footer.php");
   $(document).ready(function(){
    swal({
     type: "error",
-    title: "Vault Authorization",
+    title: "Transaction Authorization",
     text: "You Dont Have permission to Make Transactions",
    showConfirmButton: false,
     timer: 2000
