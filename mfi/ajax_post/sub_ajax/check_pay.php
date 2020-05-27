@@ -1,12 +1,13 @@
 <?php
 include("../../../functions/connect.php");
+session_start();
 $output = '';
 
 if(isset($_POST["id"]))
 {
     if($_POST["id"] !='')
     {
-        $main_p = $_POST["main_p"];
+        $main_p = $_SESSION["product_temp"];
         $sint_id = $_POST["int_id"];
 ?>
 <?php
@@ -46,15 +47,11 @@ if(isset($_POST["id"]))
                    document.getElementById("real_payment").removeAttribute("hidden");
                  }
                })
-               } else {
-                //  poor the internet
-                alert('SELECT SOMETHING');
                }
             });
          });
     </script>
      <select name="pay2" class="form-control" id="meez">
-     <option value="">select an option</option>
      <?php echo fill_paym($connection, $sint_id); ?>
      </select>
 <?php

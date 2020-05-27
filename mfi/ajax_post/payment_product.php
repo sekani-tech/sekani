@@ -1,5 +1,6 @@
 <?php
 include("../../functions/connect.php");
+session_start();
 $output = '';
 
 if(isset($_POST["id"]))
@@ -19,7 +20,7 @@ if(isset($_POST["id"]))
         $gl_acct = $_POST["idx"];
         $gl_name = $o["name"];
         $gl_name2 = $ox["name"];
-        $id_trans = $_POST["main_p"];
+        $id_trans = $_SESSION["product_temp"];
         $inload = mysqli_query($connection, "INSERT INTO `prod_acct_cache` (`gl_code`, `name`, `acct_gl_code`, `acct`, `prod_cache_id`, `type`) VALUES ('{$gl_code}', '{$gl_name}', '{$gl_acct}', '{$gl_name2}', '{$id_trans}', 'pay')");
        
         // $sql = "SELECT * FROM charge WHERE id = '".$_POST["id"]."'";

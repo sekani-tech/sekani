@@ -15,6 +15,9 @@ if($rep_every == "month"){
 }else if($rep_every == "year"){
     $table_day = "Years";
     $add_date = "365";
+} else if($rep_every == "week"){
+    $table_day = "Weeks";
+    $add_date = "7";
 }
 else{
     $table_day = "days";
