@@ -96,7 +96,7 @@ if(isset($_POST['id'])){
             <div class="form-group">
                 <div class="form-group">
                 <label for="">Account Officer:</label>
-                <select  name="acct_ofa" class="form-control" id="">
+                <select name="acct_ofa" class="form-control" id="">
                 <option value="">select account officer</option>
                 '.fill_officer($connection).'
                 </select>
@@ -106,7 +106,7 @@ if(isset($_POST['id'])){
 
         <div class="col-md-12">
             <div class="form-group">
-                <label ></label>
+                <label></label>
                 <input hidden type="text" style="text-transform: uppercase;" class="form-control">
             </div>
         </div>
@@ -262,7 +262,7 @@ if(isset($_POST['id'])){
           </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                    <label >BVN</label>
+                    <label>BVN</label>
                     <input  type="text" style="text-transform: uppercase;" class="form-control" name="sig_bvn_two">
                     </div>
                 </div>
@@ -409,7 +409,6 @@ if(isset($_POST['id'])){
                     <label id="iup-c"> Select Signature</label>
                     <div id="iup-c"></div>
                 </div>
-            
                 <div class="col-md-12">
                     <label for="file-enter-c" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
                     <input id ="file-enter-c" type="file" name="sig_id_img_three" class="inputFileHidden"/>
@@ -459,19 +458,19 @@ if(isset($_POST['id'])){
             <div class="col-md-4">
             <div class="form-group">
                 <label >First Name</label>
-                <input  type="text" style="text-transform: uppercase;" class="form-control" name="firstname">
+                <input  type="text" style="text-transform: uppercase;" class="form-control" name="firstname" required>
             </div>
             </div>
             <div class="col-md-4">
             <div class="form-group">
                 <label >Middle Name</label>
-                <input  type="text" style="text-transform: uppercase;" class="form-control" name="middlename">
+                <input  type="text" style="text-transform: uppercase;" class="form-control" name="middlename" required>
             </div>
             </div>
             <div class="col-md-4">
             <div class="form-group">
                 <label >Last Name</label>
-                <input  type="text" style="text-transform: uppercase;" class="form-control" name="lastname">
+                <input  type="text" style="text-transform: uppercase;" class="form-control" name="lastname" required>
             </div>
             </div>
             <div class="col-md-4">
