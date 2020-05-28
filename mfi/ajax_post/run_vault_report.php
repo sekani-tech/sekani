@@ -32,9 +32,9 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
       //  Always Check the vault
       if (count([$branchquery]) == 1) {
         // here we will some data
-        $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM institution_account_transaction WHERE is_vault = '1' && branch_id = '$branch_id'  && int_id ='$int_id' && transaction_date BETWEEN '$start' AND '$end'  ORDER BY transaction_date ASC");
+        $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM institution_account_transaction WHERE (is_vault = '1' AND (branch_id = '$branch_id' AND int_id ='$int_id') AND (transaction_date BETWEEN '$start' AND '$end'))  ORDER BY transaction_date ASC");
         // then we will be fixing
-        $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM institution_account_transaction WHERE is_vault = '1' && branch_id = '$branch_id'  && int_id ='$int_id' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
+        $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM institution_account_transaction WHERE (is_vault = '1' AND (branch_id = '$branch_id' AND int_id ='$int_id') AND (transaction_date BETWEEN '$start' AND '$end')) ORDER BY transaction_date ASC");
         $m1 = mysqli_fetch_array($genb1);
         $m = mysqli_fetch_array($genb);
         // qwerty
@@ -44,7 +44,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
         function fill_report($connection, $int_id, $start, $end, $branch_id)
         {
           // import
-          $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE is_vault = '1' && branch_id = '$branch_id' && int_id ='$int_id'&& transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
+          $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE (is_vault = '1' AND (branch_id = '$branch_id' AND int_id ='$int_id') AND (transaction_date BETWEEN '$start' AND '$end')) ORDER BY transaction_date ASC");
           // $q = mysqli_fetch_array($querytoget);
           $out = '';
           $q = mysqli_fetch_array($querytoget);

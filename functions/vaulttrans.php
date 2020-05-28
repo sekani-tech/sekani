@@ -42,8 +42,9 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
     $vault = mysqli_query($connection, "SELECT * FROM int_vault WHERE branch_id = '$branchid' && int_id = '$sint_id'");
     $itb = mysqli_fetch_array($vault);
     $vault_limit = $itb['movable_amount'];
-
+  // If transaction is a vault in execute this code
     if($type == "vault_in"){
+      // if the teller balance is equal is bigger amount
             if($tellbalance >= $amount){
                 $new_tellbalance = $tellbalance - $amount;
                 $new_vaultbalance = $balance + $amount;
@@ -59,12 +60,18 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         $record ="INSERT INTO institution_account_transaction (int_id, branch_id,
                         transaction_id, description, transaction_type, teller_id,is_vault, is_reversed,
                         transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-                        created_date, appuser_id, credit) VALUES ('{$sint_id}','{$branchid}', '{$transact_id}','{$description}',
-                        '{$type}', '{$tid}', '1', '0', '{$transdate}', '{$amount}', '{$new_vaultbalance}','{$amount}', '{$crdate}',
+                        created_date, appuser_id, debit) VALUES ('{$sint_id}','{$branchid}', '{$transact_id}','{$description}',
+                        '{$type}', '{$tid}', '1', '0', '{$transdate}', '{$amount}', '{$new_tellbalance}','{$amount}', '{$crdate}',
                         '{$tid}', '{$amount}')";
                        $rin = mysqli_query($connection, $record);
+                       $vable = "INSERT INTO institution_vault_transaction (int_id, branch_id transaction_id, description, transaction_type,
+                       teller_id, transaction_date, amount, vault_balance_derived, overdraft_amount_derived, balance_end_date_derived,
+                        balance_number_of_days_derived, cumulative_balance_derived, created_date, appuser_id, credit)
+                         VALUES ('{$sint_id}', '{$branchid}', '{$transact_id}', '{$description}', '{$type}', '{$tid}', '{$transdate}', '{$amount}',
+                         '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$tid}', '{$amount}')";
+                        $rlt = mysqli_query($connection, $vable);
                     if($rin){
-                      $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' && org_role ='MD'";
+                      $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
                       $rult = mysqli_query($connection, $quy);
                       if (mysqli_num_rows($rult) > 0) {
                         while ($row = mysqli_fetch_array($rult))
@@ -87,7 +94,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                               $proce = mysqli_fetch_array($process2);
                               $valut = $proce['valut'];
 
-                              if ($valut == 1 || $valut == "1") {
+                              // if ($valut == 1 || $valut == "1") {
                               $mail = new PHPMailer;
                               $mail->From = $int_email;
                               $mail->FromName = $int_name;
@@ -204,21 +211,21 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                   </body>
                               </html>";
                               $mail->AltBody = "This is the plain text version of the email content";
+                            // }
+                                        // mail system
+                            if(!$mail->send()) 
+                                {
+                                  $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+                                  echo "error";
+                                  echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
+                                } else
+                                {
+                                  $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+                                  echo "error";
+                                  echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
+                                }
                             }
-                          }
-                          } 
-            // mail system
-            if(!$mail->send()) 
-               {
-                $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                echo "error";
-                echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
-               } else
-               {
-                $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                echo "error";
-                echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
-               }
+                        } 
                     }
                     else{
                         $_SESSION["Lack_of_intfund_$randms"] = "";
@@ -256,12 +263,18 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         $record ="INSERT INTO institution_account_transaction (int_id, branch_id,
                         transaction_id, description, transaction_type, teller_id, is_vault, is_reversed,
                         transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-                        created_date, appuser_id, debit) VALUES ('{$sint_id}','{$branchid}', '{$transact_id}','{$description}',
-                        '{$type}', '{$tid}', '1', '0', '{$transdate}', '{$amount}', '{$new_vaultbalance}','{$amount}', '{$crdate}',
+                        created_date, appuser_id, credit) VALUES ('{$sint_id}','{$branchid}', '{$transact_id}','{$description}',
+                        '{$type}', '{$tid}', '1', '0', '{$transdate}', '{$amount}', '{$new_tellbalance}','{$amount}', '{$crdate}',
                         '{$tid}', '{$amount}')";
                         $rin = mysqli_query($connection, $record);
+                        $vabl = "INSERT INTO institution_vault_transaction (int_id, branch_id transaction_id, description, transaction_type,
+                        teller_id, transaction_date, amount, vault_balance_derived, overdraft_amount_derived, balance_end_date_derived,
+                         balance_number_of_days_derived, cumulative_balance_derived, created_date, appuser_id, debit)
+                          VALUES ('{$sint_id}', '{$branchid}', '{$transact_id}', '{$description}', '{$type}', '{$tid}', '{$transdate}', '{$amount}',
+                          '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$tid}', '{$amount}')";
+                         $rlt = mysqli_query($connection, $vabl);
                     if($rin){
-                      $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' && org_role ='MD'";
+                      $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
                       $rult = mysqli_query($connection, $quy);
                       if (mysqli_num_rows($rult) > 0) {
                         while ($row = mysqli_fetch_array($rult))
@@ -284,7 +297,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                               $proce = mysqli_fetch_array($process2);
                               $valut = $proce['valut'];
 
-                              if ($valut == 1 || $valut == "1") {
+                              // if ($valut == 1 || $valut == "1") {
                               $mail = new PHPMailer;
                               $mail->From = $int_email;
                               $mail->FromName = $int_name;
@@ -401,21 +414,21 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                   </body>
                               </html>";
                               $mail->AltBody = "This is the plain text version of the email content";
+                            // }
+                                        // mail system
+                            if(!$mail->send()) 
+                            {
+                            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+                            echo "error";
+                            echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
+                            } else
+                            {
+                            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+                            echo "error";
+                            echo header ("Location: ../mfi/teller_journal.php?message3=$randms");
                             }
                           }
                           } 
-            // mail system
-            if(!$mail->send()) 
-               {
-                $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                echo "error";
-                echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
-               } else
-               {
-                $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                echo "error";
-                echo header ("Location: ../mfi/teller_journal.php?message3=$randms");
-               }
                     }
                     else{
                         $_SESSION["Lack_of_intfund_$randms"] = "";

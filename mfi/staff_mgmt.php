@@ -432,7 +432,7 @@ if ($per_con == 1 || $per_con == "1") {
                   {
                     $sint_id = $_SESSION["int_id"];
                     // $query = "SELECT * FROM org_role WHERE int_id = '$sint_id'";
-                    $query = "SELECT org_role.id, org_role.role FROM org_role LEFT JOIN permission ON permission.role_id = org_role.id WHERE permission.id IS NULL && org_role.int_id = '$sint_id'";
+                    $query = "SELECT org_role.id, org_role.role FROM org_role LEFT JOIN permission ON permission.role_id = org_role.id WHERE ((permission.id IS NULL) AND org_role.int_id = '$sint_id')";
                     $result = mysqli_query($connection, $query);
                     $row = mysqli_fetch_array($result);
                     while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
@@ -676,7 +676,7 @@ if ($per_con == 1 || $per_con == "1") {
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
-                        <?php $row["id"]; ?>
+                        <?php $row['id']; ?>
                           <th><?php echo strtoupper($row["role"]); ?></th>
                           <th><?php echo strtoupper($row["description"]); ?></th>
                           <th>
@@ -863,7 +863,7 @@ if ($per_con == 1 || $per_con == "1") {
                           </label>
                         </div>
                           </th>
-                          <td><button class="btn btn-info">Update</button></td>
+                          <td><a href="edit_permission.php?id=<?php echo $row['id'];?>" class="btn btn-info">Update</a></td>
                         </tr>
                         <?php }
                           }
