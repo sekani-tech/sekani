@@ -396,7 +396,7 @@ if ($is_del == "0" && $is_del != NULL) {
                               Dear $clientt_name,
                               <h2 style='text-align:center;'>Notification of Credit Alert</h2>
                               this is to notify you of an incoming credit to your account $acct_no,
-                               by $int_name Kindly confirm with your bank.<br/><br/>
+                              Kindly confirm with your bank.<br/><br/>
                                Please see the details below
                           </div>
                           <table>
@@ -736,7 +736,7 @@ if ($is_del == "0" && $is_del != NULL) {
                           Dear $clientt_name,
                           <h2 style='text-align:center;'>Notification of Debit Alert</h2>
                           this is to notify you of an incoming debit to your account $acct_no,
-                           by $int_name Kindly confirm with your bank.<br/><br/>
+                           Kindly confirm with your bank.<br/><br/>
                            Please see the details below
                       </div>
                       <table>
