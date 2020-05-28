@@ -6,6 +6,9 @@ $destination = "client.php";
 include("header.php");
 
 ?>
+<?php
+if ($acc_op == 1 || $acc_op == "1") {
+?>
 <script src="../datatable/DropdownSelect.js"></script>
 <!-- Content added here -->
 <div class="content">
@@ -101,7 +104,29 @@ include("header.php");
       <!-- /content -->
     </div>
   </div>
-
+<?php
+}
+ else {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+   swal({
+    type: "error",
+    title: "Account opening Authorization",
+    text: "You Dont Have permission open an account",
+   showConfirmButton: false,
+    timer: 2000
+    }).then(
+    function (result) {
+      history.go(-1);
+    }
+    )
+    });
+   </script>
+  ';
+  // $URL="transact.php";
+  // echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+}
+?>
 <?php
 
 include("footer.php");

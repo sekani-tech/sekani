@@ -8,7 +8,7 @@ $destination = "client.php";
 <?php
 // right now we will program
 // first step - check if this person is authorized
-if ($client_update == 1 || $client_update == "1") {
+if ($acc_update == 1 || $acc_update == "1") {
 ?>
 <?php
   $id = $_GET["edit"];
