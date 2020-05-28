@@ -64,9 +64,8 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         '{$type}', '{$tid}', '1', '0', '{$transdate}', '{$amount}', '{$new_tellbalance}','{$amount}', '{$crdate}',
                         '{$tid}', '{$amount}')";
                        $rin = mysqli_query($connection, $record);
-                       $vable = "INSERT INTO institution_vault_transaction (int_id, branch_id transaction_id, description, transaction_type,
-                       teller_id, transaction_date, amount, vault_balance_derived, overdraft_amount_derived, balance_end_date_derived,
-                        balance_number_of_days_derived, cumulative_balance_derived, created_date, appuser_id, credit)
+                       $vable = "INSERT INTO institution_vault_transaction (int_id, branch_id, transaction_id, description, transaction_type,
+                       teller_id, transaction_date, amount, vault_balance_derived, overdraft_amount_derived, created_date, appuser_id, credit)
                          VALUES ('{$sint_id}', '{$branchid}', '{$transact_id}', '{$description}', '{$type}', '{$tid}', '{$transdate}', '{$amount}',
                          '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$tid}', '{$amount}')";
                         $rlt = mysqli_query($connection, $vable);
@@ -77,23 +76,12 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         while ($row = mysqli_fetch_array($rult))
                             {
                               $remail = $row['email'];
-                              $qemail = "SELECT * FROM staff WHERE email = '$remail'";
-                              $qemail2 = mysqli_query($connection, $qemail);
-                              $rt = mysqli_fetch_array($qemail2);
-                              $role = $rt['org_role'];
-                              $nm = $rt['display_name'];
-
-                              $org_role = $role;
-                              $queory = "SELECT * FROM org_role WHERE role = '$org_role'";
-                              $process = mysqli_query($connection, $queory);
-                              $rol = mysqli_fetch_array($process);
-                              $role_id = $rol['id'];
-
-                              $query2 = "SELECT * FROM permission WHERE role_id = '$role_id'";
-                              $process2 = mysqli_query($connection, $query2);
-                              $proce = mysqli_fetch_array($process2);
-                              $valut = $proce['valut'];
-
+                              $roleid = $row['org_role'];
+                              $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
+                              $rlot = mysqli_query($connection, $quy);
+                              $tolm = mysqli_fetch_array($rlot);
+                              $vaul = $tolm['vault_email'];
+                              
                               // if ($valut == 1 || $valut == "1") {
                               $mail = new PHPMailer;
                               $mail->From = $int_email;
@@ -267,9 +255,8 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         '{$type}', '{$tid}', '1', '0', '{$transdate}', '{$amount}', '{$new_tellbalance}','{$amount}', '{$crdate}',
                         '{$tid}', '{$amount}')";
                         $rin = mysqli_query($connection, $record);
-                        $vabl = "INSERT INTO institution_vault_transaction (int_id, branch_id transaction_id, description, transaction_type,
-                        teller_id, transaction_date, amount, vault_balance_derived, overdraft_amount_derived, balance_end_date_derived,
-                         balance_number_of_days_derived, cumulative_balance_derived, created_date, appuser_id, debit)
+                        $vabl = "INSERT INTO institution_vault_transaction (int_id, branch_id, transaction_id, description, transaction_type,
+                        teller_id, transaction_date, amount, vault_balance_derived, overdraft_amount_derived, created_date, appuser_id, debit)
                           VALUES ('{$sint_id}', '{$branchid}', '{$transact_id}', '{$description}', '{$type}', '{$tid}', '{$transdate}', '{$amount}',
                           '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$tid}', '{$amount}')";
                          $rlt = mysqli_query($connection, $vabl);
@@ -280,24 +267,13 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         while ($row = mysqli_fetch_array($rult))
                             {
                               $remail = $row['email'];
-                              $qemail = "SELECT * FROM staff WHERE email = '$remail'";
-                              $qemail2 = mysqli_query($connection, $qemail);
-                              $rt = mysqli_fetch_array($qemail2);
-                              $role = $rt['org_role'];
-                              $nm = $rt['display_name'];
+                              $roleid = $row['org_role'];
+                              $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
+                              $rlot = mysqli_query($connection, $quy);
+                              $tolm = mysqli_fetch_array($rlot);
+                              $vaul = $tolm['vault_email'];
 
-                              $org_role = $role;
-                              $queory = "SELECT * FROM org_role WHERE role = '$org_role'";
-                              $process = mysqli_query($connection, $queory);
-                              $rol = mysqli_fetch_array($process);
-                              $role_id = $rol['id'];
-
-                              $query2 = "SELECT * FROM permission WHERE role_id = '$role_id'";
-                              $process2 = mysqli_query($connection, $query2);
-                              $proce = mysqli_fetch_array($process2);
-                              $valut = $proce['valut'];
-
-                              // if ($valut == 1 || $valut == "1") {
+                              if ($vaul == 1 || $vaul == "1") {
                               $mail = new PHPMailer;
                               $mail->From = $int_email;
                               $mail->FromName = $int_name;
@@ -414,7 +390,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                   </body>
                               </html>";
                               $mail->AltBody = "This is the plain text version of the email content";
-                            // }
+                            }
                                         // mail system
                             if(!$mail->send()) 
                             {
