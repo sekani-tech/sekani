@@ -4,13 +4,13 @@ if (isset($_POST["id"]))
 {
     $id = $_POST["id"];
     if ($id == "day") {
-        $output = '<label>Days</label>';
+        $output = '<label>Day</label>';
     } else if ($id == "month") {
-        $output = '<label>Months</label>';
+        $output = '<label>Time(s) Per Month</label>';
     } else if ($id == "year") {
-        $output = '<label>Years</label>';
+        $output = '<label>Time(s) Per Year</label>';
     } else if ($id == "week") {
-        $output = '<label>Weeks</label>';
+        $output = '<label> Time(s) Per Week</label>';
     }
     echo $output;
 }

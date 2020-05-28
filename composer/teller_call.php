@@ -47,9 +47,9 @@ if (isset($_POST["start1"]) && isset($_POST["branch1"]) && isset($_POST["teller1
    //  Always Check the vault
    if (count([$query]) == 1 && count([$branchquery]) == 1) {
     // here we will some data
-    $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date BETWEEN '$start' AND '$end'  ORDER BY transaction_date ASC");
+    $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM institution_account_transaction WHERE ((teller_id = '$teller' OR appuser_id = '$teller') AND (int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end'))  ORDER BY transaction_date ASC");
     // then we will be fixing
-    $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
+    $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM institution_account_transaction WHERE ((teller_id = '$teller' OR appuser_id = '$teller') AND (int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end')) ORDER BY transaction_date ASC");
     $m1 = mysqli_fetch_array($genb1);
     $m = mysqli_fetch_array($genb);
     // qwerty
@@ -66,7 +66,7 @@ if (isset($_POST["start1"]) && isset($_POST["branch1"]) && isset($_POST["teller1
     function fill_report($connection, $int_id, $start, $end, $branch_id, $teller)
     {
       // import
-      $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE teller_id = '$teller' || appuser_id = '$teller' && int_id = '$int_id' && branch_id = '$branch_id' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
+      $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE ((teller_id = '$teller' OR appuser_id = '$teller') AND (int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end')) ORDER BY transaction_date ASC");
       // $q = mysqli_fetch_array($querytoget);
       $out = '';
       $q = mysqli_fetch_array($querytoget);

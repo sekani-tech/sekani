@@ -10,7 +10,6 @@
     $phone_b = $_POST['phone_b'];
     $h_address = $_POST['h_address'];
     $o_address = $_POST['o_address'];
-    $position = $_POST['position'];
     $email = $_POST['email'];
 
     $org = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id'");
@@ -19,9 +18,8 @@
       $int_id = $a['int_id'];
      }
 
-    $coll = "INSERT INTO loan_gaurantor (int_id, client_id, first_name, last_name, phone, phone2, home_address, office_address,
-    position_held, email) VALUES ( '{$int_id}','{$client_id}','{$firstname}','{$lastname}','{$phone}','{$phone_b}','{$h_address}',
-    '{$o_address}','{$position}','{$email}')";
+    $coll = "INSERT INTO loan_gaurantor (int_id, client_id, first_name, last_name, phone, phone2, home_address, office_address, email) VALUES ( '{$int_id}','{$client_id}','{$firstname}','{$lastname}','{$phone}','{$phone_b}','{$h_address}',
+    '{$o_address}','{$email}')";
 
     $query = mysqli_query($connection, $coll);
 

@@ -118,7 +118,7 @@ if(isset($_POST["id"]))
           <div class="row">
             <div class="col-md-5">
               <label>Repayment Every:</label>
-              <input type="number" class="form-control id="repay"/>
+              <input type="number" name="repay_every_no" class="form-control id="repayno"/>
             </div>
             <div class="col-md-5">
             <label> </label></br>
@@ -169,13 +169,23 @@ if(isset($_POST["id"]))
       <div class="col-md-4">
       <div class="form-group">
         <label>Loan Sector:</label>
-        <select name="" class="form-control">
-          <option value="">Select loan sector</option>
-          <option value="education">Education</option>
-          <option value="finance">Finance</option>
-          <option value="agricultural sector">Agricultural sector</option>
-          <option value="manufacturing">Manufacturing</option>
-          <option value="construction">Construction</option>
+        <select name="loan_sector" class="form-control">
+          <option value="0">Select loan sector</option>
+          <option value="1">Education</option>
+          <option value="2">Finance</option>
+          <option value="3">Agricultural sector</option>
+          <option value="4">Manufacturing</option>
+          <option value="5">Construction</option>
+          <option value="6">Others</option>
+        </select>
+        </div>
+        </div>
+        <div class="col-md-4">
+      <div class="form-group">
+        <label>Fund Source:</label>
+        <select name="fund_source" class="form-control">
+          <option value="1">Cash</option>
+          <option value="2">Bank</option>
         </select>
         </div>
         </div>
@@ -194,6 +204,8 @@ if(isset($_POST["id"]))
 //    $_SESSION['interest_rate'] = "batman";
 //    $_SESSION['disbursment_date'] = "batman";
 ?>
+
+<!-- uphere restric back date -->
 <script>
   $(document).ready(function() {
     $('#principal_amount').on("change keyup paste click", function(){
