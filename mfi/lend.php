@@ -413,12 +413,12 @@ $destination = "loans.php";
               <input type="text" name="office_address" id="office_address" class="form-control">
           </div>
         </div>
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
           <div class="form-group">
               <label class = "bmd-label-floating" for="">Position Held:</label>
               <input type="text" name="position_held" id="position_held" class="form-control">
           </div>
-        </div>
+        </div> -->
         <div class="col-md-4">
           <div class="form-group">
             <label class = "bmd-label-floating" class = "bmd-label-floating">Email:</label>

@@ -8,7 +8,7 @@ $int_rate = $_POST["intr"] / 100;
 $repayment_start = $_POST["repay_start"];
 $rep_every = $_POST["repay"];
 $disburse_date = $_POST["disbd"];
-
+// $repay_no = $_POST["repay_no"];
 // Test Variables
 // $principal_amount = "100000";
 // $loan_term = "5";
@@ -22,17 +22,22 @@ $disburse = $principal_amount;
 // To check what format calculation will be in 
 $table_day = "";
 $add_date = "";
+$t_d = "";
 if($rep_every == "month"){
     $table_day = "Months";
+    $t_d = "Month";
     $add_date = "30";
 } else if($rep_every == "day") {
     $table_day = "Days";
+    $t_d = "Day";
     $add_date = "1";
 } else if($rep_every == "year"){
     $table_day = "Years";
     $add_date = "365";
+    $t_d = "Year";
 } else if($rep_every == "week"){
   $table_day = "Weeks";
+  $t_d = "Week";
   $add_date = "7";
 }
 else{
@@ -64,9 +69,9 @@ echo '
 <td>'.$first_date.'</td>
 <td></td>
 <td></td>
-<td>'.number_format($disburse).'</td>
+<td>'.number_format($disburse, 2).'</td>
 <td></td>
-<td>'.number_format($disburse).'</td>
+<td>'.number_format($disburse, 2).'</td>
 <td></td>
 <td>0.00</td>
 <td></td>
@@ -88,7 +93,7 @@ while ($i < $loan_term){
   $actualend_date = date('d/m/Y', strtotime($repayment_start.' + '.$date2.' days'));
   $start_date = date('d/m/Y', strtotime($disburse_date.' + '.$date.' days'));
   $end_date = date('d/m/Y', strtotime($repayment_start.' + '.$date.' days'));
-  $diff = abs($end_date - $start_date);
+  $diff = $t_d." " .$serial;
 
   // Table Calculation
   $minus = $loan_term - 1;
