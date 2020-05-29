@@ -108,7 +108,6 @@ $resx1 = mysqli_num_rows($q1);
            $x = mysqli_fetch_array($checkm);
            $ssint_id = $_SESSION["int_id"];
            $appuser_id = $_SESSION["user_id"];
-           $acct_no = $x['account_no'];
            $staff_id = $x['staff_id'];
            $amount = $x['amount'];
            $famt = number_format("$amount", 2);
@@ -126,7 +125,6 @@ $resx1 = mysqli_num_rows($q1);
                if (count([$getacct]) == 1) {
                   $y = mysqli_fetch_array($getacct);
                   $branch_id = $y['branch_id'];
-                  $acct_no = $y['account_no'];
                   $client_id = $y['client_id'];
                   $acc_id = $y['id'];
                   $int_acct_bal = $y['account_balance_derived'];

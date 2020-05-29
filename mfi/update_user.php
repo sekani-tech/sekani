@@ -26,9 +26,14 @@ if (isset($_GET["edit"])) {
     $date_joined = $n['date_joined'];
     $status = $n['employee_status'];
     $org_role = $n['org_role'];
+    $op = mysqli_query($connection, "SELECT * FROM org_role WHERE (id='$org_role' AND int_id='$sessint_id)");
+    if (count([$op]) == 1) {
+      $f = mysqli_fetch_array($op);
+      $rolename = $f['role'];
+    }
     $img = $n['img'];
     $imagefileL = $n['img'];
-    $ut = mysqli_query($connection, "SELECT * FROM users WHERE id='$user_id' && int_id='$sessint_id");
+    $ut = mysqli_query($connection, "SELECT * FROM users WHERE (id='$user_id' && int_id='$sessint_id)");
     if (count([$ut]) == 1) {
       $j = mysqli_fetch_array($ut);
       $usertype = $j['usertype'];
@@ -145,7 +150,7 @@ if (isset($_GET["edit"])) {
                         <div class="form-group">
                           <label class="bmd-label-floating">Organization Role:</label>
                           <select name="org_role" id="" class="form-control">
-                          <option value="<?php echo $org_role;?>"><?php echo $org_role;?></option>
+                          <option value="<?php echo $org_role;?>"><?php echo $rolename;?></option>
                           <?php echo fill_role($connection); ?>
                           </select>
                         </div>
