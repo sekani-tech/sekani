@@ -262,7 +262,7 @@ input[type=number] {
               <!-- <a class="dropdown-item" href="#">Group</a> -->
               <!-- <a class="dropdown-item" href="chart_account.php">Accounting</a> -->
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Alerts</a>
+              <a class="dropdown-item" href="alert_sms.php">SMS</a>
             </div>
           </li>
           <!-- another -->

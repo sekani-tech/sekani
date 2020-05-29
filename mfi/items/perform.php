@@ -3,8 +3,8 @@
             <div class="col-md-12">
             <div class="card">
                 <div class="card-header card-header-primary">
-                <h4 class="card-title">Loan Report</h4>
-            </div>
+                  <h4 class="card-title">Loan Report</h4>
+                </div>
                 <div class="card-body">
                   <form action="">
                     <div class="row">
