@@ -32,8 +32,9 @@ if (count([$getpermission]) == 1) {
   $valut = $pms['valut'];
   $view_report = $pms['view_report'];
   $view_dashboard = $pms['view_dashboard'];
-  $client_update = $pms['update_client'];
   $vault_email = $pms['vault_email'];
+  $acc_op = $pms['acc_op'];
+  $acc_update = $pms['acc_update'];
   $per_con = $pms['configuration'];
   $bch_id = $_SESSION["branch_id"];
 }

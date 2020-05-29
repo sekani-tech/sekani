@@ -18,9 +18,10 @@ if(isset($_GET['id'])){
    $valut = $v['valut'];
    $vault_email = $v['vault_email'];
    $view_report = $v['view_report'];
-   $update_client = $v['update_client'];
    $view_dashbord = $v['view_dashboard'];
    $configuration = $v['configuration'];
+   $acc_op = $v['acc_op'];
+   $acc_update = $v['acc_update'];
    $pole = $v['role_id'];
    $rpo = mysqli_query($connection, "SELECT * FROM org_role WHERE id = '$pole' && int_id = '$sessint_id'");
    $u = mysqli_fetch_array($rpo);
@@ -67,12 +68,6 @@ if(isset($_GET['id'])){
    else{
      $g = 'unchecked';
    }
-   if($update_client == 1){
-    $h = 'checked';
-   }
-   else{
-     $h = 'unchecked';
-   }
    if($view_dashbord == 1){
     $i = 'checked';
    }
@@ -84,6 +79,18 @@ if(isset($_GET['id'])){
    }
    else{
      $j = 'unchecked';
+   }
+   if($acc_op == 1){
+    $k = 'checked';
+   }
+   else{
+     $k = 'unchecked';
+   }
+   if($acc_update == 1){
+    $l = 'checked';
+   }
+   else{
+     $l = 'unchecked';
    }
 }
 ?>
@@ -112,11 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    }else{
     $approve_loan = 0;
    }
-  if(isset($_POST['update'])){
-    $update = 1;
-   }else{
-    $update = 0;
-   }
+
   if(isset($_POST['approve_acc'])){
     $approve_acc = 1;
    }else{
@@ -137,13 +140,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    }else{
     $dash = 0;
    }
+   if(isset($_POST['accup'])){
+    $accup = 1;
+   }else{
+    $accup = 0;
+   }
+   if(isset($_POST['accop'])){
+    $accop = 1;
+   }else{
+    $accop = 0;
+   }
   if(isset($_POST['emai'])){
     $emai = 1;
    }else{
     $emai = 0;
    }
-   $rod = "UPDATE permission SET trans_appv = '$approve', trans_post = '$post_transact', loan_appv = '$approve_loan', acct_appv = '$approve_acc', valut = '$vault_trans',
-    vault_email = '$emai', view_report = '$view_report', update_client = '$update', view_dashboard = '$dash', configuration = '$access_config' WHERE int_id = '$sessint_id'
+   $rod = "UPDATE permission SET acc_op = '$accop', acc_update = '$accup', trans_appv = '$approve', trans_post = '$post_transact', loan_appv = '$approve_loan', acct_appv = '$approve_acc', valut = '$vault_trans',
+    vault_email = '$emai', view_report = '$view_report', view_dashboard = '$dash', configuration = '$access_config' WHERE int_id = '$sessint_id'
     && role_id = '$id'";
     $rox = mysqli_query($connection, $rod);
     if($rox){
@@ -206,9 +219,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   document.getElementById('n5').checked = true;
                   document.getElementById('n6').checked = true;
                   document.getElementById('n7').checked = true;
-                  document.getElementById('n8').checked = true;
                   document.getElementById('n9').checked = true;
-                  document.getElementById('n10').checked = true;
+                  document.getElementById('n8').checked = true;
+                  document.getElementById('n11').checked = true;
+                  document.getElementById('n12').checked = true;
                 } else {
                   document.getElementById('n1').checked = false;
                   document.getElementById('n2').checked = false;
@@ -217,9 +231,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   document.getElementById('n5').checked = false;
                   document.getElementById('n6').checked = false;
                   document.getElementById('n7').checked = false;
-                  document.getElementById('n8').checked = false;
                   document.getElementById('n9').checked = false;
-                  document.getElementById('n10').checked = false;
+                  document.getElementById('n8').checked = false;
+                  document.getElementById('n11').checked = false;
+                  document.getElementById('n12').checked = false;
                 }
                });
              })
@@ -227,6 +242,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
            <!-- End of Javascript for the codes -->
             <!-- for the permission -->
             <div class="row">
+            <div class="col-md-4">
+           <!-- Last -->
+           <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input <?php echo $k;?> class="form-check-input" type="checkbox" value="" name="accop" id="n11">
+                Account Opening
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+            </div>
+            <div class="col-md-4">
+           <!-- Last -->
+           <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input <?php echo $l;?> class="form-check-input" type="checkbox" value="" name="accup" id="n12">
+                Account Update
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+            </div>
             <div class="col-md-4">
             <div class="form-check form-check-inline">
               <label class="form-check-label">
@@ -274,17 +313,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               </label>
            </div>
            </div>
-           <div class="col-md-4">
-           <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input <?php echo $h;?>  class="form-check-input" type="checkbox" value="" name="update" id="n10">
-               Client Update Approval
-                <span class="form-check-sign">
-                <span class="check"></span>
-                </span>
-              </label>
-           </div>
-            </div>
             <!-- Another -->
             <div class="col-md-4">
             <div class="form-check form-check-inline">
