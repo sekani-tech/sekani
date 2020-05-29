@@ -134,6 +134,7 @@ $resx1 = mysqli_num_rows($q1);
                   $numberacct = number_format("$comp",2);
                   $comp2 = $int_acct_bal - $amount;
                   $numberacct2 = number_format("$comp2",2);
+                  $compall = $y["account_balance_derived"] - $amount;
                   $trans_type = "credit";
                   $trans_type2 = "debit";
                   $irvs = 0;
@@ -274,16 +275,24 @@ $resx1 = mysqli_num_rows($q1);
                    last_withdrawal = '$amount' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
                    $iupqres = mysqli_query($connection, $iupq);
                    if ($iupqres) {
-                       $iat = "INSERT INTO account_transaction (int_id, branch_id, account_id
-                       account_no, product_id,
-                       client_id, teller_id, transaction_id, description, transaction_type, is_reversed,
-                       transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-                       created_date, appuser_id, debit) VALUES ('{$ssint_id}', '{$branch_id}',
-                       '{$acc_id}', '{$acct_no}',  '{$product_type}', '{$client_id}', '{$teller_id}', '{$transid}', '{$description}', '{$trans_type2}', '{$irvs}',
-                       '{$transaction_date}', '{$amount}', '{$comp2}', '{$amount}',
-                       '{$gen_date}', '{$appuser_id}', '{$amount}')";
-                       $res3 = mysqli_query($connection, $iat);
-                       if ($res3) {
+                     $xmx = "INSERT INTO `account_transaction` (`int_id`, `branch_id`, `product_id`, `account_id`, `account_no`, 
+                     `client_id`, `teller_id`, `transaction_id`, `description`, `transaction_type`, `is_reversed`, `transaction_date`, 
+                     `amount`, `overdraft_amount_derived`, `balance_end_date_derived`, 
+                    `running_balance_derived`,  `cumulative_balance_derived`, `created_date`, `appuser_id`, `debit`) 
+                     VALUES ('{$sessint_id}', '{$branch_id}', '{$product_type}', 
+                     '{$acc_id}', '{$acct_no}', '{$client_id}', {$teller_id}, 
+                     '{$transid}', '{$description}', '{$trans_type2}', '{$irvs}', '{$transaction_date}',
+                     '{$amount}', '{$amount}', '{$gen_date}', '{$comp2}', '{$amount}', '{$gen_date}', '{$appuser_id}', '{$amount}')";
+                       $res3 = mysqli_query($connection, $xmx);
+                      //  if ($connection->error) {
+                      //            try {
+                      //                throw new Exception("MYSQL error $connection->error <br> $xmx ", $mysqli->error);
+                      //            } catch (Exception $e) {
+                      //                echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
+                      //                echo n12br($e->getTraceAsString());
+                      //            }
+                      //    }
+                       if ($xmx) {
                            $v = "Verified";
                            $iupqx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod' && int_id = '$sessint_id'";
                            $res4 = mysqli_query($connection, $iupqx);
