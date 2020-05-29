@@ -434,11 +434,23 @@ $transid1 = $randms1;
                   });
                 });
               </script>
+              <?php
+                  function fill_payment($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM payment_type WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["value"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
               <label>Transaction Method</label>
                <select class="form-control" name="pay_type" id="opo">
-                  <option value="Cash">Cash</option>
-                  <option value="Bank">Bank</option>
-                  <option value="Cheque">Cheque</option>
+                  <?php echo fill_payment($connection)?>
                </select>
             </div>
         </div>
@@ -520,9 +532,7 @@ $transid1 = $randms1;
                 });
               </script>
           <select name="payment_method" id="poo" class="form-control">
-            <option value="Cash">Cash</option>
-            <!-- <option value="Cheque">Cheque</option> -->
-            <!-- <option value="Transfer">Transfer</option> -->
+          <?php echo fill_payment($connection)?>
           </select>
       </div>
     </div>

@@ -26,6 +26,7 @@ if($ctype == 'INDIVIDUAL')
         $last_name = $_POST['last_name'];
         $phone = $_POST['phone'];
         $phone2 = $_POST['phone2'];
+        $occupation = $_POST['occupation'];
         $email = $_POST['email'];
         $address = $_POST['address'];
         $gender = $_POST['gender'];
@@ -107,7 +108,7 @@ if($ctype == 'INDIVIDUAL')
     $updated_on = date("Y-m-d");
     $queryx = "UPDATE client SET loan_officer_id = '$acct_off', client_type = '$ctype', account_type = '$acct_type', display_name = '$display_name',
     firstname = '$first_name', lastname= '$last_name', middlename = '$middle_name',
-    mobile_no = '$phone', mobile_no_2 = '$phone2', ADDRESS = '$address', gender = '$gender',
+    mobile_no = '$phone', mobile_no_2 = '$phone2', occupation = '$occupation', ADDRESS = '$address', gender = '$gender',
     date_of_birth = '$date_of_birth',email_address = '$email', branch_id = '$branch', COUNTRY = '$country', STATE_OF_ORIGIN = '$state',
     LGA = '$lga', BVN = '$bvn', SMS_ACTIVE = '$sms_active',
     EMAIL_ACTIVE = '$email_active', id_card = '$id_card', updated_by = '$updated_by', updated_on = '$updated_on',
@@ -187,6 +188,9 @@ else if($ctype == 'CORPORATE'){
         $bvn1 = $_POST['sig_bvn_one'];
         $bvn2 = $_POST['sig_bvn_two'];
         $bvn3 = $_POST['sig_bvn_three'];
+        $occu1 = $_POST['sig_occu_one'];
+        $occu2 = $_POST['sig_occu_two'];
+        $occu3 = $_POST['sig_occu_three'];
 
         $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id'");
       if (count([$person]) == 1) {
@@ -355,7 +359,7 @@ else if($ctype == 'CORPORATE'){
           rc_number = '$rcno', sig_one = '$signame1', sig_two = '$signame2', sig_three = '$signame3', sig_address_one = '$address1', sig_address_two = '$address2', sig_address_three = '$address3', sig_phone_one = '$phone1', sig_phone_two = '$phone2', sig_phone_three = '$phone3',
            sig_gender_one = '$gender1', sig_gender_two = '$gender2', sig_gender_three = '$gender3', sig_state_one = '$state1', sig_state_two = '$state2', sig_state_three = '$state3', sig_lga_one = '$lga1', sig_lga_two = '$lga2', sig_lga_three = '$lga3',
             sig_bvn_one = '$bvn1', sig_bvn_two = '$bvn2', sig_bvn_three = '$bvn3', sms_active_one = '$smsactive1', sms_active_two = '$smsactive2', sms_active_three = '$smsactive3', email_active_one = '$emailactive1', email_active_two = '$emailactive2',
-             email_active_three = '$emailactive3', sig_passport_one = '$p1', sig_passport_two = '$p2', sig_passport_three = '$p3', sig_signature_one = '$s1', sig_signature_two = '$s2', sig_signature_three = '$s3',
+             email_active_three = '$emailactive3', sig_occu_one = '$occu1', sig_occu_two = '$occu2', sig_occu_three = '$occu3', sig_passport_one = '$p1', sig_passport_two = '$p2', sig_passport_three = '$p3', sig_signature_one = '$s1', sig_signature_two = '$s2', sig_signature_three = '$s3',
               sig_id_img_one = '$i1', sig_id_img_two = '$i2', sig_id_img_three = '$i3', sig_id_card_one = '$sigid1', sig_id_card_two = '$sigid2', sig_id_card_three = '$sigid3', status = 'Not Approved'
               WHERE id = '$vd'";
 

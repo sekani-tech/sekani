@@ -32,6 +32,23 @@ if(isset($_POST["id"]))
       }
       return $out;
     }
+                  function fill_payment($connection)
+                  {
+                    $id = $_POST["id"];
+                    $org = mysqli_query($connection, "SELECT * FROM product WHERE id = '$id'");
+                    if (count([$org]) == 1) {
+                      $a = mysqli_fetch_array($org);
+                      $sint_id = $a['int_id'];
+                     }
+                  $org = "SELECT * FROM payment_type WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["value"].'</option>';
+                  }
+                  return $out;
+                  }
     function fill_loanofficer($connection) {
       $id = $_POST["id"];
       $org = mysqli_query($connection, "SELECT * FROM product WHERE id = '$id'");
@@ -184,8 +201,7 @@ if(isset($_POST["id"]))
       <div class="form-group">
         <label>Fund Source:</label>
         <select name="fund_source" class="form-control">
-          <option value="1">Cash</option>
-          <option value="2">Bank</option>
+          '.fill_payment($connection).'
         </select>
         </div>
         </div>

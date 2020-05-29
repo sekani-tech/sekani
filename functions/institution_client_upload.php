@@ -45,6 +45,7 @@ $date_of_birth = $_POST['date_of_birth'];
 $country = $_POST['country'];
 $state = $_POST['stated'];
 $lga = $_POST['lgka'];
+$occupation = $_POST['occupation'];
 $bvn = $_POST['bvn'];
 $loan_status = "Not Active";
 $activation_date = date("Y-m-d");
@@ -103,11 +104,11 @@ $msg = "Image Failed";
 $query = "INSERT INTO client (int_id, loan_officer_id, client_type, account_type,
 display_name, account_no,
 firstname, lastname, middlename, mobile_no, mobile_no_2, email_address, address, gender, date_of_birth,
-branch_id, country, STATE_OF_ORIGIN, lga, bvn, sms_active, email_active, id_card,
+branch_id, country, STATE_OF_ORIGIN, lga, occupation, bvn, sms_active, email_active, id_card,
 passport, signature, id_img_url, loan_status, submittedon_date, activation_date) VALUES ('{$sessint_id}', '{$loan_officer_id}', '{$ctype}',
 '{$acct_type}', '{$display_name}', '{$account_no}', '{$first_name}', '{$last_name}', '{$middlename}', '{$phone}', '{$phone2}',
 '{$email}', '{$address}', '{$gender}', '{$date_of_birth}', '{$branch}',
-'{$country}', '{$state}', '{$lga}', '{$bvn}', '{$sms_active}', '{$email_active}',
+'{$country}', '{$state}', '{$lga}', '{$occupation}', '{$bvn}', '{$sms_active}', '{$email_active}',
 '{$id_card}', '{$image3}', '{$image1}', '{$image2}', '{$loan_status}',
 '{$submitted_on}', '{$activation_date}')";
 
@@ -989,6 +990,9 @@ $sig_state_three = $_POST['sig_state_three'];
 $sig_lga_one = $_POST['sig_lga_one'];
 $sig_lga_two = $_POST['sig_lga_two'];
 $sig_lga_three = $_POST['sig_lga_three'];
+$sig_occu_one = $_POST['sig_occu_one'];
+$sig_occu_two = $_POST['sig_occu_two'];
+$sig_occu_three = $_POST['sig_occu_three'];
 $sig_bvn_one = $_POST['sig_bvn_one'];
 $sig_bvn_two = $_POST['sig_bvn_two'];
 $sig_bvn_three = $_POST['sig_bvn_three'];
@@ -1131,13 +1135,13 @@ $query = "INSERT INTO client  (int_id, loan_officer_id, loan_status, branch_id, 
  firstname, display_name, date_of_birth, submittedon_date, email_address, ADDRESS, COUNTRY,
    rc_number, sig_one, sig_two, sig_three, sig_address_one, sig_address_two, sig_address_three, sig_phone_one, sig_phone_two, sig_phone_three,
     sig_gender_one, sig_gender_two, sig_gender_three, sig_state_one, sig_state_two, sig_state_three, sig_lga_one, sig_lga_two, sig_lga_three,
-     sig_bvn_one, sig_bvn_two, sig_bvn_three, sms_active_one, sms_active_two, sms_active_three, email_active_one, email_active_two,
-      email_active_three, sig_passport_one, sig_passport_two, sig_passport_three, sig_signature_one, sig_signature_two, sig_signature_three,
-       sig_id_img_one, sig_id_img_two, sig_id_img_three, sig_id_card_one, sig_id_card_two, sig_id_card_three,status) 
+     sig_occu_one, sig_occu_two, sig_occu_three,sig_bvn_one, sig_bvn_two, sig_bvn_three, sms_active_one, sms_active_two, sms_active_three,
+      email_active_one, email_active_two, email_active_three, sig_passport_one, sig_passport_two, sig_passport_three, sig_signature_one, 
+      sig_signature_two, sig_signature_three, sig_id_img_one, sig_id_img_two, sig_id_img_three, sig_id_card_one, sig_id_card_two, sig_id_card_three, status) 
   VALUES ('{$sessint_id}', '{$loan_officer_id}', '{$loan_status}', '{$branch}', '{$ctype}', '{$account_no}','{$acct_type}', '{$activation_date}', '{$display_name}', '{$display_name}', '{$date_of_birth}',
   '{$submitted_on}', '{$email}', '{$address}','{$country}', '{$rc_number}','{$sig_one}','{$sig_two}','{$sig_three}','{$sig_address_one}','{$sig_address_two}','{$sig_address_three}',
   '{$sig_phone_one}','{$sig_phone_two}','{$sig_phone_three}','{$sig_gender_one}','{$sig_gender_two}','{$sig_gender_three}','{$sig_state_one}','{$sig_state_two}','{$sig_state_three}',
-  '{$sig_lga_one}','{$sig_lga_two}','{$sig_lga_three}','{$sig_bvn_one}','{$sig_bvn_two}','{$sig_bvn_three}','{$sms_active_one}','{$sms_active_two}','{$sms_active_three}',
+  '{$sig_lga_one}','{$sig_lga_two}','{$sig_lga_three}', '{$sig_occu_one}', '{$sig_occu_two}', '{$sig_occu_three}', '{$sig_bvn_one}','{$sig_bvn_two}','{$sig_bvn_three}','{$sms_active_one}','{$sms_active_two}','{$sms_active_three}',
   '{$email_active_one}','{$email_active_two}','{$email_active_three}','{$sig_passport_one}','{$sig_passport_two}','{$sig_passport_three}','{$sig_signature_one}','{$sig_signature_two}',
   '{$sig_signature_three}','{$sig_id_img_one}','{$sig_id_img_two}','{$sig_id_img_three}','{$sig_id_card_one}','{$sig_id_card_two}','{$sig_id_card_three}','Not Approved')";
 

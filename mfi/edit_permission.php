@@ -161,6 +161,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $rox = mysqli_query($connection, $rod);
     if($rox){
       $URL="staff_mgmt.php";
+      echo '<script type="text/javascript">
+      $(document).ready(function(){
+          swal({
+              type: "success",
+              title: "Permission",
+              text: "The permissions has been added to this role",
+              showConfirmButton: false,
+              timer: 2000
+          })
+      });
+      </script>
+      ';
       echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
     }
     else{

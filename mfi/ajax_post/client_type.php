@@ -152,6 +152,12 @@ if(isset($_POST['id'])){
               </select>
             </div>
           </div>
+          <div class="col-md-12">
+                    <div class="form-group">
+                    <label >Occupation</label>
+                    <input  type="text" style="text-transform: uppercase;" class="form-control" name="sig_occu_one">
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="form-group">
                     <label >BVN</label>
@@ -260,6 +266,12 @@ if(isset($_POST['id'])){
               </select>
             </div>
           </div>
+          <div class="col-md-12">
+                    <div class="form-group">
+                    <label >Occupation</label>
+                    <input  type="text" style="text-transform: uppercase;" class="form-control" name="sig_occu_two">
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="form-group">
                     <label>BVN</label>
@@ -369,6 +381,12 @@ if(isset($_POST['id'])){
               </select>
             </div>
           </div>
+          <div class="col-md-12">
+                    <div class="form-group">
+                    <label >Occupation</label>
+                    <input  type="text" style="text-transform: uppercase;" class="form-control" name="sig_occu_three">
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="form-group">
                     <label >BVN</label>
@@ -543,6 +561,12 @@ if(isset($_POST['id'])){
               </select>
             </div>
           </div>
+          <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Occupation:</label>
+                <input type="text" style="text-transform: uppercase;" class="form-control" name="occupation">
+            </div>
+            </div>
             <div class="col-md-4">
             <label for="">BVN:</label>
             <input type="text" style="text-transform: uppercase;" name="bvn" class="form-control" id="">
@@ -566,16 +590,6 @@ if(isset($_POST['id'])){
                     <span class="check"></span>
                     </span>
                 </label>
-            </div>
-            </div>
-            <div class="col-md-4">
-            
-            <div class="form-group">
-                <label for="">Account Officer:</label>
-                <select  name="acct_of" class="form-control" id="">
-                <option value="">select account officer</option>
-                '.fill_officer($connection).'
-                </select>
             </div>
             </div>
             <style>
@@ -610,6 +624,16 @@ if(isset($_POST['id'])){
             <label id="rated"> Select ID</label>
             <div id="rated"></div>
             
+            </div>
+            <div class="col-md-4">
+            
+            <div class="form-group">
+                <label for="">Account Officer:</label>
+                <select  name="acct_of" class="form-control" id="">
+                <option value="">select account officer</option>
+                '.fill_officer($connection).'
+                </select>
+            </div>
             </div>
             <div class="col-md-4">
             <label for="">Id Type</label>

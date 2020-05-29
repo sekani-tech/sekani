@@ -259,9 +259,8 @@ input[type=number] {
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="staff_mgmt.php">Staff Mgt.</a>
               <a class="dropdown-item" href="branch.php">Branch</a>
-              <!-- <a class="dropdown-item" href="#">Group</a> -->
-              <!-- <a class="dropdown-item" href="chart_account.php">Accounting</a> -->
-              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="payment_type.php">Payment Type</a>
+              <!-- <div class="dropdown-divider"></div> -->
               <a class="dropdown-item" href="#">Alerts</a>
             </div>
           </li>

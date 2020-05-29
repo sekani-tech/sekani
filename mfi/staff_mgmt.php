@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Branch";
+$page_title = "Staff Management";
 $destination = "index.php";
     include("header.php");
 
