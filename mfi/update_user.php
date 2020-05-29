@@ -14,7 +14,6 @@ if (isset($_GET["edit"])) {
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
     $staff_id = $n['id'];
-    $user_id = $n['user_id'];
     $int_name = $n['int_name'];
     $username = $n['username'];
     $display_name = $n['display_name'];
@@ -26,18 +25,16 @@ if (isset($_GET["edit"])) {
     $date_joined = $n['date_joined'];
     $status = $n['employee_status'];
     $org_role = $n['org_role'];
-    $op = mysqli_query($connection, "SELECT * FROM org_role WHERE (id='$org_role' AND int_id='$sessint_id)");
-    if (count([$op]) == 1) {
-      $f = mysqli_fetch_array($op);
-      $rolename = $f['role'];
-    }
     $img = $n['img'];
     $imagefileL = $n['img'];
-    $ut = mysqli_query($connection, "SELECT * FROM users WHERE (id='$user_id' && int_id='$sessint_id)");
-    if (count([$ut]) == 1) {
-      $j = mysqli_fetch_array($ut);
-      $usertype = $j['usertype'];
-    }
+
+    $getrole = mysqli_query($connection, "SELECT * FROM `org_role` WHERE id = '$org_role' && int_id = '$sessint_id'");
+    $om = mysqli_fetch_array($getrole);
+    $rolename = $om['role'];
+
+    $gettype = mysqli_query($connection, "SELECT * FROM `users` WHERE id = '$user_id' && int_id = '$sessint_id'");
+    $pi = mysqli_fetch_array($gettype);
+    $usertype = $pi['usertype'];
   }
 }
 ?>
@@ -185,6 +182,7 @@ if (isset($_GET["edit"])) {
                           <label class="bmd-label-floating">UserType</label>
                           <select name="usertype" id="" class="form-control">
                           <option value="<?php echo $usertype; ?>"><?php echo $usertype; ?></option>
+                          <option value="super_admin">Super Admin</option>
                             <option value="admin">Admin</option>
                             <option value="staff">Staff</option>
                           </select>
