@@ -14,7 +14,6 @@ if (isset($_GET["edit"])) {
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
     $staff_id = $n['id'];
-    $user_id = $n['user_id'];
     $int_name = $n['int_name'];
     $username = $n['username'];
     $display_name = $n['display_name'];
@@ -28,11 +27,14 @@ if (isset($_GET["edit"])) {
     $org_role = $n['org_role'];
     $img = $n['img'];
     $imagefileL = $n['img'];
-    $ut = mysqli_query($connection, "SELECT * FROM users WHERE id='$user_id' && int_id='$sessint_id");
-    if (count([$ut]) == 1) {
-      $j = mysqli_fetch_array($ut);
-      $usertype = $j['usertype'];
-    }
+
+    $getrole = mysqli_query($connection, "SELECT * FROM `org_role` WHERE id = '$org_role' && int_id = '$sessint_id'");
+    $om = mysqli_fetch_array($getrole);
+    $rolename = $om['role'];
+
+    $gettype = mysqli_query($connection, "SELECT * FROM `users` WHERE id = '$user_id' && int_id = '$sessint_id'");
+    $pi = mysqli_fetch_array($gettype);
+    $usertype = $pi['usertype'];
   }
 }
 ?>
@@ -145,7 +147,7 @@ if (isset($_GET["edit"])) {
                         <div class="form-group">
                           <label class="bmd-label-floating">Organization Role:</label>
                           <select name="org_role" id="" class="form-control">
-                          <option value="<?php echo $org_role;?>"><?php echo $org_role;?></option>
+                          <option value="<?php echo $org_role;?>"><?php echo $rolename;?></option>
                           <?php echo fill_role($connection); ?>
                           </select>
                         </div>
@@ -180,6 +182,7 @@ if (isset($_GET["edit"])) {
                           <label class="bmd-label-floating">UserType</label>
                           <select name="usertype" id="" class="form-control">
                           <option value="<?php echo $usertype; ?>"><?php echo $usertype; ?></option>
+                          <option value="super_admin">Super Admin</option>
                             <option value="admin">Admin</option>
                             <option value="staff">Staff</option>
                           </select>

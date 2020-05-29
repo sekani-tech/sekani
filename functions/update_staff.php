@@ -42,11 +42,11 @@ if($_FILES['imagefile']['name']) {
         $res = mysqli_query($connection, $sec);
         if ($res) {
           $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
-          echo header ("Location: ../mfi/users.php?message3=$randms");
+          echo header ("Location: ../mfi/staff_mgmt.php?message3=$randms");
         } else {
            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
            echo "error";
-          echo header ("Location: ../mfi/users.php?message4=$randms");
+          echo header ("Location: ../mfi/staff_mgmt.php?message4=$randms");
             // echo header("location: ../mfi/client.php");
         }
     } else {

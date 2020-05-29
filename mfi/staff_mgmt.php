@@ -49,8 +49,6 @@ $destination = "index.php";
 // first step - check if this person is authorized
 $org_role = $_SESSION['org_role'];
 
-$valut = $proce['configuration'];
-
 if ($per_con == 1 || $per_con == "1") {
 ?>
 <!-- Content added here -->
@@ -160,6 +158,7 @@ if ($per_con == 1 || $per_con == "1") {
                     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       // check the button value
                       $role = $_POST['submit'];
+                      $update_perm = $_POST['sumbit'];
                       $update_role = $_POST['submit'];
                       if ($role == 'role') {
                         $r_n = $_POST["role_name"];
@@ -215,7 +214,7 @@ if ($per_con == 1 || $per_con == "1") {
                      </script>
                      ';
                         }
-                      } else if ($update_role == 'update_role') {
+                      } else if ($update_perm == 'update_perm') {
                         $rid = $_POST["org_role"];
                         $rop = "SELECT role_id FROM permission WHERE int_id = '$sessint_id' && role_id = '$rid'";
                         $one = mysqli_query($connection, $rop);
@@ -314,7 +313,50 @@ if ($per_con == 1 || $per_con == "1") {
                     }
                         }
                         
+                    }elseif($update_role == 'update_role'){
+                      $r_n = $_POST["role_name"];
+                        $r_d = $_POST["descript"];
+                        $ids = $_POST["ids"];
+                        // check if this role exists
+                        $selectrole = mysqli_query($connection, "SELECT * FROM org_role WHERE int_id = '$sessint_id' && role = '$r_n'");
+                        $cs = mysqli_num_rows($selectrole);
+                        if ($cs == 0 || $cs == "0") {
+                          $getrole = "UPDATE org_role SET role = '$r_n', description = 'r_d' WHERE int_id = '$sessint_id' && id = '$id'";
+                        $MIB = mysqli_query($connection, $getrole);
+                        if ($MIB) {
+                          // echo success
+                          echo '<script type="text/javascript">
+                     $(document).ready(function(){
+                         swal({
+                             type: "success",
+                             title: "Role Updated",
+                             text: "Updated Successfully",
+                             showConfirmButton: false,
+                             timer: 2000
+                         })
+                     });
+                     </script>
+                     ';
+                        } else {
+                          // echo error
+                          echo '<script type="text/javascript">
+                     $(document).ready(function(){
+                         swal({
+                             type: "error",
+                             title: "Error During Update",
+                             text: "Couldnt Update",
+                             showConfirmButton: false,
+                             timer: 2000
+                         })
+                     });
+                     </script>
+                     ';
+                        }
                     } else {
+                      echo "";
+                    }
+                  }
+                     else {
                       echo "";
                     }
                   } else {
@@ -370,7 +412,7 @@ if ($per_con == 1 || $per_con == "1") {
                         <?php $row["id"]; ?>
                           <th><?php echo strtoupper($row["role"]); ?></th>
                           <th><?php echo $row["description"]; ?></th>
-                          <td><div data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-info">Edit</div></td>
+                          <td><a href="edit_role.php?id=<?php echo $row['id'];?>" class="btn btn-info">Edit</a></td>
                         </tr>
                         <?php }
                           }
@@ -381,37 +423,6 @@ if ($per_con == 1 || $per_con == "1") {
                       </tbody>
                     </table>
                   </div>
-
-                  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title">Edit Role</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <form method="POST" enctype="multipart/form-data">
-                            <div class="row">
-                              <div class="col-md-12">
-                                <div class="form-group">
-                                  <label >Account name*</label>
-                                  <input type="text" id="give" style="text-transform: uppercase;" class="form-control" name="acct_name" required>
-                                </div>
-                              </div>
-                              <div class="col-md-12">
-                                <div class="form-group">
-                                  <label >Description</label>
-                                  <input  id = "tit" type="text" style="text-transform: uppercase;" class="form-control" name="descript" required>
-                                </div>
-                              </div>
-                            </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                     </div>
                     <!-- /roles -->
                     <div class="tab-pane" id="per">
@@ -649,7 +660,7 @@ if ($per_con == 1 || $per_con == "1") {
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" name="submit" value="update_role" type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" name="submit" value="update_perm" type="button" class="btn btn-primary">Save changes</button>
       </div>
       </form>
       </div>
