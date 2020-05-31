@@ -132,6 +132,41 @@ else if (isset($_GET["message5"])) {
     }
 ?>
 <?php
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // check the button value
+    $rog = $_POST['submit'];
+    $add_pay = $_POST['submit'];
+    if ($add_pay == 'add_payment'){
+      $name = $_POST['name'];
+      $desc = $_POST['des'];
+      $default = $_POST['default'];
+
+
+      if(isset($_POST['is_cash'])){
+        $is_cash = 1;
+      }else{
+        $is_cash = 0;
+      }
+      $query = mysqli_query($connection, "INSERT INTO payment_type (int_id, value, description, is_cash_payment, order_position)
+      VALUES('{$sessint_id}', '{$name}', '{$desc}', '{$is_cash}', '{$default}')");
+      if($query){
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "success",
+                title: "Created Successfully",
+                text: " Payment type Created",
+                showConfirmButton: false,
+                timer: 2000
+            })
+        });
+        </script>
+        ';
+      }
+    }
+  }
+?>
+<?php
 // right now we will program
 // first step - check if this person is authorized
 // $query = "SELECT * FROM org_role WHERE role = '$org_role'";
@@ -175,6 +210,13 @@ if ($per_con == 1 || $per_con == "1") {
                         <li class="nav-item">
                           <a class="nav-link" href="#credit" data-toggle="tab">
                             <i class="material-icons">find_in_page</i> Credit Check
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#cash" data-toggle="tab">
+                          <!-- visibility -->
+                            <i class="material-icons">account_balance</i> Cash Payments
                             <div class="ripple-container"></div>
                           </a>
                         </li>
@@ -423,6 +465,139 @@ if ($per_con == 1 || $per_con == "1") {
                   </div>
                     </div>
                     <!-- end of credit checkss -->
+                    <div class="tab-pane" id="cash">
+                    <div class="table-responsive">
+                  <button data-toggle="modal" data-target="#exampleModal" class="btn btn-primary pull-left">Add</button>
+                      <!-- form of staff -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Assign Permission to a Staff</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form method="POST" enctype="multipart/form-data">
+          <div class="row">
+            <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating">Name</label>
+               <input type = "text" class="form-control" name = "name"/>
+              </div>
+            </div>
+            <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating">Description</label>
+               <input type = "text" class="form-control" name = "des"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+            <div class="form-group">
+               <label class="bmd-label-floating">Default</label>
+              <select class="form-control" name= "default">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="" name="is_cash">
+                Is Cash payment
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+            </div>
+            
+            </div>
+            <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating"></label>
+               <input type = "text" hidden class="form-control"/>
+              </div>
+            </div>
+           <!-- Next -->
+                    </div>
+                    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" name="submit" value="add_payment" type="button" class="btn btn-primary">Save changes</button>
+      </div>
+                </form>
+                </div>
+                </div>
+            </div>
+            </div>
+            <script>
+                  $(document).ready(function() {
+                  $('#tabledat4').DataTable();
+                  });
+                  </script>
+                    <table id="tabledat4" class="table">
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM payment_type WHERE int_id ='$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                        <!-- <th>
+                          ID
+                        </th> -->
+                        <th>Name</th>
+                        <th>
+                          Description
+                        </th>
+                        <th>
+                          Default
+                        </th>
+                        <th>
+                         Cash Payment
+                        </th>
+                        <th>
+                          Edit
+                        </th>
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                          <th><?php echo $row["value"]; ?></th>
+                          <th><?php echo $row["description"]; ?></th>
+                          <?php 
+                          if ($row["order_position"] == 1){
+                            $def = "Yes";
+                          }
+                          else{
+                            $def = "No";
+                          }
+                          ?>
+                         <th><?php echo $def; ?></th>
+                          <?php 
+                          if ($row["is_cash_payment"] == 1){
+                            $cash = "Yes";
+                          }
+                          else{
+                            $cash = "No";
+                          }
+                          ?>
+                         <th><?php echo $cash; ?></th>
+                          <td><a href="update_branch.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                          </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                      </tbody>
+                    </table>
+                    </div>
+                    <!-- end of cash payment -->
                   </div>
                 </div>
               </div>

@@ -241,7 +241,7 @@ input[type=number] {
               <a href="#" class="dropdown-item">Savings Report</a>
               <a href="#" class="dropdown-item">Current Accounts Report</a>
               <a href="loan_report.php" class="dropdown-item">Loan reports</a>
-              <a href="statement_of_fp.php" class="dropdown-item">Financial report</a>
+              <a href="financial_report.php" class="dropdown-item">Financial report</a>
               <a href="institutional_report.php" class="dropdown-item">Audit</a>
               <a href="vault_report.php" class="dropdown-item">Vault Report</a>
               <a href="teller.php" class="dropdown-item">Teller Report</a>
@@ -259,7 +259,7 @@ input[type=number] {
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="staff_mgmt.php">Staff Mgt.</a>
               <a class="dropdown-item" href="branch.php">Branch</a>
-              <a class="dropdown-item" href="payment_type.php">Payment Type</a>
+              <!-- <a class="dropdown-item" href="payment_type.php">Payment Type</a> -->
               <!-- <div class="dropdown-divider"></div> -->
               <a class="dropdown-item" href="#">Alerts</a>
             </div>
