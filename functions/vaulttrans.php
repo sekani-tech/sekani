@@ -78,11 +78,11 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                               $remail = $row['email'];
                               $roleid = $row['org_role'];
                               $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
-                              $rlot = mysqli_query($connection, $quy);
+                              $rlot = mysqli_query($connection, $quyd);
                               $tolm = mysqli_fetch_array($rlot);
                               $vaul = $tolm['vault_email'];
                               
-                              // if ($valut == 1 || $valut == "1") {
+                              if ($vaul == 1 || $vaul == "1") {
                               $mail = new PHPMailer;
                               $mail->From = $int_email;
                               $mail->FromName = $int_name;
@@ -199,20 +199,20 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                   </body>
                               </html>";
                               $mail->AltBody = "This is the plain text version of the email content";
-                            // }
-                                        // mail system
-                            if(!$mail->send()) 
-                                {
-                                  $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                                  echo "error";
-                                  echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
-                                } else
-                                {
-                                  $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                                  echo "error";
-                                  echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
-                                }
                             }
+                            }
+                                         // mail system
+                                         if(!$mail->send()) 
+                                         {
+                                           $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+                                           echo "error";
+                                           echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
+                                         } else
+                                         {
+                                           $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+                                           echo "error";
+                                           echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
+                                         }
                         } 
                     }
                     else{
@@ -260,28 +260,28 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                           VALUES ('{$sint_id}', '{$branchid}', '{$transact_id}', '{$description}', '{$type}', '{$tid}', '{$transdate}', '{$amount}',
                           '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$tid}', '{$amount}')";
                          $rlt = mysqli_query($connection, $vabl);
-                    if($rin){
-                      $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
-                      $rult = mysqli_query($connection, $quy);
-                      if (mysqli_num_rows($rult) > 0) {
-                        while ($row = mysqli_fetch_array($rult))
-                            {
-                              $remail = $row['email'];
-                              $roleid = $row['org_role'];
-                              $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
-                              $rlot = mysqli_query($connection, $quy);
-                              $tolm = mysqli_fetch_array($rlot);
-                              $vaul = $tolm['vault_email'];
-
-                              if ($vaul == 1 || $vaul == "1") {
-                              $mail = new PHPMailer;
-                              $mail->From = $int_email;
-                              $mail->FromName = $int_name;
-                              $mail->addAddress($remail);
-                              $mail->addReplyTo($int_email, "Reply");
-                              $mail->isHTML(true);
-                              $mail->Subject = "Transaction Alert from $int_name";
-                              $mail->Body = "<!DOCTYPE html>
+                         if($rin){
+                          $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
+                          $rult = mysqli_query($connection, $quy);
+                          if (mysqli_num_rows($rult) > 0) {
+                            while ($row = mysqli_fetch_array($rult))
+                                {
+                                  $remail = $row['email'];
+                                  $roleid = $row['org_role'];
+                                  $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
+                                  $rlot = mysqli_query($connection, $quyd);
+                                  $tolm = mysqli_fetch_array($rlot);
+                                  $vaul = $tolm['vault_email'];
+                                  
+                                  if ($vaul == 1 || $vaul == "1") {
+                                  $mail = new PHPMailer;
+                                  $mail->From = $int_email;
+                                  $mail->FromName = $int_name;
+                                  $mail->addAddress($remail);
+                                  $mail->addReplyTo($int_email, "Reply");
+                                  $mail->isHTML(true);
+                                  $mail->Subject = "Transaction Alert from $int_name";
+                                  $mail->Body = "<!DOCTYPE html>
                               <html>
                                   <head>
                                   <style>
@@ -391,7 +391,8 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                               </html>";
                               $mail->AltBody = "This is the plain text version of the email content";
                             }
-                                        // mail system
+                          }
+                            // mail system
                             if(!$mail->send()) 
                             {
                             $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
@@ -403,7 +404,6 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                             echo "error";
                             echo header ("Location: ../mfi/teller_journal.php?message3=$randms");
                             }
-                          }
                           } 
                     }
                     else{
