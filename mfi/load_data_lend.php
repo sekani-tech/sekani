@@ -146,18 +146,17 @@ if(isset($_POST["id"]))
           </div>
         </div>
       </div>
- 
-      <div class="col-md-4">
-      <div class="form-group">
-        <label>Repayment Start Date:</label>
-        <input type="date" value="" name="repay_start" class="form-control" id="repay_start">
-      </div>
-      </div>
       
       <div class="col-md-4">
       <div class="form-group">
         <label>Disbursement Date *:</label>
         <input type="date" name="disbursement_date" class="form-control" id="disb_date">
+      </div>
+      </div>
+      <div class="col-md-4">
+      <div class="form-group">
+        <label>Repayment Start Date:</label>
+        <input type="date" value="" name="repay_start" class="form-control" id="repay_start">
       </div>
       </div>
       <div class="col-md-4">

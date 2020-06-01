@@ -128,7 +128,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                         <?php $row["id"]; ?>
                           <th><?php echo $row["display_name"]; ?></th>
                           <th><?php echo $row["approved_principal"]; ?></th>
-                          <th><?php echo $row["interest_rate"]; ?></th>
+                          <th><?php echo number_format($row["interest_rate"]) . "%"; ?></th>
                           <th><?php echo $row["status"]; ?></th>
                           <td><a href="showLoan.php?approve=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                           </tr>

@@ -24,8 +24,8 @@
         while ($row = mysqli_fetch_array($result)) {
             $display = '
             <tr>
-            <td>'.$row["type"].'</td>
             <td>'.$row["value"].'</td>
+            <td>&#x20a6; '.number_format($row["type"], 2).'</td>
             <td>'.$row["description"].'</td>
             </tr>
             ';

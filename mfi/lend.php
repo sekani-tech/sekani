@@ -244,7 +244,7 @@ $destination = "loans.php";
                             <table class = "table table-bordered">
                               <thead>
                                 <tr>
-                                  <td> .</td>
+                                  <td>Name/Type</td>
                                   <td>Value</td>
                                   <td>Description</td>
                                 </tr>
@@ -269,8 +269,8 @@ $destination = "loans.php";
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label class = "bmd-label-floating" for=""> Type:</label>
-                        <input type="text" name="col_value" id="col_val" class="form-control">
+                        <label class = "bmd-label-floating" for=""> Value(&#x20a6;):</label>
+                        <input type="number" name="col_value" id="col_val" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-12">
@@ -281,7 +281,7 @@ $destination = "loans.php";
                     </div>
                   <div style="float:right;">
                         <span class="btn btn-primary pull-right" id="clickit" onclick="AddDlg()">Add</span>
-                        <button class="btn btn-primary pull-right" onclick="AddDlg()">Cancel</button>
+                        <a class="btn btn-primary pull-right" onclick="AddDlg()">Cancel</a>
                       </div>
                         <!-- </form> -->
                         <script>
@@ -503,6 +503,108 @@ $destination = "loans.php";
                       </div>
                     </div>
                     <!-- Fifth Tab Ends -->
+                    <div class="tab"> <h3>KYC:</h3>
+                    <p>Personal Information</p>
+                    <br>
+                    <div class="row">
+                    <div class=" col-md-6 form-group">
+                      <label class = "bmd-label-floating">Marital Status:</label>
+                      <!-- <input type="number" value="" name="marital_status" class="form-control"> -->
+                       <select class="form-control" name="marital_status">
+                         <option value="1">Single</option>
+                         <option value="2">Married</option>
+                       </select>
+                    </div>
+                    <div class=" col-md-6 form-group">
+                      <label class = "bmd-label-floating">Number of Dependents:</label>
+                      <!-- <input type="number" value="" name="no_of_dep" class="form-control" required> -->
+                      <select class="form-control" name="no_of_dep">
+                         <option value="0">Non</option>
+                         <option value="1">1</option>
+                         <option value="2">2</option>
+                         <option value="3">3</option>
+                         <option value="4">4 or More</option>
+                       </select>
+                    </div>
+                    </div>
+                    <br>
+                    <p>Education and Employment</p>
+                    <br>
+                    <div class="row">
+                    <div class=" col-md-6 form-group">
+                      <label class = "bmd-label-floating">Level of Education</label>
+                      <!-- <input type="number" value="" name="" class="form-control" readonly> -->
+                      <select class="form-control" name="ed_level">
+                         <option value="0">Non</option>
+                         <option value="1">Primary</option>
+                         <option value="2">Secondary</option>
+                         <option value="3">Graduate</option>
+                         <option value="4">Post-Graduate</option>
+                       </select>
+                    </div>
+                    <div class=" col-md-6 form-group">
+                      <label class = "bmd-label-floating">Employment Status</label>
+                      <!-- <input type="number" value="" name="" class="form-control" readonly> -->
+                      <select class="form-control" name="emp_stat">
+                         <option value="1">Self-Employed</option>
+                         <option value="2">Employed</option>
+                         <option value="3">Not Working</option>
+                       </select>
+                    </div>
+                    <div class=" col-md-6 form-group">
+                      <label class = "bmd-label-floating">Employer/Business name</label>
+                      <input type="text" value="" name="emp_bus_name" class="form-control">
+                    </div>
+                    <div class=" col-md-6 form-group">
+                      <label class = "bmd-label-floating">Monthly Income(&#x20a6;):</label>
+                      <input type="number" value="" name="income" class="form-control" required>
+                    </div>
+                    <!-- new -->
+                    <div class=" col-md-6 form-group">
+                      <label class = "bmd-label-floating">Years in current Job/Business:</label>
+                      <!-- <input type="number" value="" name="" class="form-control" required> -->
+                      <select class="form-control" name="years_in_job">
+                         <option value="1">1 - 3 years</option>
+                         <option value="2">3 - 5 years</option>
+                         <option value="3">5 - 10 years</option>
+                         <option value="4">10 - 20 years</option>
+                         <option value="5">More than 20 years</option>
+                       </select>
+                    </div>
+                    <!-- new for years -->
+                    </div>
+                    <br>
+                    <p>Address Details</p>
+                    <br>
+                    <div class="row">
+                    <div class=" col-md-6 form-group">
+                      <label class = "bmd-label-floating">Residence Type:</label>
+                      <!-- <input type="number" readonly value="" name="res_type" class="form-control" required> -->
+                      <select class="form-control" name="res_type">
+                         <option value="1">Rented</option>
+                         <option value="2">Owner</option>
+                       </select>
+                    </div>
+                    <!-- damn -->
+                    <!-- <div id="rent"> -->
+                    <div class=" col-md-6 form-group">
+                      <label class = "bmd-label-floating">Rent per Year (if rented):</label>
+                      <input type="number" value="" name="rent_per_year" class="form-control">
+                    </div>
+                    <!-- </div> -->
+                    <div class=" col-md-6 form-group">
+                      <label class = "bmd-label-floating">How long have you lived there?:</label>
+                      <!-- <input type="number" readonly value="" name="principal_amount" class="form-control" required> -->
+                      <select class="form-control" name="years_in_res">
+                         <option value="1">1 - 3 years</option>
+                         <option value="2">3 - 5 years</option>
+                         <option value="3">5 - 10 years</option>
+                         <option value="4">10 - 20 years</option>
+                         <option value="5">More than 20 years</option>
+                       </select>
+                    </div>
+                    </div>
+                  </div>
                     <!-- Sixth Tab Begins -->
                     <div class="tab"><h3> Repayment Schedule:</h3>
                       <div class="form-group">
@@ -566,11 +668,11 @@ $destination = "loans.php";
                               </div>
                               <div class="col-md-6 form-group">
                                 <label class = "bmd-label-floating">Repayment Start Date:</label>
-                                <input readonly type="date" name="repay_start" class="form-control" id="rsd">
+                                <input readonly type="date" name="repay" class="form-control" id="rsd">
                               </div>
                               <div class="col-md-6 form-group">
                                 <label class = "bmd-label-floating">Loan End Date:</label>
-                                <input readonly type="date" value="<?php echo $actualend_date ?>" name="repay_start" id="end" class="form-control">
+                                <input readonly type="sc" value="<?php echo $actualend_date ?>" name="repay_start" id="end" class="form-control">
                               </div>
                             <!-- </div> -->
                           </div>
@@ -589,6 +691,7 @@ $destination = "loans.php";
                           <span class="step"></span>
                           <span class="step"></span>
                           <!-- <span class="step"></span> -->
+                          <span class="step"></span>
                           <span class="step"></span>
                           <span class="step"></span>
                           <span class="step"></span>
