@@ -464,7 +464,7 @@ if(isset($_GET["edit"])) {
                           </button>
                         </div>
                         <div class="modal-body">
-                        <img  src="../functions/clients/passport/<?php echo $passport;?>"/>
+                        <img class="img-fluid"  src="../functions/clients/passport/<?php echo $passport;?>"/>
                       </div>
                     </div>
                   </div>

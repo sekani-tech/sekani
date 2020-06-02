@@ -138,18 +138,35 @@ else if (isset($_GET["message5"])) {
     $add_pay = $_POST['submit'];
     if ($add_pay == 'add_payment'){
       $name = $_POST['name'];
+      $bran = $_SESSION["branch_id"];
       $desc = $_POST['des'];
       $default = $_POST['default'];
+      $gl_type = $_POST['gl_type'];
+      $result = "SELECT * FROM acc_gl_account WHERE id = '$gl_type' AND int_id = '$sint_id'";
+      $done = mysqli_query($connection, $result);
+      $ir = mysqli_fetch_array($done);
+      $gl_code = $_POST['gl_code'];
 
+      
+      $result = "SELECT * FROM acc_gl_account WHERE int_id = '$sint_id' AND parent_id = '$gl_type'";
+      if ($result) {
+        $inr = mysqli_num_rows($result);
+        $gl_no = $checkx.$inr + 1;
+    }
 
       if(isset($_POST['is_cash'])){
         $is_cash = 1;
       }else{
         $is_cash = 0;
       }
-      $query = mysqli_query($connection, "INSERT INTO payment_type (int_id, value, description, is_cash_payment, order_position)
-      VALUES('{$sessint_id}', '{$name}', '{$desc}', '{$is_cash}', '{$default}')");
+      $query = mysqli_query($connection, "INSERT INTO payment_type (int_id, branch_id, value, description, is_cash_payment, order_position)
+      VALUES('{$sessint_id}', '{$bran}','{$name}', '{$desc}', '{$is_cash}', '{$default}')");
       if($query){
+        $glq ="INSERT INTO `acc_gl_account` (`int_id`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`,
+         `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`,
+          `organization_running_balance_derived`, `last_entry_id_derived`) VALUES ('{$sessint_id}', '{$bran}', '{$name}', '{$gl_type}', NULL, '{$gl_code}', NULL, '1', '2', '',
+           NULL, NULL, '0', '0.00', NULL)";
+        $gl = mysqli_query($connection, $glq);
         echo '<script type="text/javascript">
         $(document).ready(function(){
             swal({
@@ -216,7 +233,7 @@ if ($per_con == 1 || $per_con == "1") {
                         <li class="nav-item">
                           <a class="nav-link" href="#cash" data-toggle="tab">
                           <!-- visibility -->
-                            <i class="material-icons">account_balance</i> Cash Payments
+                            <i class="material-icons">account_balance</i> Payment Type
                             <div class="ripple-container"></div>
                           </a>
                         </li>
@@ -474,7 +491,7 @@ if ($per_con == 1 || $per_con == "1") {
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Assign Permission to a Staff</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Payment Type</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -495,6 +512,75 @@ if ($per_con == 1 || $per_con == "1") {
               </div>
             </div>
             <div class="col-md-6">
+            <?php
+                  function fill_gl($connection) {
+                    $sint_id = $_SESSION["int_id"];
+                    $org = "SELECT * FROM acc_gl_account WHERE (int_id = '$sint_id' AND (parent_id = '' OR parent_id = '0'))";
+                    $res = mysqli_query($connection, $org);
+                    $out = '';
+                    while ($row = mysqli_fetch_array($res))
+                    {
+                      $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                    }
+                    return $out;
+                  }
+                  ?>
+                 
+              <div class="form-group">
+               <label class="bmd-label-floating">GL Group</label>
+               <select name="gl_type" id="role" class="form-control">
+                 <option value="0">choose a gl type</option>
+                 <option value="1">CASH ASSET</option>
+                 <option value="5">Due From Banks</option>
+                 <option value="403">SALARIES ARREARS</option>
+                <!-- <?php echo fill_gl($connection); ?> -->
+             </select>
+             <input type="text" id="int_id" hidden  value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
+              </div>
+            </div>
+            <script>
+                        // coment on later
+                          $(document).ready(function(){
+                            $('#give').change(function() {
+                              var id = $(this).val();
+                              if (id == "") {
+                                document.getElementById('tit').readOnly = false;
+                                $('#tit').val("choose an account type");
+                              } else if (id == "1") {
+                                document.getElementById('tit').readOnly = true;
+                                $('#tit').val("1" + Math.floor(1000 + Math.random() * 9000));
+                              } else if (id == "2") {
+                                document.getElementById('tit').readOnly = true;
+                                $('#tit').val("2" + Math.floor(1000 + Math.random() * 9000));
+                              } else if (id == "3") {
+                                document.getElementById('tit').readOnly = true;
+                                $('#tit').val("3" + Math.floor(1000 + Math.random() * 9000));
+                              } else if (id == "4") {
+                                document.getElementById('tit').readOnly = true;
+                                $('#tit').val("4" + Math.floor(1000 + Math.random() * 9000));
+                              } else if (id == "5") {
+                                document.getElementById('tit').readOnly = true;
+                                $('#tit').val("5" + Math.floor(1000 + Math.random() * 9000));
+                              } else {
+                                $('#tit').val("Nothing");
+                              }
+                            });
+                          });
+                        </script>
+            <div class ="col-md-6">
+              <div class="form-group">
+              <label class="bmd-label-floating">Account Type</label>
+              <select class="form-control" name="acct_type" id="give">
+                        <option value="">Select an option</option>
+                        <option value="1">ASSET</option>
+                        <option value="2">LIABILITY</option>
+                        <option value="3">EQUITY</option>
+                        <option value="4">INCOME</option>
+                        <option value="5">EXPENSE</option>
+                      </select>
+              </div>
+            </div>
+            <div class="col-md-6">
             <div class="form-group">
                <label class="bmd-label-floating">Default</label>
               <select class="form-control" name= "default">
@@ -502,7 +588,13 @@ if ($per_con == 1 || $per_con == "1") {
                 <option value="0">No</option>
               </select>
               </div>
-            </div>
+            </div>  
+            <div class="col-md-6">
+                    <div class="form-group">
+                      <label >GL Code*</label>
+                      <input type="text" id="tit" style="text-transform: uppercase;" class="form-control" value="" name="gl_code" required readonly>
+                    </div>
+                  </div>
             <div class="col-md-6">
             <div class="form-check form-check-inline">
               <label class="form-check-label">
