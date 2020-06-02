@@ -1,8 +1,9 @@
 <?php
 
-$page_title = "Financial report";
-$destination = "index.php";
+$page_title = "Loan report";
+$destination = "../index.php";
     include("header.php");
+    // include("../../functions/connect.php");
 
 ?>
 <?php
@@ -87,20 +88,21 @@ $_SESSION["lack_of_intfund_$key"] = null;
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Financial Reports</h4>
+                  <h4 class="card-title ">Loan Reports</h4>
                   <script>
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
                   });
                   </script>
                   <!-- Insert number users institutions -->
-                  <p class="card-category"><?php
+                  <!-- <p class="card-category"><?php
                    $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved'";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> Current reports</p>
+                   }?> Current reports</p> -->
+                    6 Current reports
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -140,70 +142,40 @@ $_SESSION["lack_of_intfund_$key"] = null;
                           ?> -->
                           <!-- <th></th> -->
                           <tr>
-                          <th>Accured interest in period</th>
-                          <th>Financial</th>
+                          <th>Loan Classification</th>
+                          <th>Loan</th>
                           <th>The report list all the accured interest within the specified time period</th>
-                          <td><a href="financial_report_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="Loan_report_view.php?edit=1" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
-                          <th>Accured interest report</th>
-                          <th>Financial</th>
+                          <th>General Loan Report</th>
+                          <th>Loan</th>
                           <th>The report list all the accured interest  disbursed within the specified time period</th>
-                          <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="Loan_report_view.php?edit=2" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
+                          <th>Loan Performance Report</th>
+                          <th>Loan</th>
                           <th>Balance Sheet</th>
-                          <th>Financial</th>
-                          <th>Balance Sheet</th>
-                          <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="Loan_report_view.php?edit=3" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
-                          <th>Cashflow</th>
-                          <th>Financial</th>
+                          <th>Loan Report</th>
+                          <th>Loan</th>
                           <th>Overview of the cash flow within a given account</th>
-                          <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="Loan_report_view.php?edit=4" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
-                          <th>Dail trial balance</th>
-                          <th>Financial</th>
+                          <th>Loan Analysis</th>
+                          <th>Loan</th>
                           <th>trial balance report</th>
-                          <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="Loan_report_view.php?edit=5" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
-                          <th>Historical income statement</th>
-                          <th>Financial</th>
+                          <th>Loan Structure</th>
+                          <th>Loan</th>
                           <th>This report show the historical income and expenses broken down per month for the last six month</th>
-                          <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">description</i></a></td>
-                        </tr>
-                        <tr>
-                          <th>Journal report</th>
-                          <th>Financial</th>
-                          <th>Report shows all journal bookings</th>
-                          <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">description</i></a></td>
-                        </tr>
-                        <tr>
-                          <th>Ledger report</th>
-                          <th>Financial</th>
-                          <th>Report shows all journal bookings for a specified account</th>
-                          <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">description</i></a></td>
-                        </tr>
-                        <tr>
-                          <th>Profit and loss</th>
-                          <th>Financial</th>
-                          <th>Profit and loss statement</th>
-                          <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">description</i></a></td>
-                        </tr>
-                        <tr>
-                          <th>provisioning</th>
-                          <th>Financial</th>
-                          <th>the provision report breaks down all the portfolio in the different provisioning band. The report does not provide any journal entries related to provisioning</th>
-                          <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">description</i></a></td>
-                        </tr>
-                        <tr>
-                          <th>Teller</th>
-                          <th>Financial</th>
-                          <th>Report shows teller transaction</th>
-                          <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="Loan_report_view.php?edit=6" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                       </tbody>
                     </table>

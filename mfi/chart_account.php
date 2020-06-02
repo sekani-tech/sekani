@@ -233,9 +233,6 @@ if ( isset($_POST['bank_rec']) ) {
                           Account Type
                         </th>
                         <th>
-                          Account ID
-                        </th>
-                        <th>
                          Balance
                         </th>
                         <th>Unreconciled Balance</th>
@@ -257,7 +254,7 @@ if ( isset($_POST['bank_rec']) ) {
                           if ($pid == "" || $pid == NULL || $pid == 0) {
                             $nameofacct = "<b style='font-size: 21; color: black;'>".$nameid."</b>";
                           } else {
-                            $iman = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE id = '$pid' && int_id = '$sessint_id'");
+                            $iman = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE id = '$pid' && int_id = '$sessint_id' ORDER BY acc_gl_account.classification_enum ASC");
                             $hmm = mysqli_fetch_array($iman);
                             $gen = strtoupper($hmm["name"]);
                             $nameofacct = "<b style='font-size: 21; color: black;'>".$gen."</b>"." - ".$nameid;
@@ -283,7 +280,6 @@ if ( isset($_POST['bank_rec']) ) {
                           }
                           ?>
                           <th><?php echo $class; ?></th>
-                          <th><?php echo $row["tag_id"]; ?></th>
                           <th><?php if ($row["organization_running_balance_derived"] < 0) {
                             echo '<div style="color: red;">'.$row["organization_running_balance_derived"].'</div>';
                           } else {

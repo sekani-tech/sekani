@@ -123,7 +123,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' && status = 'Pending'";
+                        $query = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' AND status = 'Pending'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>

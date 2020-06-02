@@ -151,24 +151,24 @@ input[type=number] {
             </a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link" href="manage_client.php">
               <i class="material-icons">person</i>
-              Client
+              Register Client
             </a>
-            <div class="dropdown-menu">
+            <!-- <div class="dropdown-menu">
               <a class="dropdown-item" href="client.php">Client List</a>
               <a href="manage_client.php" class="dropdown-item">Register Client</a>
-            </div>
+            </div> -->
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link" href="#">
               <i class="material-icons">people</i>
-              Group
+              Register Group
             </a>
-            <div class="dropdown-menu">
+            <!-- <div class="dropdown-menu">
               <a class="dropdown-item" href="#">Group List</a>
               <a href="#" class="dropdown-item">Register Group</a>
-            </div>
+            </div> -->
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="false" aria-expanded="fasle">
@@ -216,7 +216,7 @@ input[type=number] {
             </div>
           </li>
           <!-- ending of accounting -->
-          <li class="nav-item dropdown">
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
               <i class="material-icons">bubble_chart</i>
               Products Summary
@@ -228,7 +228,7 @@ input[type=number] {
               <a href="#" class="dropdown-item">Shares</a>
               <a href="loans.php" class="dropdown-item">Loans</a>
             </div>
-          </li>
+          </li> -->
           <!-- report is here now -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
@@ -236,15 +236,13 @@ input[type=number] {
               Reports
             </a>
             <div class="dropdown-menu">
-              <a href="statement_of_income.php" class="dropdown-item">Client Report</a>
-              <a href="#" class="dropdown-item">Group Report</a>
-              <a href="#" class="dropdown-item">Savings Report</a>
-              <a href="#" class="dropdown-item">Current Accounts Report</a>
-              <a href="loan_report.php" class="dropdown-item">Loan reports</a>
-              <a href="financial_report.php" class="dropdown-item">Financial report</a>
-              <a href="institutional_report.php" class="dropdown-item">Audit</a>
-              <a href="vault_report.php" class="dropdown-item">Vault Report</a>
-              <a href="teller.php" class="dropdown-item">Teller Report</a>
+              <a href="report_client.php" class="dropdown-item">Client Report</a>
+              <a href="report_group.php" class="dropdown-item">Group Report</a>
+              <a href="report_savings.php" class="dropdown-item">Savings Report</a>
+              <a href="report_current.php" class="dropdown-item">Current Accounts Report</a>
+              <a href="report_loan.php" class="dropdown-item">Loan reports</a>
+              <a href="report_financial.php" class="dropdown-item">Financial report</a>
+              <a href="report_institution.php" class="dropdown-item">Institutional Report</a>
             </div>
           </li>
           <!-- end of report -->

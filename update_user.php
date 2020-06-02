@@ -1,6 +1,7 @@
 <?php
 
     include("header.php");
+    $destination = 
 
 ?>
 <!-- Content added here -->
