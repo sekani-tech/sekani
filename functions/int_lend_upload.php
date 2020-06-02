@@ -14,6 +14,7 @@ if (count([$goacctn]) == 1) {
 $product_id = $_POST['product_id'];
 $principal_amount = $_POST['principal_amount'];
 $loan_term = $_POST['loan_term'];
+$loan_no_rep = $_POST['repay_every_no'];
 $repay_every = $_POST['repay_every'];
 $interest_rate = $_POST['interest_rate'];
 $disbursement_date = $_POST['disbursement_date'];
@@ -28,6 +29,7 @@ if ($repay_start == NULL || $repay_start == "") {
     echo $repay_start;
     echo $repay_every;
 } else {
+    $repay_every = $_POST["repay_start"];
 // Part for Charges
 $charges = $_POST['charge'];
 // Part for collateral
@@ -90,19 +92,37 @@ $verify = mysqli_query($connection, "SELECT * FROM `int_vault` WHERE int_id = '$
                     '{$loan_officer}', '{$loan_purpose}', '{$currency}', '{$cd}',
                     '{$principal_amount}', '{$pd}', '{$loan_term}', '{$interest_rate}',
                     '{$principal_amount}', '{$repay_start}', '{$tff}', '$repay_every',
-                    '{$loan_term}', '{$submitted_on}', '{$userid}', '{$submitted_on}', '{$userid}',
+                    '{$loan_no_rep}', '{$submitted_on}', '{$userid}', '{$submitted_on}', '{$userid}',
                     '{$disbursement_date}', '{$repay_start}', '{$disbursement_date}',
                     '{$userid}', '{$loan_term}', '{$loan_term}', '{$stt}', '{$loan_sector}')";
             $res = mysqli_query($connection, $query);
             if ($res) {
                 $colkt = mysqli_query($connection, "SELECT * FROM loan_disbursement_cache where client_id = '$client_id'");
                                 if (count([$colkt]) == 1) {
+                                    $marital_stat = $_POST["marital_status"];
+                                    $no_dep = $_POST["no_of_dep"];
+                                    $ed_level = $_POST["ed_level"];
+                                    $emp_stat = $_POST["emp_stat"];
+                                    $emp_bus_name = $_POST["emp_bus_name"];
+                                    $income = $_POST["income"];
+                                    $years_in_job = $_POST["years_in_job"];
+                                    $res_type = $_POST["res_type"];
+                                    $rent_per_year = $_POST["rent_per_year"];
+                                    $years_in_res = $_POST["years_in_res"];
+                                   $kyc_query = mysqli_query($connection, "INSERT INTO `kyc` (`int_id`, `client_id`, `marital_status`, `no_of_dependent`,
+                                   '{$ed_level}', '{$emp_stat}', '{$emp_bus_name}', '{$income}',
+                                   '{$years_in_job}', '{$res_type}', '{$rent_per_year}', '{$years_in_res}')");
+                                   if ($kyc_query) {
                                     $_SESSION["Lack_of_intfund_$randms"] = "Successfully Uploaded, Awaiting Disbursement Approval";
-        header ("Location: ../mfi/lend.php?message=$randms");
+                                    header ("Location: ../mfi/lend.php?message=$randms");
+                                   } else {
+                                    $_SESSION["Lack_of_intfund_$randms"] = "Error in Posting For Approval";
+                                    header ("Location: ../mfi/lend.php?message2=$randms");
+                                   }
                                 }
             } else {
                 $_SESSION["Lack_of_intfund_$randms"] = "Error in Posting For Approval";
-        header ("Location: ../mfi/lend.php?message2=$randms");
+                header ("Location: ../mfi/lend.php?message2=$randms");
             }
             } else {
                 $_SESSION["Lack_of_intfund_$randms"] = "This Client Has Been Given Loan Before";
