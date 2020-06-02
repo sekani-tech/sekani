@@ -69,7 +69,15 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                          VALUES ('{$sint_id}', '{$branchid}', '{$transact_id}', '{$description}', '{$type}', '{$tid}', '{$transdate}', '{$amount}',
                          '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$tid}', '{$amount}')";
                         $rlt = mysqli_query($connection, $vable);
-                    if($rin){
+
+                        $gl_a = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '$gl_code' AND int_id = '$sint_id'";
+
+                        $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
+                         transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
+                           created_date, credit) VALUES ('{$sint_id}', '{$branchid}', NULL, '{$transact_id}', '{$description}', '{$type}', '{$tid}',
+                            '{$transdate}', '{$amount}', '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$amount}')";
+                            $rlpo = mysqli_query($connection, $gl_acc);
+                    if($rlpo){
                       $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
                       $rult = mysqli_query($connection, $quy);
                       if (mysqli_num_rows($rult) > 0) {
@@ -255,12 +263,21 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         '{$type}', '{$tid}', '1', '0', '{$transdate}', '{$amount}', '{$new_tellbalance}','{$amount}', '{$crdate}',
                         '{$tid}', '{$amount}')";
                         $rin = mysqli_query($connection, $record);
+
                         $vabl = "INSERT INTO institution_vault_transaction (int_id, branch_id, transaction_id, description, transaction_type,
                         teller_id, transaction_date, amount, vault_balance_derived, overdraft_amount_derived, created_date, appuser_id, debit)
                           VALUES ('{$sint_id}', '{$branchid}', '{$transact_id}', '{$description}', '{$type}', '{$tid}', '{$transdate}', '{$amount}',
                           '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$tid}', '{$amount}')";
                          $rlt = mysqli_query($connection, $vabl);
-                         if($rin){
+
+                         $gl_a = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '$gl_code' AND int_id = '$sint_id'";
+
+                         $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
+                         transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
+                           created_date, debit) VALUES ('{$sint_id}', '{$branchid}', NULL, '{$transact_id}', '{$description}', '{$type}', '{$tid}',
+                            '{$transdate}', '{$amount}', '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$amount}')";
+                            $rlpo = mysqli_query($connection, $gl_acc);
+                         if($rlpo){
                           $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
                           $rult = mysqli_query($connection, $quy);
                           if (mysqli_num_rows($rult) > 0) {

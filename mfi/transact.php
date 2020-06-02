@@ -448,7 +448,7 @@ $transid1 = $randms1;
                   return $out;
                   }
                   ?>
-              <label>Transaction Method</label>
+              <label>Payment Method</label>
                <select class="form-control" name="pay_type" id="opo">
                   <?php echo fill_payment($connection)?>
                </select>

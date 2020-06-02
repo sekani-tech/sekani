@@ -137,36 +137,45 @@ else if (isset($_GET["message5"])) {
     $rog = $_POST['submit'];
     $add_pay = $_POST['submit'];
     if ($add_pay == 'add_payment'){
+     $class = $_POST['acct_type']; 
       $name = $_POST['name'];
       $bran = $_SESSION["branch_id"];
       $desc = $_POST['des'];
       $default = $_POST['default'];
       $gl_type = $_POST['gl_type'];
-      $result = "SELECT * FROM acc_gl_account WHERE id = '$gl_type' AND int_id = '$sint_id'";
+      $result = "SELECT * FROM acc_gl_account WHERE id = '$gl_type' AND int_id = '$sessint_id'";
       $done = mysqli_query($connection, $result);
       $ir = mysqli_fetch_array($done);
       $gl_code = $_POST['gl_code'];
 
       
-      $result = "SELECT * FROM acc_gl_account WHERE int_id = '$sint_id' AND parent_id = '$gl_type'";
-      if ($result) {
-        $inr = mysqli_num_rows($result);
-        $gl_no = $checkx.$inr + 1;
+      $resu = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '$gl_type'";
+      $relt = mysqli_query($connection, $resu);
+      if ($relt) {
+        $inr = mysqli_num_rows($relt);
+        $gl_o = $inr + 1;
+        $gl_no = '.'.$gl_o.'.';
     }
-
+    if(isset($_POST['is_bank'])){
+      $is_bank = 1;
+    }else{
+      $is_bank = 0;
+    }
       if(isset($_POST['is_cash'])){
         $is_cash = 1;
       }else{
         $is_cash = 0;
       }
-      $query = mysqli_query($connection, "INSERT INTO payment_type (int_id, branch_id, value, description, is_cash_payment, order_position)
-      VALUES('{$sessint_id}', '{$bran}','{$name}', '{$desc}', '{$is_cash}', '{$default}')");
+      $query = mysqli_query($connection, "INSERT INTO payment_type (int_id, branch_id, value, description, gl_code, is_cash_payment, is_bank, order_position)
+      VALUES('{$sessint_id}', '{$bran}','{$name}', '{$desc}', '{$gl_code}', '{$is_cash}', '{$is_bank}', '{$default}')");
       if($query){
         $glq ="INSERT INTO `acc_gl_account` (`int_id`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`,
          `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`,
-          `organization_running_balance_derived`, `last_entry_id_derived`) VALUES ('{$sessint_id}', '{$bran}', '{$name}', '{$gl_type}', NULL, '{$gl_code}', NULL, '1', '2', '',
-           NULL, NULL, '0', '0.00', NULL)";
-        $gl = mysqli_query($connection, $glq);
+          `organization_running_balance_derived`, `last_entry_id_derived`) VALUES ('{$sessint_id}', '{$bran}', '{$name}', '.{$gl_type}.', '{$gl_no}', '{$gl_code}', '0', '1', '1', '{$class}',
+           NULL, '{$desc}', '0', '0.00', NULL)";
+
+        $glw = mysqli_query($connection, $glq);
+        if($glw){
         echo '<script type="text/javascript">
         $(document).ready(function(){
             swal({
@@ -179,6 +188,7 @@ else if (isset($_GET["message5"])) {
         });
         </script>
         ';
+      }
       }
     }
   }
@@ -606,7 +616,17 @@ if ($per_con == 1 || $per_con == "1") {
               </label>
            </div>
             </div>
-            
+            <div class="col-md-6">
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="" name="is_bank">
+                Is Bank
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+            </div>
             </div>
             <div class="col-md-12">
             <div class="form-group">
