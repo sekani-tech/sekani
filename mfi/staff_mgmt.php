@@ -167,7 +167,7 @@ if ($per_con == 1 || $per_con == "1") {
                         $selectrole = mysqli_query($connection, "SELECT * FROM org_role WHERE int_id = '$sessint_id' && role = '$r_n'");
                         $cs = mysqli_num_rows($selectrole);
                         if ($cs == 0 || $cs == "0") {
-                          $getrole = "INSERT INTO org_role (int_id, role, description) VALUES ('{$sessint_id}', '{$r_n}', '{$r_d}')";
+                          $getrole = "INSERT INTO org_role (int_id, role, description, permission) VALUES ('{$sessint_id}', '{$r_n}', '{$r_d}', '0')";
                         $MIB = mysqli_query($connection, $getrole);
                         if ($MIB) {
                           // echo success
@@ -448,10 +448,10 @@ if ($per_con == 1 || $per_con == "1") {
                   {
                     $sint_id = $_SESSION["int_id"];
                     // $query = "SELECT * FROM org_role WHERE int_id = '$sint_id'";
-                    $query = "SELECT org_role.id, org_role.role FROM org_role LEFT JOIN permission ON permission.role_id = org_role.id WHERE ((permission.id IS NULL) AND org_role.int_id = '$sint_id')";
-                    $result = mysqli_query($connection, $query);
-                    $row = mysqli_fetch_array($result);
-                    while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                    $queiry = "SELECT id, role FROM org_role WHERE permission = 0 && int_id = '$sint_id'";
+                    $reult = mysqli_query($connection, $queiry);
+                    $row = mysqli_fetch_array($reult);
+                    while($row = mysqli_fetch_array($reult, MYSQLI_ASSOC)){
                       $out = '<option value="'.$row["id"].'">' .strtoupper($row["role"]). '</option>';
                     }
                     return $out;

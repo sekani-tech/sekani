@@ -133,6 +133,7 @@ else if (isset($_GET["message5"])) {
 ?>
 <?php
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $sessint_id = $_SESSION['int_id'];
     // check the button value
     $rog = $_POST['submit'];
     $add_pay = $_POST['submit'];
@@ -166,9 +167,9 @@ else if (isset($_GET["message5"])) {
       }else{
         $is_cash = 0;
       }
-      $query = mysqli_query($connection, "INSERT INTO payment_type (int_id, branch_id, value, description, gl_code, is_cash_payment, is_bank, order_position)
+      $quoery = mysqli_query($connection, "INSERT INTO payment_type (int_id, branch_id, value, description, gl_code, is_cash_payment, is_bank, order_position)
       VALUES('{$sessint_id}', '{$bran}','{$name}', '{$desc}', '{$gl_code}', '{$is_cash}', '{$is_bank}', '{$default}')");
-      if($query){
+      if($quoery){
         $glq ="INSERT INTO `acc_gl_account` (`int_id`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`,
          `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`,
           `organization_running_balance_derived`, `last_entry_id_derived`) VALUES ('{$sessint_id}', '{$bran}', '{$name}', '.{$gl_type}.', '{$gl_no}', '{$gl_code}', '0', '1', '1', '{$class}',
@@ -182,6 +183,20 @@ else if (isset($_GET["message5"])) {
                 type: "success",
                 title: "Created Successfully",
                 text: " Payment type Created",
+                showConfirmButton: false,
+                timer: 2000
+            })
+        });
+        </script>
+        ';
+      }
+      else{
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "Failed",
+                text: " Payment type failed",
                 showConfirmButton: false,
                 timer: 2000
             })

@@ -209,7 +209,6 @@ input[type=number] {
               <!-- <a class="dropdown-item" href="#">Group</a> -->
               <a class="dropdown-item" href="#">Reconciliation</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Teller Management</a>
               <a class="dropdown-item" href="#">Accounting Export</a>
               <a class="dropdown-item" href="#">Periodic Accural</a>
               <a class="dropdown-item" href="#">Close Periods</a>
