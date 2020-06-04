@@ -8,7 +8,6 @@ if (isset($_POST['id'])) {
     $acct_name = $_POST['acct_name'];
     $gl_code = $_POST['gl_code'];
     $class_enum = $_POST['class_enum'];
-    $ext_id = $_POST['ext_id'];
     $acct_use = $_POST['acct_use'];
     $man_acct = $_POST['man_allow'];
     $disable = $_POST['disable'];
@@ -31,9 +30,21 @@ if (isset($_POST['id'])) {
         $acct_type = "EXPENSE";
     }
 
-        $sec = "UPDATE acc_gl_account SET name = '$acct_name', gl_code = '$gl_code', account_type = '$acct_type', external_id = '$ext_id',
-        account_usage = '$acct_use', classification_enum='$class_enum', manual_journal_entries_allowed='$man_acct',
-        description = '$descript' WHERE id = '$id'";
+    if ( isset($_POST['man_allow']) ) {
+        $man_allow = 1;
+    } else {
+        $man_allow = 0;
+    }
+    
+    if ( isset($_POST['disable']) ) {
+        $disable = 1;
+    } else { 
+        $disable = 0;
+    }
+
+        $sec = "UPDATE acc_gl_account SET name = '$acct_name', gl_code = '$gl_code',
+        account_usage = '$acct_use', classification_enum='$class_enum', manual_journal_entries_allowed='$man_allow',
+        disabled = '$disable', description = '$descript' WHERE id = '$id'";
         $res = mysqli_query($connection, $sec);
 
         if ($res) {

@@ -59,7 +59,7 @@ if (isset($_GET["message3"])) {
       swal({
           type: "success",
           title: "Success",
-          text: "Staff was Updated successfully!",
+          text: "Chart of Account was Updated successfully!",
           showConfirmButton: false,
           timer: 2000
       })
@@ -79,7 +79,7 @@ $(document).ready(function(){
     swal({
         type: "error",
         title: "Error",
-        text: "Error updating Staff!",
+        text: "Error updating Chart of Account!",
         showConfirmButton: false,
         timer: 2000
     })
