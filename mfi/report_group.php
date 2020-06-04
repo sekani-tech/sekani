@@ -95,21 +95,20 @@ $_SESSION["lack_of_intfund_$key"] = null;
                   });
                   </script>
                   <!-- Insert number users institutions -->
-                  <!-- <p class="card-category"><?php
-                   $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved'";
+                  <p class="card-category"><?php
+                   $query = "SELECT * FROM reports WHERE category = 'group'";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> Current reports</p> -->
-                  3 Current reports
+                   }?> Current reports</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+                  <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
+                        $query = "SELECT * FROM reports WHERE category = 'group'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -125,13 +124,13 @@ $_SESSION["lack_of_intfund_$key"] = null;
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>
-                      <!-- <?php if (mysqli_num_rows($result) > 0) {
+                      <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
-                          <th><?php echo $row["firstname"]; ?></th>
-                          <th><?php echo $row["lastname"]; ?></th>
-                          <th><?php echo strtoupper($row["first_name"]." ".$row["last_name"]); ?></th>
+                          <th><?php echo $row["name"]; ?></th>
+                          <th><?php echo $row["category"]; ?></th>
+                          <th><?php echo strtoupper($row["description"]); ?></th>
                           <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <?php }
@@ -139,27 +138,8 @@ $_SESSION["lack_of_intfund_$key"] = null;
                           else {
                             // echo "0 Document";
                           }
-                          ?> -->
+                          ?>
                           <!-- <th></th> -->
-                          <tr>
-                          <th>Group List</th>
-                          <th>Group</th>
-                          <th>Balance Sheet</th>
-                          <td><a href="Group_report_view.php?edit=3" class="btn btn-info"><i class="material-icons">description</i></a></td>
-                        </tr>
-                          <tr>
-                          <th>General Group Report</th>
-                          <th>Group</th>
-                          <th>The report list all the accured interest within the specified time period</th>
-                          <td><a href="Group_report_view.php?edit=1" class="btn btn-info"><i class="material-icons">description</i></a></td>
-                        </tr>
-                        <tr>
-                          <th>Group Report By Branch</th>
-                          <th>Group</th>
-                          <th>The report list all the accured interest  disbursed within the specified time period</th>
-                          <td><a href="Group_report_view.php?edit=2" class="btn btn-info"><i class="material-icons">description</i></a></td>
-                        </tr>
-                      </tbody>
                     </table>
                   </div>
                 </div>

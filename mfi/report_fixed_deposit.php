@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Current Accounts report";
+$page_title = "Fixed Deposit report";
 $destination = "../index.php";
     include("header.php");
     // include("../../functions/connect.php");
@@ -18,7 +18,7 @@ $destination = "../index.php";
         swal({
             type: "success",
             title: "Registration Successful",
-            text: "Awaiting Approval of New client",
+            text: "Awaiting Approval of New Fixed Deposit",
             showConfirmButton: false,
             timer: 2000
         })
@@ -53,7 +53,7 @@ if (isset($_GET["message3"])) {
       swal({
           type: "success",
           title: "Success",
-          text: "Client was Updated successfully!",
+          text: "Fixed Deposit was Updated successfully!",
           showConfirmButton: false,
           timer: 2000
       })
@@ -70,7 +70,7 @@ $(document).ready(function(){
     swal({
         type: "error",
         title: "Error",
-        text: "Error updating client!",
+        text: "Error updating Fixed Deposit!",
         showConfirmButton: false,
         timer: 2000
     })
@@ -88,7 +88,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Current Accounts Reports</h4>
+                  <h4 class="card-title ">Fixed Deposit Reports</h4>
                   <script>
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
@@ -96,7 +96,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM reports WHERE category = 'current'";
+                   $query = "SELECT * FROM reports WHERE category = 'fixed_deposit'";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -108,7 +108,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
                   <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM reports WHERE category = 'current'";
+                        $query = "SELECT * FROM reports WHERE category = 'fixed_deposit'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
