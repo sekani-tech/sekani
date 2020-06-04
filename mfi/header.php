@@ -242,6 +242,7 @@ input[type=number] {
               <a href="report_current.php" class="dropdown-item">Current Accounts Report</a>
               <a href="report_loan.php" class="dropdown-item">Loan reports</a>
               <a href="report_financial.php" class="dropdown-item">Financial report</a>
+              <a href="report_fixed_deposit.php" class="dropdown-item">Fixed Deposit Report</a>
               <a href="report_institution.php" class="dropdown-item">Institutional Report</a>
             </div>
           </li>
