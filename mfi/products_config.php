@@ -165,7 +165,7 @@ else if (isset($_GET["message5"])) {
       }
       $glq ="INSERT INTO `acc_gl_account`(`int_id`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`,
       `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`,
-       `organization_running_balance_derived`, `last_entry_id_derived`) VALUES ('{$sessint_id}', '{$value}', '{$nam}', '.{$gl_type}.',
+       `organization_running_balance_derived`, `last_entry_id_derived`) VALUES ('{$sessint_id}', '{$bran}', '{$value}', '{$gl_type}',
         '{$gl_no}', '{$gl_code}', '0', '1', '1', '{$class}', NULL, '{$desc}', '0', '0.00', NULL)";
         $glw = mysqli_query($connection, $glq);
      
