@@ -139,7 +139,7 @@ else if (isset($_GET["message5"])) {
     $add_pay = $_POST['submit'];
     if ($add_pay == 'add_payment'){
      $class = $_POST['acct_type']; 
-      $namers = $_POST['nameof'];
+      $value = $_POST['nameo'];
       $bran = $_SESSION["branch_id"];
       $desc = $_POST['des'];
       $default = $_POST['default'];
@@ -153,11 +153,6 @@ else if (isset($_GET["message5"])) {
         $gl_o = $inr + 1;
         $gl_no = '.'.$gl_o.'.';
     }
-    if(isset($_POST['default'])){
-      $default = 1;
-    }else{
-      $default = 0;
-    }
     if(isset($_POST['is_bank'])){
       $is_bank = 1;
     }else{
@@ -169,12 +164,12 @@ else if (isset($_GET["message5"])) {
         $is_cash = 0;
       }
       $wen = "INSERT INTO payment_type (int_id, branch_id, value, description, gl_code, is_cash_payment, is_bank, order_position)
-      VALUES('{$sesint_id}', '{$bran}', '{$namers}', '{$desc}', '{$gl_code}', '{$is_cash}', '{$is_bank}', '{$default}')";
+      VALUES('{$sesint_id}', '{$bran}', '{$value}', '{$desc}', '{$gl_code}', '{$is_cash}', '{$is_bank}', '{$default}')";
       $quoery = mysqli_query($connection, $wen);
       if($quoery){
         $glq ="INSERT INTO `acc_gl_account`(`int_id`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`,
          `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`,
-          `organization_running_balance_derived`, `last_entry_id_derived`) VALUES ('{$sessint_id}', '{$bran}', '{$namers}', '.{$gl_type}.',
+          `organization_running_balance_derived`, `last_entry_id_derived`) VALUES ('{$sessint_id}', '{$bran}', '{$nam}', '.{$gl_type}.',
            '{$gl_no}', '{$gl_code}', '0', '1', '1', '{$class}', NULL, '{$desc}', '0', '0.00', NULL)";
 
         $glw = mysqli_query($connection, $glq);
@@ -530,7 +525,7 @@ if ($per_con == 1 || $per_con == "1") {
             <div class="col-md-12">
             <div class="form-group">
                <label class="bmd-label-floating">Name</label>
-               <input type = "text" class="form-control" name = "nameof"/>
+               <input type = "text" class="form-control" name = "nameo"/>
               </div>
             </div>
             <div class="col-md-12">
