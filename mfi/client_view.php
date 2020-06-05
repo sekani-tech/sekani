@@ -51,7 +51,7 @@ if(isset($_GET["edit"])) {
       $gogo = mysqli_query($connection, "SELECT * FROM loan WHERE account_no = '$acc_no' && int_id='$sessint_id'");
       if (count([$gogo]) == 1) {
         $ppo = mysqli_fetch_array($gogo);
-        $sum = $jk['total_outstanding_derived'];
+        $sum = $ppo['total_outstanding_derived'];
         $olb = $ppo['principal_amount'];
         $prd = $ppo['principal_repaid_derived'];
         $cv = "Null";

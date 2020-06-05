@@ -131,7 +131,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
                           <th><?php echo $row["name"]; ?></th>
                           <th><?php echo $row["category"]; ?></th>
                           <th><?php echo strtoupper($row["description"]); ?></th>
-                          <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="report_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <?php }
                           }

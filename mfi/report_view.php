@@ -6,7 +6,7 @@ session_start();
 <?php
 if(isset($_GET["edit"])) {
   $location = $_GET["edit"];
-  echo 'get is giving out this value '.$location;
+  echo 'Page not yet functional, Please go back to previous page ';
   if($location == "1"){
     
   }
@@ -14,7 +14,6 @@ if(isset($_GET["edit"])) {
 
   }
   else if($location == 3){
-    echo 'how you doing';
     echo header("Location: client.php");
   }
   else if($location == "4"){
@@ -87,9 +86,11 @@ if(isset($_GET["edit"])) {
 
   }
   else if($location == "27"){
+    echo header("Location: statement_of_fp.php");
 
   }
   else if($location == "28"){
+    echo header("Location: statement_of_income.php");
 
   }
   else if($location == "29"){
