@@ -358,7 +358,8 @@ if ($is_del == "0" && $is_del != NULL) {
                VALUES ('{$sessint_id}', '{$branch_id}', '{$transid}', '{$description}', '{$acct_no}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt}', '{$type}', '{$dd}', '{$product_id}', '{$ogs}', '{$gen_date}')";
                $go = mysqli_query($connection, $trancache);
                if ($go) {
-                
+                $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
+                echo header ("Location: ../mfi/transact.php?message=$randms");
                } else {
                   $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
                   echo header ("Location: ../mfi/transact.php?message2=$randms");
