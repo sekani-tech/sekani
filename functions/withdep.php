@@ -597,7 +597,8 @@ if ($is_del == "0" && $is_del != NULL) {
                     ('{$sessint_id}', '{$branch_id}', '{$transid}','{$description}', '{$acct_no2}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt2}', '{$type2}', '{$wd}', '{$sproduct_id}', '{$gms}', '$gen_date') ";
                     $go = mysqli_query($connection, $trancache);
                     if ($go) {
-                      
+                      $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
+                      echo header ("Location: ../mfi/transact.php?message=$randms");
                     } else {
                        $_SESSION["Lack_of_intfund_$randms"] = "Withdrawal Failed";
                       echo header ("Location: ../mfi/transact.php?message4=$randms");
