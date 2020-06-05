@@ -545,6 +545,12 @@ $transid1 = $randms1;
           <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="tit">
       </div>
     </div>
+    <div class="col-md-4">
+      <div class="form-group">
+          <label for="">Description</label>
+          <input type="text" value="" name="descrip" class="form-control">
+      </div>
+    </div>
     </div>    
           <button type="submit" class="btn btn-primary pull-right">Submit</button>
   </form>

@@ -133,29 +133,30 @@ else if (isset($_GET["message5"])) {
 ?>
 <?php
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $sessint_id = $_SESSION['int_id'];
+    $sesint_id = $_SESSION['int_id'];
     // check the button value
     $rog = $_POST['submit'];
     $add_pay = $_POST['submit'];
     if ($add_pay == 'add_payment'){
      $class = $_POST['acct_type']; 
-      $name = $_POST['name'];
+      $namers = $_POST['nameof'];
       $bran = $_SESSION["branch_id"];
       $desc = $_POST['des'];
       $default = $_POST['default'];
       $gl_type = $_POST['gl_type'];
-      $result = "SELECT * FROM acc_gl_account WHERE id = '$gl_type' AND int_id = '$sessint_id'";
-      $done = mysqli_query($connection, $result);
-      $ir = mysqli_fetch_array($done);
       $gl_code = $_POST['gl_code'];
 
-      
       $resu = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '$gl_type'";
       $relt = mysqli_query($connection, $resu);
       if ($relt) {
         $inr = mysqli_num_rows($relt);
         $gl_o = $inr + 1;
         $gl_no = '.'.$gl_o.'.';
+    }
+    if(isset($_POST['default'])){
+      $default = 1;
+    }else{
+      $default = 0;
     }
     if(isset($_POST['is_bank'])){
       $is_bank = 1;
@@ -167,13 +168,14 @@ else if (isset($_GET["message5"])) {
       }else{
         $is_cash = 0;
       }
-      $quoery = mysqli_query($connection, "INSERT INTO payment_type (int_id, branch_id, value, description, gl_code, is_cash_payment, is_bank, order_position)
-      VALUES('{$sessint_id}', '{$bran}','{$name}', '{$desc}', '{$gl_code}', '{$is_cash}', '{$is_bank}', '{$default}')");
+      $wen = "INSERT INTO payment_type (int_id, branch_id, value, description, gl_code, is_cash_payment, is_bank, order_position)
+      VALUES('{$sesint_id}', '{$bran}', '{$namers}', '{$desc}', '{$gl_code}', '{$is_cash}', '{$is_bank}', '{$default}')";
+      $quoery = mysqli_query($connection, $wen);
       if($quoery){
-        $glq ="INSERT INTO `acc_gl_account` (`int_id`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`,
+        $glq ="INSERT INTO `acc_gl_account`(`int_id`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`,
          `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`,
-          `organization_running_balance_derived`, `last_entry_id_derived`) VALUES ('{$sessint_id}', '{$bran}', '{$name}', '.{$gl_type}.', '{$gl_no}', '{$gl_code}', '0', '1', '1', '{$class}',
-           NULL, '{$desc}', '0', '0.00', NULL)";
+          `organization_running_balance_derived`, `last_entry_id_derived`) VALUES ('{$sessint_id}', '{$bran}', '{$namers}', '.{$gl_type}.',
+           '{$gl_no}', '{$gl_code}', '0', '1', '1', '{$class}', NULL, '{$desc}', '0', '0.00', NULL)";
 
         $glw = mysqli_query($connection, $glq);
         if($glw){
@@ -522,12 +524,13 @@ if ($per_con == 1 || $per_con == "1") {
         </button>
       </div>
       <div class="modal-body">
-      <form method="POST" enctype="multipart/form-data">
+      <!-- action="../functions/pay.php" -->
+      <form method="POST"  enctype="multipart/form-data">
           <div class="row">
             <div class="col-md-12">
             <div class="form-group">
                <label class="bmd-label-floating">Name</label>
-               <input type = "text" class="form-control" name = "name"/>
+               <input type = "text" class="form-control" name = "nameof"/>
               </div>
             </div>
             <div class="col-md-12">
@@ -555,10 +558,7 @@ if ($per_con == 1 || $per_con == "1") {
                <label class="bmd-label-floating">GL Group</label>
                <select name="gl_type" id="role" class="form-control">
                  <option value="0">choose a gl type</option>
-                 <option value="1">CASH ASSET</option>
-                 <option value="5">Due From Banks</option>
-                 <option value="403">SALARIES ARREARS</option>
-                <!-- <?php echo fill_gl($connection); ?> -->
+                <?php echo fill_gl($connection); ?>
              </select>
              <input type="text" id="int_id" hidden  value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
               </div>
@@ -713,7 +713,7 @@ if ($per_con == 1 || $per_con == "1") {
                           }
                           ?>
                          <th><?php echo $cash; ?></th>
-                          <td><a href="update_branch.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                          <td><a href="#" class="btn btn-info">Edit</a></td>
                           </tr>
                         <?php }
                           }

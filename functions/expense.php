@@ -27,6 +27,7 @@ $gl_codex = $_POST['gl_no'];
 $gl_amt = $_POST['amount'];
 $pym = $_POST['payment_method'];
 $trans_id = $_POST['transid'];
+$desc = $_POST['descrip'];
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 ?>
@@ -83,10 +84,10 @@ if ($is_del == "0" && $is_del != NULL) {
                     $irvs = 0;
                     $gen_date = date('Y-m-d H:i:s');
                     $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
-            teller_id, transaction_id, transaction_type, is_reversed,
+            teller_id, transaction_id, description, transaction_type, is_reversed,
             transaction_date, amount, running_balance_derived, overdraft_amount_derived,
             created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
-            '{$gl_codex}', '{$trans_id}', 'Debit', '{$irvs}',
+            '{$gl_codex}', '{$trans_id}', '{$desc}', 'Debit', '{$irvs}',
             '{$gen_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
             '{$gen_date}', '{$staff_id}')";
                 $res4 = mysqli_query($connection, $iat2);
@@ -111,10 +112,10 @@ if ($is_del == "0" && $is_del != NULL) {
            }
         } else {
             // run the expense for approval
-            $trancache = "INSERT INTO transact_cache (int_id, branch_id, transact_id, account_no,
+            $trancache = "INSERT INTO transact_cache (int_id, branch_id, transact_id, description, account_no,
             client_name, staff_id, account_off_name,
             amount, pay_type, transact_type, status, date) VALUES
-            ('{$sessint_id}', '{$branch_id}', '{$trans_id}', '{$gl_codex}', '{$gl_name}',
+            ('{$sessint_id}', '{$branch_id}', '{$trans_id}', '{$desc}', '{$gl_codex}', '{$gl_name}',
             '{$staff_id}', '{$staff_name}', '{$gl_amt}', '{$pym}',
             'Expense', 'Pending', '{$gen_date}') ";
             $go = mysqli_query($connection, $trancache);

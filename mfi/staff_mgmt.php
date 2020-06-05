@@ -446,16 +446,16 @@ if ($per_con == 1 || $per_con == "1") {
             <?php
                   function fill_role($connection)
                   {
-                    $sint_id = $_SESSION["int_id"];
-                    // $query = "SELECT * FROM org_role WHERE int_id = '$sint_id'";
-                    $queiry = "SELECT id, role FROM org_role WHERE permission = 0 && int_id = '$sint_id'";
-                    $reult = mysqli_query($connection, $queiry);
-                    $row = mysqli_fetch_array($reult);
-                    while($row = mysqli_fetch_array($reult, MYSQLI_ASSOC)){
-                      $out = '<option value="'.$row["id"].'">' .strtoupper($row["role"]). '</option>';
-                    }
-                    return $out;
-                   }
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM org_role WHERE int_id = '$sint_id' AND permission = '0' ORDER BY id ASC";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">' .$row["role"]. '</option>';
+                  }
+                  return $out;
+                  }
                   ?>
               <div class="form-group">
                <label class="bmd-label-floating">Role</label>
@@ -467,26 +467,6 @@ if ($per_con == 1 || $per_con == "1") {
               </div>
             </div>
             <div class="col-md-12">
-              <!-- a script to get the staff -->
-          <script>
-          //   $(document).ready(function() {
-          //     $('#role').change(function(){
-          //       var id = $(this).val();
-          //       var int_id = $('#int_id').val();
-          //       $.ajax({
-          //         url:"ajax_post/role_function.php",
-          //         method:"POST",
-          //         data:{id:id, int_id:int_id},
-          //         success:function(data) {
-          //         $('#show_role_staff').html(data);
-          //       }
-          //     })
-          //   });
-          //  })
-          </script>
-              <!-- <div class="form-group">
-               <div id="show_role_staff"></div>
-              </div> -->
             </div>
            <!-- Next -->
            <div class="col-md-12">
@@ -577,10 +557,11 @@ if ($per_con == 1 || $per_con == "1") {
               </label>
            </div>
            <!-- Last -->
+           
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="approve_loan" id="n4">
-                Approve Loan
+                <input class="form-check-input" type="checkbox" value="" name="accop" id="n11">
+                Account Opening
                 <span class="form-check-sign">
                 <span class="check"></span>
                 </span>
@@ -588,8 +569,8 @@ if ($per_con == 1 || $per_con == "1") {
            </div>
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="accop" id="n11">
-               Account opening
+                <input class="form-check-input" type="checkbox" value="" name="accup" id="n12">
+                Account Update
                 <span class="form-check-sign">
                 <span class="check"></span>
                 </span>
@@ -641,15 +622,6 @@ if ($per_con == 1 || $per_con == "1") {
               <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" value="" name="emai" id="n9">
                 Vault Email
-                <span class="form-check-sign">
-                <span class="check"></span>
-                </span>
-              </label>
-           </div>
-           <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="accup" id="n12">
-                Account Update
                 <span class="form-check-sign">
                 <span class="check"></span>
                 </span>
