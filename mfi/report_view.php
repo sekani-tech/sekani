@@ -17,10 +17,10 @@ if(isset($_GET["edit"])) {
     echo header("Location: client.php");
   }
   else if($location == "4"){
-
+    echo header("Location: report_client_view.php?view4");
   }
   else if($location == "5"){
-
+    echo header("Location: report_client_view.php?view5");
   }
   else if($location == "6"){
 
@@ -50,10 +50,10 @@ if(isset($_GET["edit"])) {
 
   }
   else if($location == "15"){
-
+    echo header("Location: report_loan_view.php?view15");
   }
   else if($location == "16"){
-
+    echo header("Location: report_loan_view.php?view16");
   }
   else if($location == "17"){
 

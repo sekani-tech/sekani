@@ -258,6 +258,8 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                 if($ein){
                     $vaultinquery2 = "UPDATE int_vault SET balance = '$new_vaultbalance', last_withdrawal = '$amount' WHERE int_id = '$sint_id'";
                     $on = mysqli_query($connection, $vaultinquery2);
+                    // $glquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '' AND int_id = '$sint_id'";
+                    // $ond = mysqli_query($connection, $glquery);
                     if($on){
                         $record ="INSERT INTO institution_account_transaction (int_id, branch_id,
                         transaction_id, description, transaction_type, teller_id, is_vault, is_reversed,

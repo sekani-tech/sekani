@@ -143,21 +143,21 @@ $sessint_id = $_SESSION['int_id'];
                   <div id="project" >
                     <div class="row">
                     <div class="col-md-6">
-                        <!-- <h6>Branch name: <?php echo $branch_name;?></div></h6> -->
+                        <!-- <h4>Branch name: <?php echo $branch_name;?></div></h4> -->
                           <!-- <h4><?php echo $branch_name;?></h4> -->
-                        <h6 >Currency: <?php echo $currtype;?></h6>
+                        <h4 >Currency: <?php echo $currtype;?></h4>
                           <!-- <h4><?php echo $currtype;?></h4> -->
-                          <h6 >Account number: <?php echo $acc;?></h6>
+                          <h4 >Account number: <?php echo $acc;?></h4>
                         <!-- <h4><?php echo $acc;?></h4>  -->
-                        <h6 >Statement period: <?php echo $start,' - ',$end;?></h6>
+                        <h4 >Statement period: <?php echo $start,' - ',$end;?></h4>
                         <!-- <h5><?php echo $start,' - ',$end;?></h5>  -->
                     </div>
                     <div class="col-md-6">
-                    <h6 >Client name: <?php echo $first_name," ", $last_name;?></h6>
+                    <h4 >Client name: <?php echo $first_name," ", $last_name;?></h4>
                           <!-- <h4><?php echo $first_name," ", $last_name;?></h4> -->
-                          <h6 >Total debit: &#8358;<?php echo $totaldb;?></h6>
+                          <h4 >Total debit: &#8358;<?php echo $totaldb;?></h4>
                           <!-- <h4>&#8358;<?php echo $totaldb;?></h4> -->
-                        <h6 >Total credit: &#8358;<?php echo $totalcd;?></h6>
+                        <h4 >Total credit: &#8358;<?php echo $totalcd;?></h4>
                           <!-- <h4>&#8358;<?php echo $totalcd;?></h4> -->
                     </div>
                   </div>

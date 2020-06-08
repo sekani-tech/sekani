@@ -48,7 +48,7 @@ if(isset($_GET["edit"])) {
       $abd = $xrx['account_balance_derived'];
       $tdd = $xrx['last_deposit'];
       $twd = $xrx['last_withdrawal'];
-      $gogo = mysqli_query($connection, "SELECT * FROM loan WHERE account_no = '$acc_no' && int_id='$sessint_id'");
+      $gogo = mysqli_query($connection, "SELECT * FROM loan WHERE client_id = '$id' && int_id='$sessint_id'");
       if (count([$gogo]) == 1) {
         $ppo = mysqli_fetch_array($gogo);
         $sum = $ppo['total_outstanding_derived'];
@@ -105,6 +105,10 @@ if(isset($_GET["edit"])) {
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Account</h4>
                 </div>
+                <?php
+                if($ctype == 'INDIVIDUAL')
+                {
+                  ?>
                 <div class="card-body">
                   <form action="">
                     <div class="form-group">
@@ -124,11 +128,299 @@ if(isset($_GET["edit"])) {
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $displayname; ?>" readonly>
                         </div>
                       </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Account Type:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $ctype; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Date of Birth:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $date_of_birth; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Gender:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $gender; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Address:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $address; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Mobile Number:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $phone; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Email Address:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $email; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">State:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $state; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">LGA:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $lga; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">BVN:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $bvn; ?>" readonly>
+                        </div>
+                      </div>
                     </div>
                   </form>
                 </div>
+                <?php
+                }
+                else if($ctype == 'CORPORATE')
+                {
+                  $id = $_GET["edit"];
+                  $update = true;
+                  $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id' && int_id ='$sessint_id'");
+                  if (count([$person]) == 1) {
+                    $t = mysqli_fetch_array($person);
+                    $emaila = $t['email_address'];
+                    $dob = $t['date_of_birth'];
+                    $rc_number = $t['rc_number'];
+                    $sig_one = $t['sig_one'];
+                    $sig_two = $t['sig_two'];
+                    $sig_three = $t['sig_three'];
+                    $sig_address_one = $t['sig_address_one'];
+                    $sig_address_two = $t['sig_address_two'];
+                    $sig_address_three = $t['sig_address_three'];
+                    $sig_phone_one = $t['sig_phone_one'];
+                    $sig_phone_two = $t['sig_phone_two'];
+                    $sig_phone_three = $t['sig_phone_three'];
+                    $sig_gender_one = $t['sig_gender_one'];
+                    $sig_gender_two = $t['sig_gender_two'];
+                    $sig_gender_three = $t['sig_gender_three'];
+                    $sig_state_one = $t['sig_state_one'];
+                    $sig_state_two = $t['sig_state_two'];
+                    $sig_state_three = $t['sig_state_three'];
+                    $sig_lga_one = $t['sig_lga_one'];
+                    $sig_lga_two = $t['sig_lga_two'];
+                    $sig_lga_three = $t['sig_lga_three'];
+                    $sig_occu_one = $t['sig_occu_one'];
+                    $sig_occu_two = $t['sig_occu_two'];
+                    $sig_occu_three = $t['sig_occu_three'];
+                    $sig_bvn_one = $t['sig_bvn_one'];
+                    $sig_bvn_two = $t['sig_bvn_two'];
+                    $sig_bvn_three = $t['sig_bvn_three'];
+                    $l_officer = $t['loan_officer_id'];
+                    $acount = mysqli_query($connection, "SELECT * FROM staff WHERE id='$l_officer'");
+                    if (count([$acount]) == 1) {
+                      $r = mysqli_fetch_array($acount);
+                      $acc_off = strtoupper($r['first_name'] ." ". $j['last_name']);
+                    }
+                  }
+                  ?>
+                <div class="card-body">
+                <div class="form-group">
+                      <label for="">Registered Name:</label>
+                      <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo $display_name; ?>" readonly name="display_name">
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">RC Number:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $rc_number; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Account Number:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $acc; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Date of Registration:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $dob; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Email Address:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $emaila; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Account Officer:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $acc_off; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="">Registered Address:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $address; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Name of Signatries NO1:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_one; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Name of Signatries NO2:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_two; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Name of Signatries NO3:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_three; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Address:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_address_one; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Address:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_address_two; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Address:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_address_three; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Phone No:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_phone_one; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Phone No:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_phone_two; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Phone No:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_phone_three; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Gender:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_gender_one; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Gender:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_gender_two; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Gender:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_gender_three; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">State:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_state_one; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">State:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_state_two; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">State:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_state_three; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">LGA:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_lga_one; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">LGA:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_lga_two; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">LGA:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_lga_three; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">BVN:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_one; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">BVN:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_two; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">BVN:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_three; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Occupation:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_occu_one; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Occupation:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_occu_two; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="">Occupation:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_occu_three; ?>" readonly>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <?php
+                }?>
               </div>
-              <div class="card">
+              <!-- <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Account Summary</h4>
                 </div>
@@ -169,7 +461,7 @@ if(isset($_GET["edit"])) {
                     <a href="client.php" class="btn btn-primary pull-right">Back</a>
                   </form>
                 </div>
-              </div>
+              </div> -->
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Generate Account Report</h4>
