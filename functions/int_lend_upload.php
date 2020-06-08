@@ -24,12 +24,17 @@ $loan_officer = $_POST['loan_officer'];
 $loan_purpose = $_POST['loan_purpose'];
 $standing_instruction = $_POST['standing_instruction'];
 $linked_savings_acct = $_POST['linked_savings_acct'];
-$repay_start =  getDate(strtotime($_POST['repay_start']));
+$repay_start =  $_POST["repay_start"];
 if ($repay_start == NULL || $repay_start == "") {
     echo $repay_start;
     echo $repay_every;
 } else {
-    $repay_every = $_POST["repay_start"];
+    $repay_every = $_POST["repay_eve"];
+    $repay_st1 =  $_POST["repay_start"];
+$date = str_replace('/', '-', $repay_st1);
+$repay_st =  date('Y-m-d', strtotime($date));
+    // echo "Repayement Datw".$repay_st;
+    // echo "XDisgb Datw".$disbursement_date;
 // Part for Charges
 $charges = $_POST['charge'];
 // Part for collateral
@@ -87,13 +92,15 @@ $verify = mysqli_query($connection, "SELECT * FROM `int_vault` WHERE int_id = '$
                     term_frequency, repay_every, number_of_repayments, submittedon_date,
                     submittedon_userid, approvedon_date, approvedon_userid,
                     expected_disbursedon_date, expected_firstrepaymenton_date, disbursement_date,
-                    disbursedon_userid, repay_principal_every, repay_interest_every, status, loan_sub_status_id) VALUES ('{$sessint_id}', '{$acct_no}', '{$client_id}',
+                    disbursedon_userid, repay_principal_every, repay_interest_every, status, loan_sub_status_id) 
+                    VALUES ('{$sessint_id}', '{$acct_no}', '{$client_id}',
                     '{$cdn}', '{$product_id}', '{$fund_id}', '{$col_id}', '{$col_name}', '{$col_description}',
-                    '{$loan_officer}', '{$loan_purpose}', '{$currency}', '{$cd}',
-                    '{$principal_amount}', '{$pd}', '{$loan_term}', '{$interest_rate}',
-                    '{$principal_amount}', '{$repay_start}', '{$tff}', '$repay_every',
+                    '{$loan_officer}', '{$loan_purpose}', '{$currency}', 
+                    '{$cd}', '{$principal_amount}', '{$pd}', 
+                    '{$loan_term}', '{$interest_rate}', '{$principal_amount}', '{$repay_st}',
+                    '{$tff}', '{$repay_every}',
                     '{$loan_no_rep}', '{$submitted_on}', '{$userid}', '{$submitted_on}', '{$userid}',
-                    '{$disbursement_date}', '{$repay_start}', '{$disbursement_date}',
+                    '{$disbursement_date}', '{$repay_st}', '{$disbursement_date}',
                     '{$userid}', '{$loan_term}', '{$loan_term}', '{$stt}', '{$loan_sector}')";
             $res = mysqli_query($connection, $query);
             if ($res) {
@@ -109,12 +116,21 @@ $verify = mysqli_query($connection, "SELECT * FROM `int_vault` WHERE int_id = '$
                                     $res_type = $_POST["res_type"];
                                     $rent_per_year = $_POST["rent_per_year"];
                                     $years_in_res = $_POST["years_in_res"];
-                                   $kyc_query = mysqli_query($connection, "INSERT INTO `kyc` (`int_id`, `client_id`, `marital_status`, `no_of_dependent`,
+                                   $kyc_query = mysqli_query($connection, "INSERT INTO `kyc` (`int_id`, `client_id`, `marital_status`, `no_of_dependent`, `level_of_ed`, `emp_stat`, `emp_bus_name`, `income`, `years_in_job`, `res_type`, `rent_per_year`, `year_in_res`)
+                                   VALUES ('{$sessint_id}', '{$client_id}', '{$marital_stat}', '{$no_dep}', 
                                    '{$ed_level}', '{$emp_stat}', '{$emp_bus_name}', '{$income}',
                                    '{$years_in_job}', '{$res_type}', '{$rent_per_year}', '{$years_in_res}')");
                                    if ($kyc_query) {
                                     $_SESSION["Lack_of_intfund_$randms"] = "Successfully Uploaded, Awaiting Disbursement Approval";
                                     header ("Location: ../mfi/lend.php?message=$randms");
+    //                                 if ($connection->error) {
+    //     try {   
+    //         throw new Exception("MySQL error $connection->error <br> Query:<br> $colkt", $mysqli->error);   
+    //     } catch(Exception $e ) {
+    //         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+    //         echo nl2br($e->getTraceAsString());
+    //     }
+    // }
                                    } else {
                                     $_SESSION["Lack_of_intfund_$randms"] = "Error in Posting For Approval";
                                     header ("Location: ../mfi/lend.php?message2=$randms");
@@ -132,6 +148,14 @@ $verify = mysqli_query($connection, "SELECT * FROM `int_vault` WHERE int_id = '$
         $_SESSION["Lack_of_intfund_$randms"] = "Insufficent Fund From Institution Account!";
         header ("Location: ../mfi/lend.php?message4=$randms");
 }
+// if ($connection->error) {
+//     try {   
+//         throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
+//     } catch(Exception $e ) {
+//         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+//         echo nl2br($e->getTraceAsString());
+//     }
+// }
 }
 }
 ?>
