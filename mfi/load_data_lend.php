@@ -102,7 +102,7 @@ if(isset($_POST["id"]))
             </div>
             <div class="col-md-5">
             <label> </label>
-              <select id="repay" class="form-control">
+              <select id="repay" name="repay_eve" class="form-control">
                 <option value ="day">Days</option>
                 <option value ="week">Weeks</option>
                 <option value ="month">Months</option>
@@ -156,7 +156,7 @@ if(isset($_POST["id"]))
       <div class="col-md-4">
       <div class="form-group">
         <label>Repayment Start Date:</label>
-        <input type="date" value="" name="repay_start" class="form-control" id="repay_start">
+        <input type="date" name="repay_start" class="form-control" id="repay_start">
       </div>
       </div>
       <div class="col-md-4">
