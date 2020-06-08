@@ -1,7 +1,7 @@
 <?php
 
     include("header.php");
-    $destination = 
+    $destination = "";
 
 ?>
 <!-- Content added here -->

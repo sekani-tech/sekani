@@ -501,6 +501,17 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
 <?php
  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // here we will be posting
+    // TAKE DISPLAYED DATA
+    // check if approved or declined
+    // if System Computation or the Original Loan Principal
+    // check if the gl payment source have the balance if its more or less
+    // take out the charges at the point of disbursement
+    // post the loan out to loan
+    // record the loan in the loan transaction table
+    // Take the loan principal out of the Vualt(Gl payment Type)
+    // Record the Vualt Transaction (Gl Transaction in future)
+    // reflect the transaction on the clients account
+    // and the client account transction.
 }
 ?>
 <!-- Content added here -->
@@ -743,30 +754,6 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                         </div>
                         <!-- hyped -->
                         <br>
-                        <!-- <div class="col-md-6">
-                        <div class="card card-nav-tabs" style="width: 30rem;">
-                        <div class="card-header card-header-warning">
-                         Ph
-                         </div>
-                        <ul class="list-group list-group-flush">
-                        <li class="list-group-item">A Message (Success, Warning, Manual)</li>
-                        <li class="list-group-item">Percentage Recommendation</li>
-                        <li class="list-group-item">
-                        <div class="progress">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
-                         15%
-                        </div>
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
-                         55%
-                        </div>
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
-                         30%
-                        </div>
-                        </div>
-                        </li>
-                        </ul>
-                        </div>
-                        </div> -->
                         <!-- never be -->
                          <!-- saving -->
                          <div class="col-md-6">
@@ -776,9 +763,9 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                            </div>
                             <h3 class="card-title">&#x20a6; <?php echo number_format($comp_amt, 2); ?> </h3>
                            <p class="card-description">
-                           AI computation <?php echo $auto_perc ?>% of the principal amount.
+                           System computation <?php echo $auto_perc ?>% of the principal amount.
                            </p>
-                            <a href="#pablo" class="btn btn-white btn-round">Choose Plan</a>
+                            <button type="submit" value="submit" name="submit" class="btn btn-white btn-round">Approve Plan</button>
                           </div>
                           </div>
                          </div>
@@ -792,9 +779,16 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                            <p class="card-description">
                           100% of the principal amount.
                            </p>
-                            <button type="submit" class="btn btn-white btn-round">Choose Plan</button>
+                            <button type="submit" value="submit_b" name="submit" class="btn btn-white btn-round">Approve Plan</button>
                           </div>
                           </div>
+                         </div>
+                         <div class="col-md-12">
+                           <hr>
+                           <div>
+                           <a href="#" class="btn btn-success btn-round pull-left">Print Credit Score</a>
+                           <button type="submit" value="reject" name="submit" class="btn btn-danger btn-round pull-right">Reject Loan</button>
+                           </div>
                          </div>
                         </div>
                   </form>
