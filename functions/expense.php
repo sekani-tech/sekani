@@ -123,16 +123,16 @@ if ($is_del == "0" && $is_del != NULL) {
                 $_SESSION["Lack_of_intfund_$randms"] = "Expense Successful!";
                echo header ("Location: ../mfi/transact.php?loan2=$randms");
              } else {
-            //     $_SESSION["Lack_of_intfund_$randms"] = "Expense Failed";
-            //    echo header ("Location: ../mfi/transact.php?loan4=$randms");
-            if ($connection->error) {
-    try {   
-        throw new Exception("MySQL error $connection->error <br> Query:<br> $trancache", $mysqli->error);   
-    } catch(Exception $e ) {
-        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-        echo nl2br($e->getTraceAsString());
-    }
-}
+                $_SESSION["Lack_of_intfund_$randms"] = "Expense Failed";
+               echo header ("Location: ../mfi/transact.php?loan4=$randms");
+//             if ($connection->error) {
+//     try {   
+//         throw new Exception("MySQL error $connection->error <br> Query:<br> $trancache", $mysqli->error);   
+//     } catch(Exception $e ) {
+//         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+//         echo nl2br($e->getTraceAsString());
+//     }
+// }
              }
              
         }
