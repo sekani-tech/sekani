@@ -46,21 +46,32 @@ $destination = "report_loan.php";
                           Client Name
                         </th>
                         <th>
-                          Account No
+                          Loan Amount
                         </th>
                         <th>
-                          Principal Amount
+                          Loan Term
                         </th>
                         <th>
-                          Repayment Date
+                          Disbursement Date
                         </th>
                         <th>
-                          Outstanding Loan Balances
+                          Maturity Date
                         </th>
                         <th>
-                          Status
+                          Interest Rate
                         </th>
-                        <th>View</th>
+                        <th>
+                          Monthly Interest
+                        </th>
+                        <th>
+                          Total Interest
+                        </th>
+                        <th>
+                          Fee
+                        </th>
+                        <th>
+                          Total Income
+                        </th>
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>
@@ -92,6 +103,9 @@ $destination = "report_loan.php";
                       </tbody>
                     </table>
                   </div>
+                </div>
+                <div class="card-body">
+                  <button href="" class="btn btn-primary">PRINT PDF</button>
                 </div>
               </div>
             </div>
@@ -128,7 +142,7 @@ $destination = "report_loan.php";
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+                    <table id="tabledats" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
@@ -148,9 +162,6 @@ $destination = "report_loan.php";
                         </th>
                         <th>
                           Outstanding Loan Balances
-                        </th>
-                        <th>
-                          Loan Term
                         </th>
                         <th>View</th>
                       <tbody>

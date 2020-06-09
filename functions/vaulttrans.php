@@ -256,6 +256,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                 $ein = mysqli_query($connection, $vaultinquery);
                 $description = "Withdrawn from vault";
                 if($ein){
+                    $tellgl = "UPDATE acc_gl_account SET organization_running_balance_derived = '$' WHERE gl_code = '$bank_type' && int_id = '$sint_id'";
                     $vaultinquery2 = "UPDATE int_vault SET balance = '$new_vaultbalance', last_withdrawal = '$amount' WHERE int_id = '$sint_id'";
                     $on = mysqli_query($connection, $vaultinquery2);
                     // $glquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '' AND int_id = '$sint_id'";

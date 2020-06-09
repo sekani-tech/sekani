@@ -25,6 +25,7 @@ $output='
     <div class="form-group">
   <!-- populate from db -->
     <label class="bmd-label-floating"> Teller Name</label>
+    <input type="text" hidden name ="cash" value =""/>
     <select name="teller_id" id="tell" class="form-control">
       <option value="0">SELECT A TELLER</option>
         '.fill_teller($connection).'
