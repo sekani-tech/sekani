@@ -234,7 +234,11 @@ if(isset($_GET['edit'])){
                               ?>
                           <label for="bmd-label-floating">Income GL</label>
                           <select name="Income_gl" id="" class="form-control">
-                          <option value="<?php echo $income_gl;?>">Update Income Gl</option>
+                              <?php
+                              $select_gl = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$income_gl' && int_id = '$sessint_id'");
+                              $xmx = mysqli_fetch_array($select_gl);
+                              ?>
+                          <option value="<?php echo $income_gl;?>"><?php echo $xmx["name"]; ?></option>
                               <?php echo fill_in($connection) ?>
                           </select>
                       </div>
