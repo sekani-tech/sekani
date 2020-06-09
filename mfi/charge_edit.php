@@ -241,6 +241,7 @@ if(isset($_GET['edit'])){
                           <option value="<?php echo $income_gl;?>"><?php echo $xmx["name"]; ?></option>
                               <?php echo fill_in($connection) ?>
                           </select>
+                          <!-- heloo -->
                       </div>
                       <div class=" col-md-2 form-group">
                         <div class="form-check form-check-inline">
