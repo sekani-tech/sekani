@@ -18,6 +18,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $loan_sector = $x["loan_sub_status_id"];
       $account_officer = $x["loan_officer"];
       $acct_no = $x["account_no"];
+      $dis_cache_status = $x["status"];
       // here are the things
       $interest = $x["interest_rate"];
       $prin_amt = $x["approved_principal"];
@@ -501,6 +502,110 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
 <?php
  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // here we will be posting
+    // TAKE DISPLAYED DATA
+    // check if approved or declined
+    // if System Computation or the Original Loan Principal
+    // check if the gl payment source have the balance if its more or less
+    // take out the charges at the point of disbursement
+    // post the loan out to loan
+    // record the loan in the loan transaction table
+    // Take the loan principal out of the Vualt(Gl payment Type)
+    // Record the Vualt Transaction (Gl Transaction in future)
+    // reflect the transaction on the clients account
+    // and the client account transction.
+    // EMAIL FOR BOTH SIDES
+
+    // END ALGORITHM END
+    // 1. DISPLAY DATA
+    $but_type = $_POST["submit"];
+    // if the status is rejected or one
+    if ($dis_cache_status == "Pending") {
+      if ($but_type == "submit" || $but_type == "submit_b") {
+        // 2. check it its system computation or intial principal
+        if ($but_type == "submit") {
+          // MEANS SYSTEM COMPUTATION
+          $loan_amount = $comp_amt;
+        } else {
+          // MEANS ORIGINAL LOAN PRICIPAL
+          $loan_amount = $prin_amt;
+        }
+        // get the data of the amount that will be disbursed
+        // 3. CHECK IF VAULT HAVE THAT AMOUNT
+        // query vault to get the balance of the institution
+        $branch_id = $_SESSION["branch_id"];
+        $v_query = mysqli_query($connection, "SELECT * FROM int_vault WHERE int_id = '$sessint_id' && branch_id = '$branch_id'");
+        $ivb = mysqli_fetch_array($v_query);
+        $vault_bal = $ivb["balance"];
+        $new_vault_run_bal = $vault_bal - $loan_amount;
+        // take out the amount from the vualt balance for the transaction balance
+        if ($vault_bal >= $loan_amount) {
+          // TAKE OUT THE CHRAGES at the Disbursment point
+          // a query to select charges
+          $charge_query= mysqli_query($connection, "SELECT * FROM `product_loan_charge` WHERE product_loan_id = '$loan_product' && int_id = '$sessint_id'");
+          // $cqb = mysqli_fetch_array($charge_query);
+          // charge application start.
+          if (mysqli_num_rows($charge_query) > 0 ) {
+            while ($cxr = mysqli_fetch_array($charge_query)) {
+              $final[] = $cxr;
+              $c_id = $cxr["charge_id"];
+              $pay_charge1 = 0;
+              $pay_charge2 = 0;
+              $calc = 0;
+              $chg2 = 0;
+              // $select_flat = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' && int_id = '$sessint_id' && charge_calculation_enum = '1'");
+              // two select statement for charge and flat
+              // $select_per = mysqli_query($connection, "SELECT * FROM charge WHERE (id = '$c_id' AND int_id = '$sessint_id') AND (charge_calculation_enum > 1)");
+              // get percentage
+
+              // qwerty
+              $select_each_charge = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' && int_id = '$sessint_id'");
+              while ($ex = mysqli_fetch_array($select_each_charge)) {
+                $values = $ex["charge_time_enum"];
+                $nameofc = $ex["name"];
+                $amt = 0;
+                $forx = $ex["charge_calculation_enum"];
+                $rmt = $loan_amount;
+                if ($forx == '1') {
+                  $amt = $ex["amount"];
+                  $charge_name1 = $ex["name"];
+                  echo "AMOUNT".$amt;
+                  // TAKE THE CODE --- YOU STOPPED HERE ---
+                  //get a query for the list of flat code
+                  // $cut_name1 = implode(' ', array_slice(explode(' ', $my_string), 0, 5));
+                  // $sel_gl = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE name LIKE '%$cut_name1%' ORDER BY name ASC LIMIT 1");
+                  // take the charge from the account of the client
+                  // store it as a transaction - Debit
+                } else {
+                  $charge_name2 = $ex["name"];
+                  $calc = ($forx / 100) * $rmt;
+                  //get a query for the list of flat code
+                  // take the charge from the account of the client
+                  // store it as a transaction - Debit
+                }
+                // $pay_charge2 += $calc;
+                // $pay_charge1 += $amt;
+              }
+            }
+          }
+        }  else {
+          // echo insufficient fund from vualt
+          echo "insufficient fund from vualt";
+        }
+      } else if ($but_type == "reject") {
+        // reject the loan
+        // store the rejected loan status in cache - to rejecteds
+        echo "you rejected the loan";
+      } else {
+        // push out an error to the person approving
+        echo "error on approval";
+      }
+    } else if ($dis_cache_status == "Rejected") {
+      // echo already rejected
+      echo "rejected already";
+    } else {
+      // already approved
+      echo "Already Approved";
+    }
 }
 ?>
 <!-- Content added here -->
@@ -743,30 +848,6 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                         </div>
                         <!-- hyped -->
                         <br>
-                        <!-- <div class="col-md-6">
-                        <div class="card card-nav-tabs" style="width: 30rem;">
-                        <div class="card-header card-header-warning">
-                         Ph
-                         </div>
-                        <ul class="list-group list-group-flush">
-                        <li class="list-group-item">A Message (Success, Warning, Manual)</li>
-                        <li class="list-group-item">Percentage Recommendation</li>
-                        <li class="list-group-item">
-                        <div class="progress">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
-                         15%
-                        </div>
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
-                         55%
-                        </div>
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
-                         30%
-                        </div>
-                        </div>
-                        </li>
-                        </ul>
-                        </div>
-                        </div> -->
                         <!-- never be -->
                          <!-- saving -->
                          <div class="col-md-6">
@@ -776,9 +857,9 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                            </div>
                             <h3 class="card-title">&#x20a6; <?php echo number_format($comp_amt, 2); ?> </h3>
                            <p class="card-description">
-                           AI computation <?php echo $auto_perc ?>% of the principal amount.
+                           System computation <?php echo $auto_perc ?>% of the principal amount.
                            </p>
-                            <a href="#pablo" class="btn btn-white btn-round">Choose Plan</a>
+                            <button type="submit" value="submit" name="submit" class="btn btn-white btn-round">Approve Plan</button>
                           </div>
                           </div>
                          </div>
@@ -792,9 +873,16 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                            <p class="card-description">
                           100% of the principal amount.
                            </p>
-                            <button type="submit" class="btn btn-white btn-round">Choose Plan</button>
+                            <button type="submit" value="submit_b" name="submit" class="btn btn-white btn-round">Approve Plan</button>
                           </div>
                           </div>
+                         </div>
+                         <div class="col-md-12">
+                           <hr>
+                           <div>
+                           <a href="#" class="btn btn-success btn-round pull-left">Print Credit Score</a>
+                           <button type="submit" value="reject" name="submit" class="btn btn-danger btn-round pull-right">Reject Loan</button>
+                           </div>
                          </div>
                         </div>
                   </form>

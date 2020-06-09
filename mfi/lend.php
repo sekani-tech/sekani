@@ -223,7 +223,7 @@ $destination = "loans.php";
                     <!-- charge -->
                     <div class="tab"><h3> Charges:</h3>
                     <div id="lend_charge">
-                        </div>
+                    </div>
                         <div class="col-md-6">
                         <label class = "bmd-label-floating" for="charge" class="form-align mr-3">Charges</label>
                           <select class="form-control" name="charge"> 

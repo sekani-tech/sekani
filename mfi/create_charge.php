@@ -74,6 +74,27 @@ $destination = "products_config.php";
                           </select>
                       </div>
                       <div class=" col-md-4 form-group">
+                      <?php
+                              function fill_in($connection)
+                              {
+                                $sint_id = $_SESSION["int_id"];
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '4' ORDER BY name ASC";
+                                $res = mysqli_query($connection, $org);
+                                $output = '';
+                                while ($row = mysqli_fetch_array($res))
+                                {
+                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+                                }
+                                return $output;
+                              }
+                              ?>
+                          <label for="bmd-label-floating">Income GL</label>
+                          <select name="Income_gl" id="" class="form-control">
+                              <option value="">Choose Income Account Gl</option>
+                              <?php echo fill_in($connection) ?>
+                          </select>
+                      </div>
+                      <div class=" col-md-2 form-group">
                         <div class="form-check form-check-inline">
                             <label class="form-check-label">
                                 <input class="form-check-input" name="" type="checkbox" value="1">
@@ -84,7 +105,7 @@ $destination = "products_config.php";
                             </label>
                         </div>
                         </div>
-                        <div class=" col-md-4 form-group">
+                        <div class=" col-md-2 form-group">
                         <div class="form-check form-check-inline">
                             <label class="form-check-label">
                                 <input class="form-check-input" name="" type="checkbox" value="1">
@@ -95,7 +116,7 @@ $destination = "products_config.php";
                             </label>
                         </div>
                         </div>
-                        <div class=" col-md-4 form-group">
+                        <div class=" col-md-2 form-group">
                         <div class="form-check form-check-inline">
                             <label class="form-check-label">
                                 <input class="form-check-input" name="" type="checkbox" value="1">
