@@ -18,6 +18,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $loan_sector = $x["loan_sub_status_id"];
       $account_officer = $x["loan_officer"];
       $acct_no = $x["account_no"];
+      $dis_cache_status = $x["status"];
       // here are the things
       $interest = $x["interest_rate"];
       $prin_amt = $x["approved_principal"];
@@ -512,6 +513,86 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
     // Record the Vualt Transaction (Gl Transaction in future)
     // reflect the transaction on the clients account
     // and the client account transction.
+    // EMAIL FOR BOTH SIDES
+
+    // END ALGORITHM END
+    // 1. DISPLAY DATA
+    $but_type = $_POST["submit"];
+    // if the status is rejected or one
+    if ($dis_cache_status == "Pending") {
+      if ($but_type == "submit" || $but_type == "submit_b") {
+        // 2. check it its system computation or intial principal
+        if ($but_type == "submit") {
+          // MEANS SYSTEM COMPUTATION
+          $loan_amount = $comp_amt;
+        } else {
+          // MEANS ORIGINAL LOAN PRICIPAL
+          $loan_amount = $prin_amt;
+        }
+        // get the data of the amount that will be disbursed
+        // 3. CHECK IF VAULT HAVE THAT AMOUNT
+        // query vault to get the balance of the institution
+        $branch_id = $_SESSION["branch_id"];
+        $v_query = mysqli_query($connection, "SELECT * FROM int_vault WHERE int_id = '$sessint_id' && branch_id = '$branch_id'");
+        $ivb = mysqli_fetch_array($v_query);
+        $vault_bal = $ivb["balance"];
+        $new_vault_run_bal = $vault_bal - $loan_amount;
+        // take out the amount from the vualt balance for the transaction balance
+        if ($vault_bal >= $loan_amount) {
+          // TAKE OUT THE CHRAGES at the Disbursment point
+          // a query to select charges
+          $charge_query= mysqli_query($connection, "SELECT * FROM `product_loan_charge` WHERE product_loan_id = '$loan_product' && int_id = '$sessint_id'");
+          $cqb = mysqli_fetch_array($charge_query);
+          // charge application start.
+          if (mysqli_num_rows($charge_query) > 0 ) {
+            while ($cxr = mysqli_fetch_array($charge_query, MYSQLI_ASSOC)) {
+              $c_id = $cxr["charge_id"];
+              $select_flat = mysqli_query($connection, "");
+              $select_per = mysqli_query($connection, "");
+              // qwerty
+              $select_each_charge = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' && int_id = '$sessint_id'");
+              while ($ex = mysqli_fetch_assoc($select_each_charge)) {
+                $values = $ex["charge_time_enum"];
+                $nameofc = $ex["name"];
+                $amt = '';
+                $amt2 = '';
+                $zzzzz = 0;
+                $forp = $ex["charge_calculation_enum"];
+                $rmt = $loan_amount;
+                if ($forp == 1) {
+                  $zzzzz = $ex["amount"];
+                  $chg2 = $amt;
+                } else {
+                  $calc = ($forp / 100) * $rmt;
+                }
+                $pay_charge += $zzzzz;
+                $pay_charge2 += $calc;
+                echo $chg2."All Flat ----";
+                echo $calc."All Percentage";
+              }
+            }
+            echo $pay_charge."SUM of Flat ----"; 
+            echo $pay_charge2."SUM of Percentage"; 
+          }
+        }  else {
+          // echo insufficient fund from vualt
+          echo "insufficient fund from vualt";
+        }
+      } else if ($but_type == "reject") {
+        // reject the loan
+        // store the rejected loan status in cache - to rejecteds
+        echo "you rejected the loan";
+      } else {
+        // push out an error to the person approving
+        echo "error on approval";
+      }
+    } else if ($dis_cache_status == "Rejected") {
+      // echo already rejected
+      echo "rejected already";
+    } else {
+      // already approved
+      echo "Already Approved";
+    }
 }
 ?>
 <!-- Content added here -->
