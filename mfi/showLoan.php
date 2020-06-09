@@ -542,37 +542,50 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
           // TAKE OUT THE CHRAGES at the Disbursment point
           // a query to select charges
           $charge_query= mysqli_query($connection, "SELECT * FROM `product_loan_charge` WHERE product_loan_id = '$loan_product' && int_id = '$sessint_id'");
-          $cqb = mysqli_fetch_array($charge_query);
+          // $cqb = mysqli_fetch_array($charge_query);
           // charge application start.
           if (mysqli_num_rows($charge_query) > 0 ) {
-            while ($cxr = mysqli_fetch_array($charge_query, MYSQLI_ASSOC)) {
+            while ($cxr = mysqli_fetch_array($charge_query)) {
+              $final[] = $cxr;
               $c_id = $cxr["charge_id"];
-              $select_flat = mysqli_query($connection, "");
-              $select_per = mysqli_query($connection, "");
+              $pay_charge1 = 0;
+              $pay_charge2 = 0;
+              $calc = 0;
+              $chg2 = 0;
+              // $select_flat = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' && int_id = '$sessint_id' && charge_calculation_enum = '1'");
+              // two select statement for charge and flat
+              // $select_per = mysqli_query($connection, "SELECT * FROM charge WHERE (id = '$c_id' AND int_id = '$sessint_id') AND (charge_calculation_enum > 1)");
+              // get percentage
+
               // qwerty
               $select_each_charge = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' && int_id = '$sessint_id'");
-              while ($ex = mysqli_fetch_assoc($select_each_charge)) {
+              while ($ex = mysqli_fetch_array($select_each_charge)) {
                 $values = $ex["charge_time_enum"];
                 $nameofc = $ex["name"];
-                $amt = '';
-                $amt2 = '';
-                $zzzzz = 0;
-                $forp = $ex["charge_calculation_enum"];
+                $amt = 0;
+                $forx = $ex["charge_calculation_enum"];
                 $rmt = $loan_amount;
-                if ($forp == 1) {
-                  $zzzzz = $ex["amount"];
-                  $chg2 = $amt;
+                if ($forx == '1') {
+                  $amt = $ex["amount"];
+                  $charge_name1 = $ex["name"];
+                  echo "AMOUNT".$amt;
+                  // TAKE THE CODE --- YOU STOPPED HERE ---
+                  //get a query for the list of flat code
+                  // $cut_name1 = implode(' ', array_slice(explode(' ', $my_string), 0, 5));
+                  // $sel_gl = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE name LIKE '%$cut_name1%' ORDER BY name ASC LIMIT 1");
+                  // take the charge from the account of the client
+                  // store it as a transaction - Debit
                 } else {
-                  $calc = ($forp / 100) * $rmt;
+                  $charge_name2 = $ex["name"];
+                  $calc = ($forx / 100) * $rmt;
+                  //get a query for the list of flat code
+                  // take the charge from the account of the client
+                  // store it as a transaction - Debit
                 }
-                $pay_charge += $zzzzz;
-                $pay_charge2 += $calc;
-                echo $chg2."All Flat ----";
-                echo $calc."All Percentage";
+                // $pay_charge2 += $calc;
+                // $pay_charge1 += $amt;
               }
             }
-            echo $pay_charge."SUM of Flat ----"; 
-            echo $pay_charge2."SUM of Percentage"; 
           }
         }  else {
           // echo insufficient fund from vualt
