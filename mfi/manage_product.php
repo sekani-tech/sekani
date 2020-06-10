@@ -510,11 +510,11 @@ $destination = "index.php";
   </div>
   </div>
   <div id="show_payment"></div>
-                            <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal2"><i class="material-icons">add</i></button>
-                            <span>
+                            <!-- <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal2"><i class="material-icons">add</i></button> -->
+                            <!-- <span>
                             Map Fees to Specific Income accounts
-                            </span>
-                            <div id="acct_2">
+                            </span> -->
+                            <div id="acct_2" hidden>
                               <div class="table-responsive">
                               <table id="tabledat" class="table" cellspacing="0" style="width:100%">
          <thead>
