@@ -378,6 +378,9 @@ if ($per_con == 1 || $per_con == "1") {
                           else if ($row["charge_applies_to_enum"] == 3) {
                             $me = "Shares";
                           }
+                          else if ($row["charge_applies_to_enum"] == 4) {
+                            $me = "Current";
+                          }
                          ?>
                          <th><?php echo $me; ?></th>
                           <th><?php echo $row["is_active"]; ?></th>
