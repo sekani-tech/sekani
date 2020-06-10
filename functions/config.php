@@ -11,7 +11,7 @@ define('DB_NAME', 'sekanisy_admin');
 // define('DB_SERVER', 'localhost');
 // define('DB_USERNAME' , 'root');
 // define('DB_PASSWORD', 'password') ;
-// define('DB_CHARSET', 'utf8');
+// define('DB_CHARSET', 'utf8x');
 // define('DB_NAME', 'sekani_admin');
 
 // MUTE NOTICES

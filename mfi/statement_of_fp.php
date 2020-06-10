@@ -79,12 +79,6 @@ include('header.php');
                     <tbody>
                         <tr>
                             <td></td>
-                            <td>ASSETS</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
                             <td><b>Current Assets</b></td>
                             <td></td>
                             <td></td>

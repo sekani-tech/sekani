@@ -425,6 +425,7 @@ if(isset($_GET["edit"])) {
                           <option value="National ID">National ID</option>
                           <option value="Voters ID">Voters ID</option>
                           <option value="International Passport">International Passport</option>
+                          <option value="Drivers Liscense">Drivers Liscense</option>
                         </select>
                       </div>
                     </div>

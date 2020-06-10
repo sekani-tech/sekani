@@ -183,6 +183,7 @@ if(isset($_GET["edit"])) {
                         </div>
                       </div>
                     </div>
+                    <a href="update_client.php?edit=<?php echo $id;?>" class="btn btn-primary">Edit CLient</a>
                   </form>
                 </div>
                 <?php
@@ -415,10 +416,12 @@ if(isset($_GET["edit"])) {
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_occu_three; ?>" readonly>
                         </div>
                       </div>
+                      <a href="update_client.php?edit=<?php echo $id;?>" class="btn btn-primary">Edit CLient</a>
                     </div>
                 </div>
                 <?php
                 }?>
+                
               </div>
               <!-- <div class="card">
                 <div class="card-header card-header-primary">

@@ -179,8 +179,8 @@ input[type=number] {
               <a href="transact.php" class="dropdown-item">Deposit/Withdrawal</a>
               <a href="#" class="dropdown-item">FTD Booking</a>
               <a href="lend.php" class="dropdown-item">Book Loan</a>
-              <!-- <a href="#" class="dropdown-item">Expense Posting</a> -->
-              <a href="teller_journal.php" class="dropdown-item">Vault</a>
+              <a href="#" class="dropdown-item">CHQ/Pass Book Posting</a>
+              <a href="teller_journal.php" class="dropdown-item">Vault Posting</a>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -191,6 +191,7 @@ input[type=number] {
             <div class="dropdown-menu">
               <a href="client_approval.php" class="dropdown-item">Account Opening</a>
               <a href="transact_approval.php" class="dropdown-item">Transactions</a>
+              <a href="transact_approval.php" class="dropdown-item">CHQ/Pass Book</a>
               <a href="disbursement_approval.php" class="dropdown-item">Loan disbursement</a>
             </div>
           </li>
@@ -204,8 +205,8 @@ input[type=number] {
               <a class="dropdown-item" href="chart_account.php">Chart Of Accounts</a>
               <!-- <a class="dropdown-item" href="config.php">Configuration</a> -->
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Journals</a>
-              <a class="dropdown-item" href="#">Journal Template</a>
+              <a class="dropdown-item" href="#">Inventory</a>
+              <a class="dropdown-item" href="#">Asset Register</a>
               <!-- <a class="dropdown-item" href="#">Group</a> -->
               <a class="dropdown-item" href="#">Reconciliation</a>
               <div class="dropdown-divider"></div>
