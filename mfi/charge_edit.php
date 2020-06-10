@@ -169,11 +169,12 @@ if(isset($_GET['edit'])){
                         <div class="form-group">
                             <!-- populate from db -->
                           <label class="bmd-label-floating">Product Type</label>
-                          <select readonly name="product" id="" class="form-control">
+                          <select name="product" id="" class="form-control">
                               <option value="<?php echo $product ;?>"><?php echo $productb ;?></option>
                               <option value="1">Loan</option>
                               <option value="2">Savings</option>
                               <option value="3">Shares</option>
+                              <option value="4">Loan</option>
                           </select>
                         </div>
                       </div>
