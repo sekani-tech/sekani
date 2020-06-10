@@ -174,7 +174,7 @@ if(isset($_GET['edit'])){
                               <option value="1">Loan</option>
                               <option value="2">Savings</option>
                               <option value="3">Shares</option>
-                              <option value="4">Loan</option>
+                              <option value="4">Current</option>
                           </select>
                         </div>
                       </div>
