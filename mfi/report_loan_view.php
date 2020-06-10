@@ -25,7 +25,7 @@ $destination = "report_loan.php";
                   <!-- Insert number users institutions -->
                   <p class="card-category">
                       <?php
-                        $query = "SELECT * FROM loan_disbursement_cache WHERE int_id = '$sessint_id'";
+                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
                         // $query = "SELECT * FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
                         $result = mysqli_query($connection, $query);
                    if ($result) {
@@ -36,10 +36,10 @@ $destination = "report_loan.php";
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table id="tabledat2" class="table" cellspacing="0" style="width:100%">
+                    <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM loan_disbursement_cache WHERE int_id = '$sessint_id'";
+                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -72,7 +72,7 @@ $destination = "report_loan.php";
                         <th>
                           Total Income
                         </th>
-                        <!-- <th>Phone</th> -->
+                        <th>View</th>
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
@@ -86,11 +86,29 @@ $destination = "report_loan.php";
                             $nae = strtoupper($f["firstname"]." ".$f["lastname"]);
                         ?>
                           <th><?php echo $nae; ?></th>
-                          <th><?php echo $row["account_no"]; ?></th>
                           <th><?php echo $row["principal_amount"]; ?></th>
+                          <th><?php echo $row["loan_term"]; ?></th>
+                          <th><?php echo $row["disbursement_date"]; ?></th>
                           <th><?php echo $row["repayment_date"];?></th>
-                          <th><?php echo $row["total_outstanding_derived"]; ?></th>
-                          <th><?php echo $row["status"]; ?></th>
+                          <th><?php echo $row["interest_rate"]; ?></th>
+                          <?php
+                          $int_rate = $row["interest_rate"];
+                          $prina = $row["principal_amount"];
+                          $intr = $int_rate/100;
+                          $final = $intr * $prina;
+                          ?>
+                          <th><?php echo $final; ?></th>
+                          <?php
+                            $loant = $row["loan_term"];
+                            $total = $loant * $final;
+                          ?>
+                          <th><?php echo $total; ?></th>
+                          <th><?php echo $row["fee_charges_charged_derived"]; ?></th>
+                          <?php
+                          $fee = $row["fee_charges_charged_derived"];
+                          $income = $fee + $total;
+                          ?>
+                          <th><?php echo  $income; ?></th>
                           <td><a href="client_view.php?edit=<?php echo $cid;?>" class="btn btn-info">View</a></td>
                         </tr>
                         <?php }
@@ -105,7 +123,25 @@ $destination = "report_loan.php";
                   </div>
                 </div>
                 <div class="card-body">
-                  <button href="" class="btn btn-primary">PRINT PDF</button>
+                  <form method="POST" action="../composer/disbursedloan.php">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Start Date</label>
+                          <input type="date" value="" name="start" class="form-control" id="start">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">End Date</label>
+                          <input type="date" value="" name="end" class="form-control" id="end">
+                          <input type="text" id="int_id" hidden name="" value="<?php echo $sessint_id;?>" class="form-control" readonly>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="reset" class="btn btn-danger pull-right">Reset</button>
+                  <button type="submit" id="runi" class="btn btn-primary pull-right">Print PDF</button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -180,8 +216,7 @@ $destination = "report_loan.php";
                           <th><?php echo $row["principal_amount"]; ?></th>
                           <th><?php echo $row["repayment_date"];?></th>
                           <th><?php echo $row["total_outstanding_derived"]; ?></th>
-                          <th><?php echo $row["loan_term"]; ?></th>
-                          <td><a href="client_view.php?edit=<?php echo $cid;?>" class="btn btn-info">View</a></td>
+                          <td><a href="loan_report_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                          </tr>
                         <?php }
                           }
