@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Insitutional Report";
+$page_title = "Loan Report";
 $destination = "report_loan_view.php?view16";
     include("header.php");
 
@@ -10,6 +10,17 @@ $sint_id = $_SESSION['int_id'];
 $id = $_GET['edit'];
 $data = mysqli_query($connection, "SELECT * FROM loan WHERE id = '$id ' AND int_id = '$sint_id'");
 $w = mysqli_fetch_array($data);
+
+$name = $w['client_id'];
+$anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
+$f = mysqli_fetch_array($anam);
+$nae = strtoupper($f["firstname"]." ".$f["lastname"]);
+
+$dom = $w['loan_officer'];
+$sasa = mysqli_query($connection, "SELECT display_name FROM staff WHERE id = '$dom'");
+$gd = mysqli_fetch_array($sasa);
+$kdm = strtoupper($gd["display_name"]);
+
 $principal = $w['principal_amount'];
 $loanterm = $w['loan_term'];
 $interest = $w['interest_rate'];
@@ -34,11 +45,11 @@ $disburse = $w['disbursement_date'];
                   <div class="card-body">
                       <div class="row">
                           <div class="col-md-6"><h4 class="card-title">Status</h4></div>
-                          <div class="col-md-6">Hello</div>
+                          <div class="col-md-6">Active</div>
                           <div class="col-md-6"><h4 class="card-title">Client Name</h4></div>
-                          <div class="col-md-6">Hello</div>
+                          <div class="col-md-6"><?php echo $nae;?></div>
                           <div class="col-md-6"><h4 class="card-title">Account Officer</h4></div>
-                          <div class="col-md-6">Hello</div>
+                          <div class="col-md-6"><?php echo $kdm;?></div>
                       </div>
                   </div>
               </div>

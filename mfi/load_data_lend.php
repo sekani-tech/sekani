@@ -192,12 +192,16 @@ if(isset($_POST["id"]))
         <label>Loan Sector:</label>
         <select name="loan_sector" class="form-control">
           <option value="0">Select loan sector</option>
-          <option value="1">Education</option>
-          <option value="2">Finance</option>
+          <option value="1">Agriculture, Mining & Quarry</option>
+          <option value="2">Manufacturing, Trade & Commerce</option>
           <option value="3">Agricultural sector</option>
-          <option value="4">Manufacturing</option>
-          <option value="5">Construction</option>
-          <option value="6">Others</option>
+          <option value="4">Transport, Estate & Rent</option>
+          <option value="5">Consumer/ Personal</option>
+          <option value="6">Health</option>
+          <option value="7">Education</option>
+          <option value="8">Tourism</option>
+          <option value="9">Purchase of Shares</option>
+          <option value="10">Others</option>
         </select>
         </div>
         </div>

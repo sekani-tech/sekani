@@ -9,7 +9,6 @@ include("header.php");
 <?php
 if ($acc_op == 1 || $acc_op == "1") {
 ?>
-<script src="../datatable/DropdownSelect.js"></script>
 <!-- Content added here -->
 <div class="content">
     <div class="container-fluid">

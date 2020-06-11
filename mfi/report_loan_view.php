@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Disbursed Loan Report";
+$page_title = "Loan Report";
 $destination = "report_loan.php";
     include("header.php");
 ?>
@@ -160,7 +160,7 @@ $destination = "report_loan.php";
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Loans</h4>
+                  <h4 class="card-title ">Outstanding Loan Balance Report</h4>
                   <script>
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
@@ -193,7 +193,10 @@ $destination = "report_loan.php";
                           Principal Amount
                         </th>
                         <th>
-                          Repayment Date
+                          Disbursement Date
+                        </th>
+                        <th>
+                          Maturity Date
                         </th>
                         <th>
                           Outstanding Loan Balances
@@ -213,6 +216,7 @@ $destination = "report_loan.php";
                           <th><?php echo $nae; ?></th>
                           <th><?php echo $row["account_no"]; ?></th>
                           <th><?php echo $row["principal_amount"]; ?></th>
+                          <th><?php echo $row["disbursement_date"];?></th>
                           <th><?php echo $row["repayment_date"];?></th>
                           <th><?php echo $row["total_outstanding_derived"]; ?></th>
                           <td><a href="loan_report_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
@@ -244,7 +248,7 @@ $destination = "report_loan.php";
             <div class="col-md-12">
             <div class="card">
                 <div class="card-header card-header-primary">
-                <h4 class="card-title">Loan Report</h4>
+                <h4 class="card-title">Loan Analysis Report</h4>
             </div>
                 <div class="card-body">
                   <form>

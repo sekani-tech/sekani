@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "Vault Report";
-$destination = "index.php";
+$destination = "report_institution";
     include("header.php");
 ?>
 

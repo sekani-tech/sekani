@@ -111,5 +111,8 @@ if(isset($_GET["edit"])) {
   else if($location == "34"){
     echo header("Location: vault_report.php");
   }
+  else if($location == "35"){
+    echo header("Location: report_institution_view.php?view35");
+  }
 }
 ?>
