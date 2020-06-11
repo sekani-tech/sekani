@@ -75,8 +75,8 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#products" data-toggle="tab">
-                            <i class="material-icons">cancel</i>Pending
-                            <div class="ripple-container"></div>
+                            <i class="material-icons">cancel</i>Rejected
+                            <div class="ripple-container" ></div>
                           </a>
                         </li>
                       </ul>
