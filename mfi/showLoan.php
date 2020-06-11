@@ -1680,7 +1680,15 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Linked Account</label>
-                          <input type="text" class="form-control" name="phone" value="<?php echo $acct_no; ?>" readonly>
+                          <?php
+                           $pen = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' && client_id = '$client_id' && int_id = '$sessint_id'");
+                           $np = mysqli_fetch_array($pen);
+                          $product_type = $np["product_id"];
+                          $get_product = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$product_type' AND int_id = '$sessint_id'");
+                          $mer = mysqli_fetch_array($get_product);
+                           $p_n = $mer["name"];
+                          ?>
+                          <input type="text" class="form-control" name="phone" value="<?php echo $acct_no." ".$p_n; ?>" readonly>
                         </div>
                       </div>
                     </div>

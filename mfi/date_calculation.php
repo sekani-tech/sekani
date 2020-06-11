@@ -26,6 +26,6 @@ else{
   $date2 = $loan_term * $add_date;
   $actualend_date = date('d/m/Y', strtotime($repayment_start.' + '.$date2.' days'));
 
-  echo '<label>Loan End Date</label>
+  echo '<label>Loan Maturity Date</label>
   <input type="text" name ="matured_loan_date" readonly class="form-control" id ="ed" value="'.$actualend_date.'">';
 ?>
