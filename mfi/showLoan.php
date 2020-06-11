@@ -7,18 +7,42 @@ $destination = "disbursement_approval.php";
 <?php
 if (isset($_GET['approve']) && $_GET['approve'] !== '') {
   $appod = $_GET['approve'];
-  $checkm = mysqli_query($connection, "SELECT * FROM loan_disbursement_cache WHERE id = '$appod' && int_id = '$sessint_id' && status = 'Pending'");
+  $checkm = mysqli_query($connection, "SELECT * FROM loan_disbursement_cache WHERE id = '$appod' AND int_id = '$sessint_id' && status = 'Pending'");
   if (count([$checkm]) == 1) {
       $x = mysqli_fetch_array($checkm);
       $ssint_id = $_SESSION["int_id"];
       $client_id = $x["client_id"];
+      // GET CLIENT DETAILS LIKE EMAIL
+      $get_client_degtails = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' AND int_id = '$sessint_id'");
+      // GET IT
+      $cxp = mysqli_fetch_array($get_client_degtails);
+      $client_email = $cxp["email_address"];
+      // phone for email
+      $client_phone = $cxp["mobile_no"];
+      // end client
       $sub_user_id = $x["submittedon_userid"];
+      $sub_user_date = $x["submittedon_date"];
       $cn = $x['display_name'];
       $loan_product = $x["product_id"];
       $loan_sector = $x["loan_sub_status_id"];
       $account_officer = $x["loan_officer"];
       $acct_no = $x["account_no"];
       $dis_cache_status = $x["status"];
+      // GET THE GL _ MONEY WILL COME OUT FROM
+      $exp_mature_date = $x["expected_maturedon_date"];
+      $pay_id = $x["fund_id"];
+      $loan_purpose = $x["loan_purpose"];
+      $branch_id = $_SESSION["branch_id"];
+      $app_user = $_SESSION["staff_id"];
+      $get_payment_gl = mysqli_query($connection, "SELECT * FROM payment_type WHERE id = '$pay_id' AND int_id = '$sessint_id' AND branch_id = '$branch_id'");
+      $fool = mysqli_fetch_array($get_payment_gl);
+      $ggl = $fool["gl_code"];
+      // Get the GL and the balance
+      $get_gl = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$ggl' AND int_id = '$sessint_id'");
+      $fool1 = mysqli_fetch_array($get_gl);
+      $running_gl_balance = $fool1["organization_running_balance_derived"];
+      // END GL_BALANCE
+
       // here are the things
       $interest = $x["interest_rate"];
       $prin_amt = $x["approved_principal"];
@@ -27,6 +51,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $no_repayment = $x["number_of_repayments"];
       $disburse_date = $x["disbursement_date"];
       $repayment_date = $x["repayment_date"];
+      $term_frequency = $x["term_frequency"];
       $date = date('d, D, F, Y', strtotime($disburse_date));
       $date2 = date('d, D, F, Y', strtotime($repayment_date));
       // calculation
@@ -532,64 +557,350 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
         // get the data of the amount that will be disbursed
         // 3. CHECK IF VAULT HAVE THAT AMOUNT
         // query vault to get the balance of the institution
-        $branch_id = $_SESSION["branch_id"];
-        $v_query = mysqli_query($connection, "SELECT * FROM int_vault WHERE int_id = '$sessint_id' && branch_id = '$branch_id'");
-        $ivb = mysqli_fetch_array($v_query);
-        $vault_bal = $ivb["balance"];
-        $new_vault_run_bal = $vault_bal - $loan_amount;
+        // $branch_id = $_SESSION["branch_id"];
+        // $v_query = mysqli_query($connection, "SELECT * FROM int_vault WHERE int_id = '$sessint_id' && branch_id = '$branch_id'");
+        // $ivb = mysqli_fetch_array($v_query);
+        $new_gl_run_bal = $running_gl_balance - $loan_amount;
         // take out the amount from the vualt balance for the transaction balance
-        if ($vault_bal >= $loan_amount) {
-          // TAKE OUT THE CHRAGES at the Disbursment point
-          // a query to select charges
+        if ($running_gl_balance >= $loan_amount) {
+          // $cqb = mysqli_fetch_array($charge_query);
           $charge_query= mysqli_query($connection, "SELECT * FROM `product_loan_charge` WHERE product_loan_id = '$loan_product' && int_id = '$sessint_id'");
           // $cqb = mysqli_fetch_array($charge_query);
           // charge application start.
           if (mysqli_num_rows($charge_query) > 0 ) {
-            while ($cxr = mysqli_fetch_array($charge_query)) {
-              $final[] = $cxr;
-              $c_id = $cxr["charge_id"];
-              $pay_charge1 = 0;
-              $pay_charge2 = 0;
-              $calc = 0;
-              $chg2 = 0;
-              // $select_flat = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' && int_id = '$sessint_id' && charge_calculation_enum = '1'");
-              // two select statement for charge and flat
-              // $select_per = mysqli_query($connection, "SELECT * FROM charge WHERE (id = '$c_id' AND int_id = '$sessint_id') AND (charge_calculation_enum > 1)");
-              // get percentage
+            $get_client_account = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
+            $fct = mysqli_fetch_array($get_client_account);
+            $client_running_bal = $fct["account_balance_derived"];
+            $account_id = $fct["id"];
+            $client_charge_bal = $fct["total_fees_charge_derived"];
+            // be useful at the point of charges
+            $new_client_running_bal = $client_running_bal + $loan_amount;
 
-              // qwerty
-              $select_each_charge = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' && int_id = '$sessint_id'");
-              while ($ex = mysqli_fetch_array($select_each_charge)) {
-                $values = $ex["charge_time_enum"];
-                $nameofc = $ex["name"];
-                $amt = 0;
-                $forx = $ex["charge_calculation_enum"];
-                $rmt = $loan_amount;
-                if ($forx == '1') {
-                  $amt = $ex["amount"];
-                  $charge_name1 = $ex["name"];
-                  echo "AMOUNT".$amt;
-                  // TAKE THE CODE --- YOU STOPPED HERE ---
-                  //get a query for the list of flat code
-                  // $cut_name1 = implode(' ', array_slice(explode(' ', $my_string), 0, 5));
-                  // $sel_gl = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE name LIKE '%$cut_name1%' ORDER BY name ASC LIMIT 1");
-                  // take the charge from the account of the client
-                  // store it as a transaction - Debit
+            $insert_client_trans1 = "";
+            // update the PAYMENT GL.
+            // record the gl transaction
+            // we get client current balance, email..
+            // we make this transaction..
+            // we store this transaction in account transaction..
+            // hit this client mail
+
+            $update_acct_gl = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_gl_run_bal' WHERE int_id = '$sessint_id' && gl_code = '$ggl'");
+            if ($update_acct_gl) {
+              // record gl transaction
+              $digits = 6;
+              $trans_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+              $gends = date('Y-m-d');
+              $gen_date = date('Y-m-d H:i:s');
+              $insert_gl_trans = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
+              `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,
+              `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`,
+              `manually_adjusted_or_reversed`, `credit`, `debit`) 
+              VALUES ('{$sessint_id}', '{$branch_id}', '{$ggl}', '{$trans_id}',
+              'Loan', 'loan_disbursement', '{$client_id}', '0', '{$gends}', '{$loan_amount}', '{$new_gl_run_bal}',
+              '{$new_gl_run_bal}', '{$gends}', '0', '{$new_gl_run_bal}', '{$gends}',
+              '0', '0.00', '{$loan_amount}')");
+              // you can send EMAIL HERE FOR GL TRANSACTION FROM BANK
+              if ($insert_gl_trans) {
+                // get client running balance
+                $update_client_bal = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$new_client_running_bal' WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
+                if ($update_client_bal) {
+                  $insert_client_trans = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
+                  `product_id`, `account_id`, `account_no`, `client_id`, `teller_id`, `transaction_id`,
+                  `description`, `transaction_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
+                  `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
+                  `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
+                  VALUES ('{$sessint_id}', '{$branch_id}', '0', '{$account_id}', '$acct_no', '{$client_id}', '0', '{$trans_id}',
+                  'Loan', 'loan_disbursement', '0', '{$gen_date}', '{$loan_amount}', '{$loan_amount}',
+                  '{$gends}', '0', '{$new_client_running_bal}',
+                  '{$new_client_running_bal}', '{$gends}', '{$app_user}', '0', '0.00', '{$loan_amount}')");
+                  // store the transaction
+                  if ($insert_client_trans) {
+                    // HERE YOU CAN HIT THE MAIL
+                    $get_client_account1 = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
+                    $fct1 = mysqli_fetch_array($get_client_account1);
+                    $client_running_bal1 = $fct1["account_balance_derived"];
+                    // be useful at the point of charges
+                    // $new_client_running_bal1 = $client_running_bal1 + $loan_amount;
+                     // TAKE OUT THE CHRAGES at the Disbursment point
+                    // a query to select charges
+                  $charge_query= mysqli_query($connection, "SELECT * FROM `product_loan_charge` WHERE product_loan_id = '$loan_product' && int_id = '$sessint_id'");
+                    // THEN TEST FOR THE LOAN
+             while ($cxr = mysqli_fetch_array($charge_query)) {
+            $final[] = $cxr;
+            $c_id = $cxr["charge_id"];
+            $pay_charge1 = 0;
+            $pay_charge2 = 0;
+            $calc = 0;
+            $chg2 = 0;
+            // qwerty
+           
+            $select_each_charge = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' && int_id = '$sessint_id'");
+            while ($ex = mysqli_fetch_array($select_each_charge)) {
+              $values = $ex["charge_time_enum"];
+              $nameofc = $ex["name"];
+              $amt = 0;
+              $forx = $ex["charge_calculation_enum"];
+              $rmt = $loan_amount;
+              if ($forx == '1') {
+                $amt = $ex["amount"];
+                $charge_name1 = $ex["name"];
+                $gl_code1 = $ex["gl_code"];
+                // ACCOUNT
+                $get_client_account1 = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
+                while($fct1 = mysqli_fetch_array($get_client_account1)) {
+                $client_running_bal1 = $fct1["account_balance_derived"];
+                // echo "AMOUNT".$amt;
+                $get_gl2 = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$gl_code1' AND int_id = '$sessint_id'");
+                    while ($fool2 = mysqli_fetch_array($get_gl2)) {
+                    $running_gl_balance2 = $fool2["organization_running_balance_derived"];
+                    // DONE WITH GL MOVE TO ACCOUNT
+                $ultimate_client_running_balance = $client_running_bal1 - $amt;
+                $ultimate_gl_bal = $running_gl_balance2 + $amt;
+                // WE WILL HAVE TO UPDATE THE GL AND CLIENT ACCOUNT WITH THE TRANSACTION
+
+
+
+                // START
+                if ($amt > 0) {
+                  $update_acct_gl1 = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$ultimate_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_code1'");
+                  if ($update_acct_gl1) {
+              $trans_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+              $gends = date('Y-m-d');
+              $gen_date = date('Y-m-d H:i:s');
+              // transaction
+              $insert_charge_gl = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
+              `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,
+              `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`,
+              `manually_adjusted_or_reversed`, `credit`, `debit`) 
+              VALUES ('{$sessint_id}', '{$branch_id}', '{$gl_code1}', '{$trans_id}',
+              'Loan_Charge', 'flat_charge', '{$client_id}', '0', '{$gends}', '{$amt}', '{$ultimate_gl_bal}',
+              '{$ultimate_gl_bal}', '{$gends}', '0', '{$ultimate_gl_bal}', '{$gends}',
+              '0', '{$amt}', '0.00')");
+              // SEND THE REST
+              if ($insert_charge_gl) {
+                $update_client_bal1 = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$ultimate_client_running_balance' WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
+                if ($update_client_bal1) {
+                  $insert_client_trans1 = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
+                  `product_id`, `account_id`, `account_no`, `client_id`, `teller_id`, `transaction_id`,
+                  `description`, `transaction_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
+                  `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
+                  `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
+                  VALUES ('{$sessint_id}', '{$branch_id}', '0', '{$account_id}', '$acct_no', '{$client_id}', '0', '{$trans_id}',
+                  'Loan_Charge', 'flat_charge', '0', '{$gen_date}', '{$amt}', '{$amt}',
+                  '{$gends}', '0', '{$ultimate_client_running_balance}',
+                  '{$ultimate_client_running_balance}', '{$gends}', '{$app_user}', '0', '{$amt}', '0.00')");
+                  // END CLIENT TRANSACTION
+                  if ($insert_client_trans1) {
+                    // SEND THE EMAIL
+                  } else {
+                    // echo the client transaction
+                    echo "Error in Client Transaction";
+                  }
                 } else {
-                  $charge_name2 = $ex["name"];
-                  $calc = ($forx / 100) * $rmt;
-                  //get a query for the list of flat code
-                  // take the charge from the account of the client
-                  // store it as a transaction - Debit
+                  // echo error updating client account
+                  echo "Error in Update Client Account";
                 }
-                // $pay_charge2 += $calc;
-                // $pay_charge1 += $amt;
+              } else {
+                // echo error in charge gl error
+                echo "Error in Charge GL";
               }
+                  } else {
+                    // echo error in update of the charge gl
+                    echo "Error in Update Charge GL";
+                  }
+                } else {
+                  // echo empty
+                  echo "Error in Emoty";
+                }
+              // end while loop
+                    }
+              }
+
+                // ENDING
+                // ALSO SEND A MAIL
+              } else {
+                $charge_name2 = $ex["name"];
+                $calc = ($forx / 100) * $rmt;
+                $charge_name2 = $ex["name"];
+                $gl_code2 = $ex["gl_code"];
+
+                // ACCOUNT
+                $get_client_account2 = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
+                while ($fct2 = mysqli_fetch_array($get_client_account2)){
+                $client_running_bal2 = $fct2["account_balance_derived"];
+                // echo "AMOUNT".$amt;
+                $get_gl3 = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$gl_code2' AND int_id = '$sessint_id'");
+                    while ($fool3 = mysqli_fetch_array($get_gl3)) {
+                    $running_gl_balance3 = $fool3["organization_running_balance_derived"];
+                    // DONE WITH GL MOVE TO ACCOUNT
+                $ultimate_client_running_balance1 = $client_running_bal2 - $calc;
+                $ultimate_gl_bal1 = $running_gl_balance3 + $calc;
+                // WE WILL HAVE TO UPDATE THE GL AND CLIENT ACCOUNT WITH THE TRANSACTION
+
+
+
+                // SENDING FOR PERCENTAGE
+                if ($calc > 0) {
+                  $update_acct_gl1 = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$ultimate_gl_bal1' WHERE int_id = '$sessint_id' && gl_code = '$gl_code2'");
+                  if ($update_acct_gl1) {
+              $trans_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+              $gends = date('Y-m-d');
+              $gen_date = date('Y-m-d H:i:s');
+              // transaction
+              $insert_charge_gl5 = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
+              `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,
+              `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`,
+              `manually_adjusted_or_reversed`, `credit`, `debit`) 
+              VALUES ('{$sessint_id}', '{$branch_id}', '{$gl_code2}', '{$trans_id}',
+              'Loan_Charge', 'percentage_charge', '{$client_id}', '0', '{$gends}', '{$calc}', '{$ultimate_gl_bal1}',
+              '{$ultimate_gl_bal1}', '{$gends}', '0', '{$ultimate_gl_bal1}', '{$gends}',
+              '0', '{$calc}', '0.00')");
+              // SEND THE REST
+              if ($insert_charge_gl5) {
+                $update_client_bal5 = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$ultimate_client_running_balance1' WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
+                if ($update_client_bal5) {
+                  $insert_client_trans1 = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
+                  `product_id`, `account_id`, `account_no`, `client_id`, `teller_id`, `transaction_id`,
+                  `description`, `transaction_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
+                  `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
+                  `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
+                  VALUES ('{$sessint_id}', '{$branch_id}', '0', '{$account_id}', '$acct_no', '{$client_id}', '0', '{$trans_id}',
+                  'Loan_Charge', 'percentage_charge', '0', '{$gen_date}', '{$calc}', '{$calc}',
+                  '{$gends}', '0', '{$ultimate_client_running_balance1}',
+                  '{$ultimate_client_running_balance1}', '{$gends}', '{$app_user}', '0', '{$calc}', '0.00')");
+                  // END CLIENT TRANSACTION
+                  if ($insert_client_trans1) {
+                    // SEND THE EMAIL
+                  } else {
+                    // echo the client transaction
+                    echo "Error in Client Transaction";
+                  }
+                } else {
+                  // echo error updating client account
+                  echo "Error in Update Client Account";
+                }
+              } else {
+                // echo error in charge gl error
+                echo "Error in Charge GL";
+              }
+                  } else {
+                    // echo error in update of the charge gl
+                    echo "Error in Update Charge GL";
+                  }
+                } else {
+                  // echo empty
+                  echo "Empt";
+                }
+
+
+                // END LOOP
+              }
+
             }
+                // LOOP
+                // ENDING
+              }
+              // $pay_charge2 += $calc;
+              // $pay_charge1 += $amt;
+            }
+          }
+          // YOU NEED TO TEST THE QUERY HERE THEN TAKE OFF
+          // DISBUSE TO LOAN
+          $mmc = 1;
+          if ($mmc == 1) {
+            // loan inputting
+            $l_d_m = "INSERT INTO `loan` (`int_id`, `account_no`, `client_id`, `product_id`,
+            `fund_id`, `col_id`, `col_name`, `col_description`, `loan_officer`, `loan_purpose`, `currency_code`,
+            `currency_digits`, `principal_amount_proposed`, `principal_amount`, `loan_term`, `interest_rate`,
+            `approved_principal`, `repayment_date`, `arrearstolerance_amount`, `is_floating_interest_rate`, 
+            `interest_rate_differential`, `nominal_interest_rate_per_period`, `interest_period_frequency_enum`,
+            `annual_nominal_interest_rate`, `interest_method_enum`, `interest_calculated_in_period_enum`,
+            `allow_partial_period_interest_calcualtion`, `term_frequency`, `term_period_frequency_enum`, `repay_every`,
+            `repayment_period_frequency_enum`, `number_of_repayments`,
+            `grace_on_principal_periods`, `recurring_moratorium_principal_periods`, `grace_on_interest_periods`, `grace_interest_free_periods`, `amortization_method`,
+            `submittedon_date`, `submittedon_userid`, `approvedon_date`, `approvedon_userid`, `expected_disbursedon_date`,
+            `expected_firstrepaymenton_date`, `interest_calculated_from_date`, `disbursement_date`, `disbursedon_userid`,
+            `expected_maturedon_date`, `maturedon_date`, `closedon_date`, `closedon_userid`, `total_charges_due_at_disbursement_derived`,
+            `principal_disbursed_derived`, `principal_repaid_derived`, `principal_writtenoff_derived`, `principal_outstanding_derived`,
+            `interest_charged_derived`, `interest_repaid_derived`, `interest_waived_derived`, `interest_writtenoff_derived`,
+            `interest_outstanding_derived`, `fee_charges_charged_derived`, `fee_charges_repaid_derived`, `fee_charges_waived_derived`,
+            `fee_charges_writtenoff_derived`, `fee_charges_outstanding_derived`, `penalty_charges_charged_derived`, `penalty_charges_repaid_derived`, `penalty_charges_waived_derived`, `penalty_charges_writtenoff_derived`, `penalty_charges_outstanding_derived`,
+            `total_expected_repayment_derived`, `total_repayment_derived`, `total_expected_costofloan_derived`, `total_costofloan_derived`, `total_waived_derived`, `total_writtenoff_derived`,
+            `total_outstanding_derived`, `total_overpaid_derived`,
+            `version`, `writeoff_reason_cv_id`, `loan_sub_status_id`,
+            `is_topup`, `repay_principal_every`, `repay_interest_every`,
+            `restrict_linked_savings_product_type`, `mandatory_savings_percentage`, `internal_rate_of_return`)
+            VALUES ('{$sessint_id}', '{$acct_no}', '{$client_id}', '{$loan_product}',
+            '{$pay_id}', '..', '..', '..', '{$account_officer}', '{$loan_purpose}', 'NGN',
+            '2', '{$loan_amount}', '{$loan_amount}', '{$loan_term}', '{$interest}',
+            '{$loan_amount}', '{$repayment_date}', '0', '0', 
+            '0', '0', '0',
+            '0', '0', '1',
+            '0', '{$term_frequency}', '2', '{$repay_eve}',
+            '0', '{$no_repayment}',
+            '0', '0', '0', '0', '0',
+            '{$sub_user_date}', '{$sub_user_id}', '{$gends}', '{$app_user}', '{$disburse_date}',
+            '{$repayment_date}', '0', '{$disburse_date}', '{$sub_user_id}',
+            '{$exp_mature_date}', NULL, NULL, NULL, '0',
+            '{$loan_amount}', '0.000000', '0.000000', '{$loan_amount}',
+            '0.000000', '0.000000', '0.000000', '0.000000',
+            '{$tot_int}', '0.000000', '0.000000', '0.000000',
+            '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000',
+            '{$prin_due}', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000',
+            '{$loan_amount}', '0.000000',
+            '1', NULL, '{$loan_sector}',
+            '0', '1', '1', NULL, NULL, '0.00')";
+            $loan_disb = mysqli_query($connection, $l_d_m);
+            if($loan_disb) {
+              $update_loan_cache = mysqli_query($connection, "UPDATE loan_disbursement_cache SET status = 'Approved' WHERE id = '$appod' AND int_id = '$sessint_id'");
+              if ($update_loan_cache) {
+                echo "Done";
+              } else {
+                // error in loan cache
+                echo "Error in Update Loan gl";
+              }
+            } else {
+              // error  in loan
+              echo "Error in Loan sir";
+            }
+          } else {
+            // echo nothing
+            echo "God full of wisdom";
+          }
+          if ($connection->error) {
+                try {   
+                    throw new Exception("MySQL error $connection->error <br> Query:<br> $l_d_m", $mysqli->error);   
+                } catch(Exception $e ) {
+                    echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+                    echo nl2br($e->getTraceAsString());
+                }
+            }
+          // UPDATE THE DISBURSMENT CACHE
+          // WE TALK ABOUT LOAN STAUS
+                  } else {
+                    // error in client transaction
+                    echo "Error in Client Transaction";
+                  }
+                } else {
+                  // echo error in client balance update
+                  echo "Error in Client Bal Update";
+                }
+              } else {
+                // echo error in gl account transaction
+                echo "Error Gl trans";
+              }
+            } else {
+              // error in update gl ACCOUNT
+              echo "Error in Update GL";
+            }
+           
+          } else {
+            // echo not up to
+            echo "Noot Up to";
           }
         }  else {
           // echo insufficient fund from vualt
-          echo "insufficient fund from vualt";
+          echo "insufficient fund from the payment method";
         }
       } else if ($but_type == "reject") {
         // reject the loan
@@ -601,6 +912,13 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       }
     } else if ($dis_cache_status == "Rejected") {
       // echo already rejected
+      $update_loan_cache = mysqli_query($connection, "UPDATE loan_disbursement_cache SET status = 'Approved' WHERE id = '$appod' AND int_id = '$sessint_id'");
+              if ($update_loan_cache) {
+                echo "Done";
+              } else {
+                // error in loan cache
+                echo "Error in Update Loan gl";
+              }
       echo "rejected already";
     } else {
       // already approved
