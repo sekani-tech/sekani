@@ -782,7 +782,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
             $chg2 = 0;
             // qwerty
            
-            $select_each_charge = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' && int_id = '$sessint_id'");
+            $select_each_charge = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' AND int_id = '$sessint_id' AND charge_time_enum = '1' ");
             while ($ex = mysqli_fetch_array($select_each_charge)) {
               // echo "<P>CHARGE WHILE LOOP</P>";
               $values = $ex["charge_time_enum"];
@@ -790,6 +790,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
               $amt = 0;
               $forx = $ex["charge_calculation_enum"];
               $rmt = $loan_amount;
+              $amt_2 = $ex["amount"];
               if ($forx == '1') {
                 $amt = $ex["amount"];
                 $charge_name1 = $ex["name"];
@@ -1061,7 +1062,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                 // ALSO SEND A MAIL
               } else {
                 $charge_name2 = $ex["name"];
-                $calc = ($forx / 100) * $rmt;
+                $calc = ($amt_2 / 100) * $rmt;
                 $charge_name2 = $ex["name"];
                 $gl_code2 = $ex["gl_code"];
                 // echo "<P>PERCENTAGE WHILE LOOP</P>";
@@ -1680,7 +1681,15 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Linked Account</label>
-                          <input type="text" class="form-control" name="phone" value="<?php echo $acct_no; ?>" readonly>
+                          <?php
+                           $pen = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' && client_id = '$client_id' && int_id = '$sessint_id'");
+                           $np = mysqli_fetch_array($pen);
+                          $product_type = $np["product_id"];
+                          $get_product = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$product_type' AND int_id = '$sessint_id'");
+                          $mer = mysqli_fetch_array($get_product);
+                           $p_n = $mer["name"];
+                          ?>
+                          <input type="text" class="form-control" name="phone" value="<?php echo $acct_no." ".$p_n; ?>" readonly>
                         </div>
                       </div>
                     </div>

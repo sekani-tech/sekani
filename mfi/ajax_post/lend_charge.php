@@ -34,12 +34,13 @@ if (isset($_POST["id"]))
                              $amt2 = '';
                             $forp = $xm["charge_calculation_enum"];
                             $rmt = $_POST["prin"];
+                            $amt_2 = $xm["amount"];
                             if ($forp == 1) {
                                 $amt = number_format($xm["amount"], 2);
                                 $chg2 = $amt." Flat";
                               } else {
-                                $chg2 = $forp. "% of Loan Principal";
-                                $calc = ($forp/100) * $rmt;
+                                $chg2 = $amt_2. "% of Loan Principal";
+                                $calc = ($amt_2 / 100) * $rmt;
                                 $amt2 = number_format($calc, 2);
                               }
                               if ($values == 1) {
