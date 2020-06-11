@@ -381,11 +381,23 @@ if ($per_con == 1 || $per_con == "1") {
                           else if ($row["charge_applies_to_enum"] == 4) {
                             $me = "Current";
                           }
+
+                          if ($row["is_active"] == 1) {
+                            $ead = "Active";
+                          } else {
+                            $ead = "Not Active";
+                          }
                          ?>
                          <th><?php echo $me; ?></th>
-                          <th><?php echo $row["is_active"]; ?></th>
+                          <th><?php echo $ead; ?></th>
                           <?php
                           $xs="";
+                          $me_amt = "";
+                          if ($row["charge_calculation_enum"] == 1) {
+                            $me_amt = '&#8358; '.$row["amount"];
+                          } else {
+                            $me_amt = $row["amount"]."%";
+                          }
                           if ($row["charge_time_enum"] == 1) {
                             $xs = "Disbursement";
                           } else if ($row["charge_time_enum"] == 2) {
@@ -407,7 +419,7 @@ if ($per_con == 1 || $per_con == "1") {
                           } 
                          ?>
                          <th><?php echo $xs; ?></th>
-                          <th><?php echo $row["amount"]; ?></th>
+                          <th><?php echo $me_amt; ?></th>
                           <td><a href="charge_edit.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                           <td><a href="../functions/charge_delete.php?delete=<?php echo $row["id"];?>" class="btn btn-danger">Delete</a></td>
                         </tr>
