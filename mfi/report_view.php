@@ -59,22 +59,22 @@ if(isset($_GET["edit"])) {
     echo header("Location: report_loan_view.php?view17");
   }
   else if($location == "18"){
-
+    echo header("Location: report_loan_view.php?view18");
   }
   else if($location == "19"){
-
+    echo header("Location: report_loan_view.php?view19");
   }
   else if($location == "20"){
-
+    echo header("Location: report_loan_view.php?view20");
   }
   else if($location == "21"){
-
+    echo header("Location: report_loan_view.php?view21");
   }
   else if($location == "22"){
 
   }
   else if($location == "23"){
-
+    echo header("Location: report_loan_view.php?view23");
   }
   else if($location == "24"){
 
