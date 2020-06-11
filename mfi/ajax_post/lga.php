@@ -1,6 +1,6 @@
 <?php
 include("../../functions/connect.php");
-echo 'hello world';
+
 if(isset($_POST['id'])){
     $state = $_POST['id'];
 

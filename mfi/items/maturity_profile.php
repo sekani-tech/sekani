@@ -1,46 +1,5 @@
-          <!-- your content here -->
-          <div class="row">
-            <div class="col-md-12">
-            <div class="card">
-                <div class="card-header card-header-primary">
-                <h4 class="card-title">Institutional Report</h4>
-            </div>
-                <div class="card-body">
-                  <form action="">
-                    <div class="row">
-                      <div class="form-group col-md-3">
-                        <label for="">Start Date</label>
-                        <input type="date" name="" id="" class="form-control">
-                      </div>
-                      <div class="form-group col-md-3">
-                        <label for="">End Date</label>
-                        <input type="date" name="" id="" class="form-control">
-                      </div>
-                      <div class="form-group col-md-3">
-                        <label for="">Branch</label>
-                        <select name="" id="" class="form-control">
-                            <option value="">Head Office</option>
-                        </select>
-                      </div>
-                      <div class="form-group col-md-3">
-                        <label for="">Break Down per Branch</label>
-                        <select name="" id="" class="form-control">
-                            <option value="">No</option>
-                        </select>
-                      </div>
-                      <div class="form-group col-md-3">
-                        <label for="">Hide Zero Balances</label>
-                        <select name="" id="" class="form-control">
-                            <option value="">No</option>
-                        </select>
-                      </div>
-                    </div>
-                    <button type="reset" class="btn btn-danger">Reset</button>
-                    <button type="submit" class="btn btn-primary">Run report</button>
-                  </form>
-                </div>
-              </div>
-              <div class="card">
+              <?php
+              $out = '<div class="card">
                 <div class="card-body">
                   <div style="margin:auto; text-align:center;">
                   <img src="op.jpg" alt="sf">
@@ -292,5 +251,5 @@
                   <a href="" class="btn btn-success btn-left">Print</a>
                  </div>
                </div> 
-            </div>
-          </div>
+';
+echo $out;?>

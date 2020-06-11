@@ -179,7 +179,7 @@ input[type=number] {
               <a href="transact.php" class="dropdown-item">Deposit/Withdrawal</a>
               <a href="#" class="dropdown-item">FTD Booking</a>
               <a href="lend.php" class="dropdown-item">Book Loan</a>
-              <a href="#" class="dropdown-item">CHQ/Pass Book Posting</a>
+              <a href="cheque_book_posting.php" class="dropdown-item">CHQ/Pass Book Posting</a>
               <a href="teller_journal.php" class="dropdown-item">Vault Posting</a>
             </div>
           </li>
@@ -191,7 +191,7 @@ input[type=number] {
             <div class="dropdown-menu">
               <a href="client_approval.php" class="dropdown-item">Account Opening</a>
               <a href="transact_approval.php" class="dropdown-item">Transactions</a>
-              <a href="transact_approval.php" class="dropdown-item">CHQ/Pass Book</a>
+              <a href="#" class="dropdown-item">CHQ/Pass Book</a>
               <a href="disbursement_approval.php" class="dropdown-item">Loan disbursement</a>
             </div>
           </li>
