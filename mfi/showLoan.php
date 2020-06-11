@@ -3,6 +3,19 @@
 $page_title = "Approve Loan";
 $destination = "disbursement_approval.php";
     include("header.php");
+
+    // call
+require_once "../bat/phpmailer/PHPMailerAutoload.php";
+// qwertyuiop
+// CHECK HTN APPROVAL
+$int_name = $_SESSION["int_name"];
+$int_email = $_SESSION["int_email"];
+$int_web = $_SESSION["int_web"];
+$int_phone = $_SESSION["int_phone"];
+$int_logo = $_SESSION["int_logo"];
+$int_address = $_SESSION["int_address"];
+$sessint_id = $_SESSION["int_id"];
+$m_id = $_SESSION["user_id"];
 ?>
 <?php
 if (isset($_GET['approve']) && $_GET['approve'] !== '') {
@@ -29,6 +42,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $acct_no = $x["account_no"];
       $dis_cache_status = $x["status"];
       // GET THE GL _ MONEY WILL COME OUT FROM
+      
       $exp_mature_date = $x["expected_maturedon_date"];
       $pay_id = $x["fund_id"];
       $loan_purpose = $x["loan_purpose"];
@@ -61,6 +75,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $get_off = mysqli_query($connection, "SELECT * FROM staff WHERE id = '$account_officer'");
       $cx = mysqli_fetch_assoc($get_off);
       $off_dis = strtoupper($cx["display_name"]);
+      $account_display = substr("$acct_no",7)."*****".substr("$acct_no",8);
       // sector
       $me = "";
       if ($loan_sector == 0) {
@@ -586,6 +601,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
 
             $update_acct_gl = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_gl_run_bal' WHERE int_id = '$sessint_id' && gl_code = '$ggl'");
             if ($update_acct_gl) {
+              // echo "UPDATED FIRST CODE";
               // record gl transaction
               $digits = 6;
               $trans_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
@@ -601,9 +617,11 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
               '0', '0.00', '{$loan_amount}')");
               // you can send EMAIL HERE FOR GL TRANSACTION FROM BANK
               if ($insert_gl_trans) {
+                // echo "INSERTED INTO GL ACCOUNT TRANSACTION";
                 // get client running balance
                 $update_client_bal = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$new_client_running_bal' WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
                 if ($update_client_bal) {
+                  // echo "UPDATED ACCOUNT";
                   $insert_client_trans = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
                   `product_id`, `account_id`, `account_no`, `client_id`, `teller_id`, `transaction_id`,
                   `description`, `transaction_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
@@ -615,17 +633,147 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                   '{$new_client_running_bal}', '{$gends}', '{$app_user}', '0', '0.00', '{$loan_amount}')");
                   // store the transaction
                   if ($insert_client_trans) {
+                    // echo "INSERTED INTO ACCTOUNT TRANSACTION";
+                     
+                      // sends a mail first
                     // HERE YOU CAN HIT THE MAIL
                     $get_client_account1 = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
                     $fct1 = mysqli_fetch_array($get_client_account1);
                     $client_running_bal1 = $fct1["account_balance_derived"];
                     // be useful at the point of charges
+                    $mail = new PHPMailer;
+                    $mail->From = $int_email;
+                    $mail->FromName = $int_name;
+                    $mail->addAddress($client_email);
+                    $mail->addReplyTo($int_email, "No Reply");
+                    $mail->isHTML(true);
+                    $mail->Subject = "Transaction Alert from $int_name";
+                    $mail->Body = "<!DOCTYPE html>
+                    <html>
+                        <head>
+                        <style>
+                        .lon{
+                          height: 100%;
+                            background-color: #eceff3;
+                            font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                        }
+                        .main{
+                            margin-right: auto;
+                            margin-left: auto;
+                            width: 550px;
+                            height: auto;
+                            background-color: white;
+            
+                        }
+                        .header{
+                            margin-right: auto;
+                            margin-left: auto;
+                            width: 550px;
+                            height: auto;
+                            background-color: white;
+                        }
+                        .logo{
+                            margin-right:auto;
+                            margin-left: auto;
+                            width:auto;
+                            height: auto;
+                            background-color: white;
+            
+                        }
+                        .text{
+                            padding: 20px;
+                            font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                        }
+                        table{
+                            padding:30px;
+                            width: 100%;
+                        }
+                        table td{
+                            font-size: 15px;
+                            color:rgb(65, 65, 65);
+                        }
+                    </style>
+                        </head>
+                        <body>
+                          <div class='lon'>
+                            <div class='header'>
+                              <div class='logo'>
+                              <img  style='margin-left: 200px; margin-right: auto; height:150px; width:150px;'class='img' src= '$int_logo'/>
+                          </div>
+                      </div>
+                          <div class='main'>
+                              <div class='text'>
+                                  Dear $cn,
+                                  <h2 style='text-align:center;'>Notification of Credit Alert</h2>
+                                  this is to notify you of an incoming credit to your account $acct_no,
+                                  Kindly confirm with your bank.<br/><br/>
+                                   Please see the details below
+                              </div>
+                              <table>
+                                  <tbody>
+                                      <div>
+                                    <tr>
+                                      <td> <b >Account Number</b></td>
+                                      <td >$account_display</td>
+                                    </tr>
+                                    <tr>
+                                      <td > <b>Account Name</b></td>
+                                      <td >$cn</td>
+                                    </tr>
+                                    <tr>
+                                      <td > <b>Reference</b></td>
+                                      <td >Loan Disbursment</td>
+                                    </tr>
+                                    <tr>
+                                      <td > <b>Reference Id</b></td>
+                                      <td >$transid</td>
+                                    </tr>
+                                    <tr>
+                                      <td> <b>Transaction Amount</b></td>
+                                      <td>$loan_amount</td>
+                                    </tr>
+                                    <tr>
+                                      <td> <b>Transaction Date/Time</b></td>
+                                      <td>$gen_date</td>
+                                    </tr>
+                                    <tr>
+                                      <td> <b>Value Date</b></td>
+                                      <td>$gends</td>
+                                    </tr>
+                                    <tr>
+                                      <td> <b>Account Balance</b></td>
+                                      <td>&#8358; $client_running_bal1</td>
+                                    </tr>
+                                  </tbody>
+                                  <!-- Optional JavaScript -->
+                                  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                                  <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
+                                  <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous'></script>
+                                  <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
+                                </body>
+                              </table>
+                          </div>
+                          </div>
+                        </body>
+                    </html>";
+                    $mail->AltBody = "This is the plain text version of the email content";
+                    // mail system
+                    if(!$mail->send()) 
+                       {
+                           echo "Mailer Error: " . $mail->ErrorInfo;
+                          //  $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
+                          //  echo header ("Location: ../mfi/transact.php?message0=$randms");
+                       } else
+                       {
+                          echo "Email Successful";
+                       }
                     // $new_client_running_bal1 = $client_running_bal1 + $loan_amount;
                      // TAKE OUT THE CHRAGES at the Disbursment point
                     // a query to select charges
                   $charge_query= mysqli_query($connection, "SELECT * FROM `product_loan_charge` WHERE product_loan_id = '$loan_product' && int_id = '$sessint_id'");
                     // THEN TEST FOR THE LOAN
              while ($cxr = mysqli_fetch_array($charge_query)) {
+              //  echo "<P>PRODUCT LOAN CHARGE</P>";
             $final[] = $cxr;
             $c_id = $cxr["charge_id"];
             $pay_charge1 = 0;
@@ -636,6 +784,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
            
             $select_each_charge = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' && int_id = '$sessint_id'");
             while ($ex = mysqli_fetch_array($select_each_charge)) {
+              // echo "<P>CHARGE WHILE LOOP</P>";
               $values = $ex["charge_time_enum"];
               $nameofc = $ex["name"];
               $amt = 0;
@@ -647,11 +796,24 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                 $gl_code1 = $ex["gl_code"];
                 // ACCOUNT
                 $get_client_account1 = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
-                while($fct1 = mysqli_fetch_array($get_client_account1)) {
+                while ($fct1 = mysqli_fetch_array($get_client_account1)) {
+                  // echo "<P>FLAT WHILE LOOP</P>";
                 $client_running_bal1 = $fct1["account_balance_derived"];
+                if (isset( $client_running_bal1)) {
                 // echo "AMOUNT".$amt;
-                $get_gl2 = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$gl_code1' AND int_id = '$sessint_id'");
+                $get_gl2xx = "SELECT * FROM `acc_gl_account` WHERE gl_code = '$gl_code1' AND int_id = '$sessint_id'";
+                // echo "GL NUMBER".$gl_code1;
+              //   if ($connection->error) {
+              //     try {   
+              //         throw new Exception("MySQL error $connection->error <br> Query:<br> $get_gl_2xx", $mysqli->error);   
+              //     } catch(Exception $e ) {
+              //         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+              //         echo nl2br($e->getTraceAsString());
+              //     }
+              // }
+                $get_gl2 = mysqli_query($connection, $get_gl2xx);
                     while ($fool2 = mysqli_fetch_array($get_gl2)) {
+                      // echo "<P>SELECT ACCT GL WHILE LOOP</P>";
                     $running_gl_balance2 = $fool2["organization_running_balance_derived"];
                     // DONE WITH GL MOVE TO ACCOUNT
                 $ultimate_client_running_balance = $client_running_bal1 - $amt;
@@ -692,28 +854,207 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                   // END CLIENT TRANSACTION
                   if ($insert_client_trans1) {
                     // SEND THE EMAIL
+                    $mail = new PHPMailer;
+                    $mail->From = $int_email;
+                    $mail->FromName = $int_name;
+                    $mail->addAddress($client_email);
+                    $mail->addReplyTo($int_email, "No Reply");
+                    $mail->isHTML(true);
+                    $mail->Subject = "Transaction Alert from $int_name";
+                    $mail->Body = "<!DOCTYPE html>
+                    <html>
+                        <head>
+                        <style>
+                        .lon{
+                          height: 100%;
+                            background-color: #eceff3;
+                            font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                        }
+                        .main{
+                            margin-right: auto;
+                            margin-left: auto;
+                            width: 550px;
+                            height: auto;
+                            background-color: white;
+            
+                        }
+                        .header{
+                            margin-right: auto;
+                            margin-left: auto;
+                            width: 550px;
+                            height: auto;
+                            background-color: white;
+                        }
+                        .logo{
+                            margin-right:auto;
+                            margin-left: auto;
+                            width:auto;
+                            height: auto;
+                            background-color: white;
+            
+                        }
+                        .text{
+                            padding: 20px;
+                            font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                        }
+                        table{
+                            padding:30px;
+                            width: 100%;
+                        }
+                        table td{
+                            font-size: 15px;
+                            color:rgb(65, 65, 65);
+                        }
+                    </style>
+                        </head>
+                        <body>
+                          <div class='lon'>
+                            <div class='header'>
+                              <div class='logo'>
+                              <img  style='margin-left: 200px; margin-right: auto; height:150px; width:150px;'class='img' src= '$int_logo'/>
+                          </div>
+                      </div>
+                          <div class='main'>
+                              <div class='text'>
+                                  Dear $cn,
+                                  <h2 style='text-align:center;'>Notification of Debit Alert</h2>
+                                  this is to notify you of an incoming credit to your account $acct_no,
+                                  Kindly confirm with your bank.<br/><br/>
+                                   Please see the details below
+                              </div>
+                              <table>
+                                  <tbody>
+                                      <div>
+                                    <tr>
+                                      <td> <b >Account Number</b></td>
+                                      <td >$account_display</td>
+                                    </tr>
+                                    <tr>
+                                      <td > <b>Account Name</b></td>
+                                      <td >$cn</td>
+                                    </tr>
+                                    <tr>
+                                      <td > <b>Reference</b></td>
+                                      <td >Loan Disbursment Charge - Flat</td>
+                                    </tr>
+                                    <tr>
+                                      <td > <b>Reference Id</b></td>
+                                      <td >$transid</td>
+                                    </tr>
+                                    <tr>
+                                      <td> <b>Transaction Amount</b></td>
+                                      <td>$amt</td>
+                                    </tr>
+                                    <tr>
+                                      <td> <b>Transaction Date/Time</b></td>
+                                      <td>$gen_date</td>
+                                    </tr>
+                                    <tr>
+                                      <td> <b>Value Date</b></td>
+                                      <td>$gends</td>
+                                    </tr>
+                                    <tr>
+                                      <td> <b>Account Balance</b></td>
+                                      <td>&#8358; $ultimate_client_running_balance</td>
+                                    </tr>
+                                  </tbody>
+                                  <!-- Optional JavaScript -->
+                                  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                                  <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
+                                  <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous'></script>
+                                  <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
+                                </body>
+                              </table>
+                          </div>
+                          </div>
+                        </body>
+                    </html>";
+                    $mail->AltBody = "This is the plain text version of the email content";
+                    // mail system
+                    if(!$mail->send()) 
+                       {
+                           echo "Mailer Error: " . $mail->ErrorInfo;
+                          //  $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
+                          //  echo header ("Location: ../mfi/transact.php?message0=$randms");
+                       } else
+                       {
+                          echo "Email Successful";
+                       }
+                      //  ACCOUNT BALANCE
                   } else {
                     // echo the client transaction
-                    echo "Error in Client Transaction";
+                    // echo "Error in Client Transaction";
+                    echo '<script type="text/javascript">
+                    $(document).ready(function(){
+                        swal({
+                            type: "error",
+                            title: "Client Transaction",
+                            text: "Charge Flat GL",
+                            showConfirmButton: false,
+                            timer: 4000
+                        })
+                    });
+                    </script>
+                    ';
                   }
                 } else {
                   // echo error updating client account
-                  echo "Error in Update Client Account";
+                  // echo "Error in Update Client Account";
+                  echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Client Account Error",
+                        text: "Charge Flat GL",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
                 }
               } else {
                 // echo error in charge gl error
-                echo "Error in Charge GL";
+                // echo "Error in Charge GL";
+                echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Charge Flat Gl2",
+                        text: "Error",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
               }
                   } else {
                     // echo error in update of the charge gl
-                    echo "Error in Update Charge GL";
+                    // echo "Error in Update Charge GL";
+                    echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Charge Flat GL",
+                        text: "Error",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
                   }
                 } else {
                   // echo empty
-                  echo "Error in Emoty";
+                  // echo "Error in Emoty";
                 }
               // end while loop
                     }
+
+                  } else {
+                    echo "NO CODE";
+                  }
               }
 
                 // ENDING
@@ -723,10 +1064,11 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                 $calc = ($forx / 100) * $rmt;
                 $charge_name2 = $ex["name"];
                 $gl_code2 = $ex["gl_code"];
-
+                // echo "<P>PERCENTAGE WHILE LOOP</P>";
                 // ACCOUNT
                 $get_client_account2 = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
-                while ($fct2 = mysqli_fetch_array($get_client_account2)){
+                while ($fct2 = mysqli_fetch_array($get_client_account2)) {
+                  // echo "<P>ANOTHER PERC WHILE LOOP</P>";
                 $client_running_bal2 = $fct2["account_balance_derived"];
                 // echo "AMOUNT".$amt;
                 $get_gl3 = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$gl_code2' AND int_id = '$sessint_id'");
@@ -771,25 +1113,212 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                   // END CLIENT TRANSACTION
                   if ($insert_client_trans1) {
                     // SEND THE EMAIL
+                    $mail = new PHPMailer;
+                    $mail->From = $int_email;
+                    $mail->FromName = $int_name;
+                    $mail->addAddress($client_email);
+                    $mail->addReplyTo($int_email, "No Reply");
+                    $mail->isHTML(true);
+                    $mail->Subject = "Transaction Alert from $int_name";
+                    $mail->Body = "<!DOCTYPE html>
+                    <html>
+                        <head>
+                        <style>
+                        .lon{
+                          height: 100%;
+                            background-color: #eceff3;
+                            font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                        }
+                        .main{
+                            margin-right: auto;
+                            margin-left: auto;
+                            width: 550px;
+                            height: auto;
+                            background-color: white;
+            
+                        }
+                        .header{
+                            margin-right: auto;
+                            margin-left: auto;
+                            width: 550px;
+                            height: auto;
+                            background-color: white;
+                        }
+                        .logo{
+                            margin-right:auto;
+                            margin-left: auto;
+                            width:auto;
+                            height: auto;
+                            background-color: white;
+            
+                        }
+                        .text{
+                            padding: 20px;
+                            font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                        }
+                        table{
+                            padding:30px;
+                            width: 100%;
+                        }
+                        table td{
+                            font-size: 15px;
+                            color:rgb(65, 65, 65);
+                        }
+                    </style>
+                        </head>
+                        <body>
+                          <div class='lon'>
+                            <div class='header'>
+                              <div class='logo'>
+                              <img  style='margin-left: 200px; margin-right: auto; height:150px; width:150px;'class='img' src= '$int_logo'/>
+                          </div>
+                      </div>
+                          <div class='main'>
+                              <div class='text'>
+                                  Dear $cn,
+                                  <h2 style='text-align:center;'>Notification of Debit Alert</h2>
+                                  this is to notify you of an incoming credit to your account $acct_no,
+                                  Kindly confirm with your bank.<br/><br/>
+                                   Please see the details below
+                              </div>
+                              <table>
+                                  <tbody>
+                                      <div>
+                                    <tr>
+                                      <td> <b >Account Number</b></td>
+                                      <td >$account_display</td>
+                                    </tr>
+                                    <tr>
+                                      <td > <b>Account Name</b></td>
+                                      <td >$cn</td>
+                                    </tr>
+                                    <tr>
+                                      <td > <b>Reference</b></td>
+                                      <td >Loan Disbursment Charge - Flat</td>
+                                    </tr>
+                                    <tr>
+                                      <td > <b>Reference Id</b></td>
+                                      <td >$transid</td>
+                                    </tr>
+                                    <tr>
+                                      <td> <b>Transaction Amount</b></td>
+                                      <td>$calc</td>
+                                    </tr>
+                                    <tr>
+                                      <td> <b>Transaction Date/Time</b></td>
+                                      <td>$gen_date</td>
+                                    </tr>
+                                    <tr>
+                                      <td> <b>Value Date</b></td>
+                                      <td>$gends</td>
+                                    </tr>
+                                    <tr>
+                                      <td> <b>Account Balance</b></td>
+                                      <td>&#8358; $ultimate_client_running_balance1</td>
+                                    </tr>
+                                  </tbody>
+                                  <!-- Optional JavaScript -->
+                                  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                                  <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
+                                  <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous'></script>
+                                  <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
+                                </body>
+                              </table>
+                          </div>
+                          </div>
+                        </body>
+                    </html>";
+                    $mail->AltBody = "This is the plain text version of the email content";
+                    // mail system
+                    if(!$mail->send()) 
+                       {
+                           echo "Mailer Error: " . $mail->ErrorInfo;
+                          //  $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
+                          //  echo header ("Location: ../mfi/transact.php?message0=$randms");
+                       } else
+                       {
+                          echo "Email Successful";
+                       }
+                    // MAILING SYSTEM
                   } else {
                     // echo the client transaction
-                    echo "Error in Client Transaction";
+                    // echo "Error in Client Transaction";
+                    echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Client Transaction",
+                        text: "Charge Percentage GL",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
                   }
                 } else {
                   // echo error updating client account
-                  echo "Error in Update Client Account";
+                  // echo "Error in Update Client Account";
+                  echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Client Account Error",
+                        text: "Charge Percentage GL",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
                 }
               } else {
                 // echo error in charge gl error
-                echo "Error in Charge GL";
+                // echo "Error in Charge GL";
+                echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Charge Percentage Gl2",
+                        text: "Error",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
               }
                   } else {
                     // echo error in update of the charge gl
-                    echo "Error in Update Charge GL";
+                    // echo "Error in Update Charge GL";
+                    echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Charge Percentage GL",
+                        text: "Error",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
                   }
                 } else {
                   // echo empty
-                  echo "Empt";
+                  // echo "Empt";
+                //   echo '<script type="text/javascript">
+                // $(document).ready(function(){
+                //     swal({
+                //         type: "error",
+                //         title: "",
+                //         text: "",
+                //         showConfirmButton: false,
+                //         timer: 4000
+                //     })
+                // });
+                // </script>
+                // ';
                 }
 
 
@@ -806,8 +1335,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
           }
           // YOU NEED TO TEST THE QUERY HERE THEN TAKE OFF
           // DISBUSE TO LOAN
-          $mmc = 1;
-          if ($mmc == 1) {
+          if ($insert_client_trans1) {
             // loan inputting
             $l_d_m = "INSERT INTO `loan` (`int_id`, `account_no`, `client_id`, `product_id`,
             `fund_id`, `col_id`, `col_name`, `col_description`, `loan_officer`, `loan_purpose`, `currency_code`,
@@ -854,18 +1382,67 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
             if($loan_disb) {
               $update_loan_cache = mysqli_query($connection, "UPDATE loan_disbursement_cache SET status = 'Approved' WHERE id = '$appod' AND int_id = '$sessint_id'");
               if ($update_loan_cache) {
-                echo "Done";
+                echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "success",
+                        title: "Loan Disbursed Successfully",
+                        text: "Approved",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
+                $URL="disbursement_approval.php";
+            echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
               } else {
                 // error in loan cache
-                echo "Error in Update Loan gl";
+                // echo "Error in Update Loan gl";
+                echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Loan Disbursement Error",
+                        text: "Error",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
               }
             } else {
               // error  in loan
-              echo "Error in Loan sir";
+              // echo "Error in Loan sir";
+              echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Loan Error",
+                        text: "DB",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
             }
           } else {
             // echo nothing
-            echo "God full of wisdom";
+            // echo "God full of wisdom";
+            echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Loan Error",
+                        text: "DB",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
           }
           if ($connection->error) {
                 try {   
@@ -879,50 +1456,180 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
           // WE TALK ABOUT LOAN STAUS
                   } else {
                     // error in client transaction
-                    echo "Error in Client Transaction";
+                    // echo "Error in Client Transaction";
+                    echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Client Transaction",
+                        text: "Error",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
                   }
                 } else {
                   // echo error in client balance update
-                  echo "Error in Client Bal Update";
+                  // echo "Error in Client Bal Update";
+                  echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Client Balance",
+                        text: "Error",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
                 }
               } else {
                 // echo error in gl account transaction
-                echo "Error Gl trans";
+                // echo "Error Gl trans";
+                echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Gl Transaction Error",
+                        text: "Error",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
               }
             } else {
               // error in update gl ACCOUNT
-              echo "Error in Update GL";
+              // echo "Error in Update GL";
+              echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Gl Update Error",
+                        text: "Error",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
             }
            
           } else {
             // echo not up to
-            echo "Noot Up to";
+            // echo "Noot Up to";
+            echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "No Charge..",
+                        text: "Charge Error",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
           }
         }  else {
           // echo insufficient fund from vualt
-          echo "insufficient fund from the payment method";
+          // echo "insufficient fund from the payment method";
+          echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Insufficient Fund from the Gl",
+                        text: "This Gl Lack Fund",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
         }
       } else if ($but_type == "reject") {
         // reject the loan
         // store the rejected loan status in cache - to rejecteds
-        echo "you rejected the loan";
+        // echo "you rejected the loan";
+        echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "success",
+                        title: "Rejection Successful",
+                        text: "Call Tech Support if you dont want to reject",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
       } else {
         // push out an error to the person approving
-        echo "error on approval";
+        // echo "error on approval";
+        echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Rejection Error",
+                        text: "Error",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
       }
     } else if ($dis_cache_status == "Rejected") {
       // echo already rejected
-      $update_loan_cache = mysqli_query($connection, "UPDATE loan_disbursement_cache SET status = 'Approved' WHERE id = '$appod' AND int_id = '$sessint_id'");
+      $update_loan_cache = mysqli_query($connection, "UPDATE loan_disbursement_cache SET status = 'Rejected' WHERE id = '$appod' AND int_id = '$sessint_id'");
               if ($update_loan_cache) {
-                echo "Done";
+                // echo "Done";
+                echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "success",
+                        title: "Loan Rejected Before",
+                        text: "Kindly Call For Support if you dont want it rejected",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
               } else {
                 // error in loan cache
-                echo "Error in Update Loan gl";
+                echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Rejection Error",
+                        text: "Kindly Call For Support if You didnt want to reject",
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                });
+                </script>
+                ';
               }
-      echo "rejected already";
     } else {
       // already approved
-      echo "Already Approved";
+      // echo "Already Approved";
+      echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "Loan Has Been Approved",
+            text: "This Loan has been Approved Before",
+            showConfirmButton: false,
+            timer: 5000
+        })
+    });
+    </script>
+    ';
     }
 }
 ?>

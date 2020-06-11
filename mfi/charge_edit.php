@@ -22,7 +22,8 @@ if(isset($_GET['edit'])){
         $penalty = $a['is_penalty'];
         $active = $a['is_active'];
         $override = $a['allow_override'];
-        $income_gl = $a["fee_on_day"];
+        $income_gl = $a["gl_code"];
+        // $fee_m = $a["fee"];
     }
     $select_gl = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$income_gl' && int_id = '$sessint_id'");
     $xmx = mysqli_fetch_array($select_gl);
@@ -120,7 +121,8 @@ if(isset($_GET['edit'])){
          $charge_a = $_POST["amount"];
          $charge_o = $_POST["charge_option"];
          $charge_pay = $_POST["charge_payment"];
-         $income_account = $_POST["fee"];
+         $income_account = $_POST["gl_code"];
+        //  $fee_new = $a["fee"];
          if(isset($_POST['penalty'])){
             $pena = 1;
          }
@@ -140,8 +142,8 @@ if(isset($_GET['edit'])){
             $allow = 0;
          }
          $updat = "UPDATE charge SET name ='$charge_n', charge_applies_to_enum ='$productt', charge_payment_mode_enum ='$charge_pay',
-         charge_time_enum ='$charge_t', amount ='$charge_a', charge_calculation_enum ='$charge_o', fee_on_day ='$income_account',
-         is_active = '$act', is_penalty = '$pena', allow_override = ' $allow' WHERE id = '$id' && int_id = '$sessint_id'";
+         charge_time_enum ='$charge_t', amount ='$charge_a', charge_calculation_enum ='$charge_o',
+         is_active = '$act', is_penalty = '$pena', allow_override = ' $allow', gl_code = '$income_account' WHERE id = '$id' && int_id = '$sessint_id'";
          $updrgoe = mysqli_query($connection, $updat);
          if ($updrgoe) {
             echo '<script type="text/javascript">
@@ -156,7 +158,7 @@ if(isset($_GET['edit'])){
             });
             </script>
             ';
-            $URL="charge_edit.php?edit=$id";
+            $URL="products_config.php";
             echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
          } else {
             echo '<script type="text/javascript">
@@ -279,7 +281,7 @@ if(isset($_GET['edit'])){
                               }
                               ?>
                           <label for="bmd-label-floating">Income GL</label>
-                          <select name="fee" id="" class="form-control">
+                          <select name="gl_code" id="" class="form-control">
                           <option value="<?php echo $income_gl;?>"><?php echo $xmx["name"]; ?></option>
                               <?php echo fill_in($connection) ?>
                           </select>

@@ -64,15 +64,23 @@ $tff = $loan_term - 1;
 
 $submitted_on = date("Y-m-d");
 $currency = "NGN";
+$matured_loan_date = $_POST["matured_loan_date"];
 $cd = 2;
 // stopped at principal amount
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 // first test client loan status then test the running balance in the institution acct.
-$verify = mysqli_query($connection, "SELECT * FROM `int_vault` WHERE int_id = '$sessint_id'");
-    if (count([$verify]) == 1) {
-        $x = mysqli_fetch_array($verify);
-        $int_acct_bal = $x['balance'];
+// $verify = mysqli_query($connection, "SELECT * FROM `int_vault` WHERE int_id = '$sessint_id'");
+$branch_id = $_SESSION["branch_id"];
+$get_payment_gl = mysqli_query($connection, "SELECT * FROM payment_type WHERE id = '$fund_id' AND int_id = '$sessint_id' AND branch_id = '$branch_id'");
+$fool = mysqli_fetch_array($get_payment_gl);
+$ggl = $fool["gl_code"];
+// Get the GL and the balance
+$get_gl = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$ggl' AND int_id = '$sessint_id'");
+// $fool1 = mysqli_fetch_array($get_gl);
+    if (count([$get_gl]) == 1) {
+        $x = mysqli_fetch_array($get_gl);
+        $int_acct_bal = $x["organization_running_balance_derived"];
         $calprinamt = $principal_amount;
         $acctprin = $int_acct_bal - $calprinamt;
         $branchhl = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id'");
@@ -92,7 +100,7 @@ $verify = mysqli_query($connection, "SELECT * FROM `int_vault` WHERE int_id = '$
                     term_frequency, repay_every, number_of_repayments, submittedon_date,
                     submittedon_userid, approvedon_date, approvedon_userid,
                     expected_disbursedon_date, expected_firstrepaymenton_date, disbursement_date,
-                    disbursedon_userid, repay_principal_every, repay_interest_every, status, loan_sub_status_id) 
+                    disbursedon_userid, repay_principal_every, repay_interest_every, status, loan_sub_status_id, expected_maturedon_date) 
                     VALUES ('{$sessint_id}', '{$acct_no}', '{$client_id}',
                     '{$cdn}', '{$product_id}', '{$fund_id}', '{$col_id}', '{$col_name}', '{$col_description}',
                     '{$loan_officer}', '{$loan_purpose}', '{$currency}', 
@@ -101,7 +109,7 @@ $verify = mysqli_query($connection, "SELECT * FROM `int_vault` WHERE int_id = '$
                     '{$tff}', '{$repay_every}',
                     '{$loan_no_rep}', '{$submitted_on}', '{$userid}', '{$submitted_on}', '{$userid}',
                     '{$disbursement_date}', '{$repay_st}', '{$disbursement_date}',
-                    '{$userid}', '{$loan_term}', '{$loan_term}', '{$stt}', '{$loan_sector}')";
+                    '{$userid}', '{$loan_term}', '{$loan_term}', '{$stt}', '{$loan_sector}', '{$matured_loan_date}')";
             $res = mysqli_query($connection, $query);
             if ($res) {
                 $colkt = mysqli_query($connection, "SELECT * FROM loan_disbursement_cache where client_id = '$client_id'");
