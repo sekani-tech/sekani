@@ -69,7 +69,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $date = date('d, D, F, Y', strtotime($disburse_date));
       $date2 = date('d, D, F, Y', strtotime($repayment_date));
       // calculation
-      $tot_int = ($interest/100) * $prin_amt;
+      $tot_int = ((($interest/100) * $prin_amt) * $loan_term);
       $prin_due = $tot_int + $prin_amt;
       // get off
       $get_off = mysqli_query($connection, "SELECT * FROM staff WHERE id = '$account_officer'");
@@ -1080,8 +1080,6 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                 $ultimate_gl_bal1 = $running_gl_balance3 + $calc;
                 // WE WILL HAVE TO UPDATE THE GL AND CLIENT ACCOUNT WITH THE TRANSACTION
 
-
-
                 // SENDING FOR PERCENTAGE
                 if ($calc > 0) {
                   $update_acct_gl1 = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$ultimate_gl_bal1' WHERE int_id = '$sessint_id' && gl_code = '$gl_code2'");
@@ -1730,7 +1728,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                       </div>
                       <div class="col-md-2">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Principal Due (0.00)</label>
+                          <label class="bmd-label-floating">Total Repayment Due (0.00)</label>
                           <input type="text" class="form-control" name="location" value="<?php echo number_format($prin_due, 2); ?>" readonly>
                         </div>
                       </div>

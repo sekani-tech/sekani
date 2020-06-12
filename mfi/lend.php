@@ -224,14 +224,14 @@ $destination = "loans.php";
                     <div class="tab"><h3> Charges:</h3>
                     <div id="lend_charge">
                     </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                         <label class = "bmd-label-floating" for="charge" class="form-align mr-3">Charges</label>
                           <select class="form-control" name="charge"> 
                             <option>select charge to add</option>                                               
                           <?php echo fill_charges($connection); ?>
                           </select>
                           <button type="button" class="btn btn-primary" name="button" onclick="displayCharge()"> <i class="fa fa-plus"></i> Add To Product </button>
-                      </div>
+                      </div> -->
                     </div>
                     <!-- Third Tab Ends -->
                     <!-- Fourth Tab Begins -->
