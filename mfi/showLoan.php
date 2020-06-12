@@ -1728,7 +1728,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
                       </div>
                       <div class="col-md-2">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Principal Due (0.00)</label>
+                          <label class="bmd-label-floating">Total Repayment Due (0.00)</label>
                           <input type="text" class="form-control" name="location" value="<?php echo number_format($prin_due, 2); ?>" readonly>
                         </div>
                       </div>
