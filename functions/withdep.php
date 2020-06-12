@@ -78,7 +78,7 @@ $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_i
 $dbclient = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' && int_id = '$sessint_id'");
 if (count([$dbclient]) == 1) {
     $a = mysqli_fetch_array($dbclient);
-    $branch_id = $a['branch_id'];
+    // $branch_id = $a['branch_id'];
     $clientt_name = $a['firstname'].' '.$a['middlename'].' '.$a['lastname'];
     $clientt_name = strtoupper($clientt_name);
     $client_email = $a["email_address"];
@@ -103,6 +103,7 @@ $pay_query = mysqli_query($connection, $pay_type);
 $r = mysqli_fetch_array($pay_query);
 $isbank = $r['is_bank'];
 $glcode = $r['gl_code'];
+
 
 // we will call the GL
 $gl_man = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$glcode' && int_id = '$sessint_id'");
@@ -149,15 +150,15 @@ if ($is_del == "0" && $is_del != NULL) {
         '{$gen_date}', '{$appuser_id}', {$amt})";
         $res3 = mysqli_query($connection, $iat);
         if ($res3) {
-          if($isbank == 1){
+          if($isbank == 1) {
               // update the GL
-              $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal2' WHERE int_id = '$sessint_id' && gl_code = '$glcode'";
+              $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$glcode'";
               $dbgl = mysqli_query($connection, $upglacct);
               if($dbgl){
                 $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
                 transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
-                  created_date, debit) VALUES ('{$sessint_id}', '{$branch_id}', '{$glcode}', '{$transid}', '{$description}', '{$trans_type}', '{$staff_id}',
-                   '{$gen_date}', '{$amt}', '{$new_gl_bal2}', '{$amt}', '{$gen_date}', '{$amt}')";
+                  created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$glcode}', '{$transid}', '{$description}', '{$trans_type}', '{$staff_id}',
+                   '{$gen_date}', '{$amt}', '{$new_gl_bal}', '{$amt}', '{$gen_date}', '{$amt}')";
                    $res4 = mysqli_query($connection, $gl_acc);
               }
           }
@@ -354,8 +355,8 @@ if ($is_del == "0" && $is_del != NULL) {
            if ($test == "deposit") {
                $dd = "Deposit";
                $ogs = "Pending";
-               $trancache = "INSERT INTO transact_cache (int_id, branch_id, transact_id, description, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, product_type, status, date)
-               VALUES ('{$sessint_id}', '{$branch_id}', '{$transid}', '{$description}', '{$acct_no}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt}', '{$type}', '{$dd}', '{$product_id}', '{$ogs}', '{$gen_date}')";
+               $trancache = "INSERT INTO transact_cache (int_id, branch_id, transact_id, description, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, product_type, status, date, is_bank, bank_gl_code)
+               VALUES ('{$sessint_id}', '{$branch_id}', '{$transid}', '{$description}', '{$acct_no}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt}', '{$type}', '{$dd}', '{$product_id}', '{$ogs}', '{$gen_date}', '{$isbank}', '{$glcode}')";
                $go = mysqli_query($connection, $trancache);
                if ($go) {
                 $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
@@ -373,8 +374,14 @@ if ($is_del == "0" && $is_del != NULL) {
         }
    }
   }
-    else if ($test == "withdraw" && $int_acct_bal >= $amt2) {
+    else if ($test == "withdraw") {
         // check if the POSTING-LIMIT
+        if ($isbank == 1) {
+          $int_acct_bal = $l_acct_bal;
+        } else if ($isbank == 0) {
+          $int_acct_bal = $int_acct_bal;
+        }
+        if ($int_acct_bal >= $amt2) {
         // check if client has cash
         if ($client_acct_bal >=  $amt2) {
           if ($amt2 <= $post_limit) {
@@ -397,13 +404,13 @@ if ($is_del == "0" && $is_del != NULL) {
             if($res3){
               if($isbank == 1){
                   // update the GL
-                  $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$glcode'";
+                  $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal2' WHERE int_id = '$sessint_id' && gl_code = '$glcode'";
                   $dbgl = mysqli_query($connection, $upglacct);
                   if($dbgl){
                     $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
                     transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
-                      created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$glcode}', '{$transid}', '{$description}', '{$trans_type}', '{$staff_id}',
-                       '{$gen_date}', '{$amt}', '{$new_gl_bal}', '{$amt}', '{$gen_date}', '{$amt}')";
+                      created_date, debit) VALUES ('{$sessint_id}', '{$branch_id}', '{$glcode}', '{$transid}', '{$description}', '{$trans_type}', '{$staff_id}',
+                       '{$gen_date}', '{$amt}', '{$new_gl_bal2}', '{$amt}', '{$gen_date}', '{$amt}')";
                        $res4 = mysqli_query($connection, $gl_acc);
                   }
               }
@@ -593,8 +600,8 @@ if ($is_del == "0" && $is_del != NULL) {
                        $wd = "Withdrawal";
                        $gms = "Pending";
                       //  STOPPED HERE
-                    $trancache = "INSERT INTO transact_cache (int_id, branch_id, transact_id, description, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, product_type, status, date) VALUES
-                    ('{$sessint_id}', '{$branch_id}', '{$transid}','{$description}', '{$acct_no2}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt2}', '{$type2}', '{$wd}', '{$sproduct_id}', '{$gms}', '$gen_date') ";
+                    $trancache = "INSERT INTO transact_cache (int_id, branch_id, transact_id, description, account_no, client_id, client_name, staff_id, account_off_name, amount, pay_type, transact_type, product_type, status, date, is_bank, bank_gl_code) VALUES
+                    ('{$sessint_id}', '{$branch_id}', '{$transid}','{$description}', '{$acct_no2}', '{$client_id}', '{$clientt_name}', '{$staff_id}', '{$staff_name}', '{$amt2}', '{$type2}', '{$wd}', '{$sproduct_id}', '{$gms}', '{$gen_date}', '{$isbank}', '{$glcode}')";
                     $go = mysqli_query($connection, $trancache);
                     if ($go) {
                       $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
@@ -624,6 +631,10 @@ if ($is_del == "0" && $is_del != NULL) {
           $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";
           header ("Location: ../mfi/transact.php?messagex5=$randms");
         }
+      } else {
+        $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";
+        header ("Location: ../mfi/transact.php?message5=$randms");
+      }
     } else {
         $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";
         header ("Location: ../mfi/transact.php?message5=$randms");
