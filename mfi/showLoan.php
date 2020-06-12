@@ -69,7 +69,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $date = date('d, D, F, Y', strtotime($disburse_date));
       $date2 = date('d, D, F, Y', strtotime($repayment_date));
       // calculation
-      $tot_int = ($interest/100) * $prin_amt;
+      $tot_int = ((($interest/100) * $prin_amt) * $loan_term);
       $prin_due = $tot_int + $prin_amt;
       // get off
       $get_off = mysqli_query($connection, "SELECT * FROM staff WHERE id = '$account_officer'");
