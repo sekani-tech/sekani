@@ -62,12 +62,12 @@ $destination = "report_institution.php";
                             <?php echo fill_branch($connection); ?>
                         </select>
                       </div>
-                      <div class="form-group col-md-3">
+                      <!-- <div class="form-group col-md-3">
                         <label for="">Account Officer</label>
                         <select name="" id="outstaff" class="form-control">
                             <option value="">select option</option>
                         </select>
-                      </div>
+                      </div> -->
                     </div>
                     <span id="pddf" type="sumbit" class="btn btn-primary pull-right">PDF print</span>
                     <button type="reset" class="btn btn-danger">Reset</button>

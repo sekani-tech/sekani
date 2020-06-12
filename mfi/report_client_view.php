@@ -25,22 +25,24 @@ $destination = "report_client.php";
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
                   $std = date("Y-m-d");
-                  $end = date('Y-m-d', strtotime('-30 days'));
-
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$end' AND '$std'";
+                  $thisyear = date("Y");
+                  $thismonth = date("m");
+                  // $end = date('Y-m-d', strtotime('-30 days'));
+                  $curren = $thisyear."-".$thismonth."-01";
+                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std'";
                         $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
                      $date = date("F");
-                   }?> registered clients in the past month  || <a style = "color: white;" href="manage_client.php">Create New client</a></p>
+                   }?> registered clients this month  || <a style = "color: white;" href="manage_client.php">Create New client</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$end' AND '$std'";
+                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>

@@ -3,33 +3,58 @@ include('../../../functions/connect.php');
 session_start();
 
 $sessint_id = $_SESSION['int_id'];
-if(isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]) && isset($_POST["staff"])) {
+if(isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"])) {
   $start = $_POST["start"];
   $end = $_POST["end"];
   $branch = $_POST["branch"];
-  $staff = $_POST["staff"];
+  // $staff = $_POST["staff"];
 //   $queryi = "SELECT staff.id FROM staff JOIN account ON staff.id = account.field_officer_id WHERE staff.int_id = '$sessint_id' AND staff.id = '$staff'";
   $queryi = "SELECT * FROM staff WHERE ((int_id = '$sessint_id') AND (org_role ='3'))";
   $queryxexec = mysqli_query($connection, $queryi);
   $z = mysqli_fetch_array($queryxexec);
-
   $rom = '
   <thead class=" text-primary">
+  <tr>
     <th>
-        Staff Name
+        Staff No
       </th>
       <th>
+        Accounts Officer
+      </th>
+      <th colspan="2">
         Current Accounts
       </th>
-      <th>
+      <th colspan="2">
         Savings Accounts
       </th>
+      <th colspan="2">
+        Loans Disbursement
+      </th>
+      </tr>
+      <tr>
       <th>
-        Fixed Deposit
       </th>
       <th>
-        Loans Accounts
       </th>
+      <th>
+        No of Client
+      </th>
+      <th>
+        Value of Accounts
+      </th>
+      <th>
+        No of Client
+      </th>
+      <th>
+        Value of Accounts
+      </th>
+      <th>
+        No of Client
+      </th>
+      <th>
+        Value of Accounts
+      </th>
+      </tr>
     </thead>
 ';
 echo $rom;
@@ -72,17 +97,14 @@ $staff =  $z['id'];
 
   $out = '
     <tr>
+    <th>'.$staff.'</th>
     <th>'.$staff_name.'</th>
     <th>'.$current.'</th>
-    <th>'.$savings.'</th>
-    <th></th>
-    <th>'.$loans.'</th>
-    </tr>
-    <tr>
-    <th></th>
     <th>'.number_format($currentamount).'</th>
+    <th>'.$savings.'</th>
     <th>'.number_format($savingsamount).'</th>
-    <th></th>
+    
+    <th>'.$loans.'</th>
     <th>'.number_format($loansamount).'</th>
     </tr>
     ';
