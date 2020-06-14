@@ -15,7 +15,7 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
     $queryxexec = mysqli_query($connection, $queryi);
     $z = mysqli_fetch_array($queryxexec);
     while($z = mysqli_fetch_array($queryxexec, MYSQLI_ASSOC)){
-      $staff =  $z['id'];
+      $staff = $z['id'];
       
         $query = "SELECT * FROM staff WHERE id = '$staff'";
         $queryexec = mysqli_query($connection, $query);

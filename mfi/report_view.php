@@ -8,10 +8,10 @@ if(isset($_GET["edit"])) {
   $location = $_GET["edit"];
   echo 'Page not yet functional, Please go back to previous page ';
   if($location == "1"){
-    
+    echo header("Location: report_client_view.php?view1");
   }
   else if($location == "2"){
-
+    
   }
   else if($location == 3){
     echo header("Location: client.php");
@@ -35,7 +35,7 @@ if(isset($_GET["edit"])) {
 
   }
   else if($location == "10"){
-
+    echo header("Location: report_savings_view.php?view10");
   }
   else if($location == "11"){
 

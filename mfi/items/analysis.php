@@ -2,15 +2,14 @@
  include("../../functions/connect.php");
  session_start();
  $out= '';
- 
+ $logo = $_SESSION['int_logo'];
+$name = $_SESSION['int_name'];
   $out ='
     <div class="card-body">
       <div style="margin:auto; text-align:center;">
-      <img src="op.jpg" alt="sf">
-      <h2>Institution name</h2>
-      <p>Address</p>
+      <img style = "height: 200px; width: 200px;" src="'.$logo.' alt="sf">
+      <h2>'.$name.'</h2>
       <h4>Sectoral Analysis of Loans and Advances</h4>
-      <h4>Branch</h4>
       <P>From: 24/05/2020  ||  To: 24/05/2020</P>
       </div>
     </div>

@@ -1,80 +1,16 @@
-<div class="content">
-        <div class="container-fluid">
-                    <!-- your content here -->
-                    <div class="row">
-            <div class="col-md-12">
-            <div class="card">
-                <div class="card-header card-header-primary">
-                <h4 class="card-title">Loan Maturity Report</h4>
-            </div>
-                <div class="card-body">
-                  <form action="">
-                    <div class="row">
-                      <div class="form-group col-md-3">
-                        <label for="">Start Date</label>
-                        <input type="date" name="" id="" class="form-control">
-                      </div>
-                      <div class="form-group col-md-3">
-                        <label for="">End Date</label>
-                        <input type="date" name="" id="" class="form-control">
-                      </div>
-                      <div class="form-group col-md-3">
-                        <label for="">Branch</label>
-                        <select name="" id="" class="form-control">
-                            <option value="">Head Office</option>
-                        </select>
-                      </div>
-                      <div class="form-group col-md-3">
-                        <label for="">Break Down per Branch</label>
-                        <select name="" id="" class="form-control">
-                            <option value="">No</option>
-                        </select>
-                      </div>
-                      <div class="form-group col-md-3">
-                        <label for="">Hide Zero Balances</label>
-                        <select name="" id="" class="form-control">
-                            <option value="">No</option>
-                        </select>
-                      </div>
-                    </div>
-                    <button type="reset" class="btn btn-danger">Reset</button>
-                    <span id="runmature" type="submit" class="btn btn-primary">Run report</span>
-                  </form>
-                </div>
-              </div>
-              <script>
-                    $(document).ready(function () {
-                      $('#runmature').on("click", function () {
-                        var start = $('#start').val();
-                        var end = $('#end').val();
-                        var branch = $('#input').val();
-                        var teller = $('#till').val();
-                        var int_id = $('#int_id').val();
-                        $.ajax({
-                          url: "items/maturity_profile.php",
-                          method: "POST",
-                          data:{start:start, end:end, branch:branch, teller:teller, int_id:int_id},
-                          success: function (data) {
-                            $('#shmature').html(data);
-                          }
-                        })
-                      });
-                    });
-                  </script>
-              <div id="shmature" class="card">
 
-              </div>
-            </div>
-          </div>
+<?php
+include("../../functions/connect.php");
+session_start();
+$out= '';
+$logo = $_SESSION['int_logo'];
+$name = $_SESSION['int_name'];
 
-        </div>
- </div>
-              <?php
               $out = '<div class="card">
                 <div class="card-body">
                   <div style="margin:auto; text-align:center;">
-                  <img src="op.jpg" alt="sf">
-                  <h2>Institution name</h2>
+                  <img style = "height: 200px; width: 200px;" src="'.$logo.'" alt="sf">
+                  <h2>'.$name.'</h2>
                   <p>Address</p>
                   <h4>Schedule of Deposit Structure and Maturity Profile</h4>
                   <h4>Branch</h4>

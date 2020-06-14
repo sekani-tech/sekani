@@ -421,13 +421,13 @@ $destination = "report_loan.php";
                         $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
-                     echo $inr;
+                    //  echo $inr;
                      $date = date("F");
                    }?> Matured Loans || <a style = "color: white;" href="lend.php">Create New Loan</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table id="tabledatc" class="table" cellspacing="0" style="width:100%">
+                    <table id="tabledatv" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
@@ -456,6 +456,8 @@ $destination = "report_loan.php";
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
+                          <?php  $std = date("Y-m-d");
+                          if($std > $row["repayment_date"] ){?>
                         <?php $row["id"]; ?>
                         <?php 
                             $name = $row['client_id'];
@@ -469,7 +471,11 @@ $destination = "report_loan.php";
                           <th><?php echo $row["disbursement_date"]; ?></th>
                           <th><?php echo $row["repayment_date"];?></th>
                           <th><?php echo number_format($row["total_outstanding_derived"], 2);?></th>
-                          
+                          <?php }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
                         </tr>
                         <?php }
                           }
