@@ -159,11 +159,11 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                             $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
                             if (count([$atype]) == 1) {
                                 $yxx = mysqli_fetch_array($atype);
-                                $actype = $yxx['product_id'];
+                                $actype = isset($yxx['product_id']);
                               $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
                            if (count([$spn])) {
                              $d = mysqli_fetch_array($spn);
-                             $savingp = $d["name"];
+                             $savingp = isset($d["name"]);
                            }
                             }
                            

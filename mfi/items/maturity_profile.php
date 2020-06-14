@@ -11,9 +11,7 @@ $name = $_SESSION['int_name'];
                   <div style="margin:auto; text-align:center;">
                   <img style = "height: 200px; width: 200px;" src="'.$logo.'" alt="sf">
                   <h2>'.$name.'</h2>
-                  <p>Address</p>
                   <h4>Schedule of Deposit Structure and Maturity Profile</h4>
-                  <h4>Branch</h4>
                   <P>From: 24/05/2020  ||  To: 24/05/2020</P>
                   </div>
                 </div>
