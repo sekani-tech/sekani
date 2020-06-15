@@ -61,6 +61,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
               <tr>end</tr>
               <tr>Installment</tr>
               <tr>Amount Due</tr>
+              <tr>Interest</tr>
           </thead>
         <?php
         $install = 1;
@@ -71,7 +72,8 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
          <td><?php echo $repayment_start; ?></td>
          <td><?php echo $matured_date; ?></td>
          <td><?php echo $install++; ?></td>
-         <td><?php echo $p; ?></td>
+         <td><?php echo $pincpal_amount / $loan_term; ?></td>
+         <td><?php echo ((($interest_rate / 100) * $pincpal_amount) * $loan_term) / $loan_term ?></td>
          </tbody>
         <!-- CHECK A PHP TEST FOR TABLE -->
         <?php

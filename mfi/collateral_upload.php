@@ -19,7 +19,7 @@
     $query = mysqli_query($connection, $coll);
 
     if($query){
-        $don = "SELECT * FROM collateral WHERE client_id = '$clientid'";
+        $don = "SELECT * FROM collateral WHERE client_id = '$clientid' ORDER BY id ASC LIMIT 1";
         $result = mysqli_query($connection, $don);
         while ($row = mysqli_fetch_array($result)) {
             $display = '
