@@ -284,7 +284,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                 {
                                   $remail = $row['email'];
                                   $roleid = $row['org_role'];
-                                  $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
+                                  $quyd = "SELECT * FROM permission WHERE int_id = '$sessint_id' AND role_id = '$roleid'";
                                   $rlot = mysqli_query($connection, $quyd);
                                   $tolm = mysqli_fetch_array($rlot);
                                   $vaul = isset($tolm['vault_email']);
@@ -475,7 +475,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                             {
                               $remail = $row['email'];
                               $roleid = $row['org_role'];
-                              $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
+                              $quyd = "SELECT * FROM permission WHERE int_id = '$sessint_id' role_id = '$roleid'";
                               $rlot = mysqli_query($connection, $quyd);
                               $tolm = mysqli_fetch_array($rlot);
                               $vaul = $tolm['vault_email'];
@@ -659,7 +659,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                     {
                       $remail = $row['email'];
                       $roleid = $row['org_role'];
-                      $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
+                      $quyd = "SELECT * FROM permission WHERE int_id = '$sessint_id' role_id = '$roleid'";
                       $rlot = mysqli_query($connection, $quyd);
                       $tolm = mysqli_fetch_array($rlot);
                       $vaul = $tolm['vault_email'];

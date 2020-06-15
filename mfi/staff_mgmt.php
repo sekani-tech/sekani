@@ -105,7 +105,7 @@ if ($per_con == 1 || $per_con == "1") {
                     <table id="tabledat2" class="table" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT users.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id WHERE users.int_id ='$sessint_id'";
+                        $query = "SELECT users.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id WHERE staff.int_id ='$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>

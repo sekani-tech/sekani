@@ -7,14 +7,12 @@ $user_id = $_SESSION["user_id"];
 $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' AND user_id = '$user_id'";
 $rult = mysqli_query($connection, $quy);
 
-  $row = mysqli_fetch_array($rult);
-        $roleid = $row['org_role'];
-
-        $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
+  $rccw = mysqli_fetch_array($rult);
+        $roleid = $rccw['org_role'];
+        $quyd = "SELECT * FROM permission WHERE  int_id = '$sessint_id' AND role_id = '$roleid'";
         $rlot = mysqli_query($connection, $quyd);
         $tolm = mysqli_fetch_array($rlot);
-        $report = isset($tolm['staff_cabal']);
-
+        $report = $tolm['staff_cabal'];
 if($report == 1 || $report == '1'){
 if(isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"])) {
   $start = $_POST["start"];
@@ -24,7 +22,7 @@ if(isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"])) {
 //   $queryi = "SELECT staff.id FROM staff JOIN account ON staff.id = account.field_officer_id WHERE staff.int_id = '$sessint_id' AND staff.id = '$staff'";
   $queryi = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
   $queryxexec = mysqli_query($connection, $queryi);
-  $z = mysqli_fetch_array($queryxexec);
+  // $z = mysqli_fetch_array($queryxexec);
   $rom = '
   <thead class=" text-primary">
   <tr>
@@ -72,9 +70,9 @@ if(isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"])) {
 ';
 
 echo $rom;
-$emp_status =  $z['employee_status'];
     while($z = mysqli_fetch_array($queryxexec, MYSQLI_ASSOC)){
-      if($emp_status == 'Employed'){
+      $emp_status =  $z['employee_status'];
+      if($emp_status=='Employed'){
 $staff =  $z['id'];
 
   $query = "SELECT * FROM staff WHERE id = '$staff'";
@@ -126,7 +124,9 @@ $staff =  $z['id'];
     ';
     echo $out;
     }
-    
+    else{
+    echo 'no data';
+    }
 }          
 }
 }
@@ -137,9 +137,8 @@ else{
     $branch = $_POST["branch"];
     // $staff = $_POST["staff"];
   //   $queryi = "SELECT staff.id FROM staff JOIN account ON staff.id = account.field_officer_id WHERE staff.int_id = '$sessint_id' AND staff.id = '$staff'";
-    $queryi = "SELECT * FROM staff WHERE ((int_id = '$sessint_id') AND (org_role ='3') AND user_id = '$user_id')";
-    $queryxexec = mysqli_query($connection, $queryi);
-    $z = mysqli_fetch_array($queryxexec);
+  $quccy = "SELECT * FROM staff WHERE int_id = '$sessint_id' AND user_id = '$user_id'";
+  $queryxexec = mysqli_query($connection, $quccy);
     $rom = '
     <thead class=" text-primary">
     <tr>
@@ -186,7 +185,7 @@ else{
       </thead>
   ';
   echo $rom;
-  $z = mysqli_fetch_array($queryxexec, MYSQLI_ASSOC);
+  $z = mysqli_fetch_array($queryxexec);
   $staff =  $z['id'];
   
     $query = "SELECT * FROM staff WHERE id = '$staff'";

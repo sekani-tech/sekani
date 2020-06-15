@@ -206,7 +206,7 @@ input[type=number] {
               <a class="dropdown-item" href="chart_account.php">Chart Of Accounts</a>
               <!-- <a class="dropdown-item" href="config.php">Configuration</a> -->
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Inventory</a>
+              <a href="inventory.php" class="dropdown-item">Inventory Posting</a>
               <a class="dropdown-item" href="#">Asset Register</a>
               <!-- <a class="dropdown-item" href="#">Group</a> -->
               <a class="dropdown-item" href="#">Reconciliation</a>
