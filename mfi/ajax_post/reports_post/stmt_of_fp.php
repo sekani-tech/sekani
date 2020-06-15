@@ -6,7 +6,16 @@
 $name = $_SESSION['int_name'];
 $sessint_id = $_SESSION['int_id'];
 $current = date('d/m/Y');
-$gl_acc = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id'";
+$start = $_POST['start'];
+    $end = $_POST['end'];
+$duefrom = mysqli_query($connection, "SELECT sum(organization_running_balance_derived) AS organization_running_balance_derived FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '5'");
+$otws = mysqli_fetch_array($duefrom);
+$bank = $otws['organization_running_balance_derived'];
+
+$cash = mysqli_query($connection, "SELECT sum(organization_running_balance_derived) AS organization_running_balance_derived FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '1'");
+$otss = mysqli_fetch_array($cash);
+$cassh = $otss['organization_running_balance_derived'];
+$cashbank = $cassh + $bank;
 $out = '</div>
 <div class="card">
   <div class="card-body">
@@ -28,8 +37,8 @@ $out = '</div>
       <thead>
         <th style="font-weight:bold;"></th>
         <th style="font-weight:bold;"></th>
-        <th style="text-align: center; font-weight:bold;">2020 <br> &#x20A6</th>
-        <th style="text-align: center; font-weight:bold;">2018 <br> &#x20A6</th>
+        <th style="text-align: center; font-weight:bold;">'.$start.' <br/>(NGN)</th>
+        <th style="text-align: center; font-weight:bold;">'.$end.' <br/>(NGN)</th>
       </thead>
       <tbody>
           <tr>
@@ -41,7 +50,7 @@ $out = '</div>
         <tr>
           <td></td>
           <td>Cash and Bank</td>
-          <td style="text-align: center">4,436,527</td>
+          <td style="text-align: center">'.$cashbank.'</td>
           <td style="text-align: center">4,436,527</td>
         </tr>
         <tr>
@@ -159,8 +168,8 @@ $out = '</div>
       <thead>
         <th style="font-weight:bold;">Codes</th>
         <th style="font-weight:bold;">GL Account</th>
-        <th style="text-align: center; font-weight:bold;">2020 &#x20A6</th>
-        <th style="text-align: center; font-weight:bold;">2018 &#x20A6</th>
+        <th style="text-align: center; font-weight:bold;">'.$start.' <br/>(NGN)</th>
+        <th style="text-align: center; font-weight:bold;">'.$end.' <br/>(NGN)</th>
       </thead>
       <tbody>
           <tr>

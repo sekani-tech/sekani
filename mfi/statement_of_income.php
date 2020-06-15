@@ -22,11 +22,11 @@ include('header.php');
                     <div class="row">
                       <div class="form-group col-md-3">
                         <label for="">Start Date</label>
-                        <input type="date" name="" id="" class="form-control">
+                        <input type="date" name="" id="start" class="form-control">
                       </div>
                       <div class="form-group col-md-3">
                         <label for="">End Date</label>
-                        <input type="date" name="" id="" class="form-control">
+                        <input type="date" name="" id="end" class="form-control">
                       </div>
                       <div class="form-group col-md-3">
                         <label for="">Branch</label>
@@ -34,7 +34,7 @@ include('header.php');
                             <option value="">Head Office</option>
                         </select>
                       </div>
-                      <div class="form-group col-md-3">
+                      <!-- <div class="form-group col-md-3">
                         <label for="">Break Down per Branch</label>
                         <select name="" id="" class="form-control">
                             <option value="">No</option>
@@ -45,7 +45,7 @@ include('header.php');
                         <select name="" id="" class="form-control">
                             <option value="">No</option>
                         </select>
-                      </div>
+                      </div> -->
                     </div>
                     <button type="reset" class="btn btn-danger">Reset</button>
                     <span id="input" type="submit" class="btn btn-primary">Run report</span>
@@ -77,12 +77,12 @@ include('header.php');
               <script>
                     $(document).ready(function () {
                       $('#input').on("click", function () {
-                        var cid = $(this).val();
-                        var intid = $('#intt').val();
+                        var start = $('#start').val();
+                        var end = $('#end').val();
                         $.ajax({
                           url: "ajax_post/reports_post/stmt_of_income.php", 
                           method: "POST",
-                          data:{cid:cid, intid:intid},
+                          data:{start:start, end:end},
                           success: function (data) {
                             $('#outjournal').html(data);
                           }

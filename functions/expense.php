@@ -77,6 +77,12 @@ if ($is_del == "0" && $is_del != NULL) {
             $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_codex'";
             $dbgl = mysqli_query($connection, $upglacct);
             if ($dbgl) {
+                $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
+                transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
+                  created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$gl_codex}', '{$trans_id}', '{$desc}', 'Credit', '{$staff_id}',
+                   '{$gen_date}', '{$gl_amt}', '{$new_gl_bal}', '{$gl_amt}', '{$gen_date}', '{$amt}')";
+                   $res4 = mysqli_query($connection, $gl_acc);
+
                 $upinta = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2', total_withdrawals_derived = '$tbd2' WHERE int_id = '$sessint_id' && teller_id = '$staff_id'";
                 $res1 = mysqli_query($connection, $upinta);
                 if ($res1) {

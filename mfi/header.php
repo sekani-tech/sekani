@@ -34,6 +34,7 @@ if (count([$getpermission]) == 1) {
   $view_dashboard = $pms['view_dashboard'];
   $vault_email = $pms['vault_email'];
   $acc_op = $pms['acc_op'];
+  $staff_cabal = $pms['staff_cabal'];
   $acc_update = $pms['acc_update'];
   $per_con = $pms['configuration'];
   $bch_id = $_SESSION["branch_id"];

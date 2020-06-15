@@ -287,7 +287,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                   $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
                                   $rlot = mysqli_query($connection, $quyd);
                                   $tolm = mysqli_fetch_array($rlot);
-                                  $vaul = $tolm['vault_email'];
+                                  $vaul = isset($tolm['vault_email']);
                                   
                                   if ($vaul == 1 || $vaul == "1") {
                                   $mail = new PHPMailer;
