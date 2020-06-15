@@ -35,7 +35,7 @@ if($_FILES['imagefile']['name']) {
 
     $query = "UPDATE users SET username = '$username', usertype = '$usertype' WHERE id = '$user_id'";
     $result = mysqli_query($connection, $query);
-    if($result) {
+    // if($result) {
         $sec = "UPDATE staff SET int_name = '$int_name', username = '$username', display_name = '$display_name', email = '$email',
         first_name = '$first_name', last_name = '$last_name', phone = '$phone', employee_status = '$status', address = '$address', date_joined = '$date_joined',
         org_role = '$org_role', img = '$img' WHERE id = '$staff_id'";
@@ -49,8 +49,8 @@ if($_FILES['imagefile']['name']) {
           echo header ("Location: ../mfi/staff_mgmt.php?message4=$randms");
             // echo header("location: ../mfi/client.php");
         }
-    } else {
-      echo header ("Location: ../mfi/staff_mgmt.php?message2=$randms");
-    }
+    // } else {
+    //   echo header ("Location: ../mfi/staff_mgmt.php?message2=$randms");
+    // }
 }
 ?>
