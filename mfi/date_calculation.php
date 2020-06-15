@@ -1,5 +1,5 @@
 <?php
-$loan_term = $_POST["loant"];
+$loan_term = $_POST["loant"] - 1;
 $repayment_start = $_POST["repay_start"];
 $rep_every = $_POST["repay"];
 $disburse_date = $_POST["disbd"];
