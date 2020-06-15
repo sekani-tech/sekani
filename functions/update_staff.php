@@ -50,23 +50,7 @@ if($_FILES['imagefile']['name']) {
             // echo header("location: ../mfi/client.php");
         }
     } else {
-        echo "nop";
+      echo header ("Location: ../mfi/staff_mgmt.php?message2=$randms");
     }
 }
-?>
-<?php
-if (isset($_POST['employee_status']) && ($_POST['employee_status'] == "Employed")) {
-  $employee = "Decomisioned";
- } else {
-  $employee = "Employed";
- }
- 
-  $query = "UPDATE staff SET employee_status = $employee WHERE id = '$user_id'";
-  
-  $form = mysqli_query($connection, $query);
-  if ($form) {
-    echo header("location: ../mfi/staff_mgmt.php");
-  } else {
-    echo "there is an error here on sanusi end";
-  }
 ?>
