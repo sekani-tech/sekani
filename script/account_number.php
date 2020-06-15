@@ -3,7 +3,7 @@
 // netwr
 include("connect.php");
 
-$account_table = mysqli_query($connection, "SELECT * FROM account WHERE int_id = '6'");
+$account_table = mysqli_query($connection, "SELECT * FROM account WHERE int_id = '5'");
 // FIRST ONE
 while ($row = mysqli_fetch_array($account_table)) {
     $client_id = $row["client_id"];
@@ -42,10 +42,10 @@ while ($row = mysqli_fetch_array($account_table)) {
       $acc = $row["account_no"];
     }
 
-    $update_account = mysqli_query($connection, "UPDATE account SET account_no = '$acc' WHERE client_id = '$client_id' && int_id = '6'");
+    $update_account = mysqli_query($connection, "UPDATE account SET account_no = '$acc' WHERE client_id = '$client_id' && int_id = '5'");
 }
 
-$client_table = mysqli_query($connection, "SELECT * FROM client WHERE int_id = '6'");
+$client_table = mysqli_query($connection, "SELECT * FROM client WHERE int_id = '5'");
 // SECOUND ONE
 while ($rx = mysqli_fetch_array($client_table)) {
     $id = $rx["id"];
@@ -84,7 +84,7 @@ while ($rx = mysqli_fetch_array($client_table)) {
       $acc1 = $rx["account_no"];
     }
 
-    $update_client = mysqli_query($connection, "UPDATE client SET account_no = '$acc1' WHERE id = '$id' && int_id = '6'");
+    $update_client = mysqli_query($connection, "UPDATE client SET account_no = '$acc1' WHERE id = '$id' && int_id = '5'");
 }
 if ($update_account) {
     echo " ACCOUNT TABLE UPDATED";
