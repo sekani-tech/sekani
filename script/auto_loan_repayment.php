@@ -1,4 +1,0 @@
-<?php
-// here
-// netwr
-?>
