@@ -32,19 +32,24 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
       //  Always Check the vault
       if (count([$branchquery]) == 1) {
         // here we will some data
-        $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM institution_account_transaction WHERE (is_vault = '1' AND (branch_id = '$branch_id' AND int_id ='$int_id') AND (transaction_date BETWEEN '$start' AND '$end'))  ORDER BY transaction_date ASC");
+        $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM institution_vault_transaction WHERE branch_id = '$branch_id' AND int_id ='$int_id' AND transaction_date BETWEEN '$std' AND '$endx'  ORDER BY transaction_date ASC");
         // then we will be fixing
-        $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM institution_account_transaction WHERE (is_vault = '1' AND (branch_id = '$branch_id' AND int_id ='$int_id') AND (transaction_date BETWEEN '$start' AND '$end')) ORDER BY transaction_date ASC");
+        $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM institution_vault_transaction WHERE branch_id = '$branch_id' AND int_id ='$int_id' AND transaction_date BETWEEN '$std' AND '$endx' ORDER BY transaction_date ASC");
         $m1 = mysqli_fetch_array($genb1);
         $m = mysqli_fetch_array($genb);
         // qwerty
         $tcp = $m1["credit"];
         $tdp = $m["debit"];
+
+        $quetoget = mysqli_query($connection, "SELECT * FROM institution_vault_transaction WHERE branch_id = '$branch_id' AND int_id ='$int_id' AND transaction_date BETWEEN '$std' AND '$endx' ORDER BY transaction_date DESC");
+          $r = mysqli_fetch_array($quetoget);
+          $fom = $r['vault_balance_derived'];
         // summing
-        function fill_report($connection, $int_id, $start, $end, $branch_id)
+        function fill_report($connection, $int_id, $std, $endx, $branch_id)
         {
           // import
-          $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE (is_vault = '1' AND (branch_id = '$branch_id' AND int_id ='$int_id') AND (transaction_date BETWEEN '$start' AND '$end')) ORDER BY transaction_date ASC");
+          
+          $querytoget = mysqli_query($connection, "SELECT * FROM institution_vault_transaction WHERE branch_id = '$branch_id' AND int_id ='$int_id' AND transaction_date BETWEEN '$std' AND '$endx' ORDER BY transaction_date ASC");
           // $q = mysqli_fetch_array($querytoget);
           $out = '';
           $q = mysqli_fetch_array($querytoget);
@@ -55,7 +60,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
           $transaction_date = $q["transaction_date"];
           $camt = $q["credit"];
           $damt = $q["debit"];
-          $balance = $q["running_balance_derived"];
+          $balance = $q["vault_balance_derived"];
           $description = $q['description'];
           $amt = $camt;
           $amt2 = $damt;
@@ -102,7 +107,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="bmd-label-floating">As at:</label>
-                    <input type="text" value="'.$end.'" name="" class="form-control" id="" readonly>
+                    <input type="text" value="'.$endx.'" name="" class="form-control" id="" readonly>
                   </div>
                 </div>
                 </div>
@@ -120,7 +125,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                   <th>Balance</th>
                 </thead>
                 <tbody>
-                '.fill_report($connection, $int_id, $start, $end, $branch_id).'
+                '.fill_report($connection, $int_id, $std, $endx, $branch_id).'
                 <tr>
               <th>Total</th>
               <th></th>
@@ -132,10 +137,11 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                 </tbody>
               </table>
             </div>
-            <p><b>Total Deposit:&#8358;'.number_format($tcp, 2).'</b></p>
-            <p><b>Total Withdrawal:&#8358;'.number_format($tdp, 2).'</b></p>
+            <p><b>Total Deposit: &#8358;'.number_format($tcp, 2).'</b></p>
+            <p><b>Total Withdrawal: &#8358;'.number_format($tdp, 2).'</b></p>
+            <p><b>Current Vault Balance: &#8358;'.number_format($fom, 2).'</b></p>
             <hr>
-            <p><b>Checked By: '.$_SESSION["username"].'</b>                             <b>Date/Sign: '.$start." - ".$end.' </b></p>
+            <p><b>Checked By: '.$_SESSION["username"].'</b>                             <b>Date/Sign: '.$std." - ".$endx.' </b></p>
 
             <p>
             <button id="pddf" type="sumbit" class="btn btn-primary pull-right">PDF print</button>
