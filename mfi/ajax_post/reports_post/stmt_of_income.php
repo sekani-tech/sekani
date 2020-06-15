@@ -6,7 +6,9 @@
 $name = $_SESSION['int_name'];
 $sessint_id = $_SESSION['int_id'];
 $current = date('d/m/Y');
-
+if(isset($_POST['start'])){
+    $start = $_POST['start'];
+    $end = $_POST['end'];
 // Operating Revenue Data
 $gl_acc_exec = mysqli_query($connection, "SELECT sum(organization_running_balance_derived) AS organization_running_balance_derived FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '54'");
 $gl = mysqli_fetch_array($gl_acc_exec);
@@ -71,27 +73,30 @@ $general = $grl['organization_running_balance_derived'];
 
 $bank = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90061000'");
 $bl = mysqli_fetch_array($bank);
-$burrowing = $bl['organization_running_balance_derived'];
+$bankcharges = $bl['organization_running_balance_derived'];
 
-$gl_acc_exec = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90013000'");
-$gl = mysqli_fetch_array($gl_acc_exec);
-$burrowing = $gl['organization_running_balance_derived'];
+$rela = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90052000'");
+$rol = mysqli_fetch_array($rela);
+$relation = $rol['organization_running_balance_derived'];
 
-$gl_acc_exec = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90013000'");
-$gl = mysqli_fetch_array($gl_acc_exec);
-$burrowing = $gl['organization_running_balance_derived'];
+$sasa = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90013000'");
+$se = mysqli_fetch_array($sasa);
+$sasda = $gl['organization_running_balance_derived'];
 
-$gl_acc_exec = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90013000'");
-$gl = mysqli_fetch_array($gl_acc_exec);
-$burrowing = $gl['organization_running_balance_derived'];
+$bad = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90071000'");
+$bll = mysqli_fetch_array($bad);
+$baddebt = $bll['organization_running_balance_derived'];
 
-$gl_acc_exec = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90013000'");
-$gl = mysqli_fetch_array($gl_acc_exec);
-$burrowing = $gl['organization_running_balance_derived'];
+$security = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90053000'");
+$ssl = mysqli_fetch_array($security);
+$secure = $ssl['organization_running_balance_derived'];
 
-$gl_acc_exec = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90013000'");
-$gl = mysqli_fetch_array($gl_acc_exec);
-$burrowing = $gl['organization_running_balance_derived'];
+$missa = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90013000'");
+$gr = mysqli_fetch_array($missa);
+$sss = $gl['organization_running_balance_derived'];
+
+$totality = $salaries + $fueling + $transportation + $office_rent + $printing + $electricity + $profession + $subscribe + $repairs
++ $general + $bankcharges + $relation + $baddebt + $secure;
 
 $out = '';
 $out = '<div class="card">
@@ -114,8 +119,8 @@ $out = '<div class="card">
     <thead>
       <th style="font-weight:bold;">Codes</th>
       <th style="font-weight:bold;">GL Account</th>
-      <th style="text-align: center; font-weight:bold;">2019 <br/>(NGN)</th>
-      <th style="text-align: center; font-weight:bold;">2020 <br/>(NGN)</th>
+      <th style="text-align: center; font-weight:bold;">'.$start.' <br/>(NGN)</th>
+      <th style="text-align: center; font-weight:bold;">'.$end.' <br/>(NGN)</th>
     </thead>
     <tbody>
       <tr>
@@ -167,110 +172,110 @@ $out = '<div class="card">
     <thead>
       <th style="font-weight:bold;">Codes</th>
       <th style="font-weight:bold;">GL Account</th>
-      <th style="text-align: center; font-weight:bold;">2020 &#x20A6</th>
-      <th style="text-align: center; font-weight:bold;">2018 &#x20A6</th>
+      <th style="text-align: center; font-weight:bold;">'.$start.' <br/>(NGN)</th>
+      <th style="text-align: center; font-weight:bold;">'.$end.' <br/>(NGN)</th>
     </thead>
     <tbody>
       <tr>
-        <td></td>
+        <td>90021000</td>
         <td>Salaries, Wages and Allowances</td>
-        <td style="text-align: center">15,586,836</td>
+        <td style="text-align: center">'.number_format($salaries).'</td>
         <td style="text-align: center">15,586,836</td>
       </tr>
       <tr>
-        <td></td>
+        <td>90042000</td>
         <td>Fueling and Lubricant</td>
-        <td style="text-align: center">724,350</td>
+        <td style="text-align: center">'.number_format($fueling).'</td>
         <td style="text-align: center">724,350</td>
       </tr>
       <tr>
-        <td></td>
+        <td>90044000</td>
         <td>Transport and Traveling</td>
-        <td style="text-align: center">2,667,200</td>
+        <td style="text-align: center">'.number_format($transportation).'</td>
         <td style="text-align: center">2,667,200</td>
       </tr>
       <tr>
-        <td></td>
+        <td>90041000</td>
         <td>Office Rent</td>
-        <td style="text-align: center">1,290,000</td>
+        <td style="text-align: center">'.number_format($office_rent).'</td>
         <td style="text-align: center">1,290,000</td>
       </tr>
       <tr>
-        <td></td>
+        <td>90047000</td>
         <td>Printing and Stationaries</td>
-        <td style="text-align: center">504,600</td>
+        <td style="text-align: center">'.number_format($printing).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td></td>
+        <td>90043000</td>
         <td>Electricity and other unilities expenses</td>
-        <td style="text-align: center">504,600</td>
+        <td style="text-align: center">'.number_format($electricity).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td></td>
+        <td>90054000</td>
         <td>Professional and Consultancy fee</td>
-        <td style="text-align: center">504,600</td>
+        <td style="text-align: center">'.number_format($profession).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td></td>
+        <td>90051000</td>
         <td>Annual Subscription</td>
-        <td style="text-align: center">504,600</td>
+        <td style="text-align: center">'.number_format($subscribe).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td></td>
+        <td>57703</td>
         <td>Traffic and Vehicle Repairs</td>
-        <td style="text-align: center">504,600</td>
+        <td style="text-align: center">'.number_format($repairs).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td></td>
+        <td>90049300</td>
         <td>General Repairs and Maintenance</td>
-        <td style="text-align: center">504,600</td>
+        <td style="text-align: center">'.number_format($general).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td></td>
+        <td>90061000</td>
         <td>Bank Charges</td>
-        <td style="text-align: center">504,600</td>
+        <td style="text-align: center">'.number_format($bankcharges).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td></td>
+        <td>90052000</td>
         <td>Public Relations</td>
-        <td style="text-align: center">504,600</td>
+        <td style="text-align: center">'.number_format($relation).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
         <td></td>
         <td>Hotel and Lodging</td>
-        <td style="text-align: center">504,600</td>
+        <td style="text-align: center">'.number_format($office_rent).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td></td>
+        <td>90071000</td>
         <td>Bad debt Written Off</td>
-        <td style="text-align: center">504,600</td>
+        <td style="text-align: center">'.number_format($baddebt).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td></td>
+        <td>90053000</td>
         <td>Security & Sanition</td>
-        <td style="text-align: center">504,600</td>
-        <td style="text-align: center">504,600</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Miscelious Expense</td>
-        <td style="text-align: center">504,600</td>
+        <td style="text-align: center">'.number_format($secure).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
         <td></td>
+        <td>Miscellaneous Expense</td>
+        <td style="text-align: center">'.number_format($office_rent).'</td>
+        <td style="text-align: center">504,600</td>
+      </tr>
+      <tr>
         <td></td>
-        <td style="text-align: center"><b> 25,445,674</b></td>
+        <td></td>
+        <td style="text-align: center"><b>'.number_format($totality).'</b></td>
         <td style="text-align: center"><b> 25,445,674</b></td>
       </tr>
       <tr>
@@ -309,4 +314,5 @@ $out = '<div class="card">
 </div>
 </div>';
 echo $out;
+}
 ?>

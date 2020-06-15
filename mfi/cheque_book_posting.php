@@ -5,6 +5,49 @@ $destination = "index.php";
     include("header.php");
 
 ?>
+<?php
+  if (isset($_GET["message1"])) {
+    $key = $_GET["message1"];
+    $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "success",
+            title: "Posting Successful",
+            text: "Cheque book has been posted",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+}
+// If it is not successfull, It will show this message
+else if (isset($_GET["message2"])) {
+  $key = $_GET["message2"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Error",
+          text: "Error During Posting",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
+?>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -36,14 +79,14 @@ $destination = "index.php";
                           ?>
                           <script>
                               $(document).ready(function() {
-                                $('#client_name').change(function(){
+                                $('#acc_name').change(function(){
                                   var id = $(this).val();
                                   $.ajax({
                                     url:"ajax_post/chq_accno.php",
                                     method:"POST",
                                     data:{id:id},
                                     success:function(data){
-                                      $('#show_product').html(data);
+                                      $('#showing').html(data);
                                     }
                                   })
                                 });
@@ -51,7 +94,7 @@ $destination = "index.php";
                             </script>
                         <div class="form-group">
                           <label class="bmd-label-floating"> Accural Name</label>
-                          <select name="client_id" class="form-control" id="acc_name">
+                          <select name="acc_name" class="form-control" id="acc_name">
                           <option value="">select an option</option>
                           <?php echo fill_client($connection); ?>
                         </select>
@@ -60,7 +103,7 @@ $destination = "index.php";
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Account No</label>
-                          <select name="acc_no" class="form-control" id="show_product">
+                          <select name="acc_no" class="form-control" id="showing">
                           <option value="">select an option</option>
                         </select>
                         </div>
@@ -68,7 +111,7 @@ $destination = "index.php";
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">No of Leaves</label>
-                          <select name="client_id" class="form-control" id="acc_name">
+                          <select name="no_leaves" class="form-control" id="acc_name">
                           <option value="">select an option</option>
                           <option value="">1-50</option>
                           <option value="">51-100</option>
@@ -85,7 +128,7 @@ $destination = "index.php";
                       </div>
                       </div>
                       <a href="client.php" class="btn btn-secondary">Back</a>
-                    <button type="submit" class="btn btn-primary pull-right">Create Branch</button>
+                    <button type="submit" class="btn btn-primary pull-right">Post Cheque</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>
