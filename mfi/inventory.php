@@ -16,7 +16,7 @@ $date = date('Y-m-d');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // check the button value
   $post = $_POST['submit'];
- if($_POST['sumbit'] = 'edit_permission'){
+ if($post =='edit_permission'){
   $item = $_POST['item'];
   $seer = $_POST['srial'];
   $da = $_POST['datce'];
@@ -26,8 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
    $rod = "INSERT INTO inventory(int_id, branch_id, serial_no, date, item, quantity, unit_price, total_price)
    VALUES('{$sessint_id}', '{$branch_id}', '{$seer}', '{$da}', '{$item}', '{$quant}', '{$unit}', '{$total}' ) ";
-    $rox = mysqli_query($connection, $rod);
-    if($rox){
+    $ccccx = mysqli_query($connection, $rod);
+    if($ccccx){
       $URL="inventory.php";
       echo '<script type="text/javascript">
       $(document).ready(function(){
@@ -58,53 +58,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               ';
     }
  }
- else if($_POST['sumbit'] == 'chq'){
-    $digits = 6;
-    $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-    $sessint_id = $_SESSION["int_id"];
-    $branch = $_SESSION["branch_id"];
-    $name = $_POST['acc_name'];
-    $account_no = $_POST['acc_no'];
-    $leaves_no = $_POST['no_leaves'];
-    $range = $_POST['range'];
+//  else if($post == 'chq'){
+//     $digits = 6;
+//     $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+//     $sessint_id = $_SESSION["int_id"];
+//     $branch = $_SESSION["branch_id"];
+//     $name = $_POST['acc_name'];
+//     $account_no = $_POST['acc_no'];
+//     $leaves_no = $_POST['no_leaves'];
+//     $range = $_POST['range'];
     
-    // credit checks and accounting rules
-    // insertion query for product
-    $query ="INSERT INTO chq_book(int_id, name, branch_id, account_no, leaves_no, range)
-    VALUES ('{$sessint_id}', '{$name}','{$branch}', '{$account_no}', '{$leaves_no}', '{$range}')";
+//     // credit checks and accounting rules
+//     // insertion query for product
+//     $query ="INSERT INTO chq_book(int_id, name, branch_id, account_no, leaves_no, range, date)
+//     VALUES ('{$sessint_id}', '{$name}','{$branch}', '{$account_no}', '{$leaves_no}', '{$range}', '{$date}')";
     
-    $rox = mysqli_query($connection, $query);
-    if($rox){
-        $URL="inventory.php";
-        echo '<script type="text/javascript">
-        $(document).ready(function(){
-            swal({
-                type: "success",
-                title: "Successful",
-                text: "The Cheque Book has been posted",
-                showConfirmButton: false,
-                timer: 2000
-            })
-        });
-        </script>
-        ';
-        echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-      }
-      else{
-        echo '<script type="text/javascript">
-                $(document).ready(function(){
-                    swal({
-                        type: "error",
-                        title: "CannotAdd Inventory",
-                        text: "Error Occured in the Posting",
-                        showConfirmButton: false,
-                        timer: 2000
-                    })
-                });
-                </script>
-                ';
-      }
- }
+//     $rox = mysqli_query($connection, $query);
+//     if($rox){
+//         $URL="inventory.php";
+//         echo '<script type="text/javascript">
+//         $(document).ready(function(){
+//             swal({
+//                 type: "success",
+//                 title: "Successful",
+//                 text: "The Cheque Book has been posted",
+//                 showConfirmButton: false,
+//                 timer: 2000
+//             })
+//         });
+//         </script>
+//         ';
+//         echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+//       }
+//       else{
+//         echo '<script type="text/javascript">
+//                 $(document).ready(function(){
+//                     swal({
+//                         type: "error",
+//                         title: "CannotAdd Inventory",
+//                         text: "Error Occured in the Posting",
+//                         showConfirmButton: false,
+//                         timer: 2000
+//                     })
+//                 });
+//                 </script>
+//                 ';
+//       }
+//  }
 }
 ?>
 <div class="content">
@@ -196,13 +196,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <!-- End for Permission -->
                 </div>
               </div>
-              <div class="card">
+              <!-- <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">CHQ Book Portal</h4>
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                  <form method="post">
+                  <form method="POST" enctype="multipart/form-data">
                     <div class="row">
                       <div class="col-md-4">
                           <?php
@@ -274,7 +274,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="clearfix"></div>
                   </form>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

@@ -15,14 +15,22 @@ $name = $_POST['acc_name'];
 $account_no = $_POST['acc_no'];
 $leaves_no = $_POST['no_leaves'];
 $range = $_POST['range'];
+$date = date('Y-m-d');
 
 // credit checks and accounting rules
 // insertion query for product
-$query ="INSERT INTO chq_book(int_id, name, branch_id, account_no, leaves_no, range)
-VALUES ('{$sessint_id}', '{$name}','{$branch}', '{$account_no}', '{$leaves_no}', '{$range}')";
+$query ="INSERT INTO chq_book(int_id, name, branch_id, account_no, leaves_no, range_amount, date)
+VALUES ('{$sessint_id}', '{$name}','{$branch}', '{$account_no}', '{$leaves_no}', '{$range}', '{$date}')";
 
 $res = mysqli_query($connection, $query);
-
+// if ($connection->error) {
+//   try {   
+//       throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
+//   } catch(Exception $e ) {
+//       echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+//       echo nl2br($e->getTraceAsString());
+//   }
+// }
  if ($res) {
     $_SESSION["Lack_of_intfund_$randms"] = " was updated successfully!";
           echo header ("Location: ../mfi/cheque_book_posting.php?message1=$randms");

@@ -13,7 +13,7 @@ if(isset($_POST['id'])){
             while ($row = mysqli_fetch_array($state1))
             {
             $out .= '
-            <option value="'.$row["id"].'">'.$row["account_no"].'</option>';
+            <option value="'.$row["account_no"].'">'.$row["account_no"].'</option>';
             }
             echo $out;
     }
