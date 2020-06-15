@@ -9,7 +9,7 @@ include("header.php");
 if (isset($_GET["edit"])) {
   $user_id = $_GET["edit"];
   $update = true;
-  $person = mysqli_query($connection, "SELECT * FROM staff WHERE user_id='$user_id' && int_id='$sessint_id'");
+  $person = mysqli_query($connection, "SELECT * FROM staff WHERE id='$user_id' && int_id='$sessint_id'");
 
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
