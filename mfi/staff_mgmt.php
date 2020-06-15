@@ -244,6 +244,11 @@ if ($per_con == 1 || $per_con == "1") {
                         } else {
                           $post_transact = 0;
                         }
+                        if ( isset($_POST['staff_cabal']) ) {
+                          $staff_cabal = 1;
+                        } else {
+                          $staff_cabal = 0;
+                        }
                         if ( isset($_POST['access_config']) ) {
                         $access_config = 1;
                         } else {
@@ -290,8 +295,8 @@ if ($per_con == 1 || $per_con == "1") {
                         $dash = 0;
                         }
                        
-                        $perm = "INSERT INTO permission (int_id, role_id, acc_op, acc_update, trans_appv, trans_post, loan_appv, acct_appv, valut, vault_email, view_report, view_dashboard, configuration)
-                         VALUES ('{$sessint_id}', '{$rid}', '{$accop}', '{$accup}', '{$approve}', '{$post_transact}', '{$approve_loan}', '{$approve_acc}', '{$vault_trans}', '{$emai}', '{$view_report}', '{$dash}', '{$access_config}')";
+                        $perm = "INSERT INTO permission (int_id, role_id, acc_op, acc_update, trans_appv, trans_post, loan_appv, acct_appv, staff_cabal, valut, vault_email, view_report, view_dashboard, configuration)
+                         VALUES ('{$sessint_id}', '{$rid}', '{$accop}', '{$accup}', '{$approve}', '{$post_transact}', '{$approve_loan}', '{$approve_acc}','{$staff_cabal}', '{$vault_trans}', '{$emai}', '{$view_report}', '{$dash}', '{$access_config}')";
                         $permm = mysqli_query($connection, $perm);
                         if ($permm) {
                           $permu = "UPDATE org_role SET permission = '1' WHERE int_id = '$sessint_id' && id = '$rid'";
@@ -447,7 +452,7 @@ if ($per_con == 1 || $per_con == "1") {
                   function fill_role($connection)
                   {
                   $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM org_role WHERE int_id = '$sint_id' AND permission = '0' ORDER BY id ASC";
+                  $org = "SELECT * FROM org_role WHERE int_id = '$sint_id' AND (permission = '0' OR permission = '' OR permission = NULL) ORDER BY id ASC";
                   $res = mysqli_query($connection, $org);
                   $out = '';
                   while ($row = mysqli_fetch_array($res))
@@ -507,6 +512,7 @@ if ($per_con == 1 || $per_con == "1") {
                   document.getElementById('n10').checked = true;
                   document.getElementById('n11').checked = true;
                   document.getElementById('n12').checked = true;
+                  document.getElementById('n13').checked = true;
                 } else {
                   document.getElementById('n1').checked = false;
                   document.getElementById('n2').checked = false;
@@ -520,6 +526,7 @@ if ($per_con == 1 || $per_con == "1") {
                   document.getElementById('n10').checked = false;
                   document.getElementById('n11').checked = false;
                   document.getElementById('n12').checked = false;
+                  document.getElementById('n13').checked = true;
                 }
                });
              })
@@ -571,6 +578,15 @@ if ($per_con == 1 || $per_con == "1") {
               <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" value="" name="accup" id="n12">
                 Account Update
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+           <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="" name="staff_cabal" id="n13">
+                View All Staff Cabal
                 <span class="form-check-sign">
                 <span class="check"></span>
                 </span>
@@ -651,7 +667,7 @@ if ($per_con == 1 || $per_con == "1") {
                     <table id="tabledat1" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT permission.vault_email, org_role.id, permission.acc_op, permission.acc_update, permission.trans_appv, permission.trans_post, permission.loan_appv, permission.acct_appv, permission.valut, permission.view_report, permission.view_dashboard, permission.configuration, org_role.role, org_role.description FROM org_role JOIN permission ON org_role.id = permission.role_id WHERE org_role.int_id = '$sessint_id'";
+                        $query = "SELECT permission.vault_email, org_role.id, permission.staff_cabal, permission.acc_op, permission.acc_update, permission.trans_appv, permission.trans_post, permission.loan_appv, permission.acct_appv, permission.valut, permission.view_report, permission.view_dashboard, permission.configuration, org_role.role, org_role.description FROM org_role JOIN permission ON org_role.id = permission.role_id WHERE org_role.int_id = '$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -667,6 +683,7 @@ if ($per_con == 1 || $per_con == "1") {
                         <th>Approve Account</th>
                         <th>vault Transaction</th>
                         <th>View Report</th>
+                        <th>Staff Cabal</th>
                         <th>Dashboard</th>
                         <th>Access Config.</th>
                         <th>Vault Email</th>
@@ -823,6 +840,24 @@ if ($per_con == 1 || $per_con == "1") {
                           <div class="form-check form-check-inline">
                           <label class="form-check-label">
                               <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="vrp">
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                          </label>
+                        </div>
+                          </th>
+                          <th>
+                          <?php
+                          if($row['staff_cabal'] == '1'){
+                            $check = "checked";
+                          }
+                          elseif($row['staff_cabal'] == '0'){
+                            $check = "unchecked";
+                          }
+                          ?>   
+                          <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="oc"/>
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
