@@ -65,9 +65,11 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
           </thead>
         <?php
         $install = 1;
+        $damn = 0;
+        if ($no_of_rep == 1) {
         while (strtotime("+1 ".$rep_every, strtotime($repayment_start)) <= strtotime($matured_date2)) {
-        ?>
-         <tbody>
+            ?>
+            <tbody>
          <td><?php echo $client_id; ?></td>
          <td><?php echo $repayment_start; ?></td>
          <td><?php echo $matured_date; ?></td>
@@ -75,10 +77,25 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
          <td><?php echo $pincpal_amount / $loan_term; ?></td>
          <td><?php echo ((($interest_rate / 100) * $pincpal_amount) * $loan_term) / $loan_term ?></td>
          </tbody>
-        <!-- CHECK A PHP TEST FOR TABLE -->
-        <?php
+         <?php
         $repayment_start = date ("Y-m-d", strtotime("+1 ".$rep_every, strtotime($repayment_start)));
         }
+    } else if ($no_of_rep > 1) {
+        while ($damn <= $no_of_rep) {
+            ?>
+            <tbody>
+         <td><?php echo $client_id; ?></td>
+         <td><?php echo $repayment_start; ?></td>
+         <td><?php echo $matured_date; ?></td>
+         <td><?php echo $install++; ?></td>
+         <td><?php echo $pincpal_amount / $loan_term; ?></td>
+         <td><?php echo ((($interest_rate / 100) * $pincpal_amount) * $loan_term) / $loan_term ?></td>
+         </tbody>
+            <?php
+            //  $repayment_start = date ("Y-m-d", strtotime("+1 ".$rep_every, strtotime($repayment_start)));
+             $damn++;
+        }
+    }
         ?>
         </table>
         <?php
