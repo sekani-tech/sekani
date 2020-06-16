@@ -8,6 +8,7 @@ $account_table = mysqli_query($connection, "SELECT * FROM account WHERE int_id =
 while ($row = mysqli_fetch_array($account_table)) {
     $client_id = $row["client_id"];
     $soc = $row["account_no"];
+    $acct_id = $row["id"];
     $length = strlen($soc);
     if ($length == 1) {
       $acc ="000000000" . $soc;
@@ -42,7 +43,7 @@ while ($row = mysqli_fetch_array($account_table)) {
       $acc = $row["account_no"];
     }
 
-    $update_account = mysqli_query($connection, "UPDATE account SET account_no = '$acc' WHERE client_id = '$client_id' && int_id = '5'");
+    $update_account = mysqli_query($connection, "UPDATE account SET account_no = '$acc' WHERE client_id = '$client_id' && int_id = '5' && id = '$acct_id'");
 }
 
 $client_table = mysqli_query($connection, "SELECT * FROM client WHERE int_id = '5'");
