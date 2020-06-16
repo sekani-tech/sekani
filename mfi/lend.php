@@ -670,10 +670,10 @@ $destination = "loans.php";
                                 <label class = "bmd-label-floating">Repayment Start Date:</label>
                                 <input readonly type="date" name="repay" class="form-control" id="rsd">
                               </div>
-                              <div class="col-md-6 form-group">
+                              <!-- <div class="col-md-6 form-group">
                                 <label class = "bmd-label-floating">Loan End Date:</label>
-                                <input readonly type="sc" value="<?php echo $actualend_date ?>" name="repay_start" id="end" class="form-control">
-                              </div>
+                                <input readonly type="sc" value="<?php $actualend_date ?>" name="repay_start" id="end" class="form-control">
+                              </div> -->
                             <!-- </div> -->
                           </div>
                     </div>
