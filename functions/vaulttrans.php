@@ -216,13 +216,19 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                          if(!$mail->send()) 
                                          {
                                            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                                           echo "error";
-                                           echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
+                                           echo "sent";
+                                          //  echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
+                                          $URL="../mfi/teller_journal.php?message6=$randms";
+
+                           echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                                          } else
                                          {
                                            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
                                            echo "error";
-                                           echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
+                                          //  echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
+                                          $URL="../mfi/teller_journal.php?message1=$randms";
+
+                           echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                                          }
                         } 
                     }
@@ -413,12 +419,18 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                             {
                             $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
                             echo "error";
-                            echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
+                            // echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
+                            $URL="../mfi/teller_journal.php?message6=$randms";
+
+                           echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                             } else
                             {
                             $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
                             echo "error";
-                            echo header ("Location: ../mfi/teller_journal.php?message3=$randms");
+                            // echo header ("Location: ../mfi/teller_journal.php?message3=$randms");
+                            $URL="../mfi/teller_journal.php?message6=$randms";
+
+                           echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                             }
                           } 
                     }
@@ -604,12 +616,18 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         {
                         $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
                         echo "error";
-                        echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
+                        // echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
+                        $URL="../mfi/teller_journal.php?message6=$randms";
+
+                           echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                         } else
                         {
                         $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
                         echo "error";
-                        echo header ("Location: ../mfi/teller_journal.php?message3=$randms");
+                        $URL="../mfi/teller_journal.php?message6=$randms";
+
+                           echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                        // echo header ("Location: ../mfi/teller_journal.php?message3=$randms");
                         }
                       } 
                 }
@@ -788,12 +806,18 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                  {
                                    $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
                                    echo "error";
-                                   echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
+                                  //  echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
+                                  $URL="../mfi/teller_journal.php?message6=$randms";
+
+                           echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                                  } else
                                  {
                                    $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
                                    echo "error";
-                                   echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
+                                  //  echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
+                                  $URL="../mfi/teller_journal.php?message1=$randms";
+
+                           echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                                  }
                 } 
             }
