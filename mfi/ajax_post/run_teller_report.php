@@ -68,7 +68,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
           $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE (((teller_id = '$teller' OR appuser_id = '$teller') AND (int_id = '$int_id' AND branch_id = '$branch_id')) AND (transaction_date BETWEEN '$start' AND '$end')) ORDER BY id ASC");
           // $q = mysqli_fetch_array($querytoget);
           $out = '';
-          $q = mysqli_fetch_array($querytoget);
+          // $q = mysqli_fetch_array($querytoget);
           $client_name = "Expense";
           if (mysqli_num_rows($querytoget) > 0){
           while ($q = mysqli_fetch_array($querytoget, MYSQLI_ASSOC))
