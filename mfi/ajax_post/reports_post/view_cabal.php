@@ -20,56 +20,55 @@ if(isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"])) {
   $branch = $_POST["branch"];
   // $staff = $_POST["staff"];
 //   $queryi = "SELECT staff.id FROM staff JOIN account ON staff.id = account.field_officer_id WHERE staff.int_id = '$sessint_id' AND staff.id = '$staff'";
-  $queryi = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
-  $queryxexec = mysqli_query($connection, $queryi);
-  // $z = mysqli_fetch_array($queryxexec);
-  $rom = '
-  <thead class=" text-primary">
-  <tr>
+$rom = '
+<thead class=" text-primary">
+<tr>
+  <th>
+      Staff ID
+    </th>
     <th>
-        Staff ID
-      </th>
-      <th>
-        Accounts Officer
-      </th>
-      <th colspan="2">
-        Current Accounts
-      </th>
-      <th colspan="2">
-        Savings Accounts
-      </th>
-      <th colspan="2">
-        Loans Disbursement
-      </th>
-      </tr>
-      <tr>
-      <th>
-      </th>
-      <th>
-      </th>
-      <th>
-        No of Client
-      </th>
-      <th>
-        Value of Accounts
-      </th>
-      <th>
-        No of Client
-      </th>
-      <th>
-        Value of Accounts
-      </th>
-      <th>
-        No of Client
-      </th>
-      <th>
-        Value of Accounts
-      </th>
-      </tr>
-    </thead>
+      Accounts Officer
+    </th>
+    <th colspan="2">
+      Current Accounts
+    </th>
+    <th colspan="2">
+      Savings Accounts
+    </th>
+    <th colspan="2">
+      Loans Disbursement
+    </th>
+    </tr>
+    <tr>
+    <th>
+    </th>
+    <th>
+    </th>
+    <th>
+      No of Client
+    </th>
+    <th>
+      Value of Accounts
+    </th>
+    <th>
+      No of Client
+    </th>
+    <th>
+      Value of Accounts
+    </th>
+    <th>
+      No of Client
+    </th>
+    <th>
+      Value of Accounts
+    </th>
+    </tr>
+  </thead>
 ';
 
 echo $rom;
+  $queryi = "SELECT * FROM staff WHERE int_id = '$sessint_id' AND employee_status = 'Employed'";
+  $queryxexec = mysqli_query($connection, $queryi);
     while($z = mysqli_fetch_array($queryxexec, MYSQLI_ASSOC)){
       $emp_status =  $z['employee_status'];
       if($emp_status=='Employed'){
@@ -220,7 +219,6 @@ else{
     $query6exec = mysqli_query($connection, $query6);
     $l = mysqli_fetch_array($query6exec);
     $loansamount = $l['principal_amount'];
-  
   
     $out = '
       <tr>

@@ -47,7 +47,7 @@ if(isset($_GET["edit"])) {
 
   }
   else if($location == "14"){
-
+    echo header("Location: report_current_view.php?view14");
   }
   else if($location == "15"){
     echo header("Location: report_loan_view.php?view15");
@@ -80,7 +80,7 @@ if(isset($_GET["edit"])) {
 
   }
   else if($location == "25"){
-
+    echo header("Location: report_financial_view.php?view25");
   }
   else if($location == "26"){
 

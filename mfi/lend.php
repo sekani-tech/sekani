@@ -289,8 +289,8 @@ $destination = "loans.php";
                                 $('#clickit').on("change keyup paste click", function(){
                                   var id = $(this).val();
                                   var client_id = $('#client_name').val();
-                                  var colval = $('#colname').val();
-                                  var colname = $('#col_val').val();
+                                  var colname = $('#colname').val();
+                                  var colval = $('#col_val').val();
                                   var coldes = $('#col_descr').val();
                                   $.ajax({
                                     url:"collateral_upload.php",

@@ -5,7 +5,7 @@ $destination = "report_client.php";
     include("header.php");
 ?>
 <?php
- if (isset($_GET["view10"])) {
+ if (isset($_GET["view14"])) {
 ?>
 <!-- Content added here -->
 <div class="content">
@@ -15,7 +15,7 @@ $destination = "report_client.php";
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Savings Accounts</h4>
+                  <h4 class="card-title ">Current Accounts</h4>
                   <script>
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
@@ -23,19 +23,19 @@ $destination = "report_client.php";
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.product_id != '1'";
+                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.product_id = '1'";
                           $result = mysqli_query($connection, $querys);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> savings Accounts</p>
+                   }?> current Accounts</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table id="tabledt" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.product_id != '1'";
+                          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.product_id = '1'";
                           $result = mysqli_query($connection, $query);
                       ?>
                         <th>
