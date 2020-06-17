@@ -39,7 +39,7 @@ if(isset($_POST["cid"])) {
     $signature = $n['signature'];
     $id_img_url = $n['id_img_url'];
 
-    $getacctv = mysqli_query($connection, "SELECT * FROM account WHERE account_no='$acc_no' && int_id='$sessint_id'");
+    $getacctv = mysqli_query($connection, "SELECT * FROM account WHERE client_id='$id' && int_id='$sessint_id'");
     if (count([$getacctv]) == 1) {
       $xrx = mysqli_fetch_array($getacctv);
       $abd = $xrx['account_balance_derived'];
