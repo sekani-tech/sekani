@@ -78,21 +78,43 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $account_display = substr("$acct_no",7)."*****".substr("$acct_no",8);
       // sector
       $me = "";
-      if ($loan_sector == 0) {
-        $me = "";
-      } else if ($loan_sector == 1) {
-        $me = "Education";
-      } else if ($loan_sector == 2) {
-        $me = "Finance";
-      } else if ($loan_sector == 3) {
-        $me = "Agriculture";
-      } else if ($loan_sector == 4) {
-        $me = "Manufacturing";
-      } else if ($loan_sector == 5) {
-        $me = "Construction";
-      } else if ($loan_sector == 6) {
-        $me = "Others";
-      }
+      if($loan_sector == 1){
+$loan_sec = "Agriculture, Mining & Quarry";
+}
+else if($loan_sector == 2){
+  $loan_sec = "Manufacturing";
+}
+else if($loan_sector == 3){
+  $loan_sec = "Agricultural sector";
+}
+else if($loan_sector == 4){
+  $loan_sec = "Banking";
+}
+else if($loan_sector == 5){
+  $loan_sec = "Public Service";
+}
+else if($loan_sector == 6){
+  $loan_sec = "Health";
+}
+else if($loan_sector == 7){
+  $loan_sec = "Education";
+}
+else if($loan_sector == 8){
+  $loan_sec = "Tourism";
+}
+else if($loan_sector == 9){
+  $loan_sec = "Civil Service";
+}
+else if($loan_sector == 10){
+  $loan_sec = "Trade & Commerce";
+}
+else if($loan_sector == 11){
+  $loan_sec = "Others";
+}
+else{
+  $loan_sec = "Others";
+}
+
       // get the product
       $ln_prod =  mysqli_query($connection, "SELECT * FROM product WHERE id = '$loan_product' && int_id = '$sessint_id'");
       $pd = mysqli_fetch_array($ln_prod);
@@ -1429,7 +1451,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
             }
           } else {
             // echo nothing
-            // echo "God full of wisdom";
+            // echo "God full of wisloan_sector";
             echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({

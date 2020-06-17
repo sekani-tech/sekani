@@ -108,7 +108,7 @@ $destination = "report_loan.php";
                           $income = $fee + $total;
                           ?>
                           <th><?php echo  number_format($income); ?></th>
-                          <td><a href="client_view.php?edit=<?php echo $cid;?>" class="btn btn-info">View</a></td>
+                          <!-- <td><a href="client_view.php?edit=<?php echo $cid;?>" class="btn btn-info">View</a></td> -->
                         </tr>
                         <?php }
                           }
@@ -253,30 +253,39 @@ $destination = "report_loan.php";
                 <div class="card-body">
                   <form>
                     <div class="row">
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-md-4">
                         <label for="">Start Date</label>
-                        <input type="date" name="" id="" class="form-control">
+                        <input type="date" name="" id="start" class="form-control">
                       </div>
                       <div class="form-group col-md-3">
                         <label for="">End Date</label>
-                        <input type="date" name="" id="" class="form-control">
+                        <input type="date" name="" id="end" class="form-control">
                       </div>
+                      <?php
+                  function fill_branch($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
                       <div class="form-group col-md-3">
                         <label for="">Branch</label>
-                        <select name="" id="" class="form-control">
-                            <option value="">Head Office</option>
+                        <select name="" id="branch" class="form-control">
+                            <?php echo fill_branch($connection); ?>
                         </select>
                       </div>
-                      <div class="form-group col-md-3">
-                        <label for="">Break Down per Branch</label>
-                        <select name="" id="" class="form-control">
-                            <option value="">No</option>
-                        </select>
-                      </div>
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-md-4">
                         <label for="">Hide Zero Balances</label>
-                        <select name="" id="" class="form-control">
-                            <option value="">No</option>
+                        <select name="" id="hide" class="form-control">
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
                         </select>
                       </div>
                     </div>
@@ -290,13 +299,12 @@ $destination = "report_loan.php";
                       $('#runanalysis').on("click", function () {
                         var start = $('#start').val();
                         var end = $('#end').val();
-                        var branch = $('#input').val();
-                        var teller = $('#till').val();
-                        var int_id = $('#int_id').val();
+                        var hide = $('#hide').val();
+                        var branch = $('#branch').val();
                         $.ajax({
                           url: "items/analysis.php",
                           method: "POST",
-                          data:{start:start, end:end, branch:branch, teller:teller, int_id:int_id},
+                          data:{start:start, end:end, hide:hide, branch:branch},
                           success: function (data) {
                             $('#shanalysis').html(data);
                           }
@@ -457,7 +465,7 @@ $destination = "report_loan.php";
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                           <?php  $std = date("Y-m-d");
-                          if($std > $row["repayment_date"] ){?>
+                          if($std >= $row["repayment_date"] ){?>
                         <?php $row["id"]; ?>
                         <?php 
                             $name = $row['client_id'];
@@ -646,3 +654,4 @@ $destination = "report_loan.php";
  <?php
  }
  ?>
+ 
