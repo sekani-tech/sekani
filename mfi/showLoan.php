@@ -1590,6 +1590,8 @@ else{
           });
           </script>
           ';
+          $URL="disbursement_approval.php";
+            echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
         } else {
           // error in loan cache
           echo '<script type="text/javascript">
@@ -1639,6 +1641,8 @@ else{
                 });
                 </script>
                 ';
+                $URL="disbursement_approval.php";
+            echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
               } else {
                 // error in loan cache
                 echo '<script type="text/javascript">
