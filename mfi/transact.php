@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "Deposit/ Withdrawal";
-$destination = "index.php";
+$destination = "transaction.php";
 include("header.php");
 ?>
 <?php

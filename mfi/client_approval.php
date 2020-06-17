@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "Approval";
-$destination = "index.php";
+$destination = "approval.php";
     include("header.php");
 
 ?>

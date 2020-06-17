@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "Chart of Account";
-$destination = "index.php";
+$destination = "accounting.php";
     include("header.php");
 ?>
 <?php

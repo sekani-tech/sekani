@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "Loan Disbursement";
-$destination = "loans.php";
+$destination = "transaction.php";
     include("header.php");
 
 ?>

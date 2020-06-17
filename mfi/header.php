@@ -172,6 +172,12 @@ input[type=number] {
             </div> -->
           </li>
           <li class="nav-item dropdown">
+            <a class="nav-link" href="transaction.php">
+              <i class="material-icons">account_balance_wallet</i>
+              Transaction
+            </a>
+          </li>
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="false" aria-expanded="fasle">
               <i class="material-icons">account_balance_wallet</i>
               Transaction
@@ -183,8 +189,14 @@ input[type=number] {
               <a href="cheque_book_posting.php" class="dropdown-item">CHQ/Pass Book Posting</a>
               <a href="teller_journal.php" class="dropdown-item">Vault Posting</a>
             </div>
-          </li>
+          </li> -->
           <li class="nav-item dropdown">
+            <a class="nav-link" href="approval.php">
+              <i class="material-icons">library_books</i>
+              Approval
+            </a>
+          </li>
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="false" aria-expanded="fasle">
               <i class="material-icons">library_books</i>
               Approval
@@ -195,27 +207,31 @@ input[type=number] {
               <a href="#" class="dropdown-item">CHQ/Pass Book</a>
               <a href="disbursement_approval.php" class="dropdown-item">Loan disbursement</a>
             </div>
-          </li>
+          </li> -->
           <!-- accounting is here -->
           <li class="nav-item dropdown">
+            <a class="nav-link" href="accounting.php">
+              <i class="material-icons">menu_book</i>
+              Accounting
+            </a>
+          </li>
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               <i class="material-icons">menu_book</i>
               Accounting
             </a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="chart_account.php">Chart Of Accounts</a>
-              <!-- <a class="dropdown-item" href="config.php">Configuration</a> -->
               <div class="dropdown-divider"></div>
               <a href="inventory.php" class="dropdown-item">Inventory Posting</a>
               <a class="dropdown-item" href="#">Asset Register</a>
-              <!-- <a class="dropdown-item" href="#">Group</a> -->
               <a class="dropdown-item" href="#">Reconciliation</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Accounting Export</a>
               <a class="dropdown-item" href="#">Periodic Accural</a>
               <a class="dropdown-item" href="#">Close Periods</a>
             </div>
-          </li>
+          </li> -->
           <!-- ending of accounting -->
           <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
@@ -232,6 +248,12 @@ input[type=number] {
           </li> -->
           <!-- report is here now -->
           <li class="nav-item dropdown">
+            <a class="nav-link" href="reports.php">
+              <i class="material-icons">content_paste</i>
+              Reports
+            </a>
+          </li>
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
               <i class="material-icons">content_paste</i>
               Reports
@@ -246,24 +268,27 @@ input[type=number] {
               <a href="report_fixed_deposit.php" class="dropdown-item">Fixed Deposit Report</a>
               <a href="report_institution.php" class="dropdown-item">Institutional Report</a>
             </div>
-          </li>
+          </li> -->
           <!-- end of report -->
           <li class="nav-item dropdown">
+            <a class="nav-link" href="accounting.php">
+              <i class="material-icons">settings</i>
+              Configuration
+            </a>
+          </li>
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               <i class="material-icons">settings</i>
               Configuration
             </a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="products_config.php">Products</a>
-              <!-- <a class="dropdown-item" href="config.php">Configuration</a> -->
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="staff_mgmt.php">Staff Mgt.</a>
               <a class="dropdown-item" href="branch.php">Branch</a>
-              <!-- <a class="dropdown-item" href="payment_type.php">Payment Type</a> -->
-              <!-- <div class="dropdown-divider"></div> -->
               <a class="dropdown-item" href="#">Alerts</a>
             </div>
-          </li>
+          </li> -->
           <!-- another -->
           <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>

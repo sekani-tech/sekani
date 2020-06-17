@@ -239,15 +239,15 @@ $disburse = $w['disbursement_date'];
                       <table class="table table-bordered">
                         <thead>
                         <?php
-                        $query = "SELECT * FROM loan WHERE id = '$id' AND int_id = '$sessint_id'";
+                        $query = "SELECT * FROM prod_acct_cache WHERE id = '$id' AND int_id = '$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                             <tr>
                                 <th>Name</th>
-                                <th>Account no</th>
+                                <th>Type</th>
                                 <th>Amount</th>
                                 <th>Collected On</th>
-                                <!-- <th>Payment Mode</th> -->
+                                <th>Payment Mode</th>
                                 <th>Charge Type</th>
                                 <th>Waive Penalty</th>
                             </tr>

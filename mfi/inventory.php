@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "Post Inventory";
-$destination = "index.php";
+$destination = "accounting.php";
     include("header.php");
 
 ?>

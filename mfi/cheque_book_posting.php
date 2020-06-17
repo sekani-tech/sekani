@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "CHQ/Pass Book Posting";
-$destination = "index.php";
+$destination = "transaction.php";
     include("header.php");
 
 ?>

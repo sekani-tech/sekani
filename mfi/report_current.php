@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "Current Accounts report";
-$destination = "../index.php";
+$destination = "reports.php";
     include("header.php");
     // include("../../functions/connect.php");
 
