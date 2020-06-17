@@ -271,7 +271,7 @@ input[type=number] {
           </li> -->
           <!-- end of report -->
           <li class="nav-item dropdown">
-            <a class="nav-link" href="accounting.php">
+            <a class="nav-link" href="configuration.php">
               <i class="material-icons">settings</i>
               Configuration
             </a>
