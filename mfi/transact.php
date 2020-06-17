@@ -415,7 +415,7 @@ $transid1 = $randms1;
         <div class="col-md-4">
             <div class="form-group">
                <label class="bmd-label-floating">Amount</label>
-               <input type="number" class="form-control" name="amount" value="">
+               <input type="number" step="any" class="form-control" name="amount" value="">
             </div>
         </div>
         <div class="col-md-4">
@@ -510,7 +510,7 @@ $transid1 = $randms1;
         <div class="col-md-4">
         <div class="form-group">
           <label for="">Amount Recieved:</label>
-          <input type="number" name="amount" id="" value="" class="form-control">
+          <input type="number" step="any" name="amount" id="" value="" class="form-control">
           <span class="help-block" style="color: red;"><?php echo $exp_error;?></span>
         </div>
     </div>
