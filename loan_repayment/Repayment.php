@@ -28,8 +28,13 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
         $rep_every = $y["repay_every"];
         // DATE
         $disburse_date = $y["disbursement_date"];
+        $offical_repayment = $y["repayment_date"];
         $repayment_start = $y["repayment_date"];
         // GET THE REPAYMENT END DATE
+        $sch_date = date("Y-m-d");
+        // SECHDULE DATE
+        $approved_by = $y["approvedon_userid"];
+        // END OF OFFICAL INFO
         $loan_term1 = $loan_term - 1;
         $loan_term2 = $loan_term;
         if($rep_every == "month"){
@@ -50,64 +55,53 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
         $matured_date2 = $actualend_date1;
         // GET THE END DATE OF THE LOAN
         $matured_date = $actualend_date;
-        echo "EVERY LOAN START AND END DATE "."CLIENT ".$client_id." -". $repayment_start." - ".$matured_date;
+        // echo "EVERY LOAN START AND END DATE "."CLIENT ".$client_id." -". $repayment_start." - ".$matured_date;
         // REPAYMENT SCHEDULE
         // -----------------
-        ?>
-        <table>
-          <thead>
-              <tr>name</tr>
-              <tr>start</tr>
-              <tr>end</tr>
-              <tr>Installment</tr>
-              <tr>Amount Due</tr>
-              <tr>Interest</tr>
-          </thead>
-        <?php
-        $install = 1;
-        $damn = 0;
-        if ($no_of_rep == 1) {
+        // IF IT IS NULL 
+        $select_repayment_sch = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE loan_id = '$loan_id' AND client_id = '$client_id' AND int_id = '$int_id'");
+        $dm = mysqli_fetch_array($select_repayment_sch);
+        // dman
+        if ($dm <= 0) {
+            // NOTHING
         while (strtotime("+1 ".$rep_every, strtotime($repayment_start)) <= strtotime($matured_date2)) {
-            ?>
-            <tbody>
-         <td><?php echo $client_id; ?></td>
-         <td><?php echo $repayment_start; ?></td>
-         <td><?php echo $matured_date; ?></td>
-         <td><?php echo $install++; ?></td>
-         <td><?php echo $pincpal_amount / $loan_term; ?></td>
-         <td><?php echo ((($interest_rate / 100) * $pincpal_amount) * $loan_term) / $loan_term ?></td>
-         </tbody>
-         <?php
+           $rep_client_id =  $client_id;
+           $rep_fromdate =  $repayment_start;
+           $rep_duedate = $matured_date;
+            $rep_install = $no_of_rep;
+           $rep_comp_derived =  $pincpal_amount / $loan_term;
+           $rep_int_amt = ((($interest_rate / 100) * $pincpal_amount) * $loan_term) / $loan_term;
+        //    WE DO A NEXT STUFF
+        $insert_into_repsch = mysqli_query($connection, "INSERT INTO `loan_repayment_schedule` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, 
+            `principal_amount`, `principal_completed_derived`, `principal_writtenoff_derived`, `interest_amount`, `interest_completed_derived`, `interest_writtenoff_derived`, 
+            `interest_waived_derived`, `accrual_interest_derived`, `suspended_interest_derived`, `fee_charges_amount`, `fee_charges_completed_derived`, `fee_charges_writtenoff_derived`, 
+            `fee_charges_waived_derived`, `accrual_fee_charges_derived`, `suspended_fee_charges_derived`, `penalty_charges_amount`, `penalty_charges_completed_derived`, 
+            `penalty_charges_writtenoff_derived`, `penalty_charges_waived_derived`, `accrual_penalty_charges_derived`, `suspended_penalty_charges_derived`, 
+            `total_paid_in_advance_derived`, `total_paid_late_derived`, `completed_derived`, `obligations_met_on_date`, `createdby_id`, `created_date`, `lastmodified_date`, 
+            `lastmodifiedby_id`, `recalculated_interest_component`) 
+            VALUES ('{$int_id}', '{$loan_id}', '{$rep_client_id}', '{$offical_repayment}', '{$rep_fromdate}', '{$rep_install}', 
+            '{$rep_comp_derived}', '{$rep_comp_derived}', '0', '{$rep_int_amt}', '{$rep_int_amt}', '0',
+            NULL, '0', '0', '0', '0', '0',
+            NULL, '0', '0', '0', '{0}',
+            '0', '0', '0', '0', 
+            '0', '0', '0', NULL, '{$approved_by}', '{$sch_date}', '{$sch_date}',
+            '{$approved_by}', '0')");
+            if ($insert_into_repsch) {
+                echo "WE GOOD";
+            } else {
+                echo "WE BAD";
+            }
+        // END OF WE DO A NEXT STUFF
         $repayment_start = date ("Y-m-d", strtotime("+1 ".$rep_every, strtotime($repayment_start)));
         }
-    } else if ($no_of_rep > 1) {
-        while ($damn <= $no_of_rep) {
-            ?>
-            <tbody>
-         <td><?php echo $client_id; ?></td>
-         <td><?php echo $repayment_start; ?></td>
-         <td><?php echo $matured_date; ?></td>
-         <td><?php echo $install++; ?></td>
-         <td><?php echo $pincpal_amount / $loan_term; ?></td>
-         <td><?php echo ((($interest_rate / 100) * $pincpal_amount) * $loan_term) / $loan_term ?></td>
-         </tbody>
-            <?php
-            //  $repayment_start = date ("Y-m-d", strtotime("+1 ".$rep_every, strtotime($repayment_start)));
-             $damn++;
-        }
-    }
-        ?>
-        </table>
-        <?php
-        // IF IT IS NULL 
-        $select_repayment_sch = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` AND loan_id = '$loan_id' AND client_id = '$client_id' AND id IS NULL");
-        while ($select_repayment_sch) {
-            // NOTHING
-        }
-        // IF THE QUERY IS NOT NULL RUN THE REPAYMENT CODE
-        $select_repayment_sch = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` AND loan_id = '$loan_id' AND client_id = '$client_id' AND id IS NOT NULL");
-        // CHECK THE LAST REPAYMENT DATE THAT IS NOT DONE - COMPLETED DERIVED.
         
+        } else {
+        // IF THE QUERY IS NOT NULL RUN THE REPAYMENT CODE
+        $select_repayment_sch = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE loan_id = '$loan_id' AND client_id = '$client_id' AND id IS NOT NULL");
+        // CHECK THE LAST REPAYMENT DATE THAT IS NOT DONE - COMPLETED DERIVED.
+        echo "QWERTY";
+        // SHOWING ME NEW
+        }
     }
 }
 ?>

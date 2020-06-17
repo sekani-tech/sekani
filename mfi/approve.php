@@ -673,6 +673,8 @@ $resx1 = mysqli_num_rows($q1);
                              });
                              </script>
          ';
+         $URL="transact_approval.php";
+            echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
         } else {
          echo '<script type="text/javascript">
                              $(document).ready(function(){

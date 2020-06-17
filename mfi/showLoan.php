@@ -1575,19 +1575,39 @@ else{
       } else if ($but_type == "reject") {
         // reject the loan
         // store the rejected loan status in cache - to rejecteds
+        $update_loan_cache = mysqli_query($connection, "UPDATE loan_disbursement_cache SET status = 'Rejected' WHERE id = '$appod' AND int_id = '$sessint_id'");
+        if ($update_loan_cache) {
+          // echo "Done";
+          echo '<script type="text/javascript">
+          $(document).ready(function(){
+              swal({
+                  type: "success",
+                  title: "Loan Rejection Successful",
+                  text: "Thank you!",
+                  showConfirmButton: false,
+                  timer: 4000
+              })
+          });
+          </script>
+          ';
+          $URL="disbursement_approval.php";
+            echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+        } else {
+          // error in loan cache
+          echo '<script type="text/javascript">
+          $(document).ready(function(){
+              swal({
+                  type: "error",
+                  title: "Rejection Error",
+                  text: "Kindly Call For Support if You didnt want to reject",
+                  showConfirmButton: false,
+                  timer: 4000
+              })
+          });
+          </script>
+          ';
+        }
         // echo "you rejected the loan";
-        echo '<script type="text/javascript">
-                $(document).ready(function(){
-                    swal({
-                        type: "success",
-                        title: "Rejection Successful",
-                        text: "Call Tech Support if you dont want to reject",
-                        showConfirmButton: false,
-                        timer: 4000
-                    })
-                });
-                </script>
-                ';
       } else {
         // push out an error to the person approving
         // echo "error on approval";
@@ -1621,6 +1641,8 @@ else{
                 });
                 </script>
                 ';
+                $URL="disbursement_approval.php";
+            echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
               } else {
                 // error in loan cache
                 echo '<script type="text/javascript">

@@ -13,8 +13,8 @@
       $int_id = $a['int_id'];
      }
 
-    $coll = "INSERT INTO collateral (int_id, client_id, type, value, description) VALUES ( '{$int_id}',
-    '{$clientid}', '{$colname}', '{$colval}', '{$coldes}')";
+    $coll = "INSERT INTO collateral (int_id, client_id, type, value, description) VALUES ('{$int_id}',
+    '{$clientid}', '{$colval}', '{$colname}', '{$coldes}')";
 
     $query = mysqli_query($connection, $coll);
 
