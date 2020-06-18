@@ -3,7 +3,7 @@
  session_start();
  $out= '';
  $logo = $_SESSION['int_logo'];
-$name = $_SESSION['int_name'];
+$name = $_SESSION['int_full'];
 $sessint_id = $_SESSION['int_id'];
 $current = date('d/m/Y');
 $start = $_POST['start'];
@@ -16,18 +16,7 @@ $cash = mysqli_query($connection, "SELECT sum(organization_running_balance_deriv
 $otss = mysqli_fetch_array($cash);
 $cassh = $otss['organization_running_balance_derived'];
 $cashbank = $cassh + $bank;
-$out = '</div>
-<div class="card">
-  <div class="card-body">
-    <div style="margin:auto; text-align:center;">
-    <img style="width:200px; height:200px;"src="'.$logo.'" alt="sf">
-    <h2>'.$name.'</h2>
-    <h4>STATEMENT OF FINANCIAL POSITION</h4>
-    <h4></h4>
-    <P>'.$current.'</P>
-    </div>
-  </div>
-</div>
+$out = '
 <div class="card">
   <div class="card-header card-header-primary">
     <h4 class="card-title">Assets</h4>

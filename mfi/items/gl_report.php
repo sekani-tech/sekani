@@ -92,15 +92,15 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
           <div class="card-body">
             <!-- sup -->
             <!-- hello -->
-            <form action="../composer/vault.php" method="POST">
+            <form action="../composer/gl_report.php" method="POST">
               <div class="row">
                   <div class="col-md-4 form-group">
                       <label for="">Branch</label>
-                      <input type="text" name="start1" value="'.$start.'" id="start1" class="form-control" hidden>
-                      <input type="text" name="end1" value="'.$end.'" id="end1" class="form-control" hidden>
-                      <input type="text" name="branch1" value="'.$branch_id.'" id="branch1" class="form-control" hidden>
+                      <input type="text" name="start" value="'.$start.'" id="start1" class="form-control" hidden>
+                      <input type="text" name="end" value="'.$end.'" id="end1" class="form-control" hidden>
+                      <input type="text" name="branch" value="'.$branch_id.'" id="branch1" class="form-control" hidden>
                       <input type="text" name="int_id1" value="'.$int_id.'" id="int_id1" class="form-control" hidden>
-                      <input type="text" name="" value="'.$branch.'" id="" class="form-control" readonly>
+                      <input type="text" name="gl_acc" value="'.$glcode.'" id="" class="form-control" readonly>
                   </div>
                 <div class="col-md-4">
                   <div class="form-group">

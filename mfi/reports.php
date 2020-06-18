@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Savings report";
+$page_title = "Reports";
 $destination = "../index.php";
     include("header.php");
     // include("../../functions/connect.php");
@@ -19,7 +19,7 @@ $destination = "../index.php";
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Transactions</h4>
+                  <h4 class="card-title ">Reports</h4>
                   <script>
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
@@ -38,34 +38,42 @@ $destination = "../index.php";
                       <tbody>
                         <tr>
                           <th>Client Report</th>
+                          <th>View and manage all reports concerning the client</th>
                           <td><a href="report_client.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>Group Report</th>
+                          <th>View and manage all reports concerning group accounts</th>
                           <td><a href="report_group.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>Savings Report</th>
+                          <th>View and manage all reports concerning the savings accounts</th>
                           <td><a href="report_savings.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>Current Account Report</th>
+                          <th>View and manage all reports concerning the current accounts</th>
                           <td><a href="report_current.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>Loan Report</th>
+                          <th>View and manage all reports concerning Loan disbursement activities</th>
                           <td><a href="report_loan.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>Financial reports</th>
+                          <th>View and manage all reports concerning financial aspect of the institution</th>
                           <td><a href="report_financial.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>Fixed Deposit report</th>
+                          <th>View and manage all reports concerning the fixed deposit accounts</th>
                           <td><a href="report_fixed_deposit.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>Institutional reports</th>
+                          <th>View and manage all reports concerning the status of the institution and its activities</th>
                           <td><a href="report_institution.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                       </tbody>

@@ -3,12 +3,14 @@
  session_start();
  $out= '';
  $logo = $_SESSION['int_logo'];
-$name = $_SESSION['int_name'];
+$name = $_SESSION['int_full'];
 $sessint_id = $_SESSION['int_id'];
 $current = date('d/m/Y');
 if(isset($_POST['start'])){
     $start = $_POST['start'];
     $end = $_POST['end'];
+    $time = strtotime($end);
+    $onemonth = date("Y-m-d", strtotime("-1 month", $time));
 // Operating Revenue Data
 $gl_acc_exec = mysqli_query($connection, "SELECT sum(organization_running_balance_derived) AS organization_running_balance_derived FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '54'");
 $gl = mysqli_fetch_array($gl_acc_exec);
@@ -99,17 +101,7 @@ $totality = $salaries + $fueling + $transportation + $office_rent + $printing + 
 + $general + $bankcharges + $relation + $baddebt + $secure;
 
 $out = '';
-$out = '<div class="card">
-<div class="card-body">
-  <div style="margin:auto; text-align:center;">
-  <img style="height: 200px; width:200px;"src="'.$logo.'" alt="sf">
-  <h2>'.$name.'</h2>
-  <h4>Statement of Income</h4>
-  <h4></h4>
-  <P>'.$current.'</P>
-  </div>
-</div>
-</div>
+$out = '
 <div class="card">
 <div class="card-header card-header-primary">
   <h4 class="card-title">Operating Revenue</h4>
@@ -117,44 +109,37 @@ $out = '<div class="card">
 <div class="card-body">
   <table class="table">
     <thead>
-      <th style="font-weight:bold;">Codes</th>
       <th style="font-weight:bold;">GL Account</th>
-      <th style="text-align: center; font-weight:bold;">'.$start.' <br/>(NGN)</th>
+      <th style="text-align: center; font-weight:bold;">'.$onemonth.' <br/>(NGN)</th>
       <th style="text-align: center; font-weight:bold;">'.$end.' <br/>(NGN)</th>
     </thead>
     <tbody>
       <tr>
-        <td></td>
         <td>Interest on Loans:</td>
         <td style="text-align: center">'.number_format($interest_income).'</td>
         <td style="text-align: center">23,809,347</td>
       </tr>
       <tr>
-        <td></td>
         <td>Less interest on borrowings and deposit liabilities:</td>
         <td style="text-align: center">'.number_format($burrowing).'</td>
         <td style="text-align: center">3,605,801</td>
       </tr>
       <tr>
-        <td></td>
         <td><b>Net Interest Income</b></td>
         <td style="text-align: center"><b>'.number_format($netintincome).'</b></td>
         <td style="text-align: center"><b>20,203,547</b></td>
       </tr>
       <tr>
-        <td></td>
         <td>Services fees, fines and penalties</td>
         <td style="text-align: center">'.number_format($fee).'</td>
         <td style="text-align: center">6,694,511</td>
       </tr>
       <tr>
-        <td></td>
         <td>Other services and other income</td>
         <td style="text-align: center">'.number_format($other).'</td>
         <td style="text-align: center">491,685</td>
       </tr>
       <tr>
-        <td></td>
         <td><b>Total Income</b></td>
         <td style="text-align: center"><b>'.number_format($ttlincome).'</b></td>
         <td style="text-align: center"><b>27,389,742</b></td>
@@ -172,7 +157,7 @@ $out = '<div class="card">
     <thead>
       <th style="font-weight:bold;">Codes</th>
       <th style="font-weight:bold;">GL Account</th>
-      <th style="text-align: center; font-weight:bold;">'.$start.' <br/>(NGN)</th>
+      <th style="text-align: center; font-weight:bold;">'.$onemonth.' <br/>(NGN)</th>
       <th style="text-align: center; font-weight:bold;">'.$end.' <br/>(NGN)</th>
     </thead>
     <tbody>
