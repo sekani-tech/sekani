@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "Client Report";
-$destination = "report_client.php";
+$destination = "report_current.php";
     include("header.php");
 ?>
 <?php

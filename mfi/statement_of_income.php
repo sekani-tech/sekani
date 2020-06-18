@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "STATEMENT OF INCOME";
-$destination = "client.php";
+$destination = "report_financial.php";
 include('header.php');
 
 ?>
@@ -90,7 +90,7 @@ include('header.php');
                       });
                     });
                   </script>
-              <div id="outjournal" class="card">
+              <div id="outjournal" class="col-md-10">
 
               </div>
           </div>

@@ -78,10 +78,24 @@ $principal = $w['principal_amount'];
 $account = $w['account_no'];
 $loanterm = $w['loan_term'];
 $interest = $w['interest_rate'];
+$intamt = ($interest/100) * $principal;
 $repayment = $w['repayment_date'];
 $repay_no = $w['number_of_repayments'];
 $repayever = $w['repay_every'];
 $disburse = $w['disbursement_date'];
+$fee_charges = $w['fee_charges_charged_derived'];
+$penalty_charges = $w['penalty_charges_charged_derived'];
+$princi_repaid = $w['principal_repaid_derived'];
+$int_repaid = $w['interest_repaid_derived'];
+$fees_repaid = $w['fee_charges_repaid_derived'];
+$penal_repaid = $w['penalty_charges_repaid_derived'];
+$principal_out = $w['principal_outstanding_derived'];
+$int_out = $w['interest_outstanding_derived'];
+$fee_out = $w['fee_charges_outstanding_derived'];
+$penal_out = $w['penalty_charges_outstanding_derived'];
+$overdue = $w['total_waived_derived'];
+
+
 ?>
 <input type="text" hidden id = "principal_amount" value="<?php echo $principal;?>" name=""/>
 <input type="text" hidden id = "loan_term" value="<?php echo $loanterm;?>" name=""/>
@@ -147,60 +161,74 @@ $disburse = $w['disbursement_date'];
                     <div class="tab-pane active" id="summary">
                     <div class="col-md-12">
                     <div class="row">
-                         
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Status</h4></div>
-                          <div style = "color:green" class="col-md-3">Active</div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Client Name</h4></div>
-                          <div class="col-md-3"><?php echo $nae;?></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Account Officer</h4></div>
+                         <style>
+                           b{
+                             font-weight: 100px;
+                           }
+                         </style>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Status</h4></b></div>
+                          <div style = "color:green" class="col-md-3"><b>Active</b></div>
+                          <div class="col-md-3"><b><h4 style=" font-weight: 100px; text-align:right;" class="card-title">Client Name</h4></b></div>
+                          <div class="col-md-3"><b><?php echo $nae;?></b></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Account Officer</h4></b></div>
                           <div class="col-md-3"><?php echo $kdm;?></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Loan Cycle</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Loan Cycle</h4></b></div>
                           <div class="col-md-3"></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Date Disbursed</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Date Disbursed</h4></b></div>
                           <div class="col-md-3"><?php echo $disburse;?></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Timely Repayments</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Timely Repayments</h4></b></div>
                           <div class="col-md-3"></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Last Payment</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Last Payment</h4></b></div>
                           <div class="col-md-3"></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Amount in Arrears</h4></div>
-                          <div class="col-md-3"><?php echo $principal;?></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Next Payment</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Amount in Arrears</h4></b></div>
                           <div class="col-md-3"></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Days in Arrears</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Next Payment</h4></b></div>
+                          <div class="col-md-3"></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Days in Arrears</h4></b></div>
                           <div class="col-md-3"><?php echo $loanterm;?></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Final Payment Expected</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Final Payment Expected</h4></b></div>
                           <div class="col-md-3"><?php echo $repayment;?></div>
                       </div>
                       </div>
                       <table class="table table-bordered">
                         <thead>
-                        <?php
-                        $query = "SELECT * FROM loan WHERE id = '$id' AND int_id = '$sessint_id'";
-                        $result = mysqli_query($connection, $query);
-                      ?>
-                            <tr>
-                                <th>Principal</th>
-                                <th>Interest</th>
-                                <th>Fees</th>
-                                <th>Penalties</th>
+                        <tr>
+                                <th></th>
+                                <th>Contract</th>
+                                <th>Paid</th>
+                                <th>Outstanding</th>
+                                <th>Overdue</th>
                             </tr>
                         </thead>
                         <tbody>
-                      <?php if (mysqli_num_rows($result) > 0) {
-                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
-                        <?php $row["id"]; ?>
-                          <td><?php echo $row["principal_amount"]; ?></td>
-                          <td><?php echo $row["interest_rate"]; ?></td>
-                          <td><?php echo $row["fee_charges_outstanding_derived"]; ?></td>
-                          <td><?php echo $row["penalty_charges_outstanding_derived"];?></td>
-                         </tr>
-                        <?php }
-                          }
-                          else {
-                            // echo "0 Document";
-                          }
-                          ?>
+                                <th>Principal</th>
+                                <th><?php echo $principal;?></th>
+                                <th><?php echo $princi_repaid;?></th>
+                                <th><?php echo $principal_out;?></th>
+                                <th><?php echo $overdue;?></th></th>
+                            </tr>
+                        <tr>
+                                <th>Interest</th>
+                                <th><?php echo $intamt;?></th>
+                                <th><?php echo $int_repaid;?></th>
+                                <th><?php echo $int_out;?></th>
+                                <th><?php echo $overdue;?></th></th>
+                            </tr>
+                            <tr>
+                                <th>Fees</th>
+                                <th><?php echo $fee_charges;?></th>
+                                <th><?php echo $fee_out;?></th>
+                                <th><?php echo $princi_repaid;?></th>
+                                <th><?php echo $overdue;?></th></th>
+                            </tr>
+                            <tr>
+                                <th>Penalties</th>
+                                <th><?php echo $penalty_charges;?></th>
+                                <th><?php echo $penal_repaid;?></th>
+                                <th><?php echo $penal_out;?></th>
+                                <th><?php echo $overdue;?></th></th>
+                            </tr>
                       </tbody>
                       </table>
                     </div>
@@ -208,31 +236,31 @@ $disburse = $w['disbursement_date'];
                     <div class="tab-pane" id="details">
                     <div class="col-md-12">
                     <div class="row">
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Loan Product</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Loan Product</h4></b></div>
                           <div class="col-md-3"><?php echo $loanprod; ?></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Loan Amount</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Loan Amount</h4></b></div>
                           <div class="col-md-3"><?php echo $disburse;?></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Business Expansion</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Business Expansion</h4></b></div>
                           <div class="col-md-3"></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Interest Rate</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Interest Rate</h4></b></div>
                           <div class="col-md-3"><?php echo $interest;?></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">APR</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">APR</h4></b></div>
                           <div class="col-md-3"></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Loan Term</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Loan Term</h4></b></div>
                           <div class="col-md-3"><?php echo $loanterm;?></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">EIR</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">EIR</h4></b></div>
                           <div class="col-md-3"></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Repayment Every</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Repayment Every</h4></b></div>
                           <div class="col-md-3"><?php echo $repay_no." ".$repayever;?></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Loan Sector</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Loan Sector</h4></b></div>
                           <div class="col-md-3"><?php echo $loan_sec;?></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Linked Account</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Linked Account</h4></b></div>
                           <div class="col-md-3"><?php echo $account;?></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">No of Gaurantors</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">No of Gaurantors</h4></b></div>
                           <div class="col-md-3"><?php echo $gau;?></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Repayment Date</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Repayment Date</h4></b></div>
                           <div class="col-md-3"><?php echo $repayment;?></div>
-                          <div class="col-md-3"><h4 style="text-align:right;" class="card-title">Collateral Value</h4></div>
+                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Collateral Value</h4></b></div>
                           <div class="col-md-3"><?php echo $colvalue;?></div>
                       </div>
                       </div>
@@ -264,7 +292,7 @@ $disburse = $w['disbursement_date'];
                              $amt = '';
                              $amt2 = '';
                             $forp = $xm["charge_calculation_enum"];
-                            $rmt = $_POST["prin"];
+                            $rmt = $principal;
                             $amt_2 = $xm["amount"];
                             if ($forp == 1) {
                                 $amt = number_format($xm["amount"], 2);
@@ -310,7 +338,7 @@ $disburse = $w['disbursement_date'];
                           ?>   
                           </tbody>
                         </table>
-                      <table class="table table-bordered">
+                      <!-- <table class="table table-bordered">
                         <thead>
                         <?php
                         $query = "SELECT * FROM prod_acct_cache WHERE id = '$id' AND int_id = '$sessint_id'";
@@ -346,7 +374,7 @@ $disburse = $w['disbursement_date'];
                           }
                           ?>
                       </tbody>
-                      </table>
+                      </table> -->
                     </div>
                     <div class="tab-pane" id="repoay">
                     <div class="form-group">
