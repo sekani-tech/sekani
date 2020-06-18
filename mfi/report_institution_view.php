@@ -69,7 +69,6 @@ $destination = "report_institution.php";
                         </select>
                       </div> -->
                     </div>
-                    <span id="pddf" type="sumbit" class="btn btn-primary pull-right">PDF print</span>
                     <button type="reset" class="btn btn-danger">Reset</button>
                     <span id="runstaff" type="submit" class="btn btn-primary">Run report</span>
                   </form>
@@ -94,32 +93,12 @@ $destination = "report_institution.php";
                   </script>
                   <div class="card-body">
                       <div class="col-md-8">
-              <table id = "shstaff" class="table table-bordered">
-
-            </table>
-            <script>
-                    $(document).ready(function () {
-                      $('#pddf').on("click", function () {
-                        var start = $('#start').val();
-                        var end = $('#end').val();
-                        var branch = $('#brne').val();
-                        var staff = $('#outstaff').val();
-                        $.ajax({
-                          url: "../composer/staff_cabal.php",
-                          method: "POST",
-                          data:{start:start, end:end, branch:branch, staff:staff},
-                          success: function (data) {
-                            $('#shstaff').html(data);
-                          }
-                        })
-                      });
-                    });
-                  </script>
                       </div>
                   </div>
 
                   </div>
             </div>
+            <div id = "shstaff"> </div>
           </div>
 
         </div>

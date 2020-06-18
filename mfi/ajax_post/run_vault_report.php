@@ -89,7 +89,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
         <div class="card">
           <div class="card-header card-header-primary">
             <h4 class="card-title">'.$int_name." ".$branch.'</h4>
-            <p class="card-category">Teller Call Over Report</p>
+            <p class="card-category">Vault Report</p>
           </div>
           <div class="card-body">
             <!-- sup -->
