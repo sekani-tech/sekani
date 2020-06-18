@@ -153,7 +153,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                         <tr>
                         <?php $row["id"]; ?>
                           <th><?php echo $row["transact_type"]; ?></th>
-                          <th><?php echo $row["amount"]; ?></th>
+                          <th><?php echo number_format($row["amount"], 2); ?></th>
                           <th><?php echo $row["account_off_name"]; ?></th>
                           <th><?php echo $row["client_name"]; ?></th>
                           <th><?php echo $row["status"]; ?></th>
