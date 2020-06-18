@@ -71,8 +71,8 @@
 //             $rep_install = $no_of_rep;
 //            $rep_comp_derived =  $pincpal_amount / $loan_term;
 //            $rep_int_amt = ((($interest_rate / 100) * $pincpal_amount) * $loan_term) / $loan_term;
-//            $general_payment = $pincpal_amount + ((($interest_rate / 100) * $pincpal_amount) * $loan_term);
-//            echo "GENERAL PAYMENT".$general_payment;
+//         //    $general_payment = $pincpal_amount + ((($interest_rate / 100) * $pincpal_amount) * $loan_term);
+//         //    echo "GENERAL PAYMENT".$general_payment;
 //         //    WE DO A NEXT STUFF
 //         $insert_into_repsch = mysqli_query($connection, "INSERT INTO `loan_repayment_schedule` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, 
 //             `principal_amount`, `principal_completed_derived`, `principal_writtenoff_derived`, `interest_amount`, `interest_completed_derived`, `interest_writtenoff_derived`, 
@@ -112,6 +112,13 @@
 //             $collection_installment = $pop["installment"];
 //             $collection_principal = $pop["principal_amount"];
 //             $collection_interest = $pop["interest_amount"];
+//             $general_date_due = $pop["duedate"];
+//             $post_installment = $collection_installment - 1;
+//             $select_loanx = mysqli_query($connection, "SELECT * FROM loan WHERE id = '$collection_loan'");
+//             $ges = mysqli_fetch_array($select_loanx);
+//             $new_loan_term = $ges["loan_term"];
+//             $general_payment = ($collection_principal + $collection_interest) * $new_loan_term;
+//             echo "GENERAL PAYMENT".$general_payment;
 //             $collection_due_paid = $collection_principal + $collection_interest;
 //             $loan_account = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$collection_client_id' AND int_id = '$d_int_id'");
 //             $u = mysqli_fetch_array($loan_account);
@@ -121,7 +128,7 @@
 //             $total_withd =  $u["total_withdrawals_derived"] + $collection_due_paid;
 //             // PILLED
 //             // CLIENT 
-//             $client_account = mysqli_query($connection, "SELECT * FROM client WHERE client_id = '$collection_client_id' AND int_id = '$d_int_id'");
+//             $client_account = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' AND int_id = '$int_id'");
 //             $cx = mysqli_fetch_array($client_account);
 //             $branch_id = $cx["branch_id"];
 //             $client_firstname = $cx["firstname"];
@@ -161,19 +168,41 @@
 //                      `payment_method`, `principal_portion_derived`, `interest_portion_derived`, `fee_charges_portion_derived`, `penalty_charges_portion_derived`,
 //                      `overpayment_portion_derived`, `unrecognized_income_portion`, `suspended_interest_portion_derived`, `suspended_fee_charges_portion_derived`, 
 //                      `suspended_penalty_charges_portion_derived`, `outstanding_loan_balance_derived`, `recovered_portion_derived`, `submitted_on_date`, `manually_adjusted_or_reversed`, `created_date`, `appuser_id`, `is_account_transfer`) 
-//                     VALUES ('{$int_id}', '{$branch_id}', '0', '{$loan_id}', '{$trans_id}', '{$client_id}', '{$acct_no}', '0', '0', 'Repayment', '{$gen_date}', '{$collection_due_paid}', 
+//                     VALUES ('{$int_id}', '{$branch_id}', '0', '{$collection_loan}', '{$trans_id}', '{$client_id}', '{$acct_no}', '0', '0', 'Repayment', '{$gen_date}', '{$collection_due_paid}', 
 //                     'auto_account', '{$collection_principal}', '{$collection_interest}', '0', '0', 
 //                     '0', NULL, '0', '0', '0', '{$total_out_stand}', '{$collection_due_paid}', '{$gen_date}', '0', '{$gen_date}', '0', '1')");
-
+//                     //   if ($connection->error) {
+//                     //             try {
+//                     //                 throw new Exception("MYSQL error $connection->error <br> $update_loan_trans ", $mysqli->error);
+//                     //             } catch (Exception $e) {
+//                     //                 echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
+//                     //                 echo n12br($e->getTraceAsString());
+//                     //             }
+//                     //         }
 //                     if ($update_loan_trans) {
 //                         // update the repayment sch history
 //                         $update_repayment = mysqli_query($connection, "INSERT INTO `loan_repayment_schedule_history` (`int_id`, `loan_id`, `client_id`, `loan_reschedule_request_id`, `fromdate`, `duedate`, `installment`, `principal_amount`, `interest_amount`, `fee_charges_amount`, `penalty_charges_amount`, `createdby_id`, `created_date`, `lastmodified_date`, `lastmodifiedby_id`, `version`)
-//                         VALUES ('{$int_id}', '{$loan_id}', '{$client_id}', '{$collection_id}', '{}', '{}', '{}', '{}', '{}', '{}', NULL, NULL, '{}', NULL, NULL, '')");
-//                 // loan repayment status
-//                 // YOU STOPPED HERE HERE;
-//                 // update the repayement sch.
-//                 // TAKE THE CHARGE
-//                 // FROM THE LOAN
+//                         VALUES ('{$int_id}', '{$loan_id}', '{$client_id}', '{$collection_id}', '{$repayment_start}', '{$matured_date}', '{$collection_principal}', '{$collection_interest}', '0', '0', NULL, NULL, '{$gen_date}', NULL, NULL, '')");
+//                         if ($update_repayment) {
+//                             // loan repayment status
+//                             $update_rep_status = mysqli_query($connection, "INSERT INTO `loan_repayment_status` (`int_id`, `loan_id`, `client_id`, `product_id`, `date_due`, `date_paid`, `status`, `pay_descript`, `loan_status`, `loan_status_descript`, `pay_type`, `pay_status`) 
+//                             VALUES ('{$int_id}', '{$loan_id}', '{$client_id}', '{$product_id}', '{$general_date_due}', '{$gen_date}', '0', 'early', '0', 'active', 'account', '0')");
+//                             if ($update_rep_status) {
+//                                 // YOU STOPPED HERE HERE
+//                                // update the repayement sch.
+//                                $uodate_rep_status = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET installment = '$post_installment' WHERE int_id = '$int_id' AND id = '$collection_id'");
+//                                if ($update_rep_status) {
+//                                    echo "SUCCESS AT LAST";
+//                                } else {
+//                                    echo "ERROR AT LAST";
+//                                }
+//                               // FROM THE LOAN
+//                             } else {
+//                                 echo "ERROR at Repayment Status";
+//                             }
+//                         } else {
+//                             echo "ERROR Loan Reayment Schedule History";
+//                         }
 //                     } else {
 //                         echo "ERROR in Update Transaction";
 //                     }
@@ -190,13 +219,14 @@
 //                 // END UPDATE
 //             } else if ($client_account_balance < $collection_due_paid && $client_account_balance >= 1) {
 //                 // DO CARD COLLECTION
-//                 echo "s";
+//                 echo "TAKE FUND HERE AND ALSO ON THE FLUTTER ACCOUNT";
 //                 //  DO REPAYMENT COLLECTION
 //              } else {
 //                 $balance_remaining = "Insufficient Fund";
 //                 // DO THE INSUFFICIENT POSTING
 //                 // TAKE THE CARD - IF CARD SUCCESS (REMEMBER TO DO THE TRANSACTION, REDUCE THE ID BY 1);
 //                 // IF CARD IS BAD - THROW THE ACCOUNT INTO MINUS
+//                 echo "NO FUND";
 //             }
 //             // DO AN ACCOUNT TRANSACTION IF ANY IS GOOD;
 //             // echo "Due Paid".$collection_due_paid;
