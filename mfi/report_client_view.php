@@ -28,7 +28,7 @@ $destination = "report_client.php";
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> View clients' balance</p>
+                   }?> View client balances</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -154,7 +154,7 @@ $destination = "report_client.php";
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Registered Clients</h4>

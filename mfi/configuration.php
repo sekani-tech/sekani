@@ -38,18 +38,22 @@ $destination = "../index.php";
                       <tbody>
                         <tr>
                           <th>Products</th>
+                          <th>Add, edit and update the Loan products of the instution</th>
                           <td><a href="products_config.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>Staff Management</th>
+                          <th>Manage all the staff activities and their status</th>
                           <td><a href="staff_mgmt.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>Branch</th>
+                          <th>View and create institution branches</th>
                           <td><a href="branch.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>Alerts</th>
+                          <th>Handle the alerts that the system recieves</th>
                           <td><a href="#" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                       </tbody>

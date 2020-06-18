@@ -281,7 +281,7 @@ $destination = "transaction.php";
                     </div>
                   <div style="float:right;">
                         <span class="btn btn-primary pull-right" id="clickit" onclick="AddDlg()">Add</span>
-                        <a class="btn btn-primary pull-right" onclick="AddDlg()">Cancel</a>
+                        <span class="btn btn-primary pull-right" onclick="AddDlg()">Cancel</span>
                       </div>
                         <!-- </form> -->
                         <script>

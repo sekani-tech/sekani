@@ -61,7 +61,7 @@ if(isset($_POST["id"]))
         $a = mysqli_fetch_array($org);
         $int_id = $a['int_id'];
        }
-       $pen = "SELECT * FROM staff WHERE int_id = '$int_id'";
+       $pen = "SELECT * FROM staff WHERE int_id = '$int_id' AND employee_status = 'Employed'";
       $res = mysqli_query($connection, $pen);
       $out = '';
       while ($row = mysqli_fetch_array($res))
