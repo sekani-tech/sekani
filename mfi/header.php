@@ -151,26 +151,32 @@ input[type=number] {
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item dropdown">
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link" href="manage_client.php">
               <i class="material-icons">person</i>
               Register Client
-            </a>
+            </a> -->
             <!-- <div class="dropdown-menu">
               <a class="dropdown-item" href="client.php">Client List</a>
               <a href="manage_client.php" class="dropdown-item">Register Client</a>
             </div> -->
-          </li>
+          <!-- </li> -->
           <li class="nav-item dropdown">
+            <a class="nav-link" href="customer_service.php">
+              <i class="material-icons">supervised_user_circle</i>
+              Customer Service
+            </a>
+          </li>
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link" href="#">
               <i class="material-icons">people</i>
               Register Group
-            </a>
+            </a> -->
             <!-- <div class="dropdown-menu">
               <a class="dropdown-item" href="#">Group List</a>
               <a href="#" class="dropdown-item">Register Group</a>
             </div> -->
-          </li>
+          <!-- </li> -->
           <li class="nav-item dropdown">
             <a class="nav-link" href="transaction.php">
               <i class="material-icons">account_balance_wallet</i>
