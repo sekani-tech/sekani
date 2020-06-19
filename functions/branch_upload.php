@@ -12,14 +12,16 @@ $submitted_on = date('Y-m-d');
 
 $query = "INSERT INTO branch (int_id, name, email, phone, location) VALUES ('{$ssint_id}',
 '{$name}', '{$email}', '{$phone}', '{$location}')";
-
 $result = mysqli_query($connection, $query);
 
 if ($result) {
+    $brna = mysqli_query($connection, "SELECT * FROM branch WHERE name = '{$name}'");
+    $gom = mysqli_fetch_array($brna);
+    $br_id = $gom['id']; 
         $mvamt = 10000000.00;
         $bal = 0.00;
-        $queryx = "INSERT INTO int_vault (int_id, movable_amount, balance, date, last_withdrawal, last_deposit) VALUES ('{$ssint_id}',
-    '{$mvamt}', '{$bal}', '{$submitted_on}', '{$bal}', '{$bal}')";
+        $queryx = "INSERT INTO int_vault (int_id, branch_id, movable_amount, balance, date, last_withdrawal, last_deposit) VALUES ('{$ssint_id}',
+    '{$br_id}', '{$mvamt}', '{$bal}', '{$submitted_on}', '{$bal}', '{$bal}')";
     $gogoo = mysqli_query($connection, $queryx);
     // If 'result' is successful, it will send the required message to client.php
     $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
