@@ -70,7 +70,7 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
   <div id="logo">
     <img src="'.$_SESSION["int_logo"].'" height="80" width="80">
   </div>
-  <h1>General Ledger Report As at '.$endx.'</h1>
+  <h1>'.$glname.' Statement<br/> As at '.$endx.'</h1>
   </header>
   <main>
   <table>
@@ -119,7 +119,7 @@ Date and Sign:__________________________________
 </div>
   </main>
   ');
-  $file_name = 'General Ledger Report for '.$glname.'-'.$glcode.'.pdf';
+  $file_name = 'Statement for '.$glname.'-'.$glcode.'.pdf';
   $mpdf->Output($file_name, 'D');
     }
     else {
