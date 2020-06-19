@@ -4,15 +4,7 @@
               $out= '';
               $logo = $_SESSION['int_logo'];
               $name = $_SESSION['int_name'];
-              $out ='<div class="card">
-                <div class="card-body">
-                  <div style="margin:auto; text-align:center;">
-                  <img style = "height: 200px; width: 200px;" src="'.$logo.'" alt="sf">
-                  <h2>'.$name.'</h2>
-                  <h4>Summary of Loan Classification</h4>
-                  </div>
-                </div>
-              </div>
+              $out ='
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Summary of Loan Classification</h4>

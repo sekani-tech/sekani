@@ -386,7 +386,7 @@ $destination = "report_loan.php";
                       });
                     });
                   </script>
-              <div id="shclass" class="card">
+              <div id="shclass" class="col-md-12">
 
               </div>
             </div>
