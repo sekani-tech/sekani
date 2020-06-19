@@ -67,7 +67,6 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
           $query6exec = mysqli_query($connection, $query6);
           $l = mysqli_fetch_array($query6exec);
           $loansamount = $l['principal_amount'];
-
             $out .= '
             <tr>
             <th>'.$staff.'</th>
@@ -83,6 +82,14 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
         }
           return $out;
         }
+        $querycurttl = mysqli_query($connection, "SELECT client.id, client.account_type, account.product_id, client.account_no FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.product_id = '1' AND account.branch_id = '$branch_id' AND account.submittedon_date BETWEEN '$start' AND '$end'");
+        $totalcurrent = mysqli_num_rows($querycurttl);
+
+        $querysavttl = mysqli_query($connection, "SELECT client.id, client.account_type, account.product_id, client.account_no FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.product_id != '1' AND account.branch_id = '$branch_id' AND account.submittedon_date BETWEEN '$start' AND '$end'");
+        $totalsavings = mysqli_num_rows($querysavttl);
+
+        $querycurttl = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND submittedon_date BETWEEN '$start' AND '$end'");
+        $totalloan = mysqli_num_rows($querycurttl);
         $output = '<div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
@@ -138,12 +145,12 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                 <tr>
               <th>Total</th>
               <th></th>
-              <th></th>
+              <th>'.$totalcurrent.'</th>
                <th></th>
+               <th>'.$totalsavings.'</th>
                <th></th>
+               <th>'.$totalloan.'</th>
                <th></th>
-               <th></th>
-            <th></th>
               </tr>
                 </tbody>
               </table>
