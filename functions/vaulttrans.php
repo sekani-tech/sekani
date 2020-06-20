@@ -64,8 +64,8 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                 $description = "Deposited into Vault";
                 if($ein){
                   
-                    $vaultinquery2 = "UPDATE int_vault SET balance = '$new_vaultbalance', last_deposit = '$amount'  WHERE int_id = '$sint_id' AND branch_id = '$branchid'";
-                    $fon = mysqli_query($connection, $vaultffinquery);
+                    $vaufinquery = "UPDATE int_vault SET balance = '$new_vaultbalance', last_deposit = '$amount'  WHERE int_id = '$sint_id' AND branch_id = '$branchid'";
+                    $fon = mysqli_query($connection, $vaufinquery);
 
                     $vaultffinquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '10011000' && int_id = '$sint_id' AND branch_id = '$branchid'";
                     $on = mysqli_query($connection, $vaultffinquery);
@@ -639,7 +639,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         }
                       }
                         // mail system
-                        if(!$mail->send()) 
+                        if($rlt) 
                         {
                         $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
                         echo "error";
@@ -840,7 +840,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                     }
                     }
                                  // mail system
-                                 if(!$mail->send()) 
+                                 if($rlt) 
                                  {
                                    $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
                                    echo "error";
