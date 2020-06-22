@@ -39,6 +39,7 @@ $additional_charge = $_POST['additional_charge'];
 // LOAN PRODUCT ADDING ACCOUNTING RULE
 $asst_fund_src = $_POST["asst_fund_src"];
 $asst_loan_port = $_POST["asst_loan_port"];
+$asst_insuff_rep = $_POST["asst_insuff_rep"];
 $li_overpayment = $_POST["li_overpayment"];
 $li_suspended_income = $_POST["li_suspended_income"];
 $inc_interest = $_POST["inc_interest"];
@@ -67,8 +68,8 @@ $res = mysqli_query($connection, $query);
     $mr = mysqli_fetch_array($id_of_p);
     $product_id = $mr["id"];
     if ($product_id != 0 || $product_id != "") {
-        $making = mysqli_query($connection, "INSERT INTO `acct_rule` (`int_id`, `loan_product_id`, `asst_fund_src`, `asst_loan_port`, `li_overpayment`, `li_suspended_income`, `inc_interest`, `inc_fees`, `inc_penalties`, `inc_recovery`, `exp_loss_written_off`, `exp_interest_written_off`, `rule_type`)
-        VALUES ('{$sessint_id}', '{$product_id}', '{$asst_fund_src}', '{$asst_loan_port}', '{$li_overpayment}', '{$li_suspended_income}', '{$inc_interest}', '{$inc_fees}', '{$inc_penalties}', '{$inc_recovery}', '{$exp_loss_written_off}', '{$exp_interest_written_off}', '{$rand_id}')");
+        $making = mysqli_query($connection, "INSERT INTO `acct_rule` (`int_id`, `loan_product_id`, `asst_fund_src`, `asst_loan_port`, `li_overpayment`, `li_suspended_income`, `inc_interest`, `inc_fees`, `inc_penalties`, `inc_recovery`, `exp_loss_written_off`, `exp_interest_written_off`, `rule_type`, `insufficient_repayment`)
+        VALUES ('{$sessint_id}', '{$product_id}', '{$asst_fund_src}', '{$asst_loan_port}', '{$li_overpayment}', '{$li_suspended_income}', '{$inc_interest}', '{$inc_fees}', '{$inc_penalties}', '{$inc_recovery}', '{$exp_loss_written_off}', '{$exp_interest_written_off}', '{$rand_id}', '{$asst_insuff_rep}')");
         if ($making) {
             $id_trans = $_SESSION["product_temp"];
             $select_cache = mysqli_query($connection, "SELECT * FROM `prod_acct_cache` WHERE prod_cache_id = '$id_trans'");

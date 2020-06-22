@@ -95,7 +95,7 @@ if(isset($_POST["id"]))
         <th> <?php echo $row["name"] ?></th>
         <th><?php echo $row["charge"] ?></th>
         <th> <?php echo $row["collected_on"] ?></th>
-        <input type="text" value="<?php $row["id"] ?>">
+        <input type="text" value="<?php $row["id"] ?>" hidden>
         <th> <button id="del" type="button" name="delete" class="btn btn-info">delete</button> </th>
       </tr>
       <script>

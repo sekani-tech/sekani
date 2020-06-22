@@ -430,7 +430,7 @@ $destination = "index.php";
                                 $output = '';
                                 while ($row = mysqli_fetch_array($res))
                                 {
-                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+                                  $output .= '<option value = "'.$row["gl_code"].'"> '.strtoupper($row["name"]).' </option>';
                                 }
                                 return $output;
                               }
@@ -452,6 +452,15 @@ $destination = "index.php";
                             </select>
                             </div>
                           </div>
+                          <div class="form-group">
+                            <div class="col-md-8">
+                            <label for="charge" class="form-align">Insufficient Repayment</label>
+                            <select class="form-control form-control-sm" name="asst_insuff_rep">
+                              <option value="">--</option>
+                              <?php echo fill_asset($connection) ?>
+                            </select>
+                            </div>
+                          </div>
                           </div>
                       <h5 class="card-title">Liabilities</h5>
                       <?php
@@ -463,7 +472,7 @@ $destination = "index.php";
                                 $output = '';
                                 while ($row = mysqli_fetch_array($res))
                                 {
-                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+                                  $output .= '<option value = "'.$row["gl_code"].'"> '.strtoupper($row["name"]).' </option>';
                                 }
                                 return $output;
                               }
@@ -564,7 +573,7 @@ $destination = "index.php";
                                 $output = '';
                                 while ($row = mysqli_fetch_array($res))
                                 {
-                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+                                  $output .= '<option value = "'.$row["gl_code"].'"> '.strtoupper($row["name"]).' </option>';
                                 }
                                 return $output;
                               }
