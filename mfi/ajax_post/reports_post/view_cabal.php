@@ -157,8 +157,6 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             </div>
             
             <hr>
-            <p><b>Checked By: '.$_SESSION["username"].'</b>                             <b>Date/Sign: '.$std." - ".$endx.' </b></p>
-
             <p>
             <button id="pddf" type="sumbit" class="btn btn-primary pull-right">PDF print</button>
             <div id=""></div>

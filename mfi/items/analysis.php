@@ -82,15 +82,6 @@ $ttlsector = $sector1 + $sector2 + $sector3 + $sector4 + $sector5 + $sector6 + $
 $ttlamount =number_format($ttunt);
 
     $out ='
-    <div class="card-body">
-      <div style="margin:auto; text-align:center;">
-      <img style = "height: 200px; width: 200px;" src="'.$logo.' alt="sf">
-      <h2>'.$name.'</h2>
-      <h4>Sectoral Analysis of Loans and Advances</h4>
-      <P>From:'.$start.'  ||  To: '.$end.'</P>
-      </div>
-    </div>
-  </div>
   <div class="card">
     <div class="card-header card-header-primary">
       <h4 class="card-title">Sectoral Analysis of Loans and Advances</h4>
@@ -98,12 +89,10 @@ $ttlamount =number_format($ttunt);
     <div class="card-body">
       <table class="table">
         <thead>
-        <thead>
           <th style="font-weight:bold;">SECTOR</th>
           <th style="font-weight:bold; text-align: center;">NUMBER OF LOANS</th>
           <th style="font-weight:bold; text-align: center;">AMOUNT <br> &#x20A6</th>
           <th style="font-weight:bold; text-align: center;">%</th>
-        </thead>
         </thead>
         <tbody>
             <tr>

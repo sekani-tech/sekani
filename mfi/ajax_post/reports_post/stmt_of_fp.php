@@ -150,37 +150,32 @@ $out = '
 </div>
 <div class="card">
   <div class="card-header card-header-primary">
-    <h4 class="card-title">Liablities and Equity</h4>
+    <h4 class="card-title">Liablities</h4>
   </div>
   <div class="card-body">
     <table class="table">
       <thead>
-        <th style="font-weight:bold;">Codes</th>
         <th style="font-weight:bold;">GL Account</th>
         <th style="text-align: center; font-weight:bold;">'.$start.' <br/>(NGN)</th>
         <th style="text-align: center; font-weight:bold;">'.$end.' <br/>(NGN)</th>
       </thead>
       <tbody>
           <tr>
-              <td></td>
               <td><b>Current Liabilities</b></td>
               <td></td>
               <td></td>
           </tr>
         <tr>
-          <td></td>
           <td>Deposit Liablities</td>
           <td style="text-align: center">4,436,527</td>
           <td style="text-align: center">4,436,527</td>
         </tr>
         <tr>
-          <td></td>
           <td>Trade and Other Payables</td>
           <td style="text-align: center">66,109,561</td>
           <td style="text-align: center">66,109,561</td>
         </tr>
         <tr>
-          <td></td>
           <td><b>Total Current Liabilities</b></td>
           <td style="text-align: center"><b>70.456,088</b></td>
           <td style="text-align: center"><b>70.456,088</b></td>
@@ -189,28 +184,23 @@ $out = '
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
         </tr>
         <tr>
-              <td></td>
               <td><b>Non-Current Liabilities</b></td>
               <td></td>
               <td></td>
           </tr>
         <tr>
-          <td></td>
           <td>Unearned Income</td>
           <td style="text-align: center"></td>
           <td style="text-align: center"></td>
         </tr>
         <tr>
-          <td></td>
           <td><b>Total Non-Current Liabilities</b></td>
           <td style="text-align: center"><b>70.456,088</b></td>
           <td style="text-align: center"><b>70.456,088</b></td>
         </tr>
         <tr>
-          <td></td>
           <td><b>Total Liabilities</b></td>
           <td style="text-align: center"><b>70.456,088</b></td>
           <td style="text-align: center"><b>70.456,088</b></td>
@@ -219,34 +209,28 @@ $out = '
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
         </tr>
         <tr>
-            <td></td>
             <td><b>Shareholders Equity</b></td>
             <td></td>
             <td></td>
         </tr>
         <tr>
-          <td></td>
           <td>Share Capital</td>
           <td style="text-align: center">0</td>
           <td style="text-align: center">0</td>
         </tr>
         <tr>
-          <td></td>
           <td>Retained Surplus</td>
           <td style="text-align: center"></td>
           <td style="text-align: center"></td>
         </tr>
         <tr>
-          <td></td>
           <td><b>Total Shareholders Equity</b></td>
           <td style="text-align: center"><b>70.456,088</b></td>
           <td style="text-align: center"><b>70.456,088</b></td>
         </tr>
         <tr>
-          <td></td>
           <td><b>Total Liabilities and Shareholders Equity</b></td>
           <td style="text-align: center"><b>70.456,088</b></td>
           <td style="text-align: center"><b>70.456,088</b></td>
