@@ -155,134 +155,112 @@ $out = '
 <div class="card-body">
   <table class="table">
     <thead>
-      <th style="font-weight:bold;">Codes</th>
       <th style="font-weight:bold;">GL Account</th>
       <th style="text-align: center; font-weight:bold;">'.$onemonth.' <br/>(NGN)</th>
       <th style="text-align: center; font-weight:bold;">'.$end.' <br/>(NGN)</th>
     </thead>
     <tbody>
       <tr>
-        <td>90021000</td>
         <td>Salaries, Wages and Allowances</td>
         <td style="text-align: center">'.number_format($salaries).'</td>
         <td style="text-align: center">15,586,836</td>
       </tr>
       <tr>
-        <td>90042000</td>
         <td>Fueling and Lubricant</td>
         <td style="text-align: center">'.number_format($fueling).'</td>
         <td style="text-align: center">724,350</td>
       </tr>
       <tr>
-        <td>90044000</td>
         <td>Transport and Traveling</td>
         <td style="text-align: center">'.number_format($transportation).'</td>
         <td style="text-align: center">2,667,200</td>
       </tr>
       <tr>
-        <td>90041000</td>
         <td>Office Rent</td>
         <td style="text-align: center">'.number_format($office_rent).'</td>
         <td style="text-align: center">1,290,000</td>
       </tr>
       <tr>
-        <td>90047000</td>
         <td>Printing and Stationaries</td>
         <td style="text-align: center">'.number_format($printing).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td>90043000</td>
         <td>Electricity and other unilities expenses</td>
         <td style="text-align: center">'.number_format($electricity).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td>90054000</td>
         <td>Professional and Consultancy fee</td>
         <td style="text-align: center">'.number_format($profession).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td>90051000</td>
         <td>Annual Subscription</td>
         <td style="text-align: center">'.number_format($subscribe).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td>57703</td>
         <td>Traffic and Vehicle Repairs</td>
         <td style="text-align: center">'.number_format($repairs).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td>90049300</td>
         <td>General Repairs and Maintenance</td>
         <td style="text-align: center">'.number_format($general).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td>90061000</td>
         <td>Bank Charges</td>
         <td style="text-align: center">'.number_format($bankcharges).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td>90052000</td>
         <td>Public Relations</td>
         <td style="text-align: center">'.number_format($relation).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td></td>
         <td>Hotel and Lodging</td>
         <td style="text-align: center">'.number_format($office_rent).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td>90071000</td>
         <td>Bad debt Written Off</td>
         <td style="text-align: center">'.number_format($baddebt).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td>90053000</td>
         <td>Security & Sanition</td>
         <td style="text-align: center">'.number_format($secure).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td></td>
         <td>Miscellaneous Expense</td>
         <td style="text-align: center">'.number_format($office_rent).'</td>
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
         <td></td>
-        <td></td>
         <td style="text-align: center"><b>'.number_format($totality).'</b></td>
         <td style="text-align: center"><b> 25,445,674</b></td>
       </tr>
       <tr>
-        <td></td>
         <td style="font-weight:bold;">NET SURPLUS FROM OPERATIONS</td>
         <td style="font-weight:bold; text-align: center"> 1,944,068 </td>
         <td style="font-weight:bold; text-align: center">1,944,068</td>
       </tr>
       <tr>
-        <td></td>
         <td>Depreciation</td>
         <td style="text-align: center">1,429,000</td>
         <td style="text-align: center">1,429,000</td>
       </tr>
       <tr>
-        <td></td>
         <td>Income Tax</td>
         <td style="text-align: center">139,700</td>
         <td style="text-align: center">139,700</td>
       </tr>
       <tr>
-        <td></td>
         <td style="font-weight:bold;">SURPLUS FOR THE YEAR</td>
         <td style="font-weight:bold; text-align: center">  375,368  </td>
         <td style="font-weight:bold; text-align: center">375,368</td>

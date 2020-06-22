@@ -62,8 +62,8 @@ $destination = "../index.php";
                           <td><a href="teller_journal.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
-                          <th>Bank Transfer</th>
-                          <th>Transfer Money Between Accounts in the institution</th>
+                          <th>Cash transfer</th>
+                          <th>Transfer Cash Between Accounts in the institution</th>
                           <td><a href="bank_transfer.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         </tbody>
