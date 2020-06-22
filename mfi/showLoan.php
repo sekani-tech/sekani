@@ -1390,7 +1390,7 @@ else{
             '0', '0', '0', '0', '0',
             '{$sub_user_date}', '{$sub_user_id}', '{$gends}', '{$app_user}', '{$disburse_date}',
             '{$repayment_date}', '0', '{$disburse_date}', '{$sub_user_id}',
-            '{$exp_mature_date}', NULL, NULL, NULL, '0',
+            '{$exp_mature_date}', '{$exp_mature_date}', NULL, NULL, '0',
             '{$loan_amount}', '0.000000', '0.000000', '{$loan_amount}',
             '0.000000', '0.000000', '0.000000', '0.000000',
             '{$tot_int}', '0.000000', '0.000000', '0.000000',
