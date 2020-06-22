@@ -48,9 +48,9 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $loan_purpose = $x["loan_purpose"];
       $branch_id = $_SESSION["branch_id"];
       $app_user = $_SESSION["staff_id"];
-      $get_payment_gl = mysqli_query($connection, "SELECT * FROM payment_type WHERE id = '$pay_id' AND int_id = '$sessint_id' AND branch_id = '$branch_id'");
+      $get_payment_gl = mysqli_query($connection, "SELECT * FROM acct_rule WHERE loan_product_id = '$loan_product' AND int_id = '$sessint_id'");
       $fool = mysqli_fetch_array($get_payment_gl);
-      $ggl = $fool["gl_code"];
+      $ggl = $fool["asst_loan_port"];
       // Get the GL and the balance
       $get_gl = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$ggl' AND int_id = '$sessint_id'");
       $fool1 = mysqli_fetch_array($get_gl);
@@ -597,11 +597,11 @@ else{
         // $branch_id = $_SESSION["branch_id"];
         // $v_query = mysqli_query($connection, "SELECT * FROM int_vault WHERE int_id = '$sessint_id' && branch_id = '$branch_id'");
         // $ivb = mysqli_fetch_array($v_query);
-        $new_gl_run_bal = $running_gl_balance - $loan_amount;
+        $new_gl_run_bal = $running_gl_balance + $loan_amount;
         // take out the amount from the vualt balance for the transaction balance
-        if ($running_gl_balance >= $loan_amount) {
+        if ($new_gl_run_bal >= $loan_amount) {
           // $cqb = mysqli_fetch_array($charge_query);
-          $charge_query= mysqli_query($connection, "SELECT * FROM `product_loan_charge` WHERE product_loan_id = '$loan_product' && int_id = '$sessint_id'");
+          $charge_query = mysqli_query($connection, "SELECT * FROM `product_loan_charge` WHERE product_loan_id = '$loan_product' && int_id = '$sessint_id'");
           // $cqb = mysqli_fetch_array($charge_query);
           // charge application start.
           if (mysqli_num_rows($charge_query) > 0 ) {

@@ -58,7 +58,7 @@ $prina = $principal_amount;
 $gi = $r * $prina;
 $pd = $gi + $prina;
 // term frequency
-$fund_id = $_POST["fund_source"];
+$fund_id = 0;
 $loan_sector = $_POST["loan_sector"];
 $tff = $loan_term - 1;
 
@@ -72,24 +72,24 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 // first test client loan status then test the running balance in the institution acct.
 // $verify = mysqli_query($connection, "SELECT * FROM `int_vault` WHERE int_id = '$sessint_id'");
 $branch_id = $_SESSION["branch_id"];
-$get_payment_gl = mysqli_query($connection, "SELECT * FROM payment_type WHERE id = '$fund_id' AND int_id = '$sessint_id' AND branch_id = '$branch_id'");
-$fool = mysqli_fetch_array($get_payment_gl);
-$ggl = $fool["gl_code"];
+// $get_payment_gl = mysqli_query($connection, "SELECT * FROM payment_type WHERE id = '$fund_id' AND int_id = '$sessint_id' AND branch_id = '$branch_id'");
+// $fool = mysqli_fetch_array($get_payment_gl);
+// $ggl = $fool["gl_code"];
 // Get the GL and the balance
-$get_gl = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$ggl' AND int_id = '$sessint_id'");
+// $get_gl = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$ggl' AND int_id = '$sessint_id'");sss
 // $fool1 = mysqli_fetch_array($get_gl);
-    if (count([$get_gl]) == 1) {
-        $x = mysqli_fetch_array($get_gl);
-        $int_acct_bal = $x["organization_running_balance_derived"];
-        $calprinamt = $principal_amount;
-        $acctprin = $int_acct_bal - $calprinamt;
+    if ($fund_id == 0) {
+        // $x = mysqli_fetch_array($get_gl);
+        // $int_acct_bal = $x["organization_running_balance_derived"];
+        // $calprinamt = $principal_amount;
+        // $acctprin = $int_acct_bal - $calprinamt;
         $branchhl = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id'");
                 if (count([$branchhl]) == 1) {
                     $yxx = mysqli_fetch_array($branchhl);
                     $lsff = $yxx['loan_status'];
                     $cdn = $yxx['display_name'];
                 }
-        if ($acctprin >= 0) {
+        if ($fund_id == 0) {
             if ($lsff == "Not Active" || $lsff == "") {
                 $stt = "Pending";
                 $query = "INSERT INTO loan_disbursement_cache (int_id, account_no, client_id,

@@ -229,6 +229,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                 // TAKE THE CARD - IF CARD SUCCESS (REMEMBER TO DO THE TRANSACTION, REDUCE THE ID BY 1);
                 // IF CARD IS BAD - THROW THE ACCOUNT INTO MINUS
                 echo "NO FUND";
+                // MAKE A THROW FOR MINUS ACCOUNT TO THE GL
             }
             // DO AN ACCOUNT TRANSACTION IF ANY IS GOOD;
             // echo "Due Paid".$collection_due_paid;

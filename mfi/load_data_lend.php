@@ -206,7 +206,7 @@ if(isset($_POST["id"]))
         </select>
         </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" hidden>
       <div class="form-group">
         <label>Fund Source:</label>
         <select name="fund_source" class="form-control">
