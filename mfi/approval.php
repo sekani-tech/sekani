@@ -53,7 +53,7 @@ $destination = "../index.php";
                         </tr>
                         <tr>
                           <th>Loan Disbursement</th>
-                          <th>View and approve all the Disbursed Loan made</th>
+                          <th>View and approve all the Disbursed Loan</th>
                           <td><a href="disbursement_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         </tbody>

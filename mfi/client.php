@@ -119,7 +119,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
+                        $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -138,7 +138,16 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           Account Number
                         </th>
                         <th>
+                         Date of Birth
+                        </th>
+                        <th>
+                          Gender
+                        </th>
+                        <th>
                           Phone
+                        </th>
+                        <th>
+                          BVN
                         </th>
                         <th>View</th>
                         <th>Edit </th>
@@ -159,11 +168,11 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                             $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
                             if (count([$atype]) == 1) {
                                 $yxx = mysqli_fetch_array($atype);
-                                $actype = isset($yxx['product_id']);
+                                $actype = $yxx['product_id'];
                               $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
                            if (count([$spn])) {
                              $d = mysqli_fetch_array($spn);
-                             $savingp = isset($d["name"]);
+                             $savingp = $d["name"];
                            }
                             }
                            
@@ -206,7 +215,10 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           }
                           ?>
                           <th><?php echo $acc; ?></th>
+                          <th><?php echo $row["date_of_birth"]; ?></th>
+                          <th><?php echo $row["gender"]; ?></th>
                           <th><?php echo $row["mobile_no"]; ?></th>
+                          <th><?php echo $row["BVN"]; ?></th>
                           <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                           <td><a href="update_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Close</a></td>
                         </tr>

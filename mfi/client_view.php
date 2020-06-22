@@ -26,6 +26,9 @@ if(isset($_GET["edit"])) {
     $gender = $n['gender'];
     $date_of_birth = $n['date_of_birth'];
     $branch = $n['branch_id'];
+    $fo = mysqli_query($connection, "SELECT name FROM branch WHERE id = '$branch'");
+    $e = mysqli_fetch_array($fo);
+    $branch_name = $e['name'];
     $country = $n['COUNTRY'];
     $state = $n['STATE_OF_ORIGIN'];
     $lga = $n['LGA'];
@@ -554,14 +557,7 @@ if(isset($_GET["edit"])) {
                   <h6 class="card-category text-gray">Clients Profile Picture</h6>
                   <h4 class="card-title"><?php echo $display_name; ?></h4>
                   <p class="card-description">
-                  <?php
-                $inq = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$sessint_id'");
-                if (count([$inq]) == 1) {
-                  $n = mysqli_fetch_array($inq);
-                  $int_name = $n['int_name'];
-                }
-              ?>
-            <?php echo $int_name; ?>
+            <?php echo $branch_name; ?>
                   </p>
                   <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
                 </div>
