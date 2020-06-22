@@ -316,7 +316,7 @@ input[type=number] {
             <?php
               }else{            ?>
 
-              <a class="btn btn-primary" href="<?php echo $destination ?>"><i class="fa fa-caret-left"></i> Back</a>
+              <a class="btn btn-primary" href="javascript:history.go(-1)"><i class="fa fa-caret-left"></i> Back</a>
               
               <?php
                 }
@@ -331,10 +331,15 @@ input[type=number] {
           </button>
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#pablo">
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">notifications</i>
                 </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+                  <a class="dropdown-item" href="#">Loans matured today</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Loans due tommorow</a>
+                </div>
               </li>
               <!-- user setup -->
               <li class="nav-item dropdown">

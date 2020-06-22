@@ -6,6 +6,7 @@
     $colval = $_POST['colval'];
     $colname = $_POST['colname'];
     $coldes = $_POST['coldes']; 
+    $coldate = date('Y-m-d');
 
     $org = mysqli_query($connection, "SELECT * FROM client WHERE id = '$clientid'");
     if (count([$org]) == 1) {
@@ -13,8 +14,8 @@
       $int_id = $a['int_id'];
      }
 
-    $coll = "INSERT INTO collateral (int_id, client_id, type, value, description) VALUES ('{$int_id}',
-    '{$clientid}', '{$colval}', '{$colname}', '{$coldes}')";
+    $coll = "INSERT INTO collateral (int_id, client_id, date, type, value, description) VALUES ('{$int_id}',
+    '{$clientid}', '{$coldate}', '{$colval}', '{$colname}', '{$coldes}')";
 
     $query = mysqli_query($connection, $coll);
 
