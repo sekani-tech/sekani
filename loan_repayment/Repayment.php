@@ -193,6 +193,46 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                                $uodate_rep_status = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET installment = '$post_installment' WHERE int_id = '$int_id' AND id = '$collection_id'");
                                if ($update_rep_status) {
                                    echo "SUCCESS AT LAST";
+                                //    UPDATE THE GL OF THE REPAYMENT
+                                $open_acct_rule = mysqli_query($connection, "SELECT * FROM acct_rule WHERE int_id = '$int_id' AND loan_product_id = '$product_id'");
+                                $ty = mysqli_fetch_array($open_acct_rule);
+                                    // reduce
+                                    $loan_port = $ty["asst_loan_port"];
+                                    $int_loan_port = $ty["inc_interest"];
+                                    $take_d_s = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$loan_port' AND int_id = '$int_id'");
+                                    $gdb = mysqli_fetch_array($take_d_s);
+                                    // geng new thing here
+                                    $int_d_s = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$int_loan_port' AND int_id = '$int_id'");
+                                    $igdb = mysqli_fetch_array($int_d_s);
+                                    // IMPOSSIBLE
+                                    $intbalport = $igdb["organization_running_balance_derived"];
+                                    $newbalport = $gdb["organization_running_balance_derived"];
+                                    $updated_loan_port = $newbalport - $collection_principal;
+                                    $intloan_port = $intbalport + $collection_interest;
+                                    $update_the_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$updated_loan_port' WHERE int_id ='$int_id' AND gl_code = '$loan_port'");
+                                    if ($update_the_loan) {
+                                        // damn with
+                                        $insert_loan_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
+                                         `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
+                                        VALUES ('{$int_id}', '{$branch_id}', '{$loan_port}', '{$trans_id}', 'Loan Repayment', 'Loan Repayment Principal', '0', '0', '{$gen_date}',
+                                         '{$collection_principal}', '{$updated_loan_port}', '{$updated_loan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_principal}', '0.00')");
+                                         if ($insert_loan_port) {
+                                            $update_the_int_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$intloan_port' WHERE int_id = '$int_id' AND gl_code ='$int_loan_port'");
+                                            if ($update_the_int_loan) {
+                                                echo "SUCCESS OVER HERE";
+                                            } else {
+                                                echo "ERROR IN INTEREST EARNING";
+                                            }
+                                         } else {
+                                             echo "ERROR IN GL TRANSACTION FOR PORTFOLIO";
+                                            //  echo something else
+                                         }
+                                    } else {
+                                        // finish
+                                        echo "ERROR IN UPDATE";
+                                    }
+                                //    and also for the Interest
+                                //    END REPAYMENT
                                } else {
                                    echo "ERROR AT LAST";
                                }
