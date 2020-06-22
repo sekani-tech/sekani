@@ -13,13 +13,13 @@ $destination = "report_loan.php";
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Disbursed Loans</h4>
+                  <h4 class="card-title ">Disbursed Loans Accounts</h4>
                   <script>
                   $(document).ready(function() {
-                  $('#tabledat').DataTable();
+                  $('#tabsledat').DataTable();
                   });
                   </script>
                   <!-- Insert number users institutions -->
@@ -32,7 +32,7 @@ $destination = "report_loan.php";
                      $inr = mysqli_num_rows($result);
                      echo $inr;
                      $date = date("F");
-                   }?> Disbursed Loans || <a style = "color: white;" href="lend.php">Create New Loan</a></p>
+                   }?> Disbursed Loans</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -46,7 +46,7 @@ $destination = "report_loan.php";
                           Client Name
                         </th>
                         <th>
-                          Loan Amount
+                          Principal Amount
                         </th>
                         <th>
                           Loan Term
@@ -61,9 +61,6 @@ $destination = "report_loan.php";
                           Interest Rate
                         </th>
                         <th>
-                          Monthly Interest
-                        </th>
-                        <th>
                           Total Interest
                         </th>
                         <th>
@@ -71,6 +68,9 @@ $destination = "report_loan.php";
                         </th>
                         <th>
                           Total Income
+                        </th>
+                        <th>
+                          Outstanding Loan Balance
                         </th>
                       </thead>
                       <tbody>
@@ -101,13 +101,14 @@ $destination = "report_loan.php";
                             $loant = $row["loan_term"];
                             $total = $loant * $final;
                           ?>
-                          <th><?php echo number_format($total); ?></th>
                           <th><?php echo number_format($row["fee_charges_charged_derived"]); ?></th>
                           <?php
                           $fee = $row["fee_charges_charged_derived"];
                           $income = $fee + $total;
                           ?>
-                          <th><?php echo  number_format($income); ?></th>
+                          <th><?php $bal = $row["total_outstanding_derived"];
+                           echo  number_format($bal); ?></th>
+                          <th><?php echo number_format($total); ?></th>
                           <!-- <td><a href="client_view.php?edit=<?php echo $cid;?>" class="btn btn-info">View</a></td> -->
                         </tr>
                         <?php }
@@ -312,7 +313,7 @@ $destination = "report_loan.php";
                       });
                     });
                   </script>
-              <div id="shanalysis" class="card">
+              <div id="shanalysis">
 
               </div>
             </div>
@@ -397,11 +398,88 @@ $destination = "report_loan.php";
  }
  else if(isset($_GET["view19"])){
  ?>
- <div class="content">
+ <!-- Content added here -->
+<div class="content">
         <div class="container-fluid">
-
+          <!-- your content here -->
+          <div class="row">
+            <div class="col-md-10">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Loan Collaterals</h4>
+                  <script>
+                  $(document).ready(function() {
+                  $('#tabledat').DataTable();
+                  });
+                  </script>
+                  <!-- Insert number users institutions -->
+                  <p class="card-category"><?php
+                        $query = "SELECT * FROM collateral WHERE int_id = '$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                   if ($result) {
+                     $inr = mysqli_num_rows($result);
+                     echo $inr;
+                   }?> Collaterals</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="tabledats" class="table" cellspacing="0" style="width:100%">
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM collateral WHERE int_id = '$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                       <th style="width: 100px">
+                         Date
+                        </th>
+                        <th>
+                          Client Name
+                        </th>
+                        <th>
+                          Type
+                        </th>
+                        <th>
+                        Value
+                         
+                        </th>
+                        <th>
+                        Description
+                        </th>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                        <?php 
+                            $name = $row['client_id'];
+                            $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
+                            $f = mysqli_fetch_array($anam);
+                            $nae = strtoupper($f["firstname"]." ".$f["lastname"]);
+                        ?>
+                         <th><?php echo $row["date"]; ?></th>
+                          <th><?php echo $nae; ?></th>
+                         
+                          <th><?php echo $row["value"]; ?></th>
+                          <th><?php echo $row["type"];?></th>
+                          <th><?php echo $row["description"]; ?></th>
+                          
+                         </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                          <!-- <th></th> -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
- </div>
+      </div>
  <?php
  }
  else if(isset($_GET["view20"])){
@@ -425,13 +503,12 @@ $destination = "report_loan.php";
                   <p class="card-category">
                       <?php
                         $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
-                        // $query = "SELECT * FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
                         $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                     //  echo $inr;
                      $date = date("F");
-                   }?> Matured Loans || <a style = "color: white;" href="lend.php">Create New Loan</a></p>
+                   }?> Matured Loans</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -465,7 +542,7 @@ $destination = "report_loan.php";
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                           <?php  $std = date("Y-m-d");
-                          if($std >= $row["repayment_date"] ){?>
+                          if($std >= $row["maturedon_date"] ){?>
                         <?php $row["id"]; ?>
                         <?php 
                             $name = $row['client_id'];
@@ -477,7 +554,7 @@ $destination = "report_loan.php";
                           <th><?php echo number_format($row["principal_amount"]); ?></th>
                           <th><?php echo $row["loan_term"]; ?></th>
                           <th><?php echo $row["disbursement_date"]; ?></th>
-                          <th><?php echo $row["repayment_date"];?></th>
+                          <th><?php echo $row["maturedon_date"];?></th>
                           <th><?php echo number_format($row["total_outstanding_derived"], 2);?></th>
                           <?php }
                           else {
@@ -653,5 +730,96 @@ $destination = "report_loan.php";
  </div>
  <?php
  }
+ else if(isset($_GET["view39"])){
  ?>
- 
+ <div class="content">
+        <div class="container-fluid">
+          <!-- your content here -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Expected Loan Repayment</h4>
+                  <script>
+                  $(document).ready(function() {
+                  $('#tabledat').DataTable();
+                  });
+                  </script>
+                  <!-- Insert number users institutions -->
+                  <p class="card-category">
+                      <?php
+                      $currentdate = date('Y-m-d');
+                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND repayment_date = '$currentdate'";
+                        $result = mysqli_query($connection, $query);
+                   if ($result) {
+                     $inr = mysqli_num_rows($result);
+                     echo $inr;
+                   }?> loans expected to be repayed today</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="tabledatv" class="table" cellspacing="0" style="width:100%">
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND repayment_date = '$currentdate'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                        <th>
+                          Client Name
+                        </th>
+                        <th>
+                          Loan Amount
+                        </th>
+                        <th>
+                          Loan Term
+                        </th>
+                        <th>
+                          Disbursement Date
+                        </th>
+                        <th>
+                          Outstanding Loan Balance
+                        </th>
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                          <?php  $std = date("Y-m-d");
+                          if($std >= $row["maturedon_date"] ){?>
+                        <?php $row["id"]; ?>
+                        <?php 
+                            $name = $row['client_id'];
+                            $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
+                            $f = mysqli_fetch_array($anam);
+                            $nae = strtoupper($f["firstname"]." ".$f["lastname"]);
+                        ?>
+                          <th><?php echo $nae; ?></th>
+                          <th><?php echo number_format($row["principal_amount"]); ?></th>
+                          <th><?php echo $row["loan_term"]; ?></th>
+                          <th><?php echo $row["disbursement_date"]; ?></th>
+                          <th><?php echo number_format($row["total_outstanding_derived"], 2);?></th>
+                          <?php }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                          <!-- <th></th> -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+<?php
+}
+?>

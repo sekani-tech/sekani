@@ -76,21 +76,6 @@ if ($acc_op == 1 || $acc_op == "1") {
                 </div>
                 <div id="client">
                     </div>
-                    <div id="maenn" hidden>
-                    <div class="col-md-4">
-            <div class="form-group">
-                <label for="">State:</label>
-                <select class="form-control" style="text-transform: uppercase;" name="state" id="selState" onchange="configureDropDownLists()">
-                </select>
-                
-            </div>
-            </div>
-            <div class="col-md-4">
-            <label for="">LGA:</label>
-                <select  class="form-control" style="text-transform: uppercase;" name="lga" id="selCity">
-                </select>
-            </div>
-                    </div>
                 <a href="client.php" class="btn btn-danger">Back</a>
                 <button type="submit" name="submit" id="submit" class="btn btn-primary pull-right">Create Client</button>
                 <div class="clearfix"></div>
