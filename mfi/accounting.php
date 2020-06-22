@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Savings report";
+$page_title = "Accounting";
 $destination = "../index.php";
     include("header.php");
     // include("../../functions/connect.php");
@@ -19,7 +19,7 @@ $destination = "../index.php";
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Transactions</h4>
+                  <h4 class="card-title ">Accounting</h4>
                   <script>
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
@@ -52,23 +52,18 @@ $destination = "../index.php";
                           <td><a href="#" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
-                          <th>Reconciliation</th>
-                          <th></th>
+                          <th>Bank Reconciliation</th>
+                          <th>Reconciliation of Bank</th>
                           <td><a href="#" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
-                          <th>Accounting Export</th>
-                          <th></th>
+                          <th>Budget Template</th>
+                          <th>Create and review Budgets and other planning activities</th>
                           <td><a href="#" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
-                          <th>Periodic Accural</th>
-                          <th></th>
-                          <td><a href="#" class="btn btn-info"><i class="material-icons">description</i></a></td>
-                        </tr>
-                        <tr>
-                          <th>Close Periods</th>
-                          <th></th>
+                          <th>End of Day</th>
+                          <th>Closing of the Business Day</th>
                           <td><a href="#" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         </tbody>

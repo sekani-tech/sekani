@@ -70,7 +70,6 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
   <div id="logo">
     <img src="'.$_SESSION["int_logo"].'" height="80" width="80">
   </div>
-  <h1>'.$glname.' Statement<br/> As at '.$endx.'</h1>
   </header>
   <main>
   <table>
@@ -78,20 +77,23 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
   <tr>
       <tr>
       <th>
-      Date/Time
-      </th>
-      <th>
-       Description
-      </th>
-      <th>
-       Deposit
-      </th>
-      <th>
-        Withdrawal
-      </th>
-      <th>
-        Balance
-      </th>
+        First Name
+    </th>
+    <th>
+        Last Name
+    </th>
+    <th>
+        Account officer
+    </th>
+    <th>
+        Account Type
+    </th>
+    <th>
+        Account Number
+    </th>
+    <th>
+        Account Balances
+    </th>
       </tr>
     </thead>
   <tbody>
