@@ -240,8 +240,29 @@ $destination = "transaction.php";
                       <button type="button" class="btn btn-primary" name="button" onclick="showDialog()"> <i class="fa fa-plus"></i> Add</button>
                       </div>
                       <div class="form-group">
+                      <script>
+                              $(document).ready(function() {
+                                $('#clickit').on("change keyup paste click", function() {
+                                  var id = $(this).val();
+                                  var client_id = $('#client_name').val();
+                                  var colname = $('#colname').val();
+                                  var colval = $('#col_val').val();
+                                  var coldes = $('#col_descr').val();
+                                  $.ajax({
+                                    url:"collateral_upload.php",
+                                    method:"POST",
+                                    data:{id:id, client_id:client_id, colval:colval, colname:colname, coldes:coldes},
+                                    success:function(data){
+                                      $('#coll').html(data);
+                                      document.getElementById("off_me").setAttribute("hidden", "");
+                                    }
+                                  })
+                                });
+                              });
+                            </script>
                       <!-- <button class="btn btn-primary pull-right" id="clickit">Add</button> -->
-                            <table class = "table table-bordered">
+                      <div id="off_me">     
+                      <table class = "table table-bordered">
                               <thead>
                                 <tr>
                                   <td>Name/Type</td>
@@ -249,10 +270,11 @@ $destination = "transaction.php";
                                   <td>Description</td>
                                 </tr>
                               </thead>
-                              <tbody id="coll">
-
+                              <tbody>
                               </tbody>
                             </table>
+                            </div>
+                            <div id="coll"></div>
                       </div>
                       <!-- dialog box -->
                       <div class="form-group">
@@ -284,25 +306,6 @@ $destination = "transaction.php";
                         <span class="btn btn-primary pull-right" onclick="AddDlg()">Cancel</span>
                       </div>
                         <!-- </form> -->
-                        <script>
-                              $(document).ready(function() {
-                                $('#clickit').on("change keyup paste click", function(){
-                                  var id = $(this).val();
-                                  var client_id = $('#client_name').val();
-                                  var colname = $('#colname').val();
-                                  var colval = $('#col_val').val();
-                                  var coldes = $('#col_descr').val();
-                                  $.ajax({
-                                    url:"collateral_upload.php",
-                                    method:"POST",
-                                    data:{id:id, client_id:client_id, colval:colval, colname:colname, coldes:coldes},
-                                    success:function(data){
-                                      $('#coll').html(data);
-                                    }
-                                  })
-                                });
-                              });
-                            </script>
 <script>
     function AddDlg(){
         var bg = document.getElementById("background");
