@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "Vault Transaction";
-$destination = "index.php";
+$destination = "transaction.php";
     include("header.php");
 ?>
 <?php
@@ -148,6 +148,46 @@ else if (isset($_GET["message5"])) {
     $_SESSION["lack_of_intfund_$key"] = 0;
   }
     }
+    else if (isset($_GET["message10"])) {
+      $key = $_GET["message10"];
+      // $out = $_SESSION["lack_of_intfund_$key"];
+      $tt = 0;
+        if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+      echo '<script type="text/javascript">
+      $(document).ready(function(){
+          swal({
+              type: "error",
+              title: "Depositor/Recipient not selected",
+              text: "Please select a Depositor/Recipient",
+              showConfirmButton: false,
+              timer: 2000
+          })
+      });
+      </script>
+      ';
+      $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+    }
+    else if (isset($_GET["message11"])) {
+      $key = $_GET["message11"];
+      // $out = $_SESSION["lack_of_intfund_$key"];
+      $tt = 0;
+        if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+      echo '<script type="text/javascript">
+      $(document).ready(function(){
+          swal({
+              type: "error",
+              title: "Insufficient Funds",
+              text: "Not enough amount in the bank transaction",
+              showConfirmButton: false,
+              timer: 2000
+          })
+      });
+      </script>
+      ';
+      $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+    }
 ?>
 <!-- Content added here -->
 <?php
@@ -197,10 +237,12 @@ $transaction_id = str_pad(rand(0, pow(10, 7)-1), 7, '0', STR_PAD_LEFT);
                         <div class="form-group">
                             <!-- populate from db -->
                           <label class="bmd-label-floating"> Transaction Type</label>
-                          <select name="type" id="" class="form-control">
+                          <select name="type" id="selctttype" class="form-control">
                             <option value="0">select a transaction type in/out</option>
                             <option value="vault_in">DEPOSIT INTO VAULT</option>
                             <option value="vault_out">WITHDRAW FROM VAULT</option>
+                            <option value="from_bank">FROM BANK TO VAULT</option>
+                            <option value="to_bank">FROM VAULT TO BANK</option>
                           </select>
                         </div>
                       </div>
@@ -212,49 +254,23 @@ $transaction_id = str_pad(rand(0, pow(10, 7)-1), 7, '0', STR_PAD_LEFT);
                           <input type="text" value="<?php echo $get_b_r_n; ?>" name="branch" hidden id="branch_id" class="form-control" readonly>
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="row">
-                          <div class="col-md-6">
-                          <div class="form-group">
-                            <!-- populate from db -->
-                            <?php 
-                            function fill_teller($connection, $bch_id) {
-                              $sint_id = $_SESSION["int_id"];
-                              $org = "SELECT * FROM tellers WHERE int_id = '$sint_id' && branch_id = '$bch_id'";
-                              $res = mysqli_query($connection, $org);
-                              $out = '';
-                              while ($row = mysqli_fetch_array($res))
-                              {
-                                $out .= '<option value="'.$row["name"].'">'.$row["description"].'</option>';
-                              }
-                              return $out;
-                            }
-                            ?>
-
-                          <label class="bmd-label-floating"> Teller Name</label>
-                          <select name="teller_id" id="tell" class="form-control">
-                            <option value="0">SELECT A TELLER</option>
-                            <?php echo fill_teller($connection, $bch_id); ?>
-                          </select>
-                        </div>
-                          </div>
-                          <script>
+                      <script>
                               $(document).ready(function() {
-                                $('#tell').change(function(){
+                                $('#selctttype').change(function(){
                                   var id = $(this).val();
                                   $.ajax({
-                                    url:"ajax_post/teller_balance.php",
+                                    url:"ajax_post/vault_options.php",
                                     method:"POST",
                                     data:{id:id},
                                     success:function(data){
-                                      $('#tell_acc').html(data);
+                                      $('#sw').html(data);
                                     }
                                   })
                                 });
                               })
                             </script>
-                          <div id = "tell_acc"></div>
-                        </div>
+                      <div class="col-md-4" id ="sw">
+                        
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">

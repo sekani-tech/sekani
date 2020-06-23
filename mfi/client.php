@@ -11,6 +11,8 @@ $destination = "index.php";
 // If it is successfull, It will show this message
   if (isset($_GET["message1"])) {
     $key = $_GET["message1"];
+    $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
     // $out = $_SESSION["lack_of_intfund_$key"];
     echo '<script type="text/javascript">
     $(document).ready(function(){
@@ -24,11 +26,14 @@ $destination = "index.php";
     });
     </script>
     ';
-    $_SESSION["lack_of_intfund_$key"] = null;
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
 }
 // If it is not successfull, It will show this message
 else if (isset($_GET["message2"])) {
   $key = $_GET["message2"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   // $out = $_SESSION["lack_of_intfund_$key"];
   echo '<script type="text/javascript">
   $(document).ready(function(){
@@ -42,11 +47,14 @@ else if (isset($_GET["message2"])) {
   });
   </script>
   ';
-  $_SESSION["lack_of_intfund_$key"] = null;
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
 }
 if (isset($_GET["message3"])) {
   $key = $_GET["message3"];
   // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
@@ -59,11 +67,14 @@ if (isset($_GET["message3"])) {
   });
   </script>
   ';
-  $_SESSION["lack_of_intfund_$key"] = null;
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
 }
 else if (isset($_GET["message4"])) {
 $key = $_GET["message4"];
 // $out = $_SESSION["lack_of_intfund_$key"];
+$tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
 echo '<script type="text/javascript">
 $(document).ready(function(){
     swal({
@@ -76,7 +87,8 @@ $(document).ready(function(){
 });
 </script>
 ';
-$_SESSION["lack_of_intfund_$key"] = null;
+$_SESSION["lack_of_intfund_$key"] = 0;
+  }
 }
 ?>
 <!-- Content added here -->
@@ -107,7 +119,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
+                        $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -126,7 +138,16 @@ $_SESSION["lack_of_intfund_$key"] = null;
                           Account Number
                         </th>
                         <th>
+                         Date of Birth
+                        </th>
+                        <th>
+                          Gender
+                        </th>
+                        <th>
                           Phone
+                        </th>
+                        <th>
+                          BVN
                         </th>
                         <th>View</th>
                         <th>Edit </th>
@@ -194,7 +215,10 @@ $_SESSION["lack_of_intfund_$key"] = null;
                           }
                           ?>
                           <th><?php echo $acc; ?></th>
+                          <th><?php echo $row["date_of_birth"]; ?></th>
+                          <th><?php echo $row["gender"]; ?></th>
                           <th><?php echo $row["mobile_no"]; ?></th>
+                          <th><?php echo $row["BVN"]; ?></th>
                           <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                           <td><a href="update_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Close</a></td>
                         </tr>

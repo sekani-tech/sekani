@@ -45,7 +45,16 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $branch_idm = $x['branch_id'];
       $teller_id = $x['staff_id'];
       $transaction_date = $x['date'];
+      $is_bank = $x["is_bank"];
+      $bank_gl_code = $x["bank_gl_code"];
       $irvs = 0;
+
+      $gl_manq = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$bank_gl_code' && int_id = '$sessint_id'");
+      $glv = mysqli_fetch_array($gl_manq);
+      $E_acct_bal = $glv["organization_running_balance_derived"];
+      // DMAN
+      $new_gl_balx = $E_acct_bal + $amount;
+      $new_gl_bal2x = $E_acct_bal - $amount;
   }
 }
 $gen_date = date('Y-m-d H:i:s');
@@ -124,7 +133,7 @@ $resx1 = mysqli_num_rows($q1);
                $getacct = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' && int_id = '$sessint_id'");
                if (count([$getacct]) == 1) {
                   $y = mysqli_fetch_array($getacct);
-                  $branch_id = $y['branch_id'];
+                  // $branch_id = $y['branch_id'];
                   $client_id = $y['client_id'];
                   $acc_id = $y['id'];
                   $int_acct_bal = $y['account_balance_derived'];
@@ -159,7 +168,36 @@ $resx1 = mysqli_num_rows($q1);
                            $iupqx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod' && int_id = '$sessint_id'";
                            $res4 = mysqli_query($connection, $iupqx);
                            if ($res4) {
-                             // institution account
+                             if ($is_bank == 1) {
+                              $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_balx' WHERE int_id = '$sessint_id' && gl_code = '$bank_gl_code'";
+                              $dbgl = mysqli_query($connection, $upglacct);
+                              if ($dbgl) {
+                                $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
+                                transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
+                                  created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$bank_gl_code}', '{$transid}', '{$description}', '{$trans_type}', '{$staff_id}',
+                                   '{$gen_date}', '{$amount}', '{$new_gl_balx}', '{$amount}', '{$gen_date}', '{$amount}')";
+                                   $mxc = mysqli_query($connection, $gl_acc);
+                                   if ($mxc) {
+                                    echo '<script type="text/javascript">
+                                    $(document).ready(function(){
+                                        swal({
+                                            type: "success",
+                                            title: "Deposit Transaction",
+                                            text: "Transaction Approval Successful",
+                                            showConfirmButton: false,
+                                            timer: 2000
+                                        })
+                                    });
+                                    </script>
+                                    ';
+                                    $URL="transact_approval.php";
+                                    echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                                   } else {
+                                    echo "Error in Bank Transaction";
+                                   }
+                              }
+                             } else if ($is_bank == 0) {
+                               // institution account
                              $int_account_trans = "UPDATE institution_account SET account_balance_derived = '$new_int_bal' WHERE teller_id = '$teller_id' && int_id = '$sessint_id'";
                              $query1 = mysqli_query($connection, $int_account_trans);
                              // check if int account has been updated
@@ -218,6 +256,20 @@ $resx1 = mysqli_num_rows($q1);
                                </script>
                                ';
                              }
+                             } else {
+                              echo '<script type="text/javascript">
+                              $(document).ready(function(){
+                                  swal({
+                                      type: "error",
+                                      title: "No Payment Type",
+                                      text: "Call - Check the institution account",
+                                      showConfirmButton: false,
+                                      timer: 2000
+                                  })
+                              });
+                              </script>
+                              ';
+                             }
                              // institution account transaction
                            } else {
                              echo '<script type="text/javascript">
@@ -265,7 +317,12 @@ $resx1 = mysqli_num_rows($q1);
                  } else if ($transact_type == "Withdrawal") {
                   $getaccount = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
                   $getbal = mysqli_fetch_array($getaccount);
-                  $runtellb = $getbal["account_balance_derived"];
+                  $runtellb = 0;
+                  if ($is_bank == 1) {
+                    $runtellb = $E_acct_bal;
+                  } else if ($is_bank == 0) {
+                     $runtellb = $getbal["account_balance_derived"];
+                  }
                   // importing the needed on the gl
                   if ($runtellb >= $amount) {
                    $new_abd2 = $comp2;
@@ -296,7 +353,56 @@ $resx1 = mysqli_num_rows($q1);
                            $res4 = mysqli_query($connection, $iupqx);
                            if ($res4) {
                              // institution account
-                             // institution account transaction
+                            if ($is_bank == 1) {
+                              $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal2x' WHERE int_id = '$sessint_id' && gl_code = '$bank_gl_code'";
+                  $dbgl = mysqli_query($connection, $upglacct);
+                  if($dbgl){
+                    $gl_acc1 = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
+                    transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
+                      created_date, debit) VALUES ('{$sessint_id}', '{$branch_id}', '{$bank_gl_code}', '{$transid}', '{$description}', '{$trans_type2}', '{$staff_id}',
+                       '{$gen_date}', '{$amount}', '{$new_gl_bal2x}', '{$amount}', '{$gen_date}', '{$amount}')";
+                       $mkl = mysqli_query($connection, $gl_acc1);
+                       if ($mkl) {
+                        echo '<script type="text/javascript">
+                        $(document).ready(function(){
+                            swal({
+                                type: "success",
+                                title: "Withdrawal Transaction",
+                                text: "Transaction Approval Successful",
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        });
+                        </script>
+                        ';
+                        $URL="transact_approval.php";
+                        echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                       } else {
+                         echo "Error at the Bank Withdrawal";
+                         echo '<script type="text/javascript">
+                         $(document).ready(function(){
+                             swal({
+                                 type: "error",
+                                 title: "Withdrawal Transaction",
+                                 text: "Transaction Approval Error",
+                                 showConfirmButton: false,
+                                 timer: 2000
+                             })
+                         });
+                         </script>
+                         ';
+                       }
+                       if ($connection->error) {
+                        try {
+                            throw new Exception("MYSQL error $connection->error <br> $gl_acc1 ", $mysqli->error);
+                        } catch (Exception $e) {
+                            echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
+                            echo n12br($e->getTraceAsString());
+                        }
+                    }
+                        }
+                            } else if ($is_bank == 0) {
+                               // institution account transaction
                              $int_account_trans = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2' WHERE teller_id = '$teller_id' && int_id = '$sessint_id'";
                              $query1 = mysqli_query($connection, $int_account_trans);
                              // check if int account has been updated
@@ -354,6 +460,9 @@ $resx1 = mysqli_num_rows($q1);
                                </script>
                                ';
                              }
+                            } else {
+                              echo "Nothing";
+                            }
                            } else {
                              echo '<script type="text/javascript">
                              $(document).ready(function(){
@@ -402,7 +511,7 @@ $resx1 = mysqli_num_rows($q1);
                    $(document).ready(function(){
                        swal({
                            type: "error",
-                           title: "Teller",
+                           title: "Teller or Bank",
                            text: "Insufficient Fund",
                            showConfirmButton: false,
                            timer: 2000
@@ -584,6 +693,8 @@ $resx1 = mysqli_num_rows($q1);
                              });
                              </script>
          ';
+         $URL="transact_approval.php";
+            echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
         } else {
          echo '<script type="text/javascript">
                              $(document).ready(function(){

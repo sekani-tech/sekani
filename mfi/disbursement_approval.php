@@ -1,6 +1,6 @@
 <?php
 $page_title = "Loan Disbursement Approval";
-$destination = "index.php";
+$destination = "approval.php";
     include("header.php");
 
 ?>
@@ -88,7 +88,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM loan_disbursement_cache WHERE int_id='$sessint_id'";
+                   $query = "SELECT * FROM loan_disbursement_cache WHERE int_id='$sessint_id' && status = 'Pending'";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -100,7 +100,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM loan_disbursement_cache WHERE int_id = '$sessint_id'";
+                        $query = "SELECT * FROM loan_disbursement_cache WHERE int_id = '$sessint_id' && status = 'Pending'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -128,7 +128,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                         <?php $row["id"]; ?>
                           <th><?php echo $row["display_name"]; ?></th>
                           <th><?php echo $row["approved_principal"]; ?></th>
-                          <th><?php echo $row["interest_rate"]; ?></th>
+                          <th><?php echo number_format($row["interest_rate"]) . "%"; ?></th>
                           <th><?php echo $row["status"]; ?></th>
                           <td><a href="showLoan.php?approve=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                           </tr>

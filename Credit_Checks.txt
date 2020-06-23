@@ -5,9 +5,9 @@ or Statistic Scoreing - Took Loan Before
 1. Client Written-Off Loans Check
 2. Grace Period Check
 3. Timely Repayment - Delinquency counters
-4. Loan Status (Active, Closed, Written off, Same Product)
+4. Loan Status (Active, Written off, Same Product)
 5. Rejected and withdrawn loans
-6. Number of credit Loan Collected - cards
+6. Number of credit Loan Collected - cards - collateral value (150%)
 7. Psychometric data
 8. Savings Behaviour (KYC) -
 • Average savings balance
@@ -26,9 +26,9 @@ or Statistic Scoreing - Took Loan Before
 • Occupation
 • Phone ownership
 • Income
-• Years in current job
+• Years in current job/business
 • Previous employment
-• Years in previous job
+• Years in previous job/business
 • Number of dependents
 • Credit history
 • Banking account ownership
@@ -38,6 +38,7 @@ or Statistic Scoreing - Took Loan Before
 • Type of loan
 
 11. Guarantors Savings Behaviour
+Guarantors -  Check Value
 12. Grace Period
 13. Outstanding Loan Balance
 15. Total collateral items value

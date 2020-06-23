@@ -8,7 +8,7 @@ $destination = "client.php";
 <?php
 // right now we will program
 // first step - check if this person is authorized
-if ($client_update == 1 || $client_update == "1") {
+if ($acc_update == 1 || $acc_update == "1") {
 ?>
 <?php
   $id = $_GET["edit"];
@@ -16,7 +16,6 @@ if ($client_update == 1 || $client_update == "1") {
   $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id' && int_id='$sessint_id'");
   $n = mysqli_fetch_array($person);
     $ctype = $n['client_type'];
-    echo $ctype;
 if($ctype =='INDIVIDUAL')
 {
   ?>
@@ -36,6 +35,7 @@ if(isset($_GET["edit"])) {
     $acctn = strtoupper($xf['first_name'] ." ". $xf['last_name']);
     $last_name = $n['lastname'];
     $phone = $n['mobile_no'];
+    $occupation = $n['occupation'];
     $phone2 = $n['mobile_no_2'];
     $email = $n['email_address'];
     $address = $n['ADDRESS'];
@@ -288,6 +288,10 @@ if(isset($_GET["edit"])) {
                       </select>
                     </div>
                   </div>
+                  <div class="col-md-4">
+                        <label for="">Occupation:</label>
+                        <input type="text" value="<?php echo $occupation; ?>" name="occupation" class="form-control" id="">
+                      </div>
                       <div class="col-md-4">
                         <label for="">BVN:</label>
                         <input type="text" value="<?php echo $bvn; ?>" name="bvn" class="form-control" id="">
@@ -421,6 +425,7 @@ if(isset($_GET["edit"])) {
                           <option value="National ID">National ID</option>
                           <option value="Voters ID">Voters ID</option>
                           <option value="International Passport">International Passport</option>
+                          <option value="Drivers Liscense">Drivers Liscense</option>
                         </select>
                       </div>
                     </div>
@@ -582,6 +587,9 @@ else if($ctype = 'CORPORATE'){
       $state1 = $n['sig_state_one'];
       $state2 = $n['sig_state_two'];
       $state3 = $n['sig_state_three'];
+      $occu1 = $n['sig_occu_one'];
+      $occu2 = $n['sig_occu_two'];
+      $occu3 = $n['sig_occu_three'];
       $lga1 = $n['sig_lga_one'];
       $lga2 = $n['sig_lga_two'];
       $lga3 = $n['sig_lga_three'];
@@ -877,6 +885,12 @@ else if($ctype = 'CORPORATE'){
               </select>
             </div>
           </div>
+          <div class="col-md-12">
+                    <div class="form-group">
+                    <label >Occupation</label>
+                    <input value="<?php echo $occu1;?>" type="text" style="text-transform: uppercase;" class="form-control" name="sig_occu_one">
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="form-group">
                     <label >BVN</label>
@@ -1039,6 +1053,12 @@ else if($ctype = 'CORPORATE'){
               </select>
             </div>
           </div>
+          <div class="col-md-12">
+                    <div class="form-group">
+                    <label >Occupation</label>
+                    <input value="<?php echo $occu2;?>" type="text" style="text-transform: uppercase;" class="form-control" name="sig_occu_two">
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="form-group">
                     <label >BVN</label>
@@ -1202,6 +1222,12 @@ else if($ctype = 'CORPORATE'){
               </select>
             </div>
           </div>
+          <div class="col-md-12">
+                    <div class="form-group">
+                    <label >Occupation</label>
+                    <input value="<?php echo $occu3;?>" type="text" style="text-transform: uppercase;" class="form-control" name="sig_occu_three">
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="form-group">
                     <label >BVN</label>

@@ -55,12 +55,12 @@ $sessint_id = $_SESSION['int_id'];
       $acc_id = $b['id'];
     }
 
-      $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
+      $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$std' AND '$endx' ORDER BY transaction_date ASC");
       $deb = mysqli_fetch_array($totald);
       $tdp = $deb['debit'];
       $totaldb = number_format($tdp, 2);
       
-      $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
+      $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$std' AND '$endx' ORDER BY transaction_date ASC");
       $cred = mysqli_fetch_array($totalc);
       $tcp = $cred['credit'];
       $totalcd = number_format($tcp, 2);
@@ -143,22 +143,22 @@ $sessint_id = $_SESSION['int_id'];
                   <div id="project" >
                     <div class="row">
                     <div class="col-md-6">
-                        <h6 >Branch name</h6>
-                          <h4><?php echo $branch_name;?></h4>
-                        <h6 >Currency</h6>
-                          <h4><?php echo $currtype;?></h4>
-                          <h6 >Account number</h6>
-                        <h4><?php echo $acc;?></h4> 
-                        <h6 >Statement period</h6>
-                        <h5><?php echo $start,' - ',$end;?></h5> 
+                        <!-- <h4>Branch name: <?php echo $branch_name;?></div></h4> -->
+                          <!-- <h4><?php echo $branch_name;?></h4> -->
+                        <h4 >Currency: <?php echo $currtype;?></h4>
+                          <!-- <h4><?php echo $currtype;?></h4> -->
+                          <h4 >Account number: <?php echo $acc;?></h4>
+                        <!-- <h4><?php echo $acc;?></h4>  -->
+                        <h4 >Statement period: <?php echo $start,' - ',$end;?></h4>
+                        <!-- <h5><?php echo $start,' - ',$end;?></h5>  -->
                     </div>
                     <div class="col-md-6">
-                    <h6 >Client name</h6>
-                          <h4><?php echo $first_name," ", $last_name;?></h4>
-                          <h6 >Total debit</h6>
-                          <h4>&#8358;<?php echo $totaldb;?></h4>
-                        <h6 >Total credit</h6>
-                          <h4>&#8358;<?php echo $totalcd;?></h4>
+                    <h4 >Client name: <?php echo $first_name," ", $last_name;?></h4>
+                          <!-- <h4><?php echo $first_name," ", $last_name;?></h4> -->
+                          <h4 >Total debit: &#8358;<?php echo $totaldb;?></h4>
+                          <!-- <h4>&#8358;<?php echo $totaldb;?></h4> -->
+                        <h4 >Total credit: &#8358;<?php echo $totalcd;?></h4>
+                          <!-- <h4>&#8358;<?php echo $totalcd;?></h4> -->
                     </div>
                   </div>
                     </div>
@@ -182,7 +182,7 @@ $sessint_id = $_SESSION['int_id'];
                         $q = mysqli_fetch_array($resui);
                         $acc_id = $q['id'];
                         // $querytoget = "SELECT * FROM account_transaction WHERE account_id = '65' && int_id = '5' && branch_id = '1' && transaction_date BETWEEN '2019-01-01' AND '2020-03-03' ORDER BY transaction_date ASC";
-                        $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
+                        $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE ((account_id = '$acc_id' && int_id = $sessint_id) && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
 
                         
                         // $result = mysqli_query($connection, $querytoget);

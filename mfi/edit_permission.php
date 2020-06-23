@@ -16,6 +16,7 @@ if(isset($_GET['id'])){
    $loan_approv = $v['loan_appv'];
    $acct_approv = $v['acct_appv'];
    $valut = $v['valut'];
+   $staff_cabal = $v['staff_cabal'];
    $vault_email = $v['vault_email'];
    $view_report = $v['view_report'];
    $view_dashbord = $v['view_dashboard'];
@@ -92,6 +93,12 @@ if(isset($_GET['id'])){
    else{
      $l = 'unchecked';
    }
+   if($staff_cabal == 1){
+    $m = 'checked';
+   }
+   else{
+     $m = 'unchecked';
+   }
 }
 ?>
 <?php
@@ -155,12 +162,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    }else{
     $emai = 0;
    }
-   $rod = "UPDATE permission SET acc_op = '$accop', acc_update = '$accup', trans_appv = '$approve', trans_post = '$post_transact', loan_appv = '$approve_loan', acct_appv = '$approve_acc', valut = '$vault_trans',
+   $rod = "UPDATE permission SET acc_op = '$accop', acc_update = '$accup', trans_appv = '$approve', staff_cabal = '$staff_cabal', trans_post = '$post_transact', loan_appv = '$approve_loan', acct_appv = '$approve_acc', valut = '$vault_trans',
     vault_email = '$emai', view_report = '$view_report', view_dashboard = '$dash', configuration = '$access_config' WHERE int_id = '$sessint_id'
     && role_id = '$id'";
     $rox = mysqli_query($connection, $rod);
     if($rox){
       $URL="staff_mgmt.php";
+      echo '<script type="text/javascript">
+      $(document).ready(function(){
+          swal({
+              type: "success",
+              title: "Permission",
+              text: "The permissions has been added to this role",
+              showConfirmButton: false,
+              timer: 2000
+          })
+      });
+      </script>
+      ';
       echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
     }
     else{
@@ -223,6 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   document.getElementById('n8').checked = true;
                   document.getElementById('n11').checked = true;
                   document.getElementById('n12').checked = true;
+                  document.getElementById('n13').checked = true;
                 } else {
                   document.getElementById('n1').checked = false;
                   document.getElementById('n2').checked = false;
@@ -235,6 +255,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   document.getElementById('n8').checked = false;
                   document.getElementById('n11').checked = false;
                   document.getElementById('n12').checked = false;
+                  document.getElementById('n13').checked = false;
                 }
                });
              })
@@ -295,6 +316,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               <label class="form-check-label">
                 <input <?php echo $j;?>  class="form-check-input" type="checkbox" value="" name="access_config" id="n3">
                 Access Configuration
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+           </div>
+           <div class="col-md-4">
+           <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input <?php echo $m;?>  class="form-check-input" type="checkbox" value="" name="staff_cabal" id="n13">
+                Staff Cabal
                 <span class="form-check-sign">
                 <span class="check"></span>
                 </span>

@@ -34,6 +34,7 @@ if (count([$getpermission]) == 1) {
   $view_dashboard = $pms['view_dashboard'];
   $vault_email = $pms['vault_email'];
   $acc_op = $pms['acc_op'];
+  $staff_cabal = $pms['staff_cabal'];
   $acc_update = $pms['acc_update'];
   $per_con = $pms['configuration'];
   $bch_id = $_SESSION["branch_id"];
@@ -88,7 +89,7 @@ $rezz = mysqli_query($connection, $activeq);
   <title><?php echo "$int_name - $page_title"?></title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta http-equiv="refresh" content="1000;url=../functions/logout.php" />
+  <!-- <meta http-equiv="refresh" content="1000;url=../functions/logout.php" /> -->
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <!--     Fonts and icons     -->
@@ -150,27 +151,39 @@ input[type=number] {
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="false">
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link" href="manage_client.php">
               <i class="material-icons">person</i>
-              Client
-            </a>
-            <div class="dropdown-menu">
+              Register Client
+            </a> -->
+            <!-- <div class="dropdown-menu">
               <a class="dropdown-item" href="client.php">Client List</a>
               <a href="manage_client.php" class="dropdown-item">Register Client</a>
-            </div>
-          </li>
+            </div> -->
+          <!-- </li> -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="false">
-              <i class="material-icons">people</i>
-              Group
+            <a class="nav-link" href="customer_service.php">
+              <i class="material-icons">supervised_user_circle</i>
+              Customer Service
             </a>
-            <div class="dropdown-menu">
+          </li>
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link" href="#">
+              <i class="material-icons">people</i>
+              Register Group
+            </a> -->
+            <!-- <div class="dropdown-menu">
               <a class="dropdown-item" href="#">Group List</a>
               <a href="#" class="dropdown-item">Register Group</a>
-            </div>
-          </li>
+            </div> -->
+          <!-- </li> -->
           <li class="nav-item dropdown">
+            <a class="nav-link" href="transaction.php">
+              <i class="material-icons">account_balance_wallet</i>
+              Transaction
+            </a>
+          </li>
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="false" aria-expanded="fasle">
               <i class="material-icons">account_balance_wallet</i>
               Transaction
@@ -179,11 +192,17 @@ input[type=number] {
               <a href="transact.php" class="dropdown-item">Deposit/Withdrawal</a>
               <a href="#" class="dropdown-item">FTD Booking</a>
               <a href="lend.php" class="dropdown-item">Book Loan</a>
-              <!-- <a href="#" class="dropdown-item">Expense Posting</a> -->
-              <a href="teller_journal.php" class="dropdown-item">Vault</a>
+              <a href="cheque_book_posting.php" class="dropdown-item">CHQ/Pass Book Posting</a>
+              <a href="teller_journal.php" class="dropdown-item">Vault Posting</a>
             </div>
-          </li>
+          </li> -->
           <li class="nav-item dropdown">
+            <a class="nav-link" href="approval.php">
+              <i class="material-icons">library_books</i>
+              Approval
+            </a>
+          </li>
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="false" aria-expanded="fasle">
               <i class="material-icons">library_books</i>
               Approval
@@ -191,32 +210,36 @@ input[type=number] {
             <div class="dropdown-menu">
               <a href="client_approval.php" class="dropdown-item">Account Opening</a>
               <a href="transact_approval.php" class="dropdown-item">Transactions</a>
+              <a href="#" class="dropdown-item">CHQ/Pass Book</a>
               <a href="disbursement_approval.php" class="dropdown-item">Loan disbursement</a>
             </div>
-          </li>
+          </li> -->
           <!-- accounting is here -->
           <li class="nav-item dropdown">
+            <a class="nav-link" href="accounting.php">
+              <i class="material-icons">menu_book</i>
+              Accounting
+            </a>
+          </li>
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               <i class="material-icons">menu_book</i>
               Accounting
             </a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="chart_account.php">Chart Of Accounts</a>
-              <!-- <a class="dropdown-item" href="config.php">Configuration</a> -->
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Journals</a>
-              <a class="dropdown-item" href="#">Journal Template</a>
-              <!-- <a class="dropdown-item" href="#">Group</a> -->
+              <a href="inventory.php" class="dropdown-item">Inventory Posting</a>
+              <a class="dropdown-item" href="#">Asset Register</a>
               <a class="dropdown-item" href="#">Reconciliation</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Teller Management</a>
               <a class="dropdown-item" href="#">Accounting Export</a>
               <a class="dropdown-item" href="#">Periodic Accural</a>
               <a class="dropdown-item" href="#">Close Periods</a>
             </div>
-          </li>
+          </li> -->
           <!-- ending of accounting -->
-          <li class="nav-item dropdown">
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
               <i class="material-icons">bubble_chart</i>
               Products Summary
@@ -228,43 +251,50 @@ input[type=number] {
               <a href="#" class="dropdown-item">Shares</a>
               <a href="loans.php" class="dropdown-item">Loans</a>
             </div>
-          </li>
+          </li> -->
           <!-- report is here now -->
           <li class="nav-item dropdown">
+            <a class="nav-link" href="reports.php">
+              <i class="material-icons">content_paste</i>
+              Reports
+            </a>
+          </li>
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
               <i class="material-icons">content_paste</i>
               Reports
             </a>
             <div class="dropdown-menu">
-              <a href="statement_of_income.php" class="dropdown-item">Client Report</a>
-              <a href="#" class="dropdown-item">Group Report</a>
-              <a href="#" class="dropdown-item">Savings Report</a>
-              <a href="#" class="dropdown-item">Current Accounts Report</a>
-              <a href="loan_report.php" class="dropdown-item">Loan reports</a>
-              <a href="statement_of_fp.php" class="dropdown-item">Financial report</a>
-              <a href="institutional_report.php" class="dropdown-item">Audit</a>
-              <a href="vault_report.php" class="dropdown-item">Vault Report</a>
-              <a href="teller.php" class="dropdown-item">Teller Report</a>
+              <a href="report_client.php" class="dropdown-item">Client Report</a>
+              <a href="report_group.php" class="dropdown-item">Group Report</a>
+              <a href="report_savings.php" class="dropdown-item">Savings Report</a>
+              <a href="report_current.php" class="dropdown-item">Current Accounts Report</a>
+              <a href="report_loan.php" class="dropdown-item">Loan reports</a>
+              <a href="report_financial.php" class="dropdown-item">Financial report</a>
+              <a href="report_fixed_deposit.php" class="dropdown-item">Fixed Deposit Report</a>
+              <a href="report_institution.php" class="dropdown-item">Institutional Report</a>
             </div>
-          </li>
+          </li> -->
           <!-- end of report -->
           <li class="nav-item dropdown">
+            <a class="nav-link" href="configuration.php">
+              <i class="material-icons">settings</i>
+              Configuration
+            </a>
+          </li>
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               <i class="material-icons">settings</i>
               Configuration
             </a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="products_config.php">Products</a>
-              <!-- <a class="dropdown-item" href="config.php">Configuration</a> -->
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="staff_mgmt.php">Staff Mgt.</a>
               <a class="dropdown-item" href="branch.php">Branch</a>
-              <!-- <a class="dropdown-item" href="#">Group</a> -->
-              <!-- <a class="dropdown-item" href="chart_account.php">Accounting</a> -->
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="alert_sms.php">SMS</a>
+              <a class="dropdown-item" href="#">Alerts</a>
             </div>
-          </li>
+          </li> -->
           <!-- another -->
           <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
@@ -286,7 +316,7 @@ input[type=number] {
             <?php
               }else{            ?>
 
-              <a class="btn btn-primary" href="<?php echo $destination ?>"><i class="fa fa-caret-left"></i> Back</a>
+              <a class="btn btn-primary" href="javascript:history.go(-1)"><i class="fa fa-caret-left"></i> Back</a>
               
               <?php
                 }
@@ -301,10 +331,15 @@ input[type=number] {
           </button>
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#pablo">
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">notifications</i>
                 </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+                  <a class="dropdown-item" href="#">Loans matured today</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Loans due tommorow</a>
+                </div>
               </li>
               <!-- user setup -->
               <li class="nav-item dropdown">

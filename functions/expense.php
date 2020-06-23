@@ -27,6 +27,7 @@ $gl_codex = $_POST['gl_no'];
 $gl_amt = $_POST['amount'];
 $pym = $_POST['payment_method'];
 $trans_id = $_POST['transid'];
+$desc = $_POST['descrip'];
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 ?>
@@ -76,6 +77,12 @@ if ($is_del == "0" && $is_del != NULL) {
             $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_codex'";
             $dbgl = mysqli_query($connection, $upglacct);
             if ($dbgl) {
+                $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
+                transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
+                  created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$gl_codex}', '{$trans_id}', '{$desc}', 'Credit', '{$staff_id}',
+                   '{$gen_date}', '{$gl_amt}', '{$new_gl_bal}', '{$gl_amt}', '{$gen_date}', '{$amt}')";
+                   $res4 = mysqli_query($connection, $gl_acc);
+
                 $upinta = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2', total_withdrawals_derived = '$tbd2' WHERE int_id = '$sessint_id' && teller_id = '$staff_id'";
                 $res1 = mysqli_query($connection, $upinta);
                 if ($res1) {
@@ -83,10 +90,10 @@ if ($is_del == "0" && $is_del != NULL) {
                     $irvs = 0;
                     $gen_date = date('Y-m-d H:i:s');
                     $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
-            teller_id, transaction_id, transaction_type, is_reversed,
+            teller_id, transaction_id, description, transaction_type, is_reversed,
             transaction_date, amount, running_balance_derived, overdraft_amount_derived,
             created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
-            '{$gl_codex}', '{$trans_id}', 'Debit', '{$irvs}',
+            '{$gl_codex}', '{$trans_id}', '{$desc}', 'Debit', '{$irvs}',
             '{$gen_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
             '{$gen_date}', '{$staff_id}')";
                 $res4 = mysqli_query($connection, $iat2);
@@ -111,10 +118,10 @@ if ($is_del == "0" && $is_del != NULL) {
            }
         } else {
             // run the expense for approval
-            $trancache = "INSERT INTO transact_cache (int_id, branch_id, transact_id, account_no,
+            $trancache = "INSERT INTO transact_cache (int_id, branch_id, transact_id, description, account_no,
             client_name, staff_id, account_off_name,
             amount, pay_type, transact_type, status, date) VALUES
-            ('{$sessint_id}', '{$branch_id}', '{$trans_id}', '{$gl_codex}', '{$gl_name}',
+            ('{$sessint_id}', '{$branch_id}', '{$trans_id}', '{$desc}', '{$gl_codex}', '{$gl_name}',
             '{$staff_id}', '{$staff_name}', '{$gl_amt}', '{$pym}',
             'Expense', 'Pending', '{$gen_date}') ";
             $go = mysqli_query($connection, $trancache);
@@ -124,7 +131,16 @@ if ($is_del == "0" && $is_del != NULL) {
              } else {
                 $_SESSION["Lack_of_intfund_$randms"] = "Expense Failed";
                echo header ("Location: ../mfi/transact.php?loan4=$randms");
+//             if ($connection->error) {
+//     try {   
+//         throw new Exception("MySQL error $connection->error <br> Query:<br> $trancache", $mysqli->error);   
+//     } catch(Exception $e ) {
+//         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+//         echo nl2br($e->getTraceAsString());
+//     }
+// }
              }
+             
         }
        } else {
         // echo insufficient fund

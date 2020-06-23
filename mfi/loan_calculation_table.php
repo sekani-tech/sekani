@@ -99,7 +99,7 @@ while ($i < $loan_term){
   $minus = $loan_term - 1;
   $disburse = $principal_amount;
   $percent = $int_rate / 100;
-  $inter_due = $percent * $disburse;
+  $inter_due = ((($percent * $disburse) * $loan_term) / $loan_term) * 100;
   $princi_due = $disburse / $loan_term;
   $princi_due2 = $princi_due * ($i + 1);
   $princi_bal = $disburse - $princi_due2;

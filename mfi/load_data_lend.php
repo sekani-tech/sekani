@@ -28,10 +28,32 @@ if(isset($_POST["id"]))
       $out = '';
       while ($row = mysqli_fetch_array($res))
       {
-        $out .= '<option value="'.$row["id"].'">'.$row["account_no"].'</option>';
+        $product_type = $row["product_id"];
+        $get_product = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$product_type' AND int_id = '$int_id'");
+       while ($mer = mysqli_fetch_array($get_product)) {
+         $p_n = $mer["name"];
+         $out .= '<option value="'.$row["id"].'">'.$row["account_no"].' - '.$p_n.'</option>';
+       }
       }
       return $out;
     }
+                  function fill_payment($connection)
+                  {
+                    $id = $_POST["id"];
+                    $org = mysqli_query($connection, "SELECT * FROM product WHERE id = '$id'");
+                    if (count([$org]) == 1) {
+                      $a = mysqli_fetch_array($org);
+                      $sint_id = $a['int_id'];
+                     }
+                  $org = "SELECT * FROM payment_type WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["value"].'</option>';
+                  }
+                  return $out;
+                  }
     function fill_loanofficer($connection) {
       $id = $_POST["id"];
       $org = mysqli_query($connection, "SELECT * FROM product WHERE id = '$id'");
@@ -39,7 +61,7 @@ if(isset($_POST["id"]))
         $a = mysqli_fetch_array($org);
         $int_id = $a['int_id'];
        }
-       $pen = "SELECT * FROM staff WHERE int_id = '$int_id'";
+       $pen = "SELECT * FROM staff WHERE int_id = '$int_id' AND employee_status = 'Employed'";
       $res = mysqli_query($connection, $pen);
       $out = '';
       while ($row = mysqli_fetch_array($res))
@@ -85,7 +107,7 @@ if(isset($_POST["id"]))
             </div>
             <div class="col-md-5">
             <label> </label>
-              <select id="repay" class="form-control">
+              <select id="repay" name="repay_eve" class="form-control">
                 <option value ="day">Days</option>
                 <option value ="week">Weeks</option>
                 <option value ="month">Months</option>
@@ -129,18 +151,17 @@ if(isset($_POST["id"]))
           </div>
         </div>
       </div>
- 
-      <div class="col-md-4">
-      <div class="form-group">
-        <label>Repayment Start Date:</label>
-        <input type="date" value="" name="repay_start" class="form-control" id="repay_start">
-      </div>
-      </div>
       
       <div class="col-md-4">
       <div class="form-group">
         <label>Disbursement Date *:</label>
         <input type="date" name="disbursement_date" class="form-control" id="disb_date">
+      </div>
+      </div>
+      <div class="col-md-4">
+      <div class="form-group">
+        <label>Repayment Start Date:</label>
+        <input type="date" name="repay_start" class="form-control" id="repay_start">
       </div>
       </div>
       <div class="col-md-4">
@@ -171,21 +192,25 @@ if(isset($_POST["id"]))
         <label>Loan Sector:</label>
         <select name="loan_sector" class="form-control">
           <option value="0">Select loan sector</option>
-          <option value="1">Education</option>
-          <option value="2">Finance</option>
+          <option value="1">Agriculture, Mining & Quarry</option>
+          <option value="2">Manufacturing</option>
           <option value="3">Agricultural sector</option>
-          <option value="4">Manufacturing</option>
-          <option value="5">Construction</option>
-          <option value="6">Others</option>
+          <option value="4">Banking</option>
+          <option value="5">Public Service</option>
+          <option value="6">Health</option>
+          <option value="7">Education</option>
+          <option value="8">Tourism</option>
+          <option value="9">Civil Service</option>
+          <option value="10">Trade & Commerce</option>
+          <option value="11">Others</option>
         </select>
         </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" hidden>
       <div class="form-group">
         <label>Fund Source:</label>
         <select name="fund_source" class="form-control">
-          <option value="1">Cash</option>
-          <option value="2">Bank</option>
+          '.fill_payment($connection).'
         </select>
         </div>
         </div>

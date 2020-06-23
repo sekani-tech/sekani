@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "Deposit/ Withdrawal";
-$destination = "index.php";
+$destination = "transaction.php";
 include("header.php");
 ?>
 <?php
@@ -415,7 +415,7 @@ $transid1 = $randms1;
         <div class="col-md-4">
             <div class="form-group">
                <label class="bmd-label-floating">Amount</label>
-               <input type="number" class="form-control" name="amount" value="">
+               <input type="number" step="any" class="form-control" name="amount" value="">
             </div>
         </div>
         <div class="col-md-4">
@@ -434,11 +434,23 @@ $transid1 = $randms1;
                   });
                 });
               </script>
-              <label>Transaction Method</label>
+              <?php
+                  function fill_payment($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM payment_type WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["value"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
+              <label>Payment Method</label>
                <select class="form-control" name="pay_type" id="opo">
-                  <option value="Cash">Cash</option>
-                  <option value="Bank">Bank</option>
-                  <option value="Cheque">Cheque</option>
+                  <?php echo fill_payment($connection)?>
                </select>
             </div>
         </div>
@@ -498,7 +510,7 @@ $transid1 = $randms1;
         <div class="col-md-4">
         <div class="form-group">
           <label for="">Amount Recieved:</label>
-          <input type="number" name="amount" id="" value="" class="form-control">
+          <input type="number" step="any" name="amount" id="" value="" class="form-control">
           <span class="help-block" style="color: red;"><?php echo $exp_error;?></span>
         </div>
     </div>
@@ -520,9 +532,7 @@ $transid1 = $randms1;
                 });
               </script>
           <select name="payment_method" id="poo" class="form-control">
-            <option value="Cash">Cash</option>
-            <!-- <option value="Cheque">Cheque</option> -->
-            <!-- <option value="Transfer">Transfer</option> -->
+          <?php echo fill_payment($connection)?>
           </select>
       </div>
     </div>
@@ -533,6 +543,12 @@ $transid1 = $randms1;
       <div class="form-group">
           <label for="">Transaction ID:</label>
           <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="tit">
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+          <label for="">Description</label>
+          <input type="text" value="" name="descrip" class="form-control">
       </div>
     </div>
     </div>    

@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "Approval";
-$destination = "index.php";
+$destination = "approval.php";
     include("header.php");
 
 ?>
@@ -75,8 +75,8 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#products" data-toggle="tab">
-                            <i class="material-icons">cancel</i>Pending
-                            <div class="ripple-container"></div>
+                            <i class="material-icons">cancel</i>Rejected
+                            <div class="ripple-container" ></div>
                           </a>
                         </li>
                       </ul>
@@ -187,7 +187,7 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                     <table id="tabledat4" class="table">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.branch_id, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Not Approved'";
+                        $query = "SELECT client.id,client.submittedon_date, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Not Approved'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -238,7 +238,7 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                             ?>
                           <th><?php echo $savingp; ?></th>
                           <th><?php echo strtoupper($row["first_name"]." ".$row["last_name"]); ?></th>
-                          <th><?php echo "4/4/2020" ?></th>
+                          <th><?php echo $row["submittedon_date"]; ?></th>
                           <?php
                           $soc = $row["account_no"];
                           $length = strlen($soc);
@@ -314,7 +314,7 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                     <table id="tabledat4" class="table">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.branch_id, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Pending'";
+                        $query = "SELECT client.submittedon_date, client.id, client.account_type, client.account_no, client.branch_id, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON (client.loan_officer_id = staff.id) WHERE (client.int_id = '$sessint_id' && client.status = 'Pending')";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -364,7 +364,7 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                             ?>
                           <th><?php echo $savingp; ?></th>
                           <th><?php echo strtoupper($row["first_name"]." ".$row["last_name"]); ?></th>
-                          <th><?php echo "4/4/2020" ?></th>
+                          <th><?php echo $row["submittedon_date"]; ?></th>
                           <?php
                           $soc = $row["account_no"];
                           $length = strlen($soc);

@@ -17,8 +17,6 @@ if(isset($_GET["edit"])) {
     $id = $n['id'];
     $acct_name = $n['name'];
     $gl_code = $n['gl_code'];
-    $acct_type = $n['account_type'];
-    $ext_id = $n['external_id'];
     $acct_tag = $n['tag_id'];
     $acct_use = $n['account_usage'];
     $des = $n['description'];
@@ -35,6 +33,68 @@ if(isset($_GET["edit"])) {
   }
 }
 ?>
+<?php
+if($class_enum  == 1){
+  $acc_type = 'ASSET';
+}
+elseif($class_enum  == 2){
+  $acc_type = 'LIABILITY';
+}
+elseif($class_enum  == 3){
+  $acc_type = 'EQUITY';
+}
+elseif($class_enum  == 4){
+  $acc_type = 'INCOME';
+}
+elseif($class_enum  == 5){
+  $acc_type = 'EXPENSE';
+}
+?>
+<input type="text" hidden value="<?php echo $man_ent;?>" id="opo">
+<input type="text" hidden value="<?php echo $disable_acct;?>" id="opo2">
+<script>
+  $(document).ready(function() {
+    var xc = document.getElementById("opo").value;
+    var xc2 = document.getElementById("opo2").value;
+    if (xc == '1' && xc2 == '0') {
+      document.getElementById('mans').checked = true;
+      document.getElementById('diss').checked = false;
+      $('mans').click(function() {
+        document.getElementById('mans').checked = true;
+      });
+      $('diss').click(function() {
+        document.getElementById('diss').checked = true;
+      });
+    } else if (xc == '0' && xc2 == '1') {
+      document.getElementById('mans').checked = false;
+      document.getElementById('diss').checked = true;
+      $('mans').click(function() {
+        document.getElementById('mans').checked = true;
+      });
+      $('diss').click(function() {
+        document.getElementById('diss').checked = true;
+      });
+    } else if (xc == '1' && xc2 == '1') {
+      document.getElementById('mans').checked = true;
+      document.getElementById('diss').checked = true;
+      $('mans').click(function() {
+        document.getElementById('mans').checked = true;
+      });
+      $('diss').click(function() {
+        document.getElementById('diss').checked = true;
+      });
+    } else {
+      document.getElementById('mans').checked = false;
+      document.getElementById('diss').checked = false;
+      $('emp').click(function() {
+        document.getElementById('mans').checked = true;
+      });
+      $('dec').click(function() {
+        document.getElementById('diss').checked = true;
+      });
+    }
+  });
+</script>
 <div class="content">
     <div class="container-fluid">
       <!-- your content here -->
@@ -70,7 +130,7 @@ if(isset($_GET["edit"])) {
                     <div class="form-group">
                       <label >Account Type</label>
                       <select class="form-control" name="class_enum" id="" required>
-                        <option value="<?php echo $class_enum?>"><?php echo $acct_type?></option>
+                        <option value="<?php echo $class_enum?>"><?php echo $acc_type?></option>
                         <option value="1">ASSET</option>
                         <option value="2">LIABILITY</option>
                         <option value="3">EQUITY</option>
@@ -79,13 +139,7 @@ if(isset($_GET["edit"])) {
                       </select>
                     </div>
                   </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label >External ID</label>
-                      <input type="text" name="ext_id" value="<?php echo $ext_id; ?>" style="text-transform: uppercase;" class="form-control" required>
-                    </div>
-                  </div>
-                  
+
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account Usage</label>
@@ -97,29 +151,32 @@ if(isset($_GET["edit"])) {
                     </div>
                   </div>
                   <div class="col-md-4">
+                    <div class="row">
+                    <div class="col-md-8">
                     <div class="form-group">
                       <label >Manual Entires Allowed</label><br/>
                       <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                          <input type="checkbox" class="form-check-input" name="man_allow" type="checkbox" value="0">
+                          <input id = "mans" type="checkbox" class="form-check-input" name="man_allow" type="checkbox">
                           <span class="form-check-sign">
                             <span class="check"></span>
                           </span>
                       </label>
                     </div>
                     </div>
-                  </div>
-
-                  <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
                     <div class="form-group">
                       <label >Disable</label><br/>
                       <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                          <input class="form-check-input" name="disable" type="checkbox" value="1">
+                          <input id="diss" class="form-check-input" name="disable" type="checkbox" value="1">
                           <span class="form-check-sign">
                             <span class="check"></span>
                           </span>
                       </label>
+                    </div>
+                    </div>
                     </div>
                     </div>
                   </div>

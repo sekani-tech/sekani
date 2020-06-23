@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "Transactions";
-$destination = "index.php";
+$destination = "approval.php";
     include("header.php");
 
 ?>
@@ -98,7 +98,7 @@ if ($can_transact == 1 || $can_transact == "1") {
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Tranactions</h4>
+                  <h4 class="card-title ">Transactions</h4>
                   <script>
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
@@ -123,7 +123,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' && status = 'Pending'";
+                        $query = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' AND status = 'Pending'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -153,7 +153,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                         <tr>
                         <?php $row["id"]; ?>
                           <th><?php echo $row["transact_type"]; ?></th>
-                          <th><?php echo $row["amount"]; ?></th>
+                          <th><?php echo number_format($row["amount"], 2); ?></th>
                           <th><?php echo $row["account_off_name"]; ?></th>
                           <th><?php echo $row["client_name"]; ?></th>
                           <th><?php echo $row["status"]; ?></th>

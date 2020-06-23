@@ -129,22 +129,22 @@ $abdc = 0;
                         </div>
                       </div>
                   <script>
-                              $(document).ready(function() {
-                                $('#input').change(function(){
-                                  var id = $(this).val();
-                                  var tell_name = $('#input').val();
-                                  var int_id = $('#int_id').val();
-                                  $.ajax({
-                                    url:"create_teller_branch.php",
-                                    method:"POST",
-                                    data:{id:id, int_id:int_id},
-                                    success:function(data){
-                                      $('#show_branch').html(data);
-                                    }
-                                  })
-                                });
-                              })
-                            </script>
+                        $(document).ready(function() {
+                          $('#input').change(function(){
+                            var id = $(this).val();
+                            var tell_name = $('#input').val();
+                            var int_id = $('#int_id').val();
+                            $.ajax({
+                              url:"create_teller_branch.php",
+                              method:"POST",
+                              data:{id:id, int_id:int_id},
+                              success:function(data){
+                                $('#show_branch').html(data);
+                              }
+                            })
+                          });
+                        })
+                      </script>
                             <!-- another -->
                             <!-- da -->
                       <div class="col-md-4">

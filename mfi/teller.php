@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "Teller Report";
-$destination = "index.php";
+$destination = "report_institution.php";
     include("header.php");
 ?>
 

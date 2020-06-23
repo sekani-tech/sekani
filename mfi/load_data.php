@@ -20,7 +20,7 @@ if(isset($_POST["id"]))
         if ($forp == 1) {
           $chg = $amt." Flat";
         } else {
-          $chg = $forp. "% of Loan Principal";
+          $chg = $amt. "% of Loan Principal";
         }
         if ($values == 1) {
             $xs = "Disbursement";
@@ -45,11 +45,12 @@ if(isset($_POST["id"]))
         $branch_id = $_POST["branch_id"];
         $charge_id = $_POST["id"];
         $colon = date('Y-m-d H:i:s');
+        // $date_p = date('Y-m-d');
         $inload = mysqli_query($connection, "INSERT INTO charges_cache 
         (`int_id`, `branch_id`, `charge_id`, `name`, `charge`, `collected_on`,
         `date`, `is_status`, `cache_prod_id`)
         VALUES ('{$int_id}', '{$branch_id}', '{$charge_id}',
-        '{$nameofc}', '{$chg}', '{$xs}', NULL, '0', '{$main_p}')");
+        '{$nameofc}', '{$chg}', '{$xs}', '{$colon}', '0', '{$main_p}')");
         $sql = "SELECT * FROM charge WHERE id = '".$_POST["id"]."'";
     }
     else
@@ -85,6 +86,7 @@ if(isset($_POST["id"]))
     <th>Name</th>
     <th>Charge</th>
     <th>Collected On</th>
+    <th>Delete</th>
   </thead>
   <tbody>
     <?php if (mysqli_num_rows($result) > 0) {
@@ -93,7 +95,14 @@ if(isset($_POST["id"]))
         <th> <?php echo $row["name"] ?></th>
         <th><?php echo $row["charge"] ?></th>
         <th> <?php echo $row["collected_on"] ?></th>
+        <input type="text" value="<?php $row["id"] ?>" hidden>
+        <th> <button id="del" type="button" name="delete" class="btn btn-info">delete</button> </th>
       </tr>
+      <script>
+     $(document).ready(function () {
+      $('#del').click();
+     });
+     </script>
       <?php
       }
     } else {
@@ -105,4 +114,20 @@ if(isset($_POST["id"]))
   <?php
     echo $output;
 }
+?>
+<?php
+if ($_GET) {
+  if(isset($_GET['delete'])){
+    $id = $row["id"];
+      delete($connection, $id);
+  }//elseif(isset($_GET['select'])){
+      //select();
+  //}
+}
+function delete($connection, $id)
+    {
+    	$delete1 = mysqli_query($connection, "DELETE FROM `charges_cache` WHERE id = '$id'");
+        
+	echo "record deleted";
+    }
 ?>

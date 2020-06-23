@@ -430,23 +430,31 @@ $destination = "index.php";
                                 $output = '';
                                 while ($row = mysqli_fetch_array($res))
                                 {
-                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+                                  $output .= '<option value = "'.$row["gl_code"].'"> '.strtoupper($row["name"]).' </option>';
                                 }
                                 return $output;
                               }
                               ?>
-                              <div class="col-md-8">
+                              <!-- <div class="col-md-8">
                               <label for="charge" class="form-align">Fund Source</label>
                               <select class="form-control form-control-sm" name="asst_fund_src">
                                 <option value="">--</option>
-                                <?php echo fill_asset($connection) ?>
                               </select>
-                              </div>
+                              </div> -->
                             </div>
                             <div class="form-group">
                             <div class="col-md-8">
                             <label for="charge" class="form-align ">Loan Portfolio</label>
                             <select class="form-control form-control-sm" name="asst_loan_port">
+                              <option value="">--</option>
+                              <?php echo fill_asset($connection) ?>
+                            </select>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-md-8">
+                            <label for="charge" class="form-align">Insufficient Repayment</label>
+                            <select class="form-control form-control-sm" name="asst_insuff_rep">
                               <option value="">--</option>
                               <?php echo fill_asset($connection) ?>
                             </select>
@@ -463,7 +471,7 @@ $destination = "index.php";
                                 $output = '';
                                 while ($row = mysqli_fetch_array($res))
                                 {
-                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+                                  $output .= '<option value = "'.$row["gl_code"].'"> '.strtoupper($row["name"]).' </option>';
                                 }
                                 return $output;
                               }
@@ -510,11 +518,11 @@ $destination = "index.php";
   </div>
   </div>
   <div id="show_payment"></div>
-                            <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal2"><i class="material-icons">add</i></button>
-                            <span>
+                            <!-- <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal2"><i class="material-icons">add</i></button> -->
+                            <!-- <span>
                             Map Fees to Specific Income accounts
-                            </span>
-                            <div id="acct_2">
+                            </span> -->
+                            <div id="acct_2" hidden>
                               <div class="table-responsive">
                               <table id="tabledat" class="table" cellspacing="0" style="width:100%">
          <thead>
@@ -564,7 +572,7 @@ $destination = "index.php";
                                 $output = '';
                                 while ($row = mysqli_fetch_array($res))
                                 {
-                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+                                  $output .= '<option value = "'.$row["gl_code"].'"> '.strtoupper($row["name"]).' </option>';
                                 }
                                 return $output;
                               }
