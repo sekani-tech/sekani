@@ -33,9 +33,9 @@
                      {
                      ?>
              <tr>
-            <th><?php $pox["value"]; ?></th>
-            <th>&#x20a6; <?php number_format($pox["type"], 2); ?></th>
-            <th><?php $pox["description"]; ?></th>
+            <th><?php echo $pox["value"]; ?></th>
+            <th>&#x20a6; <?php echo number_format($pox["type"], 2); ?></th>
+            <th><?php echo $pox["description"]; ?></th>
             </tr>
             <?php
              }
