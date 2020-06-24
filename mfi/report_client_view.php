@@ -28,16 +28,29 @@ $destination = "report_client.php";
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> View client balances</p>
+                   }?> clients</p>
                 </div>
                 <div class="card-body">
                 <div class="form-group">
-                <!-- <form method = "POST" action = "../composer/client_balance.php"> -->
-              <form method = "POST" action = "#">
+                <form method = "POST" action = "../composer/client_balance.php">
               <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
               <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
               <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
-              <button type="submit" class="btn btn-primary pull-left">Download PDF</button>
+              <button type="submit" id="clientbalance" class="btn btn-primary pull-left">Download PDF</button>
+              <script>
+        $(document).ready(function () {
+        $('#clientbalance').on("click", function () {
+          swal({
+              type: "success",
+              title: "CLIENT BALANCE REPORT",
+              text: "From " + start1 + " to " + end1 + "Loading...",
+              showConfirmButton: false,
+              timer: 5000
+                    
+            })
+         });
+       });
+     </script>
             </form>
             </div>
                   <div class="table-responsive">
@@ -180,6 +193,28 @@ $destination = "report_client.php";
                    }?> registered clients || <a style = "color: white;" href="manage_client.php">Create New client</a></p>
                 </div>
                 <div class="card-body">
+                <div class="form-group">
+                <form method = "POST" action = "../composer/client_list.php">
+              <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
+              <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
+              <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
+              <button type="submit" id="clientlist" class="btn btn-primary pull-left">Download PDF</button>
+              <script>
+              $(document).ready(function () {
+              $('#clientlist').on("click", function () {
+                swal({
+                    type: "success",
+                    title: "CLIENT REPORT",
+                    text: "Printing Successful",
+                    showConfirmButton: false,
+                    timer: 5000
+                          
+                  })
+              });
+            });
+     </script>
+            </form>
+            </div>
                   <div class="table-responsive">
                     <table id="tableddat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
@@ -316,7 +351,7 @@ function fill_client($connection) {
   return $out;
 }
 ?>
-<!-- Content added here
+Content added here
     <div class="content">
         <div class="container-fluid">
          your content here
@@ -325,7 +360,7 @@ function fill_client($connection) {
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Client Summary Report</h4>
-                 s<p class="card-category">Fill in all important data</p>
+                 <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
                   <form>
@@ -369,7 +404,7 @@ function fill_client($connection) {
             <div id="outjournal"></div>
           </div>
         </div>
-      </div> -->
+      </div>
 <?php
 }
  else if (isset($_GET["view5"])) {
@@ -407,9 +442,11 @@ function fill_client($connection) {
                 <div class="card-body">
                 <div class="row">
                   <div class="col-md-3">
+                  <div class="form-group">
+                <form method = "POST" action = "../composer/registered_client.php">
                     <label for="">Pick Month</label>
-                    <select id="month" class="form-control" style="text-transform: uppercase;" name="lga">
-                    <option value=""></option>
+                    <select id="month" class="form-control" style="text-transform: uppercase;" name="month">
+                    <option value="0"></option>
                     <option value="1">January</option>
                     <option value="2">February</option>
                     <option value="3">March</option>
@@ -423,7 +460,28 @@ function fill_client($connection) {
                     <option value="11">November</option>
                     <option value="12">December</option>
                     </select>
-                  </div>
+                  
+              <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
+              <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
+              <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
+              <button type="submit" id="registeredclient" class="btn btn-primary pull-left">Download PDF</button>
+              <script>
+              $(document).ready(function () {
+              $('#registeredclient').on("click", function () {
+                swal({
+                    type: "success",
+                    title: "REGISTERED CLIENT REPORT",
+                    text: "Printing Successful",
+                    showConfirmButton: false,
+                    timer: 5000
+                          
+                  })
+              });
+            });
+     </script>
+            </form>
+            </div>
+            </div>
                   <script>
                     $(document).ready(function () {
                       $('#month').on("change", function () {
