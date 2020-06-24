@@ -22,7 +22,7 @@ session_start();
             $sessint_id =$_SESSION['int_id'];
           // import
         //   $glcode = $_POST['glcode'];
-        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
+        $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' ORDER BY client.firstname ASC";
         $result = mysqli_query($connection, $query);
         while ($q = mysqli_fetch_array($result, MYSQLI_ASSOC))
           {
@@ -47,11 +47,10 @@ session_start();
             }
             }
             $acc = $q["account_no"];
-            $don = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
-            $ew = mysqli_fetch_array($don);
-            if(isset($ew['account_balance_derived'])){
-            $accountb = $ew['account_balance_derived'];
-            }
+            $dob = $q["date_of_birth"];
+            $gender = $q["gender"];
+            $mobile = $q["mobile_no"];
+            $bvn = $q["BVN"];
             $out .= '
             <tr>
             <th style="font-size: 30px;" class="column1">'.$firstname.'</th>
@@ -59,7 +58,10 @@ session_start();
             <th style="font-size: 30px;" class="column1">'.$account.'</th>
             <th style="font-size: 30px;" class="column1">'.$savingp.'</th>
             <th style="font-size: 30px;" class="column1">'.$acc.'</th>
-            <th style="font-size: 30px;" class="column1">'.$accountb.'</th>
+            <th style="font-size: 30px;" class="column1">'.$dob.'</th>
+            <th style="font-size: 30px;" class="column1">'.$gender.'</th>
+            <th style="font-size: 30px;" class="column1">'.$mobile.'</th>
+            <th style="font-size: 30px;" class="column1">'.$bvn.'</th>
             </tr>
           ';
           }
@@ -75,7 +77,7 @@ session_start();
 <div id="logo">
   <img src="'.$_SESSION["int_logo"].'" height="80" width="80">
 </div>
-<h1>'.$_SESSION["int_full"].' <br/> Client Balance Report</h1>
+<h1>'.$_SESSION["int_full"].' <br/> Client List Report</h1>
 <div id="company" class="clearfix">
   <div>'.$branch.'</div>
   <div>'.$branch_location.'</div>
@@ -106,7 +108,16 @@ session_start();
       Account Number
     </th>
     <th style="font-size: 30px;" class="column1">
-      Account Balances
+      Date of Birth
+    </th>
+    <th style="font-size: 30px;" class="column1">
+      Gender
+    </th>
+    <th style="font-size: 30px;" class="column1">
+      Phone
+    </th>
+    <th style="font-size: 30px;" class="column1">
+      BVN
     </th>
       </tr>
     </thead>
@@ -116,6 +127,6 @@ session_start();
   </table>
   </main>
   ');
-  $file_name = 'Client Balance Report for '.$intname.'-'.$date.'.pdf';
+  $file_name = 'Client List Report for '.$intname.'-'.$date.'.pdf';
   $mpdf->Output($file_name, 'D');
 ?>
