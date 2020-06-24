@@ -93,7 +93,7 @@ else if (isset($_GET["message2"])) {
                               })
                             </script>
                         <div class="form-group">
-                          <label class="bmd-label-floating"> Accural Name</label>
+                          <label class="bmd-label-floating">Accural Name</label>
                           <select name="acc_name" class="form-control" id="acc_name">
                           <option value="">select an option</option>
                           <?php echo fill_client($connection); ?>
@@ -113,10 +113,10 @@ else if (isset($_GET["message2"])) {
                           <label class="bmd-label-floating">No of Leaves</label>
                           <select name="no_leaves" class="form-control" id="acc_name">
                           <option value="">select an option</option>
-                          <option value="1-50">1-50</option>
-                          <option value="51-100">51-100</option>
-                          <option value="101-150">101-150</option>
-                          <option value="151-200">151-200</option>
+                          <option value="1_50">1-50</option>
+                          <option value="51_100">51-100</option>
+                          <option value="101_150">101-150</option>
+                          <option value="151_200">151-200</option>
                         </select>
                         </div>
                       </div>
