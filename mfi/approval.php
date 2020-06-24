@@ -49,7 +49,7 @@ $destination = "../index.php";
                         <tr>
                           <th>CHQ/Pass Book</th>
                           <th>Approve all the issued Cheque/pass books</th>
-                          <td><a href="#" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="chq_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>Loan Disbursement</th>

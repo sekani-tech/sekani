@@ -12,8 +12,12 @@ if(isset($_POST['id'])){
             $out = '';
             while ($row = mysqli_fetch_array($state1))
             {
+                $prod = $row['product_id'];
+                $don = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$prod'");
+                $fdo = mysqli_fetch_array($don);
+                $fiof = $fdo['name'];
             $out .= '
-            <option value="'.$row["account_no"].'">'.$row["account_no"].'</option>';
+            <option value="'.$row["account_no"].'">'.$row["account_no"].'- '.$fiof.'</option>';
             }
             echo $out;
     }

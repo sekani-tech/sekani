@@ -98,7 +98,7 @@ if(isset($_POST['transact_id'])){
            $auptwres = mysqli_query($connection, $auptwo);
            // update the depositor transaction
            if ($auptwres) {
-               $description = "Transfer from ".$transnameone;
+               $description = "Transfer frm ".$transnameone;
                $aupsat = "INSERT INTO account_transaction (int_id, branch_id,  account_id,
            account_no, product_id, teller_id,
            client_id, transaction_id, description, transaction_type, is_reversed,

@@ -332,10 +332,7 @@ input[type=number] {
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
             <li class="nav-item dropdown">
-                <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="material-icons">notifications</i>
-                </a>
-                <?php
+            <?php
                 $today = date('Y-m-d');
                 $fom = mysqli_query($connection, "SELECT * FROM loan WHERE repayment_date = '$today'");
                 $dn = mysqli_num_rows($fom);
@@ -343,8 +340,14 @@ input[type=number] {
                 $tomorrow = date( 'Y-m-d' , strtotime ( $today . ' + 1 days' ));
                 $fodm = mysqli_query($connection, "SELECT * FROM loan WHERE repayment_date = '$tomorrow'");
                 $dfn = mysqli_num_rows($fodm);
-                
+                $fomd = $dfn + $dn;
                 ?>
+                <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="material-icons">notifications</i>
+                  <?php if($fomd > 0){?>
+                  <span class="badge badge-danger"><?php echo $fomd;?></span>
+                  <?php }?>
+                </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown-item" href="report_loan_view.php?view39"><?php echo $dn;?> Loans matured today</a>
                   <div class="dropdown-divider"></div>

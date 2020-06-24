@@ -437,7 +437,7 @@ Content added here
                      $inr = mysqli_num_rows($result);
                      echo $inr;
                      $date = date("F");
-                   }?> registered clients this month  || <a style = "color: white;" href="manage_client.php">Create New client</a></p>
+                   }?> registered clients this month</p>
                 </div>
                 <div class="card-body">
                 <div class="row">

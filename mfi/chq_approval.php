@@ -98,7 +98,7 @@ if ($can_transact == 1 || $can_transact == "1") {
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Transactions</h4>
+                  <h4 class="card-title ">CHQ Book Approval</h4>
                   <script>
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
@@ -106,24 +106,24 @@ if ($can_transact == 1 || $can_transact == "1") {
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM transact_cache WHERE int_id='$sessint_id' && status = 'Pending'";
+                   $query = "SELECT * FROM chq_book WHERE int_id = '$sessint_id' && status = 'Pending'";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      if($inr == '0'){ 
-                        echo 'No Transactions need of approval';
+                        echo 'No Cheque Books Issued';
                       }else{
-                        echo ''.$inr.' Transactions on the platform';
+                        echo ''.$inr.' Cheque book on the platform';
                       }
                    }
-                   ?>  || Approve Transaction</p>
+                   ?>  || Approve CHQ Book</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' AND status = 'Pending'";
+                        $query = "SELECT * FROM chq_book WHERE int_id = '$sessint_id' AND status = 'Pending'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -131,16 +131,16 @@ if ($can_transact == 1 || $can_transact == "1") {
                         </th> -->
                         <tr>
                         <th class="th-sm">
-                          Transaction Type
+                          Date
                         </th>
                         <th class="th-sm">
-                          Amount
+                         Client Name
                         </th>
                         <th class="th-sm">
-                          Posted By
+                          no of leaves
                         </th>
                         <th class="th-sm">
-                          Client
+                          Range Number
                         </th>
                         <th class="th-sm">Status</th>
                         <th>Approval</th>
@@ -152,10 +152,10 @@ if ($can_transact == 1 || $can_transact == "1") {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
-                          <th><?php echo $row["transact_type"]; ?></th>
-                          <th><?php echo number_format($row["amount"], 2); ?></th>
-                          <th><?php echo $row["account_off_name"]; ?></th>
-                          <th><?php echo $row["client_name"]; ?></th>
+                          <th><?php echo $row["date"]; ?></th>
+                          <th><?php echo $row["name"]; ?></th>
+                          <th><?php echo $row["leaves_no"]; ?></th>
+                          <th><?php echo $row["range_amount"]; ?></th>
                           <th><?php echo $row["status"]; ?></th>
                           <td><a href="approve.php?approve=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                           </tr>
@@ -186,8 +186,8 @@ if ($can_transact == 1 || $can_transact == "1") {
   $(document).ready(function(){
    swal({
     type: "error",
-    title: "Transaction Authorization",
-    text: "You Dont Have permission to Approve",
+    title: "Vault Authorization",
+    text: "You Dont Have permission to Make Transaction From Vault",
    showConfirmButton: false,
     timer: 2000
     }).then(

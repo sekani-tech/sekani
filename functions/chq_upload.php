@@ -19,8 +19,8 @@ $date = date('Y-m-d');
 
 // credit checks and accounting rules
 // insertion query for product
-$query ="INSERT INTO chq_book(int_id, name, branch_id, account_no, leaves_no, range_amount, date)
-VALUES ('{$sessint_id}', '{$name}','{$branch}', '{$account_no}', '{$leaves_no}', '{$range}', '{$date}')";
+$query ="INSERT INTO chq_book(int_id, name, branch_id, account_no, leaves_no, range_amount, date, status)
+VALUES ('{$sessint_id}', '{$name}','{$branch}', '{$account_no}', '{$leaves_no}', '{$range}', '{$date}' 'Pending')";
 
 $res = mysqli_query($connection, $query);
 // if ($connection->error) {
