@@ -25,7 +25,7 @@ $destination = "report_financial.php";
                   function fill_gl($connection)
                   {
                   $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM acc_gl_account WHERE int_id = '$sint_id' AND (parent_id != '0' || parent_id != '' || parent_id != 'NULL')";
+                  $org = "SELECT * FROM acc_gl_account WHERE int_id = '$sint_id' AND (parent_id != '0' || parent_id != '' || parent_id != 'NULL') ORDER BY name ASC";
                   $res = mysqli_query($connection, $org);
                   $out = '';
                   while ($row = mysqli_fetch_array($res))
