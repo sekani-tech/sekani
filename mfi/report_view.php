@@ -114,6 +114,9 @@ if(isset($_GET["edit"])) {
   else if($location == "35"){
     echo header("Location: report_institution_view.php?view35");
   }
+  else if($location == "36"){
+    echo header("Location: report_institution_view.php?view36");
+  }
   else if($location == "39"){
     echo header("Location: report_loan_view.php?view39");
   }

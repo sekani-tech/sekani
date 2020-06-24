@@ -87,6 +87,14 @@ $ttlamount =number_format($ttunt);
       <h4 class="card-title">Sectoral Analysis of Loans and Advances</h4>
     </div>
     <div class="card-body">
+    <div class="form-group">
+    <form method = "POST" action = "../composer/loan_analysis.php">
+  <input hidden name ="branch" type="text" value="'.$branch.'"/>
+  <input hidden name ="start" type="text" value="'.$start.'"/>
+  <input hidden name ="end" type="text" value="'.$end.'"/>
+  <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download PDF</button>
+</form>
+    </div>
       <table class="table">
         <thead>
           <th style="font-weight:bold;">SECTOR</th>
@@ -182,3 +190,17 @@ $ttlamount =number_format($ttunt);
     echo $out;
 }
 ?>
+<script>
+  $(document).ready(function () {
+  $('#disbursed').on("click", function () {
+    swal({
+        type: "success",
+        title: "LOAN ANALYSIS REPORT",
+        text: "Printing Successful",
+        showConfirmButton: false,
+        timer: 3000
+              
+      })
+  });
+});
+</script>
