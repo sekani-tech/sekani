@@ -110,7 +110,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                               $mail->addAddress($remail);
                               $mail->addReplyTo($int_email, "Reply");
                               $mail->isHTML(true);
-                              $mail->Subject = "Transaction Alert from $int_name";
+                              $mail->Subject = "Vault Alert from $int_name";
                               $mail->Body = "<!DOCTYPE html>
                               <html>
                                   <head>
@@ -319,7 +319,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                   $mail->addAddress($remail);
                                   $mail->addReplyTo($int_email, "Reply");
                                   $mail->isHTML(true);
-                                  $mail->Subject = "Transaction Alert from $int_name";
+                                  $mail->Subject = "Vault Alert from $int_name";
                                   $mail->Body = "<!DOCTYPE html>
                               <html>
                                   <head>
@@ -526,7 +526,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                               $mail->addAddress($remail);
                               $mail->addReplyTo($int_email, "Reply");
                               $mail->isHTML(true);
-                              $mail->Subject = "Transaction Alert from $int_name";
+                              $mail->Subject = "Vault Alert from $int_name";
                               $mail->Body = "<!DOCTYPE html>
                           <html>
                               <head>
@@ -727,7 +727,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                       $mail->addAddress($remail);
                       $mail->addReplyTo($int_email, "Reply");
                       $mail->isHTML(true);
-                      $mail->Subject = "Transaction Alert from $int_name";
+                      $mail->Subject = "Vault Alert from $int_name";
                       $mail->Body = "<!DOCTYPE html>
                       <html>
                           <head>
