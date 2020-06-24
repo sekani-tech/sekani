@@ -631,19 +631,19 @@ $transid1 = $randms1;
           <label for="">Payment Method:</label>
           <script>
                 $(document).ready(function() {
-                  $('#poo').change(function(){
+                  $('#poso').change(function(){
                     var id = $(this).val();
                     if (id == "Cheque") {
-                      document.getElementById('tit').readOnly = false;
-                      $("#tit").val("");
+                      document.getElementById('tsit').readOnly = false;
+                      $("#tsit").val("");
                     } else {
-                      document.getElementById('tit').readOnly = true;
-                      $("#tit").val(Math.floor(100000 + Math.random() * 900000));
+                      document.getElementById('tsit').readOnly = true;
+                      $("#tsit").val(Math.floor(100000 + Math.random() * 900000));
                     }
                   });
                 });
               </script>
-          <select name="payment_method" id="poo" class="form-control">
+          <select name="payment_method" id="poso" class="form-control">
           <?php echo fill_gl($connection)?>
           </select>
       </div>
@@ -654,7 +654,7 @@ $transid1 = $randms1;
     <div class="col-md-4">
       <div class="form-group">
           <label for="">Transaction ID:</label>
-          <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="tit">
+          <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="tsit">
       </div>
     </div>
     <div class="col-md-4">
