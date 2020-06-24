@@ -31,6 +31,28 @@ $destination = "report_current.php";
                    }?> current Accounts</p>
                 </div>
                 <div class="card-body">
+                <div class="form-group">
+                <form method = "POST" action = "../composer/current_account.php">
+              <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
+              <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
+              <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
+              <button type="submit" id="currentlist" class="btn btn-primary pull-left">Download PDF</button>
+              <script>
+              $(document).ready(function () {
+              $('#currentlist').on("click", function () {
+                swal({
+                    type: "success",
+                    title: "CURRENT ACCOUNT REPORT",
+                    text: "Printing Successful",
+                    showConfirmButton: false,
+                    timer: 5000
+                          
+                  })
+              });
+            });
+     </script>
+            </form>
+                </div>
                   <div class="table-responsive">
                     <table id="tabledt" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
@@ -70,7 +92,7 @@ $destination = "report_current.php";
                             $class = "";
                             $row["account_type"];
                             $cid= $row["id"];
-                            $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
+                            $atype = mysqli_query($connection, "SELECT * FROM account WHERE product_id = '1' AND client_id = '$cid'");
                             if (count([$atype]) == 1) {
                                 $yxx = mysqli_fetch_array($atype);
                                 $actype = $yxx['product_id'];
