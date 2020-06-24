@@ -557,6 +557,118 @@ $transid1 = $randms1;
                       </div>
                   </div>
               </div>
+              <div class="col-md-12">
+                  <div class="card">
+                      <div class="card-header card-header-primary">
+                        <h4 class="card-title">Charges</h4>
+                        <!-- <p class="card-category">Fill in all important data</p> -->
+                      </div>
+                      <div class="card-body">
+                      <form action="../functions/charger.php" method="post">
+                      <!-- <form action="#" method="post"> -->
+
+    <div class="row">
+        <div class="col-md-4">
+        <?php
+                  function fill_charges($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM charge WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                  }
+                  return $out;
+                  }
+                  function fill_client($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM client WHERE int_id = '$sint_id' AND status = 'Approved'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["firstname"].' '.$row["lastname"].'</option>';
+                  }
+                  return $out;
+                  }
+                  function fill_gl($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM acc_gl_account WHERE int_id = '$sint_id' AND (parent_id = '198') ORDER BY name ASC";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["gl_code"].'">'.$row["gl_code"].' - '.$row["name"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
+            <div class="form-group">
+                <label for="">Charges</label>
+                <select name="charge" class="form-control">
+                  <option></option>
+                  <?php echo fill_charges($connection);?>
+                </select>
+                <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id;?>" id="int_id">
+            </div>
+        </div>
+        <div class="col-md-4">
+        <div class="form-group">
+                <label for="">Client</label>
+                <select name="client_id" class="form-control">
+                  <option></option>
+                  <?php echo fill_client($connection);?>
+                </select>
+                <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id;?>" id="int_id">
+            </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+          <label for="">Payment Method:</label>
+          <script>
+                $(document).ready(function() {
+                  $('#poo').change(function(){
+                    var id = $(this).val();
+                    if (id == "Cheque") {
+                      document.getElementById('tit').readOnly = false;
+                      $("#tit").val("");
+                    } else {
+                      document.getElementById('tit').readOnly = true;
+                      $("#tit").val(Math.floor(100000 + Math.random() * 900000));
+                    }
+                  });
+                });
+              </script>
+          <select name="payment_method" id="poo" class="form-control">
+          <?php echo fill_gl($connection)?>
+          </select>
+      </div>
+    </div>
+    <div class="col-md-4">
+    <div id="accrep"></div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+          <label for="">Transaction ID:</label>
+          <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="tit">
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+          <label for="">Description</label>
+          <input type="text" value="" name="descrip" class="form-control">
+      </div>
+    </div>
+    </div>    
+          <button type="submit" class="btn btn-primary pull-right">Submit</button>
+  </form>
+                      </div>
+                  </div>
+              </div>
           </div>
         </div>
       </div>

@@ -435,9 +435,8 @@ Content added here
                         $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
-                     echo $inr;
                      $date = date("F");
-                   }?> registered clients this month</p>
+                   }?><div id="month_no"><?php echo $inr;?> Registered Clients this month</div></p>
                 </div>
                 <div class="card-body">
                 <div class="row">
@@ -482,6 +481,21 @@ Content added here
             </form>
             </div>
             </div>
+            <script>
+                    $(document).ready(function () {
+                      $('#month').on("change", function () {
+                        var month = $(this).val();
+                        $.ajax({
+                          url: "ajax_post/reports_post/pick_month_copy.php", 
+                          method: "POST",
+                          data:{month:month},
+                          success: function (data) {
+                            $('#month_no').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
                   <script>
                     $(document).ready(function () {
                       $('#month').on("change", function () {
