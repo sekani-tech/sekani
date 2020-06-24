@@ -63,6 +63,9 @@ if(isset($_GET['edit'])){
     else if($charge_type == 6){
         $charge_typeb = 'Loan Rescheduling Fee'; 
     }
+    else if($charge_type == 7){
+        $charge_typeb = 'Transaction'; 
+    }
 // Query for charge option
     if($charge_option == 1){
         $charge_optionb = 'Flat';
@@ -81,6 +84,9 @@ if(isset($_GET['edit'])){
     }
     else if($charge_option == 6){
         $charge_optionb = 'Original Loan Principal';  
+    }
+    else if($charge_option == 7){
+        $charge_optionb = 'Percentage';  
     }
     if($charge_payment == 1){
         $charge_paymentb = 'Regular';
@@ -236,6 +242,7 @@ if(isset($_GET['edit'])){
                               <option value="4">Overdue Installment Fees</option>
                               <option value="5">Disbursement - Paid with Repayment</option>
                               <option value="6">Loan Rescheduling Fee</option>
+                              <option value="7">Transaction</option>
                           </select>
                         </div>
                       </div>
@@ -255,6 +262,7 @@ if(isset($_GET['edit'])){
                               <option value="4">Interest Due on Installment</option>
                               <option value="5">Total Oustanding Loan Principal</option>
                               <option value="6">Original Loan Principal</option>
+                              <option value="7">Percentage</option>
                           </select>
                       </div>
                       <div class=" col-md-4 form-group">

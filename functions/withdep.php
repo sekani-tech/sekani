@@ -431,6 +431,10 @@ if ($is_del == "0" && $is_del != NULL) {
              }
             
               if ($res4) {
+                // DO THE ACCOUNT CHARGE
+                // check the type of that account number product and get the name
+                // SEND THE MAIL
+                // END THE ACCOUNT CHARGE
                 $mail = new PHPMailer;
             $mail->From = $int_email;
             $mail->FromName = $int_name;

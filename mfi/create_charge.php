@@ -33,6 +33,7 @@ $destination = "products_config.php";
                               <option value="1">Loan</option>
                               <option value="2">Savings</option>
                               <option value="3">Shares</option>
+                              <option value="4">Current</option>
                           </select>
                         </div>
                       </div>
@@ -46,6 +47,7 @@ $destination = "products_config.php";
                               <option value="4">Overdue Installment Fees</option>
                               <option value="5">Disbursement - Paid with Repayment</option>
                               <option value="6">Loan Rescheduliing Fee</option>
+                              <option value="7">Transaction</option>
                           </select>
                         </div>
                       </div>
@@ -64,6 +66,7 @@ $destination = "products_config.php";
                               <option value="4">Interest Due on Installment</option>
                               <option value="5">Total Oustanding Loan Principal</option>
                               <option value="6">Original Loan Principal</option>
+                              <option value="7">Percentage</option>
                           </select>
                       </div>
                       <div class=" col-md-4 form-group">

@@ -112,11 +112,19 @@ else if (isset($_GET["message2"])) {
                         <div class="form-group">
                           <label class="bmd-label-floating">No of Leaves</label>
                           <select name="no_leaves" class="form-control" id="acc_name">
+<<<<<<< HEAD
+                          <option value="0">select an option</option>
+                          <option value="1">1-50</option>
+                          <option value="2">51-100</option>
+                          <option value="3">101-150</option>
+                          <option value="4">151-200</option>
+=======
                           <option value="">select an option</option>
                           <option value="1_50">1-50</option>
                           <option value="51_100">51-100</option>
                           <option value="101_150">101-150</option>
                           <option value="151_200">151-200</option>
+>>>>>>> 2a65d04a393a2a3bb17520a73e8daafea2dff6b5
                         </select>
                         </div>
                       </div>
