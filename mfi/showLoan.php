@@ -861,7 +861,7 @@ else{
               `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`,
               `manually_adjusted_or_reversed`, `credit`, `debit`) 
               VALUES ('{$sessint_id}', '{$branch_id}', '{$gl_code1}', '{$trans_id}',
-              'Loan_Charge', 'flat_charge', '{$client_id}', '0', '{$gends}', '{$amt}', '{$ultimate_gl_bal}',
+              'Loan_Charge - {$nameofc}', 'flat_charge', '{$client_id}', '0', '{$gends}', '{$amt}', '{$ultimate_gl_bal}',
               '{$ultimate_gl_bal}', '{$gends}', '0', '{$ultimate_gl_bal}', '{$crd_d}',
               '0', '{$amt}', '0.00')");
               // SEND THE REST
@@ -874,7 +874,7 @@ else{
                   `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
                   `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
                   VALUES ('{$sessint_id}', '{$branch_id}', '0', '{$account_id}', '$acct_no', '{$client_id}', '0', '{$trans_id}',
-                  'Loan_Charge', 'flat_charge', '0', '{$gen_date}', '{$amt}', '{$amt}',
+                  'Loan_Charge - {$nameofc}', 'flat_charge', '0', '{$gen_date}', '{$amt}', '{$amt}',
                   '{$gends}', '0', '{$ultimate_client_running_balance}',
                   '{$ultimate_client_running_balance}', '{$crd_d}', '{$app_user}', '0', '{$amt}', '0.00')");
                   // END CLIENT TRANSACTION
@@ -1119,7 +1119,7 @@ else{
               `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`,
               `manually_adjusted_or_reversed`, `credit`, `debit`) 
               VALUES ('{$sessint_id}', '{$branch_id}', '{$gl_code2}', '{$trans_id}',
-              'Loan_Charge', 'percentage_charge', '{$client_id}', '0', '{$gends}', '{$calc}', '{$ultimate_gl_bal1}',
+              'Loan_Charge - {$charge_name2}', 'percentage_charge', '{$client_id}', '0', '{$gends}', '{$calc}', '{$ultimate_gl_bal1}',
               '{$ultimate_gl_bal1}', '{$gends}', '0', '{$ultimate_gl_bal1}', '{$app_on}',
               '0', '{$calc}', '0.00')");
               // SEND THE REST
@@ -1132,7 +1132,7 @@ else{
                   `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
                   `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
                   VALUES ('{$sessint_id}', '{$branch_id}', '0', '{$account_id}', '$acct_no', '{$client_id}', '0', '{$trans_id}',
-                  'Loan_Charge', 'percentage_charge', '0', '{$gen_date}', '{$calc}', '{$calc}',
+                  'Loan_Charge - {$charge_name2}', 'percentage_charge', '0', '{$gen_date}', '{$calc}', '{$calc}',
                   '{$gends}', '0', '{$ultimate_client_running_balance1}',
                   '{$ultimate_client_running_balance1}', '{$app_on}', '{$app_user}', '0', '{$calc}', '0.00')");
                   // END CLIENT TRANSACTION
