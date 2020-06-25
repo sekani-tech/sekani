@@ -55,12 +55,12 @@ $sessint_id = $_SESSION['int_id'];
       $acc_id = $b['id'];
     }
 
-      $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$std' AND '$endx' ORDER BY transaction_date ASC");
+      $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE account_id = '$acc_id' && (int_id = $sessint_id && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id ASC");
       $deb = mysqli_fetch_array($totald);
       $tdp = $deb['debit'];
       $totaldb = number_format($tdp, 2);
       
-      $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$std' AND '$endx' ORDER BY transaction_date ASC");
+      $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE account_id = '$acc_id' && (int_id = $sessint_id && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id ASC");
       $cred = mysqli_fetch_array($totalc);
       $tcp = $cred['credit'];
       $totalcd = number_format($tcp, 2);
@@ -173,7 +173,7 @@ $sessint_id = $_SESSION['int_id'];
                   $('#tabledat').DataTable();
                   });
                 </script>
-            <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+            <table id="p" class="table" cellspacing="0" style="width:100%">
                         <thead>
                           <!-- <input type='text' value='<?php echo $branch;?>'/> -->
                         <?php
@@ -181,11 +181,12 @@ $sessint_id = $_SESSION['int_id'];
                         $resui = mysqli_query($connection, $que);
                         $q = mysqli_fetch_array($resui);
                         $acc_id = $q['id'];
+                        // $resultmm = mysqli_query($connection, "SELECT * FROM account_transaction WHERE ((account_id = '$acc_id' && int_id = $sessint_id) && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
+                        // $kx = mysqli_fetch_array($resultmm);
                         // $querytoget = "SELECT * FROM account_transaction WHERE account_id = '65' && int_id = '5' && branch_id = '1' && transaction_date BETWEEN '2019-01-01' AND '2020-03-03' ORDER BY transaction_date ASC";
-                        $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE ((account_id = '$acc_id' && int_id = $sessint_id) && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
-
-                        
+                        $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE ((account_id = '$acc_id' && int_id = $sessint_id) && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id ASC");
                         // $result = mysqli_query($connection, $querytoget);
+                        // $v = 0;
                       ?>
                         <tr class="table100-head">
                             <th class="column1">Transaction-Date</th>
@@ -198,16 +199,39 @@ $sessint_id = $_SESSION['int_id'];
                     </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
-                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                          $nxtbal = $row["running_balance_derived"];
+                          ?>
                         <tr>
                           <td class="column1"><?php echo $row["transaction_date"]; ?></td>
                           <td class="column2"><?php echo $row["created_date"]; ?></td>
-                          <td class="column3"><?php echo $row["description"]; ?></td>
+                          <?php
+                          if ($row["transaction_type"] == "credit") {
+                            $desc = "Deposit";
+                          } else if ($row["transaction_type"] == "debit") {
+                            $desc = "Withdrawal";
+                          } else if ($row["transaction_type"] == "debit") {
+                            $desc = "Withdrawal";
+                          } else if ($row["transaction_type"] == "loan_disbursement") {
+                            $desc = "Loan Disbursment";
+                          } else if ($row["transaction_type"] == "percentage_charge") {
+                            $desc = $row["description"];
+                          } else if ($row["transaction_type"] == "flat_charge") {
+                            $desc = $row["description"];
+                          }
+                          ?>
+                          <td class="column3"><?php echo $desc; ?></td>
                           <td class="column4"><?php echo $row["debit"]; ?></td>
                           <td class="column5"><?php echo $row["credit"]; ?></td>
-                          <td class="column6"><?php echo number_format($row["running_balance_derived"]); ?></td>
+                          <?php
+                          // $newnext = mysqli_query($connection, "SELECT transaction_date, running_balance_derived, RunningTotal = SUM(running_balance_derived) AS OVER (ORDER BY transaction_date ROWS UNBOUNDED PRECEDING) FROM account_transaction WHERE account_id = '$acc_id' && (int_id = $sessint_id && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
+                          // $mink = mysqli_fetch_array($newnext);
+                          // $qwe = $mink["running_balance_derived"];
+                          ?>
+                          <td class="column6">&#8358; <?php echo  number_format($nxtbal, 2);?></td>
                         </tr>
-                        <?php }
+                        <?php 
+                        }
                           }
                           else {
                             // echo "0 Document";

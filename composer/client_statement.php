@@ -40,12 +40,12 @@ if(isset($_POST["id"])) {
         $client_id = $d['client_id'];
         $acc_id = $d['id'];
         }
-        $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
+        $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY id ASC");
         $deb = mysqli_fetch_array($totald);
         $tdp = $deb['debit'];
         $totaldb = number_format($tdp, 2);
   
-        $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC");
+        $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY id ASC");
         $cred = mysqli_fetch_array($totalc);
         $tcp = $cred['credit'];
         $totalcd = number_format($tcp, 2);
@@ -54,15 +54,28 @@ if(isset($_POST["id"])) {
         function fill_data($connection, $acc_id, $sessint_id, $start, $end, $branch){
         $id = $_GET["edit"];
       // import
-      $accountquery = "SELECT * FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY transaction_date ASC";
+      $accountquery = "SELECT * FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY id ASC";
       $resul = mysqli_query($connection, $accountquery);
       $out = '';
 
       while ($q = mysqli_fetch_array($resul))
-      {
+      { 
+        if ($q["transaction_type"] == "credit") {
+          $desc = "Deposit";
+        } else if ($q["transaction_type"] == "debit") {
+          $desc = "Withdrawal";
+        } else if ($q["transaction_type"] == "debit") {
+          $desc = "Withdrawal";
+        } else if ($q["transaction_type"] == "loan_disbursement") {
+          $desc = "Loan Disbursment";
+        } else if ($q["transaction_type"] == "percentage_charge") {
+          $desc = $q["description"];
+        } else if ($q["transaction_type"] == "flat_charge") {
+          $desc = $q["description"];
+        }
         $transaction_date = $q["transaction_date"];
         $value_date = $q["created_date"]; 
-        $description = $q["description"];
+        $description = $desc;
         $amt2 = $q["debit"];
         $amt = $q["credit"];
         $balance = $q["running_balance_derived"]; 
