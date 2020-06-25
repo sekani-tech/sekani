@@ -6,7 +6,7 @@ session_start();
 
 ?>
 <?php
-if(isset($_POST['transid'])){
+if(isset($_GET['approve'])){
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $sessint_id = $_SESSION["int_id"];
@@ -15,11 +15,16 @@ $users = $_SESSION["user_id"];
 $e = mysqli_query($connection, "SELECT * FROM staff WHERE user_id ='$users'");
 $r = mysqli_fetch_array($e);
 $staff_id = $r['id'];
-$charges = $_POST['charge'];
-$client = $_POST['client_id'];
-$transid = $_POST['transid'];
-$descrip = $_POST['descrip'];
-$date = date('Y-m-d');
+
+$wee = $_GET['approve'];
+$query = "SELECT * FROM savings_acct_charge WHERE id ='$wee'";
+$don = mysqli_query($connection, $query);
+$som = mysqli_fetch_array($don);
+$charges = $som['charge_id'];
+$client = $som['client_id'];
+$transid = $som['transact_id'];
+$descrip = $som['description'];
+$date = $som['date'];
 
 // credit checks and accounting rules
 $don = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$charges'");
@@ -27,12 +32,13 @@ $s = mysqli_fetch_array($don);
 $amount = $s['amount'];
 $pay_type = $s['gl_code'];
 // insertion query for product
-$query4 = "SELECT client.firstname, client.lastname, account.product_id, account.account_no, account.id, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.account_no = account.account_no WHERE client.int_id = '$sessint_id' AND client.id ='$client'";
+$query4 = "SELECT account.id, client.firstname, client.lastname, account.product_id, account.account_no, account.id, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.account_no = account.account_no WHERE client.int_id = '$sessint_id' AND client.id ='$client'";
 $queryexec = mysqli_query($connection, $query4);
 $b = mysqli_fetch_array($queryexec);
 $accbal = $b['account_balance_derived'];
 $ttl = $b['total_withdrawals_derived'];
-$acc_no = $b['account_no'];
+$acct_no = $b['account_no'];
+$acct_id = $b['id'];
 $sproduct_id = $b['product_id'];
 $clientname = $b['firstname']." ".$b['lastname'];
 
@@ -51,11 +57,11 @@ $iupq = "UPDATE account SET account_balance_derived = '$newbal', last_withdrawal
         $trans_type ="debit";
         $irvs = "0";
         $iat = "INSERT INTO account_transaction (int_id, branch_id,
-        account_no, product_id, teller_id,
+        account_no, product_id, teller_id, account_id,
         client_id, transaction_id, description, transaction_type, is_reversed,
         transaction_date, amount, running_balance_derived, overdraft_amount_derived,
         created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
-        '{$acc_no}', '{$sproduct_id}', '{$staff_id}', '{$client}', '{$transid}', '{$descrip}', '{$trans_type}', '{$irvs}',
+        '{$acc_no}', '{$sproduct_id}', '{$staff_id}', '{$acct_id}', '{$client}', '{$transid}', '{$descrip}', '{$trans_type}', '{$irvs}',
         '{$date}', '{$amount}', '{$newbal}', '{$amount}',
         '{$date}', '{$users}', {$amount})";
         $res3 = mysqli_query($connection, $iat);
@@ -70,13 +76,17 @@ $iupq = "UPDATE account SET account_balance_derived = '$newbal', last_withdrawal
                    '{$date}', '{$amount}', '{$newglball}', '{$amount}', '{$date}', '{$amount}')";
                    $res4 = mysqli_query($connection, $gl_acc);
                    if ($res4) {
+                    $iacxt = "DELETE FROM `savings_acct_charge` WHERE id = '$wee'";
+                   $rsdes3 = mysqli_query($connection, $iacxt);
+                   if($rsdes3){
                     $_SESSION["Lack_of_intfund_$randms"] = " was updated successfully!";
-                          echo header ("Location: ../mfi/transact.php?message1=$randms");
-                        } else {
-                           $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                           echo "error";
-                          echo header ("Location: ../mfi/transact.php?message2=$randms");
-                            // echo header("location: ../mfi/client.php");
+                    echo header ("Location: ../mfi/charge_approval.php?message1=$randms");
+                  } else {
+                     $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+                     echo "error";
+                    echo header ("Location: ../mfi/charge_approval.php?message2=$randms");
+                      // echo header("location: ../mfi/client.php");
+                  }
                         }
               }
             }

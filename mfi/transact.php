@@ -35,7 +35,7 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
       swal({
           type: "success",
           title: "Success",
-          text: "Transaction Successful",
+          text: "Awaiting Approval",
           showConfirmButton: false,
           timer: 2000
       })
@@ -584,7 +584,7 @@ $transid1 = $randms1;
                         <!-- <p class="card-category">Fill in all important data</p> -->
                       </div>
                       <div class="card-body">
-                      <form action="../functions/charger.php" method="post">
+                      <form action="../functions/charge_cache.php" method="post">
                       <!-- <form action="#" method="post"> -->
 
     <div class="row">

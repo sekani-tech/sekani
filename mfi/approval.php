@@ -42,6 +42,11 @@ $destination = "../index.php";
                           <td><a href="client_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
+                        <tr>
+                          <th>Charges </th>
+                          <th>Approve all the manual charges to clients</th>
+                          <td><a href="charge_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                        </tr>
                           <th>Transactions</th>
                           <th>View and approve all recently made transactions</th>
                           <td><a href="transact_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
