@@ -24,7 +24,7 @@ $destination = "index.php";
                         <!-- Each tab equals a stepper page -->
                   <!-- First Tab -->
                   <div class="tab">
-                  <h3> New Product:</h3>
+                  <h3> New Loan Product:</h3>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
