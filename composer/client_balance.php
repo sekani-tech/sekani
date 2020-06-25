@@ -6,6 +6,7 @@ session_start();
 <?php
   $intname = $_SESSION['int_name'];
   $branch_id = $_SESSION["branch_id"];
+  $sint_id =$_SESSION['int_id'];
   $date = date('d/m/Y');
   // $staff = $_POST["staff"];
   $branchquery = mysqli_query($connection, "SELECT * FROM branch WHERE id='$branch_id'");
@@ -16,6 +17,9 @@ session_start();
       $branch_location = $ans['location'];
       $branch_phone = $ans['phone'];
     }
+    $dd = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sint_id' && client.status = 'Approved'";
+        $redsult = mysqli_query($connection, $dd);
+    $ssd = mysqli_num_rows($redsult);
   function fill_report($connection)
         {
             $out = '';
@@ -84,6 +88,7 @@ session_start();
 </div>
 <div id="project">
   <div><span>BRANCH</span> '.$branch.' </div>
+  <div><span>TOTAL</span> '.$ssd.' </div>
 </div>
 </header>
   <main>

@@ -19,6 +19,7 @@ $charges = $_POST['charge'];
 $client = $_POST['client_id'];
 $transid = $_POST['transid'];
 $descrip = $_POST['descrip'];
+$acct_id = $_POST['acctdi'];
 $date = date('Y-m-d');
 
 // credit checks and accounting rules
@@ -33,7 +34,6 @@ $b = mysqli_fetch_array($queryexec);
 $accbal = $b['account_balance_derived'];
 $ttl = $b['total_withdrawals_derived'];
 $acc_no = $b['account_no'];
-$acct_id = $b['id'];
 $sproduct_id = $b['product_id'];
 $clientname = $b['firstname']." ".$b['lastname'];
 
@@ -49,8 +49,8 @@ $newbal = $accbal - $amount;
         $description = "Fee on charges";
         $trans_type ="debit";
         $irvs = "0";
-        $iat = "INSERT INTO savings_acct_charge (int_id, branch_id, client_id, transact_id, charge_id, amount, description, date)
-         VALUES ('{$sessint_id}', '{$branch_id}', '{$client}', '{$transid}', '{$charges}', '{$amount}', '{$descrip}', '{$date}')";
+        $iat = "INSERT INTO savings_acct_charge (int_id, branch_id, client_id, acct_id, transact_id, charge_id, amount, description, date)
+         VALUES ('{$sessint_id}', '{$branch_id}', '{$client}', '{$acct_id}', '{$transid}', '{$charges}', '{$amount}', '{$descrip}', '{$date}')";
         $res3 = mysqli_query($connection, $iat);
 
                    if ($res3) {

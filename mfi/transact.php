@@ -627,7 +627,7 @@ $transid1 = $randms1;
         <div class="col-md-4">
         <div class="form-group">
                 <label for="">Client</label>
-                <select name="client_id" class="form-control">
+                <select id="sdd" name="client_id" class="form-control">
                   <option></option>
                   <?php echo fill_client($connection);?>
                 </select>
@@ -644,6 +644,28 @@ $transid1 = $randms1;
       <div class="form-group">
           <label for="">Description</label>
           <input type="text" value="" name="descrip" class="form-control">
+      </div>
+    </div>
+    <script>
+                $(document).ready(function() {
+                  $('#sdd').on("change", function(){
+                    var id = $(this).val();
+                    var ist = $('#int_id').val();
+                    $.ajax({
+                      url:"ajax_post/choose_acc.php",
+                      method:"POST",
+                      data:{id:id, ist: ist},
+                      success:function(data){
+                        $('#showacc').html(data);
+                      }
+                    })
+                  });
+                });
+              </script>
+    <div class="col-md-4">
+      <div class="form-group">
+          <label for="">Account No</label>
+            <div id="showacc"></div>
       </div>
     </div>
     </div>    

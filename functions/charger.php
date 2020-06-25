@@ -24,6 +24,7 @@ $charges = $som['charge_id'];
 $client = $som['client_id'];
 $transid = $som['transact_id'];
 $descrip = $som['description'];
+$acct_id = $som['acct_id'];
 $date = $som['date'];
 
 // credit checks and accounting rules
@@ -38,7 +39,6 @@ $b = mysqli_fetch_array($queryexec);
 $accbal = $b['account_balance_derived'];
 $ttl = $b['total_withdrawals_derived'];
 $acct_no = $b['account_no'];
-$acct_id = $b['id'];
 $sproduct_id = $b['product_id'];
 $clientname = $b['firstname']." ".$b['lastname'];
 
@@ -49,7 +49,7 @@ $glbalance = $ron['organization_running_balance_derived'];
 $newglball = $glbalance + $amount;
 $ttlwith = $ttl + $amount;
 $newbal = $accbal - $amount;
-$iupq = "UPDATE account SET account_balance_derived = '$newbal', last_withdrawal = '$amount', total_withdrawals_derived = '$ttlwith' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
+$iupq = "UPDATE account SET account_balance_derived = '$newbal', last_withdrawal = '$amount', total_withdrawals_derived = '$ttlwith' WHERE id = '$acct_id' AND account_no = '$acct_no' && int_id = '$sessint_id'";
         $iupqres = mysqli_query($connection, $iupq);
         if ($iupqres) {
         // update the clients transaction
@@ -61,7 +61,7 @@ $iupq = "UPDATE account SET account_balance_derived = '$newbal', last_withdrawal
         client_id, transaction_id, description, transaction_type, is_reversed,
         transaction_date, amount, running_balance_derived, overdraft_amount_derived,
         created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
-        '{$acc_no}', '{$sproduct_id}', '{$staff_id}', '{$acct_id}', '{$client}', '{$transid}', '{$descrip}', '{$trans_type}', '{$irvs}',
+        '{$acct_no}', '{$sproduct_id}', '{$staff_id}', '{$acct_id}', '{$client}', '{$transid}', '{$descrip}', '{$trans_type}', '{$irvs}',
         '{$date}', '{$amount}', '{$newbal}', '{$amount}',
         '{$date}', '{$users}', {$amount})";
         $res3 = mysqli_query($connection, $iat);

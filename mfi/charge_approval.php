@@ -140,10 +140,10 @@ if ($can_transact == 1 || $can_transact == "1") {
                          Charges
                         </th>
                         <th class="th-sm">
-                         Description
+                        Amount
                         </th>
                         <th class="th-sm">
-                        Amount
+                       Description
                         </th>
                         <th>Approval</th>
                         </tr>
