@@ -17,7 +17,6 @@ $r = mysqli_fetch_array($e);
 $staff_id = $r['id'];
 $charges = $_POST['charge'];
 $client = $_POST['client_id'];
-$pay_type = $_POST['payment_method'];
 $transid = $_POST['transid'];
 $descrip = $_POST['descrip'];
 $date = date('Y-m-d');
@@ -26,6 +25,7 @@ $date = date('Y-m-d');
 $don = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$charges'");
 $s = mysqli_fetch_array($don);
 $amount = $s['amount'];
+$pay_type = $s['gl_code'];
 // insertion query for product
 $query4 = "SELECT client.firstname, client.lastname, account.product_id, account.account_no, account.id, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.account_no = account.account_no WHERE client.int_id = '$sessint_id' AND client.id ='$client'";
 $queryexec = mysqli_query($connection, $query4);

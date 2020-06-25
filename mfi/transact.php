@@ -25,6 +25,26 @@ if (isset($_GET["message"])) {
     ';
     $_SESSION["lack_of_intfund_$key"] = 0;
  }
+ else if (isset($_GET["message1"])) {
+  $key = $_GET["message1"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Success",
+          text: "Transaction Successful",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+ }
 } else if (isset($_GET["message2"])) {
     $key = $_GET["message2"];
     // $out = $_SESSION["lack_of_intfund_$key"];
@@ -594,18 +614,6 @@ $transid1 = $randms1;
                   }
                   return $out;
                   }
-                  function fill_gl($connection)
-                  {
-                  $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM acc_gl_account WHERE int_id = '$sint_id' AND (parent_id = '198') ORDER BY name ASC";
-                  $res = mysqli_query($connection, $org);
-                  $out = '';
-                  while ($row = mysqli_fetch_array($res))
-                  {
-                    $out .= '<option value="'.$row["gl_code"].'">'.$row["gl_code"].' - '.$row["name"].'</option>';
-                  }
-                  return $out;
-                  }
                   ?>
             <div class="form-group">
                 <label for="">Charges</label>
@@ -625,31 +633,6 @@ $transid1 = $randms1;
                 </select>
                 <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id;?>" id="int_id">
             </div>
-    </div>
-    <div class="col-md-4">
-      <div class="form-group">
-          <label for="">Payment Method:</label>
-          <script>
-                $(document).ready(function() {
-                  $('#poso').change(function(){
-                    var id = $(this).val();
-                    if (id == "Cheque") {
-                      document.getElementById('tsit').readOnly = false;
-                      $("#tsit").val("");
-                    } else {
-                      document.getElementById('tsit').readOnly = true;
-                      $("#tsit").val(Math.floor(100000 + Math.random() * 900000));
-                    }
-                  });
-                });
-              </script>
-          <select name="payment_method" id="poso" class="form-control">
-          <?php echo fill_gl($connection)?>
-          </select>
-      </div>
-    </div>
-    <div class="col-md-4">
-    <div id="accrep"></div>
     </div>
     <div class="col-md-4">
       <div class="form-group">
