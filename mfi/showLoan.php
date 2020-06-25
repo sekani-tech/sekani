@@ -16,6 +16,7 @@ $int_logo = $_SESSION["int_logo"];
 $int_address = $_SESSION["int_address"];
 $sessint_id = $_SESSION["int_id"];
 $m_id = $_SESSION["user_id"];
+// writing a new code syn here
 ?>
 <?php
 if (isset($_GET['approve']) && $_GET['approve'] !== '') {
