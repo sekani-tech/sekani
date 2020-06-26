@@ -35,7 +35,6 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
           else{
           $querytoget = mysqli_query($connection, "SELECT * FROM staff WHERE ((branch_id = '$branch_id') AND (int_id ='$int_id' AND employee_status = 'Employed' AND org_role = '$role'))");
           }
-          $q = mysqli_fetch_array($querytoget);
           while ($q = mysqli_fetch_array($querytoget))
           {
             $staff = $q["id"];
