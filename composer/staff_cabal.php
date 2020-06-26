@@ -58,11 +58,11 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
           $s = mysqli_fetch_array($query5exec);
           $savingsamount = $s['account_balance_derived'];
 
-          $query3 = "SELECT * FROM loan WHERE loan_officer = '$staff' AND submittedon_date BETWEEN '$start' AND '$end'";
+          $query3 = "SELECT * FROM loan WHERE loan_officer = '$staff' AND disbursement_date BETWEEN '$start' AND '$end'";
           $query3exec = mysqli_query($connection, $query3);
           $loans = mysqli_num_rows($query3exec);
 
-          $query6 = "SELECT SUM(principal_amount)  AS principal_amount FROM loan WHERE loan_officer = '$staff'AND submittedon_date BETWEEN '$start' AND '$end'";
+          $query6 = "SELECT SUM(principal_amount)  AS principal_amount FROM loan WHERE loan_officer = '$staff'AND disbursement_date BETWEEN '$start' AND '$end'";
           $query6exec = mysqli_query($connection, $query6);
           $l = mysqli_fetch_array($query6exec);
           $loansamount = $l['principal_amount'];
@@ -111,11 +111,11 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
           $s = mysqli_fetch_array($query5exec);
           $savingsamount = $s['account_balance_derived'];
 
-          $query3 = "SELECT * FROM loan WHERE loan_officer = '$staff' AND submittedon_date BETWEEN '$start' AND '$end'";
+          $query3 = "SELECT * FROM loan WHERE loan_officer = '$staff' AND disbursement_date BETWEEN '$start' AND '$end'";
           $query3exec = mysqli_query($connection, $query3);
           $loans = mysqli_num_rows($query3exec);
 
-          $query6 = "SELECT SUM(principal_amount)  AS principal_amount FROM loan WHERE loan_officer = '$staff'AND submittedon_date BETWEEN '$start' AND '$end'";
+          $query6 = "SELECT SUM(principal_amount)  AS principal_amount FROM loan WHERE loan_officer = '$staff'AND disbursement_date BETWEEN '$start' AND '$end'";
           $query6exec = mysqli_query($connection, $query6);
           $l = mysqli_fetch_array($query6exec);
           $loansamount = $l['principal_amount'];
@@ -246,11 +246,11 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
           $s = mysqli_fetch_array($query5exec);
           $savingsamount = $s['account_balance_derived'];
 
-          $query3 = "SELECT * FROM loan WHERE loan_officer = '$staff' AND submittedon_date BETWEEN '$start' AND '$end'";
+          $query3 = "SELECT * FROM loan WHERE loan_officer = '$staff' AND disbursement_date BETWEEN '$start' AND '$end'";
           $query3exec = mysqli_query($connection, $query3);
           $loans = mysqli_num_rows($query3exec);
 
-          $query6 = "SELECT SUM(principal_amount)  AS principal_amount FROM loan WHERE loan_officer = '$staff'AND submittedon_date BETWEEN '$start' AND '$end'";
+          $query6 = "SELECT SUM(principal_amount)  AS principal_amount FROM loan WHERE loan_officer = '$staff'AND disbursement_date BETWEEN '$start' AND '$end'";
           $query6exec = mysqli_query($connection, $query6);
           $l = mysqli_fetch_array($query6exec);
           $loansamount = $l['principal_amount'];
