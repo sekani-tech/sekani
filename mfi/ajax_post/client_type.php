@@ -476,7 +476,7 @@ if(isset($_POST['id'])){
             <div class="col-md-4">
             <div class="form-group">
                 <label >First Name</label>
-                <input  type="text" style="text-transform: uppercase;" class="form-control" name="firstname" required>
+                <input  type="text" style="text-transform: uppercase;" id="first" class="form-control" name="firstname" required>
             </div>
             </div>
             <div class="col-md-4">
@@ -488,13 +488,13 @@ if(isset($_POST['id'])){
             <div class="col-md-4">
             <div class="form-group">
                 <label >Last Name</label>
-                <input  type="text" style="text-transform: uppercase;" class="form-control" name="lastname" required>
+                <input  type="text" style="text-transform: uppercase;" id="last" class="form-control" name="lastname" required>
             </div>
             </div>
             <div class="col-md-4">
             <div class="form-group">
                 <label >Phone No</label>
-                <input  type="tel" class="form-control" name="phone">
+                <input  type="tel" class="form-control" id="phone" name="phone">
             </div>
             </div>
             <div class="col-md-4">
@@ -527,7 +527,7 @@ if(isset($_POST['id'])){
             <div class="col-md-4">
             <div class="form-group">
                 <label class="">Date of Birth:</label>
-                <input  type="date" class="form-control" name="date_of_birth">
+                <input  type="date" class="form-control" id="dob" name="date_of_birth">
             </div>
             </div>
             <div class="col-md-4">
@@ -569,7 +569,10 @@ if(isset($_POST['id'])){
             </div>
             <div class="col-md-4">
             <label for="">BVN:</label>
-            <input type="text" style="text-transform: uppercase;" name="bvn" class="form-control" id="">
+            <input type="text" required style="text-transform: uppercase;" name="bvn" class="form-control" id="bvn_check">
+            <span id="cbvn" style="color: green;" hidden>BVN MATCHED RECORD</span>
+            <span id="wbvn" style="color: red;" hidden>WRONG BVN MATCH</span>
+            <div id="bvn_result"></div>
             </div>
             <div class="col-md-4">
             <p><label for="">Active Alerts:</label></p>
@@ -651,6 +654,29 @@ if(isset($_POST['id'])){
         
 }
 ?>
+<!-- BVN RECOROD -->
+<!-- YOU WILL BE DATING DOB -->
+<!-- FIRST NAME, LAST NAME, MOBLIE, BVN -->
+<script>
+    $(document).ready(function() {
+        $('#bvn_check').on("change keyup paste click", function(){
+            var bvn = $(this).val();
+            var dob = $('#dob').val();
+            var first = $('#first').val();
+            var last = $('#last').val();
+            var phone = $('#phone').val();
+            $.ajax({
+                url:"ajax_post/BVN/bvn_checking.php",
+                method:"POST",
+            data:{bvn:bvn, dob: dob, first:first, last:last, phone:phone},
+            success:function(data){
+            $('#bvn_result').html(data);
+            }
+        })
+    });
+});
+</script>
+<!-- END BVN CHECK -->
 <script>
     $(document).ready(function() {
         $('#static').on("change", function(){
