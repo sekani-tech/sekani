@@ -29,13 +29,13 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
                     // $q = mysqli_fetch_array($querytoget);
           $out = '';
           $sessint_id = $_SESSION['int_id'];
+
           if($role == "all"){
-            $querytoget = mysqli_query($connection, "SELECT * FROM staff WHERE ((branch_id = '$branch_id') AND (int_id ='$int_id' AND employee_status = 'Employed'))");
+            $querytoget = mysqli_query($connection, "SELECT * FROM staff WHERE branch_id = '$branch_id' AND int_id ='$int_id' AND employee_status = 'Employed'");
           }
           else{
-          $querytoget = mysqli_query($connection, "SELECT * FROM staff WHERE ((branch_id = '$branch_id') AND (int_id ='$int_id' AND employee_status = 'Employed' AND org_role = '$role'))");
-          }
-          while ($q = mysqli_fetch_array($querytoget))
+            $querytoget = mysqli_query($connection, "SELECT * FROM staff WHERE branch_id = '$branch_id' AND int_id ='$int_id' AND employee_status = 'Employed' AND org_role = '$role'");
+          }while ($q = mysqli_fetch_array($querytoget))
           {
             $staff = $q["id"];
           $name = $q["display_name"];
@@ -164,7 +164,7 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
       <th>
       </th>
       <th>
-        No of Client
+        '.$role.'
       </th>
       <th>
         Value of Accounts

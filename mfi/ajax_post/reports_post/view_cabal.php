@@ -165,7 +165,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="bmd-label-floating">Role:</label>
-                    <input type="text" name="role" value="'.$rolessa.'" id="" class="form-control" readonly>
+                    <input type="text" name="usu" value="'.$rolessa.'" id="" class="form-control" readonly>
                   </div>
                 </div>
                 </div>
