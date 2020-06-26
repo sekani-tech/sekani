@@ -33,7 +33,7 @@ if ($bvn_length == 11) {
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => array(
-          "Authorization: Bearer sk_live_97fe98ff50caf80f6c0b00507fbf98f056689c22",
+          "Authorization: Bearer sk_live_6a0c005846f82f326365635f8270ad3b2c34536e",
           "Cache-Control: no-cache",
         ),
         ));
@@ -43,17 +43,35 @@ if ($bvn_length == 11) {
         curl_close($curl);
   
         if ($err) {
-           echo "cURL Error #:" . $err;
+        //    echo "cURL Error #:" . $err;
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "CONNECTION ERROR",
+                text: "TIMED OUT",
+                showConfirmButton: false,
+                timer: 3000
+            })
+            document.getElementById("cbvn").setAttribute("hidden", "");
+            document.getElementById("wbvn").removeAttribute("hidden");
+            $(":input[type=submit]").prop("disabled", true);
+        });
+        </script>
+        ';
         } else {
-           echo $response;
+        //    echo $response;
            $obj = json_decode($response, TRUE);
+           $status = $obj['status'];
+           if ($status != false) {
            $bvn_fn = $obj['data']['first_name'];
            $bvn_ln = $obj['data']['last_name'];
-           $bvn_dob = $obj['data']['dob'];
+           $bvn_dob = $obj['data']['formatted_dob'];
            $bvn_phone = $obj['data']['mobile'];
            $bvn_bvn = $obj['data']['bvn'];
-        //    echo $bvn_fn."firstname".$bvn_ln."Lastname".$bvn_dob."DATE OF BIRTH";
-        if ($bvn_fn == $first && $bvn_ln == $last && $bvn_dob == $check_DOB && $bvn_phone == $phone){
+           }
+        //    echo $bvn_fn."firstname".$bvn_ln."Lastname".$dob."DATE OF BIRTH";
+        if ($bvn_fn == $first && $bvn_ln == $last && $bvn_dob == $dob && $bvn_phone == $phone){
             // BVN VERIFIED
             echo '<script type="text/javascript">
     $(document).ready(function(){
@@ -72,6 +90,23 @@ if ($bvn_length == 11) {
     ';
         } else {
             // OUTPUT WRONG DATA, BVN NOT VERIFIED
+            if ($status == false) {
+                echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "INSUFFICIENT FUND IN WALLET",
+                        text: "Wallet Doesnt Have enough Fund",
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                    document.getElementById("cbvn").setAttribute("hidden", "");
+                    document.getElementById("wbvn").removeAttribute("hidden");
+                    $(":input[type=submit]").prop("disabled", true);
+                });
+                </script>
+                ';
+            } else {
             echo '<script type="text/javascript">
     $(document).ready(function(){
         swal({
@@ -87,6 +122,7 @@ if ($bvn_length == 11) {
     });
     </script>
     ';
+}
         }
         }
         // END OF PAYSACK BVN VERIFICATION
@@ -96,7 +132,7 @@ if ($bvn_length == 11) {
     }
 } else {
     // bvn not up to eleven
-    echo "BVN NOT UP TO ELEVEN NUMBERS";
+    echo "<span style='color:red'>BVN NOT UP TO ELEVEN NUMBERS</span>";
 }
 } else {
     echo '<script type="text/javascript">

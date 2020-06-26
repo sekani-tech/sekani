@@ -500,7 +500,7 @@ if(isset($_POST['id'])){
             <div class="col-md-4">
             <div class="form-group">
                 <label >Phone No2</label>
-                <input type="tel" class="form-control" name="phone2">
+                <input type="text" class="form-control" name="phone2">
             </div>
             </div>
             <div class="col-md-4">
@@ -570,6 +570,7 @@ if(isset($_POST['id'])){
             <div class="col-md-4">
             <label for="">BVN:</label>
             <input type="text" required style="text-transform: uppercase;" name="bvn" class="form-control" id="bvn_check">
+            <a id="bvn_on_meet" class="btn btn-primary pull-right" style="color: white">check</a>
             <span id="cbvn" style="color: green;" hidden>BVN MATCHED RECORD</span>
             <span id="wbvn" style="color: red;" hidden>WRONG BVN MATCH</span>
             <div id="bvn_result"></div>
@@ -659,8 +660,8 @@ if(isset($_POST['id'])){
 <!-- FIRST NAME, LAST NAME, MOBLIE, BVN -->
 <script>
     $(document).ready(function() {
-        $('#bvn_check').on("change keyup paste click", function(){
-            var bvn = $(this).val();
+        $('#bvn_on_meet').on("click", function(){
+            var bvn = $('#bvn_check').val();
             var dob = $('#dob').val();
             var first = $('#first').val();
             var last = $('#last').val();
