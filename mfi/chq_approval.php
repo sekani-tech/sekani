@@ -88,7 +88,7 @@ if (isset($_GET["message1"])) {
          $chq_id = $_GET["approve"];
          $stats = "Approved";
          
-         $somr = "SELECT * FROM ";
+         $somr = "SELECT * FROM charge WHERE int_id = '$sd' AND id = '$'";
 
          $updat = "UPDATE chq_book SET status = '$stats' WHERE id = '$chq_id'";
          $updrgoe = mysqli_query($connection, $updat);
