@@ -92,9 +92,8 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                             $rlpo = mysqli_query($connection, $gl_acc);
                     if($rlt){
                       $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
-                      $sd = mysqli_query($connection, $quy);
-                      if (mysqli_num_rows($sd) > 0) {
                       $rult = mysqli_query($connection, $quy);
+                      if (mysqli_num_rows($rult) > 0) {
                         while ($row = mysqli_fetch_array($rult))
                             {
                               $remail = $row['email'];
@@ -302,9 +301,8 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
 
                          if($rlt){
                           $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
-                          $sd = mysqli_query($connection, $quy);
-                          if (mysqli_num_rows($sd) > 0) {
-                            $rult = mysqli_query($connection, $quy);
+                          $rult = mysqli_query($connection, $quy);
+                          if (mysqli_num_rows($rult) > 0) {
                             while ($row = mysqli_fetch_array($rult))
                                 {
                                   $remail = $row['email'];
@@ -312,7 +310,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                   $quyd = "SELECT * FROM permission WHERE int_id = '$sessint_id' AND role_id = '$roleid'";
                                   $rlot = mysqli_query($connection, $quyd);
                                   $tolm = mysqli_fetch_array($rlot);
-                                  $vaul = $tolm['vault_email'];
+                                  $vaul = isset($tolm['vault_email']);
                                   
                                   if ($vaul == 1 || $vaul == "1") {
                                   $mail = new PHPMailer;
@@ -509,9 +507,9 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                       '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$tid}', '{$amount}')";
                      $rlt = mysqli_query($connection, $vabl);
                      if($rlt){
-                      $sd = mysqli_query($connection, $quy);
-                      if (mysqli_num_rows($sd) > 0) {
+                      $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
                       $rult = mysqli_query($connection, $quy);
+                      if (mysqli_num_rows($rult) > 0) {
                         while ($row = mysqli_fetch_array($rult))
                             {
                               $remail = $row['email'];
@@ -711,9 +709,8 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                 $rlt = mysqli_query($connection, $vable);
             if($rlt){
               $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id'";
-              $sd = mysqli_query($connection, $quy);
-              if (mysqli_num_rows($sd) > 0) {
-                $rult = mysqli_query($connection, $quy);
+              $rult = mysqli_query($connection, $quy);
+              if (mysqli_num_rows($rult) > 0) {
                 while ($row = mysqli_fetch_array($rult))
                     {
                       $remail = $row['email'];
