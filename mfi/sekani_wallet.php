@@ -15,6 +15,14 @@ $destination = "index.php";
     <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
+          <?php
+          $int_id = $_SESSION["int_id"];
+          $branch_id = $_SESSION["branch_id"];
+          $sql_on = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
+          $xm = mysqli_num_rows($sql_on);
+          if ($xm >= 1) {
+          ?>
+          <!-- NOW DO SOMETHING -->
           <div class="row">
             <div class="col-md-8">
               <div class="card">
@@ -52,9 +60,11 @@ $destination = "index.php";
                 </div>
                 </div>
                 </div>
-            <button type="button" class="btn btn-primary pull-right" id="run_pay6" >Run Report</button>
+            <button type="button" class="btn btn-primary pull-right" id="run_pay" >Run Report</button>
                 </form>
                   <!-- check -->
+                  <!-- javascript to display wallet transaction -->
+                  <!-- javascript to end wallet transaction -->
                 </div>
               </div>
             </div>
@@ -108,13 +118,63 @@ $destination = "index.php";
                     </div>
                   <!-- check -->
                   <br>
+                  <!-- open paystack transaction -->
+                  <!-- end paystack transaction -->
             <button type="button" class="btn btn-primary pull-right" id="run_pay6" >Refill</button>
             <br>
                 </div>
                 </form>
               </div>
+              <!-- if no record of institution/ Display add wallet -->
             </div>
           </div>
+          <?php
+          } else {
+            ?>
+            <div class="row">
+  <div class="col-md-4 ml-auto mr-auto">
+    <div class="card card-pricing bg-primary"><div class="card-body">
+        <div class="card-icon">
+            <i class="material-icons">business</i>
+        </div>
+        <h3 class="card-title">NGN 0.00</h3>
+        <p class="card-description">
+            Create Institution Account Wallet
+        </p>
+        <p>1. Fund the Wallet</p>
+        <p>2. Start Making BVN CHECK, SMS</p>
+        <p>3. Print Report</p>
+        <button id="wall" class="btn btn-white btn-round pull-right" style="color:black;">Create Wallet</button>
+        </div>
+    </div>
+  </div>
+</div>
+<!-- next script -->
+<script>
+    $(document).ready(function() {
+        $('#wall').on("click", function(){
+            var int_id = $('#int_id').val();
+            var branch_id = $('#branch_id').val();
+            $.ajax({
+                url:"ajax_post/wallet.php",
+                method:"POST",
+            data:{int_id:int_id, branch_id: branch_id},
+            success:function(data){
+            $('#wallet_result').html(data)
+            location.reload();
+            }
+        })
+    });
+});
+</script>
+            <?php
+          }
+          ?>
+
+          <!-- END IT NOW -->
+          <input type="text" value="<?php echo $int_id; ?>" id="int_id" hidden>
+          <input type="text" value="<?php echo $branch_id;?>" id="branch_id" hidden>
+          <div id="wallet_result"></div>
         </div>
       </div>
 
