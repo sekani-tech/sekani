@@ -164,7 +164,7 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
       <th>
       </th>
       <th>
-        '.$role.'
+      No of Client
       </th>
       <th>
         Value of Accounts
