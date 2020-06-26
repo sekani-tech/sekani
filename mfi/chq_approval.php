@@ -83,6 +83,62 @@ if (isset($_GET["message1"])) {
 }
 ?>
 <?php
+ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+     if (isset($_GET['approve'])) {
+         $chq_id = $_GET["approve"];
+         $stats = "Approved";
+         
+         $somr = "SELECT * FROM ";
+
+         $updat = "UPDATE chq_book SET status = '$stats' WHERE id = '$chq_id'";
+         $updrgoe = mysqli_query($connection, $updat);
+
+
+         if ($updrgoe) {
+            echo '<script type="text/javascript">
+            $(document).ready(function(){
+                swal({
+                    type: "success",
+                    title: "Cheque/Pass Book",
+                    text: "Thank You!",
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            });
+            </script>
+            ';
+         } else {
+            echo '<script type="text/javascript">
+            $(document).ready(function(){
+                swal({
+                    type: "error",
+                    title: "Error in Approving Cheque/Pass Book",
+                    text: "Call - The System Support",
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            });
+            </script>
+            ';
+         }
+     } else {
+        // //  echo an error that name is not found
+        // echo '<script type="text/javascript">
+        // $(document).ready(function(){
+        //     swal({
+        //         type: "error",
+        //         title: "Please check",
+        //         text: "Input a value",
+        //         showConfirmButton: false,
+        //         timer: 2000
+        //     })
+        // });
+        // </script>
+        // ';
+     }
+ }
+?>
+<?php
 // right now we will program
 // first step - check if this person is authorized
 
@@ -153,11 +209,36 @@ if ($can_transact == 1 || $can_transact == "1") {
                         <tr>
                         <?php $row["id"]; ?>
                           <th><?php echo $row["date"]; ?></th>
-                          <th><?php echo $row["name"]; ?></th>
-                          <th><?php echo $row["leaves_no"]; ?></th>
+                          <?php
+                          $idd = $row["id"];
+                            $query = "SELECT * FROM client WHERE int_id = '$sessint_id' AND id = '$idd'";
+                            $resi = mysqli_query($connection, $query);
+                            $c = mysqli_fetch_array($resi);
+                            $client_name = $c['firstname']." ".$c['lastname'];
+                          ?>
+                          <th><?php echo $client_name; ?></th>
+                          <?php
+                          $gom = $row["leaves_no"];
+                          if($gom == "1_50"){
+                            $don = "1 - 50";
+                          }
+                          else if($gom == "51_100"){
+                            $don = "51 - 100";
+                            
+                          }
+                          else if($gom == "101_150"){
+                            $don = "101 - 150";
+                            
+                          }
+                          else if($gom == "151_200"){
+                            $don = "151 - 200";
+                            
+                          }
+                          ?>
+                          <th><?php echo $don; ?></th>
                           <th><?php echo $row["range_amount"]; ?></th>
                           <th><?php echo $row["status"]; ?></th>
-                          <td><a href="approve.php?approve=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
+                          <td><a href="chq_approval.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
                           </tr>
                           <!-- <th></th> -->
                           <?php }

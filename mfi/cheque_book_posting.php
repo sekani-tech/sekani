@@ -60,7 +60,7 @@ else if (isset($_GET["message2"])) {
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/chq_upload.php" method="post">
+                  <form action="../functions/chq_upload.php" method="POST">
                     <div class="row">
                       <div class="col-md-4">
                           <?php
@@ -110,28 +110,50 @@ else if (isset($_GET["message2"])) {
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
+                          <label class="bmd-label-floating">Book Type</label>
+                          <select id="ewe" name="book_type" class="form-control" id="acc_name">
+                          <option value="chq">Chq Book</option>
+                          <option value="pass">Pass Book</option>
+                        </select>
+                        </div>
+                      </div>
+                      <script>
+                        $(document).ready(function() {
+                          $('#ewe').on("change", function(){
+                            var id = $(this).val();
+                            $.ajax({
+                              url:"ajax_post/book_type.php",
+                              method:"POST",
+                              data:{id:id,},
+                              success:function(data){
+                                $('#done').html(data);
+                              }
+                            })
+                          });
+                        });
+                      </script>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Range No</label>
+                          <input type="text" class="form-control" name="range">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating"></label>
+                          <input hidden type="text" class="form-control" name="">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div id="done" class="form-group">
                           <label class="bmd-label-floating">No of Leaves</label>
                           <select name="no_leaves" class="form-control" id="acc_name">
-<<<<<<< HEAD
-                          <option value="0">select an option</option>
-                          <option value="1">1-50</option>
-                          <option value="2">51-100</option>
-                          <option value="3">101-150</option>
-                          <option value="4">151-200</option>
-=======
                           <option value="">select an option</option>
                           <option value="1_50">1-50</option>
                           <option value="51_100">51-100</option>
                           <option value="101_150">101-150</option>
                           <option value="151_200">151-200</option>
->>>>>>> 2a65d04a393a2a3bb17520a73e8daafea2dff6b5
                         </select>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Range No</label>
-                          <input type="text" class="form-control" name="range">
                         </div>
                       </div>
                       </div>
