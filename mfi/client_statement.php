@@ -184,7 +184,7 @@ $sessint_id = $_SESSION['int_id'];
                         // $resultmm = mysqli_query($connection, "SELECT * FROM account_transaction WHERE ((account_id = '$acc_id' && int_id = $sessint_id) && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
                         // $kx = mysqli_fetch_array($resultmm);
                         // $querytoget = "SELECT * FROM account_transaction WHERE account_id = '65' && int_id = '5' && branch_id = '1' && transaction_date BETWEEN '2019-01-01' AND '2020-03-03' ORDER BY transaction_date ASC";
-                        $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE ((account_id = '$acc_id' && int_id = $sessint_id) && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id ASC");
+                        $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE ((account_id = '$acc_id' && int_id = '$sessint_id') && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id ASC");
                         // $result = mysqli_query($connection, $querytoget);
                         // $v = 0;
                       ?>
@@ -206,17 +206,17 @@ $sessint_id = $_SESSION['int_id'];
                           <td class="column1"><?php echo $row["transaction_date"]; ?></td>
                           <td class="column2"><?php echo $row["created_date"]; ?></td>
                           <?php
-                          if ($row["transaction_type"] == "credit") {
+                          if ($row["transaction_type"] == "") {
                             $desc = "Deposit";
-                          } else if ($row["transaction_type"] == "debit") {
-                            $desc = "Withdrawal";
-                          } else if ($row["transaction_type"] == "debit") {
+                          } else if ($row["transaction_type"] == "") {
                             $desc = "Withdrawal";
                           } else if ($row["transaction_type"] == "loan_disbursement") {
                             $desc = "Loan Disbursment";
                           } else if ($row["transaction_type"] == "percentage_charge") {
                             $desc = $row["description"];
                           } else if ($row["transaction_type"] == "flat_charge") {
+                            $desc = $row["description"];
+                          } else {
                             $desc = $row["description"];
                           }
                           ?>

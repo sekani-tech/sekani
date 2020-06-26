@@ -60,17 +60,17 @@ if(isset($_POST["id"])) {
 
       while ($q = mysqli_fetch_array($resul))
       { 
-        if ($q["transaction_type"] == "credit") {
+        if ($q["transaction_type"] == "") {
           $desc = "Deposit";
-        } else if ($q["transaction_type"] == "debit") {
-          $desc = "Withdrawal";
-        } else if ($q["transaction_type"] == "debit") {
+        } else if ($q["transaction_type"] == "") {
           $desc = "Withdrawal";
         } else if ($q["transaction_type"] == "loan_disbursement") {
           $desc = "Loan Disbursment";
         } else if ($q["transaction_type"] == "percentage_charge") {
           $desc = $q["description"];
         } else if ($q["transaction_type"] == "flat_charge") {
+          $desc = $q["description"];
+        } else {
           $desc = $q["description"];
         }
         $transaction_date = $q["transaction_date"];
