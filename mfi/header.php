@@ -100,6 +100,9 @@ $rezz = mysqli_query($connection, $activeq);
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- Material Kit CSS -->
   <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+  <!-- Search Query -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> -->
   <!-- accordion -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
   <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
@@ -354,7 +357,7 @@ input[type=number] {
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown-item" href="report_loan_view.php?view39"><?php echo $dn;?> Loans matured today</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#"><?php echo $dfn;?> Loans due tommorow</a>
+                  <a class="dropdown-item" href="report_loan_view.php?view39"><?php echo $dfn;?> Loans due tommorow</a>
                 </div>
               </li>
               <!-- user setup -->

@@ -9,10 +9,10 @@ $id = $_POST['id'];
         $out = '<label class="bmd-label-floating">No of Leaves</label>
         <select name="no_leaves" class="form-control" id="">
             <option value="">select an option</option>
-            <option value="1_50">1-50</option>
-            <option value="51_100">51-100</option>
-            <option value="101_150">101-150</option>
-            <option value="151_200">151-200</option>
+            <option value="50">1-50</option>
+            <option value="100">1-100</option>
+            <option value="150">1-150</option>
+            <option value="200">1-200</option>
         </select>
         ';
        echo $out;

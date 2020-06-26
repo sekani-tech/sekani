@@ -626,7 +626,20 @@ $transid1 = $randms1;
         </div>
         <div class="col-md-4">
         <div class="form-group">
-                <label for="">Client</label>
+                  <script src="../select2/css/select2.min.css"></script>
+                  <script src="../select2/js/select2.min.js"></script>
+          <script>
+           // In your Javascript (external .js resource or <script> tag)
+           $(document).ready(function() {
+              $('.js-example-basic-single').select2();
+          });
+          </script>
+                <!-- <label for="">Client</label>
+                <select class="js-example-basic-single" name="state">
+                  <option>one</option>
+                  <option>two</option>
+                  <option>three</option>
+                </select> -->
                 <select id="sdd" name="client_id" class="form-control">
                   <option></option>
                   <?php echo fill_client($connection);?>

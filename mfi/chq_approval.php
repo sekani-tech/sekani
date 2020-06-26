@@ -193,6 +193,9 @@ if ($can_transact == 1 || $can_transact == "1") {
                          Client Name
                         </th>
                         <th class="th-sm">
+                         Book Type
+                        </th>
+                        <th class="th-sm">
                           no of leaves
                         </th>
                         <th class="th-sm">
@@ -217,25 +220,17 @@ if ($can_transact == 1 || $can_transact == "1") {
                             $client_name = $c['firstname']." ".$c['lastname'];
                           ?>
                           <th><?php echo $client_name; ?></th>
-                          <?php
-                          $gom = $row["leaves_no"];
-                          if($gom == "1_50"){
-                            $don = "1 - 50";
-                          }
-                          else if($gom == "51_100"){
-                            $don = "51 - 100";
-                            
-                          }
-                          else if($gom == "101_150"){
-                            $don = "101 - 150";
-                            
-                          }
-                          else if($gom == "151_200"){
-                            $don = "151 - 200";
-                            
-                          }
+                          <?php 
+                            $ir = $row["book_type"];
+                            if($ir == "pass"){
+                              $ror = "Pass Book";
+                            }
+                            else if($ir == "chq"){
+                              $ror = "Cheque Book";
+                            }
                           ?>
-                          <th><?php echo $don; ?></th>
+                          <th><?php echo $ror; ?></th>
+                          <th><?php echo $row["leaves_no"]; ?></th>
                           <th><?php echo $row["range_amount"]; ?></th>
                           <th><?php echo $row["status"]; ?></th>
                           <td><a href="chq_approval.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>

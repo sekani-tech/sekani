@@ -77,6 +77,7 @@ $destination = "report_institution.php";
                       <div class="form-group col-md-3">
                         <label for="">Roles</label>
                         <select name="" id="role" class="form-control">
+                        <option value="all">All</option>
                         <?php echo fill_role($connection); ?>
                         </select>
                       </div>
