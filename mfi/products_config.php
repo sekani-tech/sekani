@@ -242,7 +242,7 @@ if ($per_con == 1 || $per_con == "1") {
                           </a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="#ssproducts" data-toggle="tab">
+                          <a class="nav-link" href="#saving" data-toggle="tab">
                             <i class="material-icons">attach_money</i> Savings Product
                             <div class="ripple-container"></div>
                           </a>
@@ -337,7 +337,7 @@ if ($per_con == 1 || $per_con == "1") {
                     </table>
                   </div>
                     </div>
-                    <div class="tab-pane active" id="ssproducts">
+                    <div class="tab-pane" id="saving">
                       <a href="manage_savings_product.php" class="btn btn-primary"> Create New Product</a>
                       <div class="table-responsive">
                   <script>
