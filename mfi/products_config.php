@@ -242,6 +242,12 @@ if ($per_con == 1 || $per_con == "1") {
                           </a>
                         </li>
                         <li class="nav-item">
+                          <a class="nav-link" href="#saving" data-toggle="tab">
+                            <i class="material-icons">attach_money</i> Savings Product
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                        <li class="nav-item">
                           <a class="nav-link" href="#messages" data-toggle="tab">
                             <i class="material-icons">supervisor_account</i> Charges
                             <div class="ripple-container"></div>
@@ -295,6 +301,54 @@ if ($per_con == 1 || $per_con == "1") {
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM product WHERE int_id ='$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                        <!-- <th>
+                          ID
+                        </th> -->
+                        <th>Name</th>
+                        <th>
+                          Description
+                        </th>
+                        <th>
+                          Product Group
+                        </th>
+                        <th>
+                          Edit
+                        </th>
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                          <th><?php echo $row["name"]; ?></th>
+                          <th><?php echo $row["description"]; ?></th>
+                          <th><?php echo $row["short_name"]; ?></th>
+                          <td><a href="update_product.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                      </tbody>
+                    </table>
+                  </div>
+                    </div>
+                    <div class="tab-pane" id="saving">
+                      <a href="manage_savings_product.php" class="btn btn-primary"> Create New Product</a>
+                      <div class="table-responsive">
+                  <script>
+                  $(document).ready(function() {
+                  $('#tabledatc4').DataTable();
+                  });
+                  </script>
+                    <table id="tabledat4" class="table" style="width: 100%;">
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM savings_product WHERE int_id ='$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>

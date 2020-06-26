@@ -6,7 +6,6 @@ session_start();
 <?php
   $intname = $_SESSION['int_name'];
   $branch_id = $_SESSION["branch_id"];
-  $sint_id =$_SESSION['int_id'];
   $date = date('d/m/Y');
   // $staff = $_POST["staff"];
   $branchquery = mysqli_query($connection, "SELECT * FROM branch WHERE id='$branch_id'");
@@ -17,23 +16,20 @@ session_start();
       $branch_location = $ans['location'];
       $branch_phone = $ans['phone'];
     }
-    $dd = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sint_id' && client.status = 'Approved'";
-        $redsult = mysqli_query($connection, $dd);
-    $ssd = mysqli_num_rows($redsult);
   function fill_report($connection)
         {
             $out = '';
             $sessint_id =$_SESSION['int_id'];
           // import
         //   $glcode = $_POST['glcode'];
-        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
+        $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.product_id != '1'";
         $result = mysqli_query($connection, $query);
         while ($q = mysqli_fetch_array($result, MYSQLI_ASSOC))
           {
             $cid = $q["id"];
           $firstname = $q["firstname"];
           $lastname = $q["lastname"];
-          $account = strtoupper($q["first_name"]." ".$q["last_name"]);
+          $account = strtoupper($q["client_type"]);
             $q["account_type"];
             $cid= $q["id"];
             $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
@@ -79,7 +75,7 @@ session_start();
 <div id="logo">
   <img src="'.$_SESSION["int_logo"].'" height="80" width="80">
 </div>
-<h1>'.$_SESSION["int_full"].' <br/> Client Balance Report</h1>
+<h1>'.$_SESSION["int_full"].' <br/> Savings Account Report</h1>
 <div id="company" class="clearfix">
   <div>'.$branch.'</div>
   <div>'.$branch_location.'</div>
@@ -88,7 +84,6 @@ session_start();
 </div>
 <div id="project">
   <div><span>BRANCH</span> '.$branch.' </div>
-  <div><span>TOTAL</span> '.$ssd.' </div>
 </div>
 </header>
   <main>
@@ -102,7 +97,7 @@ session_start();
       Last Name
     </th>
     <th style="font-size: 30px;" class="column1">
-      Account officer
+     Client Type
     </th>
     <th style="font-size: 30px;" class="column1">
       Account Type
@@ -121,6 +116,6 @@ session_start();
   </table>
   </main>
   ');
-  $file_name = 'Client Balance Report for '.$intname.'-'.$date.'.pdf';
+  $file_name = 'Savings Account Report for '.$intname.'-'.$date.'.pdf';
   $mpdf->Output($file_name, 'D');
 ?>

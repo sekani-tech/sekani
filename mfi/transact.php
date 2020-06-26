@@ -25,6 +25,26 @@ if (isset($_GET["message"])) {
     ';
     $_SESSION["lack_of_intfund_$key"] = 0;
  }
+ else if (isset($_GET["message1"])) {
+  $key = $_GET["message1"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Success",
+          text: "Awaiting Approval",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+ }
 } else if (isset($_GET["message2"])) {
     $key = $_GET["message2"];
     // $out = $_SESSION["lack_of_intfund_$key"];
@@ -549,6 +569,103 @@ $transid1 = $randms1;
       <div class="form-group">
           <label for="">Description</label>
           <input type="text" value="" name="descrip" class="form-control">
+      </div>
+    </div>
+    </div>    
+          <button type="submit" class="btn btn-primary pull-right">Submit</button>
+  </form>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="card">
+                      <div class="card-header card-header-primary">
+                        <h4 class="card-title">Charges</h4>
+                        <!-- <p class="card-category">Fill in all important data</p> -->
+                      </div>
+                      <div class="card-body">
+                      <form action="../functions/charge_cache.php" method="post">
+                      <!-- <form action="#" method="post"> -->
+
+    <div class="row">
+        <div class="col-md-4">
+        <?php
+                  function fill_charges($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM charge WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                  }
+                  return $out;
+                  }
+                  function fill_client($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM client WHERE int_id = '$sint_id' AND status = 'Approved' ORDER BY firstname ASC";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["firstname"].' '.$row["lastname"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
+            <div class="form-group">
+                <label for="">Charges</label>
+                <select name="charge" class="form-control">
+                  <option></option>
+                  <?php echo fill_charges($connection);?>
+                </select>
+                <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id;?>" id="int_id">
+            </div>
+        </div>
+        <div class="col-md-4">
+        <div class="form-group">
+                <label for="">Client</label>
+                <select id="sdd" name="client_id" class="form-control">
+                  <option></option>
+                  <?php echo fill_client($connection);?>
+                </select>
+                <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id;?>" id="int_id">
+            </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+          <label for="">Transaction ID:</label>
+          <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="tsit">
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+          <label for="">Description</label>
+          <input type="text" value="" name="descrip" class="form-control">
+      </div>
+    </div>
+    <script>
+                $(document).ready(function() {
+                  $('#sdd').on("change", function(){
+                    var id = $(this).val();
+                    var ist = $('#int_id').val();
+                    $.ajax({
+                      url:"ajax_post/choose_acc.php",
+                      method:"POST",
+                      data:{id:id, ist: ist},
+                      success:function(data){
+                        $('#showacc').html(data);
+                      }
+                    })
+                  });
+                });
+              </script>
+    <div class="col-md-4">
+      <div class="form-group">
+          <label for="">Account No</label>
+            <div id="showacc"></div>
       </div>
     </div>
     </div>    

@@ -79,6 +79,9 @@ $activecode = "Active";
 // working on the time stamp right now
 $ts = date('Y-m-d H:i:s');
 $acuser = $_SESSION["username"];
+$_SESSION['last_login_timestamp'] = time();
+$timmer_check = $_SESSION['last_login_timestamp'];
+// AUTO LOGIN
 $activeq = "UPDATE users SET users.status ='$activecode', users.last_logged = '$ts' WHERE users.username ='$acuser'";
 $rezz = mysqli_query($connection, $activeq);
 ?>
@@ -332,13 +335,26 @@ input[type=number] {
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
             <li class="nav-item dropdown">
+            <?php
+                $today = date('Y-m-d');
+                $fom = mysqli_query($connection, "SELECT * FROM loan WHERE repayment_date = '$today'");
+                $dn = mysqli_num_rows($fom);
+
+                $tomorrow = date( 'Y-m-d' , strtotime ( $today . ' + 1 days' ));
+                $fodm = mysqli_query($connection, "SELECT * FROM loan WHERE repayment_date = '$tomorrow'");
+                $dfn = mysqli_num_rows($fodm);
+                $fomd = $dfn + $dn;
+                ?>
                 <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">notifications</i>
+                  <?php if($fomd > 0){?>
+                  <span class="badge badge-danger"><?php echo $fomd;?></span>
+                  <?php }?>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                  <a class="dropdown-item" href="#">Loans matured today</a>
+                  <a class="dropdown-item" href="report_loan_view.php?view39"><?php echo $dn;?> Loans matured today</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Loans due tommorow</a>
+                  <a class="dropdown-item" href="#"><?php echo $dfn;?> Loans due tommorow</a>
                 </div>
               </li>
               <!-- user setup -->

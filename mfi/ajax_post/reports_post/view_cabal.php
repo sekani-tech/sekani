@@ -20,6 +20,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
     $int_id = $_SESSION["int_id"];
     $branch = $_POST["branch"];
     $branch_id = $_POST["branch"];
+    $role = $_POST["role"];
     $start = $_POST["start"];
     $end = $_POST["end"];
     $std = $_POST["start"];
@@ -28,14 +29,13 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
       $don = mysqli_query($connection, "SELECT * FROM branch WHERE id = '$branch_id'");
       $r = mysqli_fetch_array($don);
       $branch = $r['name'];
-      function fill_stafff($connection, $int_id, $start, $end, $branch_id)
+      function fill_stafff($connection, $int_id, $start, $end, $branch_id, $role)
         {
           // import
                     // $q = mysqli_fetch_array($querytoget);
           $out = '';
           $sessint_id = $_SESSION['int_id'];
-          $querytoget = mysqli_query($connection, "SELECT * FROM staff WHERE ((branch_id = '$branch_id') AND (int_id ='$int_id' AND employee_status = 'Employed'))");
-          $q = mysqli_fetch_array($querytoget);
+          $querytoget = mysqli_query($connection, "SELECT * FROM staff WHERE ((branch_id = '$branch_id') AND (int_id ='$int_id' AND employee_status = 'Employed' AND org_role = '$role'))");
           while ($q = mysqli_fetch_array($querytoget))
           {
             $staff = $q["id"];
@@ -108,6 +108,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                       <input type="text" name="branch" value="'.$branch_id.'" id="branch1" class="form-control" hidden>
                       <input type="text" name="int_id" value="'.$int_id.'" id="int_id1" class="form-control" hidden>
                       <input type="text" name="" value="'.$branch.'" id="" class="form-control" readonly>
+                      <input type="text" name="role" value="'.$role.'" id="" class="form-control" readonly>
                   </div>
                 <div class="col-md-4">
                   <div class="form-group">
@@ -141,7 +142,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                   </tr>
                 </thead>
                 <tbody>
-                '.fill_stafff($connection, $int_id, $std, $endx, $branch_id).'
+                '.fill_stafff($connection, $int_id, $std, $endx, $branch_id, $role).'
                 <tr>
               <th>Total</th>
               <th></th>

@@ -60,14 +60,14 @@ else if (isset($_GET["message2"])) {
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/chq_upload.php" method="post">
+                  <form action="../functions/chq_upload.php" method="POST">
                     <div class="row">
                       <div class="col-md-4">
                           <?php
                            // a function for client data fill
                            function fill_client($connection) {
                             $sint_id = $_SESSION["int_id"];
-                            $org = "SELECT * FROM client WHERE int_id = '$sint_id'";
+                            $org = "SELECT * FROM client WHERE int_id = '$sint_id' AND status = 'Approved'";
                             $res = mysqli_query($connection, $org);
                             $out = '';
                             while ($row = mysqli_fetch_array($res))
@@ -93,7 +93,7 @@ else if (isset($_GET["message2"])) {
                               })
                             </script>
                         <div class="form-group">
-                          <label class="bmd-label-floating"> Accural Name</label>
+                          <label class="bmd-label-floating">Accural Name</label>
                           <select name="acc_name" class="form-control" id="acc_name">
                           <option value="">select an option</option>
                           <?php echo fill_client($connection); ?>
@@ -110,20 +110,50 @@ else if (isset($_GET["message2"])) {
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">No of Leaves</label>
-                          <select name="no_leaves" class="form-control" id="acc_name">
-                          <option value="">select an option</option>
-                          <option value="">1-50</option>
-                          <option value="">51-100</option>
-                          <option value="">101-150</option>
-                          <option value="">151-200</option>
+                          <label class="bmd-label-floating">Book Type</label>
+                          <select id="ewe" name="book_type" class="form-control" id="acc_name">
+                          <option value="chq">Chq Book</option>
+                          <option value="pass">Pass Book</option>
                         </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <script>
+                        $(document).ready(function() {
+                          $('#ewe').on("change", function(){
+                            var id = $(this).val();
+                            $.ajax({
+                              url:"ajax_post/book_type.php",
+                              method:"POST",
+                              data:{id:id,},
+                              success:function(data){
+                                $('#done').html(data);
+                              }
+                            })
+                          });
+                        });
+                      </script>
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Range No</label>
                           <input type="text" class="form-control" name="range">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating"></label>
+                          <input hidden type="text" class="form-control" name="">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div id="done" class="form-group">
+                          <label class="bmd-label-floating">No of Leaves</label>
+                          <select name="no_leaves" class="form-control" id="acc_name">
+                          <option value="">select an option</option>
+                          <option value="1_50">1-50</option>
+                          <option value="51_100">51-100</option>
+                          <option value="101_150">101-150</option>
+                          <option value="151_200">151-200</option>
+                        </select>
                         </div>
                       </div>
                       </div>

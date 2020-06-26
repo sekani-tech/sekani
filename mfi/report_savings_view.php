@@ -31,6 +31,28 @@ $destination = "report_savings.php";
                    }?> savings Accounts</p>
                 </div>
                 <div class="card-body">
+                <div class="form-group">
+                <form method = "POST" action = "../composer/savings_account.php">
+              <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
+              <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
+              <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
+              <button type="submit" id="clientlist" class="btn btn-primary pull-left">Download PDF</button>
+              <script>
+              $(document).ready(function () {
+              $('#clientlist').on("click", function () {
+                swal({
+                    type: "success",
+                    title: "SAVINGS ACCOUNT REPORT",
+                    text: "Printing Successful",
+                    showConfirmButton: false,
+                    timer: 5000
+                          
+                  })
+              });
+            });
+     </script>
+            </form>
+                </div>
                   <div class="table-responsive">
                     <table id="tabledt" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
@@ -65,7 +87,7 @@ $destination = "report_savings.php";
                         $idd = $row["id"];?>
                           <th><?php echo $row["firstname"]; ?></th>
                           <th><?php echo $row["lastname"]; ?></th>
-                          <th><?php echo strtoupper($row["client_type"]." "."")?></th>
+                          <th><?php echo strtoupper($row["client_type"])?></th>
                           <?php
                             $class = "";
                             $row["account_type"];

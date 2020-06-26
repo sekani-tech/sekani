@@ -21,15 +21,15 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
   $start = $_POST["start"];
   $end = $_POST["end"];
   $branch_id = $_POST["branch"];
-  // $staff = $_POST["staff"];
+  $role = $_POST["role"];
   $int_id = $_SESSION['int_id'];
-  function fill_stafff($connection, $int_id, $start, $end, $branch_id)
+  function fill_stafff($connection, $int_id, $start, $end, $branch_id, $role)
         {
           // import
                     // $q = mysqli_fetch_array($querytoget);
           $out = '';
           $sessint_id = $_SESSION['int_id'];
-          $querytoget = mysqli_query($connection, "SELECT * FROM staff WHERE ((branch_id = '$branch_id') AND (int_id ='$int_id' AND employee_status = 'Employed'))");
+          $querytoget = mysqli_query($connection, "SELECT * FROM staff WHERE ((branch_id = '$branch_id') AND (int_id ='$int_id' AND employee_status = 'Employed' AND org_role = '$role'))");
           $q = mysqli_fetch_array($querytoget);
           while ($q = mysqli_fetch_array($querytoget))
           {

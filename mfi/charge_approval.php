@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Approval";
+$page_title = " Charge approval";
 $destination = "approval.php";
     include("header.php");
 
@@ -15,7 +15,7 @@ if (isset($_GET["message1"])) {
       swal({
           type: "success",
           title: "Success",
-          text: "Transaction Successfully Approved",
+          text: "Charge Successfully Approved",
           showConfirmButton: false,
           timer: 2000
       })
@@ -98,7 +98,7 @@ if ($can_transact == 1 || $can_transact == "1") {
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Transactions</h4>
+                  <h4 class="card-title ">Charge Approval</h4>
                   <script>
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
@@ -106,24 +106,24 @@ if ($can_transact == 1 || $can_transact == "1") {
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM transact_cache WHERE int_id='$sessint_id' && status = 'Pending'";
+                   $query = "SELECT * FROM savings_acct_charge WHERE int_id = '$sessint_id'";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      if($inr == '0'){ 
-                        echo 'No Transactions need of approval';
+                        echo 'No Cheque Books Issued';
                       }else{
-                        echo ''.$inr.' Transactions on the platform';
+                        echo ''.$inr.' Cheque book on the platform';
                       }
                    }
-                   ?>  || Approve Transaction</p>
+                   ?></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' AND status = 'Pending'";
+                        $query = "SELECT * FROM savings_acct_charge WHERE int_id = '$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -131,18 +131,20 @@ if ($can_transact == 1 || $can_transact == "1") {
                         </th> -->
                         <tr>
                         <th class="th-sm">
-                          Transaction Type
+                          Date
                         </th>
                         <th class="th-sm">
-                          Amount
+                         Client Name
                         </th>
                         <th class="th-sm">
-                          Posted By
+                         Charges
                         </th>
                         <th class="th-sm">
-                          Client
+                        Amount
                         </th>
-                        <th class="th-sm">Status</th>
+                        <th class="th-sm">
+                       Description
+                        </th>
                         <th>Approval</th>
                         </tr>
                         <!-- <th>Phone</th> -->
@@ -152,12 +154,22 @@ if ($can_transact == 1 || $can_transact == "1") {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
-                          <th><?php echo $row["transact_type"]; ?></th>
-                          <th><?php echo number_format($row["amount"], 2); ?></th>
-                          <th><?php echo $row["account_off_name"]; ?></th>
-                          <th><?php echo $row["client_name"]; ?></th>
-                          <th><?php echo $row["status"]; ?></th>
-                          <td><a href="approve.php?approve=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
+                          <th><?php echo $row["date"]; ?></th>
+                          <?php $client = $row["client_id"];
+                          $frei = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client'");
+                          $df = mysqli_fetch_array($frei);
+                          $clientname = $df["display_name"];
+                          ?>
+                          <th><?php echo $clientname; ?></th>
+                          <?php $charge = $row["charge_id"];
+                          $dfd = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$charge'");
+                          $df = mysqli_fetch_array($dfd);
+                          $chargename = $df["name"];
+                          ?>
+                          <th><?php echo $chargename; ?></th>
+                          <th><?php echo $row["amount"]; ?></th>
+                          <th><?php echo $row["description"]; ?></th>
+                          <td><a href="../functions/charger.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
                           </tr>
                           <!-- <th></th> -->
                           <?php }
@@ -186,8 +198,8 @@ if ($can_transact == 1 || $can_transact == "1") {
   $(document).ready(function(){
    swal({
     type: "error",
-    title: "Transaction Authorization",
-    text: "You Dont Have permission to Approve",
+    title: "Vault Authorization",
+    text: "You Dont Have permission to Make Transaction From Vault",
    showConfirmButton: false,
     timer: 2000
     }).then(

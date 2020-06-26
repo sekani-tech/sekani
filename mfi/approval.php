@@ -42,6 +42,11 @@ $destination = "../index.php";
                           <td><a href="client_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
+                        <tr>
+                          <th>Charges </th>
+                          <th>Approve all the manual charges to clients</th>
+                          <td><a href="charge_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                        </tr>
                           <th>Transactions</th>
                           <th>View and approve all recently made transactions</th>
                           <td><a href="transact_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
@@ -49,7 +54,7 @@ $destination = "../index.php";
                         <tr>
                           <th>CHQ/Pass Book</th>
                           <th>Approve all the issued Cheque/pass books</th>
-                          <td><a href="#" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="chq_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>Loan Disbursement</th>

@@ -35,6 +35,28 @@ $destination = "report_loan.php";
                    }?> Disbursed Loans</p>
                 </div>
                 <div class="card-body">
+                <div class="form-group">
+                <form method = "POST" action = "../composer/disbursed_loan.php">
+              <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
+              <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
+              <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
+              <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download PDF</button>
+              <script>
+              $(document).ready(function () {
+              $('#disbursed').on("click", function () {
+                swal({
+                    type: "success",
+                    title: "DISBURSED LOAN REPORT",
+                    text: "Printing Successful",
+                    showConfirmButton: false,
+                    timer: 3000
+                          
+                  })
+              });
+            });
+     </script>
+            </form>
+                </div>
                   <div class="table-responsive">
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
@@ -61,7 +83,7 @@ $destination = "report_loan.php";
                           Interest Rate
                         </th>
                         <th>
-                          Total Interest
+                          Interest Amount
                         </th>
                         <th>
                           Fee
@@ -106,9 +128,9 @@ $destination = "report_loan.php";
                           $fee = $row["fee_charges_charged_derived"];
                           $income = $fee + $total;
                           ?>
+                          <th><?php echo number_format($income); ?></th>
                           <th><?php $bal = $row["total_outstanding_derived"];
                            echo  number_format($bal); ?></th>
-                          <th><?php echo number_format($total); ?></th>
                           <!-- <td><a href="client_view.php?edit=<?php echo $cid;?>" class="btn btn-info">View</a></td> -->
                         </tr>
                         <?php }
@@ -422,6 +444,28 @@ $destination = "report_loan.php";
                    }?> Collaterals</p>
                 </div>
                 <div class="card-body">
+                <div class="form-group">
+                <form method = "POST" action = "../composer/loan_collateral.php">
+              <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
+              <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
+              <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
+              <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download PDF</button>
+              <script>
+              $(document).ready(function () {
+              $('#disbursed').on("click", function () {
+                swal({
+                    type: "success",
+                    title: "LOAN COLLATERAL REPORT",
+                    text: "Printing Successful",
+                    showConfirmButton: false,
+                    timer: 3000
+                          
+                  })
+              });
+            });
+     </script>
+            </form>
+                </div>
                   <div class="table-responsive">
                     <table id="tabledats" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
@@ -511,6 +555,28 @@ $destination = "report_loan.php";
                    }?> Matured Loans</p>
                 </div>
                 <div class="card-body">
+                <div class="form-group">
+                <form method = "POST" action = "../composer/loan_maturity.php">
+              <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
+              <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
+              <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
+              <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download PDF</button>
+              <script>
+              $(document).ready(function () {
+              $('#disbursed').on("click", function () {
+                swal({
+                    type: "success",
+                    title: "MATURED LOAN REPORT",
+                    text: "Printing Successful",
+                    showConfirmButton: false,
+                    timer: 3000
+                          
+                  })
+              });
+            });
+     </script>
+            </form>
+                </div>
                   <div class="table-responsive">
                     <table id="tabledatv" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
@@ -522,7 +588,7 @@ $destination = "report_loan.php";
                           Client Name
                         </th>
                         <th>
-                          Loan Amount
+                          Principal Amount
                         </th>
                         <th>
                           Loan Term
@@ -757,6 +823,28 @@ $destination = "report_loan.php";
                    }?> loans expected to be repayed today</p>
                 </div>
                 <div class="card-body">
+                <div class="form-group">
+                <form method = "POST" action = "../composer/exp_loan_repay.php">
+              <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
+              <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
+              <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
+              <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download PDF</button>
+              <script>
+              $(document).ready(function () {
+              $('#disbursed').on("click", function () {
+                swal({
+                    type: "success",
+                    title: "DISBURSED LOAN REPORT",
+                    text: "Printing Successful",
+                    showConfirmButton: false,
+                    timer: 3000
+                          
+                  })
+              });
+            });
+     </script>
+            </form>
+                </div>
                   <div class="table-responsive">
                     <table id="tabledatv" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
@@ -768,7 +856,7 @@ $destination = "report_loan.php";
                           Client Name
                         </th>
                         <th>
-                          Loan Amount
+                          Principal Amount
                         </th>
                         <th>
                           Loan Term

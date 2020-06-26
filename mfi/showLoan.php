@@ -16,6 +16,7 @@ $int_logo = $_SESSION["int_logo"];
 $int_address = $_SESSION["int_address"];
 $sessint_id = $_SESSION["int_id"];
 $m_id = $_SESSION["user_id"];
+// writing a new code syn here
 ?>
 <?php
 if (isset($_GET['approve']) && $_GET['approve'] !== '') {
@@ -30,6 +31,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       // GET IT
       $cxp = mysqli_fetch_array($get_client_degtails);
       $client_email = $cxp["email_address"];
+      $crn = $cxp["firstname"]." ".$cxp["lastname"];
       // phone for email
       $client_phone = $cxp["mobile_no"];
       // end client
@@ -627,15 +629,16 @@ else{
               // record gl transaction
               $digits = 6;
               $trans_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-              $gends = date('Y-m-d');
-              $gen_date = date('Y-m-d H:i:s');
+              $gends = $disburse_date;
+              $gen_date = $disburse_date;
+              $crd_d = date('Y-m-d');
               $insert_gl_trans = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
               `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,
               `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`,
               `manually_adjusted_or_reversed`, `credit`, `debit`) 
               VALUES ('{$sessint_id}', '{$branch_id}', '{$ggl}', '{$trans_id}',
-              'Loan', 'loan_disbursement', '{$client_id}', '0', '{$gends}', '{$loan_amount}', '{$new_gl_run_bal}',
-              '{$new_gl_run_bal}', '{$gends}', '0', '{$new_gl_run_bal}', '{$gends}',
+              'Loan Disbursement', 'loan_disbursement', '{$client_id}', '0', '{$gends}', '{$loan_amount}', '{$new_gl_run_bal}',
+              '{$new_gl_run_bal}', '{$gends}', '0', '{$new_gl_run_bal}', '{$crd_d}',
               '0', '0.00', '{$loan_amount}')");
               // you can send EMAIL HERE FOR GL TRANSACTION FROM BANK
               if ($insert_gl_trans) {
@@ -650,9 +653,9 @@ else{
                   `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
                   `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
                   VALUES ('{$sessint_id}', '{$branch_id}', '0', '{$account_id}', '$acct_no', '{$client_id}', '0', '{$trans_id}',
-                  'Loan', 'loan_disbursement', '0', '{$gen_date}', '{$loan_amount}', '{$loan_amount}',
+                  'Loan Disbursement', 'loan_disbursement', '0', '{$gen_date}', '{$loan_amount}', '{$loan_amount}',
                   '{$gends}', '0', '{$new_client_running_bal}',
-                  '{$new_client_running_bal}', '{$gends}', '{$app_user}', '0', '0.00', '{$loan_amount}')");
+                  '{$new_client_running_bal}', '{$crd_d}', '{$app_user}', '0', '0.00', '{$loan_amount}')");
                   // store the transaction
                   if ($insert_client_trans) {
                     // echo "INSERTED INTO ACCTOUNT TRANSACTION";
@@ -850,16 +853,17 @@ else{
                   $update_acct_gl1 = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$ultimate_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_code1'");
                   if ($update_acct_gl1) {
               $trans_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-              $gends = date('Y-m-d');
-              $gen_date = date('Y-m-d H:i:s');
+              $gends = $disburse_date;
+              $gen_date = $disburse_date;
+              $crd_d = date('Y-m-d');
               // transaction
               $insert_charge_gl = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
               `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,
               `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`,
               `manually_adjusted_or_reversed`, `credit`, `debit`) 
               VALUES ('{$sessint_id}', '{$branch_id}', '{$gl_code1}', '{$trans_id}',
-              'Loan_Charge', 'flat_charge', '{$client_id}', '0', '{$gends}', '{$amt}', '{$ultimate_gl_bal}',
-              '{$ultimate_gl_bal}', '{$gends}', '0', '{$ultimate_gl_bal}', '{$gends}',
+              'Loan_Charge - {$nameofc} / {$crn}', 'flat_charge', '{$client_id}', '0', '{$gends}', '{$amt}', '{$ultimate_gl_bal}',
+              '{$ultimate_gl_bal}', '{$gends}', '0', '{$ultimate_gl_bal}', '{$crd_d}',
               '0', '{$amt}', '0.00')");
               // SEND THE REST
               if ($insert_charge_gl) {
@@ -871,9 +875,9 @@ else{
                   `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
                   `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
                   VALUES ('{$sessint_id}', '{$branch_id}', '0', '{$account_id}', '$acct_no', '{$client_id}', '0', '{$trans_id}',
-                  'Loan_Charge', 'flat_charge', '0', '{$gen_date}', '{$amt}', '{$amt}',
+                  'Loan_Charge - {$nameofc} / {$crn}', 'flat_charge', '0', '{$gen_date}', '{$amt}', '{$amt}',
                   '{$gends}', '0', '{$ultimate_client_running_balance}',
-                  '{$ultimate_client_running_balance}', '{$gends}', '{$app_user}', '0', '{$amt}', '0.00')");
+                  '{$ultimate_client_running_balance}', '{$crd_d}', '{$app_user}', '0', '{$amt}', '0.00')");
                   // END CLIENT TRANSACTION
                   if ($insert_client_trans1) {
                     // SEND THE EMAIL
@@ -1107,16 +1111,17 @@ else{
                   $update_acct_gl1 = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$ultimate_gl_bal1' WHERE int_id = '$sessint_id' && gl_code = '$gl_code2'");
                   if ($update_acct_gl1) {
               $trans_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-              $gends = date('Y-m-d');
-              $gen_date = date('Y-m-d H:i:s');
+              $gends = $disburse_date;
+              $gen_date = $disburse_date;
+              $app_on = date('Y-m-d');
               // transaction
               $insert_charge_gl5 = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
               `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,
               `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`,
               `manually_adjusted_or_reversed`, `credit`, `debit`) 
               VALUES ('{$sessint_id}', '{$branch_id}', '{$gl_code2}', '{$trans_id}',
-              'Loan_Charge', 'percentage_charge', '{$client_id}', '0', '{$gends}', '{$calc}', '{$ultimate_gl_bal1}',
-              '{$ultimate_gl_bal1}', '{$gends}', '0', '{$ultimate_gl_bal1}', '{$gends}',
+              'Loan_Charge - {$charge_name2} / {$crn}', 'percentage_charge', '{$client_id}', '0', '{$gends}', '{$calc}', '{$ultimate_gl_bal1}',
+              '{$ultimate_gl_bal1}', '{$gends}', '0', '{$ultimate_gl_bal1}', '{$app_on}',
               '0', '{$calc}', '0.00')");
               // SEND THE REST
               if ($insert_charge_gl5) {
@@ -1128,9 +1133,9 @@ else{
                   `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
                   `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
                   VALUES ('{$sessint_id}', '{$branch_id}', '0', '{$account_id}', '$acct_no', '{$client_id}', '0', '{$trans_id}',
-                  'Loan_Charge', 'percentage_charge', '0', '{$gen_date}', '{$calc}', '{$calc}',
+                  'Loan_Charge - {$charge_name2} / {$crn}', 'percentage_charge', '0', '{$gen_date}', '{$calc}', '{$calc}',
                   '{$gends}', '0', '{$ultimate_client_running_balance1}',
-                  '{$ultimate_client_running_balance1}', '{$gends}', '{$app_user}', '0', '{$calc}', '0.00')");
+                  '{$ultimate_client_running_balance1}', '{$app_on}', '{$app_user}', '0', '{$calc}', '0.00')");
                   // END CLIENT TRANSACTION
                   if ($insert_client_trans1) {
                     // SEND THE EMAIL

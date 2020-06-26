@@ -153,7 +153,7 @@ Date and Sign:__________________________________
 </div>
 </main>
 ');
-$file_name = 'Institution Transaction as at '.$end.'.pdf';
+$file_name = 'Vault Transaction as at '.$end.'.pdf';
 $mpdf->Output($file_name, 'D');
   } else {
     echo 'Not Seeing Data';
