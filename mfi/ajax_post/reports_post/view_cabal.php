@@ -81,11 +81,11 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             <th>'.$staff.'</th>
             <th>'.$name.'</th>
             <th>'.$current.'</th>
-            <th>'.$currentamount.'</th>
+            <th>'.number_format($currentamount, 2).'</th>
             <th>'.$savings.'</th>
-            <th>'.$savingsamount.'</th>
+            <th>'.number_format($savingsamount, 2).'</th>
             <th>'.$loans.'</th>
-            <th>'.$loansamount.'</th>
+            <th>'.number_format($loansamount, 2).'</th>
             </tr>
           ';
         }
@@ -199,11 +199,11 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
               <th>Total</th>
               <th></th>
               <th>'.$totalcurrent.'</th>
-               <th>'.$totalcurrentamount.'</th>
+               <th>'.number_format($totalcurrentamount, 2).'</th>
                <th>'.$totalsavings.'</th>
-               <th>'.$totalsavingsamount.'</th>
+               <th>'.number_format($totalsavingsamount, 2).'</th>
                <th>'.$totalloans.'</th>
-               <th>'.$totalloansamount.'</th>
+               <th>'.number_format($totalloansamount, 2).'</th>
               </tr>
                 </tbody>
               </table>
@@ -279,11 +279,11 @@ else{
             <th>'.$staff.'</th>
             <th>'.$name.'</th>
             <th>'.$current.'</th>
-            <th>'.$currentamount.'</th>
+            <th>'.number_format($currentamount, 2).'</th>
             <th>'.$savings.'</th>
-            <th>'.$savingsamount.'</th>
+            <th>'.number_format($savingsamount, 2).'</th>
             <th>'.$loans.'</th>
-            <th>'.$loansamount.'</th>
+            <th>'.number_format($loansamount, 2).'</th>
             </tr>
           ';
           return $out;
