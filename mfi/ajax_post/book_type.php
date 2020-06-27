@@ -18,8 +18,7 @@ $id = $_POST['id'];
        echo $out;
     }
     else if($id == "pass"){
-        $out = '<label class="bmd-label-floating">No of Leaves</label>
-        <input type="number" class="form-control" name="no_leaves"/>
+        $out = '
         ';
        echo $out;
     }

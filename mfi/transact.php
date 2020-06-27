@@ -380,8 +380,10 @@ if ($trans_post == 1 || $trans_post == "1") {
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $randms1= str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$randms2 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $transid = $randms;
 $transid1 = $randms1;
+$transid2 = $randms2;
 ?>
 <!-- Content added here -->
 <div class="content">
@@ -640,6 +642,7 @@ $transid1 = $randms1;
                   <option>two</option>
                   <option>three</option>
                 </select> -->
+                <label for="">Client</label>
                 <select id="sdd" name="client_id" class="form-control">
                   <option></option>
                   <?php echo fill_client($connection);?>
@@ -649,8 +652,8 @@ $transid1 = $randms1;
     </div>
     <div class="col-md-4">
       <div class="form-group">
-          <label for="">Transaction ID:</label>
-          <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="tsit">
+          <label for=""></label>
+          <input type="text" readonly value="<?php echo $transid2; ?>" name="transid" class="form-control" id="tsit">
       </div>
     </div>
     <div class="col-md-4">

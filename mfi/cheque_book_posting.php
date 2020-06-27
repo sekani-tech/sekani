@@ -47,6 +47,9 @@ else if (isset($_GET["message2"])) {
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
 }
+$digits = 6;
+$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$transid = $randms;
 ?>
 <!-- Content added here -->
     <div class="content">
@@ -139,20 +142,20 @@ else if (isset($_GET["message2"])) {
                         </div>
                       </div>
                       <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating"></label>
-                          <input hidden type="text" class="form-control" name="">
-                        </div>
+                      <div class="form-group">
+                          <label for="">Transaction ID:</label>
+                          <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="tit">
                       </div>
+                    </div>
                       <div class="col-md-4">
                         <div id="done" class="form-group">
                           <label class="bmd-label-floating">No of Leaves</label>
                           <select name="no_leaves" class="form-control" id="acc_name">
-                          <option value="">select an option</option>
-                          <option value="1_50">1-50</option>
-                          <option value="51_100">51-100</option>
-                          <option value="101_150">101-150</option>
-                          <option value="151_200">151-200</option>
+                          <option hidden value="">select an option</option>
+                          <option value="50">1-50</option>
+                          <option value="100">1-100</option>
+                          <option value="150">1-150</option>
+                          <option value="200">1-200</option>
                         </select>
                         </div>
                       </div>

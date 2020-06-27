@@ -80,7 +80,7 @@ if ($is_del == "0" && $is_del != NULL) {
                 $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
                 transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
                   created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$gl_codex}', '{$trans_id}', '{$desc}', 'Credit', '{$staff_id}',
-                   '{$gen_date}', '{$gl_amt}', '{$new_gl_bal}', '{$gl_amt}', '{$gen_date}', '{$amt}')";
+                   '{$gen_date}', '{$gl_amt}', '{$new_gl_bal}', '{$gl_amt}', '{$gen_date}', '{$gl_amt}')";
                    $res4 = mysqli_query($connection, $gl_acc);
 
                 $upinta = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2', total_withdrawals_derived = '$tbd2' WHERE int_id = '$sessint_id' && teller_id = '$staff_id'";
@@ -92,10 +92,10 @@ if ($is_del == "0" && $is_del != NULL) {
                     $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
             teller_id, transaction_id, description, transaction_type, is_reversed,
             transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-            created_date, appuser_id) VALUES ('{$sessint_id}', '{$branch_id}',
+            created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
             '{$gl_codex}', '{$trans_id}', '{$desc}', 'Debit', '{$irvs}',
             '{$gen_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
-            '{$gen_date}', '{$staff_id}')";
+            '{$gen_date}', '{$staff_id}', '{$gl_amt}')";
                 $res4 = mysqli_query($connection, $iat2);
                 if ($res4) {
                     // now we will send a mail

@@ -4,6 +4,9 @@ $page_title = "Approval";
 $destination = "approval.php";
     include("header.php");
 
+    $sessint_id = $_SESSION['int_id'];
+    $branch_id = $_SESSION['branch_id'];
+
 ?>
 <?php
 if (isset($_GET["message1"])) {
@@ -85,10 +88,118 @@ if (isset($_GET["message1"])) {
 <?php
  if ($_SERVER['REQUEST_METHOD'] == 'GET') {
      if (isset($_GET['approve'])) {
-         $chq_id = $_GET["approve"];
+         $chq_id = $_GET['approve'];
          $stats = "Approved";
-         
-         $somr = "SELECT * FROM charge WHERE int_id = '$sd' AND id = '$'";
+
+         $users = $_SESSION["user_id"];
+          $e = mysqli_query($connection, "SELECT * FROM staff WHERE user_id ='$users'");
+          $r = mysqli_fetch_array($e);
+          $staff_id = $r['id'];
+
+        $ioio = "SELECT * FROM chq_book WHERE int_id = '$sessint_id' AND id = '$chq_id'";
+        $ererr = mysqli_query($connection, $ioio);
+        $fdm = mysqli_fetch_array($ererr);
+        $client = $fdm['name'];
+        $transid = $fdm['transact_id'];
+        $book_type = $fdm['book_type'];
+         if($book_type == "pass"){
+          $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = '14'";
+        $sdd = mysqli_query($connection, $somr);
+        $er = mysqli_fetch_array($sdd);
+        $amount = $er['amount'];
+        $chname = $er['name'];
+        $pay_type = $er['gl_code'];
+         }
+         else if($book_type == "chq"){
+          $noum = $fdm['leaves_no'];
+          if($noum == "50"){
+            $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = '2'";
+            $sdd = mysqli_query($connection, $somr);
+            $er = mysqli_fetch_array($sdd);
+            $amount = $er['amount'];
+            $chname = $er['name'];
+            $pay_type = $er['gl_code'];
+          }
+          else if($noum == "100"){
+            $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = '3'";
+            $sdd = mysqli_query($connection, $somr);
+            $er = mysqli_fetch_array($sdd);
+            $amount = $er['amount'];
+            $chname = $er['name'];
+            $pay_type = $er['gl_code'];
+          }
+          else if($noum == "150"){
+            $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = '14'";
+            $sdd = mysqli_query($connection, $somr);
+            $er = mysqli_fetch_array($sdd);
+            $amount = $er['amount'];
+            $chname = $er['name'];
+            $pay_type = $er['gl_code'];
+          }
+          else if($noum == "200"){
+            $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = '14'";
+            $sdd = mysqli_query($connection, $somr);
+            $er = mysqli_fetch_array($sdd);
+            $amount = $er['amount'];
+            $chname = $er['name'];
+            $pay_type = $er['gl_code'];
+          }
+
+         }
+        $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = '14'";
+        $sdd = mysqli_query($connection, $somr);
+        $er = mysqli_fetch_array($sdd);
+        $amount = $er['amount'];
+        $chname = $er['name'];
+        $pay_type = $er['gl_code'];
+
+        $query4 = "SELECT account.id, client.firstname, client.lastname, account.product_id, account.account_no, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.account_no = account.account_no WHERE client.int_id = '$sessint_id' AND client.id ='$client'";
+        $queryexec = mysqli_query($connection, $query4);
+        $b = mysqli_fetch_array($queryexec);
+        $acct_id = $b['id'];
+        $accbal = $b['account_balance_derived'];
+        $ttl = $b['total_withdrawals_derived'];
+        $acct_no = $b['account_no'];
+        $sproduct_id = $b['product_id'];
+        $clientname = $b['firstname']." ".$b['lastname'];
+
+        $descrip = $chname." credit charge for ".$clientname;
+
+        $reor = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code='$pay_type'");
+        $ron = mysqli_fetch_array($reor);
+        $glbalance = $ron['organization_running_balance_derived'];
+
+        $newbal = $accbal + $amount;
+        $ttlwith = $amount + $ttl;
+        $newglball = $amount + $glbalance;
+
+         $iupq = "UPDATE account SET account_balance_derived = '$newbal', last_withdrawal = '$amount', total_withdrawals_derived = '$ttlwith' WHERE id = '$acct_id' AND account_no = '$acct_no' && int_id = '$sessint_id'";
+        $iupqres = mysqli_query($connection, $iupq);
+
+        // update the clients transaction
+        $trans_type ="debit";
+        $irvs = "0";
+        $date = date('Y-m-d H:m:s');
+
+         $iat = "INSERT INTO account_transaction (int_id, branch_id,
+        account_no, product_id, teller_id, account_id,
+        client_id, transaction_id, description, transaction_type, is_reversed,
+        transaction_date, amount, running_balance_derived, overdraft_amount_derived,
+        created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
+        '{$acct_no}', '{$sproduct_id}', '{$staff_id}', '{$acct_id}', '{$client}', '{$transid}', '{$descrip}', '{$trans_type}', '{$irvs}',
+        '{$date}', '{$amount}', '{$newbal}', '{$amount}',
+        '{$date}', '{$users}', {$amount})";
+        $res3 = mysqli_query($connection, $iat);
+
+        $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$newglball' WHERE int_id = '$sessint_id' && gl_code = '$pay_type'";
+        $dbgl = mysqli_query($connection, $upglacct);
+
+                $deiption = "credit";
+                $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
+                transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
+                  created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$pay_type}', '{$transid}', '{$descrip}', '{$deiption}', '{$staff_id}',
+                   '{$date}', '{$amount}', '{$newglball}', '{$amount}', '{$date}', '{$amount}')";
+                   $res4 = mysqli_query($connection, $gl_acc);
 
          $updat = "UPDATE chq_book SET status = '$stats' WHERE id = '$chq_id'";
          $updrgoe = mysqli_query($connection, $updat);
