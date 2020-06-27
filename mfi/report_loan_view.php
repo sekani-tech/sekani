@@ -873,7 +873,7 @@ $destination = "report_loan.php";
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                           <?php  $std = date("Y-m-d");
-                          if($std >= $row["maturedon_date"] ){?>
+                          ?>
                         <?php $row["id"]; ?>
                         <?php 
                             $name = $row['client_id'];
@@ -886,10 +886,8 @@ $destination = "report_loan.php";
                           <th><?php echo $row["loan_term"]; ?></th>
                           <th><?php echo $row["disbursement_date"]; ?></th>
                           <th><?php echo number_format($row["total_outstanding_derived"], 2);?></th>
-                          <?php }
-                          else {
-                            // echo "0 Document";
-                          }
+                          <?php
+                          
                           ?>
                         </tr>
                         <?php }
