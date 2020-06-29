@@ -11,11 +11,12 @@
     $coldate = date('Y-m-d');
     $int_id = $_SESSION['int_id'];
     $branch_id = $_SESSION["branch_id"];
+    $cache_id = $_SESSION["savings_temp"];
 
     $coll = mysqli_query($connection, "INSERT INTO interest_rate_chart (int_id, branch_id, name, start_date,
-     end_date, interest_rate, description) VALUES ('{$int_id}', '{$branch_id}', '{$name}', '{$start}', '{$end}', '{$intrate}', '{$desc}')");
+     end_date, interest_rate, description, prod_cache_id) VALUES ('{$int_id}', '{$branch_id}', '{$name}', '{$start}', '{$end}', '{$intrate}', '{$desc}', '{$cache_id}')");
     if ($coll) {
-        $donc = mysqli_query($connection, "SELECT * FROM interest_rate_chart ORDER BY id DESC");
+        $donc = mysqli_query($connection, "SELECT * FROM interest_rate_chart WHERE int_id ='$int_id' AND prod_cache_id = '$cache_id' ORDER BY id DESC");
 ?>
              <table id="tabled" class="table table-bordered" cellspacing="0" style="width:100%;">
              <thead>

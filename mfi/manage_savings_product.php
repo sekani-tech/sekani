@@ -16,7 +16,7 @@ $destination = "index.php";
                   <h4 class="card-title">Create new Product</h4>
                   <p class="card-category">Fill in all important data</p>
                 </div>
-                <form id="form" action="../functions/int_product_upload.php" method="POST">
+                <form id="form" action="../functions/int_savings_prod_upload.php" method="POST">
                 <div class="card-body">
                 <div class = "row">
                     <div class = "col-md-12">
@@ -201,97 +201,17 @@ $destination = "index.php";
                   <!-- First Tab -->
                   <!-- Second Tab -->
                   <div class="tab">
-                    <h3>Charges</h3>
-                    <input type="text" hidden readonly id="int_id" value="<?php echo $sessint_id; ?>">
-                    <input type="text" hidden readonly id="branch_id" value="<?php echo $branch_id; ?>">
-                    <script>
-                      $(document).ready(function() {
-                        $('#charges').change(function(){
-                          var id = $(this).val();
-                          var int_id = $('#int_id').val();
-                          var branch_id = $('#branch_id').val();
-                          var main_p = $('#main_p').val();
-                          $.ajax({
-                            url:"savings_charges.php",
-                            method:"POST",
-                            data:{id:id, int_id:int_id, branch_id:branch_id, main_p: main_p},
-                            success:function(data){
-                              $('#show_charges').html(data);
-                              document.getElementById("takeme").setAttribute("hidden", "");
-                              document.getElementById("damn_men").removeAttribute("hidden");
-                            }
-                          })
-                        });
-                      })
-                    </script>
+                  <h3> Interest Rate Chart:</h3>
                     <div class="form-group">
+                      <button type="button" class="btn btn-primary" name="button" onclick="showDialog()"> <i class="fa fa-plus"></i> Add</button>
+                      </div>
+                      <div class="form-group">
                       <?php
                       $digits = 6;
                       $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
                       $_SESSION["savings_temp"] = $randms;
                       $main_p = $_SESSION["savings_temp"];
                       ?>
-                    </div>
-                    <div class="form-group">
-                      <div class="row">
-                      <div class="col-md-4">
-                      <label>Charges:</label>
-                      <div id="damn_men" hidden>
-                      </div>
-                      <div id="takeme">
-                      <input type="text" hidden value="<?php echo $main_p; ?>" id="main_p">
-                      <select name="charge_id" class="form-control" id="charges">
-                        <option value="">select an option</option>
-                        <?php echo fill_charges($connection); ?>
-                      </select>
-                      </div>
-                      </div>
-                      <div class="col-md-6">
-                      <div id="show_charges">
-                      </div>
-                      </div>
-                      </div>
-                    </div>
-                    <?php
-                      // load user role data
-                      function fill_charges($connection)
-                      {
-                      $sint_id = $_SESSION["int_id"];
-                      $main_p  = $_SESSION["product_temp"];
-                      $org = "SELECT * FROM charge WHERE int_id = '$sint_id' && charge_applies_to_enum = '1' && is_active = '1'";
-                      $res = mysqli_query($connection, $org);
-                      $output = '';
-                      while ($row = mysqli_fetch_array($res))
-                      {
-                        $output .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
-                      }
-                      return $output;
-                      }
-                      ?>
-                      <script>
-                              $(document).ready(function() {
-                                $('#credit').on("change keyup paste click", function(){
-                                  var id = $(this).val();
-                                  $.ajax({
-                                    url:"credit_check.php",
-                                    method:"POST",
-                                    data:{id:id},
-                                    success:function(data){
-                                      $('#show_credit').html(data);
-                                    }
-                                  })
-                                });
-                              });
-                            </script>
-                  </div>
-                  <!-- Second Tab -->
-                  <!-- Third Tab -->
-                  <div class="tab">
-                  <h3> Interest Rate Chart:</h3>
-                    <div class="form-group">
-                      <button type="button" class="btn btn-primary" name="button" onclick="showDialog()"> <i class="fa fa-plus"></i> Add</button>
-                      </div>
-                      <div class="form-group">
                       <script>
                               $(document).ready(function() {
                                 $('#clickit').on("change keyup paste click", function() {
@@ -421,6 +341,87 @@ $destination = "index.php";
                       </div>
                     </div>
                   </div>
+                  <!-- Second Tab -->
+                  <!-- Third Tab -->
+                  <div class="tab">
+                    <h3>Charges</h3>
+                    <input type="text" hidden readonly id="int_id" value="<?php echo $sessint_id; ?>">
+                    <input type="text" hidden readonly id="branch_id" value="<?php echo $branch_id; ?>">
+                    <script>
+                      $(document).ready(function() {
+                        $('#charges').change(function(){
+                          var id = $(this).val();
+                          var int_id = $('#int_id').val();
+                          var branch_id = $('#branch_id').val();
+                          var main_p = $('#main_p').val();
+                          $.ajax({
+                            url:"savings_charges.php",
+                            method:"POST",
+                            data:{id:id, int_id:int_id, branch_id:branch_id, main_p: main_p},
+                            success:function(data){
+                              $('#show_charges').html(data);
+                              document.getElementById("takeme").setAttribute("hidden", "");
+                              document.getElementById("damn_men").removeAttribute("hidden");
+                            }
+                          })
+                        });
+                      })
+                    </script>
+                    <div class="form-group">
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                      <div class="col-md-4">
+                      <label>Charges:</label>
+                      <div id="damn_men" hidden>
+                      </div>
+                      <div id="takeme">
+                      <input type="text" hidden value="<?php echo $main_p; ?>" id="main_p">
+                      <select name="charge_id" class="form-control" id="charges">
+                        <option value="">select an option</option>
+                        <?php echo fill_charges($connection); ?>
+                      </select>
+                      </div>
+                      </div>
+                      <div class="col-md-6">
+                      <div id="show_charges">
+                      </div>
+                      </div>
+                      </div>
+                    </div>
+                    <?php
+                      // load user role data
+                      function fill_charges($connection)
+                      {
+                      $sint_id = $_SESSION["int_id"];
+                      $main_p  = $_SESSION["product_temp"];
+                      $org = "SELECT * FROM charge WHERE int_id = '$sint_id' && charge_applies_to_enum = '1' && is_active = '1'";
+                      $res = mysqli_query($connection, $org);
+                      $output = '';
+                      while ($row = mysqli_fetch_array($res))
+                      {
+                        $output .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                      }
+                      return $output;
+                      }
+                      ?>
+                      <script>
+                              $(document).ready(function() {
+                                $('#credit').on("change keyup paste click", function(){
+                                  var id = $(this).val();
+                                  $.ajax({
+                                    url:"credit_check.php",
+                                    method:"POST",
+                                    data:{id:id},
+                                    success:function(data){
+                                      $('#show_credit').html(data);
+                                    }
+                                  })
+                                });
+                              });
+                            </script>
+                  </div>
+                  
                   <!-- Third Tab -->
                   <!-- Fourth Tab -->
                   <div class="tab">

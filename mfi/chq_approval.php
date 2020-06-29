@@ -129,7 +129,7 @@ if (isset($_GET["message1"])) {
             $pay_type = $er['gl_code'];
           }
           else if($noum == "150"){
-            $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = '14'";
+            $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = ''";
             $sdd = mysqli_query($connection, $somr);
             $er = mysqli_fetch_array($sdd);
             $amount = $er['amount'];
@@ -137,7 +137,7 @@ if (isset($_GET["message1"])) {
             $pay_type = $er['gl_code'];
           }
           else if($noum == "200"){
-            $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = '14'";
+            $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = ''";
             $sdd = mysqli_query($connection, $somr);
             $er = mysqli_fetch_array($sdd);
             $amount = $er['amount'];

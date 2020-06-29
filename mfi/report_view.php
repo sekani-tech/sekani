@@ -23,16 +23,13 @@ if(isset($_GET["edit"])) {
     echo header("Location: report_client_view.php?view5");
   }
   else if($location == "6"){
-
-  }
-  else if($location == "7"){
-
+    echo header("Location: report_group_view.php?view6");
   }
   else if($location == "8"){
-
+    echo header("Location: report_group_view.php?view8");
   }
   else if($location == "9"){
-
+    echo header("Location: report_group_view.php?view9");
   }
   else if($location == "10"){
     echo header("Location: report_savings_view.php?view10");

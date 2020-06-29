@@ -15,7 +15,7 @@ $destination = "report_client.php";
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Clients Balance Report</h4>
+                  <h4 class="card-title ">groups Balance Report</h4>
                   <script>
                   $(document).ready(function() {
                   $('#tabledaot').DataTable();
@@ -28,7 +28,7 @@ $destination = "report_client.php";
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> clients</p>
+                   }?> groups</p>
                 </div>
                 <div class="card-body">
                 <div class="form-group">
@@ -167,7 +167,7 @@ $destination = "report_client.php";
       </div>
       <?php
  }
- else if(isset($_GET["view3"])){
+ else if(isset($_GET["view6"])){
 ?>
 <!-- Content added here -->
 <div class="content">
@@ -177,7 +177,7 @@ $destination = "report_client.php";
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Clients</h4>
+                  <h4 class="card-title ">General Group Report</h4>
                   <script>
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
@@ -190,7 +190,7 @@ $destination = "report_client.php";
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> registered clients
+                   }?> registered groups
                 </div>
                 <div class="card-body">
                 <div class="form-group">
@@ -217,7 +217,7 @@ $destination = "report_client.php";
             </div>
                   <div class="table-responsive">
                     <table id="tableddat" class="table" cellspacing="0" style="width:100%">
-                      <thead class="text-primary">
+                      <thead class=" text-primary">
                       <?php
                         $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' ORDER BY client.firstname ASC";
                         $result = mysqli_query($connection, $query);
@@ -336,7 +336,7 @@ $destination = "report_client.php";
 
 <?php
  }
- else if(isset($_GET["view4"])){
+ else if(isset($_GET["view8"])){
 ?>
     <?php
 function fill_client($connection) {
@@ -359,7 +359,7 @@ Content added here
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Client Summary Report</h4>
+                  <h4 class="card-title">Group Reports By Branch</h4>
                  <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
@@ -368,7 +368,7 @@ Content added here
                       <div class="col-md-8">
                         <div class="form-group">
                             <input type="text" hidden required id="intt" value = "<?php echo $sessint_id;?>"/>
-                        <label class="bmd-label-floating">Pick Client</label>
+                        <label class="bmd-label-floating">Pick Branch</label>
                           <select name="branch" class="form-control" id="input" required>
                           <option value="">select an option</option>
                           <?php echo fill_client($connection); ?>
@@ -407,9 +407,9 @@ Content added here
       </div>
 <?php
 }
- else if (isset($_GET["view5"])) {
+ else if (isset($_GET["view9"])) {
 ?>
-<!-- Data for clients registered this month -->
+<!-- Data for groups registered this month -->
 <!-- Content added here -->
 <div class="content">
         <div class="container-fluid">
@@ -418,7 +418,7 @@ Content added here
             <div class="col-md-10">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Registered Clients</h4>
+                  <h4 class="card-title ">Registered groups</h4>
                   <script>
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
@@ -436,7 +436,7 @@ Content added here
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      $date = date("F");
-                   }?><div id="month_no"><?php echo $inr;?> Registered Clients this month</div></p>
+                   }?><div id="month_no"><?php echo $inr;?> Registered groups this month</div></p>
                 </div>
                 <div class="card-body">
                 <div class="row">

@@ -848,12 +848,12 @@ if(!$mail->send())
 } else
 {
   $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was created successfully!";
-  echo header ("Location: ../mfi/users.php?message1=$randms");
+  echo header ("Location: ../mfi/staff_mgmt.php?message1=$randms");
 }
   // end Mail system
  } else {
     $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-   echo header ("Location: ../mfi/users.php?message2=$randms");
+   echo header ("Location: ../mfi/staff_mgmt.php?message2=$randms");
      // echo header("location: ../mfi/client.php");
  }
  } else {

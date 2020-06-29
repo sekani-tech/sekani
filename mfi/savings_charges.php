@@ -15,7 +15,7 @@ if(isset($_POST["id"]))
         $values = $o["charge_time_enum"];
         $nameofc = $o["name"];
         $forp = $o["charge_calculation_enum"];
-        $main_p = $_SESSION["product_temp"];
+        $main_p = $_SESSION["savings_temp"];
         $amt = number_format($o["amount"], 2);
         if ($forp == 1) {
           $chg = $amt." Flat";
@@ -70,7 +70,7 @@ if(isset($_POST["id"]))
           var branch_id = $('#branch_idq').val();
           var main_p = $('#main_pq').val();
           $.ajax({
-          url:"ajax_post/check_up.php",
+          url:"ajax_post/sav_up.php",
           method:"POST",
           data:{id:id, int_id:int_id, branch_id:branch_id, main_p: main_p},
           success:function(data){
