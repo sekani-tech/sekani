@@ -190,7 +190,7 @@ $destination = "report_client.php";
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> registered clients || <a style = "color: white;" href="manage_client.php">Create New client</a></p>
+                   }?> registered clients
                 </div>
                 <div class="card-body">
                 <div class="form-group">
@@ -217,7 +217,7 @@ $destination = "report_client.php";
             </div>
                   <div class="table-responsive">
                     <table id="tableddat" class="table" cellspacing="0" style="width:100%">
-                      <thead class=" text-primary">
+                      <thead class="text-primary">
                       <?php
                         $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' ORDER BY client.firstname ASC";
                         $result = mysqli_query($connection, $query);
