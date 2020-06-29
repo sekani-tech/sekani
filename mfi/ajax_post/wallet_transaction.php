@@ -130,6 +130,8 @@ if (count([$branchquery]) == 1) {
           <tr>
         <th>Total</th>
         <th></th>
+        <th></th>
+        <th></th>
          <th>'.$tcdp.'</th>
          <th>'.$tddp.'</th>
       <th>'.$finalbal.'</th>
