@@ -108,7 +108,7 @@ $destination = "index.php";
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">WALLET BALANCE</h4>
-                  <p>Fund Your Sekani Wallet to be able to us our service</p>
+                  <p>Fund Your Sekani Wallet to be able to use our service</p>
                   <!-- Insert number users institutions -->
                 </div>
                 <form id="form" action="paystack/initialize.php" method="POST">

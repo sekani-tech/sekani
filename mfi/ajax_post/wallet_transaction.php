@@ -28,16 +28,17 @@ if (count([$branchquery]) == 1) {
 }
 // making
 if (count([$branchquery]) == 1) {
+    $out = '';
     // here we will some data
-    $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM sekani_wallet_transaction WHERE (((int_id = '$int_id' AND branch_id = '$branch_id')) AND ( transaction_date BETWEEN '$start' AND '$end' )) ORDER BY transaction_date ASC");
+    $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM sekani_wallet_transaction WHERE (int_id = '$int_id' AND branch_id = '$branch_id') AND ( transaction_date BETWEEN '$start' AND '$end' ) ORDER BY transaction_date ASC");
         // then we will be fixing
-        $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM sekani_wallet_transaction WHERE (((int_id = '$int_id' AND branch_id = '$branch_id')) AND (transaction_date BETWEEN '$start' AND '$end' )) ORDER BY transaction_date ASC");
+        $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM sekani_wallet_transaction WHERE (int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end' ) ORDER BY transaction_date ASC");
         $m1 = mysqli_fetch_array($genb1);
         $m = mysqli_fetch_array($genb);
 
         // MAKING
-        $genb12 = mysqli_query($connection, "SELECT `wallet_balance_derived` FROM sekani_wallet_transaction WHERE (((int_id = '$int_id' AND branch_id = '$branch_id')) AND (transaction_date BETWEEN '$start' AND '$end' )) ORDER BY id DESC LIMIT 1");
-        $genb122 = mysqli_query($connection, "SELECT `wallet_balance_derived` FROM sekani_wallet_transaction WHERE (( (int_id = '$int_id' AND branch_id = '$branch_id')) AND (transaction_date BETWEEN '$start' AND '$end' )) ORDER BY id ASC LIMIT 1");
+        $genb12 = mysqli_query($connection, "SELECT `wallet_balance_derived` FROM sekani_wallet_transaction WHERE (int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end' ) ORDER BY id DESC LIMIT 1");
+        $genb122 = mysqli_query($connection, "SELECT `wallet_balance_derived` FROM sekani_wallet_transaction WHERE (int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end' ) ORDER BY id ASC LIMIT 1");
         $m12 = mysqli_fetch_array($genb12);
         $m122 = mysqli_fetch_array($genb122);
         $tcp = $m1["credit"];
@@ -52,7 +53,7 @@ if (count([$branchquery]) == 1) {
         function fill_report($connection, $int_id, $start, $end, $branch_id)
         {
             $out = '';
-            $querytoget = mysqli_query($connection, "SELECT * FROM sekani_wallet_transaction WHERE (((int_id = '$int_id' AND branch_id = '$branch_id')) AND (transaction_date BETWEEN '$start' AND '$end')) ORDER BY id ASC");
+            $querytoget = mysqli_query($connection, "SELECT * FROM sekani_wallet_transaction WHERE ((int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end')) ORDER BY id ASC");
           // $q = mysqli_fetch_array($querytoget);
           while ($q = mysqli_fetch_array($querytoget)) {
             //   new moment
