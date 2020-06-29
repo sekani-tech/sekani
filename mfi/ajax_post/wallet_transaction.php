@@ -37,16 +37,17 @@ if (count([$branchquery]) == 1) {
         $m = mysqli_fetch_array($genb);
 
         // MAKING
-        $genb12 = mysqli_query($connection, "SELECT `wallet_balance_derived` FROM sekani_wallet_transaction WHERE (int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end' ) ORDER BY id DESC LIMIT 1");
-        $genb122 = mysqli_query($connection, "SELECT `wallet_balance_derived` FROM sekani_wallet_transaction WHERE (int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end' ) ORDER BY id ASC LIMIT 1");
-        $m12 = mysqli_fetch_array($genb12);
-        $m122 = mysqli_fetch_array($genb122);
+        // $genb12 = mysqli_query($connection, "SELECT `wallet_balance_derived` FROM sekani_wallet_transaction WHERE (int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end' ) ORDER BY id DESC LIMIT 1");
+        // $genb122 = mysqli_query($connection, "SELECT `wallet_balance_derived` FROM sekani_wallet_transaction WHERE (int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end' ) ORDER BY id ASC LIMIT 1");
+        
+        // $m12 = mysqli_fetch_array($genb12);
+        // $m122 = mysqli_fetch_array($genb122);
         $tcp = $m1["credit"];
         $tdp = $m["debit"];
-        $famt =  $m12["wallet_balance_derived"];
-        $famt2 =  $m122["wallet_balance_derived"];
-        $finalbal = number_format(($famt), 2);
-        $finalbal2 = number_format(($famt2), 2);
+        // $famt =  $m12["wallet_balance_derived"];
+        // $famt2 =  $m122["wallet_balance_derived"];
+        // $finalbal = number_format(($famt), 2);
+        // $finalbal2 = number_format(($famt2), 2);
         $tcdp = number_format(round($tcp), 2);
         $tddp = number_format(round($tdp), 2);
         // function
@@ -72,8 +73,8 @@ if (count([$branchquery]) == 1) {
               <th>.'.$trans_date.'.<th>
               <th>.'.$trans_id.'.<th>
               <th>.'.$description.'.<th>
-              <th>.'.$credit.'.<th>
-              <th>.'.$debit.'.<th>
+              <th>.'.$amt.'.<th>
+              <th>.'.$amt2.'.<th>
               <th>.'.$balance.'.<th>
             </tr>
             ';
@@ -137,10 +138,6 @@ if (count([$branchquery]) == 1) {
           </tbody>
         </table>
       </div>
-      <p><b>Opening Balance:</b> '.$finalbal2.' </p>
-      <p><b>Total Deposit:</b> '.$tcdp.' </p>
-      <p><b>Total Withdrawal:</b> '.$tddp.' </p>
-      <p><b>Closing Balance:</b> '.$finalbal.' </p>
       <hr>
       <p><b>Teller Sign:</b> 129                        <b>Date:</b></p>
       <p><b>Checked By: '.$_SESSION["username"].'</b>                             <b>Date/Sign: '.$start." - ".$end.' </b></p>
