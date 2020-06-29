@@ -26,19 +26,19 @@ $destination = "index.php";
                         <li class="nav-item">
                           <a class="nav-link active" href="#products" data-toggle="tab">
                           <!-- visibility -->
-                            <i class="material-icons">attach_money</i> Groups
+                            <i class="material-icons">supervisor_account</i> Groups
                             <div class="ripple-container"></div>
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#messages" data-toggle="tab">
-                            <i class="material-icons">supervisor_account</i> Pending Approval
+                            <i class="material-icons">supervised_user_circle</i> Pending Approval
                             <div class="ripple-container"></div>
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#perform" data-toggle="tab">
-                            <i class="material-icons">supervisor_account</i> Closed Groups
+                            <i class="material-icons">remove_circle</i> Closed Groups
                             <div class="ripple-container"></div>
                           </a>
                         </li>
