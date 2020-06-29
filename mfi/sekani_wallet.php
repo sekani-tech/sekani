@@ -185,6 +185,7 @@ function payWithPaystack() {
   });
   handler.openIframe();
   // making popping
+  // new stuff
 }
                 </script>
               </div>
