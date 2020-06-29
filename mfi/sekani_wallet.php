@@ -79,7 +79,7 @@ $destination = "index.php";
                 </div>
                 </div>
                 </div>
-            <a class="btn btn-primary pull-right" id="run_pay" >Run Report</a>
+            <a class="btn btn-primary pull-right" id="run_pay" > <span style="color: white;">Run Report</span> </a>
                 <!-- </form> -->
                   <!-- check -->
                   <!-- javascript to display wallet transaction -->
