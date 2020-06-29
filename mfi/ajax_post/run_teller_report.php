@@ -211,8 +211,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
             </form>
           </div>
         </div>
-      </div>
-      ';
+      </div>';
       echo $output;
       } else {
         echo 'Not Seeing Data';

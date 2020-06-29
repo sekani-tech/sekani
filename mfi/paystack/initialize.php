@@ -15,7 +15,7 @@ session_start();
   $curl = curl_init();
 
 // url to go to after payment
-$callback_url = 'https://app.sekanisystems.com/mfi/paystack/callback.php';  
+$callback_url = 'https://app.sekanisystems.com.ng/mfi/paystack/callback.php';  
 
 curl_setopt_array($curl, array(
   CURLOPT_URL => "https://api.paystack.co/transaction/initialize",

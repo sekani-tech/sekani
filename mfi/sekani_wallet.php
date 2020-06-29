@@ -33,39 +33,61 @@ $destination = "index.php";
                 </div>
                 <div class="card-body">
                   <!-- check -->
-                  <form id="form" method="POST">
+                  <script>
+    $(document).ready(function() {
+        $('#run_pay').on("click", function(){
+            var int_id = $('#int_id').val();
+            var branch_id = $('#branch_id').val();
+            var start = $('#start').val();
+            var end = $('#end').val();
+            $.ajax({
+                url:"ajax_post/wallet_transaction.php",
+                method:"POST",
+            data:{int_id:int_id, branch_id: branch_id, start:start, end:end},
+            success:function(data){
+            $('#view_report_me').html(data)
+            }
+        })
+    });
+});
+</script>
+                  <!-- uncheck -->
+                  <!-- <form id="form" method="POST"> -->
                 <div class="card-body">
                 <div class = "row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="sdate" >Start Date</label>
-                      <input type="date" class="form-control" name="sdate" value="" required>
+                      <input type="date" class="form-control" id="start" value="" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                       <label for="installmentAmount">End Date</label>
-                      <input type="date" class="form-control" name="edate" value="" required>
+                      <input type="date" class="form-control" id="end" value="" required>
                     </div>
                 </div>
                  <div class="col-md-6">
                     <div class="form-group">
                       <label for="installmentAmount" >Category</label>
                       <select class="form-control" name="amt">
-                        <option value="1">All</option>
-                        <option value="2">BVN</option>
-                        <option value="3">SMS</option>
+                        <option value="refill">All</option>
+                        <option value="bvn">BVN</option>
+                        <option value="sms">SMS</option>
                       </select>
                     </div>
                 </div>
                 </div>
                 </div>
-            <button type="button" class="btn btn-primary pull-right" id="run_pay" >Run Report</button>
-                </form>
+            <a class="btn btn-primary pull-right" id="run_pay" >Run Report</a>
+                <!-- </form> -->
                   <!-- check -->
                   <!-- javascript to display wallet transaction -->
                   <!-- javascript to end wallet transaction -->
                 </div>
+              </div>
+              <!-- NOTHING THE WAY -->
+              <div id="view_report_me">
               </div>
             </div>
             <!-- WE ARE DONE -->
@@ -178,7 +200,6 @@ $destination = "index.php";
             <?php
           }
           ?>
-
           <!-- END IT NOW -->
           <input type="text" value="<?php echo $int_id; ?>" id="int_id" hidden>
           <input type="text" value="<?php echo $branch_id;?>" id="branch_id" hidden>
