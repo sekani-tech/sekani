@@ -49,7 +49,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             $staff = $q["id"];
           $name = $q["display_name"];
 
-          $query1 = "SELECT client.id, client.account_type, account.product_id, client.account_no FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id = '1' AND account.branch_id = '$branch_id' AND account.submittedon_date BETWEEN '$start' AND '$end'";
+          $query1 = "SELECT client.id, client.account_type, account.product_id, client.account_no FROM account JOIN client ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id = '1' AND account.branch_id = '$branch_id' AND account.submittedon_date BETWEEN '$start' AND '$end'";
           $query1exec = mysqli_query($connection, $query1);
           $current = mysqli_num_rows($query1exec);
 
