@@ -18,6 +18,8 @@ $destination = "index.php";
           <?php
           $int_id = $_SESSION["int_id"];
           $branch_id = $_SESSION["branch_id"];
+          $int_email = $_SESSION["int_email"];
+          $int_name = $_SESSION["int_name"];
           $sql_on = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
           $xm = mysqli_num_rows($sql_on);
           if ($xm >= 1) {
@@ -70,9 +72,15 @@ $destination = "index.php";
             </div>
             <!-- WE ARE DONE -->
             <?php
-            $digits = 15;
+            $digits = 10;
             $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
             $transaction_id = "SKWAL".$randms."LET".$int_name;
+
+            $get_id = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
+            $sw = mysqli_fetch_array($get_id);
+            $wallet_bal = $sw["running_balance"];
+            $total_spent = $sw["total_withdrawal"];
+            $total_deposit = $sw["total_deposit"];
             ?>
             <div class="col-md-4">
               <div class="card">
@@ -81,49 +89,104 @@ $destination = "index.php";
                   <p>Fund Your Sekani Wallet to be able to us our service</p>
                   <!-- Insert number users institutions -->
                 </div>
-                <form id="form" method="POST">
+                <form id="paymentForm">
                 <div class="card-body">
                 <div class = "row">
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="installmentAmount" >Amount</label>
-                      <input type="number" class="form-control" name="amt" value="" required>
+                      <input type="tel" class="form-control" id="amount" required>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
                       <label for="installmentAmount">Transaction Id</label>
-                      <input type="text" class="form-control" name="amt" value="<?php echo $transaction_id; ?>" readonly>
+                      <input type="text" class="form-control" id="transaction_id" value="<?php echo $transaction_id; ?>" readonly>
                     </div>
                 </div>
                  <div class="col-md-12">
                     <div class="form-group">
                       <label for="installmentAmount" >Description</label>
-                      <input type="text" class="form-control" name="amt" value="" required>
+                      <input type="text" class="form-control" id="description" value="" required>
                     </div>
                 </div>
+                <input type="text" value="<?php echo $int_id; ?>" id="int_id" hidden>
+          <input type="text" value="<?php echo $branch_id;?>" id="branch_id" hidden>
+          <input type="text" value="<?php echo $int_email;?>" id="int_email" hidden>
+          <input type="text" value="<?php echo $int_name;?>" id="int_name" hidden>
                 </div>
                 </div>
                 <div class="card-body">
                     <div class="col-md-12">
-                      Balance: <div style="float: right;">NGN 19,000,000.00</div>
+                      Balance: <div style="float: right;">NGN <?php echo number_format($wallet_bal,2); ?></div>
                     </div>
                     <hr>
                     <div class="col-md-12">
-                      Total Spent:  <div style="float: right;">NGN 19,000,000.00</div>
+                      Total Spent:  <div style="float: right;">NGN <?php echo number_format($total_spent,2); ?></div>
                     </div>
                     <hr>
                     <div class="col-md-12">
-                      Total Deposited: <div style="float: right;">NGN 19,000,000.00</div>
+                      Total Deposited: <div style="float: right;">NGN <?php echo number_format($total_deposit,2); ?></div>
                     </div>
                   <!-- check -->
                   <br>
                   <!-- open paystack transaction -->
                   <!-- end paystack transaction -->
-            <button type="button" class="btn btn-primary pull-right" id="run_pay6" >Refill</button>
+            <button type="submit" onclick="payWithPaystack()" class="btn btn-primary pull-right">Refill</button>
             <br>
                 </div>
                 </form>
+                <script src="https://js.paystack.co/v2/inline.js"></script>
+                <script>
+//                  var paymentForm = document.getElementById('paymentForm');
+// paymentForm.addEventListener("submit", payWithPaystack, false);
+// function payWithPaystack(e) {
+//   e.preventDefault();
+//   var config = {
+//     key: 'pk_live_9b8524a2f646855944ad776bc67c1b80b6449a3b', // Replace with your public key
+//     email: document.getElementById("int_email").value,
+//     amount: document.getElementById("amount").value * 100,
+//     firstname: document.getElementById("int_name").value,
+//     lastname: 'WALLET',
+//     currency: "NGN", //GHS for Ghana Cedis
+//     reference: document.getElementById("transaction_id").value, //use your reference or leave empty to have a reference generated for you
+//     // label: "Optional string that replaces customer email"
+//     onClose: function(){
+//       alert('Window closed.');
+//     },
+//     callback: function(response){
+//       var message = 'Payment complete! Reference: ' + response.reference;
+//       alert(message);
+//     }
+//   };
+//   var paystackPopup = new Popup(config);
+//   paystackPopup.open();
+// }
+var paymentForm = document.getElementById('paymentForm');
+paymentForm.addEventListener('submit', payWithPaystack, false);
+function payWithPaystack() {
+  var handler = PaystackPop.setup({
+    key: 'pk_live_9b8524a2f646855944ad776bc67c1b80b6449a3b', // Replace with your public key
+    email: document.getElementById("int_email").value,
+    amount: document.getElementById("amount").value * 100,
+    firstname: document.getElementById("int_name").value,
+    lastname: 'WALLET',
+    currency: "NGN", //GHS for Ghana Cedis
+    reference: document.getElementById("transaction_id").value, 
+    callback: function(response) {
+      //this happens after the payment is completed successfully
+      var reference = response.reference;
+      alert('Payment complete! Reference: ' + reference);
+      // Make an AJAX call to your server with the reference to verify the transaction
+    },
+    onClose: function() {
+      alert('Transaction was not completed, window closed.');
+    },
+  });
+  handler.openIframe();
+  // making popping
+}
+                </script>
               </div>
               <!-- if no record of institution/ Display add wallet -->
             </div>
@@ -172,8 +235,6 @@ $destination = "index.php";
           ?>
 
           <!-- END IT NOW -->
-          <input type="text" value="<?php echo $int_id; ?>" id="int_id" hidden>
-          <input type="text" value="<?php echo $branch_id;?>" id="branch_id" hidden>
           <div id="wallet_result"></div>
         </div>
       </div>
