@@ -67,39 +67,37 @@ if (count([$branchquery]) == 1) {
 
             $amt = number_format($credit, 2);
             $amt2 = number_format($debit, 2);
+            $sybal = number_format($balance, 2);
 
             $out .= '
             <tr>
-              <th>.'.$trans_date.'.<th>
-              <th>.'.$trans_id.'.<th>
-              <th>.'.$description.'.<th>
-              <th>.'.$amt.'.<th>
-              <th>.'.$amt2.'.<th>
-              <th>.'.$balance.'.<th>
+              <th>.'.$trans_date.'.</th>
+              <th>.'.$trans_id.'.</th>
+              <th>.'.$description.'.</th>
+              <th>.'.$amt.'.</th>
+              <th>.'.$amt2.'.</th>
+              <th>.'.$sybal.'.</th>
             </tr>
             ';
           }
+          return $out;
         }
-        return $out;
-    }
-    $output = '
+
+        $output = '
     <div class="card">
     <div class="card-header card-header-primary">
       <h4 class="card-title">'.$int_name." ".$branch.'</h4>
-      <p class="card-category">Teller Call Over Report</p>
+      <p class="card-category">SEKANI WALLET</p>
     </div>
     <div class="card-body">
       <!-- sup -->
       <!-- hello -->
-      <form action="../composer/teller_call.php" method="post">
+      <form action="#" method="post">
         <div class="row">
             <div class="col-md-4 form-group">
-                <label for="">Name of Teller</label>
-                <input type="text" name="" value="'.$tell_name.'" id="" class="form-control" readonly>
                 <input type="text" name="start1" value="'.$start.'" id="start1" class="form-control" hidden>
                 <input type="text" name="end1" value="'.$end.'" id="end1" class="form-control" hidden>
                 <input type="text" name="branch1" value="'.$branch_id.'" id="branch1" class="form-control" hidden>
-                <input type="text" name="teller1" value="'.$teller.'" id="teller1" class="form-control" hidden>
                 <input type="text" name="int_id1" value="'.$int_id.'" id="int_id1" class="form-control" hidden>
             </div>
             <div class="col-md-4 form-group">
@@ -118,18 +116,21 @@ if (count([$branchquery]) == 1) {
       <div class="table-responsive">
         <table id="tabledat4" class="table" style="width: 100%;">
           <thead class=" text-primary">
-          <th>Date/Time</th>
-            <th>Account Name</th>
-            <th>Deposit</th>
+            <th> Date</th>
+            <th>Transaction Id</th>
             <th>
-              Withdrawal
+              Description
             </th>
+            <th>Deposit</th>
+            <th>Withdrawal</th>
             <th>Balance</th>
           </thead>
           <tbody>
           "'.fill_report($connection, $int_id, $start, $end, $teller).'"
           <tr>
         <th>Total</th>
+        <th></th>
+        <th></th>
         <th></th>
          <th>'.$tcdp.'</th>
          <th>'.$tddp.'</th>
@@ -150,6 +151,8 @@ if (count([$branchquery]) == 1) {
     </div>
   </div>';
   echo $output;
+
+    }
 } else {
     echo "DMAN NOT SEEING";
 }
