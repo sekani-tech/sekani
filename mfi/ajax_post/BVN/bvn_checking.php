@@ -33,7 +33,7 @@ if ($bvn_length == 11) {
         $total_int_profit = $qw["int_profit"];
         $total_sekani_charge = $qw["sekani_charge"];
         $total_merchant_charge = $qw["merchant_charge"];
-        if ($balance >= 40) {
+        if ($balance >= 50) {
             // BIG CODE START BVN PAYSTACK VERIFICATION
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -87,8 +87,8 @@ if ($bvn_length == 11) {
             // BVN VERIFIED
     // UPDATE THE WITHDRAWAL
     // CALCULATION
-    $cal_bal = $balance - 40;
-    $cal_with = $total_with + 40;
+    $cal_bal = $balance - 50;
+    $cal_with = $total_with + 50;
     $cal_sek = $total_sekani_charge + 20;
     $cal_mch = $total_merchant_charge + 20;
     $cal_int_prof = $total_int_profit + 10;
@@ -104,8 +104,8 @@ if ($bvn_length == 11) {
         $insert_transaction = mysqli_query($connection, "INSERT INTO `sekani_wallet_transaction` (`int_id`, `branch_id`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `wallet_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, 
         `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`,
         `int_profit`, `sekani_charge`, `merchant_charge`)
-         VALUES ('{$int_id}', '{$branch_id}', '{$trans}', 'BVN charge', 'bvn', NULL, '0', '{$date}', '40', '{$cal_bal}', '{$cal_bal}', {$date}, 
-         NULL, NULL, '{$date2}', '0', '0.00', '40.00', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
+         VALUES ('{$int_id}', '{$branch_id}', '{$trans}', 'BVN charge', 'bvn', NULL, '0', '{$date}', '50', '{$cal_bal}', '{$cal_bal}', {$date}, 
+         NULL, NULL, '{$date2}', '0', '0.00', '50.00', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
          if ($insert_transaction) {
             //  echo remaining ending
             echo '<script type="text/javascript">
@@ -113,7 +113,7 @@ if ($bvn_length == 11) {
                 swal({
                     type: "success",
                     title: "BVN VERIFIED",
-                    text: "Customers Data is Correct, and will be charged NGN 40.00",
+                    text: "Customers Data is Correct, and will be charged NGN 50.00",
                     showConfirmButton: false,
                     timer: 3000
                 })
@@ -208,7 +208,7 @@ if ($bvn_length == 11) {
             title: "FILL DATA PROPERLY",
             text: "Please check if FirstName, LastName, Date of Birth and Phone Number field has been filled correctly",
             showConfirmButton: false,
-            timer: 4000
+            timer: 5000
         });
         $(":input[type=submit]").prop("disabled", true);
     });

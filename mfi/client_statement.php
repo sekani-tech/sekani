@@ -42,19 +42,19 @@ $sessint_id = $_SESSION['int_id'];
       $branch_name = strtoupper($a['name']);
       $branch_address = $a['location'];
     }
-    $acount = mysqli_query($connection, "SELECT * FROM account WHERE client_id ='$id' && account_no='$acc_no' AND int_id = '$sessint_id'");
+    $acount = mysqli_query($connection, "SELECT * FROM account WHERE client_id ='$id' && account_no='$acc_no'");
     if (count([$acount]) == 1) {
       $b = mysqli_fetch_array($acount);
       $currtype = $b['currency_code'];
       $acc_id = $b['id'];
     }
 
-      $totald = mysqli_query($connection,"SELECT SUM(debit) AS debit FROM account_transaction WHERE account_no='$acc_no' AND (int_id = $sessint_id && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id ASC");
+      $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE account_id = '$acc_id' && (int_id = $sessint_id && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id ASC");
       $deb = mysqli_fetch_array($totald);
       $tdp = $deb['debit'];
       $totaldb = number_format($tdp, 2);
       
-      $totalc = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM account_transaction WHERE account_no='$acc_no' AND (int_id = $sessint_id && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id ASC");
+      $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE account_id = '$acc_id' && (int_id = $sessint_id && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id ASC");
       $cred = mysqli_fetch_array($totalc);
       $tcp = $cred['credit'];
       $totalcd = number_format($tcp, 2);
@@ -178,7 +178,7 @@ $sessint_id = $_SESSION['int_id'];
                         // $resultmm = mysqli_query($connection, "SELECT * FROM account_transaction WHERE ((account_id = '$acc_id' && int_id = $sessint_id) && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
                         // $kx = mysqli_fetch_array($resultmm);
                         // $querytoget = "SELECT * FROM account_transaction WHERE account_id = '65' && int_id = '5' && branch_id = '1' && transaction_date BETWEEN '2019-01-01' AND '2020-03-03' ORDER BY transaction_date ASC";
-                        $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE ((account_no = '$acc_no' && int_id = '$sessint_id') && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id ASC");
+                        $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE ((account_id = '$acc_id' OR account_no = '$acc_no' && int_id = '$sessint_id') && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id ASC");
                         // $result = mysqli_query($connection, $querytoget);
                         // $v = 0;
                       ?>
