@@ -30,33 +30,32 @@ if (count([$branchquery]) == 1) {
 if (count([$branchquery]) == 1) {
     $out = '';
     // here we will some data
-    $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM sekani_wallet_transaction WHERE (int_id = '$int_id' AND branch_id = '$branch_id') AND ( transaction_date BETWEEN '$start' AND '$end' ) ORDER BY transaction_date ASC");
+    $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM sekani_wallet_transaction WHERE (int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end' ) ORDER BY transaction_date ASC");
         // then we will be fixing
         $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM sekani_wallet_transaction WHERE (int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end' ) ORDER BY transaction_date ASC");
         $m1 = mysqli_fetch_array($genb1);
         $m = mysqli_fetch_array($genb);
-
         // MAKING
         // $genb12 = mysqli_query($connection, "SELECT `wallet_balance_derived` FROM sekani_wallet_transaction WHERE (int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end' ) ORDER BY id DESC LIMIT 1");
-        // $genb122 = mysqli_query($connection, "SELECT `wallet_balance_derived` FROM sekani_wallet_transaction WHERE (int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end' ) ORDER BY id ASC LIMIT 1");
-        
+        $genb122 = mysqli_query($connection, "SELECT `wallet_balance_derived` FROM sekani_wallet_transaction WHERE (int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end' ) ORDER BY id DESC LIMIT 1");
         // $m12 = mysqli_fetch_array($genb12);
-        // $m122 = mysqli_fetch_array($genb122);
+        $m122 = mysqli_fetch_array($genb122);
         $tcp = $m1["credit"];
         $tdp = $m["debit"];
         // $famt =  $m12["wallet_balance_derived"];
-        // $famt2 =  $m122["wallet_balance_derived"];
+        $famt2 =  $m122["wallet_balance_derived"];
         // $finalbal = number_format(($famt), 2);
-        // $finalbal2 = number_format(($famt2), 2);
+        $finalbal2 = number_format(($famt2), 2);
         $tcdp = number_format(round($tcp), 2);
         $tddp = number_format(round($tdp), 2);
         // function
         function fill_report($connection, $int_id, $start, $end, $branch_id)
         {
-            $out = '';
-            $querytoget = mysqli_query($connection, "SELECT * FROM sekani_wallet_transaction WHERE ((int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end')) ORDER BY id ASC");
+            $querytoget = mysqli_query($connection, "SELECT * FROM sekani_wallet_transaction WHERE (int_id = '$int_id' AND branch_id = '$branch_id') AND (transaction_date BETWEEN '$start' AND '$end') ORDER BY id ASC");
           // $q = mysqli_fetch_array($querytoget);
-          while ($q = mysqli_fetch_array($querytoget)) {
+          $out = '';
+          if (mysqli_num_rows($querytoget) > 0){
+          while ($q = mysqli_fetch_array($querytoget, MYSQLI_ASSOC)) {
             //   new moment
             $trans_id = $q["transaction_id"];
             $trans_date = $q["transaction_date"];
@@ -71,15 +70,16 @@ if (count([$branchquery]) == 1) {
 
             $out .= '
             <tr>
-              <th>.'.$trans_date.'.</th>
-              <th>.'.$trans_id.'.</th>
-              <th>.'.$description.'.</th>
-              <th>.'.$amt.'.</th>
-              <th>.'.$amt2.'.</th>
-              <th>.'.$sybal.'.</th>
+              <th>'.$trans_date.'</th>
+              <th>'.$trans_id.'</th>
+              <th>'.$description.'</th>
+              <th>&#8358;'.$amt.'</th>
+              <th>&#8358;'.$amt2.'</th>
+              <th>&#8358;'.$sybal.'</th>
             </tr>
             ';
           }
+        }
           return $out;
         }
 
@@ -126,21 +126,20 @@ if (count([$branchquery]) == 1) {
             <th>Balance</th>
           </thead>
           <tbody>
-          "'.fill_report($connection, $int_id, $start, $end, $teller).'"
+          "'.fill_report($connection, $int_id, $start, $end, $branch_id).'"
           <tr>
         <th>Total</th>
         <th></th>
         <th></th>
-        <th></th>
-         <th>'.$tcdp.'</th>
-         <th>'.$tddp.'</th>
-      <th>'.$finalbal.'</th>
+         <th>&#8358;'.$tcdp.'</th>
+         <th>&#8358;'.$tddp.'</th>
+      <th>&#8358;'.$finalbal2.'</th>
         </tr>
           </tbody>
         </table>
       </div>
       <hr>
-      <p><b>Teller Sign:</b> 129                        <b>Date:</b></p>
+      <p>                        <b>Date:'.date("Y-m-d").'</b></p>
       <p><b>Checked By: '.$_SESSION["username"].'</b>                             <b>Date/Sign: '.$start." - ".$end.' </b></p>
 
       <p>

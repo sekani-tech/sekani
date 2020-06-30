@@ -648,6 +648,8 @@ if(isset($_POST['id'])){
                 <option value="Drivers Liscense">Drivers Liscense</option>
             </select>
             </div>
+            <input id="int_id" hidden value = '.$_SESSION["int_id"].' hidden></input>
+            <input id="branch_id" hidden value = '.$_SESSION["branch_id"].' hidden></input>
             </div>';
             echo $output3;
     }
@@ -666,10 +668,12 @@ if(isset($_POST['id'])){
             var first = $('#first').val();
             var last = $('#last').val();
             var phone = $('#phone').val();
+            var int_id = $('#int_id').val();
+            var branch_id = $('#branch_id').val();
             $.ajax({
                 url:"ajax_post/BVN/bvn_checking.php",
                 method:"POST",
-            data:{bvn:bvn, dob: dob, first:first, last:last, phone:phone},
+            data:{bvn:bvn, dob: dob, first:first, last:last, phone:phone, int_id:int_id, branch_id:branch_id},
             success:function(data){
             $('#bvn_result').html(data);
             }
