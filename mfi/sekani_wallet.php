@@ -79,7 +79,7 @@ $destination = "index.php";
                 </div>
                 </div>
                 </div>
-            <a class="btn btn-primary pull-right" id="run_pay" >Run Report</a>
+            <a class="btn btn-primary pull-right" id="run_pay"> <span style="color: white;">Run Report</span> </a>
                 <!-- </form> -->
                   <!-- check -->
                   <!-- javascript to display wallet transaction -->
@@ -103,7 +103,6 @@ $destination = "index.php";
             $sw = mysqli_fetch_array($get_id);
             $wallet_bal = $sw["running_balance"];
             $total_spent = $sw["total_withdrawal"];
-            $total_deposit = $sw["total_deposit"];
             ?>
               <div class="card">
                 <div class="card-header card-header-primary">

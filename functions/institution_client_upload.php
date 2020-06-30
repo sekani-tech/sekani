@@ -141,6 +141,11 @@ $res = mysqli_query($connection, $query);
 
         $go = mysqli_query($connection, $accountins);
         if ($go) {
+          // TAKE THE BVN CHARGE
+          $select_account_charge = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$account_no' AND client_id = '$client_id' AND int_id = '$int_id'");
+          $myx = mysqli_fetch_array($select_account_charge);
+          $client_balance = $myx["account_balance_derived"];
+          // ALRIGHT MEN
           $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
           echo header ("Location: ../mfi/client.php?message1=$randms");
             // Start mail
