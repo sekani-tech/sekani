@@ -5,18 +5,7 @@ $output2 = '';
 $output3 = '';
 session_start();
 if(isset($_POST['id'])){
-    function fill_branch($connection)
-        {
-            $sint_id = $_SESSION["int_id"];
-            $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
-            $res = mysqli_query($connection, $org);
-            $out = '';
-            while ($row = mysqli_fetch_array($res))
-            {
-            $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
-            }
-            return $out;
-        }
+    $br_id = $_SESSION["branch_id"];
     function fill_officer($connection)
         {
             $sint_id = $_SESSION["int_id"];
@@ -78,17 +67,14 @@ if(isset($_POST['id'])){
         <div class="col-md-4">
             <div class="form-group">
                 <label >Registered Address</label>
-                <input type="text" style="text-transform: uppercase;" class="form-control" name="addressa">
+                <input type="text" style="text-transform: uppercase;"$br_id class="form-control" name="addressa">
             </div>
         </div>
 
         <div class="col-md-4">
         <div class="form-group">
         <label class="">Branch:</label>
-        <select  name="brancha" class="form-control " id="collat">
-            <option value="">select a Branch</option>
-            '.fill_branch($connection).'
-        </select>
+        <input type="text" style="text-transform: uppercase;" value="'.$br_id.'" readonly class="form-control" name="brancha">
     </div>
         </div>
 
@@ -534,10 +520,7 @@ if(isset($_POST['id'])){
             
             <div class="form-group">
                 <label class="">Branch:</label>
-                <select  name="branch" class="form-control " id="collat">
-                    <option value="">select a Branch</option>
-                    '.fill_branch($connection).'
-                </select>
+                <input type="text" style="text-transform: uppercase;" value="'.$br_id.'" readonly class="form-control" name="branch">
             </div>
             </div>
             <div class="col-md-4">
