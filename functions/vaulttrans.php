@@ -41,6 +41,13 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
     $rock = mysqli_query($connection, $que);
     $yn = mysqli_fetch_array($rock);
     $tellbalance = $yn['account_balance_derived'];
+    $tellgl = $yn['gl_code'];
+
+    $fdd = "SELECT * FROM acc_gl_account WHERE int_id='$sessint_id' AND gl_code='$tellgl'";
+    $ssddd = mysqli_query($connection, $fdd);
+    $sd = mysqli_fetch_array($ssddd);
+    $tellglbalance = $sd['organization_running_balance_derived'];
+
     $quet = "SELECT * FROM tellers WHERE name = '$tid'";
     $rocka = mysqli_query($connection, $quet);
     $yy = mysqli_fetch_array($rocka);
@@ -50,24 +57,30 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
     $vault = mysqli_query($connection, "SELECT * FROM int_vault WHERE branch_id = '$branchid' && int_id = '$sint_id'");
     $itb = mysqli_fetch_array($vault);
     $vault_limit = $itb['movable_amount'];
+    $int_gl = $itb['gl_code'];
   // If transaction is a vault in execute this code
   if($tid || $bank_type){
     if($type == "vault_in"){
       // if the teller balance is equal is bigger amount
             if($tellbalance >= $amount){
                 $new_tellbalance = $tellbalance - $amount;
+                $newtellgl = $tellglbalance - $amount;
                 $new_vaultbalance = $balance + $amount;
+
                 $blnc = number_format($new_vaultbalance);
                 $amt = number_format($amount);
                 $vaultinquery = "UPDATE institution_account SET account_balance_derived = '$new_tellbalance' WHERE teller_id = '$tid'";
                 $ein = mysqli_query($connection, $vaultinquery);
                 $description = "Deposited into Vault";
                 if($ein){
+
+                  $ddffd = "UPDATE acc_gl_account SET organization_running_balance_derived = '$newtellgl' WHERE gl_code = '$tellgl' && int_id = '$sint_id' AND branch_id = '$branchid'";
+                  $onxzx = mysqli_query($connection, $ddffd);
                   
                     $vaufinquery = "UPDATE int_vault SET balance = '$new_vaultbalance', last_deposit = '$amount'  WHERE int_id = '$sint_id' AND branch_id = '$branchid'";
                     $fon = mysqli_query($connection, $vaufinquery);
 
-                    $vaultffinquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '10011000' && int_id = '$sint_id' AND branch_id = '$branchid'";
+                    $vaultffinquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '$int_gl' && int_id = '$sint_id' AND branch_id = '$branchid'";
                     $on = mysqli_query($connection, $vaultffinquery);
                     if($on){
                         $record ="INSERT INTO institution_account_transaction (int_id, branch_id,
@@ -265,14 +278,20 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
             }
             else{
                 $new_tellbalance = $tellbalance + $amount;
+                $newtellgl = $tellglbalance + $amount;
                 $new_vaultbalance = $balance - $amount;
                 $blnc = number_format($new_vaultbalance);
                 $amt = number_format($amount);
+
                 $vaultinquery = "UPDATE institution_account SET account_balance_derived = '$new_tellbalance' WHERE teller_id = '$tid' && int_id = '$sint_id'";
                 $ein = mysqli_query($connection, $vaultinquery);
+
+                $ddffd = "UPDATE acc_gl_account SET organization_running_balance_derived = '$newtellgl' WHERE gl_code = '$tellgl' && int_id = '$sint_id' AND branch_id = '$branchid'";
+                  $onxzx = mysqli_query($connection, $ddffd);
+
                 $description = "Withdrawn from vault";
                 if($ein){
-                    $vaultgl = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '10011000' && int_id = '$sint_id' AND branch_id = '$branchid'";
+                    $vaultgl = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '$int_gl' && int_id = '$sint_id' AND branch_id = '$branchid'";
                     $ow = mysqli_query($connection, $vaultgl);
                     $vaultinquery2 = "UPDATE int_vault SET balance = '$new_vaultbalance', last_withdrawal = '$amount' WHERE int_id = '$sint_id' AND branch_id = '$branchid'";
                     $on = mysqli_query($connection, $vaultinquery2);
@@ -481,7 +500,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
             $vaultinquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_glbalance' WHERE gl_code = '$bank_type' && int_id = '$sint_id'";
             $ein = mysqli_query($connection, $vaultinquery);
 
-            $glnquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '10011000' && int_id = '$sint_id' AND branch_id = '$branchid'";
+            $glnquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '$int_gl' && int_id = '$sint_id' AND branch_id = '$branchid'";
             $on = mysqli_query($connection, $glnquery);
 
             $description = "Deposited to $glname";
@@ -682,7 +701,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
         $vaultinquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_glbalance' WHERE gl_code = '$bank_type' && int_id = '$sint_id'";
         $ein = mysqli_query($connection, $vaultinquery);
 
-        $vaultffinquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '10011000' && int_id = '$sint_id' AND branch_id = '$branchid'";
+        $vaultffinquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '$int_gl' && int_id = '$sint_id' AND branch_id = '$branchid'";
                     $on = mysqli_query($connection, $vaultffinquery);
 
         $description = "Withdrawn from $glname";
