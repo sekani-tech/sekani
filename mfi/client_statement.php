@@ -8,15 +8,9 @@ $sessint_id = $_SESSION['int_id'];
   $id = $_POST["id"];
 
   $std = $_POST["start"];
-      $datex= strtotime($std); 
-      $sdate = date("Y-m-d", $datex);
-       $start = $sdate;
-      //  echo $start;
+      //  echo $std;
        $endx = $_POST["end"];
-       $datey= strtotime($endx); 
-       $eyd= date("Y-m-d", strtotime('-1 day', $datey));
-       $end = $eyd;
-  
+
   $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id' && int_id ='$sessint_id'");
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
@@ -129,8 +123,8 @@ $sessint_id = $_SESSION['int_id'];
             <div class="form-group">
               <form method = "POST" action = "../composer/client_statement.php">
               <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
-              <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
-              <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
+              <input hidden name ="start" type="text" value="<?php echo $std;?>"/>
+              <input hidden name ="end" type="text" value="<?php echo $endx;?>"/>
               <button type="submit" class="btn btn-primary pull-left">Download PDF</button>
             </form>
             </div>
@@ -149,8 +143,8 @@ $sessint_id = $_SESSION['int_id'];
                           <!-- <h4><?php echo $currtype;?></h4> -->
                           <h4 >Account number: <?php echo $acc;?></h4>
                         <!-- <h4><?php echo $acc;?></h4>  -->
-                        <h4 >Statement period: <?php echo $start,' - ',$end;?></h4>
-                        <!-- <h5><?php echo $start,' - ',$end;?></h5>  -->
+                        <h4 >Statement period: <?php echo $std,' - ',$endx;?></h4>
+                        <!-- <h5><?php echo $std,' - ',$endx;?></h5>  -->
                     </div>
                     <div class="col-md-6">
                     <h4 >Client name: <?php echo $first_name," ", $last_name;?></h4>
