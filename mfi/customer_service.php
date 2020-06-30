@@ -58,7 +58,7 @@ $destination = "../index.php";
                         <tr>
                           <th>Client Balance Report</th>
                           <th>View the list of Clients and account Balances</th>
-                          <td><a href="report_client_view.php?view1" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="client_balance.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>Client Summary</th>
