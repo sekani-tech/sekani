@@ -6,7 +6,7 @@ $fof = $_SESSION['int_id'];
 if(isset($_POST['id'])){
     $state = $_POST['id'];
 
-            $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$fof ' AND classification_enum = '$state'";
+            $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$fof ' AND classification_enum = '$state' AND parent_id != '0'";
             $state1 = mysqli_query($connection, $stateg);
             $out = '';
             while ($row = mysqli_fetch_array($state1))

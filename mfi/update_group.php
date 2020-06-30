@@ -33,7 +33,7 @@ $destination = "branch.php";
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Edit</h4>
-                  <p class="card-category">Modify Branch Data</p>
+                  <p class="card-category">Modify Group Data</p>
                 </div>
                 <div class="card-body">
                   <form action="../functions/branch_update.php" method="post">
@@ -92,23 +92,36 @@ $destination = "branch.php";
                           <input type="text" class="form-control" value="<?php echo $location; ?>" name="location">
                         </div>
                       </div>
-                      
-                      <div class="col-md-12">
+                      <script>
+                        $(document).ready(function () {
+                          $('#sds').on("click", function () {
+                            var id = $(this).val();
+                            $.ajax({
+                              url: "ajax_post/delete_group_client.php", 
+                              method: "POST",
+                              data:{id:id},
+                              success: function (data) {
+                                $('#huh').html(data);
+                              }
+                            })
+                          });
+                        });
+                      </script>
+                      <div id = "huh" class="col-md-12">
                       <div class="table-responsive">
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved'";
+                        $query = "SELECT * FROM group_clients WHERE group_id = '$user_id' AND int_id = '$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
-                          Group
+                         Members
                         </th>
                         <th>
                           Branch
                         </th>
-                        <th width="20px">Edit</th>
-                        <th width="20px">Close</th>
+                        <th width="20px">Delete</th>
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>
@@ -116,7 +129,7 @@ $destination = "branch.php";
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
-                          <th><?php echo $row["g_name"]; ?></th>
+                          <th><?php echo $row["client_name"]; ?></th>
                           <?php
                           $ds= $row["branch_id"];
                            $query = "SELECT * FROM branch WHERE int_id = '$sessint_id' && id = '$ds'";
@@ -125,8 +138,7 @@ $destination = "branch.php";
                            $dfd = $ds['name'];
                           ?>
                           <th><?php echo $dfd; ?></th>
-                          <td><a href="update_group.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
-                          <td><a href="update_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Close</a></td>
+                          <td><a id="sds" class="btn btn-danger">Delete</a></td>
                         </tr>
                         <?php }
                           }

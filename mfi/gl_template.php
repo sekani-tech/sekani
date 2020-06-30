@@ -45,6 +45,26 @@ $(document).ready(function(){
 $_SESSION["lack_of_intfund_$key"] = 0;
 }
 }
+else if (isset($_GET["message3"])) {
+  $key = $_GET["message3"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Error Assigning Ledger",
+          text: "Database Error",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+  }
 ?>
 <!-- Content added here -->
     <div class="content">
@@ -145,7 +165,40 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                 </div>
               </div>
             </div>
-          </div>
+            <!-- <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Assign New GL Template</h4>
+                  <p class="card-category">Fill in all important data</p>
+                </div>
+                <div class="card-body">
+                <div class="table-responsive">
+                    <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+                      <thead class=" text-primary">
+                        <th>
+                         System Function
+                        </th>
+                        <th>
+                         Portal
+                        </th>
+                        <th>
+                         Current General ledger
+                        </th>
+                        <!-- <th>Phone</th> -->
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            </div>
           <!-- /content -->
         </div>
       </div>

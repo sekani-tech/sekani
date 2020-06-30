@@ -79,7 +79,27 @@ echo $dom;
     }
     else if($state == "3")
     {
-        
+      $dfdff = "SELECT * FROM institution_account WHERE int_id = '$fof'";
+      $eroer = mysqli_query($connection, $dfdff);
+      $dk = mysqli_fetch_array($eroer);
+      $sdd = $dk['gl_code'];
+
+      $tjnt = "SELECT * FROM acc_gl_account WHERE int_id = '$fof' AND gl_code = '$sdd'";
+      $sdsddc = mysqli_query($connection, $tjnt);
+      $as = mysqli_fetch_array($sdsddc);
+      $dss = $as['name'];
+
+      $dom = '
+      <div class="row">
+      <div class="col-md-6">
+      <div class="form-group">
+      <label class="bmd-label-floating">Current Gl Assigned to:</label>
+      <input class="form-control" type="text" value="'.$dss.'" readonly/>
+      </div>
+      </div>
+      </div>
+      ';
+      echo $dom;
     }
     }
     else {

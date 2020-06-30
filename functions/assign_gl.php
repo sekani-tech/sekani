@@ -29,7 +29,8 @@ if ($result) {
         $ok = mysqli_query($connection, $sqlcode);
     }
     else if($syste == "3"){
-        
+        $sqlcode = "UPDATE `institution_account` SET `gl_code` = '$glcode' WHERE branch_id ='$b_id' AND int_id = '$ssint_id'";
+        $ok = mysqli_query($connection, $sqlcode);
     }
     if($ok){
         $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
@@ -38,7 +39,7 @@ if ($result) {
     } else {
         $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
         echo "error";
-       echo header ("Location: ../mfi/gl_template.php?message2=$randms");
+       echo header ("Location: ../mfi/gl_template.php?message3=$randms");
          // echo header("location: ../mfi/client.php");
      }
         } else {
