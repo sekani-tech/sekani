@@ -20,7 +20,7 @@ $ctype = strtoupper($_POST['ctype']);
 $rand = str_pad(rand(0, pow(10, $rigits)-1), $rigits, '0', STR_PAD_LEFT);
 
 
-if($ctype == 'INDIVIDUAL')
+if($ctype == 'INDIVIDUAL' || $ctype == 'GROUP')
 {
   $loan_officer_id = $_POST["acct_of"];
 

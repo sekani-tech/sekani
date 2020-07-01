@@ -109,7 +109,7 @@ if(isset($_GET["edit"])) {
                   <h4 class="card-title">Account</h4>
                 </div>
                 <?php
-                if($ctype == 'INDIVIDUAL')
+                if($ctype == 'INDIVIDUAL' || $ctype == 'GROUP')
                 {
                   ?>
                 <div class="card-body">

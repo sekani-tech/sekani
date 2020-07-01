@@ -19,6 +19,9 @@ if(isset($_POST["client_id"]))
     $query = "INSERT INTO `group_client_cache` (`int_id`, `branch_id`, `client_id`, `client_name`, `date`, `group_cache_id`)
      VALUES ('{$int_id}', '{$branch_id}', '{$client_id}', '{$client_name}', '{$date}', '{$cache_id}')";
      $queryexec = mysqli_query($connection, $query);
+
+     $dsd = "UPDATE client SET client_type='GROUP' WHERE id = '$client_id'";
+     $dsdds = mysqli_query($connection, $dsd);
 }
 ?>
 <table width="70px" class="table">

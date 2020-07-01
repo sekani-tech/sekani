@@ -451,7 +451,7 @@ if(isset($_POST['id'])){
         
     }
     // Data for Individual Account
-    elseif($_POST['id'] == 'Individual'){
+    elseif($_POST['id'] == 'Individual' || $_POST['id'] == 'Group'){
         $output3 ='<div class="row">
         <div class="col-md-4">
             <div class="form-group">

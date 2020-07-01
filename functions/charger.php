@@ -99,4 +99,18 @@ $iupq = "UPDATE account SET account_balance_derived = '$newbal', last_withdrawal
 //   }
 // }
 }
+else if(isset($_GET['delete'])){
+  $id = $_GET['delete'];
+
+  $dod = mysqli_query($connection, "DELETE FROM savings_acct_charge WHERE id = '$id'");
+  if($dod){
+    $_SESSION["Lack_of_intfund_$randms"] = " was updated successfully!";
+    echo header ("Location: ../mfi/charge_approval.php?message5=$randms");
+  } else {
+     $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+     echo "error";
+    echo header ("Location: ../mfi/charge_approval.php?message6=$randms");
+      // echo header("location: ../mfi/client.php");
+  }
+}
 ?>

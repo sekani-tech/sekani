@@ -104,7 +104,7 @@ $b_id = $_SESSION['branch_id'];
                     <?php
                     function fill_client($connection) {
                       $sint_id = $_SESSION["int_id"];
-                      $org = "SELECT * FROM client WHERE int_id = '$sint_id'";
+                      $org = "SELECT * FROM client WHERE int_id = '$sint_id' ORDER BY firstname ASC";
                       $res = mysqli_query($connection, $org);
                       $out = '';
                       while ($row = mysqli_fetch_array($res))

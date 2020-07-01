@@ -645,6 +645,16 @@ $destination = "index.php";
                               </select>
                           </div>
                           </div>
+                          <div class="form-group">
+                          <div class="col-md-8">
+                              <label for="charge" class="form-align ">BVN Income</label>
+                              <select class="form-control form-control-sm" name="bvn_income">
+                                <option value="">--</option>
+                                <?php echo fill_in($connection) ?>
+                              </select>
+                          </div>
+                          </div>
+                          
                           <!-- <div class="form-group">
                           <div class="col-md-8">
                               <label for="charge" class="form-align ">Income from Recovery</label>
@@ -684,6 +694,15 @@ $destination = "index.php";
                           <div class="col-md-8">
                               <label for="charge" class="form-align ">Interest Written Off</label>
                               <select class="form-control form-control-sm" name="exp_interest_written_off">
+                                <option value="">--</option>
+                                <?php echo fill_exp($connection) ?>
+                              </select>
+                          </div>
+                          </div>
+                          <div class="form-group">
+                          <div class="col-md-8">
+                              <label for="charge" class="form-align ">BVN Expense</label>
+                              <select class="form-control form-control-sm" name="bvn_expense">
                                 <option value="">--</option>
                                 <?php echo fill_exp($connection) ?>
                               </select>

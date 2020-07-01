@@ -42,26 +42,8 @@ if (isset($_GET["message1"])) {
   ';
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
-} else if (isset($_GET["message3"])) {
+} else if (isset($_GET["message5"])) {
   $key = $_GET["message2"];
-  $tt = 0;
-  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-  echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "error",
-          title: "Error",
-          text: "'.$out = $_SESSION["lack_of_intfund_$key"].'",
-          showConfirmButton: false,
-          timer: 2000
-      })
-  });
-  </script>
-  ';
-  $_SESSION["lack_of_intfund_$key"] = 0;
-}
-} else if (isset($_GET["message8"])) {
-  $key = $_GET["message8"];
   $tt = 0;
   if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   echo '<script type="text/javascript">
@@ -69,7 +51,7 @@ if (isset($_GET["message1"])) {
       swal({
           type: "success",
           title: "Success",
-          text: "Transaction Has Been Declined",
+          text: "Charge Deleted",
           showConfirmButton: false,
           timer: 2000
       })
@@ -78,6 +60,25 @@ if (isset($_GET["message1"])) {
   ';
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
+} else if (isset($_GET["message6"])) {
+  $key = $_GET["message8"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Error",
+          text: "Error Deleting Client",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+
 } else {
   echo "";
 }
@@ -146,6 +147,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                        Description
                         </th>
                         <th>Approval</th>
+                        <th>Decline</th>
                         </tr>
                         <!-- <th>Phone</th> -->
                       </thead>
@@ -170,6 +172,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                           <th><?php echo $row["amount"]; ?></th>
                           <th><?php echo $row["description"]; ?></th>
                           <td><a href="../functions/charger.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
+                          <td><a href="../functions/charger.php?delete=<?php echo $row["id"];?>" class="btn btn-danger">Decline</a></td>
                           </tr>
                           <!-- <th></th> -->
                           <?php }
