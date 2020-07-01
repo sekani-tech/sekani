@@ -36,7 +36,7 @@ $destination = "branch.php";
                   <p class="card-category">Modify Group Data</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/branch_update.php" method="post">
+                  <form action="../functions/updategroup.php" method="post">
                     <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -53,7 +53,7 @@ $destination = "branch.php";
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Group Type</label>
-                          <select class="form-control">
+                          <select name="gtype" class="form-control">
                                 <option hidden value="<?php echo $regtyp;?>"><?php echo $regtyp;?></option>
                                 <option  value="formal">Formal</option>
                                 <option  value="informal">Informal</option>
@@ -63,7 +63,7 @@ $destination = "branch.php";
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Meeting Day</label>
-                          <input type="date" class="form-control" value="<?php echo $meet_dat; ?>" name="email">
+                          <input  type="date" class="form-control" value="<?php echo $meet_dat; ?>" name="meet_day">
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -71,11 +71,11 @@ $destination = "branch.php";
                           <div class="row">
                             <div class="col-md-6">
                             <label class="bmd-label-floating">Time</label>
-                            <input type="time" class="form-control" value="<?php echo $time; ?>" name="phone">
+                            <input type="time" class="form-control" value="<?php echo $time; ?>" name="meet_time">
                             </div>
                             <div class="col-md-6">
                               <label class="bmd-label-floating">Frequency</label>
-                              <select class="form-control">
+                              <select name="freq" class="form-control">
                                 <option hidden value="<?php echo $meet_freq;?>"><?php echo $meet_freq;?></option>
                                 <option  value="daily">Daily</option>
                                 <option  value="weekly">Weekly</option>
@@ -138,7 +138,7 @@ $destination = "branch.php";
                            $dfd = $ds['name'];
                           ?>
                           <th><?php echo $dfd; ?></th>
-                          <td><a id="sds" class="btn btn-danger">Delete</a></td>
+                          <td><a href="../functions/delete_group_client.php?edit=<?php echo $row["id"];?>" class="btn btn-danger">Remove</a></td>
                         </tr>
                         <?php }
                           }

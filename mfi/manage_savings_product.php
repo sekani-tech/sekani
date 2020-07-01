@@ -46,7 +46,7 @@ $destination = "index.php";
                     </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="installmentAmount" >Product Type</label>
+                          <label for="installmentAmount" >Account Type</label>
                           <select class="form-control" name="product_type" >
                            <option value="1">Current</option>
                             <option value="2">Savings</option>
@@ -56,63 +56,63 @@ $destination = "index.php";
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="installmentAmount" >Savings Category</label>
-                          <select class="form-control" name="enable" >
-                           <option value="no">Voluntary</option>
-                            <option value="yes">Compulsory</option>
+                          <select class="form-control" name="saving_cat" >
+                           <option value="1">Voluntary</option>
+                            <option value="2">Compulsory</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="installmentAmount" >Auto Create</label>
-                          <select class="form-control" name="enable" >
-                           <option value="no">No</option>
-                            <option value="yes">Yes</option>
+                          <select class="form-control" name="autocreate" >
+                           <option value="2">No</option>
+                            <option value="1">Yes</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="installmentAmount" >Currency</label>
-                          <select class="form-control" name="enable" >
-                           <option value="no">Nigerian Naira(NGN)</option>
+                          <select class="form-control" name="currency" >
+                           <option value="NGN">Nigerian Naira(NGN)</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Nominal Annual Interest rate</label>
-                        <input type="text" class="form-control" name="short_name" value="" placeholder="Short Name..." required>
+                        <input type="text" class="form-control" name="nominal_int_rate" value="" placeholder="enter value" required>
                       </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                           <label for="installmentAmount" >Compounding Period</label>
-                          <select class="form-control" name="enable" >
-                           <option value="no">Daily</option>
-                           <option value="no">Monthly</option>
-                           <option value="no">Quarterly</option>
-                           <option value="no">Bi-Annually</option>
-                           <option value="no">Annually</option>
+                          <select class="form-control" name="compound_period" >
+                           <option value="1">Daily</option>
+                           <option value="2">Monthly</option>
+                           <option value="3">Quarterly</option>
+                           <option value="4">Bi-Annually</option>
+                           <option value="5">Annually</option>
                           </select>
                         </div>
                       </div>                  
                         <div class="col-md-6">
                         <div class="form-group">
                           <label for="interestRateApplied" >Interest Posting period Type</label>
-                          <select class="form-control" name="enable" >
-                           <option value="no">Daily</option>
-                           <option value="no">Monthly</option>
-                           <option value="no">Quarterly</option>
-                           <option value="no">Bi-Annually</option>
-                           <option value="no">Annually</option>
+                          <select class="form-control" name="int_post_type" >
+                           <option value="1">Daily</option>
+                           <option value="2">Monthly</option>
+                           <option value="3">Quarterly</option>
+                           <option value="4">Bi-Annually</option>
+                           <option value="5">Annually</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="interestMethodology" >Interest Calculation Type</label>
-                          <select class="form-control" name="interest_rate_methodoloy" >
+                          <select class="form-control" name="int_cal_type" >
                             <option value="1">Daily Balance</option>
                             <option value="2">Average Daily Balance</option>
                           </select>
@@ -121,34 +121,34 @@ $destination = "index.php";
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="amortizatioMethody" >Interest Calculation Days in Year type</label>
-                          <select class="form-control" name="ammortization_method" required>
-                            <option value="equal_installment">360 days</option>
-                            <option value="equal_principal_payment">365 days</option>
+                          <select class="form-control" name="int_cal_days" required>
+                            <option value="360">360 days</option>
+                            <option value="365">365 days</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Automatic Opening Balance *</label>
-                        <input type="text" class="form-control" name="short_name" value="" placeholder="Short Name..." required>
+                        <input type="number" class="form-control" name="auto_op_bal" value="" placeholder="Short Name..." required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Mininmum Balance for Interest Calculation *</label>
-                        <input type="text" class="form-control" name="short_name" value="" placeholder="Short Name..." required>
+                        <input type="number" class="form-control" name="min_balance_cal" value="" placeholder="Short Name..." required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Maximum Positive Balance*</label>
-                        <input type="text" class="form-control" name="short_name" value="" placeholder="Short Name..." required>
+                        <input type="number" class="form-control" name="max_pve_bal" value="" placeholder="Short Name..." required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Minimum Negative Balance</label>
-                        <input type="text" class="form-control" name="short_name" value="" placeholder="Short Name..." required>
+                        <input type="number" class="form-control" name="min_nve_bal" value="" placeholder="Short Name..." required>
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -156,14 +156,14 @@ $destination = "index.php";
                           <label for="principal" >Lockin Period Frequency</label>
                           <div class="row">
                             <div class="col-md-4">
-                              <input type="text" class="form-control" name="principal_amount" value="" placeholder="Default" required>
+                              <input type="number" class="form-control" name="lock_per_freq" value="" placeholder="Default" required>
                             </div>
                             <div class="col-md-8">
-                          <select class="form-control" name="interest_rate_methodoloy" >
+                          <select class="form-control" name="lock_per_freq_time" >
                             <option value="1">Days</option>
                             <option value="2">Weeks</option>
-                            <option value="1">Months</option>
-                            <option value="2">Years</option>
+                            <option value="3">Months</option>
+                            <option value="4">Years</option>
                           </select>
                             </div>
                           </div>
@@ -172,7 +172,7 @@ $destination = "index.php";
                       <div class="col-md-6">
                        <div class="form-group">
                           <label for="additionalCharges" >Allow OverDraft</label>
-                          <select class="form-control" name="additional_charge" required>
+                          <select class="form-control" name="allover" required>
                             <option value="no">No</option>
                             <option value="yes">Yes</option>
                           </select>
@@ -181,7 +181,7 @@ $destination = "index.php";
                       <div class="col-md-6">
                        <div class="form-group">
                           <label for="additionalCharges" >Track Dormancy</label>
-                          <select class="form-control" name="additional_charge" required>
+                          <select class="form-control" name="trk_dormancy" required>
                             <option value="no">No</option>
                             <option value="yes">Yes</option>
                           </select>
@@ -190,7 +190,7 @@ $destination = "index.php";
                       <div class="col-md-6">
                        <div class="form-group">
                           <label for="additionalCharges" >Enable Withdrawal Notice</label>
-                          <select class="form-control" name="additional_charge" required>
+                          <select class="form-control" name="with_notice" required>
                             <option value="no">No</option>
                             <option value="yes">Yes</option>
                           </select>
@@ -211,6 +211,9 @@ $destination = "index.php";
                       $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
                       $_SESSION["savings_temp"] = $randms;
                       $main_p = $_SESSION["savings_temp"];
+                      $_SESSION["stemp"] = $_SESSION["savings_temp"];
+                      $dbcache = $_SESSION["stemp"];
+                      $_SESSION["product_temp"] = $randms;
                       ?>
                       <script>
                               $(document).ready(function() {

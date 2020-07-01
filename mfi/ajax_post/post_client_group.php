@@ -21,14 +21,13 @@ if(isset($_POST["client_id"]))
      $queryexec = mysqli_query($connection, $query);
 }
 ?>
-<table class="table">
+<table width="70px" class="table">
     <?php
         $sds = "SELECT * FROM group_client_cache WHERE int_id = '$int_id' AND group_cache_id = '$cache_id' ORDER BY id ASC";
         $result = mysqli_query($connection, $sds);
     ?>
     <thead class="text-primary">
-        <th style="width: 20px;">Client ID</th>
-        <th style="width: 30px;">Client Name</th>
+        <th style="width: 60px;">Client</th>
     </thead>
     <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
@@ -42,8 +41,7 @@ if(isset($_POST["client_id"]))
                             $re = mysqli_fetch_array($gffd);
                             $client_name = $re['firstname']." ".$re['lastname'];
                         ?>
-                          <th><?php echo $row["client_id"]; ?></th>
-                          <th><?php echo $client_name; ?></th>
+                          <th style="width: 60px;"><?php echo $client_name; ?></th>
                         </tr>
                         <?php }
                           }

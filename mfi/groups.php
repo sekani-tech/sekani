@@ -5,6 +5,127 @@ $destination = "index.php";
     include("header.php");
 
 ?>
+<?php
+if (isset($_GET["message1"])) {
+  $key = $_GET["message1"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Group Created",
+          text: "",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
+else if (isset($_GET["message2"])) {
+$key = $_GET["message2"];
+// $out = $_SESSION["lack_of_intfund_$key"];
+$tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "error",
+        title: "Error Creating Group",
+        text: "Contact TechSupport.",
+        showConfirmButton: false,
+        timer: 2000
+    })
+});
+</script>
+';
+$_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
+else if (isset($_GET["message3"])) {
+  $key = $_GET["message3"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Group Updated",
+          text: "Contact TechSupport.",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+  }
+  else if (isset($_GET["message4"])) {
+    $key = $_GET["message4"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+      if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "Error Updating Group",
+            text: "Contact TechSupport.",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+    }
+    else if (isset($_GET["message5"])) {
+      $key = $_GET["message5"];
+      // $out = $_SESSION["lack_of_intfund_$key"];
+      $tt = 0;
+        if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+      echo '<script type="text/javascript">
+      $(document).ready(function(){
+          swal({
+              type: "success",
+              title: "Group Closed",
+              text: "",
+              showConfirmButton: false,
+              timer: 2000
+          })
+      });
+      </script>
+      ';
+      $_SESSION["lack_of_intfund_$key"] = 0;
+      }
+      }
+      else if (isset($_GET["message6"])) {
+        $key = $_GET["message6"];
+        // $out = $_SESSION["lack_of_intfund_$key"];
+        $tt = 0;
+          if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "Error Closing Group",
+                text: "Contact TechSupport.",
+                showConfirmButton: false,
+                timer: 2000
+            })
+        });
+        </script>
+        ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+        }
+        }
+?>
 <!-- Content added here -->
 <div class="content">
         <div class="container-fluid">

@@ -38,7 +38,7 @@
                           ?>
                           <th><?php echo $dfd; ?></th>
                           <td><a href="update_group.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
-                          <td><a href="update_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Close</a></td>
+                          <td><a href="../functions/updategroup.php?close=<?php echo $row["id"];?>" class="btn btn-info">Close</a></td>
                         </tr>
                         <?php }
                           }

@@ -3,7 +3,7 @@
 $page_title = "Create Group";
 $destination = "index.php";
     include("header.php");
-
+$b_id = $_SESSION['branch_id'];
 ?>
 <!-- Content added here -->
     <div class="content">
@@ -56,10 +56,7 @@ $destination = "index.php";
                         </div>
                         <div class="col-md-6">
                             <label for="">Branch Name *:</label>
-                            <select name="branch_id" id="" class="form-control" required>
-                                <option hidden value="">select an option</option>
-                                <?php echo fill_branch($connection);?>
-                            </select>
+                            <input class="form-control" type="text" name="branch_id" value="<?php echo $b_id;?>" readonly/>
                         </div>
                         <div class="col-md-6">
                             <label for="">Loan Officer *:</label>
@@ -138,29 +135,20 @@ $destination = "index.php";
                               url: "ajax_post/post_client_group.php", 
                               method: "POST",
                               data:{client_id:client_id, cache_id:cache_id},
-                              success: function (data) {
+                              success: function(data) {
                                 $('#erio').html(data);
                               }
                             })
                           });
                         });
                       </script>
-                      <div id="erio">
-                        <table class="table">
-                            <thead>
-                                <th style="font-weight:bold;">Client ID</th>
-                                <th style="font-weight:bold;">Client Name</th>
-                            </thead>
-                            <tbody>
-                                <td></td>
-                                <td></td>
-                            </tbody>
-                        </table>
+                      <div class="col-md-4" id="erio">
+
                       </div>
                     </div>
                     <!-- /Client Selection -->
                     <!-- Oberview -->
-                    <div class="tab">
+                    <!-- <div class="tab">
                         <h3>Overview:</h3>
                         <div class="row">
                         <div class="col-md-6">
@@ -222,7 +210,7 @@ $destination = "index.php";
                             </tbody>
                         </table>
                       </div>
-                    </div>
+                    </div> -->
                     <!-- Buttons -->
                     <div style="overflow:auto;">
                           <div style="float:right;">
@@ -234,7 +222,7 @@ $destination = "index.php";
                       <!-- Circles which indicates the steps of the form: -->
                       <div style="text-align:center;margin-top:40px;">
                           <span class="step"></span>
-                          <span class="step"></span>
+                          <!-- <span class="step"></span> -->
                           <!-- <span class="step"></span> -->
                           <span class="step"></span>
                         </div>
