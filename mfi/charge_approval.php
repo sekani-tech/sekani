@@ -112,9 +112,9 @@ if ($can_transact == 1 || $can_transact == "1") {
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      if($inr == '0'){ 
-                        echo 'No Cheque Books Issued';
+                        echo 'No Charges';
                       }else{
-                        echo ''.$inr.' Cheque book on the platform';
+                        echo ''.$inr.' Charges on the platform';
                       }
                    }
                    ?></p>

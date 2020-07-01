@@ -85,15 +85,17 @@ $fomd = "INSERT INTO `savings_product` (`int_id`, `branch_id`, `name`, `short_na
                     $income_fees = $_POST['inc_fees'];
                     $income_penalties = $_POST['inc_penalties'];
                     $income_recovery = $_POST['inc_recovery'];
+                    $bvni = $_POST['bvn_income'];
+                    $bvne = $_POST['bvn_expense'];
                     $loss_written_off = $_POST['exp_loss_written_off'];
                     $interest_written_off = $_POST['exp_interest_written_off'];
 
                     $making = mysqli_query($connection, "INSERT INTO `savings_acct_rule` (`int_id`, `savings_product_id`,
                      `asst_loan_port`, `li_overpayment`, `li_suspended_income`, `inc_interest`, `inc_fees`, `inc_penalties`,
-                      `inc_recovery`, `exp_loss_written_off`, `exp_interest_written_off`, `rule_type`, `insufficient_repayment`)
+                      `inc_recovery`, `exp_loss_written_off`, `exp_interest_written_off`, `rule_type`, `insufficient_repayment`, `bvn_income`, `bvn_expense`)
                     VALUES ('{$sessint_id}', '{$savingid}', '{$loan_portfolio}', '{$overpayments}', '{$suspended_income}',
                      '{$income_interest}', '{$income_fees}', '{$income_penalties}', '{$income_recovery}', '{$loss_written_off}',
-                      '{$interest_written_off}', '{$rand_id}', '{$insufficient_repay}')");
+                      '{$interest_written_off}', '{$rand_id}', '{$insufficient_repay}', '{$bvni}', '{$bvne}')");
 
                       if($making){
                         $id_trans = $_SESSION["product_temp"];
@@ -104,8 +106,8 @@ $fomd = "INSERT INTO `savings_product` (`int_id`, `branch_id`, `name`, `short_na
                         $acct_gl_code = $sc["acct_gl_code"];
                         $acct = $sc["acct"];
                         $type_c = $sc["type"];
-                        $insert_cache = mysqli_query($connection, "INSERT INTO `sav_acct` (`int_id`, `gl_code`, `name`, `savings_id`, `acct_gl_code`, `acct`, `type`)
-                         VALUES ('{$sessint_id}', '{$gl_code}', '{$gl_name}', '{$savingid}', '{$acct_gl_code}', '{$acct}', '{$type_c}')");
+                        $insert_cache = mysqli_query($connection, "INSERT INTO `sav_acct` (`int_id`, `gl_code`, `name`, `savings_id`, `acct_gl_code`, `acct`, `type`, `bvn_income`, `bvn_expense`)
+                         VALUES ('{$sessint_id}', '{$gl_code}', '{$gl_name}', '{$savingid}', '{$acct_gl_code}', '{$acct}', '{$type_c}', '{$bvni}', '{$bvne}')");
                         if ($insert_cache) {
                             $delet_cache = mysqli_query($connection, "DELETE FROM `prod_acct_cache` WHERE prod_cache_id = '$id_trans'");
                         }
