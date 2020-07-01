@@ -12,7 +12,7 @@ if (isset($_POST['id'])) {
     $man_acct = $_POST['man_allow'];
     $disable = $_POST['disable'];
     $descript = $_POST['descript'];
-
+    $parent = $_POST['parent_id'];
     $acct_type = 0;
     if($class_enum == 1){
         $acct_type = "ASSET";
@@ -43,7 +43,7 @@ if (isset($_POST['id'])) {
     }
 
         $sec = "UPDATE acc_gl_account SET name = '$acct_name', gl_code = '$gl_code',
-        account_usage = '$acct_use', classification_enum='$class_enum', manual_journal_entries_allowed='$man_allow',
+        account_usage = '$acct_use', parent_id = '$parent', classification_enum='$class_enum', manual_journal_entries_allowed='$man_allow',
         disabled = '$disable', description = '$descript' WHERE id = '$id'";
         $res = mysqli_query($connection, $sec);
 

@@ -75,6 +75,7 @@ if ($bvn_length == 11) {
         //    echo $response;
            $obj = json_decode($response, TRUE);
            $status = $obj['status'];
+           $bvn_fn = "";
            if ($status != false) {
            $bvn_fn = $obj['data']['first_name'];
            $bvn_ln = $obj['data']['last_name'];
@@ -83,7 +84,7 @@ if ($bvn_length == 11) {
            $bvn_bvn = $obj['data']['bvn'];
            }
         //    echo $bvn_fn."firstname".$bvn_ln."Lastname".$dob."DATE OF BIRTH";
-        if ($bvn_fn == $first && $bvn_ln == $last && $bvn_dob == $dob && $bvn_phone == $phone){
+        if ($bvn_fn == $first && $bvn_ln == $last && $bvn_dob == $dob && $bvn_phone == $phone) {
             // BVN VERIFIED
     // UPDATE THE WITHDRAWAL
     // CALCULATION
@@ -155,6 +156,29 @@ if ($bvn_length == 11) {
                 // RECORD THE TRANSACTION
                 // KEEP IN THE GLS
             } else {
+                // AIIT
+                  // CALCULATION
+    $cal_bal = $balance - 50;
+    $cal_with = $total_with + 50;
+    $cal_sek = $total_sekani_charge + 20;
+    $cal_mch = $total_merchant_charge + 20;
+    $cal_int_prof = $total_int_profit + 10;
+    $digits = 9;
+    $date = date("Y-m-d");
+    $date2 = date('Y-m-d H:i:s');
+    $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+    $trans = "SKWAL".$randms."LET".$int_id;
+    $update_transaction = mysqli_query($connection, "UPDATE sekani_wallet SET running_balance = '$cal_bal', total_withdrawal = '$cal_with',
+    int_profit = '$cal_int_prof', sekani_charge = '$cal_sek', merchant_charge = '$cal_mch' WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
+    if ($update_transaction) {
+        // update
+        $insert_transaction = mysqli_query($connection, "INSERT INTO `sekani_wallet_transaction` (`int_id`, `branch_id`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `wallet_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, 
+        `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`,
+        `int_profit`, `sekani_charge`, `merchant_charge`)
+         VALUES ('{$int_id}', '{$branch_id}', '{$trans}', 'BVN charge', 'bvn', NULL, '0', '{$date}', '50', '{$cal_bal}', '{$cal_bal}', {$date}, 
+         NULL, NULL, '{$date2}', '0', '0.00', '50.00', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
+         if ($insert_transaction) {
+            //  echo remaining ending
             echo '<script type="text/javascript">
     $(document).ready(function(){
         swal({
@@ -170,6 +194,29 @@ if ($bvn_length == 11) {
     });
     </script>
     ';
+    // DISPLAY DATA
+    ?>
+    <div class="card card-nav-tabs" style="width: 20rem;">
+  <div class="card-header card-header-danger">
+    Verifiy The Data
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Firstname: <?php echo $bvn_fn;?></li>
+    <li class="list-group-item">Lastname:<?php echo $bvn_ln;?></li>
+    <li class="list-group-item">Phone: <?php echo $bvn_phone;?></li>
+    <li class="list-group-item">DOB: <?php echo $bvn_dob;?></li>
+  </ul>
+</div>
+    <?php
+         } else {
+            //  echo wrong
+            echo "WRONG TRANSACTION";
+         }
+    } else {
+        // echo out a problem witht the 
+        echo "WRONG UPDATE";
+    }
+    // NOW TAKE CHARGE
 }
         }
         }

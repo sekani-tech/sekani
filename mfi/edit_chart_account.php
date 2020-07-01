@@ -129,7 +129,7 @@ elseif($class_enum  == 5){
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account Type</label>
-                      <select class="form-control" name="class_enum" id="" required>
+                      <select class="form-control" name="class_enum" id="give" required>
                         <option value="<?php echo $class_enum?>"><?php echo $acc_type?></option>
                         <option value="1">ASSET</option>
                         <option value="2">LIABILITY</option>
@@ -137,17 +137,52 @@ elseif($class_enum  == 5){
                         <option value="4">INCOME</option>
                         <option value="5">EXPENSE</option>
                       </select>
+                      <input hidden type="text" id="int_id" value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
                     </div>
                   </div>
-
+                  <script>
+                    $(document).ready(function() {
+                      $('#atu').change(function() {
+                        var gl = $(this).val();
+                        var ch = $('#give').val();
+                        var id = $('#int_id').val();
+                        $.ajax({
+                          url:"ajax_post/chart_acct_post.php",
+                          method: "POST",
+                          data:{gl:gl, ch:ch, id:id},
+                          success:function(data){
+                            $('#dropping').html(data);
+                          }
+                        })
+                      });
+                      $('#give').change(function() {
+                        var ch = $(this).val();
+                        var gl = $('#atu').val();
+                        var id = $('#int_id').val();
+                        $.ajax({
+                          url:"ajax_post/chart_acct_post.php",
+                          method: "POST",
+                          data:{ch:ch, gl:gl, id:id},
+                          success:function(data){
+                            $('#dropping').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account Usage</label>
-                      <select class="form-control" name="acct_use" id="" required>
+                      <select class="form-control" name="acct_use" id="atu" required>
                         <option value="<?php echo $acct_use;?>"><?php echo $acct_use_name;?></option>
                         <option value="1">GL ACCOUNT</option>
                         <option value="2">GL GROUP</option>
                       </select>                    
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">    
+                    <div id="dropping"></div>           
                     </div>
                   </div>
                   <div class="col-md-4">
