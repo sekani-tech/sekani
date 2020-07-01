@@ -419,9 +419,10 @@ $transid2 = $randms2;
             <div class="form-group">
                 <label for="">Type</label>
                 <select class="form-control" name="test">
-                    <option> </option>
+                    <option hidden>select an option</option>
                     <option value="deposit">Deposit</option>
                     <option value="withdraw">Withdraw</option>
+                    <option value="deposit">Salary</option>
                  </select>
             </div>
             <div id="acct_name"></div>

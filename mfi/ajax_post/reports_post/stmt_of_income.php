@@ -10,96 +10,166 @@ if(isset($_POST['start'])){
     $start = $_POST['start'];
     $end = $_POST['end'];
     $time = strtotime($end);
-    $onemonth = date("Y-m-d", strtotime("-1 month", $time));
-// Operating Revenue Data
-$gl_acc_exec = mysqli_query($connection, "SELECT sum(organization_running_balance_derived) AS organization_running_balance_derived FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '54'");
-$gl = mysqli_fetch_array($gl_acc_exec);
-$interest_income = $gl['organization_running_balance_derived'];
+    $curren = date("F d, Y", $time);
+    $onemonth = date("F d, Y", strtotime("-1 month", $time));
+    $onemonthly = date("Y-m-d", strtotime("-1 month", $time));
 
-$service_fee = mysqli_query($connection, "SELECT sum(organization_running_balance_derived) AS organization_running_balance_derived FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '198'");
-$fe = mysqli_fetch_array($service_fee);
-$fee = $fe['organization_running_balance_derived'];
+// Interest on loans data
+$jfjf = mysqli_query($connection, "SELECT * FROM acct_rule WHERE int_id = '$sessint_id'");
+while($dsdsd = mysqli_fetch_array($jfjf)){
+$interest_income = $dsdsd['inc_interest'];
 
+$fdfi = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$interest_income' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+$dov = mysqli_query($connection, $fdfi);
+$oof = mysqli_fetch_array($dov);
+$gl = $oof['gl_account_balance_derived'];
+$int_on_loans += $gl;
 
-$gl_acc_exec = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90013000'");
-$gl = mysqli_fetch_array($gl_acc_exec);
-$burrowing = $gl['organization_running_balance_derived'];
+$fkdlf = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$interest_income' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+$dff = mysqli_query($connection, $fkdlf);
+$df = mysqli_fetch_array($dff);
+if(isset($df)){
+$gfl = $df['gl_account_balance_derived'];
+}
+else{
+  $gfl = "0.00";
+}
+$last_int_on_loans += $gfl;
+}
+// Fines and Fees gl
+$dfmldk = mysqli_query($connection, "SELECT * FROM charge WHERE int_id = '$sessint_id'");
+while($jjc = mysqli_fetch_array($dfmldk)){
+$jsk = $jjc['gl_code'];
 
-$other_fee = mysqli_query($connection, "SELECT sum(organization_running_balance_derived) AS organization_running_balance_derived FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '62'");
-$ot = mysqli_fetch_array($other_fee);
-$other = $ot['organization_running_balance_derived'];
+$fdfi = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$jsk' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+$jssbi = mysqli_query($connection, $fdfi);
+$d = mysqli_fetch_array($jssbi);
+if(isset($d)){
+$gl = $d['gl_account_balance_derived'];
+}else{
+  $gl = "0.00";
+}
+$curren_charge += $gl;
 
-$netintincome = $interest_income - $burrowing;
-$ttlincome = $netintincome + $fee + $other;
+$dfke = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$jsk' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+$ddf = mysqli_query($connection, $dfke);
+$ofs = mysqli_fetch_array($ddf);
+if(isset($ofs)){
+$gfl = $ofs['gl_account_balance_derived'];
+}
+else{
+  $gfl = "0.00";
+}
+$last_mon_charge += $gfl;
+}
+// Liabilities Report
+$liab = "SELECT * FROM acc_gl_account WHERE int_id='$sessint_id' AND classification_enum = '2'";
+$iod = mysqli_query($connection, $liab);
+while($re = mysqli_fetch_array($iod)){
+  $dofs = $re['gl_code'];
+  $dops = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$dofs' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+$sklsd = mysqli_query($connection, $dops);
+$ui = mysqli_fetch_array($sklsd);
+if(isset($ui)){
+$rer = $ui['gl_account_balance_derived'];
+}else{
+  $rer = "0.00";
+}
+$liabilities += $rer;
 
-// Operating Expenses data. If a better, more compact form of arranging this data is available, please feel free to edit.
-$salary = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90021000'");
-$sl = mysqli_fetch_array($salary);
-$salaries = $sl['organization_running_balance_derived'];
+$kldfk = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$dofs' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+$odf = mysqli_query($connection, $kldfk);
+$pdfo = mysqli_fetch_array($odf);
+if(isset($pdfo)){
+$pso = $pdfo['gl_account_balance_derived'];
+}
+else{
+  $pso = "0.00";
+}
+$otgerliabi += $pso;
+}
+// NET INTEREST INCOME
+$net_interest_income =$int_on_loans - $liabilities;
+$net_interest_income_last = $last_int_on_loans - $otgerliabi;
+// Total Revenue Income
+$ttl_revenue_curren = $net_interest_income + $curren_charge;
+$ttl_revenue_last = $net_interest_income_last + $last_mon_charge;
+// Operating Expenses
+function fill_operation($connection, $sessint_id, $start, $end, $onemonthly)
+{
+  $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id !='0' AND classification_enum ='5' ORDER BY name ASC";
+  $state1 = mysqli_query($connection, $stateg);
+  $outxx = '';
+  while ($row = mysqli_fetch_array($state1))
+  {
+    $namde = $row['name'];
 
-$fuel = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90042000'");
-$fl = mysqli_fetch_array($fuel);
-$fueling = $fl['organization_running_balance_derived'];
+    $glcode = $row['gl_code'];
 
-$trans = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90044000'");
-$tl = mysqli_fetch_array($trans);
-$transportation = $tl['organization_running_balance_derived'];
+    $opbalance = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+    $fodf = mysqli_query($connection, $opbalance);
+      $n = mysqli_fetch_array($fodf);
+      if(isset($n)){
+      $endbal = number_format($n['gl_account_balance_derived'], 2);
+      }else{
+        $endbal = "0.00";
+      }
+    
+    $fdf = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+    $ss = mysqli_query($connection, $fdf);
+      $u = mysqli_fetch_array($ss);
+      if(isset($u)){
+      $lastmon = number_format($u['gl_account_balance_derived'], 2);
+      }
+      else{
+        $lastmon = "0.00";
+      }
 
-$office = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90041000'");
-$ol = mysqli_fetch_array($office);
-$office_rent = $ol['organization_running_balance_derived'];
+  $outxx .= '
+  <tr>
+  <td>'.$namde.'</td>
+  <td style="text-align: center">'.$endbal.'</td>
+  <td style="text-align: center">'.$lastmon.'</td>
+</tr>';
+  }
+return $outxx;
+}
 
-$print = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90047000'");
-$pl = mysqli_fetch_array($print);
-$printing = $pl['organization_running_balance_derived'];
+// While loop for total operating expense
+$xccfdg = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id !='0' AND classification_enum ='5' ORDER BY name ASC";
+$fdff = mysqli_query($connection, $xccfdg);
+while ($q = mysqli_fetch_array($fdff))
+  {
+    $gllcode = $q['gl_code'];
 
-$electro = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90043000'");
-$el = mysqli_fetch_array($electro);
-$electricity = $el['organization_running_balance_derived'];
-
-$prof = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90054000'");
-$rl = mysqli_fetch_array($prof);
-$profession = $rl['organization_running_balance_derived'];
-
-$sub = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90051000'");
-$sul = mysqli_fetch_array($sub);
-$subscribe = $sul['organization_running_balance_derived'];
-
-$repau = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '57703'");
-$rl = mysqli_fetch_array($repau);
-$repairs = $rl['organization_running_balance_derived'];
-
-$general = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90049300'");
-$grl = mysqli_fetch_array($general);
-$general = $grl['organization_running_balance_derived'];
-
-$bank = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90061000'");
-$bl = mysqli_fetch_array($bank);
-$bankcharges = $bl['organization_running_balance_derived'];
-
-$rela = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90052000'");
-$rol = mysqli_fetch_array($rela);
-$relation = $rol['organization_running_balance_derived'];
-
-$sasa = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90013000'");
-$se = mysqli_fetch_array($sasa);
-$sasda = $gl['organization_running_balance_derived'];
-
-$bad = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90071000'");
-$bll = mysqli_fetch_array($bad);
-$baddebt = $bll['organization_running_balance_derived'];
-
-$security = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90053000'");
-$ssl = mysqli_fetch_array($security);
-$secure = $ssl['organization_running_balance_derived'];
-
-$missa = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '90013000'");
-$gr = mysqli_fetch_array($missa);
-$sss = $gl['organization_running_balance_derived'];
-
-$totality = $salaries + $fueling + $transportation + $office_rent + $printing + $electricity + $profession + $subscribe + $repairs
-+ $general + $bankcharges + $relation + $baddebt + $secure;
-
+    $kutty = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gllcode' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+    $cxcxfd = mysqli_query($connection, $kutty);
+    $j = mysqli_fetch_array($cxcxfd);
+    if(isset($j)){
+    $endbal = $j['gl_account_balance_derived'];
+    }else{
+      $endbal = "0.00";
+    }
+    
+    $kuoo = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gllcode' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+    $po = mysqli_query($connection, $kuoo);
+      $o = mysqli_fetch_array($po);
+      if(isset($o)){
+      $lastmon = $o['gl_account_balance_derived'];
+      }
+      else{
+        $lastmon = "0.00";
+      }
+      $ttlcurrenmonth +=$endbal;
+      $ttlastmonth +=$lastmon;
+  }
+  // Depreciation an income tax hasnt been coded yet. Values = 0 for now
+  $depreciation_current = 0.00;
+  $income_tax_current = 0.00;
+  $depreciation_last  = 0.00;
+  $income_tax_last = 0.00;
+  $profit_for_year = $ttlcurrenmonth - ($depreciation_current + $income_tax_current);
+  $profit_for_year_last = $ttlastmonth - ($depreciation_last + $income_tax_last);
 $out = '';
 $out = '
 <div class="card">
@@ -110,39 +180,39 @@ $out = '
   <table class="table">
     <thead>
       <th style="font-weight:bold;">GL Account</th>
-      <th style="text-align: center; font-weight:bold;">'.$onemonth.' <br/>(NGN)</th>
-      <th style="text-align: center; font-weight:bold;">'.$end.' <br/>(NGN)</th>
+      <th style="text-align: center; font-weight:bold;">'.$curren.'<br/>(NGN)</th>
+      <th style="text-align: center; font-weight:bold;">'.$onemonth.'<br/>(NGN)</th>
     </thead>
     <tbody>
       <tr>
         <td>Interest on Loans:</td>
-        <td style="text-align: center">'.number_format($interest_income).'</td>
-        <td style="text-align: center">23,809,347</td>
+        <td style="text-align: center">'.number_format($int_on_loans).'</td>
+        <td style="text-align: center">'.number_format($last_int_on_loans).'</td>
       </tr>
       <tr>
         <td>Less interest on borrowings and deposit liabilities:</td>
-        <td style="text-align: center">'.number_format($burrowing).'</td>
-        <td style="text-align: center">3,605,801</td>
+        <td style="text-align: center">'.number_format($liabilities).'</td>
+        <td style="text-align: center">'.number_format($otgerliabi).'</td>
       </tr>
       <tr>
         <td style="font-weight:bold;"><b>Net Interest Income</b></td>
-        <td style="text-align: center; font-weight:bold;"><b>'.number_format($netintincome).'</b></td>
-        <td style="text-align: center; font-weight:bold;"><b>20,203,547</b></td>
+        <td style="text-align: center; font-weight:bold;"><b>'.number_format($net_interest_income).'</b></td>
+        <td style="text-align: center; font-weight:bold;"><b>'.number_format($net_interest_income_last).'</b></td>
       </tr>
       <tr>
         <td>Services fees, fines and penalties</td>
-        <td style="text-align: center">'.number_format($fee).'</td>
-        <td style="text-align: center">6,694,511</td>
+        <td style="text-align: center">'.number_format($curren_charge).'</td>
+        <td style="text-align: center">'.number_format($last_mon_charge).'</td>
       </tr>
       <tr>
         <td>Other services and other income</td>
         <td style="text-align: center">'.number_format($other).'</td>
-        <td style="text-align: center">491,685</td>
+        <td style="text-align: center">0.00</td>
       </tr>
       <tr>
         <td style="font-weight:bold;"><b>Total Income</b></td>
-        <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttlincome).'</b></td>
-        <td style="text-align: center; font-weight:bold;"><b>27,389,742</b></td>
+        <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttl_revenue_curren).'</b></td>
+        <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttl_revenue_last).'</b></td>
       </tr>
     </tbody>
   </table>
@@ -156,114 +226,35 @@ $out = '
   <table class="table">
     <thead>
       <th style="font-weight:bold;">GL Account</th>
+      <th style="text-align: center; font-weight:bold;">'.$curren.' <br/>(NGN)</th>
       <th style="text-align: center; font-weight:bold;">'.$onemonth.' <br/>(NGN)</th>
-      <th style="text-align: center; font-weight:bold;">'.$end.' <br/>(NGN)</th>
     </thead>
     <tbody>
+    '.fill_operation($connection, $sessint_id, $start, $end, $onemonthly).'
       <tr>
-        <td>Salaries, Wages and Allowances</td>
-        <td style="text-align: center">'.number_format($salaries).'</td>
-        <td style="text-align: center">15,586,836</td>
+        <td style="font-weight:bold;">TOTAL</td>
+        <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttlcurrenmonth).'</b></td>
+        <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttlastmonth).'</b></td>
       </tr>
       <tr>
-        <td>Fueling and Lubricant</td>
-        <td style="text-align: center">'.number_format($fueling).'</td>
-        <td style="text-align: center">724,350</td>
-      </tr>
-      <tr>
-        <td>Transport and Traveling</td>
-        <td style="text-align: center">'.number_format($transportation).'</td>
-        <td style="text-align: center">2,667,200</td>
-      </tr>
-      <tr>
-        <td>Office Rent</td>
-        <td style="text-align: center">'.number_format($office_rent).'</td>
-        <td style="text-align: center">1,290,000</td>
-      </tr>
-      <tr>
-        <td>Printing and Stationaries</td>
-        <td style="text-align: center">'.number_format($printing).'</td>
-        <td style="text-align: center">504,600</td>
-      </tr>
-      <tr>
-        <td>Electricity and other unilities expenses</td>
-        <td style="text-align: center">'.number_format($electricity).'</td>
-        <td style="text-align: center">504,600</td>
-      </tr>
-      <tr>
-        <td>Professional and Consultancy fee</td>
-        <td style="text-align: center">'.number_format($profession).'</td>
-        <td style="text-align: center">504,600</td>
-      </tr>
-      <tr>
-        <td>Annual Subscription</td>
-        <td style="text-align: center">'.number_format($subscribe).'</td>
-        <td style="text-align: center">504,600</td>
-      </tr>
-      <tr>
-        <td>Traffic and Vehicle Repairs</td>
-        <td style="text-align: center">'.number_format($repairs).'</td>
-        <td style="text-align: center">504,600</td>
-      </tr>
-      <tr>
-        <td>General Repairs and Maintenance</td>
-        <td style="text-align: center">'.number_format($general).'</td>
-        <td style="text-align: center">504,600</td>
-      </tr>
-      <tr>
-        <td>Bank Charges</td>
-        <td style="text-align: center">'.number_format($bankcharges).'</td>
-        <td style="text-align: center">504,600</td>
-      </tr>
-      <tr>
-        <td>Public Relations</td>
-        <td style="text-align: center">'.number_format($relation).'</td>
-        <td style="text-align: center">504,600</td>
-      </tr>
-      <tr>
-        <td>Hotel and Lodging</td>
-        <td style="text-align: center">'.number_format($office_rent).'</td>
-        <td style="text-align: center">504,600</td>
-      </tr>
-      <tr>
-        <td>Bad debt Written Off</td>
-        <td style="text-align: center">'.number_format($baddebt).'</td>
-        <td style="text-align: center">504,600</td>
-      </tr>
-      <tr>
-        <td>Security & Sanition</td>
-        <td style="text-align: center">'.number_format($secure).'</td>
-        <td style="text-align: center">504,600</td>
-      </tr>
-      <tr>
-        <td>Miscellaneous Expense</td>
-        <td style="text-align: center">'.number_format($office_rent).'</td>
-        <td style="text-align: center">504,600</td>
-      </tr>
-      <tr>
-        <td style="font-weight:bold;">Total</td>
-        <td style="text-align: center; font-weight:bold;"><b>'.number_format($totality).'</b></td>
-        <td style="text-align: center; font-weight:bold;"><b> 25,445,674</b></td>
-      </tr>
-      <tr>
-        <td style="font-weight:bold;">NET SURPLUS FROM OPERATIONS</td>
-        <td style="font-weight:bold; text-align: center"> 1,944,068 </td>
-        <td style="font-weight:bold; text-align: center">1,944,068</td>
+        <td style="font-weight:bold;">NET PROFIT FROM OPERATIONS</td>
+        <td style="font-weight:bold; text-align: center">0.00</td>
+        <td style="font-weight:bold; text-align: center">0.00</td>
       </tr>
       <tr>
         <td>Depreciation</td>
-        <td style="text-align: center">1,429,000</td>
-        <td style="text-align: center">1,429,000</td>
+        <td style="text-align: center">0.00</td>
+        <td style="text-align: center">0.00</td>
       </tr>
       <tr>
         <td>Income Tax</td>
-        <td style="text-align: center">139,700</td>
-        <td style="text-align: center">139,700</td>
+        <td style="text-align: center">0.00</td> 
+        <td style="text-align: center">0.00</td>
       </tr>
       <tr>
-        <td style="font-weight:bold;">SURPLUS FOR THE YEAR</td>
-        <td style="font-weight:bold; text-align: center">  375,368  </td>
-        <td style="font-weight:bold; text-align: center">375,368</td>
+        <td style="font-weight:bold;">PROFIT FOR THE YEAR</td>
+        <td style="font-weight:bold; text-align: center">'.number_format($profit_for_year).'</td>
+        <td style="font-weight:bold; text-align: center">'.number_format($profit_for_year_last).'</td>
       </tr>
     </tbody>
   </table>

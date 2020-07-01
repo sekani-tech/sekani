@@ -639,7 +639,8 @@ if ($is_del == "0" && $is_del != NULL) {
         $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";
         header ("Location: ../mfi/transact.php?message5=$randms");
       }
-    } else {
+    }
+ else {
         $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";
         header ("Location: ../mfi/transact.php?message5=$randms");
     }
