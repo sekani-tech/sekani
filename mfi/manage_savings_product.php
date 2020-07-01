@@ -129,26 +129,26 @@ $destination = "index.php";
                       </div>
                       <div class="col-md-6">
                       <div class="form-group">
-                        <label for="shortLoanName" >Automatic Opening Balance *</label>
-                        <input type="number" class="form-control" name="auto_op_bal" value="" placeholder="Short Name..." required>
+                        <label for="shortLoanName" >Minimum Balance *</label>
+                        <input type="number" class="form-control" name="auto_op_bal" value="" placeholder="1000" required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Mininmum Balance for Interest Calculation *</label>
-                        <input type="number" class="form-control" name="min_balance_cal" value="" placeholder="Short Name..." required>
+                        <input type="number" class="form-control" name="min_balance_cal" value="" placeholder="10" required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Maximum Positive Balance*</label>
-                        <input type="number" class="form-control" name="max_pve_bal" value="" placeholder="Short Name..." required>
+                        <input type="number" class="form-control" name="max_pve_bal" value="" placeholder="100,000,000.00" required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Minimum Negative Balance</label>
-                        <input type="number" class="form-control" name="min_nve_bal" value="" placeholder="Short Name..." required>
+                        <input type="number" class="form-control" name="min_nve_bal" value="" placeholder="-20000" required>
                       </div>
                     </div>
                     <div class="col-md-6">

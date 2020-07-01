@@ -145,9 +145,75 @@ $res = mysqli_query($connection, $query);
           $select_account_charge = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$account_no' AND client_id = '$client_id' AND int_id = '$int_id'");
           $myx = mysqli_fetch_array($select_account_charge);
           $client_balance = $myx["account_balance_derived"];
+          $client_tot_with = ($myx["last_withdrawal"] + 50);
           // ALRIGHT MEN
+          $select_bvn_acct_rule =mysqli_query($connection, "SELECT * FROM savings_acct_rule WHERE int_id = '$int_id' AND savings_product_id = '$account_type'");
+          $mxy = mysqli_fetch_array($select_bvn_acc_rule);
+          $income_bvn = $mxy["bvn_income"];
+          // $expense_bvn = $mxy["bvn_expense"];
+          if ($income_bvn != "" && $expense_bvn != "") {
+            // dman
+            $calculated_client_bal = $client_balance - 50;
+            $uca = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$calculated_client_bal', last_withdrawal = '$client_tot_with' WHERE account_no = '$account_no' AND client_id = '$client_id' AND int_id = '$int_id'");
+            if ($uca) {
+              $digits = 9;
+            $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+            $transid = "SKWAL".$randms."LET".$int_id;
+            $gen_date = date("Y-m-d");
+              // now make a move for the transaction
+              // branch
+              $uath = mysqli_query($connection, "INSERT INTO account_transaction (int_id, branch_id,
+              account_no, product_id, teller_id,
+              client_id, transaction_id, description, transaction_type, is_reversed,
+              transaction_date, amount, running_balance_derived, overdraft_amount_derived,
+              created_date, appuser_id, debit) VALUES ('{$int_id}', '{$branch_id}',
+              '{$account_no}', '{$account_type}', '{$field_officer_id}', '{$client_id}', '{$transid}', 'BVN SEARCH CHARGE', 'bvn', '0',
+              '{$gen_date}', '5.00', '{$calculated_client_bal}', '50.00',
+              '{$gen_date}', '{$field_officer_id}', '50.00')");
+              if ($uath) {
+                // echo take me the charge
+                $select_bvn_gl = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$income_bvn' AND int_id = '$int_id'");
+                $tty = mysqli_fetch_array($select_bvn_gl);
+                $bvn_gl_bal = $tty["organization_running_balance_derived"] + 10;
+
+                $make_bvn_update = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived =  '$bvn_gl_bal' WHERE int_id = '$int_id' AND gl_code = '$income_bvn'");
+                // alright
+                if ($make_bvn_update) {
+                  // echo out
+                  $insert_gl_trans = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
+              `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,
+              `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`,
+              `manually_adjusted_or_reversed`, `credit`, `debit`) 
+              VALUES ('{$int_id}', '{$branch_id}', '{$income_bvn}', '{$transid}',
+              'BVN INCOME', 'bvn', '{$client_id}', '0', '{$gen_date}', '10.00', '{$bvn_gl_bal}',
+              '{$bvn_gl_bal}', '{$gen_date}', '0', '{$new_gl_run_bal}', '{$gen_date}',
+              '0', '10.00', '0.00')");
+              if ($insert_gl_trans) {
+                // channel
+                // DMAN
           $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
           echo header ("Location: ../mfi/client.php?message1=$randms");
+              } else {
+                echo "AN ERROR OCCURED IN GL TRANSACTION";
+              }
+                } else {
+                  // echo an error
+                  echo "AN ERROR OCCURED IN GL UPDATE";
+                }
+              } else {
+                // echo an error
+                echo "ACCOUNT TRANSACTION IS BAD ";
+              }
+            } else 
+            {
+              // echo
+              echo "ACCOUNT IS BAB";
+            }
+          } else {
+            // export an output
+            echo "DAMN BVN HAS PROBLEM CALL US NOW";
+          }
+          // NOW CHECK THE BVN TABLE
             // Start mail
 $mail = new PHPMailer;
 // from email addreess and name
