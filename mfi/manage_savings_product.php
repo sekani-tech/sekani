@@ -477,7 +477,7 @@ $destination = "index.php";
                             </div>
                             <div class="form-group">
                             <div class="col-md-8">
-                            <label for="charge" class="form-align ">Loan Portfolio</label>
+                            <label for="charge" class="form-align ">Savings Portfolio</label>
                             <select class="form-control form-control-sm" name="asst_loan_port">
                               <option value="">--</option>
                               <?php echo fill_asset($connection) ?>

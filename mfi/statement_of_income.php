@@ -20,6 +20,20 @@ include('header.php');
                 <div class="card-body">
                 <form action="">
                     <div class="row">
+                      <?php
+                    function fill_branch($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
                       <div class="form-group col-md-3">
                         <label for="">Start Date</label>
                         <input type="date" name="" id="start" class="form-control">
@@ -31,7 +45,7 @@ include('header.php');
                       <div class="form-group col-md-3">
                         <label for="">Branch</label>
                         <select name="" id="" class="form-control">
-                            <option value="">Head Office</option>
+                        <?php echo fill_branch($connection);?>
                         </select>
                       </div>
                       <!-- <div class="form-group col-md-3">

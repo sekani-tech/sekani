@@ -106,8 +106,8 @@ $fomd = "INSERT INTO `savings_product` (`int_id`, `branch_id`, `name`, `short_na
                         $acct_gl_code = $sc["acct_gl_code"];
                         $acct = $sc["acct"];
                         $type_c = $sc["type"];
-                        $insert_cache = mysqli_query($connection, "INSERT INTO `sav_acct` (`int_id`, `gl_code`, `name`, `savings_id`, `acct_gl_code`, `acct`, `type`, `bvn_income`, `bvn_expense`)
-                         VALUES ('{$sessint_id}', '{$gl_code}', '{$gl_name}', '{$savingid}', '{$acct_gl_code}', '{$acct}', '{$type_c}', '{$bvni}', '{$bvne}')");
+                        $insert_cache = mysqli_query($connection, "INSERT INTO `sav_acct` (`int_id`, `gl_code`, `name`, `savings_id`, `acct_gl_code`, `acct`, `type`)
+                         VALUES ('{$sessint_id}', '{$gl_code}', '{$gl_name}', '{$savingid}', '{$acct_gl_code}', '{$acct}', '{$type_c}')");
                         if ($insert_cache) {
                             $delet_cache = mysqli_query($connection, "DELETE FROM `prod_acct_cache` WHERE prod_cache_id = '$id_trans'");
                         }

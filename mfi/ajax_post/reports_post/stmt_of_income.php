@@ -125,9 +125,9 @@ $out = '
         <td style="text-align: center">3,605,801</td>
       </tr>
       <tr>
-        <td><b>Net Interest Income</b></td>
-        <td style="text-align: center"><b>'.number_format($netintincome).'</b></td>
-        <td style="text-align: center"><b>20,203,547</b></td>
+        <td style="font-weight:bold;"><b>Net Interest Income</b></td>
+        <td style="text-align: center; font-weight:bold;"><b>'.number_format($netintincome).'</b></td>
+        <td style="text-align: center; font-weight:bold;"><b>20,203,547</b></td>
       </tr>
       <tr>
         <td>Services fees, fines and penalties</td>
@@ -140,9 +140,9 @@ $out = '
         <td style="text-align: center">491,685</td>
       </tr>
       <tr>
-        <td><b>Total Income</b></td>
-        <td style="text-align: center"><b>'.number_format($ttlincome).'</b></td>
-        <td style="text-align: center"><b>27,389,742</b></td>
+        <td style="font-weight:bold;"><b>Total Income</b></td>
+        <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttlincome).'</b></td>
+        <td style="text-align: center; font-weight:bold;"><b>27,389,742</b></td>
       </tr>
     </tbody>
   </table>
@@ -241,9 +241,9 @@ $out = '
         <td style="text-align: center">504,600</td>
       </tr>
       <tr>
-        <td></td>
-        <td style="text-align: center"><b>'.number_format($totality).'</b></td>
-        <td style="text-align: center"><b> 25,445,674</b></td>
+        <td style="font-weight:bold;">Total</td>
+        <td style="text-align: center; font-weight:bold;"><b>'.number_format($totality).'</b></td>
+        <td style="text-align: center; font-weight:bold;"><b> 25,445,674</b></td>
       </tr>
       <tr>
         <td style="font-weight:bold;">NET SURPLUS FROM OPERATIONS</td>
