@@ -90,7 +90,7 @@
                   <p class="card-category">Outstanding Loan Balance</p>
                   <!-- Populate with the total value of outstanding loans -->
                   <?php
-                  $re = "SELECT SUM(total_outstanding_derived) AS total_outstanding_derived FROM loan WHERE int_id = '$sessint_id'";
+                  $re = "SELECT SUM(total_outstanding_derived) AS total_outstanding_derived FROM loan JOIN client ON loan.client_id = client.id WHERE loan.int_id = '$sessint_id'";
                   $resultxx = mysqli_query($connection, $re);
                   if (count([$resultxx]) == 1) {
                   $jk = mysqli_fetch_array($resultxx); 
