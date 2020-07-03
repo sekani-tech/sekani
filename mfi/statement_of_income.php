@@ -44,7 +44,7 @@ include('header.php');
                       </div>
                       <div class="form-group col-md-3">
                         <label for="">Branch</label>
-                        <select name="" id="" class="form-control">
+                        <select name="" id="branch_id" class="form-control">
                         <?php echo fill_branch($connection);?>
                         </select>
                       </div>
@@ -93,10 +93,11 @@ include('header.php');
                       $('#input').on("click", function () {
                         var start = $('#start').val();
                         var end = $('#end').val();
+                        var branch = $('#branch_id').val();
                         $.ajax({
                           url: "ajax_post/reports_post/stmt_of_income.php", 
                           method: "POST",
-                          data:{start:start, end:end},
+                          data:{start:start, end:end, branch:branch},
                           success: function (data) {
                             $('#outjournal').html(data);
                           }

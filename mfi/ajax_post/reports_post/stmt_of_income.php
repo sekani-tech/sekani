@@ -9,6 +9,7 @@ $current = date('d/m/Y');
 if(isset($_POST['start'])){
     $start = $_POST['start'];
     $end = $_POST['end'];
+    $branch_id = $_POST['branch'];
     $time = strtotime($end);
     $curren = date("F d, Y", $time);
     $onemonth = date("F d, Y", strtotime("-1 month", $time));
@@ -168,8 +169,10 @@ while ($q = mysqli_fetch_array($fdff))
   $income_tax_current = 0.00;
   $depreciation_last  = 0.00;
   $income_tax_last = 0.00;
-  $profit_for_year = $ttlcurrenmonth - ($depreciation_current + $income_tax_current);
-  $profit_for_year_last = $ttlastmonth - ($depreciation_last + $income_tax_last);
+  $net_prof_from_op = $ttl_revenue_curren - $ttlcurrenmonth;
+  $net_prof_last_op = $ttl_revenue_last - $ttlastmonth;
+  $profit_for_year = $net_prof_from_op - ($depreciation_current + $income_tax_current);
+  $profit_for_year_last = $net_prof_last_op - ($depreciation_last + $income_tax_last);
 $out = '';
 $out = '
 <div class="card">
@@ -238,8 +241,8 @@ $out = '
       </tr>
       <tr>
         <td style="font-weight:bold;">NET PROFIT FROM OPERATIONS</td>
-        <td style="font-weight:bold; text-align: center">0.00</td>
-        <td style="font-weight:bold; text-align: center">0.00</td>
+        <td style="font-weight:bold; text-align: center">'.number_format($net_prof_from_op).'</td>
+        <td style="font-weight:bold; text-align: center">'.number_format($net_prof_last_op).'</td>
       </tr>
       <tr>
         <td>Depreciation</td>
@@ -263,7 +266,30 @@ $out = '
 <!--//report ends here -->
 <div class="card">
  <div class="card-body">
-  <a href="" class="btn btn-primary">Print</a>
+ <form method="POST" action="../composer/stmt_income.php">
+ <input type="text" name="start_date" value="'.$start.'"/>
+ <input type="text" name="end_date" value="'.$end.'"/>
+ <input type="text" name="branch_id" value="'.$branch_id.'"/>
+ <input type="text" name="int_id" value="'.$sessint_id.'"/>
+ <input type="text" name="previous_month_date" value="'.$onemonthly.'"/>
+ <input type="text" name="current_interest_on_loans" value="'.$int_on_loans.'"/>
+ <input type="text" name="previous_interest_on_loans" value="'.$last_int_on_loans.'"/>
+ <input type="text" name="current_liabilities" value="'.$liabilities.'"/>
+ <input type="text" name="previous_liabilities" value="'.$otgerliabi.'"/>
+ <input type="text" name="current_net_interest_on_income" value="'.$net_interest_income.'"/>
+ <input type="text" name="previous_net_interest_on_income" value="'.$net_interest_income_last.'"/>
+ <input type="text" name="current_charge_income" value="'.$curren_charge.'"/>
+ <input type="text" name="previous_charge_income" value="'.$last_mon_charge.'"/>
+ <input type="text" name="current_total_revenue" value="'.$ttl_revenue_curren.'"/>
+ <input type="text" name="previous_total_revenue" value="'.$ttl_revenue_last.'"/>
+ <input type="text" name="current_total_operating_expense" value="'.$ttlcurrenmonth.'"/>
+ <input type="text" name="previous_total_operating_expense" value="'.$ttlastmonth.'"/>
+ <input type="text" name="current_net_profit_from_operation" value="'.$net_prof_from_op.'"/>
+ <input type="text" name="previous_net_profit_from_operation" value="'.$net_prof_last_op.'"/>
+ <input type="text" name="profit_current_year" value="'.$profit_for_year.'"/>
+ <input type="text" name="profit_previous_year" value="'.$profit_for_year_last.'"/>
+  <button class="btn btn-primary">Print</button>
+  </form>
  </div>
 </div>
 </div>';
