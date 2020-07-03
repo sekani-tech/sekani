@@ -267,27 +267,27 @@ $out = '
 <div class="card">
  <div class="card-body">
  <form method="POST" action="../composer/stmt_income.php">
- <input type="text" name="start_date" value="'.$start.'"/>
- <input type="text" name="end_date" value="'.$end.'"/>
- <input type="text" name="branch_id" value="'.$branch_id.'"/>
- <input type="text" name="int_id" value="'.$sessint_id.'"/>
- <input type="text" name="previous_month_date" value="'.$onemonthly.'"/>
- <input type="text" name="current_interest_on_loans" value="'.$int_on_loans.'"/>
- <input type="text" name="previous_interest_on_loans" value="'.$last_int_on_loans.'"/>
- <input type="text" name="current_liabilities" value="'.$liabilities.'"/>
- <input type="text" name="previous_liabilities" value="'.$otgerliabi.'"/>
- <input type="text" name="current_net_interest_on_income" value="'.$net_interest_income.'"/>
- <input type="text" name="previous_net_interest_on_income" value="'.$net_interest_income_last.'"/>
- <input type="text" name="current_charge_income" value="'.$curren_charge.'"/>
- <input type="text" name="previous_charge_income" value="'.$last_mon_charge.'"/>
- <input type="text" name="current_total_revenue" value="'.$ttl_revenue_curren.'"/>
- <input type="text" name="previous_total_revenue" value="'.$ttl_revenue_last.'"/>
- <input type="text" name="current_total_operating_expense" value="'.$ttlcurrenmonth.'"/>
- <input type="text" name="previous_total_operating_expense" value="'.$ttlastmonth.'"/>
- <input type="text" name="current_net_profit_from_operation" value="'.$net_prof_from_op.'"/>
- <input type="text" name="previous_net_profit_from_operation" value="'.$net_prof_last_op.'"/>
- <input type="text" name="profit_current_year" value="'.$profit_for_year.'"/>
- <input type="text" name="profit_previous_year" value="'.$profit_for_year_last.'"/>
+ <input hidden type="text" name="start_date" value="'.$start.'"/>
+ <input hidden type="text" name="end_date" value="'.$end.'"/>
+ <input hidden type="text" name="branch_id" value="'.$branch_id.'"/>
+ <input hidden type="text" name="int_id" value="'.$sessint_id.'"/>
+ <input hidden type="text" name="previous_month_date" value="'.$onemonthly.'"/>
+ <input hidden type="text" name="current_interest_on_loans" value="'.$int_on_loans.'"/>
+ <input hidden type="text" name="previous_interest_on_loans" value="'.$last_int_on_loans.'"/>
+ <input hidden type="text" name="current_liabilities" value="'.$liabilities.'"/>
+ <input hidden type="text" name="previous_liabilities" value="'.$otgerliabi.'"/>
+ <input hidden type="text" name="current_net_interest_on_income" value="'.$net_interest_income.'"/>
+ <input hidden type="text" name="previous_net_interest_on_income" value="'.$net_interest_income_last.'"/>
+ <input hidden type="text" name="current_charge_income" value="'.$curren_charge.'"/>
+ <input hidden type="text" name="previous_charge_income" value="'.$last_mon_charge.'"/>
+ <input hidden type="text" name="current_total_revenue" value="'.$ttl_revenue_curren.'"/>
+ <input hidden type="text" name="previous_total_revenue" value="'.$ttl_revenue_last.'"/>
+ <input hidden type="text" name="current_total_operating_expense" value="'.$ttlcurrenmonth.'"/>
+ <input hidden type="text" name="previous_total_operating_expense" value="'.$ttlastmonth.'"/>
+ <input hidden type="text" name="current_net_profit_from_operation" value="'.$net_prof_from_op.'"/>
+ <input hidden type="text" name="previous_net_profit_from_operation" value="'.$net_prof_last_op.'"/>
+ <input hidden type="text" name="profit_current_year" value="'.$profit_for_year.'"/>
+ <input hidden type="text" name="profit_previous_year" value="'.$profit_for_year_last.'"/>
   <button class="btn btn-primary">Print</button>
   </form>
  </div>
