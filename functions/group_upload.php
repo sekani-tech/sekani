@@ -45,6 +45,8 @@ while($ew = mysqli_fetch_array($sdsds)){
      VALUES ('{$ssint_id}', '{$gname}', '{$branch_id}', '{$clidd}', '{$namec}', '{$grou_id}')";
      $codf = mysqli_query($connection, $dof);
 
+     $rivm = "UPDATE client SET client_type = 'GROUP' WHERE int_id='$ssint_id' AND id='$clidd'";
+     $fid = mysqli_query($connection, $rivm);
      if($codf){
          $dso = "DELETE FROM `group_client_cache` WHERE id = '$grclcaid'";
          $sodkfo = mysqli_query($connection, $dso);
