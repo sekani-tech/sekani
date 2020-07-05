@@ -194,7 +194,7 @@ $destination = "report_client.php";
                 </div>
                 <div class="card-body">
                 <div class="form-group">
-                <form method = "POST" action = "../composer/client_list.php">
+                <form method = "POST" action = "../composer/group_list.php">
               <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
               <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
               <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
@@ -277,17 +277,17 @@ $destination = "report_client.php";
     <?php
 function fill_client($connection) {
   $sint_id = $_SESSION["int_id"];
-  $org = "SELECT * FROM client WHERE int_id = '$sint_id'";
+  $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
   $res = mysqli_query($connection, $org);
   $out = '';
   while ($row = mysqli_fetch_array($res))
   {
-    $out .= '<option value="'.$row["id"].'">'.$row["firstname"].' '.$row["lastname"].'</option>';
+    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
   }
   return $out;
 }
 ?>
-Content added here
+
     <div class="content">
         <div class="container-fluid">
          your content here
@@ -323,11 +323,11 @@ Content added here
                         var cid = $(this).val();
                         var intid = $('#intt').val();
                         $.ajax({
-                          url: "ajax_post/reports_post/client_summary.php", 
+                          url: "ajax_post/reports_post/groupby_branch.php", 
                           method: "POST",
                           data:{cid:cid, intid:intid},
                           success: function (data) {
-                            $('#outjournal').html(data);
+                            $('#hdhd').html(data);
                           }
                         })
                       });
@@ -335,9 +335,9 @@ Content added here
                   </script>
                   
                 </div>
+                <div id="hdhd"></div>
               </div>
             </div>
-            <div id="outjournal"></div>
           </div>
         </div>
       </div>
@@ -367,18 +367,18 @@ Content added here
                   $thismonth = date("m");
                   // $end = date('Y-m-d', strtotime('-30 days'));
                   $curren = $thisyear."-".$thismonth."-01";
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std'";
+                        $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std'";
                         $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      $date = date("F");
-                   }?><div id="month_no"><?php echo $inr;?> Registered groups this month</div></p>
+                   }?><div id="month_no"><?php echo $inr;?> Registered group(s) this month</div></p>
                 </div>
                 <div class="card-body">
                 <div class="row">
                   <div class="col-md-3">
                   <div class="form-group">
-                <form method = "POST" action = "../composer/registered_client.php">
+                <form method = "POST" action = "../composer/registered_group.php">
                     <label for="">Pick Month</label>
                     <select id="month" class="form-control" style="text-transform: uppercase;" name="month">
                     <option value="0"></option>
@@ -422,7 +422,7 @@ Content added here
                       $('#month').on("change", function () {
                         var month = $(this).val();
                         $.ajax({
-                          url: "ajax_post/reports_post/pick_month_copy.php", 
+                          url: "ajax_post/reports_post/pick_group_month_copy.php", 
                           method: "POST",
                           data:{month:month},
                           success: function (data) {
@@ -437,7 +437,7 @@ Content added here
                       $('#month').on("change", function () {
                         var month = $(this).val();
                         $.ajax({
-                          url: "ajax_post/reports_post/pick_month.php", 
+                          url: "ajax_post/reports_post/pick_group_month.php", 
                           method: "POST",
                           data:{month:month},
                           success: function (data) {
@@ -453,26 +453,26 @@ Content added here
                     <table id="dismonth" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std'";
+                        $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
-                          First Name
+                          Group Name
                         </th>
                         <th>
-                          Last Name
+                          Reg Type
                         </th>
                         <th>
-                          Account officer
+                          Meeting Day
                         </th>
                         <th>
-                          Account Type
+                          Meeting Frequency
                         </th>
                         <th>
-                          Account Number
+                          Meeting Time
                         </th>
                         <th>
-                          Phone
+                          Meeting Location
                         </th>
                       </thead>
                       <tbody>
@@ -480,28 +480,12 @@ Content added here
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
-                          <th><?php echo $row["firstname"]; ?></th>
-                          <th><?php echo $row["lastname"]; ?></th>
-                          <th><?php echo strtoupper($row["first_name"]." ".$row["last_name"]); ?></th>
-                          <?php
-                            $class = "";
-                            $row["account_type"];
-                            $cid= $row["id"];
-                            $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
-                            if (count([$atype]) == 1) {
-                                $yxx = mysqli_fetch_array($atype);
-                                $actype = $yxx['product_id'];
-                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
-                           if (count([$spn])) {
-                             $d = mysqli_fetch_array($spn);
-                             $savingp = $d["name"];
-                           }
-                            }
-                           
-                            ?>
-                          <th><?php echo $savingp; ?></th>
-                          <th><?php echo $row["account_no"]; ?></th>
-                          <th><?php echo $row["mobile_no"]; ?></th>
+                          <th><?php echo $row["g_name"]; ?></th>
+                          <th><?php echo $row["reg_type"]; ?></th>
+                          <th><?php echo $row["meeting_day"]; ?></th>
+                          <th><?php echo $row["meeting_frequency"]; ?></th>
+                          <th><?php echo $row["meeting_time"]; ?></th>
+                          <th><?php echo $row["meeting_location"]; ?></th>
                         </tr>
                         <?php }
                           }
