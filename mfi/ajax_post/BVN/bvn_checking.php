@@ -153,6 +153,7 @@ if ($bvn_length == 11) {
                 </script>
                 ';
                 // TAKE YOUR CHARGE
+                
                 // RECORD THE TRANSACTION
                 // KEEP IN THE GLS
             } else {
@@ -183,7 +184,7 @@ if ($bvn_length == 11) {
     $(document).ready(function(){
         swal({
             type: "error",
-            title: "WRONG BVN DATA",
+            title: "WRONG BVN DATA FORMAT",
             text: "BVN not Verified, check the data provided - Firstname, Lastname, Phone Number and Date of Birth",
             showConfirmButton: false,
             timer: 3000
@@ -195,6 +196,53 @@ if ($bvn_length == 11) {
     </script>
     ';
     // DISPLAY DATA
+    ?>
+    <?php
+    if ($bvn_bvn == $bvn) {
+        ?>
+<input type="text" id="fnx" value="<?php echo $bvn_fn;?>" hidden>
+    <input type="text" id="lnx" value="<?php echo $bvn_ln;?>" hidden>
+    <input type="text" id="phx" value="<?php echo $bvn_phone;?>" hidden>
+    <input type="text" id="dobx" value="<?php echo $bvn_dob;?>" hidden>
+    <script>
+       $(document).ready(function(){ 
+           var qfn = $('#fnx').val();
+           var qln = $('#lnx').val();
+           var qph = $('#phx').val();
+           var qdob = $('#dobx').val();
+        $('#first').val(qfn);
+        $('#last').val(qln);
+        $('#phone').val(qph);
+        $('#dob').val(qdob);
+        // output something
+        swal({
+            type: "error",
+            title: "DATA REFILL",
+            text: "DATA HAS BEEN REFILLED",
+            showConfirmButton: false,
+            timer: 3000
+        });
+        $(":input[type=submit]").prop("disabled", false);
+       });
+    </script>
+        <?php
+    } else {
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "BVN doesnt match",
+                text: "no match for bvn",
+                showConfirmButton: false,
+                timer: 3000
+            });
+            document.getElementById("cbvn").setAttribute("hidden", "");
+            document.getElementById("wbvn").removeAttribute("hidden");
+            $(":input[type=submit]").prop("disabled", true);
+        });
+        </script>
+        ';
+    }
     ?>
     <div class="card card-nav-tabs" style="width: 20rem;">
   <div class="card-header card-header-danger">
