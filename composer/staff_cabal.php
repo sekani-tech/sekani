@@ -40,20 +40,20 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
             $staff = $q["id"];
           $name = $q["display_name"];
 
-          $query1 = "SELECT client.id, client.account_type, account.product_id, client.account_no FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id = '1' AND account.branch_id = '$branch_id' AND account.submittedon_date BETWEEN '$start' AND '$end'";
+          $query1 = "SELECT client.id, client.account_type, account.product_id, client.account_no FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id = '1' AND account.branch_id = '$branch_id' AND client.status = 'Approved' AND account.submittedon_date BETWEEN '$start' AND '$end'";
           $query1exec = mysqli_query($connection, $query1);
           $current = mysqli_num_rows($query1exec);
 
-          $query4 = "SELECT SUM(account.account_balance_derived)  AS account_balance_derived FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id = '1' AND account.branch_id = '$branch_id' AND account.submittedon_date BETWEEN '$start' AND '$end'";
+          $query4 = "SELECT SUM(account.account_balance_derived)  AS account_balance_derived FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id = '1' AND account.branch_id = '$branch_id' AND client.status = 'Approved' AND account.submittedon_date BETWEEN '$start' AND '$end'";
           $query4exec = mysqli_query($connection, $query4);
           $c = mysqli_fetch_array($query4exec);
           $currentamount = $c['account_balance_derived'];
 
-          $query2 = "SELECT client.id, client.account_type, account.product_id, client.account_no FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id != '1' AND account.branch_id = '$branch_id' AND account.submittedon_date BETWEEN '$start' AND '$end'";
+          $query2 = "SELECT client.id, client.account_type, account.product_id, client.account_no FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id != '1' AND account.branch_id = '$branch_id' AND client.status = 'Approved' AND account.submittedon_date BETWEEN '$start' AND '$end'";
           $query2exec = mysqli_query($connection, $query2);
           $savings = mysqli_num_rows($query2exec);
 
-          $query5 = "SELECT SUM(account.account_balance_derived)  AS account_balance_derived FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id != '1' AND account.branch_id = '$branch_id' AND account.submittedon_date BETWEEN '$start' AND '$end'";
+          $query5 = "SELECT SUM(account.account_balance_derived)  AS account_balance_derived FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id != '1' AND account.branch_id = '$branch_id' AND client.status = 'Approved' AND account.submittedon_date BETWEEN '$start' AND '$end'";
           $query5exec = mysqli_query($connection, $query5);
           $s = mysqli_fetch_array($query5exec);
           $savingsamount = $s['account_balance_derived'];
@@ -93,20 +93,20 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
             $staff = $q["id"];
           $name = $q["display_name"];
 
-           $query1 = "SELECT client.id, client.account_type, account.product_id, client.account_no FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id = '1' AND account.branch_id = '$branch_id' AND account.submittedon_date BETWEEN '$start' AND '$end'";
+           $query1 = "SELECT client.id, client.account_type, account.product_id, client.account_no FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id = '1' AND account.branch_id = '$branch_id' AND client.status = 'Approved' AND account.submittedon_date BETWEEN '$start' AND '$end'";
           $query1exec = mysqli_query($connection, $query1);
           $current = mysqli_num_rows($query1exec);
 
-          $query4 = "SELECT SUM(account.account_balance_derived)  AS account_balance_derived FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id = '1' AND account.branch_id = '$branch_id' AND account.submittedon_date BETWEEN '$start' AND '$end'";
+          $query4 = "SELECT SUM(account.account_balance_derived)  AS account_balance_derived FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id = '1' AND account.branch_id = '$branch_id' AND client.status = 'Approved' AND account.submittedon_date BETWEEN '$start' AND '$end'";
           $query4exec = mysqli_query($connection, $query4);
           $c = mysqli_fetch_array($query4exec);
           $currentamount = $c['account_balance_derived'];
 
-          $query2 = "SELECT client.id, client.account_type, account.product_id, client.account_no FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id != '1' AND account.branch_id = '$branch_id' AND account.submittedon_date BETWEEN '$start' AND '$end'";
+          $query2 = "SELECT client.id, client.account_type, account.product_id, client.account_no FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id != '1' AND account.branch_id = '$branch_id' AND client.status = 'Approved' AND account.submittedon_date BETWEEN '$start' AND '$end'";
           $query2exec = mysqli_query($connection, $query2);
           $savings = mysqli_num_rows($query2exec);
 
-          $query5 = "SELECT SUM(account.account_balance_derived)  AS account_balance_derived FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id != '1' AND account.branch_id = '$branch_id' AND account.submittedon_date BETWEEN '$start' AND '$end'";
+          $query5 = "SELECT SUM(account.account_balance_derived)  AS account_balance_derived FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id != '1' AND account.branch_id = '$branch_id' AND client.status = 'Approved' AND account.submittedon_date BETWEEN '$start' AND '$end'";
           $query5exec = mysqli_query($connection, $query5);
           $s = mysqli_fetch_array($query5exec);
           $savingsamount = $s['account_balance_derived'];
@@ -228,20 +228,20 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
             $staff = $q["id"];
           $name = $q["display_name"];
 
-          $query1 = "SELECT client.id, client.account_type, account.product_id, client.account_no FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id = '1' AND account.branch_id = '$branch_id' AND account.submittedon_date BETWEEN '$start' AND '$end'";
+          $query1 = "SELECT client.id, client.account_type, account.product_id, client.account_no FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id = '1' AND account.branch_id = '$branch_id' AND client.status = 'Approved' AND account.submittedon_date BETWEEN '$start' AND '$end'";
           $query1exec = mysqli_query($connection, $query1);
           $current = mysqli_num_rows($query1exec);
 
-          $query4 = "SELECT SUM(account.account_balance_derived)  AS account_balance_derived FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id = '1' AND account.branch_id = '$branch_id' AND account.submittedon_date BETWEEN '$start' AND '$end'";
+          $query4 = "SELECT SUM(account.account_balance_derived)  AS account_balance_derived FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id = '1' AND account.branch_id = '$branch_id' AND client.status = 'Approved' AND account.submittedon_date BETWEEN '$start' AND '$end'";
           $query4exec = mysqli_query($connection, $query4);
           $c = mysqli_fetch_array($query4exec);
           $currentamount = $c['account_balance_derived'];
 
-          $query2 = "SELECT client.id, client.account_type, account.product_id, client.account_no FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id != '1' AND account.branch_id = '$branch_id' AND account.submittedon_date BETWEEN '$start' AND '$end'";
+          $query2 = "SELECT client.id, client.account_type, account.product_id, client.account_no FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id != '1' AND account.branch_id = '$branch_id' AND client.status = 'Approved' AND account.submittedon_date BETWEEN '$start' AND '$end'";
           $query2exec = mysqli_query($connection, $query2);
           $savings = mysqli_num_rows($query2exec);
 
-          $query5 = "SELECT SUM(account.account_balance_derived)  AS account_balance_derived FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id != '1' AND account.branch_id = '$branch_id' AND account.submittedon_date BETWEEN '$start' AND '$end'";
+          $query5 = "SELECT SUM(account.account_balance_derived)  AS account_balance_derived FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.loan_officer_id = '$staff' AND account.product_id != '1' AND account.branch_id = '$branch_id' AND client.status = 'Approved' AND account.submittedon_date BETWEEN '$start' AND '$end'";
           $query5exec = mysqli_query($connection, $query5);
           $s = mysqli_fetch_array($query5exec);
           $savingsamount = $s['account_balance_derived'];
