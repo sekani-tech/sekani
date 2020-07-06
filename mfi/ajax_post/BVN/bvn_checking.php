@@ -22,7 +22,7 @@ $bvn_length = strlen($bvn);
 // CHECK
 if ($bvn_length == 11) {
     // check if it exsit
-    $sql_check = mysqli_query($connection, "SELECT * FROM client WHERE BVN = '$bvn'");
+    $sql_check = mysqli_query($connection, "SELECT * FROM client WHERE BVN = '$bvn' AND int_id = '$int_id'");
     if (mysqli_num_rows($sql_check) <= 0) {
         // next code 
         // check if there is fund in the acoint
@@ -242,10 +242,40 @@ if ($bvn_length == 11) {
     } else {
         echo "<span style='color: red'>THIS CLIENT EXSIST</span>";
         // STOP FORM FROM SUBMITTING
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "CLIENT EXSIST",
+                text: "Check if the client has been rejected or Pending approval",
+                showConfirmButton: false,
+                timer: 3000
+            })
+            document.getElementById("cbvn").setAttribute("hidden", "");
+            document.getElementById("wbvn").removeAttribute("hidden");
+            $(":input[type=submit]").prop("disabled", true);
+        });
+        </script>
+        ';
     }
 } else {
     // bvn not up to eleven
     echo "<span style='color:red'>BVN NOT UP TO ELEVEN NUMBERS</span>";
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "MORE OR NOT UP TO ELEVEN NUMBERS",
+            text: "Check the BVN length",
+            showConfirmButton: false,
+            timer: 3000
+        })
+        document.getElementById("cbvn").setAttribute("hidden", "");
+        document.getElementById("wbvn").removeAttribute("hidden");
+        $(":input[type=submit]").prop("disabled", true);
+    });
+    </script>
+    ';
 }
 } else {
     echo '<script type="text/javascript">
