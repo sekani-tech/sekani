@@ -141,10 +141,6 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                 </tbody>
               </table>
             </div>
-            <p><b>Total Deposit: &#8358;'.number_format($tcp, 2).'</b></p>
-            <p><b>Total Withdrawal: &#8358;'.number_format($tdp, 2).'</b></p>
-            <p><b>Current GL Account Balance: &#8358;'.number_format($fom, 2).'</b></p>
-            <hr>
             <p><b>Checked By: '.$_SESSION["username"].'</b>                             <b>Date/Sign: '.$std." - ".$endx.' </b></p>
 
             <p>

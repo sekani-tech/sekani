@@ -82,9 +82,10 @@ if ($is_del == "0" && $is_del != NULL) {
                   created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$gl_codex}', '{$trans_id}', '{$desc}', 'Credit', '{$staff_id}',
                    '{$gen_date}', '{$gl_amt}', '{$new_gl_bal}', '{$gl_amt}', '{$gen_date}', '{$gl_amt}')";
                    $res4 = mysqli_query($connection, $gl_acc);
-
+                if($res4){
                 $upinta = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2', total_withdrawals_derived = '$tbd2' WHERE int_id = '$sessint_id' && teller_id = '$staff_id'";
                 $res1 = mysqli_query($connection, $upinta);
+                }
                 if ($res1) {
                     $trans_type2= "Expense";
                     $irvs = 0;
