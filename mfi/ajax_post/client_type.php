@@ -6,6 +6,10 @@ $output3 = '';
 session_start();
 if(isset($_POST['id'])){
     $br_id = $_SESSION["branch_id"];
+    $fod = "SELECT * FROM branch WHERE int_id = '5' AND id='$br_id'";
+    $dof = mysqli_query($connection, $fod);
+    $fs = mysqli_fetch_array($dof);
+    $bname = $fs['name'];
     function fill_officer($connection)
         {
             $sint_id = $_SESSION["int_id"];
@@ -74,7 +78,8 @@ if(isset($_POST['id'])){
         <div class="col-md-4">
         <div class="form-group">
         <label class="">Branch:</label>
-        <input type="text" style="text-transform: uppercase;" value="'.$br_id.'" readonly class="form-control" name="brancha">
+        <input type="text" style="text-transform: uppercase;" value="'.$bname.'" readonly class="form-control">
+        <input type="text" style="text-transform: uppercase;" hidden value="'.$br_id.'" readonly class="form-control" name="brancha">
     </div>
         </div>
 
@@ -520,7 +525,8 @@ if(isset($_POST['id'])){
             
             <div class="form-group">
                 <label class="">Branch:</label>
-                <input type="text" style="text-transform: uppercase;" value="'.$br_id.'" readonly class="form-control" name="branch">
+                <input type="text" style="text-transform: uppercase;" hidden value="'.$br_id.'" readonly class="form-control" name="branch">
+                <input type="text" style="text-transform: uppercase;" value="'.$bname.'" readonly class="form-control">
             </div>
             </div>
             <div class="col-md-4">

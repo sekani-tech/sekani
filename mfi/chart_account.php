@@ -89,6 +89,46 @@ $(document).ready(function(){
 $_SESSION["lack_of_intfund_$key"] = 0;
 }
 }
+else if (isset($_GET["message5"])) {
+  $key = $_GET["message5"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "General Ledger Deleted",
+          text: "GL account has been deleted successfully",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
+else if (isset($_GET["message6"])) {
+  $key = $_GET["message6"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Error",
+          text: "Error Deleting GL account",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
 ?>
 <!-- Content added here -->
 <!-- POST INTO -->
@@ -235,7 +275,7 @@ if ( isset($_POST['bank_rec']) ) {
                         <th>
                          Balance
                         </th>
-                        <th>Unreconciled Balance</th>
+                        <th>Delete</th>
                         <th>Edit</th>
                         <!-- <th>Phone</th> -->
                       </thead>
@@ -285,7 +325,31 @@ if ( isset($_POST['bank_rec']) ) {
                           } else {
                             echo $row["organization_running_balance_derived"];
                           } ?></th>
-                          <th><?php echo $row["reconciliation_enabled"]; ?></th>
+                          <?php
+                          $cash = $row["organization_running_balance_derived"];
+                          $intid = $row['int_id'];
+                          $gltype = $row["parent_id"];
+                          $glscde = $row['gl_code'];
+
+                          $df = "SELECT * FROM gl_account_transaction WHERE int_id= '$intid' AND gl_code='$glscde'";
+                          $fdi = mysqli_query($connection, $df);
+                          if(count([$fdi]) > 0){
+                            $dsd = "0";
+                          }
+                          else{
+                            $dsd = "1";
+                          }
+                          if($cash == 0 && $gltype !='0' && $dsd == 0)
+                          {?>
+                          <td><a href="delete_chart_account.php?edit=<?php echo $row["id"];?>" class="btn btn-danger sm" ><i style="color:#ffffff;" class="material-icons">close</i></a></td>
+                          <?php
+                          }
+                          else{
+                            ?>
+                          <td><a hidden><i style="color:#ffffff;" class="material-icons">create</i></a></td>
+                          <?php
+                          }
+                          ?>
                           <td><a href="edit_chart_account.php?edit=<?php echo $row["id"];?>" class="btn btn-info sm" ><i style="color:#ffffff;" class="material-icons">create</i></a></td>
                         </tr>
                         <?php }

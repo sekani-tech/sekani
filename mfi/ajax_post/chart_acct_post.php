@@ -4,6 +4,7 @@ $output2 = '';
 session_start();
 if (isset($_POST["gl"]) && isset($_POST["ch"]))
 {
+  if($_POST["gl"] == '1'){
     $int_id = $_POST["id"];
     if($_POST["gl"] != '' && $_POST["ch"] != '')
     {
@@ -27,5 +28,9 @@ if (isset($_POST["gl"]) && isset($_POST["ch"]))
           </select>';
     echo $output2;
     }
+  }
+  else{
+
+  }
 }
 ?>

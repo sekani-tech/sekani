@@ -37,11 +37,32 @@ $destination = "branch.php";
                           <input type="tel" class="form-control" name="phone">
                         </div>
                       </div>
-                      <div class="col-md-12">
+                      <div class="col-md-8">
                         <div class="form-group">
                           <label class="bmd-label-floating">Location</label>
                           <input type="text" class="form-control" name="location">
                         </div>
+                      </div>
+                      <div class=" col-md-4 form-group">
+                      <?php
+                              function fill_in($connection)
+                              {
+                                $sint_id = $_SESSION["int_id"];
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && parent_id !='0' && classification_enum = '1' && disabled = '0' ORDER BY name ASC";
+                                $res = mysqli_query($connection, $org);
+                                $output = '';
+                                while ($row = mysqli_fetch_array($res))
+                                {
+                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+                                }
+                                return $output;
+                              }
+                              ?>
+                          <label for="bmd-label-floating">Vault GL</label>
+                          <select name="income_gl" id="" class="form-control">
+                              <option value="">Choose Vault Account Gl</option>
+                              <?php echo fill_in($connection) ?>
+                          </select>
                       </div>
                       </div>
                       <a href="client.php" class="btn btn-secondary">Back</a>
