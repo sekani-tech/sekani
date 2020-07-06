@@ -118,6 +118,12 @@ if (mysqli_num_rows($getip) == 1) {
               <p>Institutions</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="general_refill.php">
+              <i class="material-icons">business</i>
+              <p>Wallet Refill</p>
+            </a>
+          </li>
           <!-- your sidebar here -->
         </ul>
       </div>
