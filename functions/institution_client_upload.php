@@ -191,8 +191,8 @@ $res = mysqli_query($connection, $query);
               if ($insert_gl_trans) {
                 // channel
                 // DMAN
-          // $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
-          // echo header ("Location: ../mfi/client.php?message1=$randms");
+          $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
+          echo header ("Location: ../mfi/client.php?message1=$randms");
               } else {
                 echo "AN ERROR OCCURED IN GL TRANSACTION";
               }
