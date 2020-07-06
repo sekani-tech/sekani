@@ -99,7 +99,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
 
         } else {
         // IF THE QUERY IS NOT NULL RUN THE REPAYMENT CODE
-        // CHECK THE LAST REPAYMENT DATE THAT IS NOT DONE - COMPLETED DERIVED.
+        // CHECK THE LAST REPAYMENT DATE THAT IS NOT DONE - COMPLETED DERIVED
         $d_loan_id = $dm["loan_id"];
         $d_client_id = $dm["client_id"];
         $d_int_id = $dm["int_id"];
