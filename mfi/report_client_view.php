@@ -431,7 +431,7 @@ Content added here
                   $thismonth = date("m");
                   // $end = date('Y-m-d', strtotime('-30 days'));
                   $curren = $thisyear."-".$thismonth."-01";
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std'";
+                        $query = "SELECT * FROM client WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std'";
                         $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -517,7 +517,7 @@ Content added here
                     <table id="dismonth" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std'";
+                        $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -546,7 +546,14 @@ Content added here
                         <?php $row["id"]; ?>
                           <th><?php echo $row["firstname"]; ?></th>
                           <th><?php echo $row["lastname"]; ?></th>
-                          <th><?php echo strtoupper($row["first_name"]." ".$row["last_name"]); ?></th>
+                          <?php $ffd = $row["loan_officer_id"];
+                          $ds = "SELECT * FROM staff WHERE int_id ='$sessint_id' AND id = '$ffd'";
+                          $fdi = mysqli_query($connection, $ds);
+                          $fd = mysqli_fetch_array($fdi);
+                          $fn = $fd['first_name'];
+                          $ln = $fd['last_name'];
+                          ?>
+                          <th><?php echo strtoupper($fn." ".$ln); ?></th>
                           <?php
                             $class = "";
                             $row["account_type"];
