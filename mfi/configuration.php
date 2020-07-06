@@ -56,11 +56,11 @@ $destination = "../index.php";
                           <th>Handle the alerts that the system recieves</th>
                           <td><a href="#" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                           <th>General Ledger Template</th>
                           <th>Assign General Ledgers to system posting activities</th>
                           <td><a href="gl_template.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
-                        </tr>
+                        </tr> -->
                         <tr>
                           <th> <b> SEKANI WALLET </b></th>
                           <th>Fund Institution Sekani Wallet, Keep Activity Up to Date</th>
