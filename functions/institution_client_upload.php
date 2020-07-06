@@ -213,6 +213,8 @@ $res = mysqli_query($connection, $query);
             // export an output
             echo "DAMN BVN HAS PROBLEM CALL US NOW";
           }
+          $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
+          echo header ("Location: ../mfi/client.php?message1=$randms");
           // NOW CHECK THE BVN TABLE
             // Start mail
 $mail = new PHPMailer;
