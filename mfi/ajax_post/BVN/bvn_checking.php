@@ -72,7 +72,7 @@ if ($bvn_length == 11) {
         </script>
         ';
         } else {
-        //    echo $response;
+           echo $response;
            $obj = json_decode($response, TRUE);
            $status = $obj['status'];
            $bvn_fn = "";
