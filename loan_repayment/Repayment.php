@@ -103,7 +103,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
         $d_loan_id = $dm["loan_id"];
         $d_client_id = $dm["client_id"];
         $d_int_id = $dm["int_id"];
-        $collect_loan = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE ((loan_id = '$d_loan_id' AND client_id = '$d_client_id') AND (int_id = '$d_int_id' AND (installment > 0) AND (duedate <= '$sch_date'))) ORDER BY id ASC LIMIT 1");
+        $collect_loan = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE ((loan_id = '$d_loan_id' AND client_id = '$d_client_id') AND (int_id = '$d_int_id' AND (installment > 0) AND (duedate = '$sch_date'))) ORDER BY id ASC LIMIT 1");
         // EXPORT THE IDS HERE
         while ($pop = mysqli_fetch_array($collect_loan)) {
             $collection_id = $pop["id"];
