@@ -7,6 +7,7 @@ $ssint_id = $_SESSION["int_id"];
 $name = $_POST['name'];
 $email = $_POST['email'];
 $phone = $_POST['phone'];
+$incomegl = $_POST['income_gl'];
 $location = $_POST['location'];
 $submitted_on = date('Y-m-d');
 
@@ -20,8 +21,8 @@ if ($result) {
     $br_id = $gom['id']; 
         $mvamt = 10000000.00;
         $bal = 0.00;
-        $queryx = "INSERT INTO int_vault (int_id, branch_id, movable_amount, balance, date, last_withdrawal, last_deposit) VALUES ('{$ssint_id}',
-    '{$br_id}', '{$mvamt}', '{$bal}', '{$submitted_on}', '{$bal}', '{$bal}')";
+        $queryx = "INSERT INTO int_vault (int_id, branch_id, movable_amount, balance, date, last_withdrawal, last_deposit, gl_code) VALUES ('{$ssint_id}',
+    '{$br_id}', '{$mvamt}', '{$bal}', '{$submitted_on}', '{$bal}', '{$bal}', '{$incomegl}')";
     $gogoo = mysqli_query($connection, $queryx);
     // If 'result' is successful, it will send the required message to client.php
     $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";

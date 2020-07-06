@@ -222,7 +222,6 @@ elseif($class_enum  == 5){
                     </div>
                   </div>
                 </div>
-                <a href="client.php" class="btn btn-danger">Back</a>
                 <button type="submit" name="submit" id="submit" class="btn btn-primary pull-right">Update Account</button>
                 <div class="clearfix"></div>
               </form>
