@@ -222,7 +222,10 @@ if ($bvn_length == 11) {
             showConfirmButton: false,
             timer: 3000
         });
+        document.getElementById("wbvn").setAttribute("hidden", "");
+        document.getElementById("cbvn").removeAttribute("hidden");
         $(":input[type=submit]").prop("disabled", false);
+        document.getElementById("bvn_on_meet").setAttribute("hidden", "");
        });
     </script>
         <?php
@@ -237,7 +240,6 @@ if ($bvn_length == 11) {
                 timer: 3000
             });
             document.getElementById("cbvn").setAttribute("hidden", "");
-            document.getElementById("bvn_on_meet").setAttribute("hidden", "");
             document.getElementById("wbvn").removeAttribute("hidden");
             $(":input[type=submit]").prop("disabled", true);
         });
