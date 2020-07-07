@@ -64,187 +64,6 @@ $destination = "index.php";
           }
         ?>
         <?php
-// right now we will program
-// first step - check if this person is authorized
-$org_role = $_SESSION['org_role'];
-
-if ($per_con == 1 || $per_con == "1") {
-?>
-<!-- Content added here -->
-<div class="content">
-        <div class="container-fluid">
-          <!-- your content here -->
-          <div class="row">
-            <div class="col-lg-12 col-md-12">
-              <div class="card">
-                <div class="card-header card-header-tabs card-header-primary">
-                  <div class="nav-tabs-navigation">
-                    <div class="nav-tabs-wrapper">
-                      <!-- <span class="nav-tabs-title">Staff Management:</span> -->
-                      <ul class="nav nav-tabs" data-tabs="tabs">
-                        <!-- <li class="nav-item">
-                          <a class="nav-link active" href="#profile" data-toggle="tab">
-                            <i class="material-icons">bug_report</i> Password Settings
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li> -->
-                        <li class="nav-item">
-                          <a class="nav-link active" href="#messages" data-toggle="tab">
-                            <i class="material-icons">people</i> Active Users
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#stff" data-toggle="tab">
-                            <i class="material-icons">people</i> Staff
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#products" data-toggle="tab">
-                            <i class="material-icons">visibility</i> Roles
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#per" data-toggle="tab">
-                            <i class="material-icons">visibility_off</i> Access Permissions
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#teller" data-toggle="tab">
-                            <i class="material-icons">account_balance_wallet</i> Teller
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="tab-content">
-                    <div class="tab-pane active" id="messages">
-                    <a href="user.php" class="btn btn-primary"> Create new User</a>
-                    <div class="table-responsive">
-                    <table id="tabledat2" class="table" style="width:100%">
-                      <thead class=" text-primary">
-                      <?php
-                        $query = "SELECT users.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id WHERE staff.int_id ='$sessint_id'";
-                        $result = mysqli_query($connection, $query);
-                      ?>
-                        <!-- <th>
-                          ID
-                        </th> -->
-                        <th>
-                          Display Name
-                        </th>
-                        <th>
-                          Username
-                        </th>
-                        <th>
-                          Insitution
-                        </th>
-                        <th>
-                          E-mail
-                        </th>
-                        <th>Active</th>
-                        <th>Employee Status</th>
-                        <th>Edit</th>
-                        <!-- <th>Phone</th> -->
-                      </thead>
-                      <tbody>
-                      <?php if (mysqli_num_rows($result) > 0) {
-                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
-                        <tr>
-                        <?php $row["id"]; ?>
-                          <th><?php echo $row["display_name"]; ?></th>
-                          <th><?php echo $row["username"]; ?></th>
-                          <th><?php echo $row["int_name"]; ?></th>
-                          <th><?php echo $row["email"]; ?></th>
-                          <th><?php echo $row["status"]; ?></th>
-                          <th><?php echo $row["employee_status"]; ?></th>
-                          <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
-                        </tr>
-                        <?php }
-                          }
-                        //   else {
-                        //     echo "0 Staff";
-                        //   }
-                          ?>
-                      </tbody>
-                    </table>
-                  </div>
-                    </div>
-                    <div class="tab-pane" id="stff">
-                    <div class="table-responsive">
-                    <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
-                    <table id="tabledat" class="table" style="width:100%">
-                      <thead class=" text-primary">
-                      <?php
-                        $query = "SELECT * FROM staff WHERE int_id ='$sessint_id'";
-                        $result = mysqli_query($connection, $query);
-                      ?>
-                        <!-- <th>
-                          ID
-                        </th> -->
-                        <th>
-                          Display Name
-                        </th>
-                        <th>
-                          Username
-                        </th>
-                        <th>
-                          Insitution
-                        </th>
-                        <th>
-                          E-mail
-                        </th>
-                        <th>Organization Role</th>
-                        <th>Employee Status</th>
-                        <th>Edit</th>
-                        <!-- <th>Phone</th> -->
-                      </thead>
-                      <tbody>
-                      <?php if (mysqli_num_rows($result) > 0) {
-                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
-                        <tr>
-                        <?php $row["id"]; ?>
-                          <th><?php echo $row["display_name"]; ?></th>
-                          <th><?php echo $row["username"]; ?></th>
-                          <th><?php echo $row["int_name"]; ?></th>
-                          <th><?php echo $row["email"]; ?></th>
-                          <?php
-                         $fs = $row["org_role"];
-                          $weo = mysqli_query($connection, "SELECT * FROM org_role WHERE id ='$fs'");
-                          $ri = mysqli_fetch_array($weo);
-                          if (isset($ri['role'])){
-                          $rolename = $ri['role'];
-                          }else{
-                            $rolename = 'Not Assigned';
-                          }
-                          ?>
-                          <th><?php echo $rolename; ?></th>
-                          <th><?php echo $row["employee_status"]; ?></th>
-                          <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
-                        </tr>
-                        <?php }
-                          }
-                        //   else {
-                        //     echo "0 Staff";
-                        //   }
-                          ?>
-                      </tbody>
-                    </table>
-                  </div>
-                    </div>
-                    <div class="tab-pane" id="products">
-                      <!-- <a href="role.php" class="btn btn-primary"> Create New Role</a> -->
-                      <?php
                     // we are gonna post to get the name of the button
                     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       // check the button value
@@ -459,6 +278,188 @@ if ($per_con == 1 || $per_con == "1") {
                     // echo no add or update
                   }
                     ?>
+        <?php
+// right now we will program
+// first step - check if this person is authorized
+$org_role = $_SESSION['org_role'];
+
+if ($per_con == 1 || $per_con == "1") {
+?>
+<!-- Content added here -->
+<div class="content">
+        <div class="container-fluid">
+          <!-- your content here -->
+          <div class="row">
+            <div class="col-lg-12 col-md-12">
+              <div class="card">
+                <div class="card-header card-header-tabs card-header-primary">
+                  <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                      <!-- <span class="nav-tabs-title">Staff Management:</span> -->
+                      <ul class="nav nav-tabs" data-tabs="tabs">
+                        <!-- <li class="nav-item">
+                          <a class="nav-link active" href="#profile" data-toggle="tab">
+                            <i class="material-icons">bug_report</i> Password Settings
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li> -->
+                        <li class="nav-item">
+                          <a class="nav-link active" href="#messages" data-toggle="tab">
+                            <i class="material-icons">people</i> Active Users
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#stff" data-toggle="tab">
+                            <i class="material-icons">people</i> Staff
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#products" data-toggle="tab">
+                            <i class="material-icons">visibility</i> Roles
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#per" data-toggle="tab">
+                            <i class="material-icons">visibility_off</i> Access Permissions
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#teller" data-toggle="tab">
+                            <i class="material-icons">account_balance_wallet</i> Teller
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="messages">
+                    <a href="user.php" class="btn btn-primary"> Create new User</a>
+                    <div class="table-responsive">
+                    <table id="tabledat2" class="table" style="width:100%">
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT users.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id WHERE staff.int_id ='$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                        <!-- <th>
+                          ID
+                        </th> -->
+                        <th>
+                          Display Name
+                        </th>
+                        <th>
+                          Username
+                        </th>
+                        <th>
+                          Insitution
+                        </th>
+                        <th>
+                          E-mail
+                        </th>
+                        <th>Active</th>
+                        <th>Employee Status</th>
+                        <th>Edit</th>
+                        <!-- <th>Phone</th> -->
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                          <th><?php echo $row["display_name"]; ?></th>
+                          <th><?php echo $row["username"]; ?></th>
+                          <th><?php echo $row["int_name"]; ?></th>
+                          <th><?php echo $row["email"]; ?></th>
+                          <th><?php echo $row["status"]; ?></th>
+                          <th><?php echo $row["employee_status"]; ?></th>
+                          <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                        </tr>
+                        <?php }
+                          }
+                        //   else {
+                        //     echo "0 Staff";
+                        //   }
+                          ?>
+                      </tbody>
+                    </table>
+                  </div>
+                    </div>
+                    <div class="tab-pane" id="stff">
+                    <div class="table-responsive">
+                    <script>
+                  $(document).ready(function() {
+                  $('#tabledat').DataTable();
+                  });
+                  </script>
+                    <table id="tabledat" class="table" style="width:100%">
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM staff WHERE int_id ='$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                        <!-- <th>
+                          ID
+                        </th> -->
+                        <th>
+                          Display Name
+                        </th>
+                        <th>
+                          Username
+                        </th>
+                        <th>
+                          Insitution
+                        </th>
+                        <th>
+                          E-mail
+                        </th>
+                        <th>Organization Role</th>
+                        <th>Employee Status</th>
+                        <th>Edit</th>
+                        <!-- <th>Phone</th> -->
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                          <th><?php echo $row["display_name"]; ?></th>
+                          <th><?php echo $row["username"]; ?></th>
+                          <th><?php echo $row["int_name"]; ?></th>
+                          <th><?php echo $row["email"]; ?></th>
+                          <?php
+                         $fs = $row["org_role"];
+                          $weo = mysqli_query($connection, "SELECT * FROM org_role WHERE id ='$fs'");
+                          $ri = mysqli_fetch_array($weo);
+                          if (isset($ri['role'])){
+                          $rolename = $ri['role'];
+                          }else{
+                            $rolename = 'Not Assigned';
+                          }
+                          ?>
+                          <th><?php echo $rolename; ?></th>
+                          <th><?php echo $row["employee_status"]; ?></th>
+                          <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                        </tr>
+                        <?php }
+                          }
+                        //   else {
+                        //     echo "0 Staff";
+                        //   }
+                          ?>
+                      </tbody>
+                    </table>
+                  </div>
+                    </div>
+                    <div class="tab-pane" id="products">
+                      <!-- <a href="role.php" class="btn btn-primary"> Create New Role</a> -->
+                      
                       <div class="card-title">Create A Role</div>
                       <br>
                       <form method="POST">
@@ -543,7 +544,7 @@ if ($per_con == 1 || $per_con == "1") {
                   function fill_role($connection)
                   {
                   $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM org_role WHERE int_id = '$sint_id' AND (permission = '0' OR permission = '' OR permission = NULL) ORDER BY id ASC";
+                  $org = "SELECT * FROM org_role WHERE int_id = '$sint_id' AND permission = '0' ORDER BY id ASC";
                   $res = mysqli_query($connection, $org);
                   $out = '';
                   while ($row = mysqli_fetch_array($res))
@@ -598,9 +599,8 @@ if ($per_con == 1 || $per_con == "1") {
                   document.getElementById('n5').checked = true;
                   document.getElementById('n6').checked = true;
                   document.getElementById('n7').checked = true;
-                  document.getElementById('n8').checked = true;
                   document.getElementById('n9').checked = true;
-                  document.getElementById('n10').checked = true;
+                  document.getElementById('n8').checked = true;
                   document.getElementById('n11').checked = true;
                   document.getElementById('n12').checked = true;
                   document.getElementById('n13').checked = true;
@@ -612,12 +612,11 @@ if ($per_con == 1 || $per_con == "1") {
                   document.getElementById('n5').checked = false;
                   document.getElementById('n6').checked = false;
                   document.getElementById('n7').checked = false;
-                  document.getElementById('n8').checked = false;
                   document.getElementById('n9').checked = false;
-                  document.getElementById('n10').checked = false;
+                  document.getElementById('n8').checked = false;
                   document.getElementById('n11').checked = false;
                   document.getElementById('n12').checked = false;
-                  document.getElementById('n13').checked = true;
+                  document.getElementById('n13').checked = false;
                 }
                });
              })
@@ -758,27 +757,12 @@ if ($per_con == 1 || $per_con == "1") {
                     <table id="tabledat1" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT permission.vault_email, org_role.id, permission.staff_cabal, permission.acc_op, permission.acc_update, permission.trans_appv, permission.trans_post, permission.loan_appv, permission.acct_appv, permission.valut, permission.view_report, permission.view_dashboard, permission.configuration, org_role.role, org_role.description FROM org_role JOIN permission ON org_role.id = permission.role_id WHERE org_role.int_id = '$sessint_id'";
+                        $query = "SELECT * FROM org_role WHERE org_role.int_id = '$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <!-- <th>
-                          ID
-                        </th> -->
-                        <th>Role Name</th>
+                        <th style="width: 50%;">Role Name</th>
                         <th>Description</th>
-                        <th>Account Opening</th>
-                        <th>Account Update</th>
-                        <th>Approve Transaction</th>
-                        <th>Post Transaction</th>
-                        <th>Approve Loan</th>
-                        <th>Approve Account</th>
-                        <th>vault Transaction</th>
-                        <th>View Report</th>
-                        <th>Staff Cabal</th>
-                        <th>Dashboard</th>
-                        <th>Access Config.</th>
-                        <th>Vault Email</th>
-                        <th>
+                        <th style="width: 30%;">
                           Edit
                         </th>
                       </thead>
@@ -789,227 +773,7 @@ if ($per_con == 1 || $per_con == "1") {
                         <?php $row['id']; ?>
                           <th><?php echo strtoupper($row["role"]); ?></th>
                           <th><?php echo strtoupper($row["description"]); ?></th>
-                          <th>
-                          <?php
-                          if($row['acc_op'] == '1'){
-                            $check = "checked";
-                          }
-                          elseif($row['acc_op'] == '0'){
-                            $check = "unchecked";
-                          }
-                          ?>   
-                          <div class="form-check form-check-inline">
-                          <label class="form-check-label">
-                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="app">
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                          </label>                     
-                        </div>
-                          </th>
-                          <th>
-                          <?php
-                          if($row['acc_update'] == '1'){
-                            $check = "checked";
-                          }
-                          elseif($row['acc_update'] == '0'){
-                            $check = "unchecked";
-                          }
-                          ?>   
-                          <div class="form-check form-check-inline">
-                          <label class="form-check-label">
-                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="app">
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                          </label>                     
-                        </div>
-                          </th>
-                          <th>
-                          <?php
-                          if($row['trans_appv'] == '1'){
-                            $check = "checked";
-                          }
-                          elseif($row['trans_appv'] == '0'){
-                            $check = "unchecked";
-                          }
-                          ?>   
-                          <div class="form-check form-check-inline">
-                          <label class="form-check-label">
-                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="app">
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                          </label>                     
-                        </div>
-                          </th>
-                          <th>
-                          <?php
-                          if($row['trans_post'] == '1'){
-                            $check = "checked";
-                          }
-                          elseif($row['trans_post'] == '0'){
-                            $check = "unchecked";
-                          }
-                          ?>   
-                          <div class="form-check form-check-inline">
-                          <label class="form-check-label">
-                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="ptr">
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                          </label>
-                        </div>
-                          </th>
-
-                          <th>
-                          <?php
-                          if($row['loan_appv'] == '1'){
-                            $check = "checked";
-                          }
-                          elseif($row['loan_appv'] == '0'){
-                            $check = "unchecked";
-                          }
-                          ?>   
-                          <div class="form-check form-check-inline">
-                          <label class="form-check-label">
-                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="apl">
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                          </label>
-                        </div>
-
-                          </th>
-                          <th>
-                          <?php
-                          if($row['acct_appv'] == '1'){
-                            $check = "checked";
-                          }
-                          elseif($row['acct_appv'] == '0'){
-                            $check = "unchecked";
-                          }
-                          ?>   
-                          <div class="form-check form-check-inline">
-                          <label class="form-check-label">
-                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="apa">
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                          </label>
-                        </div>
-                          </th>
-
-                          <th>
-                          <?php
-                          if($row['valut'] == '1'){
-                            $check = "checked";
-                          }
-                          elseif($row['valut'] == '0'){
-                            $check = "unchecked";
-                          }
-                          ?>   
-                          <div class="form-check form-check-inline">
-                          <label class="form-check-label">
-                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="vtr">
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                          </label>
-                        </div>
-                          </th>
-
-                          <th>
-                          <?php
-                          if($row['view_report'] == '1'){
-                            $check = "checked";
-                          }
-                          elseif($row['view_report'] == '0'){
-                            $check = "unchecked";
-                          }
-                          ?>   
-                          <div class="form-check form-check-inline">
-                          <label class="form-check-label">
-                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="vrp">
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                          </label>
-                        </div>
-                          </th>
-                          <th>
-                          <?php
-                          if($row['staff_cabal'] == '1'){
-                            $check = "checked";
-                          }
-                          elseif($row['staff_cabal'] == '0'){
-                            $check = "unchecked";
-                          }
-                          ?>   
-                          <div class="form-check form-check-inline">
-                          <label class="form-check-label">
-                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="oc"/>
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                          </label>
-                        </div>
-                          </th>
-                          <th>
-                          <?php
-                          if($row['view_dashboard'] == '1'){
-                            $check = "checked";
-                          }
-                          elseif($row['view_dashboard'] == '0'){
-                            $check = "unchecked";
-                          }
-                          ?>   
-                          <div class="form-check form-check-inline">
-                          <label class="form-check-label">
-                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="ds">
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                          </label>
-                        </div>
-                          </th>
-                          <th>
-                          <?php
-                          if($row['configuration'] == '1'){
-                            $check = "checked";
-                          }
-                          elseif($row['configuration'] == '0'){
-                            $check = "unchecked";
-                          }
-                          ?>   
-                          <div class="form-check form-check-inline">
-                          <label class="form-check-label">
-                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="acc">
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                          </label>
-                        </div>
-                          </th>
-                          <th>
-                          <?php
-                          if($row['vault_email'] == '1'){
-                            $check = "checked";
-                          }
-                          elseif($row['vault_email'] == '0'){
-                            $check = "unchecked";
-                          }
-                          ?>   
-                          <div class="form-check form-check-inline">
-                          <label class="form-check-label">
-                              <input class="form-check-input" <?php echo $check;?> disabled type="checkbox" value="" name="" id="ema"/>
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                          </label>
-                        </div>
-                          </th>
-                          <td><a href="edit_permission.php?id=<?php echo $row['id'];?>" class="btn btn-info">Update</a></td>
+                          <th><a href="edit_permission.php?id=<?php echo $row['id'];?>" class="btn btn-info">Update</a></th>
                         </tr>
                         <?php }
                           }

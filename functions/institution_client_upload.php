@@ -54,6 +54,7 @@ $submitted_on = date("Y-m-d");
 $queryd = mysqli_query($connection, "SELECT * FROM savings_product WHERE id='$acct_type'");
 $res = mysqli_fetch_array($queryd);
 $accttname = $res['name'];
+$type_id = $res['accounting_type'];
 // $ea = $_POST['email_active'];
 $id_card = $_POST['id_card'];
 // an if statement to return uncheck value to 0
@@ -132,10 +133,10 @@ $res = mysqli_query($connection, $query);
         $account_balance_derived = 0;
 
         $accountins = "INSERT INTO account (int_id, branch_id, account_no, account_type,
-        product_id, client_id, field_officer_id, submittedon_date, submittedon_userid,
+        type_id, product_id, client_id, field_officer_id, submittedon_date, submittedon_userid,
         currency_code, activatedon_date, activatedon_userid,
         account_balance_derived) VALUES ('{$int_id}', '{$branch_id}', '{$account_no}',
-        '{$accttname}', '{$account_type}', '{$client_id}', '{$field_officer_id}', '{$submittedon_date}',
+        '{$accttname}', '{$type_id}', '{$account_type}', '{$client_id}', '{$field_officer_id}', '{$submittedon_date}',
         '{$submittedon_userid}', '{$currency_code}', '{$activation_date}', '{$activation_userid}',
         '{$account_balance_derived}')";
 
@@ -1070,6 +1071,11 @@ $sig_bvn_one = $_POST['sig_bvn_one'];
 $sig_bvn_two = $_POST['sig_bvn_two'];
 $sig_bvn_three = $_POST['sig_bvn_three'];
 
+$queryd = mysqli_query($connection, "SELECT * FROM savings_product WHERE id='$acct_type'");
+$res = mysqli_fetch_array($queryd);
+$accttname = $res['name'];
+$type_id = $res['accounting_type'];
+
 if( $_POST['sms_active_one']){
   $sms_active_one = 1;
 }
@@ -1238,10 +1244,10 @@ $res = mysqli_query($connection, $query);
         $account_balance_derived = 0;
 
         $accountins = "INSERT INTO account (int_id, branch_id, account_no, account_type,
-        product_id, client_id, field_officer_id, submittedon_date, submittedon_userid,
+        type_id, product_id, client_id, field_officer_id, submittedon_date, submittedon_userid,
         currency_code, activatedon_date, activatedon_userid,
         account_balance_derived) VALUES ('{$int_id}', '{$branch_id}', '{$account_no}',
-        '{$accttname}', '{$account_type}', '{$client_id}', '{$field_officer_id}', '{$submittedon_date}',
+        '{$accttname}', {$type_id}', '{$account_type}', '{$client_id}', '{$field_officer_id}', '{$submittedon_date}',
         '{$submittedon_userid}', '{$currency_code}', '{$activation_date}', '{$activation_userid}',
         '{$account_balance_derived}')";
 

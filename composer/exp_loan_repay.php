@@ -6,7 +6,7 @@ session_start();
 <?php
   $intname = $_SESSION['int_name'];
   $branch_id = $_SESSION["branch_id"];
-  $date = date('d/m/Y');
+  $date = $_POST['end'];
   // $staff = $_POST["staff"];
   $branchquery = mysqli_query($connection, "SELECT * FROM branch WHERE id='$branch_id'");
     if (count([$branchquery]) == 1) {
@@ -23,7 +23,7 @@ session_start();
             $sessint_id = $_SESSION['int_id'];
           // import
         //   $glcode = $_POST['glcode'];
-        $currentdate = date('Y-m-d');
+        $currentdate = $_POST['end'];
         $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND repayment_date = '$currentdate'";
         $result = mysqli_query($connection, $query);
         while ($q = mysqli_fetch_array($result, MYSQLI_ASSOC))

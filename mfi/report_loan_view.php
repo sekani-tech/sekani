@@ -827,7 +827,7 @@ $destination = "report_loan.php";
                 <form method = "POST" action = "../composer/exp_loan_repay.php">
               <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
               <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
-              <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
+              <input hidden name ="end" type="text" value="<?php echo $currentdate;?>"/>
               <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download PDF</button>
               <script>
               $(document).ready(function () {
@@ -906,6 +906,121 @@ $destination = "report_loan.php";
           </div>
         </div>
       </div>
+      <?php
+ }
+ else if(isset($_GET["view39b"])){
+ ?>
+ <div class="content">
+        <div class="container-fluid">
+          <!-- your content here -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Expected Loan Repayment</h4>
+                  <script>
+                  $(document).ready(function() {
+                  $('#tabledat').DataTable();
+                  });
+                  </script>
+                  <!-- Insert number users institutions -->
+                  <p class="card-category">
+                      <?php
+                      $currentdate = date('Y-m-d');
+                      $time = strtotime($currentdate);
+                      $yomf = date("Y-m-d", strtotime("+1 day", $time));
+                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND repayment_date = '$yomf'";
+                        $result = mysqli_query($connection, $query);
+                   if ($result) {
+                     $inr = mysqli_num_rows($result);
+                     echo $inr;
+                   }?> loans expected to be repayed tomorrow</p>
+                </div>
+                <div class="card-body">
+                <div class="form-group">
+                <form method = "POST" action = "../composer/exp_loan_repay.php">
+              <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
+              <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
+              <input hidden name ="end" type="text" value="<?php echo $yomf;?>"/>
+              <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download PDF</button>
+              <script>
+              $(document).ready(function () {
+              $('#disbursed').on("click", function () {
+                swal({
+                    type: "success",
+                    title: "DISBURSED LOAN REPORT",
+                    text: "Printing Successful",
+                    showConfirmButton: false,
+                    timer: 3000
+                          
+                  })
+              });
+            });
+     </script>
+            </form>
+                </div>
+                  <div class="table-responsive">
+                    <table id="tabledatv" class="table" cellspacing="0" style="width:100%">
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND repayment_date = '$yomf'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                        <th>
+                          Client Name
+                        </th>
+                        <th>
+                          Principal Amount
+                        </th>
+                        <th>
+                          Loan Term
+                        </th>
+                        <th>
+                          Disbursement Date
+                        </th>
+                        <th>
+                          Outstanding Loan Balance
+                        </th>
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                          <?php  $std = date("Y-m-d");
+                          ?>
+                        <?php $row["id"]; ?>
+                        <?php 
+                            $name = $row['client_id'];
+                            $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
+                            $f = mysqli_fetch_array($anam);
+                            $nae = strtoupper($f["firstname"]." ".$f["lastname"]);
+                        ?>
+                          <th><?php echo $nae; ?></th>
+                          <th><?php echo number_format($row["principal_amount"]); ?></th>
+                          <th><?php echo $row["loan_term"]; ?></th>
+                          <th><?php echo $row["disbursement_date"]; ?></th>
+                          <th><?php echo number_format($row["total_outstanding_derived"], 2);?></th>
+                          <?php
+                          
+                          ?>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                          <!-- <th></th> -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 <?php
 }
 ?>
+

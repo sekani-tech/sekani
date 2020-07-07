@@ -23,7 +23,7 @@ $destination = "report_savings.php";
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.product_id != '1'";
+                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2'";
                           $result = mysqli_query($connection, $querys);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -57,7 +57,7 @@ $destination = "report_savings.php";
                     <table id="tabledt" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.product_id != '1'";
+                          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2'";
                           $result = mysqli_query($connection, $query);
                       ?>
                         <th>
