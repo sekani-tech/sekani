@@ -181,8 +181,8 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                     //         }
                     if ($update_loan_trans) {
                         // update the repayment sch history
-                        $update_repayment = mysqli_query($connection, "INSERT INTO `loan_repayment_schedule_history` (`int_id`, `loan_id`, `client_id`, `loan_reschedule_request_id`, `fromdate`, `duedate`, `installment`, `principal_amount`, `interest_amount`, `fee_charges_amount`, `penalty_charges_amount`, `createdby_id`, `created_date`, `lastmodified_date`, `lastmodifiedby_id`, `version`)
-                        VALUES ('{$int_id}', '{$loan_id}', '{$client_id}', '{$collection_id}', '{$repayment_start}', '{$matured_date}', '{$collection_principal}', '{$collection_interest}', '0', '0', NULL, NULL, '{$gen_date}', NULL, NULL, '')");
+                        $update_repayment = mysqli_query($connection, "INSERT INTO `loan_repayment_schedule_history` (`int_id`, `loan_id`, `client_id`, `loan_reschedule_request_id`, `fromdate`, `duedate`, `installment`, `principal_amount`, `interest_amount`, `fee_charges_amount`, `penalty_charges_amount`, `createdby_id`, `created_date`, `lastmodified_date`)
+                        VALUES ('{$int_id}', '{$loan_id}', '{$client_id}', '{$collection_id}', '{$repayment_start}', '{$matured_date}', '1', '{$collection_principal}', '{$collection_interest}', '0', '0', NULL, '{$gen_date}', '{$gen_date}')");
                         if ($update_repayment) {
                             // loan repayment status
                             $update_rep_status = mysqli_query($connection, "INSERT INTO `loan_repayment_status` (`int_id`, `loan_id`, `client_id`, `product_id`, `date_due`, `date_paid`, `status`, `pay_descript`, `loan_status`, `loan_status_descript`, `pay_type`, `pay_status`) 
@@ -316,8 +316,8 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                        //         }
                        if ($update_loan_trans) {
                            // update the repayment sch history
-                           $update_repayment = mysqli_query($connection, "INSERT INTO `loan_repayment_schedule_history` (`int_id`, `loan_id`, `client_id`, `loan_reschedule_request_id`, `fromdate`, `duedate`, `installment`, `principal_amount`, `interest_amount`, `fee_charges_amount`, `penalty_charges_amount`, `createdby_id`, `created_date`, `lastmodified_date`, `lastmodifiedby_id`, `version`)
-                           VALUES ('{$int_id}', '{$loan_id}', '{$client_id}', '{$collection_id}', '{$repayment_start}', '{$matured_date}', '{$collection_principal}', '{$collection_interest}', '0', '0', NULL, NULL, '{$gen_date}', NULL, NULL, '')");
+                           $update_repayment = mysqli_query($connection, "INSERT INTO `loan_repayment_schedule_history` (`int_id`, `loan_id`, `client_id`, `loan_reschedule_request_id`, `fromdate`, `duedate`, `installment`, `principal_amount`, `interest_amount`, `fee_charges_amount`, `penalty_charges_amount`, `createdby_id`, `created_date`, `lastmodified_date`)
+                            VALUES ('{$int_id}', '{$loan_id}', '{$client_id}', '{$collection_id}', '{$repayment_start}', '{$matured_date}', '1', '{$collection_principal}', '{$collection_interest}', '0', '0', NULL, '{$gen_date}', '{$gen_date}')");
                            if ($update_repayment) {
                                // loan repayment status
                                $update_rep_status = mysqli_query($connection, "INSERT INTO `loan_repayment_status` (`int_id`, `loan_id`, `client_id`, `product_id`, `date_due`, `date_paid`, `status`, `pay_descript`, `loan_status`, `loan_status_descript`, `pay_type`, `pay_status`) 
@@ -358,7 +358,6 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                                            VALUES ('{$int_id}', '{$branch_id}', '{$loan_port}', '{$trans_id}', 'Loan Repayment', 'Loan Repayment Principal', '0', '0', '{$gen_date}',
                                             '{$collection_principal}', '{$updated_loan_port}', '{$updated_loan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_principal}', '0.00')");
                                             if ($insert_loan_port) {
-
                                                 $update_the_int_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$intloan_port' WHERE int_id = '$int_id' AND gl_code ='$int_loan_port'");
                                                 if ($update_the_int_loan) {
                                                     $insert_i_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
@@ -375,7 +374,12 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                                                 '{$collection_due_paid}', '{$updated_loan_port}', '{$updated_loan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_due_paid}', '0.00')");
                                                 // ALRIGHT
                                                 if ($update_the_late_loan) {
-                                                    echo "we done over here";
+                                                    $makebig_move = mysqli_query($connection, "INSERT INTO `loan_arrear` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, `counter`, `principal_amount`, `principal_completed_derived`, `principal_writtenoff_derived`, `interest_amount`, `interest_completed_derived`, `interest_writtenoff_derived`, `total_paid_late_derived`, `completed_derived`, `obligations_met_on_date`, `createdby_id`, `created_date`, `lastmodified_date`) VALUES ('{$int_id}', '{$collection_loan}', '{$collection_client_id}', '{$gen_date}', '{$general_date_due}', '{$collection_installment}', '1', '{$collection_principal}', '{$collection_principal}', '0', '{$collection_interest}', '{$collection_interest}', '0', '0', '0', NULL, '{$approved_by}', '{$sch_date}', '{$sch_date}')");
+                                                    if ($makebig_move) {
+                                                        echo "we done over here";
+                                                    } else {
+                                                        echo "ERROR IN LOAN ARREAR";
+                                                    }
                                                 } else {
                                                     echo "we not really done";
                                                 }
