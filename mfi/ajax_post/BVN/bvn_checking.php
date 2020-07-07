@@ -45,7 +45,7 @@ if ($bvn_length == 11) {
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => array(
-          "Authorization: Bearer sk_live_6a0c005846f82f326365635f8270ad3b2c34536e",
+          "Authorization: Bearer sk_live_5bbf0cb5832fbdd35b07a53baaa495b6c62dba8b",
           "Cache-Control: no-cache",
         ),
         ));
@@ -148,7 +148,7 @@ if ($bvn_length == 11) {
                     });
                     document.getElementById("cbvn").setAttribute("hidden", "");
                     document.getElementById("wbvn").removeAttribute("hidden");
-                    $(":input[type=submit]").prop("disabled", true);
+                    $(":input[type=submit]").prop("disabled", false);
                 });
                 </script>
                 ';
@@ -191,7 +191,7 @@ if ($bvn_length == 11) {
         });
         document.getElementById("cbvn").setAttribute("hidden", "");
         document.getElementById("wbvn").removeAttribute("hidden");
-        $(":input[type=submit]").prop("disabled", true);
+        $(":input[type=submit]").prop("disabled", false);
     });
     </script>
     ';
@@ -241,7 +241,7 @@ if ($bvn_length == 11) {
             });
             document.getElementById("cbvn").setAttribute("hidden", "");
             document.getElementById("wbvn").removeAttribute("hidden");
-            $(":input[type=submit]").prop("disabled", true);
+            $(":input[type=submit]").prop("disabled", false);
         });
         </script>
         ';
