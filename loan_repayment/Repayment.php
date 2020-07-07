@@ -373,7 +373,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                                                 `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
                                                VALUES ('{$int_id}', '{$branch_id}', '{$minus_repayment}', '{$trans_id}', 'Late Loan Repayment', 'Late Loan Repayment Principal', '0', '0', '{$gen_date}',
                                                 '{$collection_due_paid}', '{$updated_loan_port}', '{$updated_loan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_due_paid}', '0.00')");
-
+                                                // ALRIGHT
                                                 if ($update_the_late_loan) {
                                                     echo "we done over here";
                                                 } else {

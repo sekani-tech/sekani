@@ -13,7 +13,7 @@ curl_setopt_array($curl, array(
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_HTTPHEADER => [
     "accept: application/json",
-    "authorization: Bearer sk_live_626100308622d4ecd00a6bcf0a95d1b452b9306a",
+    "authorization: Bearer sk_live_6a0c005846f82f326365635f8270ad3b2c34536e",
     "cache-control: no-cache"
   ],
 ));
