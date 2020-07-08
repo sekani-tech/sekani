@@ -136,7 +136,7 @@ $destination = "report_financial.php";
                   </div>
                   <div class="card-body">
                   <div class="form-group">
-                  <form method = "POST" action = "../composer/exp_loan_repay.php">
+                  <form method = "POST" action = "../composer/today_transaction.php">
                 <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
                 <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
                 <input hidden name ="end" type="text" value="<?php echo $currentdate;?>"/>
