@@ -157,10 +157,17 @@ if ($can_transact == 1 || $can_transact == "1") {
                         <tr>
                         <?php $row["id"]; ?>
                           <th><?php echo $row["date"]; ?></th>
-                          <?php $client = $row["client_id"];
+                          <?php
+                          
+                           $client = $row["client_id"];
+                           if($client == "0"){
+                            $clientname = "All Clients";
+                           }
+                           else{
                           $frei = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client'");
                           $df = mysqli_fetch_array($frei);
                           $clientname = $df["display_name"];
+                           }
                           ?>
                           <th><?php echo $clientname; ?></th>
                           <?php $charge = $row["charge_id"];

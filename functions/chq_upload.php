@@ -18,12 +18,17 @@ $leaves_no = $_POST['no_leaves'];
 $range = $_POST['range'];
 $date = date('Y-m-d');
 
-// credit checks and accounting rules
-// insertion query for product
-$query ="INSERT INTO chq_book(int_id, name, branch_id, account_no, book_type, leaves_no, range_amount, date, status)
-VALUES ('{$sessint_id}', '{$name}','{$branch}', '{$account_no}', '{$book}', '{$leaves_no}', '{$range}', '{$date}', 'Pending')";
+if($leaves_no =="0" || $leaves_no ==""){
+  $_SESSION["Lack_of_intfund_$randms"] = " no cheque book";
+  echo header ("Location: ../mfi/cheque_book_posting.php?message3=$randms");
+}
+else{
+  $query ="INSERT INTO chq_book(int_id, name, branch_id, account_no, book_type, leaves_no, range_amount, date, status)
+  VALUES ('{$sessint_id}', '{$name}','{$branch}', '{$account_no}', '{$book}', '{$leaves_no}', '{$range}', '{$date}', 'Pending')";
+  
+  $res = mysqli_query($connection, $query);
 
-$res = mysqli_query($connection, $query);
+
 // if ($connection->error) {
 //   try {   
 //       throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
@@ -42,5 +47,6 @@ $res = mysqli_query($connection, $query);
           echo header ("Location: ../mfi/cheque_book_posting.php?message2=$randms");
             // echo header("location: ../mfi/client.php");
         }
+      }
 }
 ?>

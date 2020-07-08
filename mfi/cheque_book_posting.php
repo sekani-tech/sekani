@@ -47,6 +47,26 @@ else if (isset($_GET["message2"])) {
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
 }
+else if (isset($_GET["message3"])) {
+  $key = $_GET["message3"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Error",
+          text: "Incomplete Input",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $transid = $randms;
@@ -151,7 +171,7 @@ $transid = $randms;
                         <div id="done" class="form-group">
                           <label class="bmd-label-floating">No of Leaves</label>
                           <select name="no_leaves" class="form-control" id="acc_name">
-                          <option hidden value="">select an option</option>
+                          <option hidden value="0">select an option</option>
                           <option value="50">1-50</option>
                           <option value="100">1-100</option>
                           <option value="150">1-150</option>

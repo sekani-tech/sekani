@@ -163,7 +163,7 @@ if (isset($_GET["message1"])) {
         $sproduct_id = $b['product_id'];
         $clientname = $b['firstname']." ".$b['lastname'];
 
-        $descrip = $chname." credit charge for ".$clientname;
+        $descrip = $chname." charge for ".$clientname;
 
         $reor = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code='$pay_type'");
         $ron = mysqli_fetch_array($reor);
@@ -232,20 +232,26 @@ if (isset($_GET["message1"])) {
             </script>
             ';
          }
-     } else {
+     }  elseif (isset($_GET['delete'])) {
+       $id = $_GET['delete'];
+
+       $fdo = "DELETE FROM chq_book WHERE id = '$id'";
+       $fidf = mysqli_query($connection, $fdo);
         // //  echo an error that name is not found
-        // echo '<script type="text/javascript">
-        // $(document).ready(function(){
-        //     swal({
-        //         type: "error",
-        //         title: "Please check",
-        //         text: "Input a value",
-        //         showConfirmButton: false,
-        //         timer: 2000
-        //     })
-        // });
-        // </script>
-        // ';
+        if($fidf){
+          echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "success",
+                title: "Cheque/Pass Book Deleted",
+                text: "transaction has been deleted",
+                showConfirmButton: false,
+                timer: 2000
+            })
+        });
+        </script>
+        ';
+        }
      }
  }
 ?>
@@ -314,6 +320,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                         </th>
                         <th class="th-sm">Status</th>
                         <th>Approval</th>
+                        <th>Decline</th>
                         </tr>
                         <!-- <th>Phone</th> -->
                       </thead>
@@ -324,11 +331,11 @@ if ($can_transact == 1 || $can_transact == "1") {
                         <?php $row["id"]; ?>
                           <th><?php echo $row["date"]; ?></th>
                           <?php
-                          $idd = $row["id"];
+                          $idd = $row["name"];
                             $query = "SELECT * FROM client WHERE int_id = '$sessint_id' AND id = '$idd'";
                             $resi = mysqli_query($connection, $query);
                             $c = mysqli_fetch_array($resi);
-                            $client_name = $c['firstname']." ".$c['lastname'];
+                            $client_name = $c['display_name'];
                           ?>
                           <th><?php echo $client_name; ?></th>
                           <?php 
@@ -345,6 +352,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                           <th><?php echo $row["range_amount"]; ?></th>
                           <th><?php echo $row["status"]; ?></th>
                           <td><a href="chq_approval.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
+                          <td><a href="chq_approval.php?delete=<?php echo $row["id"];?>" class="btn btn-danger">Decline</a></td>
                           </tr>
                           <!-- <th></th> -->
                           <?php }

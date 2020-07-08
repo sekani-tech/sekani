@@ -644,7 +644,8 @@ $transid2 = $randms2;
                 </select> -->
                 <label for="">Client</label>
                 <select id="sdd" name="client_id" class="js-example-basic-single form-control">
-                  <option></option>
+                <option hidden>select clients</option>
+                  <option value="000">All</option>
                   <?php echo fill_client($connection);?>
                 </select>
                 <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id;?>" id="int_id">
