@@ -165,8 +165,8 @@ if ($can_transact == 1 || $can_transact == "1") {
                            }
                            else{
                           $frei = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client'");
-                          $df = mysqli_fetch_array($frei);
-                          $clientname = $df["display_name"];
+                          $ds = mysqli_fetch_array($frei);
+                          $clientname = $ds["display_name"];
                            }
                           ?>
                           <th><?php echo $clientname; ?></th>
@@ -176,11 +176,35 @@ if ($can_transact == 1 || $can_transact == "1") {
                           $chargename = $df["name"];
                           ?>
                           <th><?php echo $chargename; ?></th>
-                          <th><?php echo $row["amount"]; ?></th>
+                          <?php
+                           $sdd = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$charge'");
+                           $er = mysqli_fetch_array($sdd);
+                           $dj = $er["charge_calculation_enum"];
+                              if($dj == "7"){
+                                $dom = number_format($row["amount"])."%";
+                              }
+                              else{
+                                $dom = number_format($row["amount"]);
+                              }
+                          ?>
+                          <th><?php echo $dom; ?></th>
                           <th><?php echo $row["description"]; ?></th>
-                          <td><a href="../functions/charger.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
+                          <td><a id="wait" href="../functions/charger.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
                           <td><a href="../functions/charger.php?delete=<?php echo $row["id"];?>" class="btn btn-danger">Decline</a></td>
                           </tr>
+                            <script>
+                              $(document).ready(function () {
+                              $('#wait').on("click", function () {
+                                swal({
+                                    type: "info",
+                                    title: "Cheque/Pass Book",
+                                    text: "Transaction in Progress",
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                })
+                              });
+                            });
+                              </script>
                           <!-- <th></th> -->
                           <?php }
                           }

@@ -46,12 +46,11 @@ $destination = "report_loan.php";
               $('#disbursed').on("click", function () {
                 swal({
                     type: "success",
-                    title: "DISBURSED LOAN REPORT",
-                    text: "Printing Successful",
+                    title: "Cheque/Pass Book",
+                    text: "Thank You!",
                     showConfirmButton: false,
-                    timer: 3000
-                          
-                  })
+                    timer: 2000
+                })
               });
             });
      </script>

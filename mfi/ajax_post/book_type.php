@@ -5,7 +5,7 @@ include('../../functions/connect.php');
 <?php
 if(isset($_POST['id'])){
 $id = $_POST['id'];
-    if($id == "chq"){
+    if($id == "2"){
         $out = '<label class="bmd-label-floating">No of Leaves</label>
         <select name="no_leaves" class="form-control" id="">
             <option value="">select an option</option>
@@ -17,7 +17,7 @@ $id = $_POST['id'];
         ';
        echo $out;
     }
-    else if($id == "pass"){
+    else if($id == "1"){
         $out = '
         ';
        echo $out;

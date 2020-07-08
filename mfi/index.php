@@ -19,7 +19,7 @@
                   <p class="card-category">Clients</p>
                   <!-- Populate with number of existing clients -->
                   <h3 class="card-title"><?php
-                   $query = "SELECT * FROM client WHERE int_id = '$sessint_id'";
+                   $query = "SELECT * FROM client WHERE int_id = '$sessint_id' AND status ='Approved'";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);

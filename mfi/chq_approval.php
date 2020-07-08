@@ -102,7 +102,8 @@ if (isset($_GET["message1"])) {
         $client = $fdm['name'];
         $transid = $fdm['transact_id'];
         $book_type = $fdm['book_type'];
-         if($book_type == "pass"){
+        
+         if($book_type == "1"){
           $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = '14'";
         $sdd = mysqli_query($connection, $somr);
         $er = mysqli_fetch_array($sdd);
@@ -110,7 +111,7 @@ if (isset($_GET["message1"])) {
         $chname = $er['name'];
         $pay_type = $er['gl_code'];
          }
-         else if($book_type == "chq"){
+         else if($book_type == "2"){
           $noum = $fdm['leaves_no'];
           if($noum == "50"){
             $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = '2'";
@@ -146,13 +147,6 @@ if (isset($_GET["message1"])) {
           }
 
          }
-        $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = '14'";
-        $sdd = mysqli_query($connection, $somr);
-        $er = mysqli_fetch_array($sdd);
-        $amount = $er['amount'];
-        $chname = $er['name'];
-        $pay_type = $er['gl_code'];
-
         $query4 = "SELECT account.id, client.firstname, client.lastname, account.product_id, account.account_no, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.account_no = account.account_no WHERE client.int_id = '$sessint_id' AND client.id ='$client'";
         $queryexec = mysqli_query($connection, $query4);
         $b = mysqli_fetch_array($queryexec);
@@ -340,10 +334,10 @@ if ($can_transact == 1 || $can_transact == "1") {
                           <th><?php echo $client_name; ?></th>
                           <?php 
                             $ir = $row["book_type"];
-                            if($ir == "pass"){
+                            if($ir == "1"){
                               $ror = "Pass Book";
                             }
-                            else if($ir == "chq"){
+                            else if($ir == "2"){
                               $ror = "Cheque Book";
                             }
                           ?>

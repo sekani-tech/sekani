@@ -18,7 +18,7 @@ $leaves_no = $_POST['no_leaves'];
 $range = $_POST['range'];
 $date = date('Y-m-d');
 
-if($leaves_no =="0" || $leaves_no ==""){
+if(($leaves_no =="0" || $leaves_no =="") && ($book == "2")){
   $_SESSION["Lack_of_intfund_$randms"] = " no cheque book";
   echo header ("Location: ../mfi/cheque_book_posting.php?message3=$randms");
 }
