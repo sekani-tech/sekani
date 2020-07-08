@@ -220,7 +220,7 @@ $destination = "report_current.php";
                     <table id="tabledt" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                          $query = "SELECT client.client_type, client.id, client.account_type, account.product_id, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1' AND account.account_balance_derived < '0.00'";
+                          $query = "SELECT client.client_type, client.id, client.account_type, account.product_id, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1' AND account.account_balance_derived < '0'";
                           $result = mysqli_query($connection, $query);
                       ?>
                         <th>
