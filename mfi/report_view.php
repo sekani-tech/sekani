@@ -97,7 +97,7 @@ if(isset($_GET["edit"])) {
 
   }
   else if($location == "31"){
-
+    echo header("Location: report_fixed_deposit_view.php?view31");
   }
   else if($location == "32"){
 

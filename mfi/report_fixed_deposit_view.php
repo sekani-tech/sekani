@@ -1,11 +1,11 @@
 <?php
 
-$page_title = "Client Report";
+$page_title = "Fixed Deposits";
 $destination = "report_current.php";
     include("header.php");
 ?>
 <?php
- if (isset($_GET["view14"])) {
+ if (isset($_GET["view31"])) {
 ?>
 <!-- Content added here -->
 <div class="content">
@@ -15,7 +15,7 @@ $destination = "report_current.php";
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Current Accounts</h4>
+                  <h4 class="card-title ">Fixed Deposits Accounts</h4>
                   <script>
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
@@ -23,16 +23,16 @@ $destination = "report_current.php";
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1'";
+                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '3'";
                           $result = mysqli_query($connection, $querys);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> current Accounts</p>
+                   }?> FTD Accounts</p>
                 </div>
                 <div class="card-body">
                 <div class="form-group">
-                <form method = "POST" action = "../composer/current_account.php">
+                <form method = "POST" action = "../composer/ftd_account.php">
               <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
               <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
               <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
@@ -57,7 +57,7 @@ $destination = "report_current.php";
                     <table id="tabledt" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1'";
+                          $query = "SELECT client.id, client.client_type, account.product_id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '3' ORDER BY firstname ASC";
                           $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -87,21 +87,17 @@ $destination = "report_current.php";
                         $idd = $row["id"];?>
                           <th><?php echo $row["firstname"]; ?></th>
                           <th><?php echo $row["lastname"]; ?></th>
-                          <th><?php echo strtoupper($row["client_type"]." "."")?></th>
+                          <th><?php echo strtoupper($row["client_type"])?></th>
                           <?php
                             $class = "";
                             $row["account_type"];
                             $cid= $row["id"];
-                            $atype = mysqli_query($connection, "SELECT * FROM account WHERE product_id = '1' AND client_id = '$cid'");
-                            if (count([$atype]) == 1) {
-                                $yxx = mysqli_fetch_array($atype);
-                                $actype = $yxx['product_id'];
-                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
+                            $prod = $row["product_id"];
+                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$prod'");
                            if (count([$spn])) {
                              $d = mysqli_fetch_array($spn);
                              $savingp = $d["name"];
                            }
-                            }
                            
                             ?>
                           <th><?php echo $savingp; ?></th>
@@ -186,7 +182,7 @@ $destination = "report_current.php";
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1' AND account.account_balance_derived < '0.00' ORDER BY firstname ASC";
+                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1' AND account.account_balance_derived < '0.00'";
                           $result = mysqli_query($connection, $querys);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -220,7 +216,7 @@ $destination = "report_current.php";
                     <table id="tabledt" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                          $query = "SELECT client.client_type, client.id, client.account_type, account.product_id, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1' AND account.account_balance_derived < '0.00'";
+                          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1' AND account.account_balance_derived < '0.00'";
                           $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -253,13 +249,19 @@ $destination = "report_current.php";
                           <th><?php echo strtoupper($row["client_type"]." "."")?></th>
                           <?php
                             $class = "";
-                            $prod = $row["product_id"];
                             $row["account_type"];
-                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$prod'");
+                            $cid= $row["id"];
+                            $atype = mysqli_query($connection, "SELECT * FROM account WHERE product_id = '1' AND client_id = '$cid'");
+                            if (count([$atype]) == 1) {
+                                $yxx = mysqli_fetch_array($atype);
+                                $actype = $yxx['product_id'];
+                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
                            if (count([$spn])) {
                              $d = mysqli_fetch_array($spn);
                              $savingp = $d["name"];
+                           }
                             }
+                           
                             ?>
                           <th><?php echo $savingp; ?></th>
                           <?php
