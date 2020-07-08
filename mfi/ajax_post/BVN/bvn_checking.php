@@ -37,7 +37,7 @@ if ($bvn_length == 11) {
             // BIG CODE START BVN PAYSTACK VERIFICATION
         $curl = curl_init();
         curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.paystack.co/bank/resolve_bvn/$bvn",
+        CURLOPT_URL => "https://api.flutterwave.com/v3/kyc/bvns/$bvn",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
@@ -45,7 +45,7 @@ if ($bvn_length == 11) {
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => array(
-          "Authorization: Bearer sk_live_6908f42b262f4f378257ab04af356ab20a0e8cbd",
+          "Authorization: Bearer FLWSECK-2e1fc0c6b08527b62b30f752405be2f2-X",
           "Cache-Control: no-cache",
         ),
         ));
@@ -79,9 +79,11 @@ if ($bvn_length == 11) {
            if ($status != false) {
            $bvn_fn = $obj['data']['first_name'];
            $bvn_ln = $obj['data']['last_name'];
-           $bvn_dob = $obj['data']['formatted_dob'];
-           $bvn_phone = $obj['data']['mobile'];
+           $bvn_dob = $obj['data']['date_of_birth'];
+           $bvn_phone = $obj['data']['phone_number'];
            $bvn_bvn = $obj['data']['bvn'];
+           $bvn_nat = $obj['data']['nationality'];
+           $bvn_gend = $obj['data']['gender'];
            }
         //    echo $bvn_fn."firstname".$bvn_ln."Lastname".$dob."DATE OF BIRTH";
         if ($bvn_fn == $first && $bvn_ln == $last && $bvn_dob == $dob && $bvn_phone == $phone) {
