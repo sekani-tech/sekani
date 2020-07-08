@@ -3,6 +3,8 @@
 $page_title = "Financial Report";
 $destination = "report_financial.php";
     include("header.php");
+    session_start();
+    $branch = $_SESSION['branch_id'];
 ?>
 <?php
  if (isset($_GET["view24"])) {
@@ -106,4 +108,109 @@ $destination = "report_financial.php";
  </div>
  <?php
  }
+ else if (isset($_GET["view43"])) {
+  ?>
+  <div class="content">
+          <div class="container-fluid">
+            <!-- your content here -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header card-header-primary">
+                    <h4 class="card-title ">Daily Transactions</h4>
+                    <script>
+                    $(document).ready(function() {
+                    $('#tabledat').DataTable();
+                    });
+                    </script>
+                    <!-- Insert number users institutions -->
+                    <p class="card-category">
+                        <?php
+                        $currentdate = date('Y-m-d');
+                          $query = "SELECT * FROM institution_account_transaction WHERE branch_id = '$branch' AND int_id = '$sessint_id' AND transaction_date = '$currentdate'";
+                          $result = mysqli_query($connection, $query);
+                     if ($result) {
+                       $inr = mysqli_num_rows($result);
+                       echo $inr;
+                     }?> transactions made today</p>
+                  </div>
+                  <div class="card-body">
+                  <div class="form-group">
+                  <form method = "POST" action = "../composer/exp_loan_repay.php">
+                <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
+                <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
+                <input hidden name ="end" type="text" value="<?php echo $currentdate;?>"/>
+                <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download PDF</button>
+                <script>
+                $(document).ready(function () {
+                $('#disbursed').on("click", function () {
+                  swal({
+                      type: "success",
+                      title: "DISBURSED LOAN REPORT",
+                      text: "Printing Successful",
+                      showConfirmButton: false,
+                      timer: 3000
+                            
+                    })
+                });
+              });
+       </script>
+              </form>
+                  </div>
+                    <div class="table-responsive">
+                      <table id="tabledatv" class="table" cellspacing="0" style="width:100%">
+                        <thead class=" text-primary">
+                        <?php
+                          $query = "SELECT * FROM institution_account_transaction WHERE branch_id = '$branch' AND int_id = '$sessint_id' AND transaction_date = '$currentdate'";
+                          $result = mysqli_query($connection, $query);
+                        ?>
+                          <tr class="table100-head">
+                            <th>Transaction Type</th>
+                            <th>Transaction Date</th>
+                            <th>Reference</th>
+                            <th>Account Officer</th>
+                            <th>Debits(&#8358;)</th>
+                            <th>Credits(&#8358;)</th>
+                            <th>Account Balance(&#8358;)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php if (mysqli_num_rows($result) > 0) {
+                          while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                          <tr>
+                            <th><?php echo $row["transaction_type"];?></th>
+                            <th><?php echo $row["transaction_date"];?></th>
+                            <th><?php echo $row["description"];?></th>
+                          <?php 
+                              $name = $row['appuser_id'];
+                              $anam = mysqli_query($connection, "SELECT display_name FROM staff WHERE id = '$name'");
+                              $f = mysqli_fetch_array($anam);
+                              $nae = strtoupper($f["display_name"]);
+                          ?>
+                            <th><?php echo $nae; ?></th>
+                            <th><?php echo number_format($row["debit"]); ?></th>
+                            <th><?php echo number_format($row["credit"]); ?></th>
+                            <th><?php echo number_format($row["running_balance_derived"], 2);?></th>
+                            <?php
+                            
+                            ?>
+                          </tr>
+                          <?php }
+                            }
+                            else {
+                              // echo "0 Document";
+                            }
+                            ?>
+                            <!-- <th></th> -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+   <?php
+   }
  ?>
