@@ -135,8 +135,8 @@ $transid = $randms;
                         <div class="form-group">
                           <label class="bmd-label-floating">Book Type</label>
                           <select id="ewe" name="book_type" class="form-control" id="acc_name">
-                          <option value="chq">Chq Book</option>
-                          <option value="pass">Pass Book</option>
+                          <option value="2">Chq Book</option>
+                          <option value="1">Pass Book</option>
                         </select>
                         </div>
                       </div>

@@ -30,7 +30,8 @@ $date = $som['date'];
 // credit checks and accounting rules
 $don = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$charges'");
 $s = mysqli_fetch_array($don);
-$amount = $s['amount'];
+$calc_time = $s['charge_calculation_enum'];
+
 $pay_type = $s['gl_code'];
 // insertion query for product
 if($client == "0"){
@@ -48,7 +49,16 @@ if($client == "0"){
     $reor = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code='$pay_type'");
     $ron = mysqli_fetch_array($reor);
     $glbalance = $ron['organization_running_balance_derived'];
-    
+
+    if($calc_time == "7"){
+      $amt = $s['amount'];
+      $roer = $amt / 100;
+      $amount = $accbal * $roer;
+    }
+    else{
+    $amount = $s['amount'];
+    }
+  
     $newglball = $glbalance + $amount;
     $sddd += $newglball;
     $glsmi += $amount;
@@ -72,7 +82,7 @@ if($client == "0"){
             $res3 = mysqli_query($connection, $iat);
                     }
   }
-  $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$newglball' WHERE int_id = '$sessint_id' && gl_code = '$pay_type'";
+  $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$sddd' WHERE int_id = '$sessint_id' && gl_code = '$pay_type'";
   $dbgl = mysqli_query($connection, $upglacct);
         if($dbgl){
           $deiption = "credit";
@@ -110,6 +120,15 @@ else{
   $ron = mysqli_fetch_array($reor);
   $glbalance = $ron['organization_running_balance_derived'];
   
+  if($calc_time == "7"){
+    $amt = $s['amount'];
+    $roer = $amt / 100;
+    $amount = $accbal * $roer;
+  }
+  else{
+  $amount = $s['amount'];
+  }
+
   $newglball = $glbalance + $amount;
   $ttlwith = $ttl + $amount;
   $newbal = $accbal - $amount;
