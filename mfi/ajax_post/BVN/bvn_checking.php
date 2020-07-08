@@ -45,7 +45,7 @@ if ($bvn_length == 11) {
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => array(
-          "Authorization: Bearer sk_live_5bbf0cb5832fbdd35b07a53baaa495b6c62dba8b",
+          "Authorization: Bearer sk_live_6908f42b262f4f378257ab04af356ab20a0e8cbd",
           "Cache-Control: no-cache",
         ),
         ));
@@ -291,13 +291,13 @@ if ($bvn_length == 11) {
         }
         // END OF PAYSACK BVN VERIFICATION
     } else {
-        echo "<span style='color: red'>THIS CLIENT EXSIST</span>";
+        echo "<span style='color: red'>THIS CLIENT EXIST</span>";
         // STOP FORM FROM SUBMITTING
         echo '<script type="text/javascript">
         $(document).ready(function(){
             swal({
                 type: "error",
-                title: "CLIENT EXSIST",
+                title: "CLIENT EXIST",
                 text: "Check if the client has been rejected or Pending approval",
                 showConfirmButton: false,
                 timer: 3000
