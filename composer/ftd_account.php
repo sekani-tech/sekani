@@ -16,11 +16,11 @@ session_start();
       $branch_location = $ans['location'];
       $branch_phone = $ans['phone'];
     }
-    if(isset($_POST['rer'])){
-      $sad = "in Debit";
+    if(isset($_POST['eww'])){
+      $sad = 'in Debit';
     }
     else{
-      $sad = "";
+      $sad = '';
     }
   function fill_report($connection)
         {
@@ -28,7 +28,12 @@ session_start();
             $sessint_id =$_SESSION['int_id'];
           // import
         //   $glcode = $_POST['glcode'];
-          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '3' AND account.account_balance_derived < '0.00'";
+          if(isset($_POST['eww'])){
+            $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '3' AND account.account_balance_derived < '0.00'";
+          }
+          else{
+            $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '3'";
+          }
         $result = mysqli_query($connection, $query);
         while ($q = mysqli_fetch_array($result, MYSQLI_ASSOC))
           {
@@ -38,7 +43,7 @@ session_start();
           $account = strtoupper($q["client_type"]);
             $q["account_type"];
             $cid= $q["id"];
-            $atype = mysqli_query($connection, "SELECT * FROM account WHERE product_id = '1' AND client_id = '$cid'");
+            $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
             if (count([$atype]) == 1) {
                 $yxx = mysqli_fetch_array($atype);
                 if(isset($yxx['product_id'])){

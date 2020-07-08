@@ -34,8 +34,7 @@ $destination = "report_current.php";
                 <div class="form-group">
                 <form method = "POST" action = "../composer/ftd_account.php">
               <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
-              <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
-              <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
+
               <button type="submit" id="currentlist" class="btn btn-primary pull-left">Download PDF</button>
               <script>
               $(document).ready(function () {
