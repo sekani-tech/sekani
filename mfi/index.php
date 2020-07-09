@@ -8,22 +8,6 @@
     <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
-          <?php
-         /* Remove the execution time limit */
-// set_time_limit(0);
-
-// /* Iteration interval in seconds */
-// $sleep_time = 600;
-
-// while (TRUE)
-// {
-//    /* Sleep for the iteration interval */
-//    sleep($sleep_time);
-   
-//    /* Print the time (to the console) */
-//    echo 'Time: ' . date('H:i:s');
-// }
-?>
           <div class="row">
             <!-- Card displays clients -->
             <div class="col-lg-3 col-md-6 col-sm-6">
