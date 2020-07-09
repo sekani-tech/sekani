@@ -1,5 +1,23 @@
 <?php
+//  BEFOR THE SESSION START
+session_set_cookie_params(0);
     session_start();
+    $autologout = 1000;
+    $lastactive = $_SESSION['timestamp'] ?? 0;
+    if ((time() - $lastactive) > $autologout) {
+      echo header("location: ../functions/logout.php");
+      // echo "ALRIGHT";
+    } else {
+      $_SESSION['timestamp']=time(); //Or reset the timestamp
+      // echo "READING...";
+	  }
+// THE NEW CODES HERE WILL BE FOR THE NEXT INSTANCE
+// WRITING A QUICK ALROGRITHM
+// 1. GET THE CURRENT TIME
+// 2. YOU UPDATE
+// 3. YOU CHECK
+// Let's make a new move
+  // ID
     if(!$_SESSION["usertype"] == "admin"){
       header("location: ../login.php");
       exit;

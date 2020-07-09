@@ -1,8 +1,6 @@
 <?php
-
     $page_title = "Dashboard";
     include("header.php");
-
 ?>
 <!-- Content added here -->
     <div class="content">
