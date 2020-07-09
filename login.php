@@ -1,7 +1,9 @@
 <?php
+// We are done
 // Initialize the session
 session_start();
-
+// YHA
+$_SESSION['timestamp']=time();
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
   if($_SESSION["usertype"] == "super_admin"){
