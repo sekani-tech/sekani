@@ -140,7 +140,7 @@ else if (isset($_GET["message5"])) {
           swal({
               type: "success",
               title: "Success",
-              text: "Loan Products Updated!",
+              text: "Product Updated!",
               showConfirmButton: false,
               timer: 2000
           })
@@ -160,7 +160,7 @@ else if (isset($_GET["message5"])) {
             swal({
                 type: "error",
                 title: "Error",
-                text: "Error Updating loan product!",
+                text: "Error Updating product!",
                 showConfirmButton: false,
                 timer: 2000
             })

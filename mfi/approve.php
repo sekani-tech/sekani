@@ -392,14 +392,14 @@ $resx1 = mysqli_num_rows($q1);
                          </script>
                          ';
                        }
-                       if ($connection->error) {
-                        try {
-                            throw new Exception("MYSQL error $connection->error <br> $gl_acc1 ", $mysqli->error);
-                        } catch (Exception $e) {
-                            echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
-                            echo n12br($e->getTraceAsString());
-                        }
-                    }
+                    //    if ($connection->error) {
+                    //     try {
+                    //         throw new Exception("MYSQL error $connection->error <br> $gl_acc1 ", $mysqli->error);
+                    //     } catch (Exception $e) {
+                    //         echo "Error No: ".$e->getCode()." - ".$e->getMessage() . "<br>";
+                    //         echo n12br($e->getTraceAsString());
+                    //     }
+                    // }
                         }
                             } else if ($is_bank == 0) {
                                // institution account transaction
