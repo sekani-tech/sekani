@@ -5,7 +5,7 @@ session_set_cookie_params(0);
     $autologout = 1000;
     $lastactive = $_SESSION['timestamp'] ?? 0;
     if ((time() - $lastactive) > $autologout) {
-      echo header("location: ../functions/logout.php");
+      // echo header("location: ../functions/logout.php");
       // echo "ALRIGHT";
     } else {
       $_SESSION['timestamp']=time(); //Or reset the timestamp
@@ -110,7 +110,7 @@ $rezz = mysqli_query($connection, $activeq);
   <title><?php echo "$int_name - $page_title"?></title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-  <!-- <meta http-equiv="refresh" content="1000;url=../functions/logout.php" /> -->
+  <meta http-equiv="refresh" content="1000;url=../functions/logout.php" />
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <!--     Fonts and icons     -->
