@@ -312,8 +312,8 @@ $destination = "config.php";
                           <label for="interestMethodology" >Interest Methodology *</label>
                           <select class="form-control" name="interest_rate_methodoloy" >
                             <option hidden value="<?php echo $interest_rate_methodoloy;?>"><?php echo $int_rate_my;?></option>
-                            <option value="1">Flat</option>
-                            <option value="2">Declining Balance</option>
+                            <option value ="1">Flat</option>
+                            <option value ="2">Declining Balance</option>
                           </select>
                         </div>
                       </div>
