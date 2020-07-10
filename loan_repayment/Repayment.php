@@ -214,14 +214,14 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                                         // damn with
                                         $insert_loan_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
                                          `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
-                                        VALUES ('{$int_id}', '{$branch_id}', '{$loan_port}', '{$trans_id}', 'Loan Repayment', 'Loan Repayment Principal', '0', '0', '{$gen_date}',
+                                        VALUES ('{$int_id}', '{$branch_id}', '{$loan_port}', '{$trans_id}', 'Loan Repayment Principal / {$client_firstname}', 'Loan Repayment Principal', '0', '0', '{$gen_date}',
                                          '{$collection_principal}', '{$updated_loan_port}', '{$updated_loan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_principal}', '0.00')");
                                          if ($insert_loan_port) {
                                             $update_the_int_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$intloan_port' WHERE int_id = '$int_id' AND gl_code ='$int_loan_port'");
                                             if ($update_the_int_loan) {
                                                 $insert_i_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
                                          `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
-                                        VALUES ('{$int_id}', '{$branch_id}', '{$int_loan_port}', '{$trans_id}', 'Loan Repayment', 'Loan Repayment Interest', '0', '0', '{$gen_date}',
+                                        VALUES ('{$int_id}', '{$branch_id}', '{$int_loan_port}', '{$trans_id}', 'Loan Repayment Interest / {$client_firstname}', 'Loan Repayment Interest', '0', '0', '{$gen_date}',
                                          '{$collection_interest}', '{$intloan_port}', '{$intloan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_interest}', '0.00')");
                                                 // done
                                                 if ($insert_i_port) {
@@ -355,14 +355,14 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                                            // damn with
                                            $insert_loan_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
                                             `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
-                                           VALUES ('{$int_id}', '{$branch_id}', '{$loan_port}', '{$trans_id}', 'Loan Repayment', 'Loan Repayment Principal', '0', '0', '{$gen_date}',
+                                           VALUES ('{$int_id}', '{$branch_id}', '{$loan_port}', '{$trans_id}', 'Loan Repayment Principal / {$client_firstname}', 'Loan Repayment Principal', '0', '0', '{$gen_date}',
                                             '{$collection_principal}', '{$updated_loan_port}', '{$updated_loan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_principal}', '0.00')");
                                             if ($insert_loan_port) {
                                                 $update_the_int_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$intloan_port' WHERE int_id = '$int_id' AND gl_code ='$int_loan_port'");
                                                 if ($update_the_int_loan) {
                                                     $insert_i_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
                                              `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
-                                            VALUES ('{$int_id}', '{$branch_id}', '{$int_loan_port}', '{$trans_id}', 'Loan Repayment', 'Loan Repayment Interest', '0', '0', '{$gen_date}',
+                                            VALUES ('{$int_id}', '{$branch_id}', '{$int_loan_port}', '{$trans_id}', 'Loan Repayment Interest / {$client_firstname}', 'Loan Repayment Interest', '0', '0', '{$gen_date}',
                                              '{$collection_interest}', '{$intloan_port}', '{$intloan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_interest}', '0.00')");
                                                     // done
                                                     if ($insert_i_port) {
