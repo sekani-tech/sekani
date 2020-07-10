@@ -49,7 +49,7 @@ if ($bvn_length == 11) {
           "Cache-Control: no-cache",
         ),
         ));
-  
+//   checking up the control
         $response = curl_exec($curl);
         $err = curl_error($curl);
         curl_close($curl);

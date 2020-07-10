@@ -2,6 +2,7 @@
     $page_title = "Dashboard";
     include("header.php");
 ?>
+<!-- making a new push -->
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
