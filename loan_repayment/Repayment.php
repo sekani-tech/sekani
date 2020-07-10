@@ -155,7 +155,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                 `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
                 `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
                 VALUES ('{$int_id}', '{$branch_id}', '0', '{$account_id}', '$acct_no', '{$client_id}', '0', '{$trans_id}',
-                'Loan', 'loan_repayment', '0', '{$gen_date}', '{$collection_due_paid}', '{$collection_due_paid}',
+                'Loan Repayment', 'loan_repayment', '0', '{$gen_date}', '{$collection_due_paid}', '{$collection_due_paid}',
                 '{$gen_date}', '0', '{$balance_remaining}',
                 '{$balance_remaining}', '{$gen_date}', '0', '0', '{$collection_due_paid}', '0.00')");
                 if ($insert_client_trans) {
@@ -290,7 +290,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                    `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
                    `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
                    VALUES ('{$int_id}', '{$branch_id}', '0', '{$account_id}', '$acct_no', '{$client_id}', '0', '{$trans_id}',
-                   'Loan', 'loan_repayment', '0', '{$gen_date}', '{$collection_due_paid}', '{$collection_due_paid}',
+                   'Loan Repayment', 'loan_repayment', '0', '{$gen_date}', '{$collection_due_paid}', '{$collection_due_paid}',
                    '{$gen_date}', '0', '{$balance_remaining}',
                    '{$balance_remaining}', '{$gen_date}', '0', '0', '{$collection_due_paid}', '0.00')");
                    if ($insert_client_trans) {
