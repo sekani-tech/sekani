@@ -163,7 +163,7 @@ if (isset($_GET["message1"])) {
         $ron = mysqli_fetch_array($reor);
         $glbalance = $ron['organization_running_balance_derived'];
 
-        $newbal = $accbal + $amount;
+        $newbal = $accbal - $amount;
         $ttlwith = $amount + $ttl;
         $newglball = $amount + $glbalance;
 
