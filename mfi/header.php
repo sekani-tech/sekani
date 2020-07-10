@@ -5,7 +5,7 @@ session_set_cookie_params(0);
     $autologout = 1000;
     $lastactive = $_SESSION['timestamp'] ?? 0;
     if ((time() - $lastactive) > $autologout) {
-      echo header("location: ../functions/logout.php");
+      // echo header("location: ../functions/logout.php");
       // echo "ALRIGHT";
     } else {
       $_SESSION['timestamp']=time(); //Or reset the timestamp
