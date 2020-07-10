@@ -130,6 +130,46 @@ else if (isset($_GET["message5"])) {
     $_SESSION["lack_of_intfund_$key"] = 0;
     }
     }
+    else if (isset($_GET["message7"])) {
+      $key = $_GET["message7"];
+      // $out = $_SESSION["lack_of_intfund_$key"];
+      $tt = 0;
+      if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+      echo '<script type="text/javascript">
+      $(document).ready(function(){
+          swal({
+              type: "success",
+              title: "Success",
+              text: "Loan Products Updated!",
+              showConfirmButton: false,
+              timer: 2000
+          })
+      });
+      </script>
+      ';
+      $_SESSION["lack_of_intfund_$key"] = 0;
+      }
+      }
+      else if (isset($_GET["message8"])) {
+        $key = $_GET["message8"];
+        // $out = $_SESSION["lack_of_intfund_$key"];
+        $tt = 0;
+        if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "Error",
+                text: "Error Updating loan product!",
+                showConfirmButton: false,
+                timer: 2000
+            })
+        });
+        </script>
+        ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+        }
+        }
 ?>
 <?php
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {

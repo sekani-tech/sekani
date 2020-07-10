@@ -63,7 +63,7 @@ $destination = "config.php";
   if($interest_rate_methodoloy == "1"){
     $int_rate_my = "Flat";
   }
-  else if($interest_rate_applied == "2"){
+  else if($interest_rate_methodoloy == "2"){
     $int_rate_my = "Declining Balance";
   }
 
@@ -165,7 +165,7 @@ $destination = "config.php";
                   <h4 class="card-title">Update Product</h4>
                   <p class="card-category">Fill in all important data</p>
                 </div>
-                <form id="form" action="" method="POST">
+                <form id="form" action="../functions/product_update.php" method="POST">
                 <div class="card-body">
                 <div class = "row">
                     <div class = "col-md-12">
@@ -176,6 +176,7 @@ $destination = "config.php";
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Name *:</label>
+                        <input type="text" value="<?php echo $user_id;?>" hidden  name="prod_id" class="form-control"  id="" required>
                         <input type="text" value="<?php echo $name;?>"  name="name" class="form-control"  id="" required>
                       </div>
                     </div>
@@ -403,7 +404,7 @@ $destination = "config.php";
                                 });
                               });
                             </script>
-                      <div id="idd" class="col-md-12">update_loan_product_table.php
+                      <div id="idd" class="col-md-12">
                       <table id="tabledat4" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
@@ -684,29 +685,36 @@ $destination = "config.php";
                               </span>
                               <div id="acct_int">
                               <div class="table-responsive">
-<table id="tabledat" class="table" cellspacing="0" style="width:100%">
-         <thead>
-           <th> <b> Payment Type </b></th>
-           <th> <b>Assets Account <b></th>
-         </thead>
-           </table>
+                              <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM prod_acct WHERE int_id ='$sessint_id' AND prod_id = '$user_id' AND type ='pay'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                            <th> <b> Payment Type </b></th>
+                            <th> <b>Assets Account <b></th>
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                          <th><?php echo $row['name']; ?></th>
+                          <th><?php echo $row['acct']; ?></th>
+                          <td><a class="btn btn-danger">Delete</a></td>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                      </tbody>
+                    </table>
   </div>
   </div>
-  <div id="show_payment"></div>
-                            <!-- <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal2"><i class="material-icons">add</i></button> -->
                             <!-- <span>
                             Map Fees to Specific Income accounts
                             </span> -->
-                            <div id="acct_2" hidden>
-                              <div class="table-responsive">
-                              <table id="tabledat" class="table" cellspacing="0" style="width:100%">
-         <thead>
-           <th> <b> Fee </b></th>
-           <th> <b>Income Account <b></th>
-         </thead>
-         </table>
-                              </div>
-                            </div>
                               <div id="show_payment2"></div>
                             <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal3"><i class="material-icons">add</i></button>
                             <span>
@@ -715,17 +723,30 @@ $destination = "config.php";
                             <div id="acct_3">
                               <div class="table-responsive">
                               <table id="tabledat" class="table" cellspacing="0" style="width:100%">
-         <thead>
-           <th> <b> Penalty </b></th>
-           <th> <b> Income Account <b></th>
-         </thead>
-         <!-- <tbody>
-           <tr>
-             <th> <h5> Eco Bank </h5></th>
-             <th> <h5>GL </h5></th>
-           </tr>
-         </tbody> -->
-         </table>
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM prod_acct WHERE int_id ='$sessint_id' AND prod_id = '$user_id' AND type ='pen'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                            <th> <b> Penalty </b></th>
+                            <th> <b> Income Account <b></th>
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                          <th><?php echo $row['name']; ?></th>
+                          <th><?php echo $row['acct']; ?></th>
+                          <td><a class="btn btn-danger">Delete</a></td>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                      </tbody>
+                    </table>
                               </div>
                             </div>
                               <div id="show_payment3"></div>
@@ -1124,7 +1145,7 @@ function showTab(n) {
     document.getElementById("prevBtn").style.display = "inline";
   }
   if (n == (x.length - 1)) {
-    document.getElementById("nextBtn").innerHTML = "Submit";
+    document.getElementById("nextBtn").innerHTML = "Update";
   } else {
     document.getElementById("nextBtn").innerHTML = "Next";
   }
