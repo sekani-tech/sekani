@@ -122,8 +122,25 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Account No:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $acc; ?>" readonly>
+                          <select class="form-control" name="">
+                           <option hidden>select an option</option>
+                           <?php echo fill_account($connection);?>
+                          </select>
                         </div>
+                        <?php
+                          function fill_account($connection)
+                          {
+                          $sint_id = $_SESSION["int_id"];
+                          $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
+                          $res = mysqli_query($connection, $org);
+                          $out = '';
+                          while ($row = mysqli_fetch_array($res))
+                          {
+                            $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                          }
+                          return $out;
+                          }
+                        ?>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
@@ -182,6 +199,12 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">BVN:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $bvn; ?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Account:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $bvn; ?>" readonly>
                         </div>
                       </div>

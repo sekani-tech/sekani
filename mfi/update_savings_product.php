@@ -929,7 +929,6 @@ $destination = "config.php";
                         <tr>
                           <th><?php echo $row['name']; ?></th>
                           <th><?php echo $row['acct']; ?></th>
-                          <td><a class="btn btn-danger">Delete</a></td>
                         </tr>
                         <?php }
                           }
@@ -966,7 +965,6 @@ $destination = "config.php";
                         <tr>
                           <th><?php echo $row['name']; ?></th>
                           <th><?php echo $row['acct']; ?></th>
-                          <td><a class="btn btn-danger">Delete</a></td>
                         </tr>
                         <?php }
                           }

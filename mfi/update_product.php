@@ -176,7 +176,7 @@ $destination = "config.php";
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Name *:</label>
-                        <input type="text" value="<?php echo $user_id;?>" hidden  name="prod_id" class="form-control"  id="" required>
+                        <input type="text" value="<?php echo $user_id;?>" hidden  name="prod_id" class="form-control"  id="prod_id" required>
                         <input type="text" value="<?php echo $name;?>"  name="name" class="form-control"  id="" required>
                       </div>
                     </div>
@@ -683,7 +683,7 @@ $destination = "config.php";
                               <span>
                               Configure Fund sources for payment channels
                               </span>
-                              <div id="acct_int">
+                              <div id="fdof">
                               <div class="table-responsive">
                               <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
@@ -720,7 +720,7 @@ $destination = "config.php";
                             <span>
                             Map Penalties to Specific income accounts
                             </span>
-                            <div id="acct_3">
+                            <div id="">
                               <div class="table-responsive">
                               <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
@@ -749,8 +749,6 @@ $destination = "config.php";
                     </table>
                               </div>
                             </div>
-                              <div id="show_payment3"></div>
-                            </div>
                           <!-- <div class="col-md-8"> -->
                           <!-- </div> -->
                         </div>
@@ -758,24 +756,24 @@ $destination = "config.php";
                           
 <!-- Modal -->
 <?php 
-                              function fill_all($connection)
-                              {
-                                $sint_id = $_SESSION["int_id"];
-                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' ORDER BY name ASC";
-                                $res = mysqli_query($connection, $org);
-                                $output = '';
-                                while ($row = mysqli_fetch_array($res))
-                                {
-                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
-                                }
-                                return $output;
-                              }
-                              ?>
+function fill_all($connection)
+{
+  $sint_id = $_SESSION["int_id"];
+  $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' ORDER BY name ASC";
+  $res = mysqli_query($connection, $org);
+  $output = '';
+  while ($row = mysqli_fetch_array($res))
+  {
+    $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+  }
+  return $output;
+}
+?>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Accounting Insturction</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Accounting Instruction</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -785,52 +783,26 @@ $destination = "config.php";
           <div class="col-md-6">
           <div class="form-group">
           <?php 
-                              function fill_payment($connection)
-                              {
-                                $sint_id = $_SESSION["int_id"];
-                                $getacct = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE name LIKE '%due from bank%' && int_id = '$sint_id'");
-                                $cx = mysqli_fetch_array($getacct);
-                                $dfb = $cx["id"];
+            function fill_payment($connection)
+            {
+              $sint_id = $_SESSION["int_id"];
+              $getacct = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE name LIKE '%due from bank%' && int_id = '$sint_id'");
+              $cx = mysqli_fetch_array($getacct);
+              $dfb = $cx["id"];
 
-                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '1' && parent_id = '$dfb' ORDER BY name ASC";
-                                $res = mysqli_query($connection, $org);
-                                $output = '';
-                                while ($row = mysqli_fetch_array($res))
-                                {
-                                  $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
-                                }
-                                return $output;
-                              }
-                              ?>
+              $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '1' && parent_id = '$dfb' ORDER BY name ASC";
+              $res = mysqli_query($connection, $org);
+              $output = '';
+              while ($row = mysqli_fetch_array($res))
+              {
+                $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+              }
+              return $output;
+            }
+          ?>
          <label for="charge" class="form-align ">Payment</label>
-         <script>
-           $(document).ready(function () {
-             $('#run_pay').on("change keyup paste click", function () {
-               var id = $('#payment_id').val();
-               var int_id = $('#int_id').val();
-               var main_p = $('#main_p').val();
-               var idx = $('#payment_id_x').val();
-              //  new
-               if (idx != '' && id !=  '') {
-                $.ajax({
-                 url: "ajax_post/payment_product.php",
-                 method: "POST",
-                 data:{id:id, int_id:int_id, main_p:main_p, idx:idx},
-                 success: function (data) {
-                   $('#show_payment').html(data);
-                   document.getElementById("ipayment_id").setAttribute("hidden", "");
-                   document.getElementById("real_payment").removeAttribute("hidden");
-                 }
-               })
-               } else {
-                //  poor the internet
-               }
-             });
-           });
-         </script>
-         <div id="real_payment" hidden></div>
          <div id="ipayment_id">
-              <select id="payment_id" class="form-control form-control-sm" name="">
+              <select id="payment_gl" class="form-control form-control-sm" name="">
               <option value="">--</option>
               <?php echo fill_payment($connection)?>
             </select>
@@ -840,18 +812,34 @@ $destination = "config.php";
           <div class="col-md-6">
           <div class="form-group">
          <label for="charge" class="form-align">Asset Account</label>
-              <select class="form-control form-control-sm" name="" id="payment_id_x">
+              <select class="form-control form-control-sm" name="" id="account_gl">
               <option value="">--</option>
               <?php echo fill_asset($connection) ?>
-            </select> 
+            </select>
           </div>
           </div>
+          <script>
+                    $(document).ready(function() {
+                      $('#run_pay').on("click", function(){
+                        var paymentgl = $('#payment_gl').val();
+                        var accountgl = $('#account_gl').val();
+                        var prod_id = $('#prod_id').val();
+                        $.ajax({
+                          url:"ajax_post/update_loan_payment.php",
+                          method:"POST",
+                          data:{paymentgl:paymentgl, accountgl:accountgl, prod_id:prod_id},
+                          success:function(data){
+                            $('#fdof').html(data);
+                          }
+                        })
+                      });
+                    });
+                </script>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="run_pay">Save changes</button>
-        <button type="button" class="btn btn-primary" id="run_pay2" hidden>Save changes</button>
       </div>
     </div>
   </div>
