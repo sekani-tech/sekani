@@ -715,12 +715,11 @@ $destination = "config.php";
                             <!-- <span>
                             Map Fees to Specific Income accounts
                             </span> -->
-                              <div id="show_payment2"></div>
                             <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal3"><i class="material-icons">add</i></button>
                             <span>
                             Map Penalties to Specific income accounts
                             </span>
-                            <div id="">
+                            <div id="qoem">
                               <div class="table-responsive">
                               <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
@@ -830,6 +829,22 @@ function fill_all($connection)
                           data:{paymentgl:paymentgl, accountgl:accountgl, prod_id:prod_id},
                           success:function(data){
                             $('#fdof').html(data);
+                          }
+                        })
+                      });
+                    });
+
+                    $(document).ready(function() {
+                      $('#ediw').on("click", function(){
+                        var penaltygl = $('#penaltygl').val();
+                        var incomegl = $('#incomegl').val();
+                        var prod_id = $('#prod_id').val();
+                        $.ajax({
+                          url:"ajax_post/update_loan_payment.php",
+                          method:"POST",
+                          data:{penaltygl:penaltygl, incomegl:incomegl, prod_id:prod_id},
+                          success:function(data){
+                            $('#qoem').html(data);
                           }
                         })
                       });
@@ -959,34 +974,9 @@ function fill_all($connection)
                               }
                               ?>
          <label for="charge" class="form-align ">Penalty</label>
-         <script>
-           $(document).ready(function () {
-             $('#run_pay5').on("change keyup paste click", function () {
-               var id2 = $('#payment_id3').val();
-               var int_id = $('#int_id').val();
-               var main_p = $('#main_p').val();
-               var idx2 = $('#payment_id_x3').val();
-              //  new
-               if (idx2 != '' && id2 !=  '') {
-                $.ajax({
-                 url: "ajax_post/payment_pen.php",
-                 method: "POST",
-                 data:{id2:id2, int_id:int_id, main_p:main_p, idx2:idx2},
-                 success: function (data) {
-                   $('#show_payment3').html(data);
-                   document.getElementById("ipayment_id3").setAttribute("hidden", "");
-                   document.getElementById("real_payment3").removeAttribute("hidden");
-                 }
-               })
-               } else {
-                //  poor the internet
-               }
-             });
-           });
-         </script>
          <div id="real_payment3"></div>
          <div id="ipayment_id3">
-         <select class="form-control form-control-sm" name="" id="payment_id3">
+         <select class="form-control form-control-sm" name="" id="penaltygl">
               <option value="">--</option>
               <?php echo fill_pen($connection) ?>
             </select> 
@@ -996,7 +986,7 @@ function fill_all($connection)
           <div class="col-md-6">
           <div class="form-group">
          <label for="charge" class="form-align ">Income Account</label>
-              <select class="form-control form-control-sm" name="" id="payment_id_x3">
+              <select class="form-control form-control-sm" name="" id="incomegl">
               <option value="">--</option>
               <?php echo fill_in($connection) ?>
             </select> 
@@ -1006,8 +996,7 @@ function fill_all($connection)
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="run_pay5">Save changes</button>
-        <button type="button" class="btn btn-primary" id="run_pay6" hidden>Save changes</button>
+        <button type="button" class="btn btn-primary" id="ediw">Save changes</button>
       </div>
     </div>
   </div>

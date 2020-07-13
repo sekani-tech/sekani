@@ -743,7 +743,7 @@ $destination = "config.php";
                           <div class="form-group">
                             <div class="col-md-8">
                             <label for="charge" class="form-align">Insufficient Repayment</label>
-                            <select class="form-control form-control-sm" name="asst_insuff_rep">
+                            <select class="form-control form-control-sm" name="insufficient_repayment">
                             <option hidden value="<?php echo $insufficient_repayment;?>"><?php echo $insuf_rymnt;?></option>
                               <?php echo fill_asset($connection) ?>
                             </select>
@@ -912,7 +912,7 @@ $destination = "config.php";
                               <span>
                               Configure Fund sources for payment channels
                               </span>
-                              <div id="acct_int">
+                              <div id="fdof">
                               <div class="table-responsive">
                               <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
@@ -929,6 +929,7 @@ $destination = "config.php";
                         <tr>
                           <th><?php echo $row['name']; ?></th>
                           <th><?php echo $row['acct']; ?></th>
+                          <td><a class="btn btn-danger">Delete</a></td>
                         </tr>
                         <?php }
                           }
@@ -940,15 +941,47 @@ $destination = "config.php";
                     </table>
   </div>
   </div>
+  <script>
+                    $(document).ready(function() {
+                      $('#run_pay').on("click", function(){
+                        var paymentgl = $('#payment_gl').val();
+                        var accountgl = $('#account_gl').val();
+                        var prod_id = $('#sav_id').val();
+                        $.ajax({
+                          url:"ajax_post/update_savings_payment.php",
+                          method:"POST",
+                          data:{paymentgl:paymentgl, accountgl:accountgl, prod_id:prod_id},
+                          success:function(data){
+                            $('#fdof').html(data);
+                          }
+                        })
+                      });
+                    });
+
+                    $(document).ready(function() {
+                      $('#ediw').on("click", function(){
+                        var penaltygl = $('#penaltygl').val();
+                        var incomegl = $('#incomegl').val();
+                        var prod_id = $('#sav_id').val();
+                        $.ajax({
+                          url:"ajax_post/update_savings_payment.php",
+                          method:"POST",
+                          data:{penaltygl:penaltygl, incomegl:incomegl, prod_id:prod_id},
+                          success:function(data){
+                            $('#qoem').html(data);
+                          }
+                        })
+                      });
+                    });
+                </script>
                             <!-- <span>
                             Map Fees to Specific Income accounts
                             </span> -->
-                              <div id="show_payment2"></div>
                             <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal3"><i class="material-icons">add</i></button>
                             <span>
                             Map Penalties to Specific income accounts
                             </span>
-                            <div id="acct_3">
+                            <div id="qoem">
                               <div class="table-responsive">
                               <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
@@ -965,6 +998,7 @@ $destination = "config.php";
                         <tr>
                           <th><?php echo $row['name']; ?></th>
                           <th><?php echo $row['acct']; ?></th>
+                          <td><a class="btn btn-danger">Delete</a></td>
                         </tr>
                         <?php }
                           }
@@ -976,7 +1010,6 @@ $destination = "config.php";
                     </table>
                               </div>
                             </div>
-                              <div id="show_payment3"></div>
                             </div>
                         </div>
                           
@@ -999,7 +1032,7 @@ $destination = "config.php";
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Accounting Insturction</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Accounting Instruction</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1027,34 +1060,9 @@ $destination = "config.php";
                               }
                               ?>
          <label for="charge" class="form-align ">Payment</label>
-         <script>
-           $(document).ready(function () {
-             $('#run_pay').on("change keyup paste click", function () {
-               var id = $('#payment_id').val();
-               var int_id = $('#int_id').val();
-               var main_p = $('#main_p').val();
-               var idx = $('#payment_id_x').val();
-              //  new
-               if (idx != '' && id !=  '') {
-                $.ajax({
-                 url: "ajax_post/payment_product.php",
-                 method: "POST",
-                 data:{id:id, int_id:int_id, main_p:main_p, idx:idx},
-                 success: function (data) {
-                   $('#show_payment').html(data);
-                   document.getElementById("ipayment_id").setAttribute("hidden", "");
-                   document.getElementById("real_payment").removeAttribute("hidden");
-                 }
-               })
-               } else {
-                //  poor the internet
-               }
-             });
-           });
-         </script>
          <div id="real_payment" hidden></div>
          <div id="ipayment_id">
-              <select id="payment_id" class="form-control form-control-sm" name="">
+              <select id="payment_gl" class="form-control form-control-sm" name="">
               <option value="">--</option>
               <?php echo fill_payment($connection)?>
             </select>
@@ -1064,7 +1072,7 @@ $destination = "config.php";
           <div class="col-md-6">
           <div class="form-group">
          <label for="charge" class="form-align">Asset Account</label>
-              <select class="form-control form-control-sm" name="" id="payment_id_x">
+              <select class="form-control form-control-sm" name="" id="account_gl">
               <option value="">--</option>
               <?php echo fill_asset($connection) ?>
             </select> 
@@ -1075,7 +1083,6 @@ $destination = "config.php";
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="run_pay">Save changes</button>
-        <button type="button" class="btn btn-primary" id="run_pay2" hidden>Save changes</button>
       </div>
     </div>
   </div>
@@ -1113,34 +1120,8 @@ $destination = "config.php";
                               }
                               ?>
          <label for="charge" class="form-align ">Fee</label>
-         <script>
-           $(document).ready(function () {
-             $('#run_pay3').on("change keyup paste click", function () {
-               var id2 = $('#payment_id2').val();
-               var int_id = $('#int_id').val();
-               var main_p = $('#main_p').val();
-               var idx2 = $('#payment_id_x2').val();
-              //  new
-               if (idx2 != '' && id2 !=  '') {
-                $.ajax({
-                 url: "ajax_post/payment_fee.php",
-                 method: "POST",
-                 data:{id2:id2, int_id:int_id, main_p:main_p, idx2:idx2},
-                 success: function (data) {
-                   $('#show_payment2').html(data);
-                   document.getElementById("ipayment_id2").setAttribute("hidden", "");
-                   document.getElementById("real_payment2").removeAttribute("hidden");
-                 }
-               })
-               } else {
-                //  poor the internet
-               }
-             });
-           });
-         </script>
-         <div id="real_payment2" hidden></div>
-         <div id="ipayment_id2">
-         <select class="form-control form-control-sm" name="" id="payment_id2">
+         <div id="">
+         <select class="form-control form-control-sm" name="" id="penalty_gl">
               <option value="">--</option>
               <?php echo fill_fee($connection) ?>
             </select>
@@ -1150,7 +1131,7 @@ $destination = "config.php";
           <div class="col-md-6">
           <div class="form-group">
          <label for="charge" class="form-align ">Income Account</label>
-              <select class="form-control form-control-sm" name="" id="payment_id_x2">
+              <select class="form-control form-control-sm" name="" id="income_gl">
               <option value="">--</option>
               <?php echo fill_in($connection) ?>
             </select> 
@@ -1160,8 +1141,7 @@ $destination = "config.php";
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="run_pay3">Save changes</button>
-        <button type="button" class="btn btn-primary" id="run_pay4" hidden>Save changes</button>
+        <button type="button" class="btn btn-primary" id="">Save changes</button>
       </div>
     </div>
   </div>
@@ -1195,34 +1175,9 @@ $destination = "config.php";
                               }
                               ?>
          <label for="charge" class="form-align ">Penalty</label>
-         <script>
-           $(document).ready(function () {
-             $('#run_pay5').on("change keyup paste click", function () {
-               var id2 = $('#payment_id3').val();
-               var int_id = $('#int_id').val();
-               var main_p = $('#main_p').val();
-               var idx2 = $('#payment_id_x3').val();
-              //  new
-               if (idx2 != '' && id2 !=  '') {
-                $.ajax({
-                 url: "ajax_post/payment_pen.php",
-                 method: "POST",
-                 data:{id2:id2, int_id:int_id, main_p:main_p, idx2:idx2},
-                 success: function (data) {
-                   $('#show_payment3').html(data);
-                   document.getElementById("ipayment_id3").setAttribute("hidden", "");
-                   document.getElementById("real_payment3").removeAttribute("hidden");
-                 }
-               })
-               } else {
-                //  poor the internet
-               }
-             });
-           });
-         </script>
          <div id="real_payment3"></div>
          <div id="ipayment_id3">
-         <select class="form-control form-control-sm" name="" id="payment_id3">
+         <select class="form-control form-control-sm" name="" id="penaltygl">
               <option value="">--</option>
               <?php echo fill_pen($connection) ?>
             </select> 
@@ -1232,7 +1187,7 @@ $destination = "config.php";
           <div class="col-md-6">
           <div class="form-group">
          <label for="charge" class="form-align ">Income Account</label>
-              <select class="form-control form-control-sm" name="" id="payment_id_x3">
+              <select class="form-control form-control-sm" name="" id="incomegl">
               <option value="">--</option>
               <?php echo fill_in($connection) ?>
             </select> 
@@ -1242,8 +1197,7 @@ $destination = "config.php";
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="run_pay5">Save changes</button>
-        <button type="button" class="btn btn-primary" id="run_pay6" hidden>Save changes</button>
+        <button type="button" class="btn btn-primary" id="ediw">Save changes</button>
       </div>
     </div>
   </div>

@@ -49,11 +49,26 @@ if (isset($_POST['sav_id'])) {
      $dfodf = mysqli_query($connection, $qurt);
 
      if($qurt){
+      $dfdi = "SELECT * FROM savings_acct_rule WHERE int_id = '$sint_id' AND savings_product_id = '$sav_id'";
+      $iofd = mysqli_query($connection, $dfdi);
+      $f = mysqli_fetch_array($iofd);
+      $dos = $f['savings_product_id'];
+      if($dos == $sav_id){
          $sod = "UPDATE savings_acct_rule SET asst_loan_port='{$asst_loan_port}', li_overpayment='{$li_overpayment}', li_suspended_income='{$li_suspended_income}',
           inc_interest='{$inc_interest}', inc_fees='{$inc_fees}', inc_penalties='{$inc_penalties}', inc_recovery='{$inc_recovery}', bvn_income='{$bvn_income}',
           bvn_expense='{$bvn_expense}', exp_loss_written_off='{$exp_loss_written_off}', exp_interest_written_off='{$exp_interest_written_off}', insufficient_repayment='{$insufficient_repayment}'
           WHERE int_id = '$sint_id' AND savings_product_id = '$sav_id'";
           $eiro = mysqli_query($connection, $sod);
+      }
+      else{
+        $eiro = mysqli_query($connection, "INSERT INTO `savings_acct_rule` (`int_id`, `savings_product_id`,
+          `asst_loan_port`, `li_overpayment`, `li_suspended_income`, `inc_interest`, `inc_fees`, `inc_penalties`,
+          `inc_recovery`, `exp_loss_written_off`, `exp_interest_written_off`, `insufficient_repayment`, `bvn_income`, `bvn_expense`)
+        VALUES ('{$sessint_id}', '{$savingid}', '{$asst_loan_port}', '{$li_overpayment}', '{$li_suspended_income}',
+          '{$inc_interest}', '{$inc_fees}', '{$inc_penalties}', '{$inc_recovery}', '{$exp_loss_written_off}',
+          '{$exp_interest_written_off}', '{$insufficient_repayment}', '{$bvn_income}', '{$bvn_expense}')");
+      }
+          
           if($eiro){
                 $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
                 echo header ("Location: ../mfi/products_config.php?message7=$randms");

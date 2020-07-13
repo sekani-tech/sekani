@@ -9,7 +9,7 @@ if(isset($_POST["paymentgl"]))
     $paymentgl = $_POST['paymentgl'];
     $accountgl = $_POST['accountgl'];
     $prod = $_POST['prod_id'];
-    $dmsim = "SELECT * FROM prod_acct WHERE prod_id = '$prod' AND gl_code = '$paymentgl' && type ='pay'";
+    $dmsim = "SELECT * FROM sav_acct WHERE savings_id = '$prod' AND gl_code = '$paymentgl' && type ='pay'";
     $dsi = mysqli_query($connection, $dmsim);
     $i = mysqli_fetch_array($dsi);
     $dfe = $i['gl_code'];
@@ -30,7 +30,7 @@ if(isset($_POST["paymentgl"]))
   
           $gl_name = $o["name"];
           $gl_name2 = $ox["name"];
-          $inload = mysqli_query($connection, "UPDATE `prod_acct` SET `gl_code` = '{$paymentgl}', `name` = '{$gl_name}', `acct_gl_code` = '{$accountgl}', `acct` = '{$gl_name2}'
+          $inload = mysqli_query($connection, "UPDATE `sav_acct` SET `gl_code` = '{$paymentgl}', `name` = '{$gl_name}', `acct_gl_code` = '{$accountgl}', `acct` = '{$gl_name2}'
           WHERE int_id = '{$sint_id}' AND `gl_code` = '{$paymentgl}'");
          
           // $sql = "SELECT * FROM charge WHERE id = '".$_POST["id"]."'";
@@ -51,13 +51,13 @@ if(isset($_POST["paymentgl"]))
 
         $gl_name = $o["name"];
         $gl_name2 = $ox["name"];
-        $inload = mysqli_query($connection, "INSERT INTO `prod_acct` (`int_id`, `gl_code`, `name`, `acct_gl_code`, `acct`, `prod_id`, `type`)
+        $inload = mysqli_query($connection, "INSERT INTO `sav_acct` (`int_id`, `gl_code`, `name`, `acct_gl_code`, `acct`, `savings_id`, `type`)
          VALUES ('{$sint_id}', '{$paymentgl}', '{$gl_name}', '{$accountgl}', '{$gl_name2}', '{$prod}', 'pay')");
        
         // $sql = "SELECT * FROM charge WHERE id = '".$_POST["id"]."'";
         $dis = "Created";
     }
-    $sqlx = "SELECT * FROM prod_acct WHERE prod_id = '$prod' && type ='pay'";
+    $sqlx = "SELECT * FROM sav_acct WHERE savings_id = '$prod' && type ='pay'";
     $rmes = mysqli_query($connection, $sqlx);
     ?>
 <div class="table-responsive">
@@ -90,7 +90,7 @@ else if(isset($_POST["penaltygl"])){
     $penaltygl = $_POST['penaltygl'];
     $incomegl = $_POST['incomegl'];
     $prod = $_POST['prod_id'];
-    $dmsim = "SELECT * FROM prod_acct WHERE prod_id = '$prod' AND gl_code = '$penaltygl' && type ='pen'";
+    $dmsim = "SELECT * FROM sav_acct WHERE savings_id = '$prod' AND gl_code = '$penaltygl' && type ='pen'";
     $dsi = mysqli_query($connection, $dmsim);
     $i = mysqli_fetch_array($dsi);
     $dfe = $i['gl_code'];
@@ -111,7 +111,7 @@ else if(isset($_POST["penaltygl"])){
   
           $gl_name = $o["name"];
           $gl_name2 = $ox["name"];
-          $inload = mysqli_query($connection, "UPDATE `prod_acct` SET `gl_code` = '{$penaltygl}', `name` = '{$gl_name}', `acct_gl_code` = '{$incomegl}', `acct` = '{$gl_name2}'
+          $inload = mysqli_query($connection, "UPDATE `sav_acct` SET `gl_code` = '{$penaltygl}', `name` = '{$gl_name}', `acct_gl_code` = '{$incomegl}', `acct` = '{$gl_name2}'
           WHERE int_id = '{$sint_id}' AND `gl_code` = '{$penaltygl}'");
          
           // $sql = "SELECT * FROM charge WHERE id = '".$_POST["id"]."'";
@@ -132,13 +132,13 @@ else if(isset($_POST["penaltygl"])){
 
         $gl_name = $o["name"];
         $gl_name2 = $ox["name"];
-        $inload = mysqli_query($connection, "INSERT INTO `prod_acct` (`int_id`, `gl_code`, `name`, `acct_gl_code`, `acct`, `prod_id`, `type`)
+        $inload = mysqli_query($connection, "INSERT INTO `sav_acct` (`int_id`, `gl_code`, `name`, `acct_gl_code`, `acct`, `savings_id`, `type`)
          VALUES ('{$sint_id}', '{$penaltygl}', '{$gl_name}', '{$incomegl}', '{$gl_name2}', '{$prod}', 'pen')");
        
         // $sql = "SELECT * FROM charge WHERE id = '".$_POST["id"]."'";
         $dis = "Created";
     }
-    $sqlx = "SELECT * FROM prod_acct WHERE prod_id = '$prod' && type ='pen'";
+    $sqlx = "SELECT * FROM sav_acct WHERE savings_id = '$prod' && type ='pen'";
     $rmes = mysqli_query($connection, $sqlx);
     ?>
 <div class="table-responsive">

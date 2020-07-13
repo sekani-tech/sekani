@@ -488,7 +488,7 @@ $destination = "index.php";
                           <div class="form-group">
                             <div class="col-md-8">
                             <label for="charge" class="form-align">Insufficient Repayment</label>
-                            <select class="form-control form-control-sm" name="asst_insuff_rep">
+                            <select class="form-control form-control-sm" name="insufficient_repayment">
                               <option value="">--</option>
                               <?php echo fill_asset($connection) ?>
                             </select>

@@ -51,11 +51,22 @@ $insufficient_repayment = $_POST['asst_insuff_rep'];
 
   $result = mysqli_query($connection, $query);
   if($result) {
+    $dfdi = "SELECT * FROM acct_rule WHERE int_id = '$sint_id' AND loan_product_id = '$Loan_prod'";
+    $iofd = mysqli_query($connection, $dfdi);
+    $f = mysqli_fetch_array($iofd);
+    $dos = $f['loan_product_id'];
+    if($dos == $Loan_prod){
     $dfer = "UPDATE acct_rule SET asst_loan_port= '{$asst_loan_port}', li_overpayment= '{$li_overpayment}', li_suspended_income= '{$li_suspended_income}', inc_interest= '{$inc_interest}',
     inc_fees= '{$inc_fees}', inc_penalties= '{$inc_penalties}', inc_recovery= '{$inc_recovery}', exp_loss_written_off= '{$exp_loss_written_off}', exp_interest_written_off= '{$exp_interest_written_off}',
     insufficient_repayment= '{$insufficient_repayment}' WHERE int_id = '$sint_id' AND loan_product_id = '$Loan_prod'";
       // If 'result' is successful, it will send the required message to client.php
       $mfdi = mysqli_query($connection, $dfer);
+    }
+    else{
+      $dfer = "INSERT INTO `acct_rule` (`int_id`, `loan_product_id`, `asst_loan_port`, `li_overpayment`, `li_suspended_income`, `inc_interest`, `inc_fees`, `inc_penalties`, `inc_recovery`, `exp_loss_written_off`, `exp_interest_written_off`, `insufficient_repayment`)
+      VALUES ('{$sint_id}', '{$Loan_prod}', '{$asst_loan_port}', '{$li_overpayment}', '{$li_suspended_income}', '{$inc_interest}', '{$inc_fees}', '{$inc_penalties}', '{$inc_recovery}', '{$exp_loss_written_off}', '{$exp_interest_written_off}', '{$insufficient_repayment}')";
+      $mfdi = mysqli_query($connection, $dfer);
+    }
       if($mfdi){
         $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
         echo header ("Location: ../mfi/products_config.php?message7=$randms");
