@@ -1,5 +1,6 @@
 <?php
 // START
+// echo "HERE I AM";
 include("DB/connect.php");
 // GET THE LOAN DISBURSMENT CACHE CHECK BY DISBURSMENT CHACHE ID
 // GET THE LOAN
@@ -438,6 +439,27 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
         // stuffs
         // SHOWING ME NEW
         }
+    }
+}
+?>
+
+<?php
+// script to check all the users current time
+// logic if the current time is different then make it non active
+$current_time = date('Y-m-d H:i:s');
+// line to query the users
+$select_user = mysqli_query($connection, "SELECT * FROM users");
+while ($row = mysqli_fetch_array($select_user)) {
+    // display each - lastlogged, id and int_id.
+    $id = $row["id"];
+    $int_id = $row["int_id"];
+    $ll = $row["last_logged"];
+
+    if ($current_time > $ll) {
+        // make a query to update users profile to not active
+        $activeq = "UPDATE users SET users.status ='Not Active' WHERE id = '$id' AND int_id = '$int_id'";
+$rezz = mysqli_query($connection, $activeq);
+        echo "FUCKING LATE";
     }
 }
 ?>

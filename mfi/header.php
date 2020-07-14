@@ -24,7 +24,6 @@ session_set_cookie_params(0);
   }
   $staff_id = $_SESSION["staff_id"];
 ?>
-
 <?php
   // get connections for all pages
   include("../functions/connect.php");
@@ -103,6 +102,31 @@ $timmer_check = $_SESSION['last_login_timestamp'];
 $activeq = "UPDATE users SET users.status ='$activecode', users.last_logged = '$ts' WHERE users.username ='$acuser'";
 $rezz = mysqli_query($connection, $activeq);
 ?>
+<input type="text" value="<?php echo $acuser;?>" id="username" hidden>
+<input type="text" value="<?php echo $sessint_id; ?>" id="int_id" hidden>
+<script>
+setInterval(function() {
+    // alert('I will appear every 4 seconds');
+    var int_id = $('#int_id').val();
+    var user = $('#username').val();
+    $.ajax({
+      url:"ajax_post/logout/record.php",
+      method:"POST",
+      data:{int_id:int_id, user: user},
+      success:function(data){
+        $('#time_recorder').html(data);
+      }
+    });
+    $.ajax({
+      url:"../loan_repayment/Repayment.php",
+      method:"POST",
+      data:{int_id:int_id, user: user},
+      success:function(data){
+        $('#r_bb').html(data);
+      }
+    });
+}, 1000);   // Interval set to 4 seconds
+</script>
 <!doctype html>
 <html lang="en">
 
@@ -329,6 +353,8 @@ input[type=number] {
       </div>
     </div>
     <div class="main-panel">
+      <div id="time_recorder"></div>
+      <div id="r_bb" hidden></div>
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
