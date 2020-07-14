@@ -122,10 +122,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Account No:</label>
-                          <select class="form-control" name="">
-                           <option hidden>select an option</option>
-                           <?php echo fill_account($connection);?>
-                          </select>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $acc_no; ?>" readonly>
                         </div>
                         <?php
                           function fill_account($connection)

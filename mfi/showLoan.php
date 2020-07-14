@@ -644,6 +644,8 @@ else{
               if ($insert_gl_trans) {
                 // echo "INSERTED INTO GL ACCOUNT TRANSACTION";
                 // get client running balance
+                $client_loan_status = mysqli_query($connection, "UPDATE client SET loan_status = 'ACTIVE' WHERE account_no = '$acct_no' AND id = '$client_id' AND int_id = '$sessint_id'");
+
                 $update_client_bal = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$new_client_running_bal' WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
                 if ($update_client_bal) {
                   // echo "UPDATED ACCOUNT";
