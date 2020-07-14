@@ -98,14 +98,6 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
   "'.fill_report($connection, $int_id, $std, $glcode, $endx, $branch_id).'"
   </tbody>
   </table>
-  <div id="notices">
-<div>Total Deposit: &#8358; '.$tcdp.' </div>
-<br/>
-<div>Total Withdrawal: &#8358; '.$tddp.'</div>
-<br/>
-<div>Current Balance: &#8358; '.$finalbal.'</div>
-<br/>S
-</div>
   </main>
   ');
   $file_name = 'Statement for '.$glname.'-'.$glcode.'.pdf';
