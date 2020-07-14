@@ -446,7 +446,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
 <?php
 // script to check all the users current time
 // logic if the current time is different then make it non active
-$current_time = date('Y-m-d H:i:s');
+$current_time = date('Y-m-d H:i:s', strtotime('-2 minutes'));
 // line to query the users
 $select_user = mysqli_query($connection, "SELECT * FROM users");
 while ($row = mysqli_fetch_array($select_user)) {
