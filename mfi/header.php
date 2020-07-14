@@ -102,13 +102,13 @@ $timmer_check = $_SESSION['last_login_timestamp'];
 $activeq = "UPDATE users SET users.status ='$activecode', users.last_logged = '$ts' WHERE users.username ='$acuser'";
 $rezz = mysqli_query($connection, $activeq);
 ?>
-<input type="text" value="<?php echo $acuser;?>" id="username" hidden>
-<input type="text" value="<?php echo $sessint_id; ?>" id="int_id" hidden>
+<input type="text" value="<?php echo $acuser;?>" id="usernameoioio" hidden>
+<input type="text" value="<?php echo $sessint_id; ?>" id="int_idioioioio" hidden>
 <script>
 setInterval(function() {
     // alert('I will appear every 4 seconds');
-    var int_id = $('#int_id').val();
-    var user = $('#username').val();
+    var int_id = $('#int_idioioioio').val();
+    var user = $('#usernameoioio').val();
     $.ajax({
       url:"ajax_post/logout/record.php",
       method:"POST",

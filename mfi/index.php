@@ -62,13 +62,24 @@
                   </div>
                   <p class="card-category">Logged in Staff</p>
                   <!-- Populate with number of logged in staff -->
-                  <h3 class="card-title"><?php
-                   $query = "SELECT * FROM users WHERE int_id = '$sessint_id' && status = 'Active'";
-                   $result = mysqli_query($connection, $query);
-                   if ($result) {
-                     $inr = mysqli_num_rows($result);
-                     echo $inr;
-                   }?></h3>
+                  <script>
+setInterval(function() {
+    // alert('I will appear every 4 seconds');
+    var int_id = $('#int_idioioioio').val();
+    var user = $('#usernameoioio').val();
+    $.ajax({
+      url:"ajax_post/logout/log_staff.php",
+      method:"POST",
+      data:{int_id:int_id, user: user},
+      success:function(data){
+        $('#logged_staff').html(data);
+      }
+    });
+}, 1000);   // Interval set to 4 seconds
+</script>
+                  <h3 class="card-title">
+                    <div id="logged_staff">0</div>
+                   </h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
