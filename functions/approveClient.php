@@ -24,17 +24,17 @@ else{
 }
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-
+$date = date('Y-m-d');
     // $client = mysqli_query($connection, "SELECT account_no FROM client WHERE id = '$id'");
     // if (count([$person]) == 1) {
     //     $n = mysqli_fetch_array($person);
     //     $app = $n['status'];
     // }
 if($accid && $br_id){
-    $appclient = "UPDATE client SET status = 'Approved', branch_id = '$br_id', loan_officer_id = '$accid' WHERE id = '$id'";
+    $appclient = "UPDATE client SET status = 'Approved', branch_id = '$br_id', loan_officer_id = '$accid', activation_date = '$date' WHERE id = '$id'";
 }
 else{
-    $appclient = "UPDATE client SET status = 'Approved' WHERE id = '$id'";
+    $appclient = "UPDATE client SET status = 'Approved', activation_date = '$date'  WHERE id = '$id'";
 }
     $clsures = mysqli_query($connection, $appclient);
     if ($clsures) {
