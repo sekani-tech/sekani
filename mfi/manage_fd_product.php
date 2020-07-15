@@ -23,7 +23,7 @@ $dos = mysqli_query($connection, $fd);
                   <h4 class="card-title">Create new Product</h4>
                   <p class="card-category">Fill in all important data</p>
                 </div>
-                <form id="form" action="../functions/int_product_upload.php" method="POST">
+                <form id="form" action="../functions/int_ftd_upload.php" method="POST">
                 <div class="card-body">
                 <div class = "row">
                     <div class = "col-md-12">
@@ -31,7 +31,7 @@ $dos = mysqli_query($connection, $fd);
                         <!-- Each tab equals a stepper page -->
                   <!-- First Tab -->
                   <div class="tab">
-                  <h3> New Loan Product:</h3>
+                  <h3> New Fixed Deposit Term Product:</h3>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
@@ -53,184 +53,336 @@ $dos = mysqli_query($connection, $fd);
                     </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="installmentAmount" >Installment Amount in Multiples</label>
-                          <input type="text" class="form-control" name="in_amt_multiples" value="" required>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="principal" >Principal</label>
-                          <div class="row">
-                            <div class="col-md-4">
-                              <input type="text" class="form-control" name="principal_amount" value="" placeholder="Default" required>
-                            </div>
-                            <div class="col-md-4">
-                             <input type="text" class="form-control" name="min_principal_amount" value="" placeholder="Min" required>
-                            </div>
-                            <div class="col-md-4">
-                              <input type="text" class="form-control" name="max_principal_amount" value="" placeholder="Max" required>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="loanTerms" >Loan Term</label>
-                          <div class="row">
-                            <div class="col-md-4">
-                              <input type="text" class="form-control" name="loan_term" value="" placeholder="Default" required>
-                            </div>
-                            <div class="col-md-4">
-                              <input type="text" class="form-control" name="min_loan_term" value="" placeholder="Min" required>
-                          </div>
-                            <div class="col-md-4">
-                              <input type="text" class="form-control" name="max_loan_term" value="" placeholder="Max" required>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                        <label for="repaymentFrequency" >Repayment Frequency *</label>
-                        <div class="row">
-                        <div class="col-md-8">
-                          <input type="text" class="form-control " name="repayment_frequency" value="" required>
-                        </div>
-                        <div class="col-md-4">
-                        <select class="form-control" name="repayment_every">
-                          <option value="day">Days</option>
-                          <option value="week">Weeks</option>
-                          <option value="month">Months</option>
-                        </select>
-                        </div>
-                        </div>
-                        </div>
-                      </div>                     
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="interestRate" >Interest Rate</label>
-                          <div class="row">
-                            <div class="col-md-4">
-                              <input type="text" class="form-control" name="interest_rate" value="" placeholder="Default" required>
-                            </div>
-                            <div class="col-md-4">
-                              <input type="text" class="form-control" name="min_interest_rate" value="" placeholder="Min" required>
-                            </div>
-                            <div class="col-md-4">
-                              <input type="text" class="form-control" name="max_interest_rate" value="" placeholder="Max" required>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="interestRateApplied" >Interest Rate Applied *</label>
-                          <select class="form-control" name="interest_rate_applied" >
-                            <option value="per_month">Per Month</option>
-                            <option value="per_year">Per Year</option>
+                          <label for="installmentAmount" >Product Group id</label>
+                          <select class="form-control" name="product_type" >
+                            <option value="3">Fixed-Deposit</option>
                           </select>
                         </div>
                       </div>
-
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="installmentAmount" >Currency</label>
+                          <select class="form-control" name="currency" >
+                           <option value="NGN">Nigerian Naira(NGN)</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="interestRate" >Deposit Amount</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <input type="text" class="form-control" name="deposita" value="" placeholder="Default" required>
+                            </div>
+                            <div class="col-md-4">
+                              <input type="text" class="form-control" name="deposita_min" value="" placeholder="Min" required>
+                            </div>
+                            <div class="col-md-4">
+                              <input type="text" class="form-control" name="deposita_max" value="" placeholder="Max" required>
+                            </div>
+                          </div>
+                        </div>
+                      </div>               
                         <div class="col-md-6">
                         <div class="form-group">
-                          <label for="interestRateApplied" >Enable Balloon repayment</label>
-                          <select class="form-control" name="enable" >
-                           <option value="no">No</option>
-                            <option value="yes">Yes</option>
+                          <label for="interestRateApplied" >Interest Posting period Type</label>
+                          <select class="form-control" name="int_post_type" >
+                           <option value="1">Daily</option>
+                           <option value="2">Monthly</option>
+                           <option value="3">Quarterly</option>
+                           <option value="4">Bi-Annually</option>
+                           <option value="5">Annually</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="installmentAmount" >Interest Compounding Period</label>
+                          <select class="form-control" name="compound_period" >
+                           <option value="1">Daily</option>
+                           <option value="2">Monthly</option>
+                           <option value="3">Quarterly</option>
+                           <option value="4">Bi-Annually</option>
+                           <option value="5">Annually</option>
+                          </select>
+                        </div>
+                      </div>    
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="interestMethodology" >Interest Calculation Type</label>
+                          <select class="form-control" name="int_cal_type" >
+                            <option value="1">Daily Balance</option>
+                            <option value="2">Average Daily Balance</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="amortizatioMethody" >Interest Calculation Days in Year type</label>
+                          <select class="form-control" name="int_cal_days" required>
+                            <option value="30">30 days</option>
+                            <option value="60">60 days</option>
+                            <option value="90">90 days</option>
+                            <option value="180">180 days</option>
+                            <option value="365">365 days</option>
+                            <option value="366">366 days</option>
                           </select>
                         </div>
                       </div>
                     <div class="col-md-6">
-                    <div class="row">
-                      <div class="col-md-4">
-                     
-                      <div class="form-group">
-                        <label for="loanDescription" >Grace on principal payment</label>
-                        <input type="text" class="form-control" name="grace_on_principal" value="" required>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label for="loanDescription" >Grace on interest payment</label>
-                        <input type="text" class="form-control" name="grace_on_interest" value="" required>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label for="loanDescription" >Grace on interest charged</label>
-                        <input type="text" class="form-control" name="grace_on_interest_charged" value="" required>
-                      </div>
-                    </div>
-                    </div>
-                    </div>
-                      <div class="col-md-6">
                         <div class="form-group">
-                          <label for="interestMethodology" >Interest Methodology *</label>
-                          <select class="form-control" name="interest_rate_methodoloy" >
-                            <option value="1">Flat</option>
-                            <option value="">Declining Balance</option>
+                          <label for="principal" >Lockin Period Frequency</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <input type="number" class="form-control" name="lock_per_freq" value="" placeholder="Default" required>
+                            </div>
+                            <div class="col-md-8">
+                          <select class="form-control" name="lock_per_freq_time" >
+                            <option value="1">Days</option>
+                            <option value="2">Weeks</option>
+                            <option value="3">Months</option>
+                            <option value="4">Years</option>
                           </select>
+                            </div>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="amortizatioMethody" >Amortization Method *</label>
-                          <select class="form-control" name="ammortization_method" required>
-                            <option value="equal_installment">Equal Installments</option>
-                            <option value="equal_principal_payment">Equal Principal Payment</option>
+                          <label for="principal" >Minimum Deposit Term</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <input type="number" class="form-control" name="minimum_dep_term" value="" placeholder="Min" required>
+                            </div>
+                            <div class="col-md-8">
+                          <select class="form-control" name="minimum_dep_term_time" >
+                            <option value="1">Days</option>
+                            <option value="2">Weeks</option>
+                            <option value="3">Months</option>
+                            <option value="4">Years</option>
                           </select>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="loanCycleCount" >Include In Loan Cycle Count </label>
-                          <select class="form-control" name="cycle_count" required>
-                            <option value="no">No</option>
-                            <option value="yes">Yes</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="overPayment" >Automatically Allocate Overpayment </label>
-                          <select class="form-control" name="auto_allocate_overpayment" required>
-                            <option value="no">No</option>
-                            <option value="yes">Yes</option>
-                          </select>
+                            </div>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                        <div class="form-group">
-                          <label for="additionalCharges" >Allow Additional Charges </label>
-                          <select class="form-control" name="additional_charge" required>
-                            <option value="no">No</option>
-                            <option value="yes">Yes</option>
+                          <label for="additionalCharges" >Auto Renew on maturity</label>
+                          <select class="form-control" name="auto_renew" required>
+                            <option value="2">No</option>
+                            <option value="1">Yes</option>
                           </select>
                         </div>
                       </div>
-                      <!-- auto desburse should be disabled -->
-                      <!-- <div class="col-md-6" hidden>
+                      <div class="col-md-6">
                         <div class="form-group">
-                          <label for="autoDisburse" >Auto Disburse </label>
-                          <select class="form-control" name="auto_disburse" required>
-                            <option value="yes">yes</option>
+                          <label for="principal" >Maximum Deposit Term</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <input type="number" class="form-control" name="maximum_dep_term" value="" placeholder="Max" required>
+                            </div>
+                            <div class="col-md-8">
+                          <select class="form-control" name="maximum_dep_term_time" >
+                            <option value="1">Days</option>
+                            <option value="2">Weeks</option>
+                            <option value="3">Months</option>
+                            <option value="4">Years</option>
+                          </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                       <div class="form-group">
+                          <label for="additionalCharges" >Allow Premature Closing Penalty</label>
+                          <select class="form-control" name="allover" required>
+                            <option value="2">No</option>
+                            <option value="1">Yes</option>
                           </select>
                         </div>
-                      </div> -->
-                      <!-- <div class="col-md-6">
+                      </div>
+                      <div class="col-md-6">
                         <div class="form-group">
-                            <label for="requireSavingsAcct" >Requires Linked Savings Account </label>
-                            <select class="form-control" name="linked_savings_acct" required>
-                              <option value="Abuja Savings Group">Abuja Savings Group</option>
-                              <option value="Lagos Savings Group">Lagos Savings Group</option>
-                            </select>
+                          <label for="principal" >In Multiples of Deposit Term</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <input type="number" class="form-control" name="inmultiples_dep_term" value="" placeholder="Default" required>
+                            </div>
+                            <div class="col-md-8">
+                          <select class="form-control" name="inmultiples_dep_term_time" >
+                            <option value="1">Days</option>
+                            <option value="2">Weeks</option>
+                            <option value="3">Months</option>
+                            <option value="4">Years</option>
+                          </select>
+                            </div>
                           </div>
-                      </div> -->
+                        </div>
+                      </div>
                   </div>
                   </div>
                   <!-- First Tab -->
                   <!-- Second Tab -->
+                  <div class="tab">
+                  <h3> Interest Rate Chart:</h3>
+                    <div class="form-group">
+                      <button type="button" class="btn btn-primary" name="button" onclick="showDialog()"> <i class="fa fa-plus"></i> Add</button>
+                      </div>
+                      <div class="form-group">
+                      <?php
+                      $digits = 6;
+                      $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+                      $_SESSION["savings_temp"] = $randms;
+                      $main_p = $_SESSION["savings_temp"];
+                      $_SESSION["stemp"] = $_SESSION["savings_temp"];
+                      $dbcache = $_SESSION["stemp"];
+                      $_SESSION["product_temp"] = $randms;
+                      ?>
+                      <script>
+                              $(document).ready(function() {
+                                $('#clickit').on("change keyup paste click", function() {
+                                  var id = $(this).val();
+                                  var name = $('#nam').val();
+                                  var start = $('#start').val();
+                                  var end = $('#end').val();
+                                  var intrate = $('#intrate').val();
+                                  var desc = $('#desc').val();
+                                  var term = $('#term').val();
+                                  var amount = $('#amount').val();
+                                  $.ajax({
+                                    url:"interest_rate_chart.php",
+                                    method:"POST",
+                                    data:{id:id, name:name, start:start, end:end, intrate:intrate, desc:desc, term:term, amount:amount},
+                                    success:function(data){
+                                      $('#coll').html(data);
+                                      document.getElementById("off_me").setAttribute("hidden", "");
+                                    }
+                                  })
+                                });
+                              });
+                            </script>
+                      <!-- <button class="btn btn-primary pull-right" id="clickit">Add</button> -->
+                      <div id="off_me">     
+                      <table class = "table table-bordered">
+                              <thead>
+                                <tr>
+                                  <td>Name</td>
+                                  <td>From Date</td>
+                                  <td>End Date</td>
+                                  <td>Interest Rate</td>
+                                  <td>Description</td>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              </tbody>
+                            </table>
+                            </div>
+                            <div id="coll"></div>
+                      </div>
+                      <!-- dialog box -->
+                      <div class="form-group">
+                      <div id="background">
+                      </div>
+                      <div id="diallbox">
+                        <!-- <form method="POST" action="lend.php" > -->
+                <h3>Add Interest Rate</h3>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class = "bmd-label-floating" class="md-3 form-align " for=""> Name:</label>
+                        <input type="text" name="col_name" id="nam" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class = "bmd-label-floating" for="">Start Date</label>
+                        <input type="date" name="col_value" id="start" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class = "bmd-label-floating" for="">End Date:</label>
+                        <input type="date" name="col_description" id="end" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class = "bmd-label-floating" for="">Term:</label>
+                        <input type="number" name="col_value" id="term" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class = "bmd-label-floating" for="">Amount:</label>
+                        <input type="number" name="col_value" id="amount" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class = "bmd-label-floating" for="">Interest Rate:</label>
+                        <input type="number" name="col_value" id="intrate" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class = "bmd-label-floating" for="">Description:</label>
+                        <input type="text" name="col_value" id="desc" class="form-control">
+                      </div>
+                    </div>
+                  <div style="float:right;">
+                        <span class="btn btn-primary pull-right" id="clickit" onclick="AddDlg()">Add</span>
+                        <span class="btn btn-primary pull-right" onclick="AddDlg()">Cancel</span>
+                      </div>
+                        <!-- </form> -->
+<script>
+    function AddDlg(){
+        var bg = document.getElementById("background");
+        var dlg = document.getElementById("diallbox");
+        bg.style.display = "none";
+        dlg.style.display = "none";
+    }
+    
+    function showDialog(){
+        var bg = document.getElementById("background");
+        var dlg = document.getElementById("diallbox");
+        bg.style.display = "block";
+        dlg.style.display = "block";
+        
+        var winWidth = window.innerWidth;
+        var winHeight = window.innerHeight;
+        
+        dlg.style.left = (winWidth/2) - 480/2 + "px";
+        dlg.style.top = "50px";
+    }
+</script>
+<style>
+    #background{
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        background-color: black;
+        opacity: 0.7;
+        z-index: 9999;
+    }
+    
+    #diallbox{
+        /*initially dialog box is hidden*/
+        display: none;
+        position: fixed;
+        width: 480px;
+        z-index: 9999;
+        border-radius: 10px;
+        padding:20px;
+        background-color: #ffffff;
+    }
+</style>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Second Tab -->
+                  <!-- Third Tab -->
                   <div class="tab">
                     <h3>Charges</h3>
                     <input type="text" hidden readonly id="int_id" value="<?php echo $sessint_id; ?>">
@@ -243,32 +395,22 @@ $dos = mysqli_query($connection, $fd);
                           var branch_id = $('#branch_id').val();
                           var main_p = $('#main_p').val();
                           $.ajax({
-                            url:"load_data.php",
+                            url:"ftd_charges.php",
                             method:"POST",
                             data:{id:id, int_id:int_id, branch_id:branch_id, main_p: main_p},
                             success:function(data){
                               $('#show_charges').html(data);
-                              document.getElementById("takeme").setAttribute("hidden", "");
-                              document.getElementById("damn_men").removeAttribute("hidden");
                             }
                           })
                         });
                       })
                     </script>
                     <div class="form-group">
-                      <?php
-                      $digits = 6;
-                      $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-                      $_SESSION["product_temp"] = $randms;
-                      $main_p = $_SESSION["product_temp"];
-                      ?>
                     </div>
                     <div class="form-group">
                       <div class="row">
                       <div class="col-md-4">
                       <label>Charges:</label>
-                      <div id="damn_men" hidden>
-                      </div>
                       <div id="takeme">
                       <input type="text" hidden value="<?php echo $main_p; ?>" id="main_p">
                       <select name="charge_id" class="form-control" id="charges">
@@ -299,106 +441,8 @@ $dos = mysqli_query($connection, $fd);
                       return $output;
                       }
                       ?>
-                      <script>
-                              $(document).ready(function() {
-                                $('#credit').on("change keyup paste click", function(){
-                                  var id = $(this).val();
-                                  $.ajax({
-                                    url:"credit_check.php",
-                                    method:"POST",
-                                    data:{id:id},
-                                    success:function(data){
-                                      $('#show_credit').html(data);
-                                    }
-                                  })
-                                });
-                              });
-                            </script>
                   </div>
-                  <!-- Second Tab -->
-                  <!-- Third Tab -->
-                  <div class="tab">
-                    <h3>Credit Checks</h3>
-                    <div class="row">
-                     <div class="col-md-8">
-        <h5>SUBJECTIVE/STATISTIC SCOREING CREDIT CHECK MODEL</h5>
-        <p>Read the Guide in Running this Model Have it in <b>MIND</b> this scoring model is used for new customers or Manual Entries by Loan Officers</p>
-        </div>
-        <div class="col-md-12">
-        <p>Find Details Below</p>
-        <script>
-    $(document).ready(function() {
-    $('#tabledat').DataTable();
-    });
-</script>
-         <table id="tabledat" class="table" cellspacing="0" style="width:100%">
-         <thead>
-           <th> <b> Name </b></th>
-           <th> <b>Risk Level <b></th>
-           <th> <b>Severity Level <b></th>
-           <th> <b> Description <b></th>
-         </thead>
-         <tbody>
-           <tr>
-             <th> <h5> Delinquency Counter </h5></th>
-             <th> <h5>High </h5></th>
-             <th> <h5>Warning</h5></th>
-             <th> <h5>Counting Over Due Repayment</h5> </th>
-           </tr>
-           <tr>
-             <th> <h5>Loan History Status</h5> </th>
-             <th> <h5>High</h5> </th>
-             <th> <h5>Warning</h5> </th>
-             <th> <h5>Check Hisotry of collection, Closed, Written off, Active and Same Product</h5> </th>
-           </tr>
-           <tr>
-             <th> <h5>Psychometric Data</h5> </th>
-             <th> <h5>Normal</h5> </th>
-             <th> <h5>Warning</h5> </th>
-             <th> <h5>Amplitude Test for measuring intelligence</h5> </th>
-           </tr>
-           <tr>
-             <th> <h5>Savings Behaviour</h5> </th>
-             <th> <h5>High</h5> </th>
-             <th> <h5>Block Loan</h5> </th>
-             <th> <h5>Study of Avg. Savings and also Transaction Cycle of the Applicant</h5> </th>
-           </tr>
-           <tr>
-             <th> <h5>Guarantors Savings Behaviour</h5> </th>
-             <th> <h5>Normal</h5> </th>
-             <th> <h5>Pass</h5> </th>
-             <th> <h5>Track Guarantors Transaction and Give Feedback</h5> </th>
-           </tr>
-           <tr>
-             <th> <h5>Outstanding Loan Balance</h5> </th>
-             <th> <h5>Normal</h5> </th>
-             <th> <h5>Warning</h5> </th>
-             <th> <h5>Check for Any Loan Outstanding Balance, Reduction of Lend Limit</h5> </th>
-           </tr>
-           <tr>
-             <th> <h5>KYC</h5> </th>
-             <th> <h5>High</h5> </th>
-             <th> <h5>Block</h5> </th>
-             <th> <h5>Checks for Important Details of Customers Bio Data</h5> </th>
-           </tr>
-          <!-- <tr>
-             <th> <h5></h5> </th>
-             <th> <h5></h5> </th>
-             <th> <h5></h5> </th>
-             <th> <h5></h5> </th>
-           </tr>
-           <tr>
-             <th> <h5></h5> </th>
-             <th> <h5></h5> </th>
-             <th> <h5></h5> </th>
-             <th> <h5></h5> </th>
-           </tr>  -->
-         </tbody>
-         </table>
-        <p>Table Description</p>
-        </div>
-                    </div>
-                  </div>
+                  
                   <!-- Third Tab -->
                   <!-- Fourth Tab -->
                   <div class="tab">
@@ -451,7 +495,7 @@ $dos = mysqli_query($connection, $fd);
                             </div>
                             <div class="form-group">
                             <div class="col-md-8">
-                            <label for="charge" class="form-align ">Loan Portfolio</label>
+                            <label for="charge" class="form-align ">Savings Portfolio</label>
                             <select class="form-control form-control-sm" name="asst_loan_port">
                               <option value="">--</option>
                               <?php echo fill_asset($connection) ?>
@@ -461,7 +505,7 @@ $dos = mysqli_query($connection, $fd);
                           <div class="form-group">
                             <div class="col-md-8">
                             <label for="charge" class="form-align">Insufficient Repayment</label>
-                            <select class="form-control form-control-sm" name="asst_insuff_rep">
+                            <select class="form-control form-control-sm" name="insufficient_repayment">
                               <option value="">--</option>
                               <?php echo fill_asset($connection) ?>
                             </select>
@@ -619,6 +663,16 @@ $dos = mysqli_query($connection, $fd);
                               </select>
                           </div>
                           </div>
+                          <div class="form-group">
+                          <div class="col-md-8">
+                              <label for="charge" class="form-align ">BVN Income</label>
+                              <select class="form-control form-control-sm" name="bvn_income">
+                                <option value="">--</option>
+                                <?php echo fill_in($connection) ?>
+                              </select>
+                          </div>
+                          </div>
+                          
                           <!-- <div class="form-group">
                           <div class="col-md-8">
                               <label for="charge" class="form-align ">Income from Recovery</label>
@@ -658,6 +712,15 @@ $dos = mysqli_query($connection, $fd);
                           <div class="col-md-8">
                               <label for="charge" class="form-align ">Interest Written Off</label>
                               <select class="form-control form-control-sm" name="exp_interest_written_off">
+                                <option value="">--</option>
+                                <?php echo fill_exp($connection) ?>
+                              </select>
+                          </div>
+                          </div>
+                          <div class="form-group">
+                          <div class="col-md-8">
+                              <label for="charge" class="form-align ">BVN Expense</label>
+                              <select class="form-control form-control-sm" name="bvn_expense">
                                 <option value="">--</option>
                                 <?php echo fill_exp($connection) ?>
                               </select>
