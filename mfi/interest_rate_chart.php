@@ -7,6 +7,8 @@
     $start = $_POST['start'];
     $end = $_POST['end'];
     $intrate = $_POST['intrate'];
+    $term = $_POST['term'];
+    $amount = $_POST['amount'];
     $desc = $_POST['desc'];
     $coldate = date('Y-m-d');
     $int_id = $_SESSION['int_id'];
@@ -14,7 +16,7 @@
     $cache_id = $_SESSION["savings_temp"];
 
     $coll = mysqli_query($connection, "INSERT INTO interest_rate_chart (int_id, branch_id, name, start_date,
-     end_date, interest_rate, description, prod_cache_id) VALUES ('{$int_id}', '{$branch_id}', '{$name}', '{$start}', '{$end}', '{$intrate}', '{$desc}', '{$cache_id}')");
+     end_date, interest_rate, term, amount, description, prod_cache_id) VALUES ('{$int_id}', '{$branch_id}', '{$name}', '{$start}', '{$end}', '{$intrate}', '{$term}','{$amount}','{$desc}', '{$cache_id}')");
     if ($coll) {
         $donc = mysqli_query($connection, "SELECT * FROM interest_rate_chart WHERE int_id ='$int_id' AND prod_cache_id = '$cache_id' ORDER BY id DESC");
 ?>

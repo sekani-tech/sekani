@@ -107,7 +107,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM savings_acct_charge WHERE int_id = '$sessint_id'";
+                   $query = "SELECT * FROM client_charge WHERE int_id = '$sessint_id'";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -124,7 +124,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM savings_acct_charge WHERE int_id = '$sessint_id'";
+                        $query = "SELECT * FROM client_charge WHERE int_id = '$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -200,7 +200,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                                     title: "Cheque/Pass Book",
                                     text: "Transaction in Progress",
                                     showConfirmButton: false,
-                                    timer: 2000
+                                    timer: 20000
                                 })
                               });
                             });
