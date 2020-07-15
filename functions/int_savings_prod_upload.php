@@ -38,7 +38,7 @@ $fomd = "INSERT INTO `savings_product` (`int_id`, `branch_id`, `name`, `short_na
  `currency_code`, `currency_digits`, `nominal_annual_interest_rate`, `interest_compounding_period_enum`,
   `interest_posting_period_enum`, `interest_calculation_type_enum`, `interest_calculation_days_in_year_type_enum`,
    `lockin_period_frequency`, `lockin_period_frequency_enum`, `accounting_type`,
-   `allow_overdraft`, `is_dormancy_tracking_active`, `enable_withdrawal_notice`, `min_balance_for_interest_calculation`, `savings_cat`, `auto_renew_on_closure`,
+   `allow_overdraft`, `is_dormancy_tracking_active`, `enable_withdrawal_notice`, `min_balance_for_interest_calculation`, `savings_cat`, `autocreate`,
     `min_required_balance`, `minimum_negative_balance`, `maximum_positve_balance`) 
         VALUES ('{$sessint_id}', '{$branch_id}', '{$name}', '{$short_name}', '{$description}', '{$currency}', '2', '{$nominal_int_rate}', '{$compound_period}', '{$int_post_type}'
         , '{$int_cal_type}', '{$int_cal_days}', '{$lock_per_freq}', '{$lock_per_freq_time}', '{$product_type}', '{$allover}', '{$trk_dormancy}', '{$with_notice}', '{$min_balance_cal}'
