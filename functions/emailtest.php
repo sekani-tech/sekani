@@ -21,7 +21,6 @@ if (mysqli_num_rows($rult) > 0) {
         $vaul = $tolm['vault_email'];
         
         if ($vaul == 1 || $vaul == "1") {
-          echo $remail.'<br/>';
          // mailin
                             // begining of mail
                             $mail = new PHPMailer;
@@ -228,7 +227,7 @@ if (mysqli_num_rows($rult) > 0) {
                                 echo "Mailer Error: " . $mail->ErrorInfo;
                             } else
                             {
-                                echo "Message has been sent successfully";
+                                echo $remail." Message has been sent successfully<br/>";
                             }
                           }
                         }
