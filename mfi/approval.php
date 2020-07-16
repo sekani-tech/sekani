@@ -38,7 +38,7 @@ $destination = "../index.php";
                       <tbody>
                         <tr>
                           <th>Account Opening</th>
-                          <th>View and approve all newly registered clients in teh institution</th>
+                          <th>View and approve all newly registered clients in the institution</th>
                           <td><a href="client_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
