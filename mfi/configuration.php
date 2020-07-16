@@ -54,7 +54,7 @@ $destination = "../index.php";
                         <tr>
                           <th>Alerts</th>
                           <th>Handle the alerts that the system recieves</th>
-                          <td><a href="#" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="alert.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <!-- <tr>
                           <th>General Ledger Template</th>
