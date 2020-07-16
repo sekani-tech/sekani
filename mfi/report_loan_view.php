@@ -796,6 +796,7 @@ $destination = "report_loan.php";
  <?php
  }
  else if(isset($_GET["view39"])){
+   $main_date = $_GET["view39"];
  ?>
  <div class="content">
         <div class="container-fluid">
@@ -813,8 +814,7 @@ $destination = "report_loan.php";
                   <!-- Insert number users institutions -->
                   <p class="card-category">
                       <?php
-                      $currentdate = date('Y-m-d');
-                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND repayment_date = '$currentdate'";
+                        $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date'";
                         $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -848,14 +848,17 @@ $destination = "report_loan.php";
                     <table id="tabledatv" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND repayment_date = '$currentdate'";
+                        $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
                           Client Name
                         </th>
                         <th>
-                          Principal Amount
+                          Principal Due
+                        </th>
+                        <th>
+                          Interest Due
                         </th>
                         <th>
                           Loan Term
@@ -866,6 +869,9 @@ $destination = "report_loan.php";
                         <th>
                           Outstanding Loan Balance
                         </th>
+                        <!-- <th>
+                          Status
+                        </th> -->
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
@@ -873,7 +879,15 @@ $destination = "report_loan.php";
                         <tr>
                           <?php  $std = date("Y-m-d");
                           ?>
-                        <?php $row["id"]; ?>
+                        <?php $row["id"];
+                        $loan_id = $row["loan_id"];
+                        $install = $row["installment"];
+                        if ($install == 0) {
+                          $install = "Paid";
+                        } else {
+                          $install = "Pending";
+                        }
+                        ?>
                         <?php 
                             $name = $row['client_id'];
                             $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
@@ -881,10 +895,17 @@ $destination = "report_loan.php";
                             $nae = strtoupper($f["firstname"]." ".$f["lastname"]);
                         ?>
                           <th><?php echo $nae; ?></th>
-                          <th><?php echo number_format($row["principal_amount"]); ?></th>
-                          <th><?php echo $row["loan_term"]; ?></th>
-                          <th><?php echo $row["disbursement_date"]; ?></th>
-                          <th><?php echo number_format($row["total_outstanding_derived"], 2);?></th>
+                          <?php
+                          $get_loan = mysqli_query($connection, "SELECT loan_term, total_outstanding_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
+                          $mik = mysqli_fetch_array($get_loan);
+                          $l_n = $mik["loan_term"];
+                          $t_o = $mik["total_outstanding_derived"];
+                          ?>
+                          <th>NGN <?php echo number_format($row["principal_amount"], 2); ?></th>
+                          <th>NGN <?php echo number_format($row["interest_amount"], 2); ?></th>
+                          <th><?php echo $l_n; ?></th>
+                          <th><?php echo $row["fromdate"];?></th>
+                          <th>NGN <?php echo number_format($t_o, 2);?></th>
                           <?php
                           
                           ?>
