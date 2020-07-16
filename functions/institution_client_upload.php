@@ -142,6 +142,14 @@ $res = mysqli_query($connection, $query);
 
         $go = mysqli_query($connection, $accountins);
         if ($go) {
+          // maing a post to the mennn SMS CHARGE
+          // $sms_charge = mysqli_query($connection, "SELECT * FROM `sms_charge` WHERE int_id = '$int_id' AND account_no = '$account_no'");
+          // $qp = mysqli_fetch_array($sms_charge);
+          // if (mysqli_num_rows($qp) <= 0) {
+          //   // create the SMS charge
+          //   $insert_charge = mysqli_query($connection, "INSERT INTO `sms_charge` (`int_id`, `client_id`, `account_no`, `amount`, `charge_date`) VALUES ('{$int_id}', '{$client_id}', '{$account_no}', '4.00', '{$gen_date}')");
+          //   // bursting overbverbverver
+          // }
           // TAKE THE BVN CHARGE
           $select_account_charge = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$account_no' AND client_id = '$client_id' AND int_id = '$int_id'");
           $myx = mysqli_fetch_array($select_account_charge);
