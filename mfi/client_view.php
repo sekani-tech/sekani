@@ -3,6 +3,7 @@
 $page_title = "View Client";
 $destination = "client.php";
 include('header.php');
+session_start();
 
 ?>
 <?php
@@ -98,6 +99,25 @@ if(isset($_GET["edit"])) {
   }
 }
 ?>
+<?php
+    function fill_account($connection) {
+      $int_id = $_SESSION['int_id'];
+       $client_id = $_GET['edit'];
+       $pen = "SELECT * FROM account WHERE client_id = '$client_id'";
+      $res = mysqli_query($connection, $pen);
+      $out = '';
+      while ($row = mysqli_fetch_array($res))
+      {
+        $product_type = $row["product_id"];
+        $get_product = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$product_type' AND int_id = '$int_id'");
+       while ($mer = mysqli_fetch_array($get_product)) {
+         $p_n = $mer["name"];
+         $out .= '<option value="'.$row["id"].'">'.$row["account_no"].' - '.$p_n.'</option>';
+       }
+      }
+      return $out;
+    }
+?>
 <!-- Content added here -->
 <div class="content">
         <div class="container-fluid">
@@ -122,22 +142,10 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Account No:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $acc_no; ?>" readonly>
+                            <select class="form-control">
+                              <?php echo fill_account($connection);?>
+                            </select>
                         </div>
-                        <?php
-                          function fill_account($connection)
-                          {
-                          $sint_id = $_SESSION["int_id"];
-                          $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
-                          $res = mysqli_query($connection, $org);
-                          $out = '';
-                          while ($row = mysqli_fetch_array($res))
-                          {
-                            $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
-                          }
-                          return $out;
-                          }
-                        ?>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
@@ -206,7 +214,8 @@ if(isset($_GET["edit"])) {
                         </div>
                       </div>
                     </div>
-                    <a href="update_client.php?edit=<?php echo $id;?>" class="btn btn-primary">Edit CLient</a>
+                    <a href="update_client.php?edit=<?php echo $id;?>" class="btn btn-primary">Edit Client</a>
+                    <a href="add_account.php?edit=<?php echo $id;?>" class="btn btn-primary">Add Account to client</a>
                   </form>
                 </div>
                 <?php
