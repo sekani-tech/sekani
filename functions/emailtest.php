@@ -39,7 +39,7 @@ if (mysqli_num_rows($rult) > 0) {
                             // $mail->addBCC("bcc@example.com");
                             // Send HTML or Plain Text Email
                             $mail->isHTML(true);
-                            $mail->Subject = "Vault Alert From".$int_name;
+                            $mail->Subject = "Vault Alert From ".$int_name;
                             $mail->Body = "<!DOCTYPE html>
                               <html>
                                   <head>
