@@ -34,6 +34,7 @@ $destination = "config.php";
     $maximum_deposit_term = $n['maximum_deposit_term'];
     $maximum_deposit_term_time = $n['maximum_deposit_term_time'];
     $in_multiples_deposit_term = $n['in_multiples_deposit_term'];
+    $auto_renew = $n['auto_renew_on_closure'];
     $in_multiples_deposit_term_time = $n['in_multiples_deposit_term_time'];
 
     if($auto_renew == "1"){
@@ -155,7 +156,7 @@ $destination = "config.php";
 
   }
 
-  $dsopq = "SELECT * FROM savings_acct_rule WHERE int_id = '$sessint_id' AND savings_product_id = '$user_id'";
+  $dsopq = "SELECT * FROM ftd_acct_rule WHERE int_id = '$sessint_id' AND ftd_id = '$user_id'";
   $fdq = mysqli_query($connection, $dsopq);
   $l = mysqli_fetch_array($fdq);
     $asst_loan_port = $l['asst_loan_port'];
@@ -230,7 +231,7 @@ $destination = "config.php";
                   <h4 class="card-title">Update Product</h4>
                   <p class="card-category">Fill in all important data</p>
                 </div>
-                <form id="form" action="../functions/product_savings_update.php" method="POST">
+                <form id="form" action="../functions/product_ftd_update.php" method="POST">
                 <div class="card-body">
                 <div class = "row">
                     <div class = "col-md-12">
@@ -243,6 +244,7 @@ $destination = "config.php";
                       <div class="form-group">
                         <label>Name *:</label>
                         <input type="text" value="<?php echo $name?>"  name="name" class="form-control"  id="" required>
+                        <input type="text" hidden value="<?php echo $user_id?>" name="ftd_id" class="form-control"  id="ftd_id" required>
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -447,16 +449,18 @@ $destination = "config.php";
                       <script>
                               $(document).ready(function() {
                                 $('#clickit').on("change keyup paste click", function() {
-                                  var id = $('#sav_id').val();
+                                  var id = $('#ftd_id').val();
                                   var name = $('#nam').val();
                                   var start = $('#start').val();
                                   var end = $('#end').val();
                                   var intrate = $('#intrate').val();
+                                  var term = $('#term').val();
+                                  var amount = $('#amount').val();
                                   var desc = $('#desc').val();
                                   $.ajax({
                                     url:"ajax_post/update_int_rate_chart.php",
                                     method:"POST",
-                                    data:{id:id, name:name, start:start, end:end, intrate:intrate, desc:desc},
+                                    data:{id:id, name:name, start:start, end:end, intrate:intrate, desc:desc, term:term, amount:amount},
                                     success:function(data){
                                       $('#coll').html(data);
                                     }
@@ -516,7 +520,7 @@ $destination = "config.php";
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class = "bmd-label-floating" class="md-3 form-align " for=""> Name:</label>
-                        <input type="text" value="<?php echo $name?>"name="col_name" id="nam" class="form-control">
+                        <input type="text" value="" name="col_name" id="nam" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-12">
@@ -539,8 +543,20 @@ $destination = "config.php";
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
+                        <label class = "bmd-label-floating" for="">Term:</label>
+                        <input type="number" name="col_value" id="term" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class = "bmd-label-floating" for="">Amount:</label>
+                        <input type="number" name="col_value" id="amount" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
                         <label class = "bmd-label-floating" for="">Description:</label>
-                        <input type="text" value="<?php echo $name?>"name="col_value" id="desc" class="form-control">
+                        <input type="text" value="" name="col_value" id="desc" class="form-control">
                       </div>
                     </div>
                   <div style="float:right;">
@@ -566,7 +582,7 @@ $destination = "config.php";
         var winHeight = window.innerHeight;
         
         dlg.style.left = (winWidth/2) - 480/2 + "px";
-        dlg.style.top = "150px";
+        dlg.style.top = "50px";
     }
 </script>
 <style>
@@ -629,9 +645,9 @@ $destination = "config.php";
                               $(document).ready(function() {
                                 $('#charges').on("change", function(){
                                   var id = $(this).val();
-                                  var user = $('#sav_id').val();
+                                  var user = $('#ftd_id').val();
                                   $.ajax({
-                                    url:"ajax_post/update_savings_product_table.php",
+                                    url:"ajax_post/update_ftd_product_table.php",
                                     method:"POST",
                                     data:{id:id, user:user},
                                     success:function(data){
@@ -645,7 +661,7 @@ $destination = "config.php";
                       <table id="tabledat4" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM savings_product_charge WHERE int_id ='$sessint_id' AND savings_id = '$user_id'";
+                        $query = "SELECT * FROM ftd_product_charge WHERE int_id ='$sessint_id' AND ftd_id = '$user_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                       <th>Name</th>
@@ -944,7 +960,7 @@ $destination = "config.php";
                               <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM sav_acct WHERE int_id ='$sessint_id' AND savings_id = '$user_id' AND type ='pay'";
+                        $query = "SELECT * FROM ftd_acct WHERE int_id ='$sessint_id' AND ftd_id = '$user_id' AND type ='pay'";
                         $result = mysqli_query($connection, $query);
                       ?>
                             <th> <b> Payment Type </b></th>
@@ -973,9 +989,9 @@ $destination = "config.php";
                       $('#run_pay').on("click", function(){
                         var paymentgl = $('#payment_gl').val();
                         var accountgl = $('#account_gl').val();
-                        var prod_id = $('#sav_id').val();
+                        var prod_id = $('#ftd_id').val();
                         $.ajax({
-                          url:"ajax_post/update_savings_payment.php",
+                          url:"ajax_post/update_ftd_payment.php",
                           method:"POST",
                           data:{paymentgl:paymentgl, accountgl:accountgl, prod_id:prod_id},
                           success:function(data){
@@ -989,9 +1005,9 @@ $destination = "config.php";
                       $('#ediw').on("click", function(){
                         var penaltygl = $('#penaltygl').val();
                         var incomegl = $('#incomegl').val();
-                        var prod_id = $('#sav_id').val();
+                        var prod_id = $('#ftd_id').val();
                         $.ajax({
-                          url:"ajax_post/update_savings_payment.php",
+                          url:"ajax_post/update_ftd_payment.php",
                           method:"POST",
                           data:{penaltygl:penaltygl, incomegl:incomegl, prod_id:prod_id},
                           success:function(data){
@@ -1013,7 +1029,7 @@ $destination = "config.php";
                               <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM sav_acct WHERE int_id ='$sessint_id' AND savings_id = '$user_id' AND type ='pen'";
+                        $query = "SELECT * FROM ftd_acct WHERE int_id ='$sessint_id' AND ftd_id = '$user_id' AND type ='pen'";
                         $result = mysqli_query($connection, $query);
                       ?>
                             <th> <b> Penalty </b></th>

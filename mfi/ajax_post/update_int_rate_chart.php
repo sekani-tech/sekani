@@ -7,20 +7,22 @@
     $start = $_POST['start'];
     $end = $_POST['end'];
     $intrate = $_POST['intrate'];
+    $term = $_POST['term'];
+    $amount = $_POST['amount'];
     $desc = $_POST['desc'];
     $coldate = date('Y-m-d');
     $int_id = $_SESSION['int_id'];
     $branch_id = $_SESSION["branch_id"];
 
-    $coll = mysqli_query($connection, "INSERT INTO interest_rate_chart (int_id, branch_id, savings_id, name, start_date,
-     end_date, interest_rate, description) VALUES ('{$int_id}', '{$branch_id}', '{$col_id}', '{$name}', '{$start}', '{$end}', '{$intrate}', '{$desc}')");
+    $coll = mysqli_query($connection, "INSERT INTO interest_rate_chart (int_id, branch_id, savings_id, term, amount, name, start_date,
+     end_date, interest_rate, description) VALUES ('{$int_id}', '{$branch_id}', '{$col_id}','{$term}','{$amount}', '{$name}', '{$start}', '{$end}', '{$intrate}', '{$desc}')");
     if ($coll) {
         $donc = mysqli_query($connection, "SELECT * FROM interest_rate_chart WHERE int_id ='$int_id' AND savings_id = '$col_id' ORDER BY id DESC");
 ?>
              <table id="tabled" class="table table-bordered" cellspacing="0" style="width:100%;">
              <thead>
              <tr>
-               <th>Name</th>
+                <th>Name</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Interest Rate</th>

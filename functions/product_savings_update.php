@@ -64,7 +64,7 @@ if (isset($_POST['sav_id'])) {
         $eiro = mysqli_query($connection, "INSERT INTO `savings_acct_rule` (`int_id`, `savings_product_id`,
           `asst_loan_port`, `li_overpayment`, `li_suspended_income`, `inc_interest`, `inc_fees`, `inc_penalties`,
           `inc_recovery`, `exp_loss_written_off`, `exp_interest_written_off`, `insufficient_repayment`, `bvn_income`, `bvn_expense`)
-        VALUES ('{$sessint_id}', '{$savingid}', '{$asst_loan_port}', '{$li_overpayment}', '{$li_suspended_income}',
+        VALUES ('{$sint_id}', '{$savingid}', '{$asst_loan_port}', '{$li_overpayment}', '{$li_suspended_income}',
           '{$inc_interest}', '{$inc_fees}', '{$inc_penalties}', '{$inc_recovery}', '{$exp_loss_written_off}',
           '{$exp_interest_written_off}', '{$insufficient_repayment}', '{$bvn_income}', '{$bvn_expense}')");
       }
