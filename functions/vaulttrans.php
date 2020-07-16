@@ -116,13 +116,25 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                               $vaul = $tolm['vault_email'];
                               
                               if ($vaul == 1 || $vaul == "1") {
-                              $mail = new PHPMailer;
-                              $mail->From = $int_email;
-                              $mail->FromName = $int_name;
-                              $mail->addAddress($remail);
-                              $mail->addReplyTo($int_email, "Reply");
-                              $mail->isHTML(true);
-                              $mail->Subject = "Vault Alert from $int_name";
+         // mailin
+                            // begining of mail
+                            $mail = new PHPMailer;
+                            // from email addreess and name
+                            $mail->From = $int_email;
+                            $mail->FromName = $int_name;
+                            // to adress and name
+                            $mail->addAddress($remail, $username);
+                            // reply address
+                            //Address to which recipient will reply
+                            // progressive html images
+                            $mail->addReplyTo($int_email, "Reply");
+                            // CC and BCC
+                            //CC and BCC
+                            // $mail->addCC("cc@example.com");
+                            // $mail->addBCC("bcc@example.com");
+                            // Send HTML or Plain Text Email
+                            $mail->isHTML(true);
+                            $mail->Subject = "Vault Alert From ".$int_name;
                               $mail->Body = "<!DOCTYPE html>
                               <html>
                                   <head>
@@ -331,13 +343,25 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                   $vaul = $tolm['vault_email'];
                                   
                                   if ($vaul == 1 || $vaul == "1") {
-                                  $mail = new PHPMailer;
-                                  $mail->From = $int_email;
-                                  $mail->FromName = $int_name;
-                                  $mail->addAddress($remail);
-                                  $mail->addReplyTo($int_email, "Reply");
-                                  $mail->isHTML(true);
-                                  $mail->Subject = "Vault Alert from $int_name";
+                                           // mailin
+                            // begining of mail
+                            $mail = new PHPMailer;
+                            // from email addreess and name
+                            $mail->From = $int_email;
+                            $mail->FromName = $int_name;
+                            // to adress and name
+                            $mail->addAddress($remail, $username);
+                            // reply address
+                            //Address to which recipient will reply
+                            // progressive html images
+                            $mail->addReplyTo($int_email, "Reply");
+                            // CC and BCC
+                            //CC and BCC
+                            // $mail->addCC("cc@example.com");
+                            // $mail->addBCC("bcc@example.com");
+                            // Send HTML or Plain Text Email
+                            $mail->isHTML(true);
+                            $mail->Subject = "Vault Alert From ".$int_name;
                                   $mail->Body = "<!DOCTYPE html>
                                   <html>
                                       <head>
@@ -539,13 +563,25 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                               $vaul = $tolm['vault_email'];
                               
                               if ($vaul == 1 || $vaul == "1") {
-                              $mail = new PHPMailer;
-                              $mail->From = $int_email;
-                              $mail->FromName = $int_name;
-                              $mail->addAddress($remail);
-                              $mail->addReplyTo($int_email, "Reply");
-                              $mail->isHTML(true);
-                              $mail->Subject = "Vault Alert from $int_name";
+         // mailin
+                            // begining of mail
+                            $mail = new PHPMailer;
+                            // from email addreess and name
+                            $mail->From = $int_email;
+                            $mail->FromName = $int_name;
+                            // to adress and name
+                            $mail->addAddress($remail, $username);
+                            // reply address
+                            //Address to which recipient will reply
+                            // progressive html images
+                            $mail->addReplyTo($int_email, "Reply");
+                            // CC and BCC
+                            //CC and BCC
+                            // $mail->addCC("cc@example.com");
+                            // $mail->addBCC("bcc@example.com");
+                            // Send HTML or Plain Text Email
+                            $mail->isHTML(true);
+                            $mail->Subject = "Vault Alert From ".$int_name;
                               $mail->Body = "<!DOCTYPE html>
                               <html>
                                   <head>
@@ -741,13 +777,25 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                           $vaul = $tolm['vault_email'];
                           
                           if ($vaul == 1 || $vaul == "1") {
-                          $mail = new PHPMailer;
-                          $mail->From = $int_email;
-                          $mail->FromName = $int_name;
-                          $mail->addAddress($remail);
-                          $mail->addReplyTo($int_email, "Reply");
-                          $mail->isHTML(true);
-                          $mail->Subject = "Vault Alert from $int_name";
+         // mailin
+                            // begining of mail
+                            $mail = new PHPMailer;
+                            // from email addreess and name
+                            $mail->From = $int_email;
+                            $mail->FromName = $int_name;
+                            // to adress and name
+                            $mail->addAddress($remail, $username);
+                            // reply address
+                            //Address to which recipient will reply
+                            // progressive html images
+                            $mail->addReplyTo($int_email, "Reply");
+                            // CC and BCC
+                            //CC and BCC
+                            // $mail->addCC("cc@example.com");
+                            // $mail->addBCC("bcc@example.com");
+                            // Send HTML or Plain Text Email
+                            $mail->isHTML(true);
+                            $mail->Subject = "Vault Alert From ".$int_name;
                           $mail->Body = "<!DOCTYPE html>
                           <html>
                               <head>
