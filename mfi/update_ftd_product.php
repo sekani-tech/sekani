@@ -18,46 +18,29 @@ $destination = "config.php";
     $short_name = $n['short_name'];
     $description = $n['description'];
     $accounting_type = $n['accounting_type'];
-    $saving_cat = $n['savings_cat'];
-    $auto_renew = $n['auto_create'];
-    $currency_code = $n['currency_code'];
-    $noml_al_int_rate = $n['nominal_annual_interest_rate'];
+    $deposit = $n['deposit_amount'];
+    $depositmin = $n['min_deposit_amount'];
+    $depositmax = $n['max_deposit_amount'];
     $interest_compounding_period_enum = $n['interest_compounding_period_enum'];
     $interest_posting_period_enum = $n['interest_posting_period_enum'];
     $interest_calculation_type_enum = $n['interest_calculation_type_enum'];
     $interest_calculation_days_in_year_type_enum = $n['interest_calculation_days_in_year_type_enum'];
-    $min_required_opening_balance = $n['min_required_opening_balance'];
     $min_balance_for_interest_calculation = $n['min_balance_for_interest_calculation'];
-    $minimum_negative_balance = $n['minimum_negative_balance'];
-    $maximum_positve_balance = $n['maximum_positve_balance'];
     $lockin_period_frequency = $n['lockin_period_frequency'];
     $lockin_period_frequency_enum = $n['lockin_period_frequency_enum'];
     $allow_overdraft = $n['allow_overdraft'];
-    $is_dormancy_tracking_active = $n['is_dormancy_tracking_active'];
-    $enable_withdrawal_notice = $n['enable_withdrawal_notice'];
-
-    if($accounting_type == "1"){
-      $prod_type = "Current";
-    }
-    else if($accounting_type == "2"){
-      $prod_type = "Savings";
-    }
-    else if($accounting_type == "3"){
-      $prod_type = "Fixed-Deposit";
-    }
-
-    if($saving_cat == "1"){
-      $savings_cat = "Voluntary";
-    }
-    else if($saving_cat == "2"){
-      $savings_cat = "Compulsory";
-    }
+    $minimum_deposit_term = $n['minimum_deposit_term'];
+    $minimum_deposit_term_time = $n['minimum_deposit_term_time'];
+    $maximum_deposit_term = $n['maximum_deposit_term'];
+    $maximum_deposit_term_time = $n['maximum_deposit_term_time'];
+    $in_multiples_deposit_term = $n['in_multiples_deposit_term'];
+    $in_multiples_deposit_term_time = $n['in_multiples_deposit_term_time'];
 
     if($auto_renew == "1"){
-      $autocreate = "Yes";
+      $auto_ren = "Yes";
     }
     else if($auto_renew == "2"){
-      $autocreate = "No";
+      $auto_ren = "No";
     }
 
     if($interest_compounding_period_enum == "1"){
@@ -99,12 +82,24 @@ $destination = "config.php";
       $int_cal_type = "Average Daily Balance";
     }
 
-    if($interest_calculation_days_in_year_type_enum == "360"){
-      $int_cal_days = "360 days";
+    if($interest_calculation_days_in_year_type_enum == "30"){
+      $int_cal_days = "30 days";
     }
-    else if($interest_calculation_days_in_year_type_enum == "365"){
-      $int_cal_days = "365 days";
+    else if($interest_calculation_days_in_year_type_enum == "60"){
+      $int_cal_days = "60 days";
     }
+    else if($interest_calculation_days_in_year_type_enum == "90"){
+        $int_cal_days = "90 days";
+      }
+      else if($interest_calculation_days_in_year_type_enum == "180"){
+        $int_cal_days = "180 days";
+      }
+      else if($interest_calculation_days_in_year_type_enum == "365"){
+        $int_cal_days = "365 days";
+      }
+      else if($interest_calculation_days_in_year_type_enum == "366"){
+        $int_cal_days = "366 days";
+      }
 
     if($lockin_period_frequency_enum == "1"){
       $lock_per_freq_time = "Days";
@@ -119,24 +114,44 @@ $destination = "config.php";
       $lock_per_freq_time = "Years";
     }
 
-    if($allow_overdraft == "1"){
-      $allover = "Yes";
-    }
-    else if($allow_overdraft == "2"){
-      $allover = "No";
-    }
-    if($is_dormancy_tracking_active == "1"){
-      $trk_dormancy = "Yes";
-    }
-    else if($is_dormancy_tracking_active == "2"){
-      $trk_dormancy = "No";
-    }
-    if($enable_withdrawal_notice == "1"){
-      $with_notice = "Yes";
-    }
-    else if($enable_withdrawal_notice == "2"){
-     $with_notice = "No";
-    }
+    if($minimum_deposit_term_time == "1"){
+        $min_dep_time = "Days";
+      }
+      else if($minimum_deposit_term_time == "2"){
+        $min_dep_time = "Weeks";
+      }
+      else if($minimum_deposit_term_time == "3"){
+        $min_dep_time = "Months";
+      }
+      else if($minimum_deposit_term_time == "4"){
+        $min_dep_time = "Years";
+      }
+
+      if($maximum_deposit_term_time == "1"){
+        $max_dep_time = "Days";
+      }
+      else if($maximum_deposit_term_time == "2"){
+        $max_dep_time = "Weeks";
+      }
+      else if($maximum_deposit_term_time == "3"){
+        $max_dep_time = "Months";
+      }
+      else if($maximum_deposit_term_time == "4"){
+        $max_dep_time = "Years";
+      }
+
+      if($in_multiples_deposit_term_time == "1"){
+        $in_multiples = "Days";
+      }
+      else if($in_multiples_deposit_term_time == "2"){
+        $in_multiples = "Weeks";
+      }
+      else if($in_multiples_deposit_term_time == "3"){
+        $in_multiples = "Months";
+      }
+      else if($in_multiples_deposit_term_time == "4"){
+        $in_multiples = "Years";
+      }
 
   }
 
@@ -222,55 +237,31 @@ $destination = "config.php";
                       <div class = "form-group">
                         <!-- First tab -->
                         <div class="tab">
-                        <h3> New Savings Product:</h3>
+                  <h3> New Fixed Deposit Term Product:</h3>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Name *:</label>
-                        <input type="text" value="<?php echo $name;?>" name="name" class="form-control"  id="" required>
-                        <input type="text" hidden value="<?php echo $user_id;?>" name="sav_id" class="form-control"  id="sav_id">
+                        <input type="text" value="<?php echo $name?>"  name="name" class="form-control"  id="" required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Short Loan Name *</label>
-                        <input type="text" value="<?php echo $short_name;?>" class="form-control" name="short_name" value="" placeholder="Short Name..." required>
+                        <input type="text" value="<?php echo $short_name?>"class="form-control" name="short_name" value="" placeholder="Short Name..." required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="loanDescription" >Description *</label>
-                        <input type="text" value="<?php echo $description;?>" class="form-control" name="description" value="" placeholder="Description...." required>
+                        <input type="text" value="<?php echo $description?>"class="form-control" name="description" value="" placeholder="Description...." required>
                       </div>
                     </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="installmentAmount" >Account Type</label>
-                          <select class="form-control" name="accounting_type" >
-                            <option hidden value="<?php echo $accounting_type;?>"><?php echo $prod_type;?></option>
-                           <option value="1">Current</option>
-                            <option value="2">Savings</option>
+                          <label for="installmentAmount" >Product Group id</label>
+                          <select class="form-control" name="product_type" >
                             <option value="3">Fixed-Deposit</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="installmentAmount" >Savings Category</label>
-                          <select class="form-control" name="saving_cat" >
-                          <option hidden value="<?php echo $saving_cat;?>"><?php echo $savings_cat;?></option>
-                           <option value="1">Voluntary</option>
-                            <option value="2">Compulsory</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="installmentAmount" >Auto Create</label>
-                          <select class="form-control" name="auto_renew" >
-                          <option hidden value="<?php echo $auto_renew;?>"><?php echo $autocreate;?></option>
-                           <option value="2">No</option>
-                            <option value="1">Yes</option>
                           </select>
                         </div>
                       </div>
@@ -283,28 +274,25 @@ $destination = "config.php";
                         </div>
                       </div>
                       <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="shortLoanName" >Nominal Annual Interest rate</label>
-                        <input type="text" value="<?php echo $noml_al_int_rate;?>" class="form-control" name="noml_al_int_rate" value="" placeholder="enter value" required>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group">
-                          <label for="installmentAmount" >Compounding Period</label>
-                          <select class="form-control" name="interest_compounding_period_enum" >
-                          <option hidden value="<?php echo $interest_compounding_period_enum;?>"><?php echo $compound_period;?></option>
-                           <option value="1">Daily</option>
-                           <option value="2">Monthly</option>
-                           <option value="3">Quarterly</option>
-                           <option value="4">Bi-Annually</option>
-                           <option value="5">Annually</option>
-                          </select>
+                          <label for="interestRate" >Deposit Amount</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <input type="text" value="<?php echo $deposit?>"class="form-control" name="deposita" value="" placeholder="Default" required>
+                            </div>
+                            <div class="col-md-4">
+                              <input type="text" value="<?php echo $depositmin?>"class="form-control" name="deposita_min" value="" placeholder="Min" required>
+                            </div>
+                            <div class="col-md-4">
+                              <input type="text" value="<?php echo $depositmax?>"class="form-control" name="deposita_max" value="" placeholder="Max" required>
+                            </div>
+                          </div>
                         </div>
-                      </div>                  
+                      </div>               
                         <div class="col-md-6">
                         <div class="form-group">
                           <label for="interestRateApplied" >Interest Posting period Type</label>
-                          <select class="form-control" name="interest_posting_period_enum" >
+                          <select class="form-control"  name="int_post_type" >
                           <option hidden value="<?php echo $interest_posting_period_enum;?>"><?php echo $int_post_type;?></option>
                            <option value="1">Daily</option>
                            <option value="2">Monthly</option>
@@ -316,8 +304,21 @@ $destination = "config.php";
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
+                          <label for="installmentAmount" >Interest Compounding Period</label>
+                          <select class="form-control" name="compound_period">
+                          <option hidden value="<?php echo $interest_compounding_period_enum;?>"><?php echo $compound_period;?></option>
+                           <option value="1">Daily</option>
+                           <option value="2">Monthly</option>
+                           <option value="3">Quarterly</option>
+                           <option value="4">Bi-Annually</option>
+                           <option value="5">Annually</option>
+                          </select>
+                        </div>
+                      </div>    
+                      <div class="col-md-6">
+                        <div class="form-group">
                           <label for="interestMethodology" >Interest Calculation Type</label>
-                          <select class="form-control" name="interest_calculation_type_enum" >
+                          <select class="form-control" name="int_cal_type" >
                           <option hidden value="<?php echo $interest_calculation_type_enum;?>"><?php echo $int_cal_type;?></option>
                             <option value="1">Daily Balance</option>
                             <option value="2">Average Daily Balance</option>
@@ -327,46 +328,26 @@ $destination = "config.php";
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="amortizatioMethody" >Interest Calculation Days in Year type</label>
-                          <select class="form-control" name="interest_calculation_days_in_year_type_enum" required>
+                          <select class="form-control" name="int_cal_days" required>
                           <option hidden value="<?php echo $interest_calculation_days_in_year_type_enum;?>"><?php echo $int_cal_days;?></option>
-                            <option value="360">360 days</option>
+                            <option value="30">30 days</option>
+                            <option value="60">60 days</option>
+                            <option value="90">90 days</option>
+                            <option value="180">180 days</option>
                             <option value="365">365 days</option>
+                            <option value="366">366 days</option>
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="shortLoanName" >Minimum Balance *</label>
-                        <input type="number" value="<?php echo $min_required_opening_balance;?>" class="form-control" name="min_required_opening_balance" value="" placeholder="1000" required>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="shortLoanName" >Mininmum Balance for Interest Calculation *</label>
-                        <input type="number" value="<?php echo $min_balance_for_interest_calculation;?>" class="form-control" name="min_balance_for_interest_calculation" value="" placeholder="10" required>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="shortLoanName" >Maximum Positive Balance*</label>
-                        <input type="number" value="<?php echo $maximum_positve_balance;?>" class="form-control" name="maximum_positve_balance" value="" placeholder="100,000,000.00" required>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="shortLoanName" >Minimum Negative Balance</label>
-                        <input type="number" value="<?php echo $minimum_negative_balance;?>" class="form-control" name="minimum_negative_balance" value="" placeholder="-20000" required>
-                      </div>
-                    </div>
                     <div class="col-md-6">
                         <div class="form-group">
                           <label for="principal" >Lockin Period Frequency</label>
                           <div class="row">
                             <div class="col-md-4">
-                              <input type="number" value="<?php echo $lockin_period_frequency;?>" class="form-control" name="lockin_period_frequency" value="" placeholder="Default" required>
+                              <input type="number" class="form-control" name="lock_per_freq" value="<?php echo $lockin_period_frequency; ?>" placeholder="Default" required>
                             </div>
                             <div class="col-md-8">
-                          <select class="form-control" name="lockin_period_frequency_enum" >
+                          <select class="form-control" name="lock_per_freq_time" >
                           <option hidden value="<?php echo $lockin_period_frequency_enum;?>"><?php echo $lock_per_freq_time;?></option>
                             <option value="1">Days</option>
                             <option value="2">Weeks</option>
@@ -378,37 +359,83 @@ $destination = "config.php";
                         </div>
                       </div>
                       <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="principal" >Minimum Deposit Term</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <input type="number" class="form-control" name="minimum_dep_term" value="<?php echo $minimum_deposit_term;?>" placeholder="Min" required>
+                            </div>
+                            <div class="col-md-8">
+                          <select class="form-control" name="minimum_dep_term_time" >
+                          <option hidden value="<?php echo $minimum_deposit_term_time;?>"><?php echo $min_dep_time;?></option>
+                            <option value="1">Days</option>
+                            <option value="2">Weeks</option>
+                            <option value="3">Months</option>
+                            <option value="4">Years</option>
+                          </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
                        <div class="form-group">
-                          <label for="additionalCharges" >Allow OverDraft</label>
-                          <select class="form-control" name="allow_overdraft" required>
-                          <option hidden value="<?php echo $allow_overdraft;?>"><?php echo $allover;?></option>
+                          <label for="additionalCharges" >Auto Renew on maturity</label>
+                          <select class="form-control" name="auto_renew" required>
+                          <option hidden value="<?php echo $auto_renew;?>"><?php echo $auto_ren;?></option>
                             <option value="2">No</option>
                             <option value="1">Yes</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="principal" >Maximum Deposit Term</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <input type="number" class="form-control" name="maximum_dep_term" value="<?php echo $minimum_deposit_term;?>" placeholder="Max" required>
+                            </div>
+                            <div class="col-md-8">
+                          <select class="form-control" name="maximum_dep_term_time" >
+                          <option hidden value="<?php echo $maximum_deposit_term_time;?>"><?php echo $max_dep_time;?></option>
+                            <option value="1">Days</option>
+                            <option value="2">Weeks</option>
+                            <option value="3">Months</option>
+                            <option value="4">Years</option>
+                          </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
                        <div class="form-group">
-                          <label for="additionalCharges" >Track Dormancy</label>
-                          <select class="form-control" name="is_dormancy_tracking_active" required>
-                          <option hidden value="<?php echo $is_dormancy_tracking_active;?>"><?php echo $trk_dormancy;?></option>
+                          <label for="additionalCharges" >Allow Premature Closing Penalty</label>
+                          <select class="form-control" name="allover" required>
                             <option value="2">No</option>
                             <option value="1">Yes</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
-                       <div class="form-group">
-                          <label for="additionalCharges" >Enable Withdrawal Notice</label>
-                          <select class="form-control" name="enable_withdrawal_notice" required>
-                          <option hidden value="<?php echo $enable_withdrawal_notice;?>"><?php echo $with_notice;?></option>
-                            <option value="2">No</option>
-                            <option value="1">Yes</option>
+                        <div class="form-group">
+                          <label for="principal" >In Multiples of Deposit Term</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <input type="number" class="form-control" name="inmultiples_dep_term" value="<?php echo $minimum_deposit_term;?>" placeholder="Default" required>
+                            </div>
+                            <div class="col-md-8">
+                          <select class="form-control" name="inmultiples_dep_term_time" >
+                          <option hidden value="<?php echo $in_multiples_deposit_term_time;?>"><?php echo $in_multiples;?></option>
+                            <option value="1">Days</option>
+                            <option value="2">Weeks</option>
+                            <option value="3">Months</option>
+                            <option value="4">Years</option>
                           </select>
+                            </div>
+                          </div>
                         </div>
                       </div>
                   </div>
-                        </div>
+                  </div>
                         <!-- First tab -->
                          <!-- Second tab -->
                          <div class="tab">
@@ -489,7 +516,7 @@ $destination = "config.php";
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class = "bmd-label-floating" class="md-3 form-align " for=""> Name:</label>
-                        <input type="text" name="col_name" id="nam" class="form-control">
+                        <input type="text" value="<?php echo $name?>"name="col_name" id="nam" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-12">
@@ -513,7 +540,7 @@ $destination = "config.php";
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class = "bmd-label-floating" for="">Description:</label>
-                        <input type="text" name="col_value" id="desc" class="form-control">
+                        <input type="text" value="<?php echo $name?>"name="col_value" id="desc" class="form-control">
                       </div>
                     </div>
                   <div style="float:right;">
@@ -592,7 +619,7 @@ $destination = "config.php";
                       <div class="row">
                       <div class="col-md-4">
                       <label>Charges:</label>
-                      <input id="sde" type="text" value="<?php echo $user_id;?>" hidden /> 
+                      <input id="sde" type="text" value="<?php echo $name?>"value="<?php echo $user_id;?>" hidden /> 
                       <select name="charge_id" class="form-control" id="charges">
                         <option value="">select an option</option>
                         <?php echo fill_charges($connection); ?>

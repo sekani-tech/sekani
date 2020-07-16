@@ -476,7 +476,7 @@ if ($per_con == 1 || $per_con == "1") {
                           <th><?php echo $row["name"]; ?></th>
                           <th><?php echo $row["description"]; ?></th>
                           <th><?php echo $row["short_name"]; ?></th>
-                          <td><a href="update_savings_product.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                          <td><a href="update_ftd_product.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
                         <?php }
                           }

@@ -9,13 +9,12 @@ include("header.php");
 if (isset($_GET["edit"])) {
   $user_id = $_GET["edit"];
   $update = true;
-  $person = mysqli_query($connection, "SELECT * FROM staff WHERE id='$user_id' && int_id='$sessint_id'");
+  $person = mysqli_query($connection, "SELECT * FROM staff WHERE int_id ='$sessint_id' AND id ='$user_id'");
 
   if (count([$person]) == 1) {
     $n = mysqli_fetch_array($person);
     $staff_id = $n['id'];
     $int_name = $n['int_name'];
-    $username = $n['username'];
     $display_name = $n['display_name'];
     $email = $n['email'];
     $first_name = $n['first_name'];
@@ -26,15 +25,27 @@ if (isset($_GET["edit"])) {
     $status = $n['employee_status'];
     $org_role = $n['org_role'];
     $img = $n['img'];
+    $us_id = $n['user_id'];
     $imagefileL = $n['img'];
 
     $getrole = mysqli_query($connection, "SELECT * FROM `org_role` WHERE id = '$org_role' && int_id = '$sessint_id'");
     $om = mysqli_fetch_array($getrole);
     $rolename = $om['role'];
 
-    $gettype = mysqli_query($connection, "SELECT * FROM `users` WHERE id = '$user_id' && int_id = '$sessint_id'");
+    $gettype = mysqli_query($connection, "SELECT * FROM `users` WHERE id = '$us_id' && int_id = '$sessint_id'");
     $pi = mysqli_fetch_array($gettype);
     $usertype = $pi['usertype'];
+    $username = $pi['username'];
+  }
+
+  if($usertype == 'staff'){
+    $type = 'Staff';
+  }
+  else if($usertype == 'admin'){
+    $type = 'Admin';
+  }
+  else if($usertype == 'super_admin'){
+    $type = 'Super Admin';
   }
 }
 ?>
@@ -147,7 +158,7 @@ if (isset($_GET["edit"])) {
                         <div class="form-group">
                           <label class="bmd-label-floating">Organization Role:</label>
                           <select name="org_role" id="" class="form-control">
-                          <option value="<?php echo $org_role;?>"><?php echo $rolename;?></option>
+                          <option hidden value="<?php echo $org_role;?>"><?php echo $rolename;?></option>
                           <?php echo fill_role($connection); ?>
                           </select>
                         </div>
@@ -181,7 +192,7 @@ if (isset($_GET["edit"])) {
                         <div class="form-group">
                           <label class="bmd-label-floating">UserType</label>
                           <select name="usertype" id="" class="form-control">
-                          <option value="<?php echo $usertype; ?>"><?php echo $usertype; ?></option>
+                          <option hidden value="<?php echo $usertype; ?>"><?php echo $type; ?></option>
                           <option value="super_admin">Super Admin</option>
                             <option value="admin">Admin</option>
                             <option value="staff">Staff</option>

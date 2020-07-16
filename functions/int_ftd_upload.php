@@ -35,7 +35,7 @@ $lock_per_freq_time = $_POST['lock_per_freq_time'];
 $allover = $_POST['allover'];
 
 // Query to Input data into table
-$fomd = "INSERT INTO `savings_product` ( `int_id`, `branch_id`, `name`, `short_name`, `description`, `currency_code`, `currency_digits`, `interest_compounding_period_enum`,
+$fomd = "INSERT INTO `savings_product` (`int_id`, `branch_id`, `name`, `short_name`, `description`, `currency_code`, `currency_digits`, `interest_compounding_period_enum`,
             `interest_posting_period_enum`, `interest_calculation_type_enum`, `interest_calculation_days_in_year_type_enum`, `lockin_period_frequency`, `lockin_period_frequency_enum`,
             `accounting_type`, `deposit_amount`, `min_deposit_amount`, `max_deposit_amount`, `minimum_deposit_term`, `minimum_deposit_term_time`, `maximum_deposit_term`,
             `maximum_deposit_term_time`, `in_multiples_deposit_term`, `in_multiples_deposit_term_time`, `allow_overdraft`, `auto_renew_on_closure`) 

@@ -305,13 +305,7 @@ if ($per_con == 1 || $per_con == "1") {
                         </li> -->
                         <li class="nav-item">
                           <a class="nav-link active" href="#messages" data-toggle="tab">
-                            <i class="material-icons">people</i> Active Users
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#stff" data-toggle="tab">
-                            <i class="material-icons">people</i> Staff
+                            <i class="material-icons">people</i> Active Staff Users
                             <div class="ripple-container"></div>
                           </a>
                         </li>
@@ -342,10 +336,15 @@ if ($per_con == 1 || $per_con == "1") {
                     <div class="tab-pane active" id="messages">
                     <a href="user.php" class="btn btn-primary"> Create new User</a>
                     <div class="table-responsive">
-                    <table id="tabledat2" class="table" style="width:100%">
+                    <script>
+                  $(document).ready(function() {
+                  $('#tabledat').DataTable();
+                  });
+                  </script>
+                    <table id="tabledat" class="table" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT users.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id WHERE staff.int_id ='$sessint_id'";
+                        $query = "SELECT staff.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id WHERE staff.int_id ='$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -378,72 +377,6 @@ if ($per_con == 1 || $per_con == "1") {
                           <th><?php echo $row["int_name"]; ?></th>
                           <th><?php echo $row["email"]; ?></th>
                           <th><?php echo $row["status"]; ?></th>
-                          <th><?php echo $row["employee_status"]; ?></th>
-                          <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
-                        </tr>
-                        <?php }
-                          }
-                        //   else {
-                        //     echo "0 Staff";
-                        //   }
-                          ?>
-                      </tbody>
-                    </table>
-                  </div>
-                    </div>
-                    <div class="tab-pane" id="stff">
-                    <div class="table-responsive">
-                    <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
-                    <table id="tabledat" class="table" style="width:100%">
-                      <thead class=" text-primary">
-                      <?php
-                        $query = "SELECT * FROM staff WHERE int_id ='$sessint_id'";
-                        $result = mysqli_query($connection, $query);
-                      ?>
-                        <!-- <th>
-                          ID
-                        </th> -->
-                        <th>
-                          Display Name
-                        </th>
-                        <th>
-                          Username
-                        </th>
-                        <th>
-                          Insitution
-                        </th>
-                        <th>
-                          E-mail
-                        </th>
-                        <th>Organization Role</th>
-                        <th>Employee Status</th>
-                        <th>Edit</th>
-                        <!-- <th>Phone</th> -->
-                      </thead>
-                      <tbody>
-                      <?php if (mysqli_num_rows($result) > 0) {
-                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
-                        <tr>
-                        <?php $row["id"]; ?>
-                          <th><?php echo $row["display_name"]; ?></th>
-                          <th><?php echo $row["username"]; ?></th>
-                          <th><?php echo $row["int_name"]; ?></th>
-                          <th><?php echo $row["email"]; ?></th>
-                          <?php
-                         $fs = $row["org_role"];
-                          $weo = mysqli_query($connection, "SELECT * FROM org_role WHERE id ='$fs'");
-                          $ri = mysqli_fetch_array($weo);
-                          if (isset($ri['role'])){
-                          $rolename = $ri['role'];
-                          }else{
-                            $rolename = 'Not Assigned';
-                          }
-                          ?>
-                          <th><?php echo $rolename; ?></th>
                           <th><?php echo $row["employee_status"]; ?></th>
                           <td><a href="update_user.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
