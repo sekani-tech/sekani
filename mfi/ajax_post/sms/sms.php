@@ -52,7 +52,7 @@ if ($err) {
 echo $response;
 $obj = json_decode($response, TRUE);
 $status = $obj['response'];
-if ($status != "" && $status == "success") {
+if ($status == "Success") {
     // end
     echo '<script type="text/javascript">
     $(document).ready(function(){
