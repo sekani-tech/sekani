@@ -399,9 +399,9 @@ input[type=number] {
                   <?php }?>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                  <a class="dropdown-item" href="report_loan_view.php?view39"><?php echo $dn;?> Loans matured today</a>
+                  <a class="dropdown-item" href="report_loan_view.php?view39=<?php echo $today;?>"><?php echo $dn;?> Loans matured today</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="report_loan_view.php?view39b"><?php echo $dfn;?> Loans due tommorow</a>
+                  <a class="dropdown-item" href="report_loan_view.php?view39b=<?php echo $tomorrow; ?>"><?php echo $dfn;?> Loans due tommorow</a>
                 </div>
               </li>
               <!-- user setup -->

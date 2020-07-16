@@ -12,7 +12,8 @@
     $o_address = $_POST['o_address'];
     $email = $_POST['email'];
 
-    $org = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id'");
+    if ($phone != "" || $email != "") {
+        $org = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id'");
     if (count([$org]) == 1) {
       $a = mysqli_fetch_array($org);
       $int_id = $a['int_id'];
@@ -39,6 +40,19 @@
                 ';
                 echo $display;
             }
+            echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "success",
+                title: "Successfully Added",
+                text: "Thank you!",
+                showConfirmButton: false,
+                timer: 3000
+            });
+            $("#nextBtn").prop("disabled", false);
+        });
+        </script>
+        ';
         }
     } else {
         $don = "SELECT * FROM loan_gaurantor WHERE client_id = '$client_id'";
@@ -62,6 +76,22 @@
                 showConfirmButton: false,
                 timer: 3000
             });
+            $("#nextBtn").prop("disabled", false);
+        });
+        </script>
+        ';
+    }
+    } else {
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "Incomplete Details",
+                text: "Check the E-mail and Phone Field",
+                showConfirmButton: false,
+                timer: 3000
+            });
+            $("#nextBtn").prop("disabled", true);
         });
         </script>
         ';
