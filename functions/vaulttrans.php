@@ -5,7 +5,7 @@ require_once "../bat/phpmailer/PHPMailerAutoload.php";
 ?>
 
 <?php
-$emailu = $_SESSION["email"]; 
+$emailu = $_SESSION["email"];
 $int_name = $_SESSION["int_name"];
 $int_email = $_SESSION["int_email"];
 $int_web = $_SESSION["int_web"];

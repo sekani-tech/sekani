@@ -5,12 +5,19 @@ $destination = "index.php";
     include("header.php");
 
 ?>
+<?php
+$sint_id = $_SESSION['int_id'];
+$fd = "DELETE FROM charges_cache WHERE int_id = '$sint_id'";
+$dos = mysqli_query($connection, $fd);
+$fd = "DELETE FROM prod_acct_cache WHERE int_id = '$sint_id'";
+$dos = mysqli_query($connection, $fd);
+?>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Create new Product</h4>

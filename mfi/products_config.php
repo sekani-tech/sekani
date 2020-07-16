@@ -288,6 +288,12 @@ if ($per_con == 1 || $per_con == "1") {
                           </a>
                         </li>
                         <li class="nav-item">
+                          <a class="nav-link" href="#fixed" data-toggle="tab">
+                            <i class="material-icons">attach_money</i> Fixed Term Deposit Product
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                        <li class="nav-item">
                           <a class="nav-link" href="#messages" data-toggle="tab">
                             <i class="material-icons">supervisor_account</i> Charges
                             <div class="ripple-container"></div>
@@ -388,7 +394,64 @@ if ($per_con == 1 || $per_con == "1") {
                     <table id="tabledat4" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM savings_product WHERE int_id ='$sessint_id'";
+                        $query = "SELECT * FROM savings_product WHERE int_id ='$sessint_id' AND (accounting_type = '1' OR accounting_type = '2')";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                        <!-- <th>
+                          ID
+                        </th> -->
+                        <th>Name</th>
+                        <th>
+                          Description
+                        </th>
+                        <th>
+                          Product Group
+                        </th>
+                        <th>
+                          Edit
+                        </th>
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                          <th><?php echo $row["name"]; ?></th>
+                          <th><?php echo $row["description"]; ?></th>
+                          <?php
+                          $fefo = $row["accounting_type"];
+                          if($fefo == 1){
+                            $dfo = "Current";
+                          }
+                          else if($fefo == 2){
+                            $dfo = "Savings";
+                          }
+                          ?>
+                          <th><?php echo $dfo; ?></th>
+                          <td><a href="update_savings_product.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                      </tbody>
+                    </table>
+                  </div>
+                    </div>
+                    <div class="tab-pane" id="fixed">
+                      <a href="manage_fd_product.php" class="btn btn-primary"> Create New Product</a>
+                      <div class="table-responsive">
+                  <script>
+                  $(document).ready(function() {
+                  $('#tabledatc4').DataTable();
+                  });
+                  </script>
+                    <table id="tabledat4" class="table" style="width: 100%;">
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM savings_product WHERE int_id ='$sessint_id' AND accounting_type = '3'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>

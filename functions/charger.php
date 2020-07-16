@@ -17,7 +17,7 @@ $r = mysqli_fetch_array($e);
 $staff_id = $r['id'];
 
 $wee = $_GET['approve'];
-$query = "SELECT * FROM savings_acct_charge WHERE id ='$wee'";
+$query = "SELECT * FROM client_charge WHERE id ='$wee'";
 $don = mysqli_query($connection, $query);
 $som = mysqli_fetch_array($don);
 $charges = $som['charge_id'];
@@ -35,7 +35,7 @@ $calc_time = $s['charge_calculation_enum'];
 $pay_type = $s['gl_code'];
 // insertion query for product
 if($client == "0"){
-  $query4 = "SELECT account.id, client.firstname, client.lastname, account.product_id, account.account_no, account.id, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.account_no = account.account_no WHERE client.int_id = '$sessint_id'";
+  $query4 = "SELECT client.id, client.firstname, client.lastname, account.product_id, account.account_no, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.account_no = account.account_no WHERE client.int_id = '$sessint_id'";
   $queryexec = mysqli_query($connection, $query4);
   while($b = mysqli_fetch_array($queryexec)){
 
@@ -64,7 +64,7 @@ if($client == "0"){
     $glsmi += $amount;
     $ttlwith = $ttl + $amount;
     $newbal = $accbal - $amount;
-    $iupq = "UPDATE account SET account_balance_derived = '$newbal', last_withdrawal = '$amount', total_withdrawals_derived = '$ttlwith' WHERE client_id = '$at_id' AND account_no = '$acct_no' && int_id = '$sessint_id'";
+    $iupq = "UPDATE account SET account_balance_derived = '$newbal', last_withdrawal = '$amount', total_withdrawals_derived = '$ttlwith' WHERE client_id = '$at_id' AND account_no = '$acct_no' AND int_id = '$sessint_id'";
             $iupqres = mysqli_query($connection, $iupq);
             if ($iupqres) {
             // update the clients transaction
@@ -92,7 +92,7 @@ if($client == "0"){
              '{$date}', '{$glsmi}', '{$sddd}', '{$glsmi}', '{$date}', '{$glsmi}')";
              $res4 = mysqli_query($connection, $gl_acc);
              if ($res4) {
-              $iacxt = "DELETE FROM `savings_acct_charge` WHERE id = '$wee'";
+              $iacxt = "DELETE FROM `client_charge` WHERE id = '$wee'";
              $rsdes3 = mysqli_query($connection, $iacxt);
              if($rsdes3){
               $_SESSION["Lack_of_intfund_$randms"] = " was updated successfully!";
@@ -159,7 +159,7 @@ else{
                      '{$date}', '{$amount}', '{$newglball}', '{$amount}', '{$date}', '{$amount}')";
                      $res4 = mysqli_query($connection, $gl_acc);
                      if ($res4) {
-                      $iacxt = "DELETE FROM `savings_acct_charge` WHERE id = '$wee'";
+                      $iacxt = "DELETE FROM `client_charge` WHERE id = '$wee'";
                      $rsdes3 = mysqli_query($connection, $iacxt);
                      if($rsdes3){
                       $_SESSION["Lack_of_intfund_$randms"] = " was updated successfully!";
@@ -186,7 +186,7 @@ else{
 else if(isset($_GET['delete'])){
   $id = $_GET['delete'];
 
-  $dod = mysqli_query($connection, "DELETE FROM savings_acct_charge WHERE id = '$id'");
+  $dod = mysqli_query($connection, "DELETE FROM client_charge WHERE id = '$id'");
   if($dod){
     $_SESSION["Lack_of_intfund_$randms"] = " was updated successfully!";
     echo header ("Location: ../mfi/charge_approval.php?message5=$randms");

@@ -44,7 +44,7 @@ if (isset($_POST['sav_id'])) {
     $qurt = "UPDATE savings_product SET name='{$name}', short_name='{$short_name}', description='{$description}', savings_cat='{$saving_cat}', currency_code='{$currency}', nominal_annual_interest_rate='{$noml_al_int_rate}',
       interest_compounding_period_enum='{$interest_compounding_period_enum}',  interest_posting_period_enum='{$interest_posting_period_enum}',  interest_calculation_type_enum='{$interest_calculation_type_enum}',  interest_calculation_days_in_year_type_enum='{$interest_calculation_days_in_year_type_enum}', 
      min_required_opening_balance='{$min_required_opening_balance}', lockin_period_frequency='{$lockin_period_frequency}', lockin_period_frequency_enum='{$lockin_period_frequency_enum}', accounting_type='{$accounting_type}', maximum_positve_balance='{$maximum_positve_balance}', 
-      minimum_negative_balance='{$minimum_negative_balance}', allow_overdraft='{$allow_overdraft}', min_balance_for_interest_calculation='{$min_balance_for_interest_calculation}', auto_renew_on_closure='{$auto_renew}', 
+      minimum_negative_balance='{$minimum_negative_balance}', allow_overdraft='{$allow_overdraft}', min_balance_for_interest_calculation='{$min_balance_for_interest_calculation}', autocreate='{$auto_renew}', 
      is_dormancy_tracking_active='{$is_dormancy_tracking_active}',  enable_withdrawal_notice='{$enable_withdrawal_notice}' WHERE int_id = '$sint_id' AND id = '$sav_id'";
      $dfodf = mysqli_query($connection, $qurt);
 

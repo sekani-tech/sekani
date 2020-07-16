@@ -77,7 +77,7 @@ $newbal = $accbal - $amount;
         $description = "Fee on charges";
         $trans_type ="debit";
         $irvs = "0";
-        $iat = "INSERT INTO savings_acct_charge (int_id, branch_id, client_id, acct_id, transact_id, charge_id, amount, description, date)
+        $iat = "INSERT INTO client_charge (int_id, branch_id, client_id, acct_id, transact_id, charge_id, amount, description, date)
          VALUES ('{$sessint_id}', '{$branch_id}', '{$client}', '{$acct_id}', '{$transid}', '{$charges}', '{$amount}', '{$descrip}', '{$date}')";
         $res3 = mysqli_query($connection, $iat);
 

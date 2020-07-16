@@ -15,34 +15,33 @@ $name = $_POST['name'];
 $short_name = $_POST['short_name'];
 $description = $_POST['description'];
 $product_type = $_POST['product_type'];
-$saving_cat = $_POST['saving_cat'];
-$autocreate = $_POST['autocreate'];
+$auto_renew = $_POST['auto_renew'];
 $currency = $_POST['currency'];
-$nominal_int_rate = $_POST['nominal_int_rate'];
+$def_deposit = $_POST['deposita'];
+$min_deposit = $_POST['deposita_min'];
+$max_deposit = $_POST['deposita_max'];
 $compound_period = $_POST['compound_period'];
 $int_post_type = $_POST['int_post_type'];
 $int_cal_type = $_POST['int_cal_type'];
 $int_cal_days = $_POST['int_cal_days'];
-$auto_op_bal = $_POST['auto_op_bal'];
-$min_balance_cal = $_POST['min_balance_cal'];
-$max_pve_bal = $_POST['max_pve_bal'];
-$min_nve_bal = $_POST['min_nve_bal'];
+$minimum_dep_term = $_POST['minimum_dep_term'];
+$minimum_dep_term_time = $_POST['minimum_dep_term_time'];
+$maximum_dep_term = $_POST['maximum_dep_term'];
+$maximum_dep_term_time = $_POST['maximum_dep_term_time'];
+$inmultiples_dep_term = $_POST['inmultiples_dep_term'];
+$inmultiples_dep_term_time = $_POST['inmultiples_dep_term_time'];
 $lock_per_freq = $_POST['lock_per_freq'];
 $lock_per_freq_time = $_POST['lock_per_freq_time'];
 $allover = $_POST['allover'];
-$trk_dormancy = $_POST['trk_dormancy'];
-$with_notice = $_POST['with_notice'];
 
 // Query to Input data into table
-$fomd = "INSERT INTO `savings_product` (`int_id`, `branch_id`, `name`, `short_name`, `description`,
- `currency_code`, `currency_digits`, `nominal_annual_interest_rate`, `interest_compounding_period_enum`,
-  `interest_posting_period_enum`, `interest_calculation_type_enum`, `interest_calculation_days_in_year_type_enum`,
-   `lockin_period_frequency`, `lockin_period_frequency_enum`, `accounting_type`,
-   `allow_overdraft`, `is_dormancy_tracking_active`, `enable_withdrawal_notice`, `min_balance_for_interest_calculation`, `savings_cat`, `autocreate`,
-    `min_required_balance`, `minimum_negative_balance`, `maximum_positve_balance`) 
-        VALUES ('{$sessint_id}', '{$branch_id}', '{$name}', '{$short_name}', '{$description}', '{$currency}', '2', '{$nominal_int_rate}', '{$compound_period}', '{$int_post_type}'
-        , '{$int_cal_type}', '{$int_cal_days}', '{$lock_per_freq}', '{$lock_per_freq_time}', '{$product_type}', '{$allover}', '{$trk_dormancy}', '{$with_notice}', '{$min_balance_cal}'
-        , '{$saving_cat}', '{$autocreate}', '{$auto_op_bal}', '{$min_nve_bal}', '{$max_pve_bal}')";
+$fomd = "INSERT INTO `savings_product` ( `int_id`, `branch_id`, `name`, `short_name`, `description`, `currency_code`, `currency_digits`, `interest_compounding_period_enum`,
+            `interest_posting_period_enum`, `interest_calculation_type_enum`, `interest_calculation_days_in_year_type_enum`, `lockin_period_frequency`, `lockin_period_frequency_enum`,
+            `accounting_type`, `deposit_amount`, `min_deposit_amount`, `max_deposit_amount`, `minimum_deposit_term`, `minimum_deposit_term_time`, `maximum_deposit_term`,
+            `maximum_deposit_term_time`, `in_multiples_deposit_term`, `in_multiples_deposit_term_time`, `allow_overdraft`, `auto_renew_on_closure`) 
+        VALUES ('{$sessint_id}', '{$branch_id}', '{$name}', '{$short_name}', '{$description}', '{$currency}', '2', '{$compound_period}', '{$int_post_type}', '{$int_cal_type}', 
+            '{$int_cal_days}', '{$lock_per_freq}', '{$lock_per_freq_time}', '{$product_type}', '{$def_deposit}', '{$min_deposit}', '{$max_deposit}', '{$minimum_dep_term}', 
+            '{$minimum_dep_term_time}', '{$maximum_dep_term}', '{$maximum_dep_term_time}', '{$inmultiples_dep_term}', '{$inmultiples_dep_term_time}', '{$allover}', '{$auto_renew}')";
         $dona = mysqli_query($connection, $fomd);
 
         if($dona){
@@ -68,7 +67,7 @@ $fomd = "INSERT INTO `savings_product` (`int_id`, `branch_id`, `name`, `short_na
                     $iddd = $ef['id'];
                     $charge_id = $ef['charge_id'];
                      
-                    $idn  = "INSERT INTO `savings_product_charge` (`int_id`, `savings_id`, `charge_id`)
+                    $idn  = "INSERT INTO `ftd_product_charge` (`int_id`, `ftd_id`, `charge_id`)
                      VALUES ('{$sessint_id}', '{$savingid}', '{$charge_id}')";
                      $fif = mysqli_query($connection, $idn);
                      if($fif){
@@ -90,7 +89,7 @@ $fomd = "INSERT INTO `savings_product` (`int_id`, `branch_id`, `name`, `short_na
                     $loss_written_off = $_POST['exp_loss_written_off'];
                     $interest_written_off = $_POST['exp_interest_written_off'];
 
-                    $making = mysqli_query($connection, "INSERT INTO `savings_acct_rule` (`int_id`, `savings_product_id`,
+                    $making = mysqli_query($connection, "INSERT INTO `ftd_acct_rule` (`int_id`, `ftd_id`,
                      `asst_loan_port`, `li_overpayment`, `li_suspended_income`, `inc_interest`, `inc_fees`, `inc_penalties`,
                       `inc_recovery`, `exp_loss_written_off`, `exp_interest_written_off`, `rule_type`, `insufficient_repayment`, `bvn_income`, `bvn_expense`)
                     VALUES ('{$sessint_id}', '{$savingid}', '{$loan_portfolio}', '{$overpayments}', '{$suspended_income}',
@@ -106,7 +105,7 @@ $fomd = "INSERT INTO `savings_product` (`int_id`, `branch_id`, `name`, `short_na
                         $acct_gl_code = $sc["acct_gl_code"];
                         $acct = $sc["acct"];
                         $type_c = $sc["type"];
-                        $insert_cache = mysqli_query($connection, "INSERT INTO `sav_acct` (`int_id`, `gl_code`, `name`, `savings_id`, `acct_gl_code`, `acct`, `type`)
+                        $insert_cache = mysqli_query($connection, "INSERT INTO `ftd_acct` (`int_id`, `gl_code`, `name`, `ftd_id`, `acct_gl_code`, `acct`, `type`)
                          VALUES ('{$sessint_id}', '{$gl_code}', '{$gl_name}', '{$savingid}', '{$acct_gl_code}', '{$acct}', '{$type_c}')");
                         if ($insert_cache) {
                             $delet_cache = mysqli_query($connection, "DELETE FROM `prod_acct_cache` WHERE prod_cache_id = '$id_trans'");
@@ -132,5 +131,11 @@ $fomd = "INSERT INTO `savings_product` (`int_id`, `branch_id`, `name`, `short_na
                     // }
                 }
             }
+        }
+        else {
+            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+            echo "error";
+            // echo header ("Location: ../mfi/products_config.php?message2=$randms");
+            // echo header("location: ../mfi/client.php");
         }
 ?>

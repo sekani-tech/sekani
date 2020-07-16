@@ -9,6 +9,8 @@ $destination = "index.php";
 $sint_id = $_SESSION['int_id'];
 $fd = "DELETE FROM charges_cache WHERE int_id = '$sint_id'";
 $dos = mysqli_query($connection, $fd);
+$fd = "DELETE FROM prod_acct_cache WHERE int_id = '$sint_id'";
+$dos = mysqli_query($connection, $fd);
 ?>
 <!-- Content added here -->
     <div class="content">
@@ -21,7 +23,7 @@ $dos = mysqli_query($connection, $fd);
                   <h4 class="card-title">Create new Product</h4>
                   <p class="card-category">Fill in all important data</p>
                 </div>
-                <form id="form" action="../functions/int_savings_prod_upload.php" method="POST">
+                <form id="form" action="../functions/int_ftd_upload.php" method="POST">
                 <div class="card-body">
                 <div class = "row">
                     <div class = "col-md-12">
@@ -29,7 +31,7 @@ $dos = mysqli_query($connection, $fd);
                         <!-- Each tab equals a stepper page -->
                   <!-- First Tab -->
                   <div class="tab">
-                  <h3> New Savings Product:</h3>
+                  <h3> New Fixed Deposit Term Product:</h3>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
@@ -51,29 +53,9 @@ $dos = mysqli_query($connection, $fd);
                     </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="installmentAmount" >Account Type</label>
+                          <label for="installmentAmount" >Product Group id</label>
                           <select class="form-control" name="product_type" >
-                           <option value="1">Current</option>
-                            <option value="2">Savings</option>
                             <option value="3">Fixed-Deposit</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="installmentAmount" >Savings Category</label>
-                          <select class="form-control" name="saving_cat" >
-                           <option value="1">Voluntary</option>
-                            <option value="2">Compulsory</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="installmentAmount" >Auto Create</label>
-                          <select class="form-control" name="autocreate" >
-                           <option value="2">No</option>
-                            <option value="1">Yes</option>
                           </select>
                         </div>
                       </div>
@@ -86,23 +68,21 @@ $dos = mysqli_query($connection, $fd);
                         </div>
                       </div>
                       <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="shortLoanName" >Nominal Annual Interest rate</label>
-                        <input type="text" class="form-control" name="nominal_int_rate" value="" placeholder="enter value" required>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group">
-                          <label for="installmentAmount" >Compounding Period</label>
-                          <select class="form-control" name="compound_period" >
-                           <option value="1">Daily</option>
-                           <option value="2">Monthly</option>
-                           <option value="3">Quarterly</option>
-                           <option value="4">Bi-Annually</option>
-                           <option value="5">Annually</option>
-                          </select>
+                          <label for="interestRate" >Deposit Amount</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <input type="text" class="form-control" name="deposita" value="" placeholder="Default" required>
+                            </div>
+                            <div class="col-md-4">
+                              <input type="text" class="form-control" name="deposita_min" value="" placeholder="Min" required>
+                            </div>
+                            <div class="col-md-4">
+                              <input type="text" class="form-control" name="deposita_max" value="" placeholder="Max" required>
+                            </div>
+                          </div>
                         </div>
-                      </div>                  
+                      </div>               
                         <div class="col-md-6">
                         <div class="form-group">
                           <label for="interestRateApplied" >Interest Posting period Type</label>
@@ -117,6 +97,18 @@ $dos = mysqli_query($connection, $fd);
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
+                          <label for="installmentAmount" >Interest Compounding Period</label>
+                          <select class="form-control" name="compound_period" >
+                           <option value="1">Daily</option>
+                           <option value="2">Monthly</option>
+                           <option value="3">Quarterly</option>
+                           <option value="4">Bi-Annually</option>
+                           <option value="5">Annually</option>
+                          </select>
+                        </div>
+                      </div>    
+                      <div class="col-md-6">
+                        <div class="form-group">
                           <label for="interestMethodology" >Interest Calculation Type</label>
                           <select class="form-control" name="int_cal_type" >
                             <option value="1">Daily Balance</option>
@@ -128,35 +120,15 @@ $dos = mysqli_query($connection, $fd);
                         <div class="form-group">
                           <label for="amortizatioMethody" >Interest Calculation Days in Year type</label>
                           <select class="form-control" name="int_cal_days" required>
-                            <option value="360">360 days</option>
+                            <option value="30">30 days</option>
+                            <option value="60">60 days</option>
+                            <option value="90">90 days</option>
+                            <option value="180">180 days</option>
                             <option value="365">365 days</option>
+                            <option value="366">366 days</option>
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="shortLoanName" >Minimum Balance *</label>
-                        <input type="number" class="form-control" name="auto_op_bal" value="" placeholder="1000" required>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="shortLoanName" >Mininmum Balance for Interest Calculation *</label>
-                        <input type="number" class="form-control" name="min_balance_cal" value="" placeholder="10" required>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="shortLoanName" >Maximum Positive Balance*</label>
-                        <input type="number" class="form-control" name="max_pve_bal" value="" placeholder="100,000,000.00" required>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="shortLoanName" >Minimum Negative Balance</label>
-                        <input type="number" class="form-control" name="min_nve_bal" value="" placeholder="-20000" required>
-                      </div>
-                    </div>
                     <div class="col-md-6">
                         <div class="form-group">
                           <label for="principal" >Lockin Period Frequency</label>
@@ -176,8 +148,53 @@ $dos = mysqli_query($connection, $fd);
                         </div>
                       </div>
                       <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="principal" >Minimum Deposit Term</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <input type="number" class="form-control" name="minimum_dep_term" value="" placeholder="Min" required>
+                            </div>
+                            <div class="col-md-8">
+                          <select class="form-control" name="minimum_dep_term_time" >
+                            <option value="1">Days</option>
+                            <option value="2">Weeks</option>
+                            <option value="3">Months</option>
+                            <option value="4">Years</option>
+                          </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
                        <div class="form-group">
-                          <label for="additionalCharges" >Allow OverDraft</label>
+                          <label for="additionalCharges" >Auto Renew on maturity</label>
+                          <select class="form-control" name="auto_renew" required>
+                            <option value="2">No</option>
+                            <option value="1">Yes</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="principal" >Maximum Deposit Term</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <input type="number" class="form-control" name="maximum_dep_term" value="" placeholder="Max" required>
+                            </div>
+                            <div class="col-md-8">
+                          <select class="form-control" name="maximum_dep_term_time" >
+                            <option value="1">Days</option>
+                            <option value="2">Weeks</option>
+                            <option value="3">Months</option>
+                            <option value="4">Years</option>
+                          </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                       <div class="form-group">
+                          <label for="additionalCharges" >Allow Premature Closing Penalty</label>
                           <select class="form-control" name="allover" required>
                             <option value="2">No</option>
                             <option value="1">Yes</option>
@@ -185,21 +202,21 @@ $dos = mysqli_query($connection, $fd);
                         </div>
                       </div>
                       <div class="col-md-6">
-                       <div class="form-group">
-                          <label for="additionalCharges" >Track Dormancy</label>
-                          <select class="form-control" name="trk_dormancy" required>
-                            <option value="2">No</option>
-                            <option value="1">Yes</option>
+                        <div class="form-group">
+                          <label for="principal" >In Multiples of Deposit Term</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <input type="number" class="form-control" name="inmultiples_dep_term" value="" placeholder="Default" required>
+                            </div>
+                            <div class="col-md-8">
+                          <select class="form-control" name="inmultiples_dep_term_time" >
+                            <option value="1">Days</option>
+                            <option value="2">Weeks</option>
+                            <option value="3">Months</option>
+                            <option value="4">Years</option>
                           </select>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                       <div class="form-group">
-                          <label for="additionalCharges" >Enable Withdrawal Notice</label>
-                          <select class="form-control" name="with_notice" required>
-                            <option value="2">No</option>
-                            <option value="1">Yes</option>
-                          </select>
+                            </div>
+                          </div>
                         </div>
                       </div>
                   </div>
@@ -230,10 +247,12 @@ $dos = mysqli_query($connection, $fd);
                                   var end = $('#end').val();
                                   var intrate = $('#intrate').val();
                                   var desc = $('#desc').val();
+                                  var term = $('#term').val();
+                                  var amount = $('#amount').val();
                                   $.ajax({
                                     url:"interest_rate_chart.php",
                                     method:"POST",
-                                    data:{id:id, name:name, start:start, end:end, intrate:intrate, desc:desc},
+                                    data:{id:id, name:name, start:start, end:end, intrate:intrate, desc:desc, term:term, amount:amount},
                                     success:function(data){
                                       $('#coll').html(data);
                                       document.getElementById("off_me").setAttribute("hidden", "");
@@ -287,6 +306,18 @@ $dos = mysqli_query($connection, $fd);
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
+                        <label class = "bmd-label-floating" for="">Term:</label>
+                        <input type="number" name="col_value" id="term" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class = "bmd-label-floating" for="">Amount:</label>
+                        <input type="number" name="col_value" id="amount" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
                         <label class = "bmd-label-floating" for="">Interest Rate:</label>
                         <input type="number" name="col_value" id="intrate" class="form-control">
                       </div>
@@ -320,7 +351,7 @@ $dos = mysqli_query($connection, $fd);
         var winHeight = window.innerHeight;
         
         dlg.style.left = (winWidth/2) - 480/2 + "px";
-        dlg.style.top = "150px";
+        dlg.style.top = "50px";
     }
 </script>
 <style>
@@ -364,13 +395,11 @@ $dos = mysqli_query($connection, $fd);
                           var branch_id = $('#branch_id').val();
                           var main_p = $('#main_p').val();
                           $.ajax({
-                            url:"savings_charges.php",
+                            url:"ftd_charges.php",
                             method:"POST",
                             data:{id:id, int_id:int_id, branch_id:branch_id, main_p: main_p},
                             success:function(data){
                               $('#show_charges').html(data);
-                              document.getElementById("takeme").setAttribute("hidden", "");
-                              document.getElementById("damn_men").removeAttribute("hidden");
                             }
                           })
                         });
@@ -382,8 +411,6 @@ $dos = mysqli_query($connection, $fd);
                       <div class="row">
                       <div class="col-md-4">
                       <label>Charges:</label>
-                      <div id="damn_men" hidden>
-                      </div>
                       <div id="takeme">
                       <input type="text" hidden value="<?php echo $main_p; ?>" id="main_p">
                       <select name="charge_id" class="form-control" id="charges">
@@ -414,21 +441,6 @@ $dos = mysqli_query($connection, $fd);
                       return $output;
                       }
                       ?>
-                      <script>
-                              $(document).ready(function() {
-                                $('#credit').on("change keyup paste click", function(){
-                                  var id = $(this).val();
-                                  $.ajax({
-                                    url:"credit_check.php",
-                                    method:"POST",
-                                    data:{id:id},
-                                    success:function(data){
-                                      $('#show_credit').html(data);
-                                    }
-                                  })
-                                });
-                              });
-                            </script>
                   </div>
                   
                   <!-- Third Tab -->
@@ -493,7 +505,7 @@ $dos = mysqli_query($connection, $fd);
                           <div class="form-group">
                             <div class="col-md-8">
                             <label for="charge" class="form-align">Insufficient Repayment</label>
-                            <select class="form-control form-control-sm" name="insufficient_repaymentlk">
+                            <select class="form-control form-control-sm" name="insufficient_repayment">
                               <option value="">--</option>
                               <?php echo fill_asset($connection) ?>
                             </select>
@@ -738,7 +750,7 @@ $dos = mysqli_query($connection, $fd);
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Accounting Insturction</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Accounting Instruction</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

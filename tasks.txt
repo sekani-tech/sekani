@@ -31,11 +31,11 @@ Sanusi
 1. Fix loan creation -- (use the form in test.html the current form in lend.php not accurate) --DONE
 2. Update Loan functionalities - preview --DONE (I added a client_id column in the collateral table)
 3. manage_product convert to stepper --DONE
-4. Loan_summary
-5. Create Teller
+4. Loan_summary --DONE
+5. Create Teller --DONE
 6. Save Teller - View Teller Table
-7. Assign a Till to the Teller
-8. Create Internal Accounts (Assets, Liabilities, Equity, Income and Expenditure)
+7. Assign a Till to the Teller --DONE
+8. Create Internal Accounts (Assets, Liabilities, Equity, Income and Expenditure) --DONE
 ------
 Sam
 ------
