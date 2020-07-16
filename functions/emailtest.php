@@ -20,6 +20,7 @@ if (mysqli_num_rows($rult) > 0) {
         $vaul = $tolm['vault_email'];
         
         if ($vaul == 1 || $vaul == "1") {
+          echo $remail.'<br/>';
         $mail = new PHPMailer;
         $mail->From = $int_email;
         $mail->FromName = $int_name;
