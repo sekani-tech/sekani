@@ -11,8 +11,8 @@ $int_logo = 'https://firebasestorage.googleapis.com/v0/b/recipeapp-6e1ce.appspot
 $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' AND employee_status = 'Employed'";
 $rult = mysqli_query($connection, $quy);
 if (mysqli_num_rows($rult) > 0) {
-  while ($row = mysqli_fetch_array($rult))
-      {
+ $row = mysqli_fetch_array($rult);
+      // {
         $remail = $row['email'];
         $roleid = $row['org_role'];
         $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
@@ -230,6 +230,6 @@ if (mysqli_num_rows($rult) > 0) {
                                 echo $remail." Message has been sent successfully<br/>";
                             }
                           }
-                        }
+                        // }
   } 
 ?>
