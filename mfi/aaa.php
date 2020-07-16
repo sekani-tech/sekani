@@ -13,7 +13,7 @@ $sdf = mysqli_query($connection, $dif);
 while($d = mysqli_fetch_array($sdf)){
     $id = $d['id'];
 
-    $os = "UPDATE client SET loan_status = 'ACTIVE' WHERE int_id = '$int_id' AND id = '$id'";
+    $os = "UPDATE client SET loan_status = '' WHERE int_id = '$int_id' AND id = '$id'";
     $fdf = mysqli_query($connection, $os);
 
 
