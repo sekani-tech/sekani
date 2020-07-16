@@ -5,6 +5,7 @@ require_once "../bat/phpmailer/PHPMailerAutoload.php";
 $sessint_id = 5;
 $int_email = 'dgmfb@gmail.com';
 $int_name = 'DGMFB';
+$username = "Test";
 $nm = 'Tech Support';
 $int_logo = 'https://firebasestorage.googleapis.com/v0/b/recipeapp-6e1ce.appspot.com/o/DGMFB.png?alt=media&token=c4d6cb90-3bc3-47be-82d3-71b1a26d9b27';
 $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' AND employee_status = 'Employed'";
@@ -24,7 +25,7 @@ if (mysqli_num_rows($rult) > 0) {
         $mail = new PHPMailer;
         $mail->From = $int_email;
         $mail->FromName = $int_name;
-        $mail->addAddress($remail);
+        $mail->addAddress($remail, $username);
         $mail->addReplyTo($int_email, "Reply");
         $mail->isHTML(true);
         $mail->Subject = "Vault Alert from $int_name";
@@ -140,16 +141,13 @@ if (mysqli_num_rows($rult) > 0) {
       }
       }
                    // mail system
-                   $sd =mysqli_num_rows($rult);
                    if(!$mail->send()) 
                    {
                      echo "Didnt Send";
-                     echo $sd." people recieved it";
                     //  echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
                    } else
                    {
                      echo "Email Sent";
-                     echo $sd." people recieved it"; 
                     //  echo header ("Location: ../mfi/teller_journal.php?message1=$randms");;
                    }
   } 
