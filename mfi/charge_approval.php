@@ -197,7 +197,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                               $('#wait').on("click", function () {
                                 swal({
                                     type: "info",
-                                    title: "Cheque/Pass Book",
+                                    title: "Charge",
                                     text: "Transaction in Progress",
                                     showConfirmButton: false,
                                     timer: 20000
@@ -232,8 +232,8 @@ if ($can_transact == 1 || $can_transact == "1") {
   $(document).ready(function(){
    swal({
     type: "error",
-    title: "Vault Authorization",
-    text: "You Dont Have permission to Make Transaction From Vault",
+    title: "Charge Authorizaation",
+    text: "You Dont Have permission",
    showConfirmButton: false,
     timer: 2000
     }).then(

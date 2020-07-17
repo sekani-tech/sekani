@@ -80,7 +80,7 @@ $transaction_id = str_pad(rand(0, pow(10, 7)-1), 7, '0', STR_PAD_LEFT);
 // Loop to pull all client
 function fill_client($connection) {
     $sint_id = $_SESSION["int_id"];
-    $org = "SELECT * FROM client WHERE int_id = '$sint_id' AND status = 'Approved'";
+    $org = "SELECT * FROM client WHERE int_id = '$sint_id' AND status = 'Approved' ORDER BY firstname ASC";
     $res = mysqli_query($connection, $org);
     $out = '';
     while ($row = mysqli_fetch_array($res))
