@@ -13,7 +13,7 @@ $destination = "report_loan.php";
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Disbursed Loans Accounts</h4>
@@ -85,10 +85,7 @@ $destination = "report_loan.php";
                           Interest Amount
                         </th>
                         <th>
-                          Fee
-                        </th>
-                        <th>
-                          Total Income
+                          Total Int Income
                         </th>
                         <th>
                           Outstanding Loan Balance
@@ -121,15 +118,18 @@ $destination = "report_loan.php";
                           <?php
                             $loant = $row["loan_term"];
                             $total = $loant * $final;
+                            $totalint +=$total;
                           ?>
-                          <th><?php echo number_format($row["fee_charges_charged_derived"]); ?></th>
                           <?php
                           $fee = $row["fee_charges_charged_derived"];
                           $income = $fee + $total;
+                          $ttlinc += $income;
                           ?>
                           <th><?php echo number_format($income); ?></th>
                           <th><?php $bal = $row["total_outstanding_derived"];
-                           echo  number_format($bal); ?></th>
+                          $df = $bal;
+                           echo number_format($bal);
+                           $ttloutbalance += $bal; ?></th>
                           <!-- <td><a href="client_view.php?edit=<?php echo $cid;?>" class="btn btn-info">View</a></td> -->
                         </tr>
                         <?php }
@@ -138,6 +138,17 @@ $destination = "report_loan.php";
                             // echo "0 Document";
                           }
                           ?>
+                          <tr>
+                            <th>Total</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th><?php echo number_format($totalint);?></th>
+                            <th><?php echo number_format($ttlinc);?></th>
+                            <th><?php echo number_format($ttloutbalance);?></th>
+                          </tr>
                           <!-- <th></th> -->
                       </tbody>
                     </table>
