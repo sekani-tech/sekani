@@ -55,16 +55,6 @@ $destination = "../index.php";
                           <th>View the list of all the approved clients in the institution</th>
                           <td><a href="groups.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
-                        <tr>
-                          <th>Client Balance Report</th>
-                          <th>View the list of Clients and account Balances</th>
-                          <td><a href="client_balance.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
-                        </tr>
-                        <tr>
-                          <th>Client Summary</th>
-                          <th>View the summary of a specifically selected client</th>
-                          <td><a href="report_client_view.php?view4" class="btn btn-info"><i class="material-icons">description</i></a></td>
-                        </tr>
                         <!-- <tr>
                           <th>Vault Posting</th>
                           <td><a href="teller_journal.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
