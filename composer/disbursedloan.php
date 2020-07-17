@@ -48,29 +48,30 @@ session_start();
         ';
         }
         return $out;
+      }
 
-        $accountquery = "SELECT * FROM loan WHERE int_id = $sessint_id AND submittedon_date BETWEEN '$start' AND '$end'";
-        $resul = mysqli_query($connection, $accountquery);
-        $out = '';
-  
-        while ($q = mysqli_fetch_array($resul))
-        {
-          $prina = $q["principal_amount"];
-          $loant = $q["loan_term"]; 
-          $disb = $q["disbursement_date"]; 
-          $repay = $q["repayment_date"]; 
-          $intrate = $q["interest_rate"]; 
-          $fee = $q["fee_charges_charged_derived"]; 
-          $intr = $intrate/100;
-          $final = $intr * $prina;
-          $total = $loant * $final;
-          $income = $fee + $total;
-          $out = $q["outstanding_balance_derived"];
-        
-          $ttlin += $income;
-          $outbal += $out;
-          $ttlfin += $final;
-        }
+      
+      $accountquery = "SELECT * FROM loan WHERE int_id = $sessint_id AND submittedon_date BETWEEN '$start' AND '$end'";
+      $resul = mysqli_query($connection, $accountquery);
+      $out = '';
+
+      while ($q = mysqli_fetch_array($resul))
+      {
+        $prina = $q["principal_amount"];
+        $loant = $q["loan_term"]; 
+        $disb = $q["disbursement_date"]; 
+        $repay = $q["repayment_date"]; 
+        $intrate = $q["interest_rate"]; 
+        $fee = $q["fee_charges_charged_derived"]; 
+        $intr = $intrate/100;
+        $final = $intr * $prina;
+        $total = $loant * $final;
+        $income = $fee + $total;
+        $out = $q["outstanding_balance_derived"];
+      
+        $ttlin += $income;
+        $outbal += $out;
+        $ttlfin += $final;
       }
       
 require_once __DIR__ . '/vendor/autoload.php';
