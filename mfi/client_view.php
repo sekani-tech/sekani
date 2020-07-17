@@ -17,6 +17,7 @@ if(isset($_GET["edit"])) {
     $display_name = $n['display_name'];
     $first_name = $n['firstname'];
     $middle_name = $n['middlename'];
+    $loan_status = $n['loan_status'];
     $last_name = $n['lastname'];
     $acc_no = $n['account_no'];
     $loanofficer_id = $n['loan_officer_id'];
@@ -142,7 +143,7 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Account No:</label>
-                            <select class="form-control">
+                            <select id="account" class="form-control">
                               <?php echo fill_account($connection);?>
                             </select>
                         </div>
@@ -161,56 +162,87 @@ if(isset($_GET["edit"])) {
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="">Date of Birth:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $date_of_birth; ?>" readonly>
+                          <label for="">Loan Status:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $loan_status; ?>" readonly>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <script>
+                    $(document).ready(function () {
+                      $('#account').on("change", function () {
+                        var id = $(this).val();
+                        $.ajax({
+                          url: "ajax_post/client_view_acc.php", 
+                          method: "POST",
+                          data:{id:id},
+                          success: function (data) {
+                            $('#soe').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                      <!-- <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Gender:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $gender; ?>" readonly>
                         </div>
-                      </div>
-                      <div class="col-md-6">
+                      </div> -->
+                      <!-- <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Address:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $address; ?>" readonly>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Mobile Number:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $phone; ?>" readonly>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <!-- <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Email Address:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $email; ?>" readonly>
                         </div>
-                      </div>
-                      <div class="col-md-6">
+                      </div> -->
+                      <!-- <div class="col-md-6">
                         <div class="form-group">
                           <label for="">State:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $state; ?>" readonly>
                         </div>
-                      </div>
-                      <div class="col-md-6">
+                      </div> -->
+                      <!-- <div class="col-md-6">
                         <div class="form-group">
                           <label for="">LGA:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $lga; ?>" readonly>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">BVN:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $bvn; ?>" readonly>
                         </div>
                       </div>
+                      <div class="col-md-12">
+                        <div class="row"  id="soe">
+                     <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Account Balance:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $abd; ?>" readonly>
+                        </div>
+                      </div> 
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="">Account:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $bvn; ?>" readonly>
+                          <label for="">Last Deposit:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $tdd; ?>" readonly>
+                        </div>
+                      </div>
+                       <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Last Withdrawal:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $twd; ?>" readonly>
+                        </div>
+                      </div>
                         </div>
                       </div>
                     </div>
@@ -324,24 +356,6 @@ if(isset($_GET["edit"])) {
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label for="">Address:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_address_one; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">Address:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_address_two; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">Address:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_address_three; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
                           <label for="">Phone No:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_phone_one; ?>" readonly>
                         </div>
@@ -360,60 +374,6 @@ if(isset($_GET["edit"])) {
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label for="">Gender:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_gender_one; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">Gender:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_gender_two; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">Gender:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_gender_three; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">State:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_state_one; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">State:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_state_two; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">State:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_state_three; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">LGA:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_lga_one; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">LGA:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_lga_two; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">LGA:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_lga_three; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
                           <label for="">BVN:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_one; ?>" readonly>
                         </div>
@@ -428,24 +388,6 @@ if(isset($_GET["edit"])) {
                         <div class="form-group">
                           <label for="">BVN:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_three; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">Occupation:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_occu_one; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">Occupation:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_occu_two; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">Occupation:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_occu_three; ?>" readonly>
                         </div>
                       </div>
                       <a href="update_client.php?edit=<?php echo $id;?>" class="btn btn-primary">Edit CLient</a>
