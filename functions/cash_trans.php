@@ -27,17 +27,21 @@ if (count([$getacct1]) == 1) {
 }
 $taketeller = "SELECT * FROM tellers WHERE name = '$staff_id' && int_id = '$sint_id'";
 
-if(isset($_POST['transact_id'])){
+if(isset($_GET['approve'])){
     // Declaring Variables
-    $trans_id = $_POST['transact_id'];
-    $trans_from = $_POST['transfrom'];
-    $amount = $_POST['amount'];
-    $trans_to = $_POST['transto'];
-    $branch_id = $_POST['branch'];
+    $fid = $_GET['approve'];
+    $fdfi = "SELECT * FROM transfer_cache WHERE id = '$fid'";
+    $df = mysqli_query($connection, $fdfi);
+    $dsd = mysqli_fetch_array($df);
+    $trans_id = $dsd['transact_id'];
+    $trans_from = $dsd['trans_from'];
+    $amount = $dsd['amount'];
+    $trans_to = $dsd['trans_to'];
+    $branch_id = $dsd['branch_id'];
     $credit = "credit";
     $debit = "debit";
     $irvs = 0;
-    $trans_date = date('Y-m-d h:m:s');
+    $trans_date = $dsd['trans_date'];
 
     // Get the account balance data for the depositor 
     $query3 = "SELECT client.firstname, client.lastname, account.product_id, account.account_no, account.id, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.account_no = account.account_no WHERE client.int_id = '$sint_id' AND client.id ='$trans_from'";
@@ -51,7 +55,7 @@ if(isset($_POST['transact_id'])){
     $ttlwithdrawal = $a['total_withdrawals_derived'];
 
     // Get the account data for the recipient 
-    $query4 = "SELECT client.firstname, client.lastname, account.product_id, account.account_no, account.id, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.account_no = account.account_no WHERE client.int_id = '$sint_id' AND client.id ='$trans_to'";
+    $query4 = "SELECT client.firstname, client.lastname, account.product_id, account.account_no, account.id, account.total_deposits_derived, account.account_balance_derived FROM client JOIN account ON client.account_no = account.account_no WHERE client.int_id = '$sint_id' AND client.id ='$trans_to'";
     $queryexec = mysqli_query($connection, $query4);
     $b = mysqli_fetch_array($queryexec);
     $transnametwo = strtoupper($b['firstname']." ". $b['lastname']);
@@ -62,8 +66,6 @@ if(isset($_POST['transact_id'])){
     $ttldeposit = $b['total_deposits_derived'];
 
     // Code is to check if User making transaction is a teller
-    $check_me_men = mysqli_query($connection, $taketeller);
-    if(count([$check_me_men]) > 0){
         // if account being transferred from is greater than amount, proceed to code
         if($accountbalone >= $amount){
             // New deposit account balance
@@ -110,9 +112,10 @@ if(isset($_POST['transact_id'])){
 
            $rsd = mysqli_query($connection, $aupsat);
            if($rsd){
+               $we = mysqli_query($connection, "UPDATE transfer_cache SET status = 'Approved' WHERE id = '$fid'");
                 //  Transaction Successful
             $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
-            echo header ("Location: ../mfi/bank_transfer.php?message2=$randms");
+            echo header ("Location: ../mfi/transfer_approval.php?message2=$randms");
            }
            }
             }
@@ -121,13 +124,15 @@ if(isset($_POST['transact_id'])){
         else{
              // Not enough money in the bank account
             $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
-            echo header ("Location: ../mfi/bank_transfer.php?message1=$randms");
+            echo header ("Location: ../mfi/transfer_approval.php?message1=$randms");
         }
-    }
-    else{
-    // you're not authorized not a teller
-    $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
-    echo header ("Location: ../mfi/bank_transfer.php?message0=$randms");
+}
+else if(isset($_GET['decline'])){
+    $fdf = $_GET['decline'];
+    $we = mysqli_query($connection, "UPDATE transfer_cache SET status = 'Declined' WHERE id = '$fdf'");
+    if($we){
+        $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
+        echo header ("Location: ../mfi/transfer_approval.php?message3=$randms");
     }
 }
 ?>

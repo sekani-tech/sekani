@@ -53,7 +53,7 @@ else if (isset($_GET["message2"])) {
         swal({
             type: "success",
             title: "Success",
-            text: "Transfer Successful",
+            text: "Transfer Successful, Awaiting Approval",
             showConfirmButton: false,
             timer: 2000
         })
@@ -101,7 +101,7 @@ function fill_client($connection) {
                   <!-- <p class="card-category">Fill in all important data</p> -->
                 </div>
                 <div class="card-body">
-                  <form action="../functions/cash_trans.php" method="POST">
+                  <form action="../functions/trans_cache.php" method="POST">
                     <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">

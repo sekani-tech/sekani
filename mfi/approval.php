@@ -51,6 +51,11 @@ $destination = "../index.php";
                           <th>View and approve all recently made transactions</th>
                           <td><a href="transact_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
+                        </tr>
+                          <th>Client Cash Tranfer</th>
+                          <th>View and approve all recently made transactions by clients</th>
+                          <td><a href="transfer_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                        </tr>
                         <tr>
                           <th>CHQ/Pass Book</th>
                           <th>Approve all the issued Cheque/pass books</th>
