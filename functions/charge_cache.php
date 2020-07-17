@@ -26,7 +26,7 @@ $client = $_POST['client_id'];
 $transid = $_POST['transid'];
 $descrip = $_POST['descrip'];
 $acct_id = $_POST['acctdi'];
-$date = date('Y-m-d');
+$date = date('Y-m-d h:m:s');
 
 $taketeller = "SELECT * FROM tellers WHERE name = '$staff_id' && int_id = '$sessint_id'";
 $check_me_men = mysqli_query($connection, $taketeller);

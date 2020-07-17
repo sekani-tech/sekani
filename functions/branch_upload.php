@@ -9,7 +9,7 @@ $email = $_POST['email'];
 $phone = $_POST['phone'];
 $incomegl = $_POST['income_gl'];
 $location = $_POST['location'];
-$submitted_on = date('Y-m-d');
+$submitted_on = date('Y-m-d h:m:s');
 
 $query = "INSERT INTO branch (int_id, name, email, phone, location) VALUES ('{$ssint_id}',
 '{$name}', '{$email}', '{$phone}', '{$location}')";

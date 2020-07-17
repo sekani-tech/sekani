@@ -9,7 +9,7 @@ $syste = $_POST['system'];
 $class = $_POST['class_type'];
 $glcode = $_POST['gl_code'];
 $assign = $_POST['assign'];
-$submitted_on = date('Y-m-d');
+$submitted_on = date('Y-m-d h:m:s');
 $submited_by = $_SESSION['user_id'];
 
 $digits = 6;

@@ -51,7 +51,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             $out = '';
           // import
         //   $glcode = $_POST['glcode'];
-          $querytoget = mysqli_query($connection, "SELECT * FROM gl_account_transaction WHERE branch_id = '$branch_id' AND gl_code = '$glcode' AND int_id ='$int_id' AND transaction_date BETWEEN '$std' AND '$endx' ORDER BY transaction_date ASC");
+          $querytoget = mysqli_query($connection, "SELECT * FROM gl_account_transaction WHERE branch_id = '$branch_id' AND gl_code = '$glcode' AND int_id ='$int_id' AND transaction_date BETWEEN '$std' AND '$endx' ORDER BY transaction_date, id ASC");
           while ($q = mysqli_fetch_array($querytoget, MYSQLI_ASSOC))
           {
 

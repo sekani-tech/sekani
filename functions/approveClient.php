@@ -24,7 +24,7 @@ else{
 }
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-$date = date('Y-m-d');
+$date = date('Y-m-d h:m:s');
     // $client = mysqli_query($connection, "SELECT account_no FROM client WHERE id = '$id'");
     // if (count([$person]) == 1) {
     //     $n = mysqli_fetch_array($person);

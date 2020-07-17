@@ -37,7 +37,7 @@ if(isset($_POST['transact_id'])){
     $credit = "credit";
     $debit = "debit";
     $irvs = 0;
-    $trans_date = date('Y-m-d');
+    $trans_date = date('Y-m-d h:m:s');
 
     // Get the account balance data for the depositor 
     $query3 = "SELECT client.firstname, client.lastname, account.product_id, account.account_no, account.id, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.account_no = account.account_no WHERE client.int_id = '$sint_id' AND client.id ='$trans_from'";

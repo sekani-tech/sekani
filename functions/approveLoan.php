@@ -42,7 +42,7 @@ $pd = $gi + $prina;
 // term frequency
 $tff = $loan_term - 1;
 
-$submitted_on = date("Y-m-d");
+$submitted_on = date("Y-m-d h:m:s");
 $currency = "NGN";
 $cd = 2;
 $query = "INSERT INTO loan_disbursement_cache (int_id, account_no, client_id,
@@ -98,12 +98,12 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
                     $tess = 10;
                     $trans_id = str_pad(rand(0, pow(10, $tess)-1), $digits, '0', STR_PAD_LEFT);
                     $trans_type = "debit";
-                    $trans_date = date("Y-m-d");
+                    $trans_date = date("Y-m-d h:m:s");
                     $trans_amt = $calprinamt;
                     $irvs = 0;
                     $ova = 0;
                     $running_b = $upacctb;
-                    $created_date = date("Y-m-d");
+                    $created_date = date("Y-m-d h:m:s");
 
                     $iat = "INSERT INTO institution_account_transaction (int_id, branch_id,
                     client_id, transaction_id, transaction_type, is_reversed,
@@ -121,7 +121,7 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
                     if ($clsures) {
                         // update client account (savings or current)
                         $cabd = $abd + $principal_amount;
-                        $ladd = date("Y-m-d");
+                        $ladd = date("Y-m-d h:m:s");
                         $oyacbu = "UPDATE account SET account_balance_derived = '$cabd',
                         last_activity_date = '$ladd' WHERE client_id = '$client_id'";
                         $gomrca = mysqli_query($connection, $oyacbu);
@@ -136,11 +136,11 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
                                 $hsj = 6;
                                 $transac_id = str_pad(rand(0, pow(10, $hsj)-1), $digits, '0', STR_PAD_LEFT);
                                 $transac_type = "credit";
-                                $transac_date = date("Y-m-d");
+                                $transac_date = date("Y-m-d h:m:s");
                                 $transac_amt = $calprinamt;
                                 $cova = 0;
                                 $crunning_b = $acctrunb + $calprinamt;
-                                $trans_created_date = date("Y-m-d");
+                                $trans_created_date = date("Y-m-d h:m:s");
 
                                 $colacctts = "INSERT INTO account_transaction (int_id,
                                 branch_id, product_id, account_no, client_id,
