@@ -63,7 +63,7 @@ $destination = "report_loan.php";
                         $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <th>
+                        <th style="width:50px;">
                           Client Name
                         </th>
                         <th>
@@ -76,7 +76,7 @@ $destination = "report_loan.php";
                           Disbursement Date
                         </th>
                         <th>
-                          Maturity Date
+                          Date of Maturity
                         </th>
                         <th>
                           Interest Rate
@@ -129,7 +129,8 @@ $destination = "report_loan.php";
                           <th><?php $bal = $row["total_outstanding_derived"];
                           $df = $bal;
                            echo number_format($bal);
-                           $ttloutbalance += $bal; ?></th>
+                           $ttloutbalance += $bal;
+                            ?></th>
                           <!-- <td><a href="client_view.php?edit=<?php echo $cid;?>" class="btn btn-info">View</a></td> -->
                         </tr>
                         <?php }
@@ -147,7 +148,10 @@ $destination = "report_loan.php";
                             <th></th>
                             <th><?php echo number_format($totalint);?></th>
                             <th><?php echo number_format($ttlinc);?></th>
-                            <th><?php echo number_format($ttloutbalance);?></th>
+                            <th>
+                              <?php
+                               echo number_format($ttloutbalance);
+                            ?></th>
                           </tr>
                           <!-- <th></th> -->
                       </tbody>
