@@ -36,25 +36,6 @@ $destination = "report_loan.php";
                 </div>
                 <div class="card-body">
                 <div class="form-group">
-                <form method = "POST" action = "../composer/disbursed_loan.php">
-              <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
-              <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
-              <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
-              <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download PDF</button>
-              <script>
-              $(document).ready(function () {
-              $('#disbursed').on("click", function () {
-                swal({
-                    type: "success",
-                    title: "Cheque/Pass Book",
-                    text: "Thank You!",
-                    showConfirmButton: false,
-                    timer: 2000
-                })
-              });
-            });
-     </script>
-            </form>
                 </div>
                   <div class="table-responsive">
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">

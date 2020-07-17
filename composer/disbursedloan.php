@@ -31,6 +31,8 @@ session_start();
           $final = $intr * $prina;
           $total = $loant * $final;
           $income = $fee + $total;
+          $out = $q["outstanding_balance_derived"];
+
           $out .= '
           <tr>
               <td style = "font-size:20px;">'.$nae.'</td>
@@ -40,13 +42,35 @@ session_start();
               <td style = "font-size:20px;">'.$repay.'</td>
               <td style = "font-size:20px;">'.$intrate.'</td>
               <td style = "font-size:20px;">'.$final.'</td>
-              <td style = "font-size:20px;">'.$total.'</td>
-              <td style = "font-size:20px;">'.$fee.'</td>
               <td style = "font-size:20px;">'.$income.'</td>
+              <td style = "font-size:20px;">'.$out.'</td>
           </tr>
         ';
         }
         return $out;
+
+        $accountquery = "SELECT * FROM loan WHERE int_id = $sessint_id AND submittedon_date BETWEEN '$start' AND '$end'";
+        $resul = mysqli_query($connection, $accountquery);
+        $out = '';
+  
+        while ($q = mysqli_fetch_array($resul))
+        {
+          $prina = $q["principal_amount"];
+          $loant = $q["loan_term"]; 
+          $disb = $q["disbursement_date"]; 
+          $repay = $q["repayment_date"]; 
+          $intrate = $q["interest_rate"]; 
+          $fee = $q["fee_charges_charged_derived"]; 
+          $intr = $intrate/100;
+          $final = $intr * $prina;
+          $total = $loant * $final;
+          $income = $fee + $total;
+          $out = $q["outstanding_balance_derived"];
+        
+          $ttlin += $income;
+          $outbal += $out;
+          $ttlfin += $final;
+        }
       }
       
 require_once __DIR__ . '/vendor/autoload.php';
@@ -68,12 +92,11 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
     <th style = "font-size:20px;">Loan Amount</th>
     <th style = "font-size:20px;">Loan Term</th>
     <th style = "font-size:20px;">Disbursement Date</th>
-    <th style = "font-size:20px;">Maturity Date</th>
+    <th style = "font-size:20px;">Date of Maturity</th>
     <th style = "font-size:20px;">Interest Rate</th>
-    <th style = "font-size:20px;">Monthly Interest</th>
-    <th style = "font-size:20px;">Total Interest</th>
-    <th style = "font-size:20px;">Fee</th>
+    <th style = "font-size:20px;">Interest Amount</th>
     <th style = "font-size:20px;">Total Income</th>
+    <th style = "font-size:20px;">Outstanding Bal Derived</th>
 </tr>
 </thead>
 <tbody>
@@ -81,9 +104,13 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
 <tr>
 <th style = "font-size:20px;">Total</th>
 <th style = "font-size:20px;"></th>
- <th style = "font-size:20px;">&#8358; '.$tcdp.'</th>
- <th style = "font-size:20px;">&#8358; '.$tddp.'</th>
-<th style = "font-size:20px;">&#8358; '.$finalbal.'</th>
+<th style = "font-size:20px;"></th>
+<th style = "font-size:20px;"></th>
+<th style = "font-size:20px;"></th>
+<th style = "font-size:20px;"></th>
+ <th style = "font-size:20px;">&#8358; '.$ttlfin.'</th>
+ <th style = "font-size:20px;">&#8358; '.$ttlin.'</th>
+<th style = "font-size:20px;">&#8358; '.$outbal.'</th>
 </tr>
 </tbody>
 </table>
