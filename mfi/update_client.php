@@ -366,7 +366,7 @@ if(isset($_GET["edit"])) {
                   function fill_officer($connection)
                   {
                   $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM staff WHERE int_id = '$sint_id' ORDER BY staff.display_name ASC";
+                  $org = "SELECT * FROM staff WHERE int_id = '$sint_id' AND employee_status = 'Employed' ORDER BY staff.display_name ASC";
                   $res = mysqli_query($connection, $org);
                   $out = '';
                   while ($row = mysqli_fetch_array($res))
@@ -807,7 +807,7 @@ else if($ctype = 'CORPORATE'){
           function fill_officer($connection)
           {
           $sint_id = $_SESSION["int_id"];
-          $org = "SELECT * FROM staff WHERE int_id = '$sint_id' ORDER BY staff.display_name ASC";
+          $org = "SELECT * FROM staff WHERE int_id = '$sint_id' AND employee_status = 'Employed' ORDER BY staff.display_name ASC";
           $res = mysqli_query($connection, $org);
           $out = '';
           while ($row = mysqli_fetch_array($res))
