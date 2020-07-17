@@ -49,12 +49,12 @@ $sessint_id = $_SESSION['int_id'];
       $acc_id = $b['id'];
     }
 
-      $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE  ((account_id = '$acc_id' OR account_no = '$acc_no' && int_id = '$sessint_id') && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id ASC");
+      $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE  (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
       $deb = mysqli_fetch_array($totald);
       $tdp = $deb['debit'];
       $totaldb = number_format($tdp, 2);
       
-      $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE ((account_id = '$acc_id' OR account_no = '$acc_no' && int_id = '$sessint_id') && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id ASC");
+      $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
       $cred = mysqli_fetch_array($totalc);
       $tcp = $cred['credit'];
       $totalcd = number_format($tcp, 2);
@@ -89,6 +89,7 @@ $sessint_id = $_SESSION['int_id'];
               <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
               <input hidden name ="start" type="text" value="<?php echo $std;?>"/>
               <input hidden name ="end" type="text" value="<?php echo $endx;?>"/>
+              <input hidden name ="account_no" type="text" value="<?php echo $acc_no;?>"/>
               <button type="submit" class="btn btn-primary pull-left">Download PDF</button>
             </form>
             </div>

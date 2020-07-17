@@ -31,19 +31,19 @@ if(isset($_GET["edit"])) {
     $first_name = $n['firstname'];
     $middle_name = $n['middlename'];
     $account_officer = $n['loan_officer_id'];
-    $checkl = "SELECT * FROM staff WHERE user_id = '$account_officer'";
+    $checkl = "SELECT * FROM staff WHERE id = '$account_officer'";
     $resxx = mysqli_query($connection, $checkl);
     $xf = mysqli_fetch_array($resxx);
     $acctn = strtoupper($xf['first_name'] ." ". $xf['last_name']);
     $last_name = $n['lastname'];
     $phone = $n['mobile_no'];
-    $occupation = $n['occupation'];
     $phone2 = $n['mobile_no_2'];
     $email = $n['email_address'];
     $address = $n['ADDRESS'];
     $gender = $n['gender'];
     $date_of_birth = $n['date_of_birth'];
     $branch = $n['branch_id'];
+    $occupation = $n['occupation'];
     $checkli = "SELECT * FROM branch WHERE id = '$branch'";
     $resx = mysqli_query($connection, $checkli);
     $xfc = mysqli_fetch_array($resx);
@@ -379,7 +379,7 @@ if(isset($_GET["edit"])) {
                         <div class="form-group">
                           <label for="">Account Officer:</label>
                           <select name="acct_off" class="form-control " id="">
-                            <option value="<?php echo $account_officer;?>">...</option>
+                            <option hidden value="<?php echo $account_officer;?>"><?php echo $acctn;?></option>
                             <?php echo fill_officer($connection); ?>
                           </select>
                         </div>
@@ -568,10 +568,10 @@ else if($ctype = 'CORPORATE'){
       $regaddress = $n['ADDRESS'];
       $bran = $n['branch_id'];
       $account_officer = $n['loan_officer_id'];
-      $checkl = "SELECT * FROM staff WHERE user_id = '$account_officer'";
+      $checkl = "SELECT * FROM staff WHERE id = '$account_officer'";
       $resxx = mysqli_query($connection, $checkl);
       $xf = mysqli_fetch_array($resxx);
-      $acctn = strtoupper($xf['first_name'] ." ". $xf['last_name']);
+      $accn = strtoupper($xf['first_name'] ." ". $xf['last_name']);
       $signame1 = $n['sig_one'];
       $signame2 = $n['sig_two'];
       $signame3 = $n['sig_three'];
@@ -822,7 +822,7 @@ else if($ctype = 'CORPORATE'){
                 <div class="form-group">
                 <label for="">Account Officer:</label>
                 <select  name="acct_ofa" class="form-control" id="">
-                <option value="<?php echo $account_officer;?>">select account officer</option>
+                <option hidden value="<?php echo $account_officer;?>"><?php echo $accn;?></option>
                 <?php echo fill_officer($connection);?>
                 </select>
             </div>

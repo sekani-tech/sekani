@@ -17,7 +17,7 @@ if(isset($_POST["id"])) {
         $lname = $a['lastname'];
         $int_id = $a['int_id'];
         $actype = $a['account_type'];
-        $acc_no = $a['account_no'];
+        $acc_no = $_POST['account_no'];
         $branch = $a['branch_id'];
         $query2 = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$int_id'");
         if (count([$query2]) == 1) {
@@ -40,21 +40,21 @@ if(isset($_POST["id"])) {
         $client_id = $d['client_id'];
         $acc_id = $d['id'];
         }
-        $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY id ASC");
+        $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
         $deb = mysqli_fetch_array($totald);
         $tdp = $deb['debit'];
         $totaldb = number_format($tdp, 2);
   
-        $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY id ASC");
+        $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
         $cred = mysqli_fetch_array($totalc);
         $tcp = $cred['credit'];
         $totalcd = number_format($tcp, 2);
 
 
-        function fill_data($connection, $acc_id, $sessint_id, $start, $end, $branch){
+        function fill_data($connection, $acc_no, $sessint_id, $start, $end, $branch){
         $id = $_GET["edit"];
       // import
-      $accountquery = "SELECT * FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY id ASC";
+      $accountquery = "SELECT * FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$start' AND '$end') ORDER BY transaction_date ASC";
       $resul = mysqli_query($connection, $accountquery);
       $out = '';
 
