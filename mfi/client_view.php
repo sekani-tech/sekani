@@ -118,6 +118,23 @@ if(isset($_GET["edit"])) {
       }
       return $out;
     }
+    function fill_accounting($connection) {
+      $int_id = $_SESSION['int_id'];
+       $client_id = $_GET['edit'];
+       $pen = "SELECT * FROM account WHERE client_id = '$client_id'";
+      $res = mysqli_query($connection, $pen);
+      $out = '';
+      while ($row = mysqli_fetch_array($res))
+      {
+        $product_type = $row["product_id"];
+        $get_product = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$product_type' AND int_id = '$int_id'");
+       while ($mer = mysqli_fetch_array($get_product)) {
+         $p_n = $mer["name"];
+         $out .= '<option value="'.$row["account_no"].'">'.$row["account_no"].' - '.$p_n.'</option>';
+       }
+      }
+      return $out;
+    }
 ?>
 <!-- Content added here -->
 <div class="content">
@@ -457,6 +474,14 @@ if(isset($_GET["edit"])) {
                         <div class="form-group">
                           <label for="">End Date:</label>
                           <input type="date" name="end" id="" class="form-control" value="">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Account No:</label>
+                            <select id="account" name="accno" class="form-control">
+                              <?php echo fill_accounting($connection);?>
+                            </select>
                         </div>
                       </div>
                     </div>

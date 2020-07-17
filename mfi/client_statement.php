@@ -8,6 +8,7 @@ $sessint_id = $_SESSION['int_id'];
   $id = $_POST["id"];
 
   $std = $_POST["start"];
+  $acc_no = $_POST['accno'];
       //  echo $std;
        $endx = $_POST["end"];
 
@@ -20,7 +21,6 @@ $sessint_id = $_SESSION['int_id'];
     $first_name = $n['firstname'];
     $middle_name = $n['middlename'];
     $last_name = $n['lastname'];
-    $acc_no = $n['account_no'];
     $actype = $n['account_type'];
     $phone = $n['mobile_no'];
     $phone2 = $n['mobile_no_2'];
@@ -67,42 +67,6 @@ $sessint_id = $_SESSION['int_id'];
     $_SESSION["loggedin"] = true;
     $_SESSION["client_id"] = $id;
 ?>
-<?php
-                          $soc = $n["account_no"];
-                          $length = strlen($soc);
-                          if ($length == 1) {
-                            $acc ="000000000" . $soc;
-                          }
-                          elseif ($length == 2) {
-                            $acc ="00000000" . $soc;
-                          }
-                          elseif ($length == 3) {
-                            $acc ="00000000" . $soc;
-                          }
-                          elseif ($length == 4) {
-                            $acc ="0000000" . $soc;
-                          }
-                          elseif ($length == 5) {
-                            $acc ="000000" . $soc;
-                          }
-                          elseif ($length == 6) {
-                            $acc ="0000" . $soc;
-                          }
-                          elseif ($length == 7) {
-                            $acc ="000" . $soc;
-                          }
-                          elseif ($length == 8) {
-                            $acc ="00" . $soc;
-                          }
-                          elseif ($length == 9) {
-                            $acc ="0" . $soc;
-                          }
-                          elseif ($length == 10) {
-                            $acc = $n["account_no"];
-                          }else{
-                            $acc = $n["account_no"];
-                          }
-                          ?>
 <!-- Content added here -->
 <!-- print content -->
 <div class="content">
@@ -137,22 +101,14 @@ $sessint_id = $_SESSION['int_id'];
                   <div id="project" >
                     <div class="row">
                     <div class="col-md-6">
-                        <!-- <h4>Branch name: <?php echo $branch_name;?></div></h4> -->
-                          <!-- <h4><?php echo $branch_name;?></h4> -->
                         <h4 >Currency: <?php echo $currtype;?></h4>
-                          <!-- <h4><?php echo $currtype;?></h4> -->
-                          <h4 >Account number: <?php echo $acc;?></h4>
-                        <!-- <h4><?php echo $acc;?></h4>  -->
+                          <h4 >Account number: <?php echo $acc_no;?></h4>
                         <h4 >Statement period: <?php echo $std,' - ',$endx;?></h4>
-                        <!-- <h5><?php echo $std,' - ',$endx;?></h5>  -->
                     </div>
                     <div class="col-md-6">
                     <h4 >Client name: <?php echo $first_name," ", $last_name;?></h4>
-                          <!-- <h4><?php echo $first_name," ", $last_name;?></h4> -->
                           <h4 >Total debit: &#8358;<?php echo $totaldb;?></h4>
-                          <!-- <h4>&#8358;<?php echo $totaldb;?></h4> -->
                         <h4 >Total credit: &#8358;<?php echo $totalcd;?></h4>
-                          <!-- <h4>&#8358;<?php echo $totalcd;?></h4> -->
                     </div>
                   </div>
                     </div>
@@ -178,7 +134,7 @@ $sessint_id = $_SESSION['int_id'];
                         // $resultmm = mysqli_query($connection, "SELECT * FROM account_transaction WHERE ((account_id = '$acc_id' && int_id = $sessint_id) && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
                         // $kx = mysqli_fetch_array($resultmm);
                         // $querytoget = "SELECT * FROM account_transaction WHERE account_id = '65' && int_id = '5' && branch_id = '1' && transaction_date BETWEEN '2019-01-01' AND '2020-03-03' ORDER BY transaction_date ASC";
-                        $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE ((account_id = '$acc_id' OR account_no = '$acc_no' && int_id = '$sessint_id') && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
+                        $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
                         // $result = mysqli_query($connection, $querytoget);
                         // $v = 0;
                       ?>

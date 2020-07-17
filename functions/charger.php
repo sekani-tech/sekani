@@ -35,7 +35,7 @@ $calc_time = $s['charge_calculation_enum'];
 $pay_type = $s['gl_code'];
 // insertion query for product
 if($client == "0"){
-  $query4 = "SELECT client.id, client.firstname, client.lastname, account.product_id, account.account_no, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.account_no = account.account_no WHERE client.int_id = '$sessint_id'";
+  $query4 = "SELECT client.id, client.firstname, client.lastname, account.product_id, account.account_no, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.id = '$acct_id'";
   $queryexec = mysqli_query($connection, $query4);
   while($b = mysqli_fetch_array($queryexec)){
 
@@ -64,7 +64,7 @@ if($client == "0"){
     $glsmi += $amount;
     $ttlwith = $ttl + $amount;
     $newbal = $accbal - $amount;
-    $iupq = "UPDATE account SET account_balance_derived = '$newbal', last_withdrawal = '$amount', total_withdrawals_derived = '$ttlwith' WHERE client_id = '$at_id' AND account_no = '$acct_no' AND int_id = '$sessint_id'";
+    $iupq = "UPDATE account SET account_balance_derived = '$newbal', last_withdrawal = '$amount', total_withdrawals_derived = '$ttlwith' WHERE client_id = '$at_id' AND id = '$acct_id' AND int_id = '$sessint_id'";
             $iupqres = mysqli_query($connection, $iupq);
             if ($iupqres) {
             // update the clients transaction
@@ -107,7 +107,7 @@ if($client == "0"){
             }
 }
 else{
-  $query4 = "SELECT account.id, client.firstname, client.lastname, account.product_id, account.account_no, account.id, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.account_no = account.account_no WHERE client.int_id = '$sessint_id' AND client.id ='$client'";
+  $query4 = "SELECT account.id, client.firstname, client.lastname, account.product_id, account.account_no, account.id, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND client.id ='$client' AND account.id = '$acct_id'";
   $queryexec = mysqli_query($connection, $query4);
   $b = mysqli_fetch_array($queryexec);
   $accbal = $b['account_balance_derived'];
