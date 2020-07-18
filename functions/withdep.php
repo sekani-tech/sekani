@@ -150,7 +150,7 @@ if ($is_del == "0" && $is_del != NULL) {
         '{$gen_date}', '{$appuser_id}', {$amt})";
         $res3 = mysqli_query($connection, $iat);
         if ($res3) {
-          // amen
+          // amen BEGINNING
           // MAKING A MOVE
           // get the loan in arrears
           $select_arrear = mysqli_query($connection, "SELECT * FROM `loan_arrear` WHERE client_id = '$client_id' AND int_id = '$sessint_id' AND installment >= 1 ORDER BY id ASC");
@@ -158,11 +158,57 @@ if ($is_del == "0" && $is_del != NULL) {
           $gas = mysqli_fetch_array($select_arrear);
           $a_id = $gas["id"];
           $a_int_id = $gas["int_id"];
+          $a_loan_id = $gas["loan_id"];
+          $select_l = mysqli_query($connection, "SELECT * FROM 'loan' WHERE id = '$a_loan_id' AND int_id = '$sessint_id'");
+          $lm = mysqli_fetch_array($select_l);
+          // get id
+          $loan_product_id = $lm["product_id"];
+          // query_on
+          $select_prod_acct = mysqli_query($connection, "SELECT * FROM `acct_rule` WHERE loan_product_id = '$loan_product_id' AND int_id = '$sessint_id'");
+          // check out the gl_code names
+          $li_m = mysqli_fetch_array($select_prod_acct);
+          // loan portfolio
+          $loan_port = $li_m["asst_loan_port"];
+          // loan income interest
+          $int_loan_port = $li_m["inc_interest"];
+          // end of the gl
           $a_principal = $gas["principal_amount"];
           $a_interest = $gas["interest_amount"];
+          $loan_amount = $a_principal + $a_interest;
           // END MOVE
+          // run a code to check if the account is less than or equals to the amount
+          // BEFORE RUNNING CHECK GL AND BALANCE\
+          $take_d_s = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$loan_port' AND int_id = '$sessint_id'");
+          $gdb = mysqli_fetch_array($take_d_s);
+          // geng new thing here
+          $int_d_s = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$int_loan_port' AND int_id = '$sessint_id'");
+          $igdb = mysqli_fetch_array($int_d_s);
+          // IMPOSSIBLE
+          $intbalport = $igdb["organization_running_balance_derived"];
+          $newbalport = $gdb["organization_running_balance_derived"];
+          // AFTER RUNING
+          // ALRIGHT WE MOVING
+          if ($amt >= $loan_amount) {
+            // ok good
+            $update_arrear = mysqli_query($connection, "UPDATE `loan_arrear` SET principal_amount = '0.00', interest_amount = '0.00', installment = '0' WHERE id = '$a_id' AND int_id = '$a_int_id' AND client_id = '$client_id'");
+            // check out the update
+            if ($update_arrear) {
+              // OK NOW RUN A FUNCTION.
+            }
+          } else if ($amt < $loan_amount) {
+            // ok nice
+            $loan_bal = $amt / 2;
+            $loan_bal_prin = $a_principal - $loan_bal;
+            $loan_bal_int = $a_interest - $loan_bal;
+            // pop up
+            $update_arrear = mysqli_query($connection, "UPDATE `loan_arrear` SET principal_amount = '$loan_bal_prin', interest_amount = '$loan_bal_int', installment = '0' WHERE id = '$a_id' AND int_id = '$a_int_id' AND client_id = '$client_id'");
+            if ($update_arrear) {
+              // OK NOW RUN A FUNCTION.
+            }
+          }
           // MAKING IT OUT
           // END THE TRANSACTION
+          // ENDING OF THE AR
           if($isbank == 1) {
               // update the GL
               $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$glcode'";
