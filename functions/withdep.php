@@ -236,7 +236,7 @@ if ($is_del == "0" && $is_del != NULL) {
             $loan_bal_prin = $a_principal - $loan_bal;
             $loan_bal_int = $a_interest - $loan_bal;
             // pop up
-            $update_arrear = mysqli_query($connection, "UPDATE `loan_arrear` SET principal_amount = '$loan_bal_prin', interest_amount = '$loan_bal_int', installment = '0' WHERE id = '$a_id' AND int_id = '$a_int_id' AND client_id = '$client_id'");
+            $update_arrear = mysqli_query($connection, "UPDATE `loan_arrear` SET principal_amount = '$loan_bal_prin', interest_amount = '$loan_bal_int', installment = '1' WHERE id = '$a_id' AND int_id = '$a_int_id' AND client_id = '$client_id'");
             if ($update_arrear) {
               // OK NOW RUN A FUNCTION.
               $updated_loan_port = $newbalport + $loan_bal;
