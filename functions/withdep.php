@@ -151,6 +151,9 @@ if ($is_del == "0" && $is_del != NULL) {
         $res3 = mysqli_query($connection, $iat);
         if ($res3) {
           // MAKING A MOVE
+          // get the loan in arrears
+          $select_arrear = mysqli_query($connection, "SELECT * FROM `loan_arrear` WHERE client_id = '$client_id' AND int_id = '$sessint_id' AND installment >= 1 ORDER BY id ASC");
+          // QWERTY
           // END THE TRANSACTION.
           if($isbank == 1) {
               // update the GL
