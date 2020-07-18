@@ -417,7 +417,7 @@ while ($iq = mysqli_fetch_array($select_arrears)) {
     $cal_end = strtotime($current_date);
     // do your calculation
     $days_between = ceil(abs($cal_end - $cal_start) / 86400);
-    // update
+    // update ok
     $arrear_update = mysqli_query($connection, "UPDATE `loan_arrear` SET counter = '$days_between' WHERE id = '$a_id' AND int_id = '$a_int_id' AND loan_id = '$a_loan_id' AND client_id = '$a_client_id'");
     // aiit
     if ($arrear_update) {

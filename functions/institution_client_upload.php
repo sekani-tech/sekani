@@ -3,6 +3,7 @@
 include("connect.php");
 session_start();
 require_once "../bat/phpmailer/PHPMailerAutoload.php";
+// qwerty
 $int_name = $_SESSION["int_name"];
 $int_email = $_SESSION["int_email"];
 $int_web = $_SESSION["int_web"];

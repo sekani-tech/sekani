@@ -150,6 +150,8 @@ if ($is_del == "0" && $is_del != NULL) {
         '{$gen_date}', '{$appuser_id}', {$amt})";
         $res3 = mysqli_query($connection, $iat);
         if ($res3) {
+          // MAKING A MOVE
+          // END THE TRANSACTION.
           if($isbank == 1) {
               // update the GL
               $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$glcode'";
@@ -663,5 +665,5 @@ echo header ("Location: ../mfi/transact.php?messagex2=$randms");
 
 ?>
 <?php
-// 
+// qwerty
 ?>
