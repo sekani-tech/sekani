@@ -24,7 +24,7 @@ session_start();
           // import
         //   $glcode = $_POST['glcode'];
         $currentdate = $_POST['end'];
-        $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$currentdate'";
+        $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id'";
         $result = mysqli_query($connection, $query);
         while ($q = mysqli_fetch_array($result, MYSQLI_ASSOC))
           {
@@ -40,6 +40,7 @@ session_start();
             $l_n = $mik["loan_term"];
             $t_o = $mik["total_outstanding_derived"];
             $from = $q["fromdate"];
+            $to = $q["duedate"];
             $out .= '
             <tr>
             <th style="font-size: 50px;" class="column1">'.$nae.'</th>
@@ -47,6 +48,7 @@ session_start();
             <th style="font-size: 50px;" class="column1">'.$int_amount.'</th>
             <th style="font-size: 50px;" class="column1">'.$l_n.'</th>
             <th style="font-size: 50px;" class="column1">'.$from.'</th>
+            <th style="font-size: 50px;" class="column1">'.$to.'</th>
             <th style="font-size: 50px;" class="column1">'.$t_o.'</th>
             </tr>
           ';
@@ -63,7 +65,7 @@ session_start();
 <div id="logo">
   <img src="'.$_SESSION["int_logo"].'" height="80" width="80">
 </div>
-<h1>'.$_SESSION["int_full"].' <br/>Loans to be paid on '.$current.'</h1>
+<h1>'.$_SESSION["int_full"].' <br/>Loans in arrears Report</h1>
 <div id="company" class="clearfix">
   <div>'.$branch.'</div>
   <div>'.$branch_location.'</div>
@@ -94,6 +96,9 @@ session_start();
     Disbursement Date
     </th>
     <th style="font-size: 50px;" class="column1">
+    Repayment Date
+    </th>
+    <th style="font-size: 50px;" class="column1">
     Outstanding Loan Balance
     </th>
       </tr>
@@ -104,6 +109,6 @@ session_start();
   </table>
   </main>
   ');
-  $file_name = 'Expected loan Repayments for '.$intname.'-'.$date.'.pdf';
+  $file_name = 'Loan Repayments in Arrears for '.$intname.'.pdf';
   $mpdf->Output($file_name, 'D');
 ?>

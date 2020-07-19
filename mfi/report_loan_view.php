@@ -822,7 +822,7 @@ $destination = "report_loan.php";
                 <form method = "POST" action = "../composer/exp_loan_repay.php">
               <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
               <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
-              <input hidden name ="end" type="text" value="<?php echo $currentdate;?>"/>
+              <input hidden name ="end" type="text" value="<?php echo $main_date;?>"/>
               <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download PDF</button>
               <script>
               $(document).ready(function () {
@@ -1016,6 +1016,142 @@ $destination = "report_loan.php";
                           <th><?php echo $row["loan_term"]; ?></th>
                           <th><?php echo $row["disbursement_date"]; ?></th>
                           <th><?php echo number_format($row["total_outstanding_derived"], 2);?></th>
+                          <?php
+                          
+                          ?>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                          <!-- <th></th> -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+<?php
+}
+else if(isset($_GET["view45"])){
+?>
+ <div class="content">
+        <div class="container-fluid">
+          <!-- your content here -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Loans in Arrears</h4>
+                  <script>
+                  $(document).ready(function() {
+                  $('#tabledat').DataTable();
+                  });
+                  </script>
+                  <!-- Insert number users institutions -->
+                  <p class="card-category">
+                      <?php
+                        $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                   if ($result) {
+                     $inr = mysqli_num_rows($result);
+                     echo $inr;
+                   }?> loans past due date</p>
+                </div>
+                <div class="card-body">
+                <div class="form-group">
+                <form method = "POST" action = "../composer/arrear_report.php">
+              <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
+              <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
+              <input hidden name ="end" type="text" value="<?php echo $currentdate;?>"/>
+              <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download PDF</button>
+              <script>
+              $(document).ready(function () {
+              $('#disbursed').on("click", function () {
+                swal({
+                    type: "success",
+                    title: "DISBURSED LOAN REPORT",
+                    text: "Printing Successful",
+                    showConfirmButton: false,
+                    timer: 3000
+                          
+                  })
+              });
+            });
+     </script>
+            </form>
+                </div>
+                  <div class="table-responsive">
+                    <table id="tabledatv" class="table" cellspacing="0" style="width:100%">
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                        <th>
+                          Client Name
+                        </th>
+                        <th>
+                          Principal Due
+                        </th>
+                        <th>
+                          Interest Due
+                        </th>
+                        <th>
+                          Loan Term
+                        </th>
+                        <th>
+                          Disbursement Date
+                        </th>
+                        <th>
+                          Repayment Date
+                        </th>
+                        <th>
+                          Outstanding Loan Balance
+                        </th>
+                        <!-- <th>
+                          Status
+                        </th> -->
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                          <?php  $std = date("Y-m-d");
+                          ?>
+                        <?php $row["id"];
+                        $loan_id = $row["loan_id"];
+                        $install = $row["installment"];
+                        if ($install == 0) {
+                          $install = "Paid";
+                        } else {
+                          $install = "Pending";
+                        }
+                        ?>
+                        <?php 
+                            $name = $row['client_id'];
+                            $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
+                            $f = mysqli_fetch_array($anam);
+                            $nae = strtoupper($f["firstname"]." ".$f["lastname"]);
+                        ?>
+                          <th><?php echo $nae; ?></th>
+                          <?php
+                          $get_loan = mysqli_query($connection, "SELECT loan_term, total_outstanding_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
+                          $mik = mysqli_fetch_array($get_loan);
+                          $l_n = $mik["loan_term"];
+                          $t_o = $mik["total_outstanding_derived"];
+                          ?>
+                          <th>NGN <?php echo number_format($row["principal_amount"], 2); ?></th>
+                          <th>NGN <?php echo number_format($row["interest_amount"], 2); ?></th>
+                          <th><?php echo $l_n; ?></th>
+                          <th><?php echo $row["fromdate"];?></th>
+                          <th><?php echo $row["duedate"];?></th>
+                          <th>NGN <?php echo number_format($t_o, 2);?></th>
                           <?php
                           
                           ?>
