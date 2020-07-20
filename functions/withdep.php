@@ -319,6 +319,41 @@ if ($is_del == "0" && $is_del != NULL) {
             }
           }
         if ($res4) {
+          if ($client_sms == "1") {
+            ?>
+            <input type="text" id="s_amount" value="<?php echo $amt; ?>" hidden>
+            <input type="text" id="s_desc" value="<?php echo $description; ?>" hidden>
+            <input type="text" id="s_date" value="<?php echo $acct_no; ?>" hidden>
+            <input type="text" id="s_balance" value="<?php echo $gen_date; ?>" hidden>
+            <script>
+          $(document).ready(function() {
+              var int_id = $('#s_int_id').val();
+              var branch_id = $('#s_branch_id').val();
+              var sender_id = $('#s_sender_id').val();
+              var phone = $('#s_phone').val();
+              var client_id = $('#s_client_id').val();
+              var account_no = $('#s_acct_no').val();
+              // function
+              var amount = $('#s_amount').val();
+              var trans_type = "Credit";
+              var desc = $('#s_desc').val();
+              var date = $('#s_date').val();
+              var balance = $('#s_balance').val();
+              // now we work on the body.
+              var msg = trans_type+" \n" + "Amt: NGN "+amount+" \n Desc: "+desc+" \n Bal: "+balance+"  \n Date: "+date;
+              $.ajax({
+                url:"../mfi/ajax_post/sms/sms.php",
+                method:"POST",
+                data:{int_id:int_id, branch_id:branch_id, sender_id:sender_id, phone:phone, msg:msg, client_id:client_id, account_no:account_no },
+                success:function(data){
+                  $('#make_display').html(data);
+                }
+              });
+          });
+        </script>
+            <?php
+          }
+          // aomkjjkk
           $mail = new PHPMailer;
           $mail->From = $int_email;
           $mail->FromName = $int_name;
@@ -589,7 +624,7 @@ if ($is_del == "0" && $is_del != NULL) {
                     var account_no = $('#s_acct_no').val();
                     // function
                     var amount = $('#s_amount').val();
-                    var trans_type = "Credit";
+                    var trans_type = "Debit";
                     var desc = $('#s_desc').val();
                     var date = $('#s_date').val();
                     var balance = $('#s_balance').val();
