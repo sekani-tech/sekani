@@ -16,7 +16,7 @@ $check_DOB = date('d-F-y', strtotime($dob));
 // echo "$check_DOB";
 $first = strtoupper($_POST["first"]); 
 $last = strtoupper($_POST["last"]); 
-$phone = $_POST["phone"]; 
+$phone = $_POST["phone"];
 // MOVING TO THE NEXT
 $bvn_length = strlen($bvn);
 // CHECK
