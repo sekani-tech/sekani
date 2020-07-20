@@ -31,6 +31,7 @@
               $pc_email = $n['pc_email'];
               $img = $n['img'];
               $int_img = $n['img'];
+              $sender_id = $n['sender_id'];
             }
           }
         ?>
@@ -99,6 +100,12 @@
                             <div class="form-group">
                                 <label class="bmd-label-floating">Phone</label>
                                 <input type="text" value="<?php echo $office_phone; ?>" name="office_phone" class="form-control" id="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Sender ID</label>
+                                <input type="text" value="<?php echo $sender_id; ?>" name="sender_id" class="form-control" id="">
                             </div>
                         </div>
                         <div class="col-md-6">

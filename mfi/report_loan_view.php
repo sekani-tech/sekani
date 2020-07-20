@@ -1114,6 +1114,9 @@ else if(isset($_GET["view45"])){
                         <th>
                           Outstanding Loan Balance
                         </th>
+                        <th>
+                         Status
+                        </th>
                         <!-- <th>
                           Status
                         </th> -->
@@ -1144,14 +1147,30 @@ else if(isset($_GET["view45"])){
                           $get_loan = mysqli_query($connection, "SELECT loan_term, total_outstanding_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
                           $mik = mysqli_fetch_array($get_loan);
                           $l_n = $mik["loan_term"];
-                          $t_o = $mik["total_outstanding_derived"];
+                          $eos = $row["installment"];
+                          if($eos == 1){
+                            $eod = "Not Paid";
+                          }
+                          elseif($eos == 0){
+                            $eod = "Paid";
+                          }
                           ?>
-                          <th>NGN <?php echo number_format($row["principal_amount"], 2); ?></th>
-                          <th>NGN <?php echo number_format($row["interest_amount"], 2); ?></th>
+                          <th><?php echo number_format($row["principal_amount"], 2); ?></th>
+                          <th><?php echo number_format($row["interest_amount"], 2); ?></th>
                           <th><?php echo $l_n; ?></th>
                           <th><?php echo $row["fromdate"];?></th>
                           <th><?php echo $row["duedate"];?></th>
-                          <th>NGN <?php echo number_format($t_o, 2);?></th>
+                          <?php
+                          $cli_id = $row["client_id"];
+                            $sf = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND id = '$loan_id' AND client_id = '$cli_id'";
+                            $do = mysqli_query($connection, $sf);
+                            while($sd = mysqli_fetch_array($do)){
+                              
+                             $outbalance = $sd['total_outstanding_derived'];                             
+                            }
+                          ?>
+                          <th><?php echo number_format($outbalance, 2);?></th>
+                          <th><?php echo $eod;?></th>
                           <?php
                           
                           ?>

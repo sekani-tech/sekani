@@ -69,6 +69,12 @@
                                 <input type="text" name="office_phone" class="form-control" id="">
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Sender ID</label>
+                                <input type="text" name="sender_id" class="form-control" id="">
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3">

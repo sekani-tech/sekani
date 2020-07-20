@@ -41,6 +41,13 @@ session_start();
             $t_o = $mik["total_outstanding_derived"];
             $from = $q["fromdate"];
             $to = $q["duedate"];
+            $eos = $q["installment"];
+            if($eos == 1){
+              $eod = "Not Paid";
+            }
+            elseif($eos == 0){
+              $eod = "Paid";
+            }
             $out .= '
             <tr>
             <th style="font-size: 50px;" class="column1">'.$nae.'</th>
@@ -50,6 +57,7 @@ session_start();
             <th style="font-size: 50px;" class="column1">'.$from.'</th>
             <th style="font-size: 50px;" class="column1">'.$to.'</th>
             <th style="font-size: 50px;" class="column1">'.$t_o.'</th>
+            <th style="font-size: 50px;" class="column1">'.$eod.'</th>
             </tr>
           ';
           }
@@ -100,6 +108,9 @@ session_start();
     </th>
     <th style="font-size: 50px;" class="column1">
     Outstanding Loan Balance
+    </th>
+    <th style="font-size: 50px;" class="column1">
+    Status
     </th>
       </tr>
     </thead>

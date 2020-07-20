@@ -108,6 +108,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                       if (mysqli_num_rows($rult) > 0) {
                         while ($row = mysqli_fetch_array($rult))
                             {
+                              $username = $row['username'];
                               $remail = $row['email'];
                               $roleid = $row['org_role'];
                               $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
@@ -335,6 +336,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                           if (mysqli_num_rows($rult) > 0) {
                             while ($row = mysqli_fetch_array($rult))
                                 {
+                                  $username = $row['username'];
                                   $remail = $row['email'];
                                   $roleid = $row['org_role'];
                                   $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
@@ -555,6 +557,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                       if (mysqli_num_rows($rult) > 0) {
                         while ($row = mysqli_fetch_array($rult))
                             {
+                              $username = $row['username'];
                               $remail = $row['email'];
                               $roleid = $row['org_role'];
                               $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
@@ -769,6 +772,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                   if (mysqli_num_rows($rult) > 0) {
                     while ($row = mysqli_fetch_array($rult))
                         {
+                          $username = $row['username'];
                           $remail = $row['email'];
                           $roleid = $row['org_role'];
                           $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";

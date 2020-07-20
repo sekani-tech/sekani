@@ -19,6 +19,7 @@ $pc_other_name = $_POST['pc_other_name'];
 $pc_designation = $_POST['pc_designation'];
 $pc_phone = $_POST['pc_phone'];
 $pc_email = $_POST['pc_email'];
+$sender_id = $_POST['sender_id'];
 // preparation of account number
 $sessint_id = $_SESSION["int_id"];
 $ldi = $_SESSION["user_id"];
@@ -48,10 +49,10 @@ $intnumer = $mw + 1;
 
 $query = "INSERT INTO institutions (int_name, rcn, lga, int_state, email,
 office_address, website, office_phone, pc_title, pc_surname, pc_other_name,
-pc_designation, pc_phone, pc_email, img) VALUES ('{$int_name}','{$rcn}',
+pc_designation, pc_phone, pc_email, img, sender_id) VALUES ('{$int_name}','{$rcn}',
 '{$lga}', '{$int_state}', '{$email}', '{$office_address}', '{$website}', '{$office_phone}',
 '{$pc_title}', '{$pc_surname}', '{$pc_other_name}', '{$pc_designation}',
-'{$pc_phone}', '{$pc_email}', '{$imagex}')";
+'{$pc_phone}', '{$pc_email}', '{$imagex}', '{$sender_id}')";
 // add
 $result = mysqli_query($connection, $query);
 if ($result) {

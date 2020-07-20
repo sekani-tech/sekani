@@ -43,6 +43,25 @@ $destination = "approval.php";
             $_SESSION["lack_of_intfund_$key"] = 0;
             }
           }
+          else if (isset($_GET["message3"])) {
+            $key = $_GET["message3"];
+            $tt = 0;
+            if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+              echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "success",
+                        title: "Success",
+                        text: "Client Deleted",
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                });
+                </script>
+                ';
+            $_SESSION["lack_of_intfund_$key"] = 0;
+            }
+          }
         ?>
         <?php
 // right now we will program
@@ -338,6 +357,7 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                         </th>
                         <th>Edit</th>
                         <th>Approve</th>
+                        <th>Delete</th>
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
@@ -404,6 +424,7 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                           <th><?php echo $acc; ?></th>
                           <td><a href="client_approvalEdit.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">edit</i></a></td>
                           <td><a href="../functions/approveClient.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">check</i></a></td>
+                          <td><a href="../functions/deleteClient.php?edit=<?php echo $row["id"];?>" class="btn btn-danger"><i class="material-icons">close</i></a></td>
                           </tr>
                         <?php }
                           }

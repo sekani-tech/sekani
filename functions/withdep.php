@@ -163,6 +163,7 @@ if ($is_del == "0" && $is_del != NULL) {
           $lm = mysqli_fetch_array($select_l);
           // get id
           $loan_product_id = $lm["product_id"];
+          $current_out_loan = $lm["total_outstanding_derived"];
           // query_on
           $select_prod_acct = mysqli_query($connection, "SELECT * FROM `acct_rule` WHERE loan_product_id = '$loan_product_id' AND int_id = '$sessint_id'");
           // check out the gl_code names
@@ -202,6 +203,10 @@ if ($is_del == "0" && $is_del != NULL) {
               $collection_principal = $a_principal;
               $collection_interest = $a_interest;
               $update_the_loan = mysqli_query($connection, "UPDATE `acc_gl_account` SET organization_running_balance_derived = '$updated_loan_port' WHERE int_id ='$sessint_id' AND gl_code = '$loan_port'");
+              
+               // Update outstanding loan Balance
+              $new_out_loan = $current_out_loan - $updated_loan_port;
+              $update_olb = mysqli_query($connection, "UPDATE loan SET total_outstanding_derived = '$new_out_loan' WHERE id = '$a_loan_id' AND int_id = '$sessint_id'");
               // Qwerty
               if ($update_the_loan) {
                 // damn with
@@ -245,6 +250,11 @@ if ($is_del == "0" && $is_del != NULL) {
               $collection_interest = $loan_bal;
               $update_the_loan = mysqli_query($connection, "UPDATE `acc_gl_account` SET organization_running_balance_derived = '$updated_loan_port' WHERE int_id ='$sessint_id' AND gl_code = '$loan_port'");
               // Qwerty
+               // Update outstanding loan Balance
+               $new_out_loan = $current_out_loan - $updated_loan_port;
+               $update_olb = mysqli_query($connection, "UPDATE loan SET total_outstanding_derived = '$new_out_loan' WHERE id = '$a_loan_id' AND int_id = '$sessint_id'");
+               // Qwerty
+               
               if ($update_the_loan) {
                 // damn with
                 $insert_loan_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
