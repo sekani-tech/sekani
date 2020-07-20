@@ -321,10 +321,10 @@ if ($is_del == "0" && $is_del != NULL) {
         if ($res4) {
           if ($client_sms == "1") {
             ?>
-            <input type="text" id="s_amount" value="<?php echo $amt; ?>" hidden>
+            <input type="text" id="s_amount" value="<?php echo number_format($amt, 2); ?>" hidden>
             <input type="text" id="s_desc" value="<?php echo $description; ?>" hidden>
-            <input type="text" id="s_date" value="<?php echo $acct_no; ?>" hidden>
-            <input type="text" id="s_balance" value="<?php echo $gen_date; ?>" hidden>
+            <input type="text" id="s_date" value="<?php echo $gen_date; ?>" hidden>
+            <input type="text" id="s_balance" value="<?php echo number_format($comp, 2); ?>" hidden>
             <script>
           $(document).ready(function() {
               var int_id = $('#s_int_id').val();
@@ -610,10 +610,10 @@ if ($is_del == "0" && $is_del != NULL) {
                 // DO THE ACCOUNT CHARGE
                 if ($client_sms == "1") {
                   ?>
-                  <input type="text" id="s_amount" value="<?php echo $amt; ?>" hidden>
+                  <input type="text" id="s_amount" value="<?php echo number_format($amt,2); ?>" hidden>
                   <input type="text" id="s_desc" value="<?php echo $description; ?>" hidden>
-                  <input type="text" id="s_date" value="<?php echo $acct_no; ?>" hidden>
-                  <input type="text" id="s_balance" value="<?php echo $gen_date; ?>" hidden>
+                  <input type="text" id="s_date" value="<?php echo $gen_date; ?>" hidden>
+                  <input type="text" id="s_balance" value="<?php echo number_format($comp2, 2); ?>" hidden>
                   <script>
                 $(document).ready(function() {
                     var int_id = $('#s_int_id').val();
