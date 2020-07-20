@@ -104,6 +104,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $int_img = $res["img"];
                             $int_address = $res["office_address"];
                             $int_full = $res["int_full"];
+                            $sender_id = $res["sender_id"];
 
                             $_SESSION["int_name"] = $intname;
                             $_SESSION["int_email"] = $intemail;
@@ -112,6 +113,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["int_logo"] = $int_img;
                             $_SESSION["int_address"] = $int_address;
                             $_SESSION["int_full"] = $int_full;
+                            $_SESSION["sender_id"] = $sender_id;
+                            // mr favor
                             $altemail = mysqli_query($link, "SELECT * FROM `institutions` WHERE int_id ='1'");
                             if (count([$altemail]) == 1) {
                             $alt = mysqli_fetch_array($altemail);
