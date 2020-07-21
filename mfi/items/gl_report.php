@@ -100,7 +100,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
               <div class="row">
                   <div class="col-md-4 form-group">
                       <label for="">GL Code:</label>
-                      <input type="text" name="" value="'.$glcode.'" id="start1" class="form-control">
+                      <input type="text" name="" value="'.$glcode.'" id="start1" readonly class="form-control">
                   </div>
                 <div class="col-md-4">
                   <div class="form-group">
