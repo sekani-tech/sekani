@@ -65,6 +65,7 @@
                   <script>
 setInterval(function() {
     // alert('I will appear every 4 seconds');
+    // we are done now
     var int_id = $('#int_idioioioio').val();
     var user = $('#usernameoioio').val();
     $.ajax({
