@@ -19,6 +19,7 @@ $sessint_id = $_SESSION["int_id"];
 $appuser_id = $_SESSION['user_id'];
 $sender_id = $_SESSION["sender_id"];
 $gen_date = date('Y-m-d H:i:s');
+$pint = date('Y-m-d H:i:s');
 $gends = date('Y-m-d');
 ?>
 <?php
@@ -161,7 +162,6 @@ if (count([$dbclient]) == 1) {
 <input type="text" id="s_sender_id" value="<?php echo $sender_id; ?>" hidden>
 <input type="text" id="s_phone" value="<?php echo $client_phone; ?>" hidden>
 <input type="text" id="s_client_id" value="<?php echo $client_id; ?>" hidden>
-<input type="text" id="s_acct_no" value="<?php echo $acct_no; ?>" hidden>
 <div id="make_display"></div>
                <?php
                //    account deposit computation
@@ -313,10 +313,12 @@ if (count([$dbclient]) == 1) {
           // END THE TRANSACTION
           if ($client_sms == "1") {
             ?>
+            <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
+            <input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
             <input type="text" id="s_amount" value="<?php echo $amount; ?>" hidden>
             <input type="text" id="s_desc" value="<?php echo $description; ?>" hidden>
-            <input type="text" id="s_date" value="<?php echo $gen_date; ?>" hidden>
-            <input type="text" id="s_balance" value="<?php echo $comp; ?>" hidden>
+            <input type="text" id="s_date" value="<?php echo $pint; ?>" hidden>
+            <input type="text" id="s_balance" value="<?php echo number_format($comp, 2); ?>" hidden>
             <script>
           $(document).ready(function() {
               var int_id = $('#s_int_id').val();
@@ -324,15 +326,16 @@ if (count([$dbclient]) == 1) {
               var sender_id = $('#s_sender_id').val();
               var phone = $('#s_phone').val();
               var client_id = $('#s_client_id').val();
-              var account_no = $('#s_acct_no').val();
               // function
               var amount = $('#s_amount').val();
+              var acct_no = $('#s_acct_no').val();
+              var int_name = $('#s_int_name').val();
               var trans_type = "Credit";
               var desc = $('#s_desc').val();
               var date = $('#s_date').val();
               var balance = $('#s_balance').val();
               // now we work on the body.
-              var msg = trans_type+" \n" + "Amt: NGN "+amount+" \n Desc: "+desc+" \n Bal: "+balance+"  \n Date: "+date;
+              var msg = int_name+" "+trans_type+" \n" + "Amt: NGN "+amount+" \n Acct: "+acct_no+"\nDesc: "+desc+" \nBal: "+balance+" \nAvail: "+balance+"\nDate: "+date+"\nThank you for Banking with Us!";
               $.ajax({
                 url:"ajax_post/sms/sms.php",
                 method:"POST",
@@ -534,9 +537,11 @@ if (count([$dbclient]) == 1) {
                             //  now for DEBIT
                             if ($client_sms == "1") {
                               ?>
+                              <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
+                              <input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
                               <input type="text" id="s_amount" value="<?php echo number_format($amount, 2); ?>" hidden>
                               <input type="text" id="s_desc" value="<?php echo $description; ?>" hidden>
-                              <input type="text" id="s_date" value="<?php echo $gen_date; ?>" hidden>
+                              <input type="text" id="s_date" value="<?php echo $pint; ?>" hidden>
                               <input type="text" id="s_balance" value="<?php echo number_format($comp2, 2); ?>" hidden>
                               <script>
                             $(document).ready(function() {
@@ -545,16 +550,17 @@ if (count([$dbclient]) == 1) {
                                 var sender_id = $('#s_sender_id').val();
                                 var phone = $('#s_phone').val();
                                 var client_id = $('#s_client_id').val();
-                                var account_no = $('#s_acct_no').val();
                                 // function
                                 // will be done soon
                                 var amount = $('#s_amount').val();
+                                var acct_no = $('#s_acct_no').val();
+                                var int_name = $('#s_int_name').val();
                                 var trans_type = "Debit";
                                 var desc = $('#s_desc').val();
                                 var date = $('#s_date').val();
                                 var balance = $('#s_balance').val();
                                 // now we work on the body.
-                                var msg = trans_type+" \n" + "Amt: NGN "+amount+" \n Desc: "+desc+" \n Bal: "+balance+"  \n Date: "+date;
+                                var msg = int_name+" "+trans_type+" \n" + "Amt: NGN "+amount+" \n Acct: "+acct_no+"\nDesc: "+desc+" \nBal: "+balance+" \nAvail: "+balance+"\nDate: "+date+"\nThank you for Banking with Us!";
                                 $.ajax({
                                   url:"ajax_post/sms/sms.php",
                                   method:"POST",

@@ -66,6 +66,7 @@ $irvs = 0;
 // $randms2 = str_pad(rand(0, pow(10, $space)-1), $space, '0', STR_PAD_LEFT);
 // $transid = $randms2;
 $gen_date = date('Y-m-d H:i:s');
+$pint = date('Y-m-d H:i:s');
 $gends = date('Y-m-d');
 // we will call the institution account
 $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
@@ -130,13 +131,15 @@ $resx1 = mysqli_num_rows($q1);
 $resx2 = mysqli_num_rows($q2);
 $resx3 = mysqli_num_rows($q3);
 // we will execute the statement
+$account_display = substr("$acct_no",7)."*****".substr("$acct_no",8);
 ?>
 <input type="text" id="s_int_id" value="<?php echo $sessint_id; ?>" hidden>
 <input type="text" id="s_branch_id" value="<?php echo $branch_id; ?>" hidden>
 <input type="text" id="s_sender_id" value="<?php echo $sender_id; ?>" hidden>
 <input type="text" id="s_phone" value="<?php echo $client_phone; ?>" hidden>
 <input type="text" id="s_client_id" value="<?php echo $client_id; ?>" hidden>
-<input type="text" id="s_acct_no" value="<?php echo $acct_no; ?>" hidden>
+<input type="text" id="s_acct_no" value="<?php echo $acct_display; ?>" hidden>
+<input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
 <div id="make_display"></div>
 <?php
 // your daddy
@@ -333,7 +336,7 @@ if ($is_del == "0" && $is_del != NULL) {
             ?>
             <input type="text" id="s_amount" value="<?php echo number_format($amt, 2); ?>" hidden>
             <input type="text" id="s_desc" value="<?php echo $description; ?>" hidden>
-            <input type="text" id="s_date" value="<?php echo $gen_date; ?>" hidden>
+            <input type="text" id="s_date" value="<?php echo $pint; ?>" hidden>
             <input type="text" id="s_balance" value="<?php echo number_format($comp, 2); ?>" hidden>
             <script>
           $(document).ready(function() {
@@ -342,15 +345,16 @@ if ($is_del == "0" && $is_del != NULL) {
               var sender_id = $('#s_sender_id').val();
               var phone = $('#s_phone').val();
               var client_id = $('#s_client_id').val();
-              var account_no = $('#s_acct_no').val();
               // function
               var amount = $('#s_amount').val();
               var trans_type = "Credit";
+              var acct_no = $('#s_acct_no').val();
+              var int_name = $('#s_int_name').val();
               var desc = $('#s_desc').val();
               var date = $('#s_date').val();
               var balance = $('#s_balance').val();
               // now we work on the body.
-              var msg = trans_type+" \n" + "Amt: NGN "+amount+" \n Desc: "+desc+" \n Bal: "+balance+"  \n Date: "+date;
+              var msg = int_name+" "+trans_type+" \n" + "Amt: NGN "+amount+" \n Acct: "+acct_no+"\nDesc: "+desc+" \nBal: "+balance+" \nAvail: "+balance+"\nDate: "+date+"\nThank you for Banking with Us!";
               $.ajax({
                 url:"../mfi/ajax_post/sms/sms.php",
                 method:"POST",
@@ -622,7 +626,7 @@ if ($is_del == "0" && $is_del != NULL) {
                   ?>
                   <input type="text" id="s_amount" value="<?php echo number_format($amt,2); ?>" hidden>
                   <input type="text" id="s_desc" value="<?php echo $description; ?>" hidden>
-                  <input type="text" id="s_date" value="<?php echo $gen_date; ?>" hidden>
+                  <input type="text" id="s_date" value="<?php echo $pint; ?>" hidden>
                   <input type="text" id="s_balance" value="<?php echo number_format($comp2, 2); ?>" hidden>
                   <script>
                 $(document).ready(function() {
@@ -631,15 +635,16 @@ if ($is_del == "0" && $is_del != NULL) {
                     var sender_id = $('#s_sender_id').val();
                     var phone = $('#s_phone').val();
                     var client_id = $('#s_client_id').val();
-                    var account_no = $('#s_acct_no').val();
                     // function
                     var amount = $('#s_amount').val();
                     var trans_type = "Debit";
+                    var acct_no = $('#s_acct_no').val();
+                    var int_name = $('#s_int_name').val();
                     var desc = $('#s_desc').val();
                     var date = $('#s_date').val();
                     var balance = $('#s_balance').val();
                     // now we work on the body.
-                    var msg = trans_type+" \n" + "Amt: NGN "+amount+" \n Desc: "+desc+" \n Bal: "+balance+"  \n Date: "+date;
+                    var msg = int_name+" "+trans_type+" \n" + "Amt: NGN "+amount+" \n Acct: "+acct_no+"\nDesc: "+desc+" \nBal: "+balance+" \nAvail: "+balance+"\nDate: "+date+"\nThank you for Banking with Us!";
                     $.ajax({
                       url:"../mfi/ajax_post/sms/sms.php",
                       method:"POST",
