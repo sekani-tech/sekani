@@ -158,6 +158,7 @@ if (count([$dbclient]) == 1) {
 }
                  ?>
 <input type="text" id="s_int_id" value="<?php echo $sessint_id; ?>" hidden>
+<input type="text" id="s_acct_nox" value="<?php echo $acct_no; ?>" hidden>
 <input type="text" id="s_branch_id" value="<?php echo $branch_id; ?>" hidden>
 <input type="text" id="s_sender_id" value="<?php echo $sender_id; ?>" hidden>
 <input type="text" id="s_phone" value="<?php echo $client_phone; ?>" hidden>
@@ -326,6 +327,7 @@ if (count([$dbclient]) == 1) {
               var sender_id = $('#s_sender_id').val();
               var phone = $('#s_phone').val();
               var client_id = $('#s_client_id').val();
+              var account_no = $('#s_acct_nox').val();
               // function
               var amount = $('#s_amount').val();
               var acct_no = $('#s_acct_no').val();
@@ -550,6 +552,7 @@ if (count([$dbclient]) == 1) {
                                 var sender_id = $('#s_sender_id').val();
                                 var phone = $('#s_phone').val();
                                 var client_id = $('#s_client_id').val();
+                                var account_no = $('#s_acct_nox').val();
                                 // function
                                 // will be done soon
                                 var amount = $('#s_amount').val();
