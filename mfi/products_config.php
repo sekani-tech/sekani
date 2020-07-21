@@ -881,7 +881,7 @@ if ($per_con == 1 || $per_con == "1") {
                           }
                           ?>
                          <th><?php echo $cash; ?></th>
-                          <td><a href="#" class="btn btn-info">Edit</a></td>
+                          <td><a href="editpay_type.php?edit='<?php echo $row['id'];?>'" class="btn btn-info">Edit</a></td>
                           </tr>
                         <?php }
                           }

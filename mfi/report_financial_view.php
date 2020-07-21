@@ -183,9 +183,9 @@ $destination = "report_financial.php";
                             <th><?php echo $row["description"];?></th>
                           <?php 
                               $name = $row['appuser_id'];
-                              $anam = mysqli_query($connection, "SELECT display_name FROM staff WHERE id = '$name'");
+                              $anam = mysqli_query($connection, "SELECT username FROM users WHERE id = '$name'");
                               $f = mysqli_fetch_array($anam);
-                              $nae = strtoupper($f["display_name"]);
+                              $nae = strtoupper($f["username"]);
                           ?>
                             <th><?php echo $nae; ?></th>
                             <th><?php echo number_format($row["debit"]); ?></th>

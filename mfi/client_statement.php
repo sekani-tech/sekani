@@ -58,6 +58,11 @@ $sessint_id = $_SESSION['int_id'];
       $cred = mysqli_fetch_array($totalc);
       $tcp = $cred['credit'];
       $totalcd = number_format($tcp, 2);
+
+      // Closing Balance
+      $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id DESC LIMIT 1");
+      $rerc = mysqli_fetch_array($result);
+      $closing_bal = $rerc['running_balance_derived'];
   }
 
 // session_start();
@@ -105,6 +110,7 @@ $sessint_id = $_SESSION['int_id'];
                         <h4 >Currency: <?php echo $currtype;?></h4>
                           <h4 >Account number: <?php echo $acc_no;?></h4>
                         <h4 >Statement period: <?php echo $std,' - ',$endx;?></h4>
+                        <h4 >Closing Balance: &#8358;<?php echo number_format($closing_bal, 2);?></h4>
                     </div>
                     <div class="col-md-6">
                     <h4 >Client name: <?php echo $first_name," ", $last_name;?></h4>
