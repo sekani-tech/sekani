@@ -223,8 +223,6 @@ if ($is_del == "0" && $is_del != NULL) {
               $update_the_loan = mysqli_query($connection, "UPDATE `acc_gl_account` SET organization_running_balance_derived = '$updated_loan_port' WHERE int_id ='$sessint_id' AND gl_code = '$loan_port'");
               
                // Update outstanding loan Balance
-              $new_out_loan = $current_out_loan - $updated_loan_port;
-              $update_olb = mysqli_query($connection, "UPDATE loan SET total_outstanding_derived = '$new_out_loan' WHERE id = '$a_loan_id' AND int_id = '$sessint_id'");
               // Qwerty
               if ($update_the_loan) {
                 // damn with
