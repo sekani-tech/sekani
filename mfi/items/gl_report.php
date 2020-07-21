@@ -45,6 +45,10 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
         $quetoget = mysqli_query($connection, "SELECT * FROM gl_account_transaction WHERE branch_id = '$branch_id' AND gl_code = '$glcode' AND int_id ='$int_id' AND transaction_date BETWEEN '$std' AND '$endx' ORDER BY transaction_date DESC");
           $r = mysqli_fetch_array($quetoget);
           $fom = $r['gl_account_balance_derived'];
+
+          $fdfgfg = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE branch_id = '$branch_id' AND gl_code = '$glcode' AND int_id ='$int_id'");
+          $ff = mysqli_fetch_array($fdfgfg);
+          $gl_account = $ff['organization_running_balance_derived'];
         // summing
         function fill_report($connection, $int_id, $std, $glcode, $endx, $branch_id)
         {
@@ -100,7 +104,11 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                       <input type="text" name="end" value="'.$end.'" id="end1" class="form-control" hidden>
                       <input type="text" name="branch" value="'.$branch_id.'" id="branch1" class="form-control" hidden>
                       <input type="text" name="int_id1" value="'.$int_id.'" id="int_id1" class="form-control" hidden>
-                      <input type="text" name="gl_acc" value="'.$glcode.'" id="" class="form-control" readonly>
+                      <input type="text" name="gl_acc" value="'.$glcode.'" id="" class="form-control" hidden readonly>
+                  </div>
+                  <div class="col-md-4 form-group">
+                      <label for="">GL Code:</label>
+                      <input type="text" name="start" value="'.$start.'" id="start1" class="form-control" hidden>
                   </div>
                 <div class="col-md-4">
                   <div class="form-group">
@@ -110,8 +118,8 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label class="bmd-label-floating">GL Code:</label>
-                    <input type="text" value="'.$glcode.'" name="" class="form-control" id="" readonly>
+                    <label class="bmd-label-floating">Current Balance:</label>
+                    <input type="text" value="'.number_format($gl_account).'" name="" class="form-control" id="" readonly>
                   </div>
                 </div>
                 </div>
