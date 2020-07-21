@@ -99,16 +99,8 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             <form action="../composer/gl_report.php" method="POST">
               <div class="row">
                   <div class="col-md-4 form-group">
-                      <label for="">Branch</label>
-                      <input type="text" name="start" value="'.$start.'" id="start1" class="form-control" hidden>
-                      <input type="text" name="end" value="'.$end.'" id="end1" class="form-control" hidden>
-                      <input type="text" name="branch" value="'.$branch_id.'" id="branch1" class="form-control" hidden>
-                      <input type="text" name="int_id1" value="'.$int_id.'" id="int_id1" class="form-control" hidden>
-                      <input type="text" name="gl_acc" value="'.$glcode.'" id="" class="form-control" hidden readonly>
-                  </div>
-                  <div class="col-md-4 form-group">
                       <label for="">GL Code:</label>
-                      <input type="text" name="start" value="'.$start.'" id="start1" class="form-control" hidden>
+                      <input type="text" name="" value="'.$glcode.'" id="start1" readonly class="form-control">
                   </div>
                 <div class="col-md-4">
                   <div class="form-group">
@@ -122,6 +114,14 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                     <input type="text" value="'.number_format($gl_account).'" name="" class="form-control" id="" readonly>
                   </div>
                 </div>
+                <div class="col-md-4 form-group">
+                      <label for=""></label>
+                      <input type="text" name="start" value="'.$start.'" id="start1" class="form-control" hidden>
+                      <input type="text" name="end" value="'.$end.'" id="end1" class="form-control" hidden>
+                      <input type="text" name="branch" value="'.$branch_id.'" id="branch1" class="form-control" hidden>
+                      <input type="text" name="int_id1" value="'.$int_id.'" id="int_id1" class="form-control" hidden>
+                      <input type="text" name="gl_acc" value="'.$glcode.'" id="" class="form-control" hidden readonly>
+                  </div>
                 </div>
               <div class="clearfix"></div>
             
