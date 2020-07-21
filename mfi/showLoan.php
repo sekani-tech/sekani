@@ -583,6 +583,7 @@ else{
     <input type="text" id="s_sender_id" value="<?php echo $sender_id; ?>" hidden>
     <input type="text" id="s_phone" value="<?php echo $client_phone; ?>" hidden>
     <input type="text" id="s_client_id" value="<?php echo $client_id; ?>" hidden>
+    <input type="text" id="s_acct_nox" value="<?php echo $acct_no; ?>" hidden>
     <div id="make_display"></div>
                    <?php
     // record the loan in the loan transaction table
@@ -689,6 +690,7 @@ else{
                         var sender_id = $('#s_sender_id').val();
                         var phone = $('#s_phone').val();
                         var client_id = $('#s_client_id').val();
+                        var account_no = $('#s_acct_nox').val();
                         // function
                         var amount = $('#s_amount').val();
                         var acct_no = $('#s_acct_no').val();
@@ -947,6 +949,7 @@ else{
                         var sender_id = $('#s_sender_id').val();
                         var phone = $('#s_phone').val();
                         var client_id = $('#s_client_id').val();
+                        var account_no = $('#s_acct_nox').val();
                         // function
                         var amount = $('#s_amount').val();
                         var acct_no = $('#s_acct_no').val();
@@ -1243,6 +1246,7 @@ else{
                         var sender_id = $('#s_sender_id').val();
                         var phone = $('#s_phone').val();
                         var client_id = $('#s_client_id').val();
+                        var account_no = $('#s_acct_nox').val();
                         // function
                         var amount = $('#s_amount').val();
                         var acct_no = $('#s_acct_no').val();
