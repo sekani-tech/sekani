@@ -3,11 +3,13 @@
 $page_title = "Approve Loan";
 $destination = "disbursement_approval.php";
     include("header.php");
+    include("ajaxcall.php");
 
     // call
 require_once "../bat/phpmailer/PHPMailerAutoload.php";
 // qwertyuiop
 // CHECK HTN APPROVAL
+$sender_id = $_SESSION["sender_id"];
 $int_name = $_SESSION["int_name"];
 $int_email = $_SESSION["int_email"];
 $int_web = $_SESSION["int_web"];
@@ -32,6 +34,9 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $cxp = mysqli_fetch_array($get_client_degtails);
       $client_email = $cxp["email_address"];
       $crn = $cxp["firstname"]." ".$cxp["lastname"];
+      $client_phone = $cxp["mobile_no"];
+      $client_sms = $cxp["SMS_ACTIVE"];
+      $pint = date('Y-m-d H:i:s');
       // phone for email
       $client_phone = $cxp["mobile_no"];
       // end client
@@ -572,6 +577,14 @@ else{
     // check if the gl payment source have the balance if its more or less
     // take out the charges at the point of disbursement
     // post the loan out to loan
+    ?>
+    <input type="text" id="s_int_id" value="<?php echo $sessint_id; ?>" hidden>
+    <input type="text" id="s_branch_id" value="<?php echo $branch_id; ?>" hidden>
+    <input type="text" id="s_sender_id" value="<?php echo $sender_id; ?>" hidden>
+    <input type="text" id="s_phone" value="<?php echo $client_phone; ?>" hidden>
+    <input type="text" id="s_client_id" value="<?php echo $client_id; ?>" hidden>
+    <div id="make_display"></div>
+                   <?php
     // record the loan in the loan transaction table
     // Take the loan principal out of the Vualt(Gl payment Type)
     // Record the Vualt Transaction (Gl Transaction in future)
@@ -661,7 +674,43 @@ else{
                   // store the transaction
                   if ($insert_client_trans) {
                     // echo "INSERTED INTO ACCTOUNT TRANSACTION";
-                     
+                    if ($client_sms == "1") {
+                      ?>
+                      <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
+                      <input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
+                      <input type="text" id="s_amount" value="<?php echo number_format($loan_amount, 2); ?>" hidden>
+                      <input type="text" id="s_desc" value="<?php echo "Loan Disbursement"; ?>" hidden>
+                      <input type="text" id="s_date" value="<?php echo $pint; ?>" hidden>
+                      <input type="text" id="s_balance" value="<?php echo number_format($new_client_running_bal, 2); ?>" hidden>
+                      <script>
+                    $(document).ready(function() {
+                        var int_id = $('#s_int_id').val();
+                        var branch_id = $('#s_branch_id').val();
+                        var sender_id = $('#s_sender_id').val();
+                        var phone = $('#s_phone').val();
+                        var client_id = $('#s_client_id').val();
+                        // function
+                        var amount = $('#s_amount').val();
+                        var acct_no = $('#s_acct_no').val();
+                        var int_name = $('#s_int_name').val();
+                        var trans_type = "Credit";
+                        var desc = $('#s_desc').val();
+                        var date = $('#s_date').val();
+                        var balance = $('#s_balance').val();
+                        // now we work on the body.
+                        var msg = int_name+" "+trans_type+" \n" + "Amt: NGN "+amount+" \n Acct: "+acct_no+"\nDesc: "+desc+" \nBal: "+balance+" \nAvail: "+balance+"\nDate: "+date+"\nThank you for Banking with Us!";
+                        $.ajax({
+                          url:"ajax_post/sms/sms.php",
+                          method:"POST",
+                          data:{int_id:int_id, branch_id:branch_id, sender_id:sender_id, phone:phone, msg:msg, client_id:client_id, account_no:account_no },
+                          success:function(data){
+                            $('#make_display').html(data);
+                          }
+                        });
+                    });
+                  </script>
+                      <?php
+                    }
                       // sends a mail first
                     // HERE YOU CAN HIT THE MAIL
                     $get_client_account1 = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
@@ -883,6 +932,44 @@ else{
                   // END CLIENT TRANSACTION
                   if ($insert_client_trans1) {
                     // SEND THE EMAIL
+                    if ($client_sms == "1") {
+                      ?>
+                      <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
+                      <input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
+                      <input type="text" id="s_amount" value="<?php echo number_format($amt, 2); ?>" hidden>
+                      <input type="text" id="s_desc" value="<?php echo "Loan Charge ".$nameofc; ?>" hidden>
+                      <input type="text" id="s_date" value="<?php echo $pint; ?>" hidden>
+                      <input type="text" id="s_balance" value="<?php echo number_format($ultimate_client_running_balance, 2); ?>" hidden>
+                      <script>
+                    $(document).ready(function() {
+                        var int_id = $('#s_int_id').val();
+                        var branch_id = $('#s_branch_id').val();
+                        var sender_id = $('#s_sender_id').val();
+                        var phone = $('#s_phone').val();
+                        var client_id = $('#s_client_id').val();
+                        // function
+                        var amount = $('#s_amount').val();
+                        var acct_no = $('#s_acct_no').val();
+                        var int_name = $('#s_int_name').val();
+                        var trans_type = "Debit";
+                        var desc = $('#s_desc').val();
+                        var date = $('#s_date').val();
+                        var balance = $('#s_balance').val();
+                        // now we work on the body.
+                        var msg = int_name+" "+trans_type+" \n" + "Amt: NGN "+amount+" \n Acct: "+acct_no+"\nDesc: "+desc+" \nBal: "+balance+" \nAvail: "+balance+"\nDate: "+date+"\nThank you for Banking with Us!";
+                        $.ajax({
+                          url:"ajax_post/sms/sms.php",
+                          method:"POST",
+                          data:{int_id:int_id, branch_id:branch_id, sender_id:sender_id, phone:phone, msg:msg, client_id:client_id, account_no:account_no },
+                          success:function(data){
+                            $('#make_display').html(data);
+                          }
+                        });
+                    });
+                  </script>
+                      <?php
+                    }
+                    // END IT HERE
                     $mail = new PHPMailer;
                     $mail->From = $int_email;
                     $mail->FromName = $int_name;
@@ -1141,6 +1228,44 @@ else{
                   // END CLIENT TRANSACTION
                   if ($insert_client_trans1) {
                     // SEND THE EMAIL
+                    if ($client_sms == "1") {
+                      ?>
+                      <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
+                      <input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
+                      <input type="text" id="s_amount" value="<?php echo number_format($calc, 2); ?>" hidden>
+                      <input type="text" id="s_desc" value="<?php echo "Loan Charge ".$charge_name2; ?>" hidden>
+                      <input type="text" id="s_date" value="<?php echo $pint; ?>" hidden>
+                      <input type="text" id="s_balance" value="<?php echo number_format($ultimate_client_running_balance1, 2); ?>" hidden>
+                      <script>
+                    $(document).ready(function() {
+                        var int_id = $('#s_int_id').val();
+                        var branch_id = $('#s_branch_id').val();
+                        var sender_id = $('#s_sender_id').val();
+                        var phone = $('#s_phone').val();
+                        var client_id = $('#s_client_id').val();
+                        // function
+                        var amount = $('#s_amount').val();
+                        var acct_no = $('#s_acct_no').val();
+                        var int_name = $('#s_int_name').val();
+                        var trans_type = "Debit";
+                        var desc = $('#s_desc').val();
+                        var date = $('#s_date').val();
+                        var balance = $('#s_balance').val();
+                        // now we work on the body.
+                        var msg = int_name+" "+trans_type+" \n" + "Amt: NGN "+amount+" \n Acct: "+acct_no+"\nDesc: "+desc+" \nBal: "+balance+" \nAvail: "+balance+"\nDate: "+date+"\nThank you for Banking with Us!";
+                        $.ajax({
+                          url:"ajax_post/sms/sms.php",
+                          method:"POST",
+                          data:{int_id:int_id, branch_id:branch_id, sender_id:sender_id, phone:phone, msg:msg, client_id:client_id, account_no:account_no },
+                          success:function(data){
+                            $('#make_display').html(data);
+                          }
+                        });
+                    });
+                  </script>
+                      <?php
+                    }
+                    // SMS
                     $mail = new PHPMailer;
                     $mail->From = $int_email;
                     $mail->FromName = $int_name;
@@ -1364,6 +1489,7 @@ else{
           // YOU NEED TO TEST THE QUERY HERE THEN TAKE OFF
           // DISBUSE TO LOAN
           if ($insert_client_trans1) {
+            // OK MAKE MOVE
             // loan inputting
             $l_d_m = "INSERT INTO `loan` (`int_id`, `account_no`, `client_id`, `product_id`,
             `fund_id`, `col_id`, `col_name`, `col_description`, `loan_officer`, `loan_purpose`, `currency_code`,
