@@ -3,6 +3,7 @@
 $page_title = "Approve";
 $destination = "transact_approval.php";
     include("header.php");
+    include("ajaxcall.php");
     require_once "../bat/phpmailer/PHPMailerAutoload.php";
 ?>
 <!-- IMPORTING FO THE EXPENSE -->
