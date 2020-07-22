@@ -60,7 +60,7 @@ $tot_dep = $tot_dep + $amount;
 $select_transaction = mysqli_query($connection, "SELECT * FROM `sekani_wallet_transaction` WHERE transaction_id	= '$trans'");
 $num_t = mysqli_num_rows($select_transaction);
 if ($num_t <= 0) {
-$update_wallet = mysqli_query($connection, "UPDATE sekani_wallet SET running_balance = '$run_bal', total_deposit = '$tot_dep'");
+$update_wallet = mysqli_query($connection, "UPDATE sekani_wallet SET running_balance = '$run_bal', total_deposit = '$tot_dep' WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
 if ($update_wallet) {
     $insert_transaction = mysqli_query($connection, "INSERT INTO `sekani_wallet_transaction` (`int_id`, `branch_id`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `wallet_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, 
     `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`)

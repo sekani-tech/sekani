@@ -131,7 +131,7 @@ $resx1 = mysqli_num_rows($q1);
 $resx2 = mysqli_num_rows($q2);
 $resx3 = mysqli_num_rows($q3);
 // we will execute the statement
-$account_display = substr("$acct_no",7)."*****".substr("$acct_no",8);
+$account_display = substr("$acct_no", 0, 3)."*****".substr("$acct_no",8);
 ?>
 <input type="text" id="s_int_id" value="<?php echo $sessint_id; ?>" hidden>
 <input type="text" id="s_acct_nox" value="<?php echo $acct_no; ?>" hidden>

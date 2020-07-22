@@ -34,7 +34,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $client_id = $x['client_id'];
       $id = $client_id;
       $acct_no = $x['account_no'];
-      $account_display = substr("$acct_no",7)."*****".substr("$acct_no",8);
+      $account_display = substr("$acct_no", 0, 3)."*****".substr("$acct_no",8);
       $staff_id = $x['staff_id'];
       $ao = $x['account_off_name'];
       $amount = $x['amount'];
