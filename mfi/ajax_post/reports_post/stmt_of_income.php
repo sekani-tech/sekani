@@ -17,26 +17,29 @@ if(isset($_POST['start'])){
 
 // Interest on loans data
 $jfjf = mysqli_query($connection, "SELECT * FROM acct_rule WHERE int_id = '$sessint_id'");
-while($dsdsd = mysqli_fetch_array($jfjf)){
-$interest_income = $dsdsd['inc_interest'];
+  while($dsdsd = mysqli_fetch_array($jfjf)){
+    $interest_income = $dsdsd['inc_interest'];
+    
+    // interest on loans current month
+    $fdfi = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$interest_income' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+    $dov = mysqli_query($connection, $fdfi);
+    $oof = mysqli_fetch_array($dov);
+    $gl = $oof['gl_account_balance_derived'];
+    $int_on_loans += $gl;
+    
+    // interest on loans previous month
+    $fkdlf = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$interest_income' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+    $dff = mysqli_query($connection, $fkdlf);
+    $df = mysqli_fetch_array($dff);
+    if(isset($df)){
+    $gfl = $df['gl_account_balance_derived'];
+    }
+    else{
+      $gfl = "0.00";
+    }
+    $last_int_on_loans += $gfl;
+    }
 
-$fdfi = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$interest_income' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
-$dov = mysqli_query($connection, $fdfi);
-$oof = mysqli_fetch_array($dov);
-$gl = $oof['gl_account_balance_derived'];
-$int_on_loans += $gl;
-
-$fkdlf = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$interest_income' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
-$dff = mysqli_query($connection, $fkdlf);
-$df = mysqli_fetch_array($dff);
-if(isset($df)){
-$gfl = $df['gl_account_balance_derived'];
-}
-else{
-  $gfl = "0.00";
-}
-$last_int_on_loans += $gfl;
-}
 // Fines and Fees gl
 $dfmldk = mysqli_query($connection, "SELECT * FROM charge WHERE int_id = '$sessint_id'");
 while($jjc = mysqli_fetch_array($dfmldk)){
@@ -107,31 +110,35 @@ function fill_operation($connection, $sessint_id, $start, $end, $onemonthly)
 
     $glcode = $row['gl_code'];
 
-    $opbalance = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+    $opbalance = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
     $fodf = mysqli_query($connection, $opbalance);
       $n = mysqli_fetch_array($fodf);
       if(isset($n)){
-      $endbal = number_format($n['gl_account_balance_derived'], 2);
+      $endbal = number_format($n['credit'], 2);
       }else{
         $endbal = "0.00";
       }
     
-    $fdf = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+    $fdf = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
     $ss = mysqli_query($connection, $fdf);
       $u = mysqli_fetch_array($ss);
       if(isset($u)){
-      $lastmon = number_format($u['gl_account_balance_derived'], 2);
+      $lastmon = number_format($u['credit'], 2);
       }
       else{
         $lastmon = "0.00";
       }
-
+if($endbal == '0.00' && $lastmon == '0.00'){
+  $outxx .= '';
+}
+else{
   $outxx .= '
   <tr>
   <td>'.$namde.'</td>
   <td style="text-align: center">'.$endbal.'</td>
   <td style="text-align: center">'.$lastmon.'</td>
 </tr>';
+}
   }
 return $outxx;
 }
@@ -143,20 +150,20 @@ while ($q = mysqli_fetch_array($fdff))
   {
     $gllcode = $q['gl_code'];
 
-    $kutty = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gllcode' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+    $kutty = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gllcode' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
     $cxcxfd = mysqli_query($connection, $kutty);
     $j = mysqli_fetch_array($cxcxfd);
     if(isset($j)){
-    $endbal = $j['gl_account_balance_derived'];
+    $endbal = $j['credit'];
     }else{
       $endbal = "0.00";
     }
     
-    $kuoo = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gllcode' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+    $kuoo = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gllcode' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
     $po = mysqli_query($connection, $kuoo);
       $o = mysqli_fetch_array($po);
       if(isset($o)){
-      $lastmon = $o['gl_account_balance_derived'];
+      $lastmon = $o['credit'];
       }
       else{
         $lastmon = "0.00";
