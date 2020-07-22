@@ -238,7 +238,7 @@ $out = '';
 $out = '
 <div class="card">
 <div class="card-header card-header-primary">
-  <h4 class="card-title">Operating Revenue</h4>
+  <h4 class="card-title">Operating Revenu</h4>
 </div>
 <div class="card-body">
   <table class="table">
