@@ -102,51 +102,15 @@ if (isset($_GET["message1"])) {
         $client = $fdm['name'];
         $transid = $fdm['transact_id'];
         $book_type = $fdm['book_type'];
+        $charges = $fdm['charge_applied'];
         
-         if($book_type == "1"){
-          $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = '14'";
+          $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = '$charges'";
         $sdd = mysqli_query($connection, $somr);
         $er = mysqli_fetch_array($sdd);
         $amount = $er['amount'];
         $chname = $er['name'];
         $pay_type = $er['gl_code'];
-         }
-         else if($book_type == "2"){
-          $noum = $fdm['leaves_no'];
-          if($noum == "50"){
-            $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = '2'";
-            $sdd = mysqli_query($connection, $somr);
-            $er = mysqli_fetch_array($sdd);
-            $amount = $er['amount'];
-            $chname = $er['name'];
-            $pay_type = $er['gl_code'];
-          }
-          else if($noum == "100"){
-            $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = '3'";
-            $sdd = mysqli_query($connection, $somr);
-            $er = mysqli_fetch_array($sdd);
-            $amount = $er['amount'];
-            $chname = $er['name'];
-            $pay_type = $er['gl_code'];
-          }
-          else if($noum == "150"){
-            $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = ''";
-            $sdd = mysqli_query($connection, $somr);
-            $er = mysqli_fetch_array($sdd);
-            $amount = $er['amount'];
-            $chname = $er['name'];
-            $pay_type = $er['gl_code'];
-          }
-          else if($noum == "200"){
-            $somr = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = ''";
-            $sdd = mysqli_query($connection, $somr);
-            $er = mysqli_fetch_array($sdd);
-            $amount = $er['amount'];
-            $chname = $er['name'];
-            $pay_type = $er['gl_code'];
-          }
 
-         }
         $query4 = "SELECT account.id, client.firstname, client.lastname, account.product_id, account.account_no, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.account_no = account.account_no WHERE client.int_id = '$sessint_id' AND client.id ='$client'";
         $queryexec = mysqli_query($connection, $query4);
         $b = mysqli_fetch_array($queryexec);
@@ -310,6 +274,9 @@ if ($can_transact == 1 || $can_transact == "1") {
                           no of leaves
                         </th>
                         <th class="th-sm">
+                          Charges Appli+ed
+                        </th>
+                        <th class="th-sm">
                           Range Number
                         </th>
                         <th class="th-sm">Status</th>
@@ -343,6 +310,14 @@ if ($can_transact == 1 || $can_transact == "1") {
                           ?>
                           <th><?php echo $ror; ?></th>
                           <th><?php echo $row["leaves_no"]; ?></th>
+                          <?php
+                          $charge_id = $row["charge_applied"];
+                          $dsddf = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id = '$charge_id'";
+                          $fdiofu = mysqli_query($connection, $dsddf);
+                          $d = mysqli_fetch_array($fdiofu);
+                          $charhes = $d['name'];
+                          ?>
+                          <th><?php echo $charhes ?></th>
                           <th><?php echo $row["range_amount"]; ?></th>
                           <th><?php echo $row["status"]; ?></th>
                           <td><a href="chq_approval.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>

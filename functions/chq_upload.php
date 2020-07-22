@@ -15,6 +15,7 @@ $name = $_POST['acc_name'];
 $account_no = $_POST['acc_no'];
 $book = $_POST['book_type'];
 $leaves_no = $_POST['no_leaves'];
+$charge_app = $_POST['charge_app'];
 $range = $_POST['range'];
 $date = date('Y-m-d');
 
@@ -23,8 +24,8 @@ if(($leaves_no =="0" || $leaves_no =="") && ($book == "2")){
   echo header ("Location: ../mfi/cheque_book_posting.php?message3=$randms");
 }
 else{
-  $query ="INSERT INTO chq_book(int_id, name, branch_id, account_no, book_type, leaves_no, range_amount, date, status)
-  VALUES ('{$sessint_id}', '{$name}','{$branch}', '{$account_no}', '{$book}', '{$leaves_no}', '{$range}', '{$date}', 'Pending')";
+  $query ="INSERT INTO chq_book(int_id, name, branch_id, account_no, book_type, leaves_no, range_amount, charge_applied, date, status)
+  VALUES ('{$sessint_id}', '{$name}','{$branch}', '{$account_no}', '{$book}', '{$leaves_no}', '{$range}', '{$charge_app}', '{$date}', 'Pending')";
   
   $res = mysqli_query($connection, $query);
 

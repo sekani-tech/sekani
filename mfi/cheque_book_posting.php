@@ -99,6 +99,17 @@ $transid = $randms;
                             }
                             return $out;
                           }
+                          function fill_charge($connection) {
+                            $sint_id = $_SESSION["int_id"];
+                            $org = "SELECT * FROM charge WHERE int_id = '$sint_id' AND ((name LIKE '%cheque%') OR (name LIKE '%chq%') OR (name LIKE '%check%'))";
+                            $res = mysqli_query($connection, $org);
+                            $out = '';
+                            while ($row = mysqli_fetch_array($res))
+                            {
+                              $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                            }
+                            return $out;
+                          }
                           ?>
                           <script>
                               $(document).ready(function() {
@@ -134,7 +145,7 @@ $transid = $randms;
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Book Type</label>
-                          <select id="ewe" name="book_type" class="form-control" id="acc_name">
+                          <select id="ewe" name="book_type" class="form-control">
                           <option value="2">Chq Book</option>
                           <option value="1">Pass Book</option>
                         </select>
@@ -168,9 +179,11 @@ $transid = $randms;
                       </div>
                     </div>
                       <div class="col-md-4">
-                        <div id="done" class="form-group">
+                      <div  id="done" class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
                           <label class="bmd-label-floating">No of Leaves</label>
-                          <select name="no_leaves" class="form-control" id="acc_name">
+                          <select name="no_leaves" class="form-control">
                           <option hidden value="0">select an option</option>
                           <option value="50">1-50</option>
                           <option value="100">1-100</option>
@@ -178,6 +191,16 @@ $transid = $randms;
                           <option value="200">1-200</option>
                         </select>
                         </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div id="" class="form-group">
+                          <label class="bmd-label-floating">Charge Applied</label>
+                          <select name="charge_app" class="form-control">
+                          <?php echo fill_charge($connection);?>
+                        </select>
+                        </div>
+                      </div>
+                      </div>
                       </div>
                       </div>
                       <a href="client.php" class="btn btn-secondary">Back</a>
