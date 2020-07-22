@@ -18,26 +18,42 @@ if(isset($_POST['start'])){
 // Interest on loans data
 $jfjf = mysqli_query($connection, "SELECT * FROM acct_rule WHERE int_id = '$sessint_id'");
   while($dsdsd = mysqli_fetch_array($jfjf)){
+    $acct_rule_id =$dsdsd['id'];
     $interest_income = $dsdsd['inc_interest'];
+    $fdof = mysqli_query($connection, "SELECT * FROM acct_rule WHERE int_id = '$sessint_id' AND inc_interest = '$interest_income'");
+    $dfds = mysqli_num_rows($fdof);
+    if($dfds > 1){
+      // interest on loans current month
+      $fdfi = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$interest_income' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+      $dov = mysqli_query($connection, $fdfi);
+      $oof = mysqli_fetch_array($dov);
+      $gl = $oof['gl_account_balance_derived'];
+      $int_on_loans = $gl;
     
-    // interest on loans current month
-    $fdfi = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$interest_income' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
-    $dov = mysqli_query($connection, $fdfi);
-    $oof = mysqli_fetch_array($dov);
-    $gl = $oof['gl_account_balance_derived'];
-    $int_on_loans += $gl;
-    
-    // interest on loans previous month
-    $fkdlf = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$interest_income' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
-    $dff = mysqli_query($connection, $fkdlf);
-    $df = mysqli_fetch_array($dff);
-    if(isset($df)){
-    $gfl = $df['gl_account_balance_derived'];
+      // interest on loans previous month
+      $fkdlf = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$interest_income' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+      $dff = mysqli_query($connection, $fkdlf);
+      $df = mysqli_fetch_array($dff);
+      $gfl = $df['gl_account_balance_derived'];
+      $last_int_on_loans = $gfl;
     }
     else{
-      $gfl = "0.00";
+      while($er = mysqli_fetch_array($fdof)){
+        // interest on loans current month
+      $fdfi = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$interest_income' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+      $dov = mysqli_query($connection, $fdfi);
+      $oof = mysqli_fetch_array($dov);
+      $gl = $oof['gl_account_balance_derived'];
+      $int_on_loans += $gl;
+    
+      // interest on loans previous month
+      $fkdlf = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$interest_income' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+      $dff = mysqli_query($connection, $fkdlf);
+      $df = mysqli_fetch_array($dff);
+      $gfl = $df['gl_account_balance_derived'];
+      $last_int_on_loans += $gfl;
+      }
     }
-    $last_int_on_loans += $gfl;
     }
 
 // Fines and Fees gl
