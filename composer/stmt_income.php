@@ -41,44 +41,48 @@ if (isset($_POST["start_date"]) && isset($_POST["end_date"]) && isset($_POST["in
       $branch_phone = $ans['phone'];
     }
     function fill_operation($connection, $sessint_id, $start, $end, $onemonthly)
-{
-  $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id !='0' AND classification_enum ='5' ORDER BY name ASC";
-  $state1 = mysqli_query($connection, $stateg);
-  $outxx = '';
-  while ($row = mysqli_fetch_array($state1))
-  {
-    $namde = $row['name'];
-
-    $glcode = $row['gl_code'];
-
-    $opbalance = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
-    $fodf = mysqli_query($connection, $opbalance);
-      $n = mysqli_fetch_array($fodf);
-      if(isset($n)){
-      $endbal = number_format($n['gl_account_balance_derived'], 2);
-      }else{
-        $endbal = "0.00";
-      }
+    {
+      $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id !='0' AND classification_enum ='5' ORDER BY name ASC";
+      $state1 = mysqli_query($connection, $stateg);
+      $outxx = '';
+      while ($row = mysqli_fetch_array($state1))
+      {
+        $namde = $row['name'];
     
-    $fdf = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
-    $ss = mysqli_query($connection, $fdf);
-      $u = mysqli_fetch_array($ss);
-      if(isset($u)){
-      $lastmon = number_format($u['gl_account_balance_derived'], 2);
+        $glcode = $row['gl_code'];
+    
+        $opbalance = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+        $fodf = mysqli_query($connection, $opbalance);
+          $n = mysqli_fetch_array($fodf);
+          if(isset($n)){
+          $endbal = number_format($n['credit'], 2);
+          }else{
+            $endbal = "0.00";
+          }
+        
+        $fdf = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+        $ss = mysqli_query($connection, $fdf);
+          $u = mysqli_fetch_array($ss);
+          if(isset($u)){
+          $lastmon = number_format($u['credit'], 2);
+          }
+          else{
+            $lastmon = "0.00";
+          }
+    if($endbal == '0.00' && $lastmon == '0.00'){
+      $outxx .= '';
+    }
+    else{
+      $outxx .= '
+      <tr>
+      <td>'.$namde.'</td>
+      <td style="text-align: center">'.$endbal.'</td>
+      <td style="text-align: center">'.$lastmon.'</td>
+    </tr>';
+    }
       }
-      else{
-        $lastmon = "0.00";
-      }
-
-  $outxx .= '
-  <tr>
-  <td style="height:35px;">'.$namde.'</td>
-  <td style="height:35px;">'.$endbal.'</td>
-  <td style="height:35px;">'.$lastmon.'</td>
-</tr>';
-  }
-return $outxx;
-}
+    return $outxx;
+    }
     // NOTHIG
 require_once __DIR__ . '/vendor/autoload.php';
 $mpdf = new \Mpdf\Mpdf();
