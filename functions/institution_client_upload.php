@@ -1,6 +1,7 @@
 <?php
 // connection
 include("connect.php");
+include("../mfi/ajaxcall.php");
 session_start();
 require_once "../bat/phpmailer/PHPMailerAutoload.php";
 // qwerty
@@ -12,7 +13,7 @@ $int_logo = $_SESSION["int_logo"];
 $int_address = $_SESSION["int_address"];
 $ekaniN = $_SESSION["sek_name"];
 $ekaniE = $_SESSION["sek_email"];
-
+$sender_id = $_SESSION["sender_id"];
 ?>
 <?php
 $rigits = 7;
@@ -52,6 +53,15 @@ $loan_status = "Not Active";
 $activation_date = date("Y-m-d");
 $submitted_on = date("Y-m-d");
 // $sa = $_POST['sms_active'];
+?>
+<input type="text" id="s_int_id" value="<?php echo $sessint_id; ?>" hidden>
+<input type="text" id="s_acct_nox" value="<?php echo $account_no; ?>" hidden>
+<input type="text" id="s_branch_id" value="<?php echo $branch_id; ?>" hidden>
+<input type="text" id="s_phone" value="<?php echo $phone; ?>" hidden>
+<input type="text" id="s_sender_id" value="<?php echo $sender_id; ?>" hidden>
+<input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
+<div id="make_display"></div>
+<?php
 $queryd = mysqli_query($connection, "SELECT * FROM savings_product WHERE id='$acct_type'");
 $res = mysqli_fetch_array($queryd);
 $accttname = $res['name'];
@@ -226,6 +236,33 @@ $res = mysqli_query($connection, $query);
           // $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
           // echo header ("Location: ../mfi/client.php?message1=$randms");
           // NOW CHECK THE BVN TABLE
+          ?>
+<input type="text" id="s_client_id" value="<?php echo $client_id; ?>" hidden>
+<input type="text" id="s_client_name" value="<?php echo $first_name." ".$last_name; ?>" hidden>
+<script>
+          $(document).ready(function() {
+              var int_id = $('#s_int_id').val();
+              var branch_id = $('#s_branch_id').val();
+              var sender_id = $('#s_sender_id').val();
+              var phone = $('#s_phone').val();
+              var client_id = $('#s_client_id').val();
+              var account_no = $('#s_acct_nox').val();
+              // function
+              var int_name = $('#s_int_name').val();
+              var client_name = $('#s_client_name').val();
+              // now we work on the body.
+              var msg = "WELCOME TO "+int_name+" PLEASE FIND YOUR ACCOUNT DETAILS BELOW\n"+"ACCT NO:"+account_no+"\nACCT NAME:"+client_name+"\n Thank you!";
+              $.ajax({
+                url:"../mfi/ajax_post/sms/sms.php",
+                method:"POST",
+                data:{int_id:int_id, branch_id:branch_id, sender_id:sender_id, phone:phone, msg:msg, client_id:client_id, account_no:account_no },
+                success:function(data){
+                  $('#make_display').html(data);
+                }
+              });
+          });
+        </script>
+          <?php
             // Start mail
 $mail = new PHPMailer;
 // from email addreess and name
