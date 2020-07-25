@@ -18,7 +18,7 @@ $destination = "accounting.php";
         swal({
             type: "success",
             title: "Success",
-            text: "Registration Successful",
+            text: "Successful Deleted",
             showConfirmButton: false,
             timer: 2000
         })
@@ -382,29 +382,14 @@ if ( isset($_POST['bank_rec']) ) {
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <div id="tit" class="form-group">
-                      <label>GL Code*</label>
-                      <input type="text"style="text-transform: uppercase;" class="form-control" value="" name="gl_code" required readonly>
+                    <div class="form-group">
+                      <label >External ID</label>
+                      <input type="text" style="text-transform: uppercase;" class="form-control" name="ext_id">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >Account Type*</label>
-                      <script>
-                    $(document).ready(function () {
-                      $('#give').on("change", function () {
-                        var type = $(this).val();
-                        $.ajax({
-                          url: "ajax_post/chart_account_gl.php", 
-                          method: "POST",
-                          data:{type:type},
-                          success: function (data) {
-                            $('#tit').html(data);
-                          }
-                        })
-                      });
-                    });
-                  </script>
                       <select class="form-control" name="acct_type" id="give">
                         <option value="">Select an option</option>
                         <option value="1">ASSET</option>
@@ -416,10 +401,61 @@ if ( isset($_POST['bank_rec']) ) {
                       <input hidden type="text" id="int_id" value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label >External ID</label>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" name="ext_id">
+                  <script>
+                    $(document).ready(function () {
+                      $('#give').on("change", function () {
+                        var type = $(this).val();
+                        var dso = $('#atu').val();
+                        var pid = $('#dropping').val();
+                        $.ajax({
+                          url: "ajax_post/chart_account_gl.php", 
+                          method: "POST",
+                          data:{type:type, dso:dso, pid:pid},
+                          success: function (data) {
+                            $('#tit').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                  <script>
+                    $(document).ready(function () {
+                      $('#atu').on("change", function () {
+                        var dso = $(this).val();
+                        var type = $('#give').val();
+                        var pid = $('#dropping').val();
+                        $.ajax({
+                          url: "ajax_post/chart_account_gl.php", 
+                          method: "POST",
+                          data:{type:type, dso:dso, pid:pid},
+                          success: function (data) {
+                            $('#tit').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                  <script>
+                    $(document).ready(function () {
+                      $('#dropping').on("change", function () {
+                        var dso = $('#atu').val();
+                        var type = $('#give').val();
+                        var pid = $(this).val();
+                        $.ajax({
+                          url: "ajax_post/chart_account_gl.php", 
+                          method: "POST",
+                          data:{type:type, dso:dso, pid:pid},
+                          success: function (data) {
+                            $('#tit').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                   <div class="col-md-6">
+                    <div id="tit" class="form-group">
+                      <label>GL Code*</label>
+                      <input type="text"style="text-transform: uppercase;" class="form-control" value="" name="gl_code" required readonly>
                     </div>
                   </div>
                   <!-- <div class="col-md-6">
@@ -473,9 +509,26 @@ if ( isset($_POST['bank_rec']) ) {
                   <!-- checking out the group 2 -->
                   <div class="col-md-6">
                     <div class="form-group">    
-                    <div id="dropping"></div>           
+                    <div>
+                    <label >GL Group</label>
+                  <select  id="dropping" class="form-control" name="parent_id" id="pid">
+                    <option value="0">choose group</option>
+                    <?php echo fill_gl($connection)?>
+                  </select>
+                    </div>           
                     </div>
                   </div>
+                  <?php function fill_gl($connection) {
+          $sint_id = $_SESSION["int_id"];
+          $org = "SELECT * FROM acc_gl_account WHERE (int_id = '$sint_id' AND (parent_id = '' OR parent_id = '0'))";
+          $res = mysqli_query($connection, $org);
+          $out = '';
+          while ($row = mysqli_fetch_array($res))
+          {
+            $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+          }
+          return $out;
+        }?>
                   <!-- end of group  -->
                   <br>
                   <div class="col-md-6">

@@ -21,11 +21,10 @@ if (isset($_POST["gl"]) && isset($_POST["ch"]))
           }
           return $out;
         }
-        $output2 = '<label >GL Group</label>
-          <select class="form-control" name="parent_id" id="pid">
+        $output2 = '
             <option value="0">choose group</option>
-            "'.fill_gl($connection, $acct_use, $int_id).'"
-          </select>';
+            "'.fill_gl($connection).'"
+            ';
     echo $output2;
     }
   }
