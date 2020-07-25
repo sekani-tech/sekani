@@ -12,7 +12,13 @@ if (isset($_POST['id'])) {
     $man_acct = $_POST['man_allow'];
     $disable = $_POST['disable'];
     $descript = $_POST['descript'];
-    $parent = $_POST['parent_id'];
+    if(isset($_POST['parent_id'])){
+        $parent = $_POST['parent_id'];
+    }
+    else{
+        $parent = 0;
+    }
+    
     $acct_type = 0;
     if($class_enum == 1){
         $acct_type = "ASSET";

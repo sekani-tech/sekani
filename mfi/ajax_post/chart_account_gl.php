@@ -15,9 +15,10 @@ if(isset($_POST['type']) && isset($_POST['dso'])){
         $ser = $sd['int_id_no'];
         $fid = $sd['id'];
         $ido = mysqli_num_rows($odmw);
-        $we = $ser * 100;
+        echo '$ido is '.$ser;
+        $we = $ido * 100;
         if($we == '0'){
-            $piid == $ser + 100;
+            $piid == $ido + 100;
         }
         else{
             $piid == 100;
@@ -28,7 +29,7 @@ if(isset($_POST['type']) && isset($_POST['dso'])){
             $odmw = mysqli_query($connection, $sdf);
             $spdo = mysqli_num_rows($odmw);
 
-            $gl_code = ($dsd * 10).$piid+($spdo + 1);
+            $gl_code = ($dsd * 10).$piid + ($spdo + 1);
         }
         else{
             $gl_code = ($dsd * 10).'100';
