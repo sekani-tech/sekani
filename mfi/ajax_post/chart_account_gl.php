@@ -13,6 +13,9 @@ if(isset($_POST['type'])){
     if($spdo){
         $gl_code = ($dsd * 10000) + ($spdo + 1);
     }
+    else{
+        $gl_code = ($dsd * 10000) + 1;
+    }
     $out = '
     <label>GL Code*</label>
     <input type="text" name="gl_code" style="text-transform: uppercase;" id="" class="form-control" value="'.$gl_code.'" readonly>
