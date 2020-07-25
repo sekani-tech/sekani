@@ -382,9 +382,9 @@ if ( isset($_POST['bank_rec']) ) {
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <div class="form-group">
-                      <label >GL Code*</label>
-                      <input type="text" id="tit" style="text-transform: uppercase;" class="form-control" value="" name="gl_code" required readonly>
+                    <div id="tit" class="form-group">
+                      <label>GL Code*</label>
+                      <input type="text"style="text-transform: uppercase;" class="form-control" value="" name="gl_code" required readonly>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -392,14 +392,12 @@ if ( isset($_POST['bank_rec']) ) {
                       <label >Account Type*</label>
                       <script>
                     $(document).ready(function () {
-                      $('#input').on("click", function () {
-                        var start = $('#start').val();
-                        var end = $('#end').val();
-                        var branch = $('#branch_id').val();
+                      $('#give').on("change", function () {
+                        var type = $(this).val();
                         $.ajax({
-                          url: "ajax_post/reports_post/stmt_of_income.php", 
+                          url: "ajax_post/chart_account_gl.php", 
                           method: "POST",
-                          data:{start:start, end:end, branch:branch},
+                          data:{type:type},
                           success: function (data) {
                             $('#tit').html(data);
                           }
