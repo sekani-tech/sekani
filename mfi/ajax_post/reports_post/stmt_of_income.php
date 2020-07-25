@@ -68,7 +68,7 @@ $jfjf = mysqli_query($connection, "SELECT * FROM acct_rule WHERE int_id = '$sess
 // Fines and Fees gl
 function fill_charge($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly)
 {
-  $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '4' AND parent_id = '198'";
+  $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '4'";
   $state1 = mysqli_query($connection, $stateg);
   $outxx = '';
   while ($row = mysqli_fetch_array($state1))
@@ -112,9 +112,8 @@ else{
 return $outxx;
 }
 // total of fees
-$oieio = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '4' AND parent_id = '198'";
+$oieio = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '4'";
 $sdreo = mysqli_query($connection, $oieio);
-$outxx = '';
 while ($op = mysqli_fetch_array($sdreo))
 {
   $namde = $op['name'];
@@ -124,18 +123,18 @@ while ($op = mysqli_fetch_array($sdreo))
   $sldksp = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gldo' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
   $reprop = mysqli_query($connection, $sldksp);
     $i = mysqli_fetch_array($reprop);
-
+    if(isset($i)){
     $ending = number_format($i['credit'], 2);
-
+    }
   
     $opso = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gldo' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
   $sdpo = mysqli_query($connection, $opso);
     $q = mysqli_fetch_array($sdpo);
-    
+    if(isset($q)){
     $pdospo = number_format($q['credit'], 2);
-
-      $total_fees_current = $ending;
-      $total_fees_last = $pdospo;
+    }
+      $total_fees_current += $ending;
+      $total_fees_last += $pdospo;
 
 }
 // Liabilities Report
@@ -168,8 +167,8 @@ $otgerliabi += $pso;
 $net_interest_income =$int_on_loans - $liabilities;
 $net_interest_income_last = $last_int_on_loans - $otgerliabi;
 // Total Revenue Income
-$ttl_revenue_curren = $net_interest_income + $curren_charge;
-$ttl_revenue_last = $net_interest_income_last + $last_mon_charge;
+$ttl_revenue_curren = $net_interest_income + $total_fees_current;
+$ttl_revenue_last = $net_interest_income_last + $total_fees_last;
 // Operating Expenses
 function fill_operation($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly)
 {
@@ -285,7 +284,7 @@ $out = '';
 $out = '
 <div class="card">
 <div class="card-header card-header-primary">
-  <h4 class="card-title">Operating Revenu</h4>
+  <h4 class="card-title">Operating Revenue</h4>
 </div>
 <div class="card-body">
   <table class="table">
