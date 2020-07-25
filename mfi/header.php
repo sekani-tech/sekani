@@ -398,11 +398,13 @@ input[type=number] {
                   <span class="badge badge-danger"><?php echo $fomd;?></span>
                   <?php }?>
                 </a>
+                <?php if($fomd > 0){?>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown-item" href="report_loan_view.php?view39=<?php echo $today;?>"><?php echo $dn;?> Loans matured today</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="report_loan_view.php?view39b=<?php echo $tomorrow; ?>"><?php echo $dfn;?> Loans due tommorow</a>
                 </div>
+                <?php }?>
               </li>
               <!-- user setup -->
               <li class="nav-item dropdown">

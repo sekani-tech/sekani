@@ -150,6 +150,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $man_ent_all = 0;
 }
 
+$fdop = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '0'";
+$fdos = mysqli_query($connection, $fdop);
+$pdfo = mysqli_num_rows($fdos);
+$int_id_no = $pdfo + 1;
 
 if ( isset($_POST['bank_rec']) ) {
     $bank_rec = 1;
@@ -166,7 +170,7 @@ if ( isset($_POST['bank_rec']) ) {
   $chat_acct = "INSERT INTO `acc_gl_account`
   (`int_id`, `branch_id`, `name`, `parent_id`, `gl_code`,
   `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `description`, `reconciliation_enabled`)
-  VALUES ('{$int_id}', '{$int_id_no}', '{$bnc_id}', '{$acct_name}',
+  VALUES ('{$int_id}', '{$bnc_id}', '{$acct_name}',
   '{$pid}', '{$gl_code}',
   '{$man_ent_all}', '{$acct_use}', '{$acct_type}', '{$desc}', '{$bank_rec}')";
 
@@ -200,9 +204,9 @@ if ( isset($_POST['bank_rec']) ) {
   } else {
       // alright check this out
   $chat_acct = "INSERT INTO `acc_gl_account`
-  (`int_id`, `branch_id`, `name`, `gl_code`,
+  (`int_id`, `int_id_no`, `branch_id`, `name`, `gl_code`,
   `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `description`, `reconciliation_enabled`)
-  VALUES ('{$int_id}', '{$bnc_id}', '{$acct_name}', '{$gl_code}',
+  VALUES ('{$int_id}', '{$int_id_no}', '{$bnc_id}', '{$acct_name}', '{$gl_code}',
   '{$man_ent_all}', '{$acct_use}', '{$acct_type}', '{$desc}', '{$bank_rec}')";
 
   $done = mysqli_query($connection, $chat_acct);

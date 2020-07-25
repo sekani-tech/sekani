@@ -12,11 +12,13 @@ if(isset($_POST['type'])){
         $sdf = "SELECT * FROM acc_gl_account WHERE int_id = '$sint' AND parent_id = '0' AND id = '$parent_id'";
         $odmw = mysqli_query($connection, $sdf);
         $sd = mysqli_fetch_array($odmw);
-        $ido = $sd['id'];
-        $piid = $ido * 100;
+        $ser = $sd['int_id_no'];
+        $fid = $sd['id'];
+        $ido = mysqli_num_rows($odmw);
+        $piid = $ser * 100;
 
-        if($ido){
-            $sdf = "SELECT * FROM acc_gl_account WHERE int_id = '$sint' AND classification_enum = '$dsd' AND parent_id = '$ido'";
+        if($piid){
+            $sdf = "SELECT * FROM acc_gl_account WHERE int_id = '$sint' AND classification_enum = '$dsd' AND parent_id = '$fid'";
             $odmw = mysqli_query($connection, $sdf);
             $spdo = mysqli_num_rows($odmw);
 
