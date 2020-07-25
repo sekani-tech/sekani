@@ -37,13 +37,12 @@ if($_FILES['int_logo']['name']) {
   office_address = '$office_address', website = '$website', office_phone = '$office_phone',
   pc_title = '$pc_title', pc_surname = '$pc_surname', pc_other_name = '$pc_other_name', pc_designation = '$pc_designation',
   pc_phone = '$pc_phone', pc_email = '$pc_email', img = '$img' sender_id = '$sender_id' WHERE int_id = '$int_id'";
-  $result = mysqli_prepare($connection, $query);
-  if(mysqli_stmt_execute($result)) {
+  $result = mysqli_query($connection, $query);
+  if($result) {
      echo header("location: ../institution.php");
     echo "<p>done</p>";
   } else {
       echo "nop";
   }
 }
-mysqli_close($connection);
 ?>

@@ -384,11 +384,11 @@ input[type=number] {
             <li class="nav-item dropdown">
             <?php
                 $today = date('Y-m-d');
-                $fom = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE duedate = '$today'");
+                $fom = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$today'");
                 $dn = mysqli_num_rows($fom);
 
                 $tomorrow = date( 'Y-m-d' , strtotime ( $today . ' + 1 days' ));
-                $fodm = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE duedate = '$tomorrow'");
+                $fodm = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$tomorrow'");
                 $dfn = mysqli_num_rows($fodm);
                 $fomd = $dfn + $dn;
                 ?>

@@ -133,7 +133,7 @@ if ($view_report == 1 || $view_report == "1") {
   $(document).ready(function(){
    swal({
     type: "error",
-    title: "Vault Authorization",
+    title: "Authorization Denied",
     text: "You Dont Have permission to View this report",
    showConfirmButton: false,
     timer: 2000
