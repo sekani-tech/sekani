@@ -134,8 +134,8 @@ while ($op = mysqli_fetch_array($sdreo))
     
     $pdospo = number_format($q['credit'], 2);
 
-      $total_fees_current += $ending;
-    $total_fees_last += $pdospo;
+      $total_fees_current = $ending;
+      $total_fees_last = $pdospo;
 
 }
 // Liabilities Report

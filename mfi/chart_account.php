@@ -391,34 +391,22 @@ if ( isset($_POST['bank_rec']) ) {
                     <div class="form-group">
                       <label >Account Type*</label>
                       <script>
-                        // coment on later
-                          $(document).ready(function(){
-                            $('#give').change(function() {
-                              var id = $(this).val();
-                              if (id == "") {
-                                document.getElementById('tit').readOnly = false;
-                                $('#tit').val("choose an account type");
-                              } else if (id == "1") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("1" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "2") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("2" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "3") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("3" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "4") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("4" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "5") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("5" + Math.floor(1000 + Math.random() * 9000));
-                              } else {
-                                $('#tit').val("Nothing");
-                              }
-                            });
-                          });
-                        </script>
+                    $(document).ready(function () {
+                      $('#input').on("click", function () {
+                        var start = $('#start').val();
+                        var end = $('#end').val();
+                        var branch = $('#branch_id').val();
+                        $.ajax({
+                          url: "ajax_post/reports_post/stmt_of_income.php", 
+                          method: "POST",
+                          data:{start:start, end:end, branch:branch},
+                          success: function (data) {
+                            $('#tit').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
                       <select class="form-control" name="acct_type" id="give">
                         <option value="">Select an option</option>
                         <option value="1">ASSET</option>
