@@ -707,6 +707,29 @@ if ($per_con == 1 || $per_con == "1") {
                <input type = "text" class="form-control" name = "des"/>
               </div>
             </div>
+            <div class ="col-md-6">
+              <div class="form-group">
+              <label class="bmd-label-floating">Account Type</label>
+              <select class="form-control" name="acct_type" id="give">
+                        <option value="">Select an option</option>
+                        <option value="1">ASSET</option>
+                        <option value="2">LIABILITY</option>
+                        <option value="3">EQUITY</option>
+                        <option value="4">INCOME</option>
+                        <option value="5">EXPENSE</option>
+                      </select>
+              </div>
+            </div>
+            <div class ="col-md-6">
+              <div class="form-group">
+              <label class="bmd-label-floating">Account Usage</label>
+              <select class="form-control" name="acct_type" id="acct_use">
+                        <option value="">Select an option</option>
+                        <option value="1">GL ACCOUNT</option>
+                        <option value="2">GL GROUP</option>
+                      </select>
+              </div>
+            </div>
             <div class="col-md-6">
             <?php
                   function fill_gl($connection) {
@@ -731,49 +754,65 @@ if ($per_con == 1 || $per_con == "1") {
              <input type="text" id="int_id" hidden  value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
               </div>
             </div>
+
             <script>
-                        // coment on later
-                          $(document).ready(function(){
-                            $('#give').change(function() {
-                              var id = $(this).val();
-                              if (id == "") {
-                                document.getElementById('tit').readOnly = false;
-                                $('#tit').val("choose an account type");
-                              } else if (id == "1") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("1" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "2") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("2" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "3") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("3" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "4") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("4" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "5") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("5" + Math.floor(1000 + Math.random() * 9000));
-                              } else {
-                                $('#tit').val("Nothing");
-                              }
-                            });
-                          });
-                        </script>
-            <div class ="col-md-6">
-              <div class="form-group">
-              <label class="bmd-label-floating">Account Type</label>
-              <select class="form-control" name="acct_type" id="give">
-                        <option value="">Select an option</option>
-                        <option value="1">ASSET</option>
-                        <option value="2">LIABILITY</option>
-                        <option value="3">EQUITY</option>
-                        <option value="4">INCOME</option>
-                        <option value="5">EXPENSE</option>
-                      </select>
-              </div>
-            </div>
+                    $(document).ready(function () {
+                      $('#give').on("change", function () {
+                        var type = $(this).val();
+                        var dso = $('#atu').val();
+                        var pid = $('#dropping').val();
+                        $.ajax({
+                          url: "ajax_post/chart_account_gl.php", 
+                          method: "POST",
+                          data:{type:type, dso:dso, pid:pid},
+                          success: function (data) {
+                            $('#tit').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                  <script>
+                    $(document).ready(function () {
+                      $('#atu').on("change", function () {
+                        var dso = $(this).val();
+                        var type = $('#give').val();
+                        var pid = $('#dropping').val();
+                        $.ajax({
+                          url: "ajax_post/chart_account_gl.php", 
+                          method: "POST",
+                          data:{type:type, dso:dso, pid:pid},
+                          success: function (data) {
+                            $('#tit').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                  <script>
+                    $(document).ready(function () {
+                      $('#dropping').on("change", function () {
+                        var dso = $('#atu').val();
+                        var type = $('#give').val();
+                        var pid = $(this).val();
+                        $.ajax({
+                          url: "ajax_post/chart_account_gl.php", 
+                          method: "POST",
+                          data:{type:type, dso:dso, pid:pid},
+                          success: function (data) {
+                            $('#tit').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
             <div class="col-md-6">
+                    <div id="tit" class="form-group">
+                      <label >GL Code*</label>
+                      <input type="text" style="text-transform: uppercase;" class="form-control" value="" name="gl_code" required readonly>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
             <div class="form-group">
                <label class="bmd-label-floating">Default</label>
               <select class="form-control" name= "default">
@@ -782,12 +821,6 @@ if ($per_con == 1 || $per_con == "1") {
               </select>
               </div>
             </div>  
-            <div class="col-md-6">
-                    <div class="form-group">
-                      <label >GL Code*</label>
-                      <input type="text" id="tit" style="text-transform: uppercase;" class="form-control" value="" name="gl_code" required readonly>
-                    </div>
-                  </div>
             <div class="col-md-6">
             <div class="form-check form-check-inline">
               <label class="form-check-label">

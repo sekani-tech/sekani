@@ -8,11 +8,11 @@ if (isset($_POST["gl"]) && isset($_POST["ch"]))
     $int_id = $_POST["id"];
     if($_POST["gl"] != '' && $_POST["ch"] != '')
     {
-        $acct_use = $_POST["ch"];
-
+        
         function fill_gl($connection) {
+          $acct_use = $_POST["ch"];
           $sint_id = $_SESSION["int_id"];
-          $org = "SELECT * FROM acc_gl_account WHERE (int_id = '$sint_id' AND (parent_id = '' OR parent_id = '0'))";
+          $org = "SELECT * FROM acc_gl_account WHERE classification_enum = '$acct_use' AND (int_id = '$sint_id' AND (parent_id = '' OR parent_id = '0'))";
           $res = mysqli_query($connection, $org);
           $out = '';
           while ($row = mysqli_fetch_array($res))

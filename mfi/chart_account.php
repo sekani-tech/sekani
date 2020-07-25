@@ -134,7 +134,9 @@ else if (isset($_GET["message6"])) {
 <!-- POST INTO -->
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $efd = $_POST['submit'];
   // on her i will be posting data
+
   $acct_name = $_POST['acct_name'];
   $gl_code = $_POST['gl_code'];
   $acct_type = $_POST['acct_type'];
@@ -519,7 +521,7 @@ if ( isset($_POST['bank_rec']) ) {
                     <div class="form-group">    
                     <div>
                     <label >GL Group</label>
-                  <select  id="dropping" class="form-control" name="parent_id" id="pid">
+                  <select  id="dropping" class="form-control" name="parent_id">
                     <option value="0">choose group</option>
                     <?php echo fill_gl($connection)?>
                   </select>
@@ -574,7 +576,7 @@ if ( isset($_POST['bank_rec']) ) {
                 </div>
                 <div class="clearfix"></div>
                   <div style="float:right;">
-                        <button type="submit" class="btn btn-primary pull-right">Add</button>
+                        <button type="submit" value="enter" class="btn btn-primary pull-right">Add</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                       </div>
                 </form>
