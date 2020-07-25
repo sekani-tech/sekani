@@ -38,7 +38,7 @@ if(isset($_POST['type'])){
         }
     }
     $out = '
-    <label>GL Coding*</label>
+    <label>GL Code*</label>
     <input type="text" name="gl_code" style="text-transform: uppercase;" id="" class="form-control" value="'.$gl_code.'" readonly>
     ';
           echo $out;
