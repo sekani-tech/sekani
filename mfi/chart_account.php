@@ -140,6 +140,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $acct_type = $_POST['acct_type'];
   $ext_id = $_POST['ext_id'];
   $acct_use = $_POST['acct_use'];
+
+  $dioi = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '0'";
+  $fdsd = mysqli_query($connection, $dioi);
+  $fdu = mysqli_num_rows($fdsd);
+  $int_id_no = $fdu + 1;
   if ( isset($_POST['man_ent']) ) {
     $man_ent_all = 1;
 } else {
@@ -160,9 +165,9 @@ if ( isset($_POST['bank_rec']) ) {
     $pid = $_POST['parent_id'];
     // alright check this out
   $chat_acct = "INSERT INTO `acc_gl_account`
-  (`int_id`, `branch_id`, `name`, `parent_id`, `gl_code`,
+  (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `gl_code`,
   `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `description`, `reconciliation_enabled`)
-  VALUES ('{$int_id}', '{$bnc_id}', '{$acct_name}',
+  VALUES ('{$int_id}', '{$int_id_no}', '{$bnc_id}', '{$acct_name}',
   '{$pid}', '{$gl_code}',
   '{$man_ent_all}', '{$acct_use}', '{$acct_type}', '{$desc}', '{$bank_rec}')";
 
@@ -196,9 +201,9 @@ if ( isset($_POST['bank_rec']) ) {
   } else {
       // alright check this out
   $chat_acct = "INSERT INTO `acc_gl_account`
-  (`int_id`, `branch_id`, `name`, `gl_code`,
+  (`int_id`, `int_id_no`, `branch_id`, `name`, `gl_code`,
   `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `description`, `reconciliation_enabled`)
-  VALUES ('{$int_id}', '{$bnc_id}', '{$acct_name}', '{$gl_code}',
+  VALUES ('{$int_id}', '{$int_id_no}', '{$bnc_id}', '{$acct_name}', '{$gl_code}',
   '{$man_ent_all}', '{$acct_use}', '{$acct_type}', '{$desc}', '{$bank_rec}')";
 
   $done = mysqli_query($connection, $chat_acct);

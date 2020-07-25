@@ -20,10 +20,10 @@ if(isset($_POST['type'])){
             $odmw = mysqli_query($connection, $sdf);
             $spdo = mysqli_num_rows($odmw);
 
-            $gl_code = ($dsd * 10000) + $piid + ($spdo + 1);
+            $gl_code = ($dsd * 10).$piid+($spdo + 1);
         }
         else{
-            $gl_code = ($dsd * 10000) + $piid + ($spdo + 1);
+            $gl_code = ($dsd * 10).$piid+($spdo + 1);
         }
     }
     elseif($acc_use == '2'){
@@ -31,10 +31,10 @@ if(isset($_POST['type'])){
         $odmw = mysqli_query($connection, $sdf);
         $spdo = mysqli_num_rows($odmw);
         if($spdo){
-            $gl_code = ($dsd * 10000) + (($spdo + 1) * 100);
+            $gl_code = ($dsd * 10).(($spdo + 1) * 100);
         }
         else{
-            $gl_code = ($dsd * 10000) + 100;
+            $gl_code = ($dsd * 10) + 100;
         }
     }
     $out = '
