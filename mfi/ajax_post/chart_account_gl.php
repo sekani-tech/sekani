@@ -9,7 +9,7 @@ if(isset($_POST['type']) && isset($_POST['dso'])){
     $acc_use = $_POST['dso'];
     $parent_id = $_POST['pid'];
     if($acc_use == '1'){
-        $sdf = "SELECT * FROM acc_gl_account WHERE int_id = '$sint' AND parent_id = '0' AND id = '$parent_id'";
+        $sdf = "SELECT * FROM acc_gl_account WHERE int_id = '$sint' AND classification_enum = '$dsd' AND id = '$parent_id'";
         $odmw = mysqli_query($connection, $sdf);
         $sd = mysqli_fetch_array($odmw);
         $ser = $sd['int_id_no'];
@@ -19,8 +19,8 @@ if(isset($_POST['type']) && isset($_POST['dso'])){
         if($we == '0'){
             $piid == $ser + 100;
         }
-        elseif($we != 0){
-            $piid == $ser * 100;
+        else{
+            $piid == 100;
         }
 
         if($piid){
