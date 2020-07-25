@@ -25,6 +25,7 @@ if (isset($_GET["edit"])) {
     $status = $n['employee_status'];
     $org_role = $n['org_role'];
     $img = $n['img'];
+    $branch_id = $n['branch_id'];
     $us_id = $n['user_id'];
     $imagefileL = $n['img'];
 
@@ -37,6 +38,9 @@ if (isset($_GET["edit"])) {
     $usertype = $pi['usertype'];
     $username = $pi['username'];
   }
+  $dsido = mysqli_query($connection, "SELECT * FROM `branch` WHERE id = '$branch_id' && int_id = '$sessint_id'");
+  $u = mysqli_fetch_array($dsido);
+  $bname = $u['name'];
 
   if($usertype == 'staff'){
     $type = 'Staff';
@@ -98,7 +102,7 @@ if (isset($_GET["edit"])) {
                           <span class="help-block" style="color: red;"><div id="warnuser"></div></span>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Display name</label>
                           <input type="text" name="display_name" value="<?php echo $display_name; ?>" class="form-control">
@@ -108,6 +112,15 @@ if (isset($_GET["edit"])) {
                         <div class="form-group">
                           <label class="bmd-label-floating">Email address</label>
                           <input type="email" name="email" value="<?php echo $email; ?>" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Branch</label>
+                          <select name="branch_id" value="<?php echo $email; ?>" class="form-control">
+                          <option hidden value = "<?php echo $branch_id;?>"><?php echo $bname;?></option>
+                          <?php echo fill_branch($connection)?>
+                          </select>
                         </div>
                       </div>
                     </div>
@@ -151,6 +164,19 @@ if (isset($_GET["edit"])) {
                   while ($row = mysqli_fetch_array($res))
                   {
                     $out .= '<option value="'.$row["id"].'">' .$row["role"]. '</option>';
+                  }
+                  return $out;
+                  }
+
+                  function fill_branch($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM branch WHERE int_id = '$sint_id' ORDER BY id ASC";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">' .$row["name"]. '</option>';
                   }
                   return $out;
                   }

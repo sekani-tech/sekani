@@ -25,24 +25,24 @@ $int_cal_type = $_POST['int_cal_type'];
 $int_cal_days = $_POST['int_cal_days'];
 $auto_op_bal = $_POST['auto_op_bal'];
 $min_balance_cal = $_POST['min_balance_cal'];
-$max_pve_bal = $_POST['max_pve_bal'];
-$min_nve_bal = $_POST['min_nve_bal'];
+// $max_pve_bal = $_POST['max_pve_bal'];
+// $min_nve_bal = $_POST['min_nve_bal'];
 $lock_per_freq = $_POST['lock_per_freq'];
 $lock_per_freq_time = $_POST['lock_per_freq_time'];
 $allover = $_POST['allover'];
 $trk_dormancy = $_POST['trk_dormancy'];
-$with_notice = $_POST['with_notice'];
+// $with_notice = $_POST['with_notice'];
 
 // Query to Input data into table
 $fomd = "INSERT INTO `savings_product` (`int_id`, `branch_id`, `name`, `short_name`, `description`,
  `currency_code`, `currency_digits`, `nominal_annual_interest_rate`, `interest_compounding_period_enum`,
   `interest_posting_period_enum`, `interest_calculation_type_enum`, `interest_calculation_days_in_year_type_enum`,
    `lockin_period_frequency`, `lockin_period_frequency_enum`, `accounting_type`,
-   `allow_overdraft`, `is_dormancy_tracking_active`, `enable_withdrawal_notice`, `min_balance_for_interest_calculation`, `savings_cat`, `autocreate`,
-    `min_required_balance`, `minimum_negative_balance`, `maximum_positve_balance`) 
+   `allow_overdraft`, `is_dormancy_tracking_active`, `min_balance_for_interest_calculation`, `savings_cat`, `auto_create`,
+    `min_required_balance`) 
         VALUES ('{$sessint_id}', '{$branch_id}', '{$name}', '{$short_name}', '{$description}', '{$currency}', '2', '{$nominal_int_rate}', '{$compound_period}', '{$int_post_type}'
-        , '{$int_cal_type}', '{$int_cal_days}', '{$lock_per_freq}', '{$lock_per_freq_time}', '{$product_type}', '{$allover}', '{$trk_dormancy}', '{$with_notice}', '{$min_balance_cal}'
-        , '{$saving_cat}', '{$autocreate}', '{$auto_op_bal}', '{$min_nve_bal}', '{$max_pve_bal}')";
+        , '{$int_cal_type}', '{$int_cal_days}', '{$lock_per_freq}', '{$lock_per_freq_time}', '{$product_type}', '{$allover}', '{$trk_dormancy}', '{$min_balance_cal}'
+        , '{$saving_cat}', '{$autocreate}', '{$auto_op_bal}')";
         $dona = mysqli_query($connection, $fomd);
 
         if($dona){
@@ -122,15 +122,16 @@ $fomd = "INSERT INTO `savings_product` (`int_id`, `branch_id`, `name`, `short_na
                         echo header ("Location: ../mfi/products_config.php?message2=$randms");
                         // echo header("location: ../mfi/client.php");
                     }
-                                        // if ($connection->error) {
-                    //     try {   
-                    //         throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $msqli->errno);   
-                    //     } catch(Exception $e ) {
-                    //         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-                    //         echo nl2br($e->getTraceAsString());
-                    //     }
-                    // }
+                
                 }
+            }
+        }
+        if ($connection->error) {
+            try {   
+                throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $msqli->errno);   
+            } catch(Exception $e ) {
+                echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+                echo nl2br($e->getTraceAsString());
             }
         }
 ?>
