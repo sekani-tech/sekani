@@ -52,9 +52,15 @@
                           <input type="text" readonly value="<?php echo $int_id; ?>" class="form-control" name="int_id">
                         </div>
                       </div>
-                      <div class="col-md-11">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Name</label>
+                          <input type="text" value="<?php echo $int_name; ?>" class="form-control" name="int_name">
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Full Name</label>
                           <input type="text" value="<?php echo $int_name; ?>" class="form-control" name="int_name">
                         </div>
                       </div>

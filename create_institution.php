@@ -15,10 +15,16 @@
                 <div class="card-body">
                   <form action="functions/institution_data.php" method="POST" enctype="multipart/form-data">
                     <div class="row">
-                      <div class="col-md-12">
+                      <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Name</label>
+                          <label class="bmd-label-floating">Short Name</label>
                           <input type="text" class="form-control" name="int_name">
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Full Name</label>
+                          <input type="text" class="form-control" name="int_full">
                         </div>
                       </div>
                       <div class="col-md-3">

@@ -6,6 +6,7 @@ session_start();
 <!-- another for inputting the data -->
 <?php
 $int_name = $_POST['int_name'];
+$int_full = $_POST['int_full'];
 $rcn = $_POST['rcn'];
 $lga = $_POST['lga'];
 $int_state = $_POST['int_state'];
@@ -42,20 +43,34 @@ if (move_uploaded_file($_FILES['int_logo']['tmp_name'], "instimg/" . $imagex)) {
 } else {
   $msg = "Image Failed";
 }
-$int_no = "SELECT * FROM institutions";
-$eddd = mysqli_query($connection, $int_no);
-$mw = mysqli_num_rows($eddd);
-$intnumer = $mw + 1;
 
-$query = "INSERT INTO institutions (int_name, rcn, lga, int_state, email,
+$query = "INSERT INTO institutions (int_name, int_full, rcn, lga, int_state, email,
 office_address, website, office_phone, pc_title, pc_surname, pc_other_name,
-pc_designation, pc_phone, pc_email, img, sender_id) VALUES ('{$int_name}','{$rcn}',
+pc_designation, pc_phone, pc_email, img, sender_id) VALUES ('{$int_name}','{$int_full}','{$rcn}',
 '{$lga}', '{$int_state}', '{$email}', '{$office_address}', '{$website}', '{$office_phone}',
 '{$pc_title}', '{$pc_surname}', '{$pc_other_name}', '{$pc_designation}',
 '{$pc_phone}', '{$pc_email}', '{$imagex}', '{$sender_id}')";
 // add
 $result = mysqli_query($connection, $query);
 if ($result) {
+    $dsf = mysqli_query($connection, "SELECT * FROM institutions WHERE int_name = '$int_name'");
+    $df = mysqli_fetch_array($dsf);
+    $intid = $df['int_id'];
+
+    $riedfoifo = "INSERT INTO `org_role` (`int_id`, `role`, `description`, `permission`)
+   VALUES ('{$intid}', 'super user', '', '1')";
+  $fdrty = mysqli_query($connection, $riedfoifo);
+    if($fdrty){
+    $dsid = "SELECT * FROM org_role WHERE int_id = '$intid' AND role = 'super user'";
+    $perv = mysqli_query($connection, $dsid);
+    $di = mysqli_fetch_array($perv);
+    $org_ole = $di['id'];
+
+    $fdopf = "INSERT INTO `permission` (`int_id`, `role_id`, `acc_op`, `acc_update`, `trans_appv`, `trans_post`, `loan_appv`, `acct_appv`,
+        `staff_cabal`, `valut`, `vault_email`, `view_report`, `view_dashboard`, `configuration`) 
+        VALUES ('$intid', '$org_ole', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1')";
+        $fdpoijf = mysqli_query($connection, $fdopf);
+if($fdpoijf){
         echo header("Location: ../institution.php");
     // if ($connection->error) {
     //     try {   
@@ -71,5 +86,13 @@ if ($result) {
 } else {
     // Display an error message
     echo "<p>Bad</p>";
+}
+    }
+else{
+    echo "<p>insert org role not work</p>";
+}
+}
+else{
+    echo "<p>insert institution not work</p>";
 }
 ?>
