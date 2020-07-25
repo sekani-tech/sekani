@@ -123,7 +123,7 @@ elseif($class_enum  == 5){
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >GL Code</label>
-                      <input type="text" value="<?php echo $gl_code; ?>" readonly style="text-transform: uppercase;" class="form-control" name="gl_code" required>
+                      <input type="text" value="<?php echo $gl_code; ?>"  style="text-transform: uppercase;" class="form-control" name="gl_code" required>
                     </div>
                   </div>
                   <div class="col-md-4">
