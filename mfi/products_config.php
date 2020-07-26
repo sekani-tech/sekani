@@ -819,7 +819,7 @@ if ($per_con == 1 || $per_con == "1") {
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
-                        <?php $row["id"]; ?>
+                        <?php $dop = $row["id"]; ?>
                           <th><?php echo $row["value"]; ?></th>
                           <th><?php echo $row["description"]; ?></th>
                           <?php 
@@ -840,7 +840,7 @@ if ($per_con == 1 || $per_con == "1") {
                           }
                           ?>
                          <th><?php echo $cash; ?></th>
-                          <td><a href="editpay_type.php?edit='<?php echo $row['id'];?>'" class="btn btn-info">Edit</a></td>
+                          <td><a href="editpay_type.php?edit=<?php echo $dop;?>" class="btn btn-info">Edit</a></td>
                           </tr>
                         <?php }
                           }

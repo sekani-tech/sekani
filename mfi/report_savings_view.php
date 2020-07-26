@@ -7,6 +7,18 @@ $destination = "report_savings.php";
 <?php
  if (isset($_GET["view10"])) {
 ?>
+<?php
+    $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2'";
+    $result = mysqli_query($connection, $query);
+    while($d = mysqli_fetch_array($result)){
+      $clid = $d['id'];
+      $don = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$clid'");
+      $ew = mysqli_fetch_array($don);
+      $accountb = $ew['account_balance_derived'];
+      $ttlacc +=$accountb;
+    }
+    
+?>
 <!-- Content added here -->
 <div class="content">
         <div class="container-fluid">
@@ -33,6 +45,13 @@ $destination = "report_savings.php";
                 <div class="card-body">
                 <div class="form-group">
                 <form method = "POST" action = "../composer/savings_account.php">
+                <div class="col-md-6">
+                <input hidden name ="acc_bal" type="text" value="<?php echo $ttlacc;?>"/>
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Total Account Balances</label>
+                          <input type="text" class="form-control" value="<?php echo number_format($ttlacc, 2); ?>" name="">
+                        </div>
+                      </div>
               <button type="submit" id="clientlist" class="btn btn-primary pull-left">Download PDF</button>
               <script>
               $(document).ready(function () {
@@ -50,6 +69,7 @@ $destination = "report_savings.php";
      </script>
             </form>
                 </div>
+                
                   <div class="table-responsive">
                     <table id="tabledt" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
@@ -140,7 +160,7 @@ $destination = "report_savings.php";
                           ?>
                           <th><?php echo $acc; ?></th>
                           <?php
-                          $don = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$idd'");
+                          $don = mysqli_query($connection, "SELECT SUM(account_balance_derived) AS account_balance_derived FROM account WHERE client_id = '$idd'");
                           $ew = mysqli_fetch_array($don);
                           $accountb = $ew['account_balance_derived'];
                           ?>
