@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Edit Branch";
+$page_title = "Edit Payment Type";
 $destination = "branch.php";
     include("header.php");
 
@@ -18,7 +18,7 @@ $destination = "branch.php";
     $gl_code = $n['gl_code'];
     $is_bank = $n['is_bank'];
     $is_cash = $n['is_cash_payment'];
-    $def = $n['default'];
+    $def = $n['order_position'];
 
     if($is_bank == '1'){
         $check = "checked";
@@ -30,11 +30,20 @@ $destination = "branch.php";
     }else{
         $dheeck = "unchecked";
     }
+    if($def == '1'){
+        $deff = "Yes";
+    }else{
+        $deff = "No";
+    }
 
     $coe = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$gl_code' AND int_id = '$sessint_id'");
     $do =mysqli_fetch_array($coe);
     $p_id =$do['parent_id'];
     $gl_name = $do['name'];
+
+    $sdpo = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE id = '$p_id' AND int_id = '$sessint_id'");
+    $do =mysqli_fetch_array($sdpo);
+    $p_id_name =$do['name'];
   }
 }
 ?>
@@ -50,7 +59,7 @@ $destination = "branch.php";
                   <p class="card-category">Fill important Data</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/branch_update.php" method="post">
+                  <form action="../functions/paytype_update.php" method="post">
                     <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -62,12 +71,13 @@ $destination = "branch.php";
                         <div class="form-group">
                           <label class="bmd-label-floating">Name</label>
                           <input type="text" class="form-control" value="<?php echo $name; ?>" name="name">
+                          <input hidden type="text" class="form-control" value="<?php echo $sessint_id; ?>" name="int_id">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Description</label>
-                          <input type="text" class="form-control" value="<?php echo $email; ?>" name="email">
+                          <input type="text" class="form-control" value="<?php echo $desc; ?>" name="desc">
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -88,7 +98,7 @@ $destination = "branch.php";
               <div class="form-group">
                <label class="bmd-label-floating">GL Group</label>
                <select name="gl_type" id="role" class="form-control">
-                 <option value="0">choose a gl type</option>
+                 <option value="<?php echo $p_id;?>"><?php echo $p_id_name;?></option>
                 <?php echo fill_gl($connection); ?>
              </select>
              <input type="text" id="int_id" hidden  value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
@@ -113,13 +123,18 @@ $destination = "branch.php";
                     <div class="form-group">
                       <label class="bmd-label-floating">GL Account</label>
                       <select id ="tit" class="form-control" name= "gl_code">
+                      <option hidden value="<?php echo $gl_code;?>"><?php echo $gl_name;?></option>
                       </select>    
                     </div>
                   </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Default</label>
-                          <input type="text" class="form-control" value="<?php echo $location; ?>" name="location">
+                          <select id ="tit" class="form-control" name= "default">
+                            <option hidden value="<?php echo $def;?>"><?php echo $deff;?></option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>                        
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -149,7 +164,7 @@ $destination = "branch.php";
                         </div>
                         </div>
                         </div>
-                    <button type="submit" class="btn btn-primary pull-right">Update Branch</button>
+                    <button type="submit" class="btn btn-primary pull-right">Update</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>
@@ -159,7 +174,6 @@ $destination = "branch.php";
           <!-- /content -->
         </div>
       </div>
-
 <?php
 
     include("footer.php");

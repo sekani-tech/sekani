@@ -170,6 +170,46 @@ else if (isset($_GET["message5"])) {
         $_SESSION["lack_of_intfund_$key"] = 0;
         }
         }
+        else if (isset($_GET["message9"])) {
+          $key = $_GET["message9"];
+          // $out = $_SESSION["lack_of_intfund_$key"];
+          $tt = 0;
+          if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+          echo '<script type="text/javascript">
+          $(document).ready(function(){
+              swal({
+                  type: "success",
+                  title: "Success",
+                  text: "Payment Type Updated!",
+                  showConfirmButton: false,
+                  timer: 2000
+              })
+          });
+          </script>
+          ';
+          $_SESSION["lack_of_intfund_$key"] = 0;
+          }
+          }
+          else if (isset($_GET["message10"])) {
+            $key = $_GET["message9"];
+            // $out = $_SESSION["lack_of_intfund_$key"];
+            $tt = 0;
+            if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+            echo '<script type="text/javascript">
+            $(document).ready(function(){
+                swal({
+                    type: "error",
+                    title: "Error",
+                    text: "Error Updating Payment Type!",
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            });
+            </script>
+            ';
+            $_SESSION["lack_of_intfund_$key"] = 0;
+            }
+            }
 ?>
 <?php
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
