@@ -183,15 +183,8 @@ else if (isset($_GET["message5"])) {
       $bran = $_SESSION["branch_id"];
       $desc = $_POST['des'];
       $default = $_POST['default'];
-      $gl_type = $_POST['gl_type'];
       $gl_code = $_POST['gl_code'];
 
-      $resu = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '$gl_type'";
-      $relt = mysqli_query($connection, $resu);
-      if ($relt) {
-        $inr = mysqli_num_rows($relt);
-        $gl_o = $inr + 1;
-        $gl_no = '.'.$gl_o.'.';
     }
     if(isset($_POST['is_bank'])){
       $is_bank = 1;
@@ -203,13 +196,7 @@ else if (isset($_GET["message5"])) {
       }else{
         $is_cash = 0;
       }
-      $glq ="INSERT INTO `acc_gl_account`(`int_id`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`,
-      `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`,
-       `organization_running_balance_derived`, `last_entry_id_derived`) VALUES ('{$sessint_id}', '{$bran}', '{$value}', '{$gl_type}',
-        '{$gl_no}', '{$gl_code}', '0', '1', '1', '{$class}', NULL, '{$desc}', '0', '0.00', NULL)";
-        $glw = mysqli_query($connection, $glq);
      
-      if($glw){
         $wen = "INSERT INTO payment_type (int_id, branch_id, value, description, gl_code, is_cash_payment, is_bank, order_position)
         VALUES('{$sesint_id}', '{$bran}', '{$value}', '{$desc}', '{$gl_code}', '{$is_cash}', '{$is_bank}', '{$default}')";
         $quoery = mysqli_query($connection, $wen);
@@ -242,9 +229,7 @@ else if (isset($_GET["message5"])) {
         </script>
         ';
       }
-      }
     }
-  }
 ?>
 <?php
 // right now we will program
@@ -707,29 +692,6 @@ if ($per_con == 1 || $per_con == "1") {
                <input type = "text" class="form-control" name = "des"/>
               </div>
             </div>
-            <div class ="col-md-6">
-              <div class="form-group">
-              <label class="bmd-label-floating">Account Type</label>
-              <select class="form-control" name="acct_type" id="give">
-                        <option value="">Select an option</option>
-                        <option value="1">ASSET</option>
-                        <option value="2">LIABILITY</option>
-                        <option value="3">EQUITY</option>
-                        <option value="4">INCOME</option>
-                        <option value="5">EXPENSE</option>
-                      </select>
-              </div>
-            </div>
-            <div class ="col-md-6">
-              <div class="form-group">
-              <label class="bmd-label-floating">Account Usage</label>
-              <select class="form-control" name="acct_type" id="acct_use">
-                        <option value="">Select an option</option>
-                        <option value="1">GL ACCOUNT</option>
-                        <option value="2">GL GROUP</option>
-                      </select>
-              </div>
-            </div>
             <div class="col-md-6">
             <?php
                   function fill_gl($connection) {
@@ -754,51 +716,14 @@ if ($per_con == 1 || $per_con == "1") {
              <input type="text" id="int_id" hidden  value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
               </div>
             </div>
-
             <script>
                     $(document).ready(function () {
-                      $('#give').on("change", function () {
-                        var type = $(this).val();
-                        var dso = $('#atu').val();
-                        var pid = $('#dropping').val();
+                      $('#role').on("change", function () {
+                        var ch = $('#role').val();
                         $.ajax({
-                          url: "ajax_post/chart_account_gl.php", 
+                          url: "ajax_post/glss.php", 
                           method: "POST",
-                          data:{type:type, dso:dso, pid:pid},
-                          success: function (data) {
-                            $('#tit').html(data);
-                          }
-                        })
-                      });
-                    });
-                  </script>
-                  <script>
-                    $(document).ready(function () {
-                      $('#atu').on("change", function () {
-                        var dso = $(this).val();
-                        var type = $('#give').val();
-                        var pid = $('#dropping').val();
-                        $.ajax({
-                          url: "ajax_post/chart_account_gl.php", 
-                          method: "POST",
-                          data:{type:type, dso:dso, pid:pid},
-                          success: function (data) {
-                            $('#tit').html(data);
-                          }
-                        })
-                      });
-                    });
-                  </script>
-                  <script>
-                    $(document).ready(function () {
-                      $('#dropping').on("change", function () {
-                        var dso = $('#atu').val();
-                        var type = $('#give').val();
-                        var pid = $(this).val();
-                        $.ajax({
-                          url: "ajax_post/chart_account_gl.php", 
-                          method: "POST",
-                          data:{type:type, dso:dso, pid:pid},
+                          data:{ch:ch},
                           success: function (data) {
                             $('#tit').html(data);
                           }
@@ -807,9 +732,10 @@ if ($per_con == 1 || $per_con == "1") {
                     });
                   </script>
             <div class="col-md-6">
-                    <div id="tit" class="form-group">
-                      <label >GL Code*</label>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" value="" name="gl_code" required readonly>
+                    <div class="form-group">
+                      <label class="bmd-label-floating">GL Account</label>
+                      <select id ="tit" class="form-control" name= "gl_code">
+                      </select>    
                     </div>
                   </div>
                   <div class="col-md-6">

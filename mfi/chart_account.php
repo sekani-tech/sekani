@@ -136,7 +136,7 @@ else if (isset($_GET["message6"])) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $efd = $_POST['submit'];
   // on her i will be posting data
-
+if($efd == "gl_accounto"){
   $acct_name = $_POST['acct_name'];
   $gl_code = $_POST['gl_code'];
   $acct_type = $_POST['acct_type'];
@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $man_ent_all = 0;
 }
 
-$fdop = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '0'";
+$fdop = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '$acct_type' AND parent_id = '0'";
 $fdos = mysqli_query($connection, $fdop);
 $pdfo = mysqli_num_rows($fdos);
 $int_id_no = $pdfo + 1;
@@ -239,6 +239,20 @@ if ( isset($_POST['bank_rec']) ) {
  </script>';
   }
   }
+}
+else {
+  echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+         type: "info",
+          title: "CHART OF ACCOUNT",
+            text: "nothing added",
+         showConfirmButton: false,
+       timer: 2000
+        })
+        });
+ </script>';
+}
 }
 ?>
 <!-- DONE POSTING -->
@@ -576,7 +590,7 @@ if ( isset($_POST['bank_rec']) ) {
                 </div>
                 <div class="clearfix"></div>
                   <div style="float:right;">
-                        <button type="submit" value="enter" class="btn btn-primary pull-right">Add</button>
+                        <button type="submit" name="submit" value="gl_accounto" class="btn btn-primary pull-right">Add</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                       </div>
                 </form>

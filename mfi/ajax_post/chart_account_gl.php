@@ -9,32 +9,25 @@ if(isset($_POST['type']) && isset($_POST['dso'])){
     $acc_use = $_POST['dso'];
     $parent_id = $_POST['pid'];
     if($acc_use == '1'){
-        $sdf = "SELECT * FROM acc_gl_account WHERE int_id = '$sint' AND classification_enum = '$dsd' AND id = '$parent_id'";
+        $pdro = "SELECT * FROM acc_gl_account WHERE int_id = '$sint' AND classification_enum = '$dsd' AND id = '$parent_id'";
+        $pdok = mysqli_query($connection, $pdro);
+        $s = mysqli_fetch_array($pdok);
+        $int_no = $s['int_id_no'];
+        if($int_no == 0){
+            $dsos = $int_no + 100;
+        }else{
+            $dsos = $int_no * 100;
+        }
+        
+
+        $sdf = "SELECT * FROM acc_gl_account WHERE int_id = '$sint' AND classification_enum = '$dsd' AND parent_id = '$parent_id'";
         $odmw = mysqli_query($connection, $sdf);
         $sd = mysqli_fetch_array($odmw);
-        $ser = $sd['int_id_no'];
-        $fid = $sd['id'];
         $ido = mysqli_num_rows($odmw);
-        echo '$ido is '.$ser;
-        $we = $ido * 100;
-        if($we == '0'){
-            $piid == $ido + 100;
-        }
-        else{
-            $piid == 100;
-        }
+        $we = ($ido + 1);
 
-        if($piid){
-            $sdf = "SELECT * FROM acc_gl_account WHERE int_id = '$sint' AND classification_enum = '$dsd' AND parent_id = '$fid'";
-            $odmw = mysqli_query($connection, $sdf);
-            $spdo = mysqli_num_rows($odmw);
-
-            $gl_code = ($dsd * 10).$piid + ($spdo + 1);
+        $gl_code = ($dsd * 10).($dsos + $we);
         }
-        else{
-            $gl_code = ($dsd * 10).'100';
-        }
-    }
     elseif($acc_use == '2'){
         $sdf = "SELECT * FROM acc_gl_account WHERE int_id = '$sint' AND classification_enum = '$dsd' AND parent_id = '0'";
         $odmw = mysqli_query($connection, $sdf);
@@ -51,8 +44,8 @@ if(isset($_POST['type']) && isset($_POST['dso'])){
     <input type="text" name="gl_code" style="text-transform: uppercase;" id="" class="form-control" value="'.$gl_code.'" readonly>
     ';
           echo $out;
-    }
-    else {
-        echo 'ID not posted';
-    }
+}
+else{
+    echo 'id not posted';
+}
 ?>
