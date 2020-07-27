@@ -1,32 +1,20 @@
 <?php
-// something
+// making a good move
 include("../../../functions/connect.php");
-// Try the sms api
-$int_id = $_POST["int_id"];
-$branch_id = $_POST["branch_id"];
-$send_id = $_POST["sender_id"];
+// porty
+session_start();
+$int_id = $_SESSION["int_id"];
+$branch_id = $_SESSION["branch_id"];
+$network = $_POST["net"];
 $phone = $_POST["phone"];
-$msg = $_POST["msg"];
-$client_id = $_POST["client_id"];
-$account_no = $_POST["account_no"];
-// quick test
+$amount = $_POST["amt"];
+// MAD
 $digits = 9;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+// end the code
 // end
-if ($send_id != "" && $phone != "" && $msg != "" && $int_id != "" && $branch_id != "") {
-    // AIIT MAKING A 
-// // echo $int_id;
-// $bvn = $_POST["bvn"];
-// $dob = $_POST["dob"];
-// $check_DOB = date('d-F-y', strtotime($dob));
-// MOVING TO THE NEXT
-$phone_length = strlen($phone);
-// CHECK
-if ($phone_length == 10) {
-//    make phone have number
-$phone = "234".$phone;
-}
-    // sender ID
+if ($network != "" && $phone != "" && $amount != "" && $int_id != "" && $branch_id != "") {
+    // finnin
     $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
         $qw = mysqli_fetch_array($sql_fund);
         $balance = $qw["running_balance"];
@@ -34,13 +22,13 @@ $phone = "234".$phone;
         $total_int_profit = $qw["int_profit"];
         $total_sekani_charge = $qw["sekani_charge"];
         $total_merchant_charge = $qw["merchant_charge"];
-        if ($balance >= 4) {
-            // start
-            // make it possible
-    $curl = curl_init();
+        // test
+        if ($balance >= $amount) {
+            // STAT API
+            $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => "https://hordecall.net/sms/postSms.php",
+  CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -48,14 +36,18 @@ curl_setopt_array($curl, array(
   CURLOPT_FOLLOWLOCATION => true,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "POST",
-  CURLOPT_POSTFIELDS => "sender_id=$send_id&mobile=$phone&msg=$msg&msg_id=$randms&username=2348091141288&password=password@111",
   CURLOPT_HTTPHEADER => array(
-    "Content-Type: application/x-www-form-urlencoded"
+    "serviceCode: QAB",
+    "phone: $phone",
+    "amount: $amount",
+    "vend_type: VTU",
+    "network: $network",
+    "request_id: $randms",
+    "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30"
   ),
 ));
-// checking up the control
-$response = curl_exec($curl);
 // success
+$response = curl_exec($curl);
 $err = curl_close($curl);
 if ($err) {
     //    echo "cURL Error #:" . $err;
@@ -76,49 +68,36 @@ if ($err) {
     ';
     echo "NO INTERNET CONNECTION";
     } else {
-// echo $response;
+        // echo $response;
 $obj = json_decode($response, TRUE);
-$status = $obj['response'];
-if ($status != "") {
-    // make a post online
-    $cal_bal = $balance - 4;
-    $cal_with = $total_with + 4;
+$status = $obj['status'];
+$msg = $obj['message'];
+// make a move
+if ($status == "200" && $status != "") {
+    // alright
+    $cal_bal = $balance - $amount;
+    $cal_with = $total_with + $amount;
     $cal_sek = $total_sekani_charge + 0;
-    $cal_mch = $total_merchant_charge + 4;
+    $cal_mch = $total_merchant_charge + $amount;
     $cal_int_prof = $total_int_profit + 0;
     $digits = 9;
     $date = date("Y-m-d");
     $date2 = date('Y-m-d H:i:s');
     $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-    $trans = "SKWAL".$randms."SMS".$int_id;
-    // end making a post online
+    $trans = "SKWAL".$randms."AIRTIME".$int_id;
+    // GD
     $update_transaction = mysqli_query($connection, "UPDATE sekani_wallet SET running_balance = '$cal_bal', total_withdrawal = '$cal_with',
     int_profit = '$cal_int_prof', sekani_charge = '$cal_sek', merchant_charge = '$cal_mch' WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
     if ($update_transaction) {
-        // update
+        // WE ARE DONE
         $insert_transaction = mysqli_query($connection, "INSERT INTO `sekani_wallet_transaction` (`int_id`, `branch_id`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `wallet_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, 
         `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`,
         `int_profit`, `sekani_charge`, `merchant_charge`)
-         VALUES ('{$int_id}', '{$branch_id}', '{$trans}', 'SMS charge', 'sms', NULL, '0', '{$date}', '4', '{$cal_bal}', '{$cal_bal}', {$date}, 
-         NULL, NULL, '{$date2}', '0', '0.00', '4.00', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
+         VALUES ('{$int_id}', '{$branch_id}', '{$trans}', 'Airtime Recharge $network - $phone', 'airtime', NULL, '0', '{$date}', '{$amount}', '{$cal_bal}', '{$cal_bal}', {$date}, 
+         NULL, NULL, '{$date2}', '0', '0.00', '{$amount}', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
          if ($insert_transaction) {
-            //  get the transaction.
-            $insert_qualif = mysqli_query($connection, "INSERT INTO `sms_charge` (`int_id`, `branch_id`, `trans_id`, `client_id`, `account_no`, `amount`, `charge_date`) VALUES ('{$int_id}', '{$branch_id}', '{$trans}', '{$client_id}', '{$account_no}', '4', '{$date}')");
-            if ($insert_qualif) {
-                echo "WE ARE GOOD NOW";
-            } else {
-                echo "NOT DONE";
-            }
-         } else {
-             echo "ERROR IN RECORED TRANSACTION";
-         }
-    } else {
-        echo "ERROR IN UPDATE TRANSACTION";
-    }
-}
-if ($status == "Success") {
-    // end
-    echo '<script type="text/javascript">
+            //  go withdra
+            echo '<script type="text/javascript">
     $(document).ready(function(){
         swal({
             type: "success",
@@ -130,42 +109,42 @@ if ($status == "Success") {
     });
     </script>
     ';
-    echo "SUCCESSFUL";
+         } else {
+            //  NOTHING AT ALL
+            echo "ERROR IN TRANSACTION";
+         }
+    } else {
+        // NOTHING AT ALL
+        echo "ERROR IN WALLET";
+    }
 } else {
     echo '<script type="text/javascript">
     $(document).ready(function(){
         swal({
             type: "error",
-            title: "Status Error! - '.$status.'",
-            text: "API error",
+            title: "Error Messgae - '.$msg.'",
+            text: "AIRTIME ERROR",
             showConfirmButton: false,
-            timer: 3000
+            timer: 5000
         });
     });
     </script>
     ';
-    echo "API STATUS ERROR";
 }
     }
-            // end
         } else {
-            echo "INSUFFICIENT WALLET BALANCE";
+            echo '<script type="text/javascript">
+            $(document).ready(function(){
+                swal({
+                    type: "error",
+                    title: "INSUFFICIENT FUND",
+                    text: "REFILL YOUR WALLET",
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            });
+            </script>
+            ';
         }
-    
-    // end
-} else {
-    // echo Error
-    echo '<script type="text/javascript">
-    $(document).ready(function(){
-        swal({
-            type: "error",
-            title: "No Data",
-            text: "Input Data",
-            showConfirmButton: false,
-            timer: 3000
-        });
-    });
-    </script>
-    ';
 }
 ?>
