@@ -142,10 +142,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    }else{
     $view_report = 0;
    }
-  if(isset($_POST['approve'])){
+  if(isset($_POST['dash'])){
     $dash = 1;
    }else{
     $dash = 0;
+   }
+   if(isset($_POST['staff_cabal'])){
+    $staff_cabal = 1;
+   }else{
+    $staff_cabal = 0;
    }
    if(isset($_POST['accup'])){
     $accup = 1;

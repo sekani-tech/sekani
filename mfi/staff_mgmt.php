@@ -699,7 +699,7 @@ if ($per_con == 1 || $per_con == "1") {
                     <table id="tabledat1" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM org_role JOIN permission ON org_role.id = permission.role_id WHERE org_role.int_id = '$sessint_id'";
+                        $query = "SELECT org_role.id, org_role.role, org_role.description FROM org_role JOIN permission ON org_role.id = permission.role_id WHERE org_role.int_id = '$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>Role Name</th>
