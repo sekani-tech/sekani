@@ -68,8 +68,7 @@ $destination = "index.php";
                     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       // check the button value
                       $role = $_POST['submit'];
-                      $update_perm = $_POST['sumbit'];
-                      $update_role = $_POST['submit'];
+
                       if ($role == 'role') {
                         $r_n = $_POST["role_name"];
                         $r_d = $_POST["descript"];
@@ -124,7 +123,7 @@ $destination = "index.php";
                      </script>
                      ';
                         }
-                      } else if ($update_perm == 'update_perm') {
+                      } else if ($role == 'update_perm') {
                         $rid = $_POST["org_role"];
                         $rop = "SELECT role_id FROM permission WHERE int_id = '$sessint_id' && role_id = '$rid'";
                         $one = mysqli_query($connection, $rop);
@@ -228,7 +227,7 @@ $destination = "index.php";
                     }
                         }
                         
-                    }elseif($update_role == 'update_role'){
+                    }elseif($role == 'update_role'){
                       $r_n = $_POST["role_name"];
                         $r_d = $_POST["descript"];
                         $ids = $_POST["ids"];
