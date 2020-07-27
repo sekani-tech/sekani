@@ -54,6 +54,7 @@ if (count([$getpermission]) == 1) {
   $staff_cabal = $pms['staff_cabal'];
   $acc_update = $pms['acc_update'];
   $per_con = $pms['configuration'];
+  $per_bills = $pms['bills'];
   $bch_id = $_SESSION["branch_id"];
 }
 ?>
@@ -307,22 +308,16 @@ input[type=number] {
               Reports
             </a>
           </li>
-          <!-- <li class="nav-item dropdown">
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-              <i class="material-icons">content_paste</i>
-              Reports
+              <i class="material-icons">description</i>
+              Bills & Airtime
             </a>
             <div class="dropdown-menu">
-              <a href="report_client.php" class="dropdown-item">Client Report</a>
-              <a href="report_group.php" class="dropdown-item">Group Report</a>
-              <a href="report_savings.php" class="dropdown-item">Savings Report</a>
-              <a href="report_current.php" class="dropdown-item">Current Accounts Report</a>
-              <a href="report_loan.php" class="dropdown-item">Loan reports</a>
-              <a href="report_financial.php" class="dropdown-item">Financial report</a>
-              <a href="report_fixed_deposit.php" class="dropdown-item">Fixed Deposit Report</a>
-              <a href="report_institution.php" class="dropdown-item">Institutional Report</a>
+              <a href="bill.php" class="dropdown-item">Pay Bills</a>
+              <a href="airtime.php" class="dropdown-item">Buy Airtime & Data</a>
             </div>
-          </li> -->
+          </li>
           <!-- end of report -->
           <li class="nav-item dropdown">
             <a class="nav-link" href="configuration.php">
