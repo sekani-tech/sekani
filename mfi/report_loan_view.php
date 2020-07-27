@@ -63,6 +63,9 @@ $destination = "report_loan.php";
                           Interest Rate
                         </th>
                         <th>
+                          Outstanding Loan Balance
+                        </th>
+                        <th>
                           Account Officer
                         </th>
                       </thead>
@@ -96,7 +99,6 @@ $destination = "report_loan.php";
                           $intr = $int_rate/100;
                           $final = $intr * $prina;
                           ?>
-                          <th><?php echo number_format($final); ?></th>
                           <?php
                             $loant = $row["loan_term"];
                             $total = $loant * $final;
@@ -107,7 +109,6 @@ $destination = "report_loan.php";
                           $income = $fee + $total;
                           $ttlinc += $income;
                           ?>
-                          <th><?php echo number_format($income); ?></th>
                           <th><?php $bal = $row["total_outstanding_derived"];
                           $df = $bal;
                            echo number_format($bal);
