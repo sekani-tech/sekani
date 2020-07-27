@@ -337,7 +337,7 @@ if (count([$dbclient]) == 1) {
               var date = $('#s_date').val();
               var balance = $('#s_balance').val();
               // now we work on the body.
-              var msg = int_name+" "+trans_type+" \n" + "Amt: NGN "+amount+" \n Acct: "+acct_no+"\nDesc: "+desc+" \nBal: "+balance+" \nAvail: "+balance+"\nDate: "+date+"\nThank you for Banking with Us!";
+              var msg = int_name+" "+trans_type+" \n" + "Amt: NGN "+amount+" \n Acct: "+acct_no+"\nDesc: "+desc+" \nBal: "+balance+" \nAvail: "+balance+"\nDate: "+date+"\nThanks!";
               $.ajax({
                 url:"ajax_post/sms/sms.php",
                 method:"POST",
@@ -563,7 +563,7 @@ if (count([$dbclient]) == 1) {
                                 var date = $('#s_date').val();
                                 var balance = $('#s_balance').val();
                                 // now we work on the body.
-                                var msg = int_name+" "+trans_type+" \n" + "Amt:NGN "+amount+" \n Acct: "+acct_no+"\nDesc: "+desc+" \nBal: "+balance+" \nAvail: "+balance+"\nDate: "+date+"\nThank you for Banking with Us";
+                                var msg = int_name+" "+trans_type+" \n" + "Amt:NGN "+amount+" \n Acct: "+acct_no+"\nDesc: "+desc+" \nBal: "+balance+" \nAvail: "+balance+"\nDate: "+date+"\nThanks";
                                 $.ajax({
                                   url:"ajax_post/sms/sms.php",
                                   method:"POST",

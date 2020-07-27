@@ -251,7 +251,7 @@ $res = mysqli_query($connection, $query);
               var int_name = $('#s_int_name').val();
               var client_name = $('#s_client_name').val();
               // now we work on the body.
-              var msg = "WELCOME TO "+int_name+" PLEASE FIND YOUR ACCOUNT DETAILS BELOW\n"+"ACCT NO:"+account_no+"\nACCT NAME:"+client_name+"\n Thank you!";
+              var msg = "WELCOME TO "+int_name+" PLEASE FIND YOUR ACCOUNT DETAILS BELOW\n"+"ACCT NO:"+account_no+"\nACCT NAME:"+client_name+"\n Thanks!";
               $.ajax({
                 url:"../mfi/ajax_post/sms/sms.php",
                 method:"POST",
