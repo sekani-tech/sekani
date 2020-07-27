@@ -346,18 +346,18 @@ $destination = "config.php";
                         <input type="number" value="<?php echo $min_balance_for_interest_calculation;?>" class="form-control" name="min_balance_for_interest_calculation" value="" placeholder="10" required>
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Maximum Positive Balance*</label>
                         <input type="number" value="<?php echo $maximum_positve_balance;?>" class="form-control" name="maximum_positve_balance" value="" placeholder="100,000,000.00" required>
                       </div>
-                    </div>
-                    <div class="col-md-6">
+                    </div> -->
+                    <!-- <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Minimum Negative Balance</label>
                         <input type="number" value="<?php echo $minimum_negative_balance;?>" class="form-control" name="minimum_negative_balance" value="" placeholder="-20000" required>
                       </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-6">
                         <div class="form-group">
                           <label for="principal" >Lockin Period Frequency</label>
@@ -397,7 +397,7 @@ $destination = "config.php";
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <!-- <div class="col-md-6">
                        <div class="form-group">
                           <label for="additionalCharges" >Enable Withdrawal Notice</label>
                           <select class="form-control" name="enable_withdrawal_notice" required>
@@ -406,7 +406,7 @@ $destination = "config.php";
                             <option value="1">Yes</option>
                           </select>
                         </div>
-                      </div>
+                      </div> -->
                   </div>
                         </div>
                         <!-- First tab -->

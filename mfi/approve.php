@@ -973,37 +973,37 @@ if (count([$dbclient]) == 1) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Transaction Type:</label>
-                          <input type="text" class="form-control" name="name" value="<?php echo $transact_type; ?>" readonly>
+                          <input type="text" class="form-control" name="name" value="<?php echo $transact_type; ?>" >
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Posted By</label>
-                          <input type="text" class="form-control" name="email" value="<?php echo $ao; ?>" readonly>
+                          <input type="text" class="form-control" name="email" value="<?php echo $ao; ?>" >
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Client Name</label>
-                          <input type="text" class="form-control" name="phone" value="<?php echo $cn; ?>" readonly>
+                          <input type="text" class="form-control" name="phone" value="<?php echo $cn; ?>" >
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Amount</label>
-                          <input type="text" class="form-control" name="location" value="<?php echo $amount; ?>" readonly>
+                          <input type="text" class="form-control" name="location" value="<?php echo $amount; ?>" >
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Description</label>
-                          <input type="text" class="form-control" name="descript" value="<?php echo $description; ?>" readonly>
+                          <input type="text" class="form-control" name="descript" value="<?php echo $description; ?>" >
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Transaction ID</label>
-                          <input type="text" class="form-control" name="transidddd" value="<?php echo $transid; ?>" readonly>
+                          <input type="text" class="form-control" name="transidddd" value="<?php echo $transid; ?>" >
                         </div>
                       </div>
                       </div>

@@ -123,7 +123,7 @@ elseif($class_enum  == 5){
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >GL Code</label>
-                      <input type="text" value="<?php echo $gl_code; ?>" readonly style="text-transform: uppercase;" class="form-control" name="gl_code" required>
+                      <input type="text" value="<?php echo $gl_code; ?>"  style="text-transform: uppercase;" class="form-control" name="gl_code" required>
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -173,8 +173,8 @@ elseif($class_enum  == 5){
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account Usage</label>
-                      <select class="form-control" name="acct_use" id="atu" required>
-                        <option value="<?php echo $acct_use;?>"><?php echo $acct_use_name;?></option>
+                      <select class="form-control" name="acct_use" id="atu">
+                        <option hidden value="<?php echo $acct_use;?>"><?php echo $acct_use_name;?></option>
                         <option value="1">GL ACCOUNT</option>
                         <option value="2">GL GROUP</option>
                       </select>                    
@@ -182,7 +182,11 @@ elseif($class_enum  == 5){
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">    
-                    <div id="dropping"></div>           
+                    <div >
+                    <label>GL GROUP</label>
+                      <select type="text"style="text-transform: uppercase;" class="form-control" value="" id="dropping" name="parent_id" >
+                    </select>
+                    </div>           
                     </div>
                   </div>
                   <div class="col-md-4">

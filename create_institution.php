@@ -15,25 +15,67 @@
                 <div class="card-body">
                   <form action="functions/institution_data.php" method="POST" enctype="multipart/form-data">
                     <div class="row">
-                      <div class="col-md-12">
+                      <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Name</label>
+                          <label class="bmd-label-floating">Short Name</label>
                           <input type="text" class="form-control" name="int_name">
                         </div>
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Full Name</label>
+                          <input type="text" class="form-control" name="int_full">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">RCN</label>
                           <input type="text" class="form-control" name="rcn">
                         </div>
                       </div>
-                      <div class="col-md-8">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">LGA</label>
-                          <input type="text" class="form-control" name="lga">
-                        </div>
-                      </div>
+                          <?php
+                          function fill_state($connection)
+                            {
+                            $org = "SELECT * FROM states";
+                            $res = mysqli_query($connection, $org);
+                            $out = '';
+                            while ($row = mysqli_fetch_array($res))
+                            {
+                              $out .= '<option value="'.$row["name"].'">' .$row["name"]. '</option>';
+                            }
+                            return $out;
+                            }?>
+                  <script>
+                      $(document).ready(function() {
+                          $('#static').on("change", function(){
+                          var id = $(this).val();
+                          $.ajax({
+                              url:"mfi/ajax_post/lga.php",
+                              method:"POST",
+                              data:{id:id},
+                              success:function(data){
+                              $('#showme').html(data);
+                              }
+                          })
+                          });
+                      });
+                  </script>
                     </div>
+                    <div class="col-md-4">
+            <div class="form-group">
+              <label for="">State:</label>
+              <select id="static" class="form-control" style="text-transform: uppercase;" name="stated">
+              <?php echo fill_state($connection)?>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="">LGA:</label>
+              <select class="form-control" name="lgka" id="showme">
+              </select>
+            </div>
+          </div>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">

@@ -7,8 +7,20 @@
     $start = $_POST['start'];
     $end = $_POST['end'];
     $intrate = $_POST['intrate'];
-    $term = $_POST['term'];
-    $amount = $_POST['amount'];
+    if(isset($_POST['term'])){
+        $term = $_POST['term'];
+    }
+    else{
+        $term = 0; 
+    }
+
+    if(isset($_POST['amount'])){
+        $amount = $_POST['amount'];
+    }
+    else{
+        $amount = 0;
+    }
+
     $desc = $_POST['desc'];
     $coldate = date('Y-m-d');
     $int_id = $_SESSION['int_id'];

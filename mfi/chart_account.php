@@ -18,7 +18,7 @@ $destination = "accounting.php";
         swal({
             type: "success",
             title: "Success",
-            text: "Registration Successful",
+            text: "Successful Deleted",
             showConfirmButton: false,
             timer: 2000
         })
@@ -134,18 +134,28 @@ else if (isset($_GET["message6"])) {
 <!-- POST INTO -->
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $efd = $_POST['submit'];
   // on her i will be posting data
+if($efd == "gl_accounto"){
   $acct_name = $_POST['acct_name'];
   $gl_code = $_POST['gl_code'];
   $acct_type = $_POST['acct_type'];
   $ext_id = $_POST['ext_id'];
   $acct_use = $_POST['acct_use'];
+
+  $dioi = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '0'";
+  $fdsd = mysqli_query($connection, $dioi);
+  $fdu = mysqli_num_rows($fdsd);
   if ( isset($_POST['man_ent']) ) {
     $man_ent_all = 1;
 } else {
     $man_ent_all = 0;
 }
 
+$fdop = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '$acct_type' AND parent_id = '0'";
+$fdos = mysqli_query($connection, $fdop);
+$pdfo = mysqli_num_rows($fdos);
+$int_id_no = $pdfo + 1;
 
 if ( isset($_POST['bank_rec']) ) {
     $bank_rec = 1;
@@ -196,9 +206,9 @@ if ( isset($_POST['bank_rec']) ) {
   } else {
       // alright check this out
   $chat_acct = "INSERT INTO `acc_gl_account`
-  (`int_id`, `branch_id`, `name`, `gl_code`,
+  (`int_id`, `int_id_no`, `branch_id`, `name`, `gl_code`,
   `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `description`, `reconciliation_enabled`)
-  VALUES ('{$int_id}', '{$bnc_id}', '{$acct_name}', '{$gl_code}',
+  VALUES ('{$int_id}', '{$int_id_no}', '{$bnc_id}', '{$acct_name}', '{$gl_code}',
   '{$man_ent_all}', '{$acct_use}', '{$acct_type}', '{$desc}', '{$bank_rec}')";
 
   $done = mysqli_query($connection, $chat_acct);
@@ -229,6 +239,20 @@ if ( isset($_POST['bank_rec']) ) {
  </script>';
   }
   }
+}
+else {
+  echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+         type: "info",
+          title: "CHART OF ACCOUNT",
+            text: "nothing added",
+         showConfirmButton: false,
+       timer: 2000
+        })
+        });
+ </script>';
+}
 }
 ?>
 <!-- DONE POSTING -->
@@ -383,42 +407,13 @@ if ( isset($_POST['bank_rec']) ) {
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label >GL Code*</label>
-                      <input type="text" id="tit" style="text-transform: uppercase;" class="form-control" value="" name="gl_code" required readonly>
+                      <label >External ID</label>
+                      <input type="text" style="text-transform: uppercase;" class="form-control" name="ext_id">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label >Account Type*</label>
-                      <script>
-                        // coment on later
-                          $(document).ready(function(){
-                            $('#give').change(function() {
-                              var id = $(this).val();
-                              if (id == "") {
-                                document.getElementById('tit').readOnly = false;
-                                $('#tit').val("choose an account type");
-                              } else if (id == "1") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("1" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "2") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("2" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "3") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("3" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "4") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("4" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "5") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("5" + Math.floor(1000 + Math.random() * 9000));
-                              } else {
-                                $('#tit').val("Nothing");
-                              }
-                            });
-                          });
-                        </script>
                       <select class="form-control" name="acct_type" id="give">
                         <option value="">Select an option</option>
                         <option value="1">ASSET</option>
@@ -430,10 +425,61 @@ if ( isset($_POST['bank_rec']) ) {
                       <input hidden type="text" id="int_id" value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label >External ID</label>
-                      <input type="text" style="text-transform: uppercase;" class="form-control" name="ext_id">
+                  <script>
+                    $(document).ready(function () {
+                      $('#give').on("change", function () {
+                        var type = $(this).val();
+                        var dso = $('#atu').val();
+                        var pid = $('#dropping').val();
+                        $.ajax({
+                          url: "ajax_post/chart_account_gl.php", 
+                          method: "POST",
+                          data:{type:type, dso:dso, pid:pid},
+                          success: function (data) {
+                            $('#tit').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                  <script>
+                    $(document).ready(function () {
+                      $('#atu').on("change", function () {
+                        var dso = $(this).val();
+                        var type = $('#give').val();
+                        var pid = $('#dropping').val();
+                        $.ajax({
+                          url: "ajax_post/chart_account_gl.php", 
+                          method: "POST",
+                          data:{type:type, dso:dso, pid:pid},
+                          success: function (data) {
+                            $('#tit').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                  <script>
+                    $(document).ready(function () {
+                      $('#dropping').on("change", function () {
+                        var dso = $('#atu').val();
+                        var type = $('#give').val();
+                        var pid = $(this).val();
+                        $.ajax({
+                          url: "ajax_post/chart_account_gl.php", 
+                          method: "POST",
+                          data:{type:type, dso:dso, pid:pid},
+                          success: function (data) {
+                            $('#tit').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                   <div class="col-md-6">
+                    <div id="tit" class="form-group">
+                      <label>GL Code*</label>
+                      <input type="text"style="text-transform: uppercase;" class="form-control" value="" name="gl_code" required readonly>
                     </div>
                   </div>
                   <!-- <div class="col-md-6">
@@ -487,9 +533,26 @@ if ( isset($_POST['bank_rec']) ) {
                   <!-- checking out the group 2 -->
                   <div class="col-md-6">
                     <div class="form-group">    
-                    <div id="dropping"></div>           
+                    <div>
+                    <label >GL Group</label>
+                  <select  id="dropping" class="form-control" name="parent_id">
+                    <option value="0">choose group</option>
+                    <?php echo fill_gl($connection)?>
+                  </select>
+                    </div>           
                     </div>
                   </div>
+                  <?php function fill_gl($connection) {
+          $sint_id = $_SESSION["int_id"];
+          $org = "SELECT * FROM acc_gl_account WHERE (int_id = '$sint_id' AND (parent_id = '' OR parent_id = '0'))";
+          $res = mysqli_query($connection, $org);
+          $out = '';
+          while ($row = mysqli_fetch_array($res))
+          {
+            $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+          }
+          return $out;
+        }?>
                   <!-- end of group  -->
                   <br>
                   <div class="col-md-6">
@@ -527,7 +590,7 @@ if ( isset($_POST['bank_rec']) ) {
                 </div>
                 <div class="clearfix"></div>
                   <div style="float:right;">
-                        <button type="submit" class="btn btn-primary pull-right">Add</button>
+                        <button type="submit" name="submit" value="gl_accounto" class="btn btn-primary pull-right">Add</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                       </div>
                 </form>

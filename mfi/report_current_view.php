@@ -7,6 +7,18 @@ $destination = "report_current.php";
 <?php
  if (isset($_GET["view14"])) {
 ?>
+<?php
+    $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1'";
+    $result = mysqli_query($connection, $query);
+    while($d = mysqli_fetch_array($result)){
+      $clid = $d['id'];
+      $don = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$clid'");
+      $ew = mysqli_fetch_array($don);
+      $accountb = $ew['account_balance_derived'];
+      $ttlacc +=$accountb;
+    }
+    
+?>
 <!-- Content added here -->
 <div class="content">
         <div class="container-fluid">
@@ -36,6 +48,13 @@ $destination = "report_current.php";
               <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
               <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
               <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
+              <input hidden name ="acc_bal" type="text" value="<?php echo $ttlacc;?>"/>
+              <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Total Account Balances</label>
+                          <input type="text" class="form-control" value="<?php echo number_format($ttlacc, 2); ?>" name="">
+                        </div>
+                      </div>
               <button type="submit" id="currentlist" class="btn btn-primary pull-left">Download PDF</button>
               <script>
               $(document).ready(function () {

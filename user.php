@@ -67,10 +67,15 @@ $qrys = "SELECT id FROM users WHERE username = '$username'";
 $res = mysqli_query($connection, $qrys);
 $row = mysqli_fetch_array($res);
 $ui = $row["id"];
- if ($res) {
+
+$dsid = "SELECT * FROM org_role WHERE int_id = '$inst_id' AND role = 'super user'";
+$perv = mysqli_query($connection, $dsid);
+$di = mysqli_fetch_array($perv);
+$org_ole = $di['id'];
+
     $qrys = "INSERT INTO staff (int_id, int_name, user_id, username, display_name, email, first_name, last_name,
 description, address, date_joined, org_role, phone) VALUES ('{$inst_id}', '{$int_name}', '{$ui}', '{$username}', '{$display_name}', '{$email}',
-'{$first_name}', '{$last_name}', '{$description}', '{$address}', '{$date_joined}', '{$org_role}', '{$phone}')";
+'{$first_name}', '{$last_name}', '{$description}', '{$address}', '{$date_joined}', '{$org_ole}', '{$phone}')";
 
 $result = mysqli_query($connection, $qrys);
 // if ($connection->error) {
@@ -93,10 +98,6 @@ if ($result) {
      echo "<p>ERROR</p>";
      $imgmsg = "";
  }
-} else {
-   echo "<p>Error</p>";
-   $imgmsg = "";
-}
 // if ($connection->error) {
 //     try {   
 //         throw new Exception("MySQL error $connection->error <br> Query:<br> $queryuser", $msqli->errno);   
@@ -213,10 +214,7 @@ if ($result) {
                         <div class="form-group">
                           <label for="role" class="bmd-label-floating">Organization Role:</label>
                           <select name="org_role" id="" class="form-control">
-                              <option value="">...</option>
-                              <?php foreach ( $results as $option ) : ?>
-                              <option value="<?php echo $option->role; ?>"><?php echo $option->role; ?></option>
-                              <?php endforeach; ?>
+                              <option value="super user">Super User</option>
                           </select>
                         </div>
                       </div>

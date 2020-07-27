@@ -27,6 +27,7 @@ if (isset($_POST["start_date"]) && isset($_POST["end_date"]) && isset($_POST["in
     $previous_net_profit_from_operation = $_POST['previous_net_profit_from_operation'];
     $profit_current_year = $_POST['profit_current_year'];
     $profit_previous_year = $_POST['profit_previous_year'];
+    $onemontstart = $_POST['prev_month_start'];
 
     $time = strtotime($end);
     $curren = date("F d, Y", $time);
@@ -40,49 +41,94 @@ if (isset($_POST["start_date"]) && isset($_POST["end_date"]) && isset($_POST["in
       $branch_location = $ans['location'];
       $branch_phone = $ans['phone'];
     }
-    function fill_operation($connection, $sessint_id, $start, $end, $onemonthly)
-    {
-      $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id !='0' AND classification_enum ='5' ORDER BY name ASC";
-      $state1 = mysqli_query($connection, $stateg);
-      $outxx = '';
-      while ($row = mysqli_fetch_array($state1))
-      {
-        $namde = $row['name'];
-    
-        $glcode = $row['gl_code'];
-    
-        $opbalance = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
-        $fodf = mysqli_query($connection, $opbalance);
-          $n = mysqli_fetch_array($fodf);
-          if(isset($n)){
-          $endbal = number_format($n['credit'], 2);
-          }else{
-            $endbal = "0.00";
-          }
-        
-        $fdf = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
-        $ss = mysqli_query($connection, $fdf);
-          $u = mysqli_fetch_array($ss);
-          if(isset($u)){
-          $lastmon = number_format($u['credit'], 2);
-          }
-          else{
-            $lastmon = "0.00";
-          }
-    if($endbal == '0.00' && $lastmon == '0.00'){
-      $outxx .= '';
-    }
-    else{
-      $outxx .= '
-      <tr>
-      <td>'.$namde.'</td>
-      <td style="text-align: center">'.$endbal.'</td>
-      <td style="text-align: center">'.$lastmon.'</td>
-    </tr>';
-    }
+    function fill_charge($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly)
+{
+  $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '4' AND parent_id = '198'";
+  $state1 = mysqli_query($connection, $stateg);
+  $outxx = '';
+  while ($row = mysqli_fetch_array($state1))
+  {
+    $namde = $row['name'];
+
+    $glcode = $row['gl_code'];
+
+    $opbalance = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+    $fodf = mysqli_query($connection, $opbalance);
+      $n = mysqli_fetch_array($fodf);
+      if(isset($n['credit'])){
+      $endbal = number_format($n['credit'], 2);
+      }else{
+        $endbal = "0.00";
       }
-    return $outxx;
-    }
+    
+    $fdf = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+    $ss = mysqli_query($connection, $fdf);
+      $u = mysqli_fetch_array($ss);
+      if(isset($u['credit'])){
+      $lastmon = number_format($u['credit'], 2);
+      }
+      else{
+        $lastmon = "0.00";
+      }
+if($endbal == '0.00' && $lastmon == '0.00'){
+  $outxx .= '';
+}
+else{
+  $outxx .= '
+  <tr>
+  <td>'.$namde.'</td>
+  <td style="text-align: center">'.$endbal.'</td>
+  <td style="text-align: center">'.$lastmon.'</td>
+</tr>
+';
+}
+
+  }
+return $outxx;
+}
+    function fill_operation($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly)
+{
+  $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id !='0' AND classification_enum ='5' ORDER BY name ASC";
+  $state1 = mysqli_query($connection, $stateg);
+  $outxx = '';
+  while ($row = mysqli_fetch_array($state1))
+  {
+    $namde = $row['name'];
+
+    $glcode = $row['gl_code'];
+
+    $opbalance = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+    $fodf = mysqli_query($connection, $opbalance);
+      $n = mysqli_fetch_array($fodf);
+      if(isset($n)){
+      $endbal = number_format($n['credit'], 2);
+      }else{
+        $endbal = "0.00";
+      }
+    
+    $fdf = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+    $ss = mysqli_query($connection, $fdf);
+      $u = mysqli_fetch_array($ss);
+      if(isset($u)){
+      $lastmon = number_format($u['credit'], 2);
+      }
+      else{
+        $lastmon = "0.00";
+      }
+if($endbal == '0.00' && $lastmon == '0.00'){
+  $outxx .= '';
+}
+else{
+  $outxx .= '
+  <tr>
+  <td>'.$namde.'</td>
+  <td style="text-align: center">'.$endbal.'</td>
+  <td style="text-align: center">'.$lastmon.'</td>
+</tr>';
+}
+  }
+return $outxx;
+}
     // NOTHIG
 require_once __DIR__ . '/vendor/autoload.php';
 $mpdf = new \Mpdf\Mpdf();
@@ -133,9 +179,10 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
       </tr>
       <tr>
         <td style="height:35px;">Services fees, fines and penalties</td>
-        <td style="height:35px;">'.number_format($current_charge_income).'</td>
-        <td style="height:35px;">'.number_format($previous_charge_income).'</td>
+        <td style="height:35px;"></td>
+        <td style="height:35px;"></td>
       </tr>
+      '.fill_charge($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly).'
       <tr>
         <td style="height:35px;">Other services and other income</td>
         <td style="height:35px;">0.00</td>
@@ -157,7 +204,7 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
       </tr>
     </thead>
     <tbody>
-    '.fill_operation($connection, $sessint_id, $start, $end, $onemonthly).'
+    '.fill_operation($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly).'
     <tr>
         <td style="height:35px;">TOTAL</td>
         <td style="height:35px;"><b>'.number_format($current_total_operating_expense).'</b></td>

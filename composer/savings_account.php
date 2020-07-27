@@ -6,6 +6,7 @@ session_start();
 <?php
   $intname = $_SESSION['int_name'];
   $branch_id = $_SESSION["branch_id"];
+  $ttlacc = $_POST["acc_bal"];
   $date = date('d/m/Y');
   // $staff = $_POST["staff"];
   $branchquery = mysqli_query($connection, "SELECT * FROM branch WHERE id='$branch_id'");
@@ -95,6 +96,7 @@ session_start();
 </div>
 <div id="project">
   <div><span>BRANCH</span> '.$branch.' </div>
+  <div><span>Total Account Balances</span> '.number_format($ttlacc, 2).' </div>
 </div>
 </header>
   <main>

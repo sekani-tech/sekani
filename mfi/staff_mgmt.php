@@ -525,12 +525,12 @@ if ($per_con == 1 || $per_con == "1") {
              $(document).ready(function () {
                $('#all').change(function () {
                 if ($(this).is(':checked')) {
-                  document.getElementById('n1').checked = true;
-                  document.getElementById('n2').checked = true;
-                  document.getElementById('n3').checked = true;
-                  document.getElementById('n4').checked = true;
-                  document.getElementById('n5').checked = true;
-                  document.getElementById('n6').checked = true;
+                  document.getElementById('a').checked = true;
+                  document.getElementById('b').checked = true;
+                  document.getElementById('c').checked = true;
+                  document.getElementById('d').checked = true;
+                  document.getElementById('e').checked = true;
+                  document.getElementById('f').checked = true;
                   document.getElementById('n7').checked = true;
                   document.getElementById('n9').checked = true;
                   document.getElementById('n8').checked = true;
@@ -559,7 +559,7 @@ if ($per_con == 1 || $per_con == "1") {
             <div class="col-md-5">
             <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="approve" id="n1">
+                <input class="form-check-input" type="checkbox" value="" name="approve" id="a">
                 Approve Transaction
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -569,7 +569,7 @@ if ($per_con == 1 || $per_con == "1") {
            <!-- Next -->
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="post_transact" id="n2">
+                <input class="form-check-input" type="checkbox" value="" name="post_transact" id="b">
                 Post Transaction
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -579,7 +579,7 @@ if ($per_con == 1 || $per_con == "1") {
            <!-- Next -->
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="access_config" id="n3">
+                <input class="form-check-input" type="checkbox" value="" name="access_config" id="c">
                 Access Configuration
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -590,7 +590,7 @@ if ($per_con == 1 || $per_con == "1") {
            
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="accop" id="n11">
+                <input class="form-check-input" type="checkbox" value="" name="accop" id="d">
                 Account Opening
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -599,7 +599,7 @@ if ($per_con == 1 || $per_con == "1") {
            </div>
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="accup" id="n12">
+                <input class="form-check-input" type="checkbox" value="" name="accup" id="e">
                 Account Update
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -608,7 +608,7 @@ if ($per_con == 1 || $per_con == "1") {
            </div>
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="staff_cabal" id="n13">
+                <input class="form-check-input" type="checkbox" value="" name="staff_cabal" id="f">
                 View All Staff Cabal
                 <span class="form-check-sign">
                 <span class="check"></span>

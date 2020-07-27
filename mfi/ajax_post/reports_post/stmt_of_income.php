@@ -66,30 +66,76 @@ $jfjf = mysqli_query($connection, "SELECT * FROM acct_rule WHERE int_id = '$sess
     }
 
 // Fines and Fees gl
-$dfmldk = mysqli_query($connection, "SELECT * FROM charge WHERE int_id = '$sessint_id'");
-while($jjc = mysqli_fetch_array($dfmldk)){
-$jsk = $jjc['gl_code'];
+function fill_charge($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly)
+{
+  $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '4'";
+  $state1 = mysqli_query($connection, $stateg);
+  $outxx = '';
+  while ($row = mysqli_fetch_array($state1))
+  {
+    $namde = $row['name'];
 
-$fdfi = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$jsk' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
-$jssbi = mysqli_query($connection, $fdfi);
-$d = mysqli_fetch_array($jssbi);
-if(isset($d)){
-$gl = $d['gl_account_balance_derived'];
-}else{
-  $gl = "0.00";
-}
-$curren_charge += $gl;
+    $glcode = $row['gl_code'];
 
-$dfke = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$jsk' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
-$ddf = mysqli_query($connection, $dfke);
-$ofs = mysqli_fetch_array($ddf);
-if(isset($ofs)){
-$gfl = $ofs['gl_account_balance_derived'];
+    $opbalance = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+    $fodf = mysqli_query($connection, $opbalance);
+      $n = mysqli_fetch_array($fodf);
+      if(isset($n['credit'])){
+      $endbal = number_format($n['credit'], 2);
+      }else{
+        $endbal = "0.00";
+      }
+    
+    $fdf = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+    $ss = mysqli_query($connection, $fdf);
+      $u = mysqli_fetch_array($ss);
+      if(isset($u['credit'])){
+      $lastmon = number_format($u['credit'], 2);
+      }
+      else{
+        $lastmon = "0.00";
+      }
+if($endbal == '0.00' && $lastmon == '0.00'){
+  $outxx .= '';
 }
 else{
-  $gfl = "0.00";
+  $outxx .= '
+  <tr>
+  <td>'.$namde.'</td>
+  <td style="text-align: center">'.$endbal.'</td>
+  <td style="text-align: center">'.$lastmon.'</td>
+</tr>
+';
 }
-$last_mon_charge += $gfl;
+
+  }
+return $outxx;
+}
+// total of fees
+$oieio = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '4'";
+$sdreo = mysqli_query($connection, $oieio);
+while ($op = mysqli_fetch_array($sdreo))
+{
+  $namde = $op['name'];
+
+  $gldo = $op['gl_code'];
+
+  $sldksp = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gldo' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+  $reprop = mysqli_query($connection, $sldksp);
+    $i = mysqli_fetch_array($reprop);
+    if(isset($i)){
+    $ending = number_format($i['credit'], 2);
+    }
+  
+    $opso = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gldo' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+  $sdpo = mysqli_query($connection, $opso);
+    $q = mysqli_fetch_array($sdpo);
+    if(isset($q)){
+    $pdospo = number_format($q['credit'], 2);
+    }
+      $total_fees_current += $ending;
+      $total_fees_last += $pdospo;
+
 }
 // Liabilities Report
 $liab = "SELECT * FROM acc_gl_account WHERE int_id='$sessint_id' AND classification_enum = '2'";
@@ -121,8 +167,8 @@ $otgerliabi += $pso;
 $net_interest_income =$int_on_loans - $liabilities;
 $net_interest_income_last = $last_int_on_loans - $otgerliabi;
 // Total Revenue Income
-$ttl_revenue_curren = $net_interest_income + $curren_charge;
-$ttl_revenue_last = $net_interest_income_last + $last_mon_charge;
+$ttl_revenue_curren = $net_interest_income + $total_fees_current;
+$ttl_revenue_last = $net_interest_income_last + $total_fees_last;
 // Operating Expenses
 function fill_operation($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly)
 {
@@ -238,7 +284,7 @@ $out = '';
 $out = '
 <div class="card">
 <div class="card-header card-header-primary">
-  <h4 class="card-title">Operating Revenu</h4>
+  <h4 class="card-title">Operating Revenue</h4>
 </div>
 <div class="card-body">
   <table class="table">
@@ -263,11 +309,13 @@ $out = '
         <td style="text-align: center; font-weight:bold;"><b>'.number_format($net_interest_income).'</b></td>
         <td style="text-align: center; font-weight:bold;"><b>'.number_format($net_interest_income_last).'</b></td>
       </tr>
+
+      '.fill_charge($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly).'
       <tr>
-        <td>Services fees, fines and penalties</td>
-        <td style="text-align: center">'.number_format($curren_charge).'</td>
-        <td style="text-align: center">'.number_format($last_mon_charge).'</td>
-      </tr>
+      <td style="font-weight:bold;"><b>Total</b></td>
+      <td style="text-align: center">'.number_format($total_fees_current, 2).'</td>
+      <td style="text-align: center">'.number_format($total_fees_last, 2).'</td>
+    </tr>
       <tr>
         <td>Other services and other income</td>
         <td style="text-align: center">'.number_format($other).'</td>
@@ -349,6 +397,7 @@ $out = '
  <input hidden type="text" name="previous_net_profit_from_operation" value="'.$net_prof_last_op.'"/>
  <input hidden type="text" name="profit_current_year" value="'.$profit_for_year.'"/>
  <input hidden type="text" name="profit_previous_year" value="'.$profit_for_year_last.'"/>
+ <input hidden type="text" name="prev_month_start" value="'.$onemontstart.'"/>
   <button class="btn btn-primary">Print</button>
   </form>
  </div>

@@ -15,6 +15,7 @@ if (isset($_POST['int_name']) && isset($_POST['usertype'])) {
     $last_name = $_POST['last_name'];
     $status = $_POST['employee_status'];
     $phone = $_POST['phone'];
+    $branch_id = $_POST['branch_id'];
     $address = $_POST['address'];
     $date_joined = $_POST['date_joined'];
     $org_role = $_POST['org_role'];
@@ -36,7 +37,7 @@ if($_FILES['imagefile']['name']) {
     $query = "UPDATE users SET username = '$username', usertype = '$usertype' WHERE id = '$user_id'";
     $result = mysqli_query($connection, $query);
     // if($result) {
-        $sec = "UPDATE staff SET int_name = '$int_name', username = '$username', display_name = '$display_name', email = '$email',
+        $sec = "UPDATE staff SET int_name = '$int_name', username = '$username', branch_id = '$branch_id', display_name = '$display_name', email = '$email',
         first_name = '$first_name', last_name = '$last_name', phone = '$phone', employee_status = '$status', address = '$address', date_joined = '$date_joined',
         org_role = '$org_role', img = '$img' WHERE id = '$staff_id'";
         $res = mysqli_query($connection, $sec);

@@ -145,7 +145,7 @@ $dos = mysqli_query($connection, $fd);
                         <input type="number" class="form-control" name="min_balance_cal" value="" placeholder="10" required>
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Maximum Positive Balance*</label>
                         <input type="number" class="form-control" name="max_pve_bal" value="" placeholder="100,000,000.00" required>
@@ -156,7 +156,7 @@ $dos = mysqli_query($connection, $fd);
                         <label for="shortLoanName" >Minimum Negative Balance</label>
                         <input type="number" class="form-control" name="min_nve_bal" value="" placeholder="-20000" required>
                       </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-6">
                         <div class="form-group">
                           <label for="principal" >Lockin Period Frequency</label>
@@ -193,7 +193,7 @@ $dos = mysqli_query($connection, $fd);
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <!-- <div class="col-md-6">
                        <div class="form-group">
                           <label for="additionalCharges" >Enable Withdrawal Notice</label>
                           <select class="form-control" name="with_notice" required>
@@ -201,7 +201,7 @@ $dos = mysqli_query($connection, $fd);
                             <option value="1">Yes</option>
                           </select>
                         </div>
-                      </div>
+                      </div> -->
                   </div>
                   </div>
                   <!-- First Tab -->
