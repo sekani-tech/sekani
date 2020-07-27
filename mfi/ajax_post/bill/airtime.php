@@ -37,7 +37,7 @@ curl_setopt_array($curl, array(
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "POST",
   CURLOPT_HTTPHEADER => array(
-    "serviceCode: QAB",
+    "servicecode: QAB",
     "phone: $phone",
     "amount: $amount",
     "vend_type: VTU",
@@ -122,7 +122,7 @@ if ($status == "200" && $status != "") {
     $(document).ready(function(){
         swal({
             type: "error",
-            title: "Error Messgae - '.$msg.'",
+            title: "Error Message - '.$msg.'",
             text: "AIRTIME ERROR",
             showConfirmButton: false,
             timer: 5000

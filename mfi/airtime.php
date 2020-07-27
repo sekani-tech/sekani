@@ -537,7 +537,7 @@ if ($per_bills == 1 || $per_bills == "1") {
    swal({
     type: "error",
     title: "You Dont Have Airtime Access",
-    text: "Only Teller Can",
+    text: "Your are not permitted",
    showConfirmButton: false,
     timer: 2000
     }).then(
