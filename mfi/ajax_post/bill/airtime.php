@@ -23,6 +23,7 @@ if ($network != "" && $phone != "" && $amount != "" && $int_id != "" && $branch_
         $total_sekani_charge = $qw["sekani_charge"];
         $total_merchant_charge = $qw["merchant_charge"];
         // test
+        $serc= "QAB";
         if ($balance >= $amount) {
             // STAT API
             $curl = curl_init();
@@ -37,7 +38,7 @@ curl_setopt_array($curl, array(
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "POST",
   CURLOPT_HTTPHEADER => array(
-    "service_code: QAB",
+    "serviceCode: $serc",
     "phone: $phone",
     "amount: $amount",
     "vend_type: VTU",
