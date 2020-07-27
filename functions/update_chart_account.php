@@ -12,6 +12,11 @@ if (isset($_POST['id'])) {
     $man_acct = $_POST['man_allow'];
     $disable = $_POST['disable'];
     $descript = $_POST['descript'];
+
+    $fdos = "SELECT * FROM acc_gl_account WHERE id = '$id'";
+    $dpos = mysqli_query($connection, $fdos);
+    $dqp = mysqli_fetch_array($dpos);
+    $prev_code = $dqp['gl_code'];
     if(isset($_POST['parent_id'])){
         $parent = $_POST['parent_id'];
     }
@@ -52,7 +57,9 @@ if (isset($_POST['id'])) {
         account_usage = '$acct_use', parent_id = '$parent', classification_enum='$class_enum', manual_journal_entries_allowed='$man_allow',
         disabled = '$disable', description = '$descript' WHERE id = '$id'";
         $res = mysqli_query($connection, $sec);
-
+        if($res) {
+            
+        }
         if ($res) {
           $_SESSION["Lack_of_intfund_$randms"] = " Account was updated successfully!";
           echo header ("Location: ../mfi/chart_account.php?message3=$randms");
