@@ -203,9 +203,15 @@ $destination = "index.php";
                         } else {
                         $dash = 0;
                         }
+                        if (isset($_POST['bill']) ) {
+                          $bill = 1;
+                          } else {
+                          $bill = 0;
+                          }
                        
-                        $perm = "INSERT INTO permission (int_id, role_id, acc_op, acc_update, trans_appv, trans_post, loan_appv, acct_appv, staff_cabal, valut, vault_email, view_report, view_dashboard, configuration)
-                         VALUES ('{$sessint_id}', '{$rid}', '{$accop}', '{$accup}', '{$approve}', '{$post_transact}', '{$approve_loan}', '{$approve_acc}','{$staff_cabal}', '{$vault_trans}', '{$emai}', '{$view_report}', '{$dash}', '{$access_config}')";
+                        $perm = "INSERT INTO permission (int_id, role_id, acc_op, acc_update, trans_appv, trans_post, loan_appv, acct_appv, staff_cabal, valut, vault_email, view_report, view_dashboard, configuration, bills)
+                         VALUES ('{$sessint_id}', '{$rid}', '{$accop}', '{$accup}', '{$approve}', '{$post_transact}', '{$approve_loan}', '{$approve_acc}','{$staff_cabal}', '{$vault_trans}', '{$emai}', '{$view_report}', '{$dash}', '{$access_config}',
+                         '{$bill}')";
                         $permm = mysqli_query($connection, $perm);
                         if ($permm) {
                           $permu = "UPDATE org_role SET permission = '1' WHERE int_id = '$sessint_id' && id = '$rid'";
@@ -536,6 +542,7 @@ if ($per_con == 1 || $per_con == "1") {
                   document.getElementById('j').checked = true;
                   document.getElementById('k').checked = true;
                   document.getElementById('l').checked = true;
+                  document.getElementById('m').checked = true;
                 } else {
                   document.getElementById('a').checked = false;
                   document.getElementById('b').checked = false;
@@ -549,6 +556,8 @@ if ($per_con == 1 || $per_con == "1") {
                   document.getElementById('j').checked = false;
                   document.getElementById('k').checked = false;
                   document.getElementById('l').checked = false;
+                  document.getElementById('m').checked = false;
+
                 }
                });
              })
@@ -609,6 +618,15 @@ if ($per_con == 1 || $per_con == "1") {
               <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" value="" name="staff_cabal" id="f">
                 View All Staff Cabal
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+           <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="" name="bill" id="m">
+                Bills
                 <span class="form-check-sign">
                 <span class="check"></span>
                 </span>
