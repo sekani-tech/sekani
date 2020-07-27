@@ -531,25 +531,25 @@ if ($per_con == 1 || $per_con == "1") {
                   document.getElementById('d').checked = true;
                   document.getElementById('e').checked = true;
                   document.getElementById('f').checked = true;
-                  document.getElementById('n7').checked = true;
-                  document.getElementById('n9').checked = true;
-                  document.getElementById('n8').checked = true;
-                  document.getElementById('n11').checked = true;
-                  document.getElementById('n12').checked = true;
-                  document.getElementById('n13').checked = true;
+                  document.getElementById('g').checked = true;
+                  document.getElementById('h').checked = true;
+                  document.getElementById('i').checked = true;
+                  document.getElementById('j').checked = true;
+                  document.getElementById('k').checked = true;
+                  document.getElementById('l').checked = true;
                 } else {
-                  document.getElementById('n1').checked = false;
-                  document.getElementById('n2').checked = false;
-                  document.getElementById('n3').checked = false;
-                  document.getElementById('n4').checked = false;
-                  document.getElementById('n5').checked = false;
-                  document.getElementById('n6').checked = false;
-                  document.getElementById('n7').checked = false;
-                  document.getElementById('n9').checked = false;
-                  document.getElementById('n8').checked = false;
-                  document.getElementById('n11').checked = false;
-                  document.getElementById('n12').checked = false;
-                  document.getElementById('n13').checked = false;
+                  document.getElementById('a').checked = false;
+                  document.getElementById('b').checked = false;
+                  document.getElementById('c').checked = false;
+                  document.getElementById('d').checked = false;
+                  document.getElementById('e').checked = false;
+                  document.getElementById('f').checked = false;
+                  document.getElementById('g').checked = false;
+                  document.getElementById('h').checked = false;
+                  document.getElementById('i').checked = false;
+                  document.getElementById('j').checked = false;
+                  document.getElementById('k').checked = false;
+                  document.getElementById('l').checked = false;
                 }
                });
              })
@@ -620,7 +620,7 @@ if ($per_con == 1 || $per_con == "1") {
             <div class="col-md-5">
             <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="approve_acc" id="n5">
+                <input class="form-check-input" type="checkbox" value="" name="approve_acc" id="g">
                 Approve Account
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -630,7 +630,7 @@ if ($per_con == 1 || $per_con == "1") {
            <!-- Next -->
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="vault_trans" id="n6">
+                <input class="form-check-input" type="checkbox" value="" name="vault_trans" id="h">
                 Vault Transaction
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -640,7 +640,7 @@ if ($per_con == 1 || $per_con == "1") {
            <!-- Next -->
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="view_report" id="n7">
+                <input class="form-check-input" type="checkbox" value="" name="view_report" id="i">
                 View Report
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -649,7 +649,7 @@ if ($per_con == 1 || $per_con == "1") {
            </div>
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="dash" id="n8">
+                <input class="form-check-input" type="checkbox" value="" name="dash" id="j">
                 Dashboard
                 <span class="form-check-sign">
                 <span class="check"></span>
@@ -659,8 +659,17 @@ if ($per_con == 1 || $per_con == "1") {
            <!-- Last -->
            <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="emai" id="n9">
+                <input class="form-check-input" type="checkbox" value="" name="emai" id="k">
                 Vault Email
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+           <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="" name="approve_loan" id="l">
+                Loan Approval
                 <span class="form-check-sign">
                 <span class="check"></span>
                 </span>
@@ -690,12 +699,12 @@ if ($per_con == 1 || $per_con == "1") {
                     <table id="tabledat1" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM org_role WHERE org_role.int_id = '$sessint_id'";
+                        $query = "SELECT org_role.id, org_role.role, org_role.description FROM org_role JOIN permission ON org_role.id = permission.role_id WHERE org_role.int_id = '$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <th style="width: 50%;">Role Name</th>
+                        <th>Role Name</th>
                         <th>Description</th>
-                        <th style="width: 30%;">
+                        <th>
                           Edit
                         </th>
                       </thead>

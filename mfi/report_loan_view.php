@@ -63,13 +63,10 @@ $destination = "report_loan.php";
                           Interest Rate
                         </th>
                         <th>
-                          Interest Amount
-                        </th>
-                        <th>
-                          Total Int Income
-                        </th>
-                        <th>
                           Outstanding Loan Balance
+                        </th>
+                        <th>
+                          Account Officer
                         </th>
                       </thead>
                       <tbody>
@@ -82,9 +79,16 @@ $destination = "report_loan.php";
                             $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
                             $f = mysqli_fetch_array($anam);
                             $nae = strtoupper($f["firstname"]." ".$f["lastname"]);
+                            
                         ?>
                           <th><?php echo $nae; ?></th>
                           <th><?php echo number_format($row["principal_amount"]); ?></th>
+                          <?php
+                          $loan_off = $row['loan_officer'];
+                          $fido = mysqli_query($connection, "SELECT * FROM staff WHERE id = '$loan_off'");
+                          $fd = mysqli_fetch_array($fido);
+                          $account = $fd['display_name'];
+                          ?>
                           <th><?php echo $row["loan_term"]; ?></th>
                           <th><?php echo $row["disbursement_date"]; ?></th>
                           <th><?php echo $row["repayment_date"];?></th>
@@ -95,7 +99,6 @@ $destination = "report_loan.php";
                           $intr = $int_rate/100;
                           $final = $intr * $prina;
                           ?>
-                          <th><?php echo number_format($final); ?></th>
                           <?php
                             $loant = $row["loan_term"];
                             $total = $loant * $final;
@@ -106,12 +109,12 @@ $destination = "report_loan.php";
                           $income = $fee + $total;
                           $ttlinc += $income;
                           ?>
-                          <th><?php echo number_format($income); ?></th>
                           <th><?php $bal = $row["total_outstanding_derived"];
                           $df = $bal;
                            echo number_format($bal);
                            $ttloutbalance += $bal;
                             ?></th>
+                            <th><?php echo $account; ?></th>
                           <!-- <td><a href="client_view.php?edit=<?php echo $cid;?>" class="btn btn-info">View</a></td> -->
                         </tr>
                         <?php }
