@@ -28,26 +28,22 @@ if ($network != "" && $phone != "" && $amount != "" && $int_id != "" && $branch_
             // STAT API
             $curl = curl_init();
 
-curl_setopt_array($curl, array(
-  CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => "",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 0,
-  CURLOPT_FOLLOWLOCATION => true,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => "POST",
-  CURLOPT_HTTPHEADER => array(
-    "serviceCode: QAB",
-    "phone: $phone",
-    "amount: $amount",
-    "vend_type: VTU",
-    "network: $network",
-    "request_id: $randms",
-    "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30"
-  ),
-));
-// success
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "http://34.68.51.255/shago/public/api/test/b2b",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"QAB\",\r\n\"phone\" : \"$phone\",\r\n\"amount\": \"$amount\",\r\n\"vend_type\" : \"VTU \",\r\n\"network\": \"$network\",\r\n\"request_id\": \"$trans\"\r\n}",
+                CURLOPT_HTTPHEADER => array(
+                  "Content-Type: application/json",
+                  "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30"
+                ),
+              ));
+              
 $response = curl_exec($curl);
 $err = curl_close($curl);
 if ($err) {
