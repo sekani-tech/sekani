@@ -358,7 +358,7 @@ if ($per_bills == 1 || $per_bills == "1") {
                <select name="" id="network" class="form-control">
                  <option value="MTN">MTN</option>
                  <option value="AIRTEL">AIRTEL</option>
-                 <option value="ETISALAT">ETISALAT</option>
+                 <option value="9mobile">9MOBILE</option>
                  <option value="GLO">GLO</option>
              </select>
              <input type="text" id="int_id" hidden  value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
