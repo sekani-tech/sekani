@@ -98,7 +98,7 @@ if ($status == "200" && $status != "") {
     $(document).ready(function(){
         swal({
             type: "success",
-            title: "Message sent Successfully! - '.$status.'",
+            title: "Sent - '.$msg.'",
             text: "API Looks Good!",
             showConfirmButton: false,
             timer: 3000
