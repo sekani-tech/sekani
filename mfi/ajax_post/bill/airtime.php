@@ -43,7 +43,8 @@ curl_setopt_array($curl, array(
     "amount: $amount",
     "vend_type: VTU",
     "network: $network",
-    "request_id: $randms"
+    "request_id: $randms",
+    "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30"
   ),
 ));
 // success
