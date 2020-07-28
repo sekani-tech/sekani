@@ -29,7 +29,7 @@ if ($network != "" && $phone != "" && $amount != "" && $int_id != "" && $branch_
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
-                CURLOPT_URL => "http://34.68.51.255/shago/public/api/test/b2b",
+                CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
