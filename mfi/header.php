@@ -309,14 +309,10 @@ input[type=number] {
             </a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+            <a class="nav-link" href="bill_airtime.php">
               <i class="material-icons">description</i>
               Bills & Airtime
             </a>
-            <div class="dropdown-menu">
-              <a href="bill.php" class="dropdown-item">Pay Bills</a>
-              <a href="airtime.php" class="dropdown-item">Buy Airtime & Data</a>
-            </div>
           </li>
           <!-- end of report -->
           <li class="nav-item dropdown">

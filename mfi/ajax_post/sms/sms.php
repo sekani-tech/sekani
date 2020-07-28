@@ -13,7 +13,7 @@ $account_no = $_POST["account_no"];
 $digits = 9;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 // end
-if ($send_id != "" && $phone != "" && $msg != "" && $int_id != "" && $branch_id) {
+if ($send_id != "" && $phone != "" && $msg != "" && $int_id != "" && $branch_id != "") {
     // AIIT MAKING A 
 // // echo $int_id;
 // $bvn = $_POST["bvn"];

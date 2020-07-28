@@ -337,8 +337,80 @@ if ($per_bills == 1 || $per_bills == "1") {
                     </div> -->
                     <div class="tab-pane active" id="products">
                         <center>
-                      <a href="#" class="btn btn-primary"> Buy Airtime</a>
+                      <button data-toggle="modal" data-target="#exampleModal" class="btn btn-primary"> Buy Airtime</button>
                       </center>
+                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Buy Airtime</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <!-- action="../functions/pay.php" -->
+      <form method="POST"  enctype="multipart/form-data">
+          <div class="row">
+          <div class="col-md-12">
+              <div class="form-group">
+               <label class="bmd-label-floating">Select a Network</label>
+               <select name="" id="network" class="form-control">
+                 <option value="MTN">MTN</option>
+                 <option value="AIRTEL">AIRTEL</option>
+                 <option value="9mobile">9MOBILE</option>
+                 <option value="GLO">GLO</option>
+             </select>
+             <input type="text" id="int_id" hidden  value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating">Phone Number</label>
+               <input type = "text" id="phone" class="form-control" name = ""/>
+              </div>
+            </div>
+            <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating">Amount NGN</label>
+               <input type = "text" id="amount" class="form-control" name = ""/>
+              </div>
+            </div>
+            </div>
+            <script>
+                              $(document).ready(function() {
+                                $('#submitme').on("change keyup paste click", function() {
+                                  var net = $('#network').val();
+                                  var phone = $('#phone').val();
+                                  var amt = $('#amount').val();
+                                  $.ajax({
+                                    url:"ajax_post/bill/airtime.php",
+                                    method:"POST",
+                                    data:{net:net, phone:phone, amt:amt},
+                                    success:function(data){
+                                      $('#coll').html(data);
+                                    }
+                                  });
+                                });
+                              });
+                            </script>
+            <!-- <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating"></label>
+               <input type = "text" hidden class="form-control"/>
+              </div>
+            </div> -->
+           <!-- Next -->
+           <div id="coll"></div>
+                    </div>
+                    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="submitme" name="submit" value="add_payment" type="button" class="btn btn-primary">Buy</button>
+      </div>
+                </form>
+                </div>
+                </div>
+            </div>
                       <hr>
                       <div class="table-responsive">
                   <script>
@@ -443,195 +515,6 @@ if ($per_bills == 1 || $per_bills == "1") {
                     </div>
                     <!-- credit checks -->
                     <!-- end of credit checkss -->
-                    <div class="tab-pane" id="cash">
-                    <div class="table-responsive">
-                  <button data-toggle="modal" data-target="#exampleModal" class="btn btn-primary pull-left">Add</button>
-                      <!-- form of staff -->
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Payment Type</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <!-- action="../functions/pay.php" -->
-      <form method="POST"  enctype="multipart/form-data">
-          <div class="row">
-            <div class="col-md-12">
-            <div class="form-group">
-               <label class="bmd-label-floating">Name</label>
-               <input type = "text" class="form-control" name = "nameo"/>
-              </div>
-            </div>
-            <div class="col-md-12">
-            <div class="form-group">
-               <label class="bmd-label-floating">Description</label>
-               <input type = "text" class="form-control" name = "des"/>
-              </div>
-            </div>
-            <div class="col-md-6">
-            <?php
-                  function fill_gl($connection) {
-                    $sint_id = $_SESSION["int_id"];
-                    $org = "SELECT * FROM acc_gl_account WHERE (int_id = '$sint_id' AND (parent_id = '' OR parent_id = '0'))";
-                    $res = mysqli_query($connection, $org);
-                    $out = '';
-                    while ($row = mysqli_fetch_array($res))
-                    {
-                      $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
-                    }
-                    return $out;
-                  }
-                  ?>
-                 
-              <div class="form-group">
-               <label class="bmd-label-floating">GL Group</label>
-               <select name="gl_type" id="role" class="form-control">
-                 <option value="0">choose a gl type</option>
-                <?php echo fill_gl($connection); ?>
-             </select>
-             <input type="text" id="int_id" hidden  value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
-              </div>
-            </div>
-            <script>
-                    $(document).ready(function () {
-                      $('#role').on("change", function () {
-                        var ch = $('#role').val();
-                        $.ajax({
-                          url: "ajax_post/glss.php", 
-                          method: "POST",
-                          data:{ch:ch},
-                          success: function (data) {
-                            $('#tit').html(data);
-                          }
-                        })
-                      });
-                    });
-                  </script>
-            <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">GL Account</label>
-                      <select id ="tit" class="form-control" name= "gl_code">
-                      </select>    
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-            <div class="form-group">
-               <label class="bmd-label-floating">Default</label>
-              <select class="form-control" name= "default">
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-              </select>
-              </div>
-            </div>  
-            <div class="col-md-6">
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="is_cash">
-                Is Cash payment
-                <span class="form-check-sign">
-                <span class="check"></span>
-                </span>
-              </label>
-           </div>
-            </div>
-            <div class="col-md-6">
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" name="is_bank">
-                Is Bank
-                <span class="form-check-sign">
-                <span class="check"></span>
-                </span>
-              </label>
-           </div>
-            </div>
-            </div>
-            <div class="col-md-12">
-            <div class="form-group">
-               <label class="bmd-label-floating"></label>
-               <input type = "text" hidden class="form-control"/>
-              </div>
-            </div>
-           <!-- Next -->
-                    </div>
-                    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" name="submit" value="add_payment" type="button" class="btn btn-primary">Save changes</button>
-      </div>
-                </form>
-                </div>
-                </div>
-            </div>
-            </div>
-            <script>
-                  $(document).ready(function() {
-                  $('#tabledat4').DataTable();
-                  });
-                  </script>
-                    <table id="tabledat4" class="table">
-                      <thead class=" text-primary">
-                      <?php
-                        $query = "SELECT * FROM payment_type WHERE int_id ='$sessint_id'";
-                        $result = mysqli_query($connection, $query);
-                      ?>
-                        <!-- <th>
-                          ID
-                        </th> -->
-                        <th>Name</th>
-                        <th>
-                          Description
-                        </th>
-                        <th>
-                          Default
-                        </th>
-                        <th>
-                         Cash Payment
-                        </th>
-                        <th>
-                          Edit
-                        </th>
-                      </thead>
-                      <tbody>
-                      <?php if (mysqli_num_rows($result) > 0) {
-                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
-                        <tr>
-                        <?php $dop = $row["id"]; ?>
-                          <th><?php echo $row["value"]; ?></th>
-                          <th><?php echo $row["description"]; ?></th>
-                          <?php 
-                          if ($row["order_position"] == 1){
-                            $def = "Yes";
-                          }
-                          else{
-                            $def = "No";
-                          }
-                          ?>
-                         <th><?php echo $def; ?></th>
-                          <?php 
-                          if ($row["is_cash_payment"] == 1){
-                            $cash = "Yes";
-                          }
-                          else{
-                            $cash = "No";
-                          }
-                          ?>
-                         <th><?php echo $cash; ?></th>
-                          <td><a href="editpay_type.php?edit=<?php echo $dop;?>" class="btn btn-info">Edit</a></td>
-                          </tr>
-                        <?php }
-                          }
-                          else {
-                            // echo "0 Document";
-                          }
-                          ?>
-                      </tbody>
-                    </table>
-                    </div>
                     <!-- end of cash payment -->
                   </div>
                 </div>
@@ -654,7 +537,7 @@ if ($per_bills == 1 || $per_bills == "1") {
    swal({
     type: "error",
     title: "You Dont Have Airtime Access",
-    text: "Only Teller Can",
+    text: "Your are not permitted",
    showConfirmButton: false,
     timer: 2000
     }).then(
