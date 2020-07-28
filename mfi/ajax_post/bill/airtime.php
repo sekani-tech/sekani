@@ -38,7 +38,7 @@ curl_setopt_array($curl, array(
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "POST",
   CURLOPT_HTTPHEADER => array(
-    "serviceCode: $serc",
+    "serviceCode: QAB",
     "phone: $phone",
     "amount: $amount",
     "vend_type: VTU",
@@ -70,6 +70,7 @@ if ($err) {
     echo "NO INTERNET CONNECTION";
     } else {
         // echo $response;
+        // make 
 $obj = json_decode($response, TRUE);
 $status = $obj['status'];
 $msg = $obj['message'];
