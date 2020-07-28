@@ -38,7 +38,7 @@ if ($network != "" && $phone != "" && $amount != "" && $int_id != "" && $branch_
               CURLOPT_CUSTOMREQUEST => "POST",
               CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"QAB\",\r\n\"phone\" : \"$phone\",\r\n\"amount\": \"$amount\",\r\n\"vend_type\" : \"VTU \",\r\n\"network\": \"$network\",\r\n\"request_id\": \"$randms\"\r\n}",
               CURLOPT_HTTPHEADER => array(
-                "email: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
+                "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
                 "Content-Type: application/json"
               ),
             ));
