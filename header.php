@@ -75,6 +75,9 @@ if (mysqli_num_rows($getip) == 1) {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- Material Kit CSS -->
   <link href="assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+  <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="datatable/jquery-3.3.2.js"></script>
   <script src="datatable/jquery.dataTables.min.js"></script>
   <script src="datatable/jquery.dataTables.min.js"></script>

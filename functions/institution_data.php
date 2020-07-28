@@ -56,7 +56,8 @@ if ($result) {
     $dsf = mysqli_query($connection, "SELECT * FROM institutions WHERE int_name = '$int_name'");
     $df = mysqli_fetch_array($dsf);
     $intid = $df['int_id'];
-
+    $foi = "INSERT INTO `branch` (`int_id`, `parent_id`, `hierarchy`, `opening_date`, `name`,
+     `email`, `phone`, `location`) VALUES ()";
     $riedfoifo = "INSERT INTO `org_role` (`int_id`, `role`, `description`, `permission`)
    VALUES ('{$intid}', 'super user', '', '1')";
   $fdrty = mysqli_query($connection, $riedfoifo);
