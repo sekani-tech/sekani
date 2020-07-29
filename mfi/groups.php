@@ -126,6 +126,24 @@ else if (isset($_GET["message3"])) {
         }
         }
 ?>
+<?php
+  function branch_opt($connection)
+  {  
+      $br_id = $_SESSION["branch_id"];
+      $sint_id = $_SESSION["int_id"];
+      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+      $dof = mysqli_query($connection, $dff);
+      $out = '';
+      while ($row = mysqli_fetch_array($dof))
+      {
+        $do = $row['id'];
+      $out .= " OR branch_id ='$do'";
+      }
+      return $out;
+  }
+  $br_id = $_SESSION["branch_id"];
+  $branches = branch_opt($connection);
+?>
 <!-- Content added here -->
 <div class="content">
         <div class="container-fluid">
