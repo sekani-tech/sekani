@@ -128,7 +128,7 @@ setInterval(function() {
             <div class="col-md-4">
               <div class="card card-chart">
                 <div class="card-header card-header-success">
-                  <div class="ct-chart" id="dailySalesChart"></div>
+                  <div class="ct-chart" id=""></div>
                 </div>
                 <div class="card-body">
                   <h4 class="card-title">Daily Loan Collection</h4>
