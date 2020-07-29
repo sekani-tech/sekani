@@ -10,7 +10,7 @@
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved'";
+                        $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && (branch_id ='$br_id' $branches) && status = 'Approved'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>

@@ -8,7 +8,7 @@
                    <table id="tabledats" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Pending'";
+                        $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && (branch_id ='$br_id' $branches) && status = 'Pending'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
