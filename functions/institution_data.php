@@ -56,8 +56,20 @@ if ($result) {
     $dsf = mysqli_query($connection, "SELECT * FROM institutions WHERE int_name = '$int_name'");
     $df = mysqli_fetch_array($dsf);
     $intid = $df['int_id'];
-    $foi = "INSERT INTO `branch` (`int_id`, `parent_id`, `hierarchy`, `opening_date`, `name`,
-     `email`, `phone`, `location`) VALUES ()";
+    $foi = "INSERT INTO `branch` (`int_id`, `parent_id`, `opening_date`, `name`, `email`, `state`, `lga`, `location`,`phone`)
+     VALUES ('{$intid}','0', '{$submitted_on}', 'Head Office', '{$int_state}', '{$lga}', '{$email}', '{$office_address}', '{$office_phone}')";
+    $foia = mysqli_query($connection,$foi);
+    // vault for the branch
+    $brna = mysqli_query($connection, "SELECT * FROM branch WHERE int_id = '{$ssint_id}' AND name = '{$name}'");
+    $gom = mysqli_fetch_array($brna);
+    $br_id = $gom['id']; 
+        $mvamt = 10000000.00;
+        $bal = 0.00;
+        $queryx = "INSERT INTO int_vault (int_id, branch_id, movable_amount, balance, date, last_withdrawal, last_deposit, gl_code) VALUES ('{$ssint_id}',
+    '{$br_id}', '{$mvamt}', '{$bal}', '{$submitted_on}', '{$bal}', '{$bal}', '{$incomegl}')";
+    $gogoo = mysqli_query($connection, $queryx);
+
+    if($gogoo){
     $riedfoifo = "INSERT INTO `org_role` (`int_id`, `role`, `description`, `permission`)
    VALUES ('{$intid}', 'super user', '', '1')";
   $fdrty = mysqli_query($connection, $riedfoifo);
@@ -68,8 +80,8 @@ if ($result) {
     $org_ole = $di['id'];
 
     $fdopf = "INSERT INTO `permission` (`int_id`, `role_id`, `acc_op`, `acc_update`, `trans_appv`, `trans_post`, `loan_appv`, `acct_appv`,
-        `staff_cabal`, `valut`, `vault_email`, `view_report`, `view_dashboard`, `configuration`) 
-        VALUES ('$intid', '$org_ole', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1')";
+        `staff_cabal`, `valut`, `vault_email`, `view_report`, `view_dashboard`, `configuration`, `bills`) 
+        VALUES ('$intid', '$org_ole', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1')";
         $fdpoijf = mysqli_query($connection, $fdopf);
 if($fdpoijf){
         echo header("Location: ../institution.php");
@@ -92,6 +104,7 @@ if($fdpoijf){
 else{
     echo "<p>insert org role not work</p>";
 }
+    }
 }
 else{
     echo "<p>insert institution not work</p>";
