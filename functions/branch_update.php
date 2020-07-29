@@ -2,15 +2,18 @@
 <?php
 if (isset($_POST['id'])) {
 $id = $_POST['id'];
-$int_id = $_POST['int_id'];
 $name = $_POST['name'];
 $email = $_POST['email'];
 $phone = $_POST['phone'];
+$state = $_POST['state'];
+$lga = $_POST['lga'];
+$parent_bid = $_POST['parent_bid'];
 $location = $_POST['location'];
-  $query = "UPDATE branch SET id = '$id', name = '$name', email = '$email', phone = '$phone',
-  location = '$location' WHERE id = '$id'";
-  $result = mysqli_prepare($connection, $query);
-  if(mysqli_stmt_execute($result)) {
+
+  $query = "UPDATE branch SET name = '$name', email = '$email', phone = '$phone',
+  location = '$location', state = '$state', lga = '$lga', parent_id = '$parent_bid' WHERE id = '$id'";
+  $result = mysqli_query($connection, $query);
+  if(($result)) {
     // If 'result' is successful, it will send the required message to client.php
     $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
           echo header ("Location: ../mfi/branch.php?message3=$randms");
