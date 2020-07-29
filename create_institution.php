@@ -107,7 +107,7 @@
                       <div class="col-md-4">
                             <div class="form-group">
                                 <label class="form-check-label">Phone</label>
-                                <input type="text" name="office_phone" class="form-control" id="">
+                                <input type="number" name="office_phone" class="form-control" id="">
                             </div>
                         </div>
                         <!-- <div class="clearfix"></div> -->
