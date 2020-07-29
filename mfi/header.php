@@ -373,6 +373,7 @@ input[type=number] {
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
             <li class="nav-item dropdown">
+              <!-- Notification for matured loans -->
             <?php
                 $today = date('Y-m-d');
                 $fom = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$today'");
@@ -381,7 +382,28 @@ input[type=number] {
                 $tomorrow = date( 'Y-m-d' , strtotime ( $today . ' + 1 days' ));
                 $fodm = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$tomorrow'");
                 $dfn = mysqli_num_rows($fodm);
-                $fomd = $dfn + $dn;
+                ?>
+                <!-- Notification for client approval -->
+                <?php
+                  $query = "SELECT client.id,client.submittedon_date, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Not Approved'";
+                  $result = mysqli_query($connection, $query);
+                  $approvd = mysqli_num_rows($result);
+                ?>
+                <!-- Notification for institution transactions -->
+                <?php
+                  $sfsf = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' AND status = 'Pending'";
+                  $sdwr = mysqli_query($connection, $sfsf);
+                  $trans = mysqli_num_rows($sdwr);
+                ?>
+                <!-- notification for client fund transfer -->
+                <?php
+                  $sdf = "SELECT * FROM transfer_cache WHERE int_id = '$sessint_id' AND status = 'Pending'";
+                  $wyj = mysqli_query($connection, $sdf);
+                  $client = mysqli_num_rows($wyj);
+                ?>
+                <!-- Notification for banner -->
+                <?php
+                $fomd = $dfn + $dn + $approvd + $trans + $client;
                 ?>
                 <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">notifications</i>
@@ -389,22 +411,24 @@ input[type=number] {
                   <span class="badge badge-danger"><?php echo $fomd;?></span>
                   <?php }?>
                 </a>
-                <?php if($dn > 0 && $dfn > 0){?>
-                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                  <a class="dropdown-item" href="report_loan_view.php?view39=<?php echo $today;?>"><?php echo $dn;?> Loans matured today</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="report_loan_view.php?view39b=<?php echo $tomorrow; ?>"><?php echo $dfn;?> Loans due tommorow</a>
-                </div>
-                  <?php }else if($dfn > 0){?>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                  <a class="dropdown-item" href="report_loan_view.php?view39b=<?php echo $tomorrow; ?>"><?php echo $dfn;?> Loans due tommorow</a>
-                </div>
-                  <?php }
-                  else if($dn > 0 ){?>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                  <a class="dropdown-item" href="report_loan_view.php?view39=<?php echo $today;?>"><?php echo $dn;?> Loans matured today</a>
-                  </div>
+                <?php 
+                  if($dfn){?>
+                  <a class="dropdown-item" href="report_loan_view.php?view39b=<?php echo $tomorrow; ?>"><?php echo $dfn;?> Loan(s) due tommorow</a>
+                  <?php }
+                  if($dn){?>
+                  <a class="dropdown-item" href="report_loan_view.php?view39=<?php echo $today;?>"><?php echo $dn;?> Loan(s) matured today</a>
+                <?php }
+                if($approvd){?>
+                  <a class="dropdown-item" href="client_approval.php"><?php echo $approvd;?> client(s) in need of approval</a>
+                <?php }
+                if($trans){?>
+                  <a class="dropdown-item" href="transact_approval.php"><?php echo $trans;?> transaction(s) in need of approval</a>
+                <?php }
+                if($client){?>
+                  <a class="dropdown-item" href="transfer_approval.php"><?php echo $client;?> client transfer(s) in need of approval</a>
                 <?php }?>
+                </div>
               </li>
               <!-- user setup -->
               <li class="nav-item dropdown">
