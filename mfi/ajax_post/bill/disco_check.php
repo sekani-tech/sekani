@@ -5,14 +5,15 @@ include("../../../functions/connect.php");
 session_start();
 $int_id = $_SESSION["int_id"];
 $branch_id = $_SESSION["branch_id"];
-$network = $_POST["net"];
-$phone = $_POST["phone"];
+$disco = $_POST["disco"];
+$meter = $_POST["meter"];
+$dis_type = $_POST["dis_type"];
 // MAD
 $digits = 9;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 // end the code
 // end
-if ($network != "" && $phone != "" && $int_id != "" && $branch_id != "") {
+if ($disco != "" && $meter != "" && $int_id != "" && $branch_id != "") {
     // finnin
     $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
         $qw = mysqli_fetch_array($sql_fund);
@@ -35,14 +36,14 @@ curl_setopt_array($curl, array(
   CURLOPT_FOLLOWLOCATION => true,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "POST",
-  CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"VDA\",\r\n\"phone\" : \"$phone\",\r\n\"network\": \"$network\"\r\n}",
+  CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"AOV\",\r\n\"disco\" : \"$disco\",\r\n\"meterNo\": \"$meter\",\r\n\"type\" : \"$dis_type\"\r\n}",
   CURLOPT_HTTPHEADER => array(
     "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
     "Content-Type: application/json"
   ),
 ));
 
-$response = curl_exec($curl);  
+$response = curl_exec($curl);
 $err = curl_close($curl);
 if ($err) {
     //    echo "cURL Error #:" . $err;
@@ -68,55 +69,45 @@ if ($err) {
 $obj = json_decode($response, TRUE);
 $status = $obj['status'];
 $msg = $obj['message'];
-$product = $obj['product'];
+$customer = $obj['customerName'];
+$customerAddress = $obj['customerAddress'];
+$customerDistrict = $obj['customerDistrict'];
+$phoneNumber = $obj['phoneNumber'];
 // make a move
-$me = json_encode($product);
 if ($status == "200" && $status != "") {
         // echo $someArray[0]["code"];
     ?>
-    <label class="bmd-label-floating">Date Plan <div id="data_ress"></div></label>
-    <select id="see" class="form-control" style="text-transform: uppercase;">
-        <option value="">SELECT DATA PLAN</option>
-    <?php
-    $someArray = json_decode($me, true);
-    foreach ($someArray as $key => $value) {
-            echo "<option value=".$value["allowance"].":".$value["code"].":".$value["price"]."> " . " ". $value["allowance"] ." &#8358;". number_format($value["price"], 2) . " TERM: ". $value["validity"] . "</option>";
-          }
-          ?>
-    </select>
+    <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating">Amount</label>
+               <input type = "text" value="" id="amount" class="form-control" name = ""/>
+              </div>
+    </div>
+    <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating">Customer Name</label>
+               <input type = "text" value="<?php echo $customer ?>" id="name" class="form-control" name = "" readonly/>
+              </div>
+    </div>
     <!-- ow te script -->
-    <script>
-                $(document).ready(function() {
-                                $('#see').on("change keyup paste click", function() {
-                                  var datac = $('#see').val();
-                                    $.ajax({
-                                      url:"ajax_post/bill/data_res.php",
-                                      method:"POST",
-                                      data:{datac:datac},
-                                      success:function(data){
-                                      $('#data_ress').html(data);
-                                    }
-                                  });
-                                });
-                              });
-                            </script>
+    <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating">Customer Phone</label>
+               <input type = "text" value="<?php echo $phoneNumber ?>" id="phonenumber" class="form-control" name = ""/>
+              </div>
+    </div>
     <!-- DATA respomze -->
+    <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating">Customer Address</label>
+               <input type = "text" value="<?php echo $customerAddress ?>" id="customerAddress" class="form-control" name = ""/>
+              </div>
+    </div>
     
     <?php
     
 } else {
-    echo '<script type="text/javascript">
-    $(document).ready(function(){
-        swal({
-            type: "error",
-            title: "Error Message - '.$msg.'",
-            text: "DATA ERROR",
-            showConfirmButton: false,
-            timer: 5000
-        });
-    });
-    </script>
-    ';
+    echo "Finding User..." ;
 }
     }
         } else {
