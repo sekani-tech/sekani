@@ -73,7 +73,15 @@ if ($err) {
 $obj = json_decode($response, TRUE);
 $status = $obj['status'];
 $msg = $obj['message'];
-// make a move
+// repsonse working up.
+$token = $obj['token'];
+$unit = $obj['unit'];
+$taxAmount = $obj['taxAmount'];
+$bonusUnit = $obj['bonusUnit'];
+$bonusToken = $obj['bonusToken'];
+$disco = $obj['disco'];
+$transId = $obj['transId'];
+// make a move | qwerty
 if ($status == "200" && $status != "") {
     // alright
     $cal_bal = $balance - $amount;
@@ -103,15 +111,13 @@ if ($status == "200" && $status != "") {
         swal({
             type: "success",
             title: "Paid - '.$msg.'",
-            text: "API Looks Good!",
+            text: "TOKEN: '.$token.'",
             showConfirmButton: false,
-            timer: 3000
+            timer: 60000
         });
     });
     </script>
     ';
-    $URL="airtime.php";
-    echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
          } else {
             //  NOTHING AT ALL
             echo "ERROR IN TRANSACTION";
