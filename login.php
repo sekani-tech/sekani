@@ -114,6 +114,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["int_address"] = $int_address;
                             $_SESSION["int_full"] = $int_full;
                             $_SESSION["sender_id"] = $sender_id;
+
+                            function branch_option($connection)
+                            {  
+                                $br_id = $_SESSION["branch_id"];
+                                $sint_id = $_SESSION["int_id"];
+                                $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+                                $dof = mysqli_query($connection, $dff);
+                                $out = '';
+                                while ($row = mysqli_fetch_array($dof))
+                                {
+                                  $do = $row['id'];
+                                $out .= " OR branch_id ='$do'";
+                                }
+                                return $out;
+                            }
+                            $branches = branch_option($connection);
+                            $_SESSION['branch_option'] = "branch_id = '$_SESSION[branch_id]'".$branches;
                             // mr favor
                             $altemail = mysqli_query($link, "SELECT * FROM `institutions` WHERE int_id ='1'");
                             if (count([$altemail]) == 1) {

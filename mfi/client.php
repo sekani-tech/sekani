@@ -3,6 +3,7 @@
 $page_title = "Clients";
 $destination = "index.php";
     include("header.php");
+    $br_id = $_SESSION['branch_id'];
 
 ?>
 <?php
@@ -106,9 +107,26 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                   });
                   </script>
                   <!-- Insert number users institutions -->
+                  <?php
+                        function branch_opt($connection)
+                        {  
+                            $br_id = $_SESSION["branch_id"];
+                            $sint_id = $_SESSION["int_id"];
+                            $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+                            $dof = mysqli_query($connection, $dff);
+                            $out = '';
+                            while ($row = mysqli_fetch_array($dof))
+                            {
+                              $do = $row['id'];
+                            $out .= " OR client.branch_id ='$do'";
+                            }
+                            return $out;
+                        }
+                        $branches = branch_opt($connection);
+                        ?>
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved'";
-                   $result = mysqli_query($connection, $query);
+                        $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && (client.branch_id ='$br_id' $branches) && client.status = 'Approved'";
+                        $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
@@ -119,7 +137,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
+                        $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && (client.branch_id ='$br_id' $branches) && client.status = 'Approved'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>

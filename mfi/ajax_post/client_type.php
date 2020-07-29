@@ -5,11 +5,19 @@ $output2 = '';
 $output3 = '';
 session_start();
 if(isset($_POST['id'])){
-    $br_id = $_SESSION["branch_id"];
-    $fod = "SELECT * FROM branch WHERE int_id = '5' AND id='$br_id'";
-    $dof = mysqli_query($connection, $fod);
-    $fs = mysqli_fetch_array($dof);
-    $bname = $fs['name'];
+    function branch_option($connection)
+    {  
+        $br_id = $_SESSION["branch_id"];
+        $sint_id = $_SESSION["int_id"];
+        $fod = "SELECT * FROM branch WHERE int_id = '$sint_id' AND parent_id='$br_id' || id = '$br_id'";
+        $dof = mysqli_query($connection, $fod);
+        $out = '';
+        while ($row = mysqli_fetch_array($dof))
+        {
+        $out .= '<option value="'.$row["id"].'">' .$row["name"]. '</option>';
+        }
+        return $out;
+    }
     function fill_officer($connection)
         {
             $sint_id = $_SESSION["int_id"];
@@ -77,10 +85,11 @@ if(isset($_POST['id'])){
 
         <div class="col-md-4">
         <div class="form-group">
-        <label class="">Branch:</label>
-        <input type="text" style="text-transform: uppercase;" value="'.$bname.'" readonly class="form-control">
-        <input type="text" style="text-transform: uppercase;" hidden value="'.$br_id.'" readonly class="form-control" name="brancha">
-    </div>
+            <label class="">Branch:</label>
+            <select class="form-control" name="branch">
+            '.branch_option($connection).'
+            </select>
+        </div>
         </div>
 
         <div class="col-md-4">
@@ -522,11 +531,11 @@ if(isset($_POST['id'])){
             </div>
             </div>
             <div class="col-md-4">
-            
             <div class="form-group">
                 <label class="">Branch:</label>
-                <input type="text" style="text-transform: uppercase;" hidden value="'.$br_id.'" readonly class="form-control" name="branch">
-                <input type="text" style="text-transform: uppercase;" value="'.$bname.'" readonly class="form-control">
+                <select class="form-control" name="branch">
+                '.branch_option($connection).'
+                </select>
             </div>
             </div>
             <div class="col-md-4">
