@@ -142,10 +142,14 @@ if($efd == "gl_accounto"){
   $acct_type = $_POST['acct_type'];
   $ext_id = $_POST['ext_id'];
   $acct_use = $_POST['acct_use'];
+  $qed = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '$gl_code'");
+  $dsp = mysqli_fetch_array($qed);
+  $gll = $dsp['gl_code'];
+  if($gl_code == $gll){
 
-  $dioi = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '0'";
-  $fdsd = mysqli_query($connection, $dioi);
-  $fdu = mysqli_num_rows($fdsd);
+  }
+  else{
+
   if ( isset($_POST['man_ent']) ) {
     $man_ent_all = 1;
 } else {
@@ -166,8 +170,9 @@ if ( isset($_POST['bank_rec']) ) {
   $int_id = $sessint_id;
   $bnc_id = $branch_id;
 
-  if ( isset($_POST['parent_id']) ) {
+  if (isset($_POST['parent_id'])){
     $pid = $_POST['parent_id'];
+
     // alright check this out
   $chat_acct = "INSERT INTO `acc_gl_account`
   (`int_id`, `branch_id`, `name`, `parent_id`, `gl_code`,
@@ -239,6 +244,7 @@ if ( isset($_POST['bank_rec']) ) {
  </script>';
   }
   }
+}
 }
 else {
   echo '<script type="text/javascript">
