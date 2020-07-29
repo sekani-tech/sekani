@@ -36,7 +36,7 @@ if(isset($_POST['type']) && isset($_POST['dso'])){
             $gl_code = ($dsd * 10).(($sprtydo + 1) * 100);
         }
         else{
-            $gl_code = ($dsd * 10) + 100;
+            $gl_code = ($dsd * 10).(($sprtydo + 1) * 100);
         }
     }
     $out = '
