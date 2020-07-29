@@ -5,6 +5,21 @@ $destination = "index.php";
     include("header.php");
 $b_id = $_SESSION['branch_id'];
 ?>
+<?php
+    function branch_option($connection)
+    {  
+        $br_id = $_SESSION["branch_id"];
+        $sint_id = $_SESSION["int_id"];
+        $fod = "SELECT * FROM branch WHERE int_id = '$sint_id' AND parent_id='$br_id' || id = '$br_id'";
+        $dof = mysqli_query($connection, $fod);
+        $out = '';
+        while ($row = mysqli_fetch_array($dof))
+        {
+        $out .= '<option value="'.$row["id"].'">' .$row["name"]. '</option>';
+        }
+        return $out;
+    }
+?>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -55,8 +70,12 @@ $b_id = $_SESSION['branch_id'];
                             <input type="text" name="gname" id="" class="form-control" required>
                         </div>
                         <div class="col-md-6">
-                            <label for="">Branch Name *:</label>
-                            <input class="form-control" type="text" name="branch_id" value="<?php echo $b_id;?>" readonly/>
+                        <div class="form-group">
+                            <label class="">Branch:</label>
+                            <select class="form-control" name="branch_id">
+                            <?php echo branch_option($connection);?>
+                            </select>
+                        </div>
                         </div>
                         <div class="col-md-6">
                             <label for="">Loan Officer *:</label>
