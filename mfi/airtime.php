@@ -462,8 +462,101 @@ if ($per_bills == 1 || $per_bills == "1") {
                     </div>
                     <div class="tab-pane" id="saving">
                     <center>
-                      <a href="#" class="btn btn-primary"> Buy Data</a>
+                      <button data-toggle="modal" data-target="#exampleModal1" class="btn btn-primary"> Buy Data</button>
                       </center>
+                      <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Buy Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <!-- action="../functions/pay.php" -->
+      <form method="POST"  enctype="multipart/form-data">
+          <div class="row">
+            <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating">Phone Number</label>
+               <input type = "text" id="phone_d" class="form-control" name = ""/>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+               <label class="bmd-label-floating">Select a Network</label>
+               <select name="" id="network_d" class="form-control">
+                 <option value="">select a network</option>
+                 <option value="MTN">MTN</option>
+                 <option value="AIRTEL">AIRTEL</option>
+                 <option value="9mobile">9MOBILE</option>
+                 <option value="GLO">GLO</option>
+             </select>
+             <input type="text" id="int_id" hidden  value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-12">
+            <div class="form-group">
+            <div id="qwerty"></div>
+              </div>
+            </div>
+            <div class="col-md-12">
+    <p id="msg"></p>
+            </div>
+            </div>
+                         <script>
+                              $(document).ready(function() {
+                                $('#network_d').on("change keyup paste click", function() {
+                                  var net = $('#network_d').val();
+                                  if (net != "") {
+                                    var phone = $('#phone_d').val();
+                                    $.ajax({
+                                      url:"ajax_post/bill/data_request.php",
+                                      method:"POST",
+                                      data:{net:net, phone:phone},
+                                      success:function(data){
+                                      $('#qwerty').html(data);
+                                    }
+                                  });
+                                  }
+                                });
+                              });
+                            </script>
+            <!-- <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating"></label>
+               <input type = "text" hidden class="form-control"/>
+              </div>
+            </div> -->
+            
+           <!-- Next -->
+           <script>
+        $(document).ready(function() {
+            $('#data_pay').on("click", function() {
+                                  var phone = $('#phone_d').val();
+                                  var net = $('#network_d').val();
+                                  $.ajax({
+                                    url:"ajax_post/bill/data.php",
+                                    method:"POST",
+                                    data:{ phone:phone, net:net},
+                                    success:function(data){
+                                      $('#finish_buying').html(data);
+                                    }
+                                  });
+                                });
+                              });
+                            </script>
+                            <div id="finish_buying"></div>
+                    </div>
+                    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="data_pay" name="submit" disabled value="add_payment" type="button" class="btn btn-primary">Buy</button>
+      </div>
+                </form>
+                </div>
+                </div>
+            </div>
                       <hr>
                     <div class="table-responsive">
                   <script>

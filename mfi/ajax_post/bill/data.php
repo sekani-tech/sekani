@@ -7,13 +7,15 @@ $int_id = $_SESSION["int_id"];
 $branch_id = $_SESSION["branch_id"];
 $network = $_POST["net"];
 $phone = $_POST["phone"];
-$amount = $_POST["amt"];
+$amount = $_SESSION["price"];
+$bundle = $_SESSION["bundle"];
+$package = $_SESSION["package"];
 // MAD
 $digits = 9;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 // end the code
 // end
-if ($network != "" && $phone != "" && $amount != "" && $int_id != "" && $branch_id != "") {
+if ($network != "" && $phone != "" && $amount != "" && $int_id != "" && $branch_id != "" && $bundle != "" && $package != "") {
     // finnin
     $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
         $qw = mysqli_fetch_array($sql_fund);
@@ -36,14 +38,14 @@ if ($network != "" && $phone != "" && $amount != "" && $int_id != "" && $branch_
               CURLOPT_FOLLOWLOCATION => true,
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "POST",
-              CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"QAB\",\r\n\"phone\" : \"$phone\",\r\n\"amount\": \"$amount\",\r\n\"vend_type\" : \"VTU \",\r\n\"network\": \"$network\",\r\n\"request_id\": \"$randms\"\r\n}",
+              CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"BDA\",\r\n\"phone\" : \"$phone\",\r\n\"amount\": \"$amount\",\r\n\"bundle\" : \"$bundle\",\r\n\"network\": \"$network\",\r\n\"package\" : \"$package\",\r\n\"request_id\": \"$randms\"\r\n}",
               CURLOPT_HTTPHEADER => array(
                 "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
                 "Content-Type: application/json"
               ),
             ));
             
-            $response = curl_exec($curl);      
+            $response = curl_exec($curl);   
 $err = curl_close($curl);
 if ($err) {
     //    echo "cURL Error #:" . $err;
@@ -81,7 +83,7 @@ if ($status == "200" && $status != "") {
     $date = date("Y-m-d");
     $date2 = date('Y-m-d H:i:s');
     $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-    $trans = "SKWAL".$randms."AIRTIME".$int_id;
+    $trans = "SKWAL".$randms."DATA".$int_id;
     // GD
     $update_transaction = mysqli_query($connection, "UPDATE sekani_wallet SET running_balance = '$cal_bal', total_withdrawal = '$cal_with',
     int_profit = '$cal_int_prof', sekani_charge = '$cal_sek', merchant_charge = '$cal_mch' WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
@@ -90,7 +92,7 @@ if ($status == "200" && $status != "") {
         $insert_transaction = mysqli_query($connection, "INSERT INTO `sekani_wallet_transaction` (`int_id`, `branch_id`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `wallet_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, 
         `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`,
         `int_profit`, `sekani_charge`, `merchant_charge`)
-         VALUES ('{$int_id}', '{$branch_id}', '{$trans}', 'Airtime Recharge $network - $phone', 'bill_airtime', NULL, '0', '{$date}', '{$amount}', '{$cal_bal}', '{$cal_bal}', {$date}, 
+         VALUES ('{$int_id}', '{$branch_id}', '{$trans}', 'Data Recharge $network - $phone', 'bill_data', NULL, '0', '{$date}', '{$amount}', '{$cal_bal}', '{$cal_bal}', {$date}, 
          NULL, NULL, '{$date2}', '0', '0.00', '{$amount}', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
          if ($insert_transaction) {
             //  go withdra
@@ -122,7 +124,7 @@ if ($status == "200" && $status != "") {
         swal({
             type: "error",
             title: "Error Message - '.$msg.'",
-            text: "AIRTIME ERROR",
+            text: "DATA ERROR",
             showConfirmButton: false,
             timer: 5000
         });
