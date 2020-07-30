@@ -21,7 +21,21 @@ if(isset($_POST["id"]))
       }
       return $out;
   }
-  $branche = $_SESSION['branch_option'];
+  function branch_opt($connection)
+  {  
+      $br_id = $_SESSION["branch_id"];
+      $sint_id = $_POST["ist"];
+      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+      $dof = mysqli_query($connection, $dff);
+      $out = '';
+      while ($row = mysqli_fetch_array($dof))
+      {
+        $do = $row['id'];
+      $out .= " OR branch_id ='$do'";
+      }
+      return $out;
+  }
+  $branche = branch_opt($connection);
   $branches = branch_option($connection);
   $br_id = $_SESSION['branch_id'];
     if($_POST["id"] !='')
@@ -36,7 +50,7 @@ if(isset($_POST["id"]))
       </div>
       ';
     }
-
+  }
     if($_POST["id"] !='')
     {
         $ans = "SELECT * FROM account WHERE account_no = '".$_POST["id"]."' && (branch_id ='$br_id' $branche) && int_id = '".$_POST["ist"]."'";
@@ -51,7 +65,6 @@ if(isset($_POST["id"]))
       ';
     }
     }
-  }
     echo $output;
     echo $output2;
 }
