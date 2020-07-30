@@ -5,6 +5,24 @@ $destination = "report_client.php";
     include("header.php");
 ?>
 <?php
+  function branch_opt($connection)
+  {  
+      $br_id = $_SESSION["branch_id"];
+      $sint_id = $_SESSION["int_id"];
+      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+      $dof = mysqli_query($connection, $dff);
+      $out = '';
+      while ($row = mysqli_fetch_array($dof))
+      {
+        $do = $row['id'];
+      $out .= " OR branch_id ='$do'";
+      }
+      return $out;
+  }
+  $br_id = $_SESSION["branch_id"];
+  $branches = branch_opt($connection);
+?>
+<?php
  if (isset($_GET["view1"])) {
 ?>
 <!-- Content added here -->
@@ -23,7 +41,7 @@ $destination = "report_client.php";
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved'";
+                   $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved' && (branch_id ='$br_id' $branches)";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -185,7 +203,7 @@ $destination = "report_client.php";
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved'";
+                   $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved' && (branch_id ='$br_id' $branches)";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -219,7 +237,7 @@ $destination = "report_client.php";
                     <table id="tableddat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' AND status = 'Approved' ORDER BY g_name ASC";
+                        $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' AND status = 'Approved' && (branch_id ='$br_id' $branches) ORDER BY g_name ASC";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -277,7 +295,8 @@ $destination = "report_client.php";
     <?php
 function fill_client($connection) {
   $sint_id = $_SESSION["int_id"];
-  $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
+  $guuy = $_SESSION['branch_id'];
+  $org = "SELECT * FROM branch WHERE int_id = '$sint_id' AND (id = '$guuy' OR parent_id = '$guuy')";
   $res = mysqli_query($connection, $org);
   $out = '';
   while ($row = mysqli_fetch_array($res))

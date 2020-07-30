@@ -6,17 +6,18 @@ $destination = "report_institution.php";
 ?>
 
 <?php
-function fill_client($connection) {
-  $sint_id = $_SESSION["int_id"];
-  $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
-  $res = mysqli_query($connection, $org);
-  $out = '';
-  while ($row = mysqli_fetch_array($res))
-  {
-    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
-  }
-  return $out;
-}
+                  function fill_client($connection) {
+                    $sint_id = $_SESSION["int_id"];
+                    $guuy = $_SESSION['branch_id'];
+                    $org = "SELECT * FROM branch WHERE int_id = '$sint_id' AND (id = '$guuy' OR parent_id = '$guuy')";
+                    $res = mysqli_query($connection, $org);
+                    $out = '';
+                    while ($row = mysqli_fetch_array($res))
+                    {
+                      $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                    }
+                    return $out;
+                  }
 ?>
 <?php
 

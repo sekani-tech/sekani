@@ -5,10 +5,28 @@ $destination = "report_savings.php";
     include("header.php");
 ?>
 <?php
+  function branch_opt($connection)
+  {  
+      $br_id = $_SESSION["branch_id"];
+      $sint_id = $_SESSION["int_id"];
+      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+      $dof = mysqli_query($connection, $dff);
+      $out = '';
+      while ($row = mysqli_fetch_array($dof))
+      {
+        $do = $row['id'];
+      $out .= " OR client.branch_id ='$do'";
+      }
+      return $out;
+  }
+  $br_id = $_SESSION["branch_id"];
+  $branches = branch_opt($connection);
+?>
+<?php
  if (isset($_GET["view10"])) {
 ?>
 <?php
-    $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2'";
+    $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' && (client.branch_id ='$br_id' $branches)";
     $result = mysqli_query($connection, $query);
     while($d = mysqli_fetch_array($result)){
       $clid = $d['id'];
@@ -35,7 +53,7 @@ $destination = "report_savings.php";
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2'";
+                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' && (client.branch_id ='$br_id' $branches)";
                           $result = mysqli_query($connection, $querys);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -49,7 +67,7 @@ $destination = "report_savings.php";
                 <input hidden name ="acc_bal" type="text" value="<?php echo $ttlacc;?>"/>
                         <div class="form-group">
                           <label class="bmd-label-floating">Total Account Balances</label>
-                          <input type="text" class="form-control" value="<?php echo number_format($ttlacc, 2); ?>" name="">
+                          <input type="text" readonly class="form-control" value="<?php echo number_format($ttlacc, 2); ?>" name="">
                         </div>
                       </div>
               <button type="submit" id="clientlist" class="btn btn-primary pull-left">Download PDF</button>
@@ -74,7 +92,7 @@ $destination = "report_savings.php";
                     <table id="tabledt" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2'";
+                          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' && (client.branch_id ='$br_id' $branches)";
                           $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -203,7 +221,7 @@ $destination = "report_savings.php";
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' AND account.account_balance_derived < '0.00'";
+                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' AND (client.branch_id ='$br_id' $branches) AND account.account_balance_derived < '0.00'";
                           $result = mysqli_query($connection, $querys);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -237,7 +255,7 @@ $destination = "report_savings.php";
                     <table id="tabledt" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' AND account.account_balance_derived < '0.00'";
+                          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' AND account.account_balance_derived < '0.00' && (client.branch_id ='$br_id' $branches)";
                           $result = mysqli_query($connection, $query);
                       ?>
                         <th>

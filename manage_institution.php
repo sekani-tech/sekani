@@ -64,20 +64,50 @@
                           <input type="text" value="<?php echo $int_name; ?>" class="form-control" name="int_name">
                         </div>
                       </div>
+                      <?php
+                          function fill_state($connection)
+                            {
+                            $org = "SELECT * FROM states";
+                            $res = mysqli_query($connection, $org);
+                            $out = '';
+                            while ($row = mysqli_fetch_array($res))
+                            {
+                              $out .= '<option value="'.$row["name"].'">' .$row["name"]. '</option>';
+                            }
+                            return $out;
+                            }?>
+                      <script>
+                    $(document).ready(function() {
+                      $('#static').on("change", function(){
+                        var id = $(this).val();
+                        $.ajax({
+                          url:"mfi/ajax_post/lga.php",
+                          method:"POST",
+                          data:{id:id},
+                          success:function(data){
+                            $('#showme').html(data);
+                          }
+                        })
+                      });
+                    });
+                </script>
                       <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">State:</label>
-                      <select class="form-control" style="text-transform: uppercase;" name="state" id="selState" onchange="configureDropDownLists()">
-                      </select>
-                    </div> 
-                    </div> 
-                    <div class="col-md-6">
-                      <div class="form-group">
-                      <label for="">LGA:</label>
-                      <select  class="form-control"name="lga" id="selCity">
-                      </select>
-                    </div>
-                  </div>
+                        <div class="form-group">
+                          <label for="">State:</label>
+                          <select id="static" class="form-control" style="text-transform: uppercase;" name="state">
+                          <option value="<?php echo $int_state;?>" hidden><?php echo $int_state;?></option>
+                          <?php echo fill_state($connection);?>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="form-check-label">LGA</label>
+                          <option value="<?php echo $lga;?>" hidden><?php echo $lga;?></option>
+                          <select id="showme" class="form-control" style="text-transform: uppercase;" name="lga">
+                          </select>
+                        </div>
+                      </div>
                   <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">RCN</label>

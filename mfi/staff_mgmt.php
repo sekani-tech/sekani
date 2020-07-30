@@ -6,6 +6,24 @@ $destination = "index.php";
 
 ?>
 <?php
+  function branch_opt($connection)
+  {  
+      $br_id = $_SESSION["branch_id"];
+      $sint_id = $_SESSION["int_id"];
+      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+      $dof = mysqli_query($connection, $dff);
+      $out = '';
+      while ($row = mysqli_fetch_array($dof))
+      {
+        $do = $row['id'];
+      $out .= " OR users.branch_id ='$do'";
+      }
+      return $out;
+  }
+  $br_id = $_SESSION["branch_id"];
+  $branches = branch_opt($connection);
+?>
+<?php
           if (isset($_GET["message"])) {
             $key = $_GET["message"];
             $tt = 0;
@@ -349,7 +367,7 @@ if ($per_con == 1 || $per_con == "1") {
                     <table id="tabledat" class="table" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT staff.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id WHERE staff.int_id ='$sessint_id'";
+                        $query = "SELECT staff.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id WHERE staff.int_id ='$sessint_id' && (users.branch_id ='$br_id' $branches)";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -756,7 +774,25 @@ if ($per_con == 1 || $per_con == "1") {
                     <table id="tabledat4" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM tellers WHERE int_id ='$sessint_id'";
+  function branch_opondt($connection)
+  {  
+      $br_id = $_SESSION["branch_id"];
+      $sint_id = $_SESSION["int_id"];
+      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+      $dof = mysqli_query($connection, $dff);
+      $out = '';
+      while ($row = mysqli_fetch_array($dof))
+      {
+        $do = $row['id'];
+      $out .= " OR branch_id ='$do'";
+      }
+      return $out;
+  }
+  $br_id = $_SESSION["branch_id"];
+  $brahes = branch_opondt($connection);
+?>
+                      <?php
+                        $query = "SELECT * FROM tellers WHERE int_id ='$sessint_id' && (branch_id ='$br_id' $brahes)";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>

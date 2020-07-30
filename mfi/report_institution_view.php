@@ -5,6 +5,24 @@ $destination = "report_institution.php";
     include("header.php");
 ?>
 <?php
+  function branch_opt($connection)
+  {  
+      $br_id = $_SESSION["branch_id"];
+      $sint_id = $_SESSION["int_id"];
+      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+      $dof = mysqli_query($connection, $dff);
+      $out = '';
+      while ($row = mysqli_fetch_array($dof))
+      {
+        $do = $row['id'];
+      $out .= " OR client.branch_id ='$do'";
+      }
+      return $out;
+  }
+  $br_id = $_SESSION["branch_id"];
+  $branches = branch_opt($connection);
+?>
+<?php
  if (isset($_GET["view35"])) {
 ?>
 <div class="content">
@@ -17,17 +35,17 @@ $destination = "report_institution.php";
                 <h4 class="card-title">Staff Cabal Report</h4>
             </div>
             <?php
-                  function fill_branch($connection)
-                  {
-                  $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
-                  $res = mysqli_query($connection, $org);
-                  $out = '';
-                  while ($row = mysqli_fetch_array($res))
-                  {
-                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
-                  }
-                  return $out;
+                  function fill_branch($connection) {
+                    $sint_id = $_SESSION["int_id"];
+                    $guuy = $_SESSION['branch_id'];
+                    $org = "SELECT * FROM branch WHERE int_id = '$sint_id' AND (id = '$guuy' OR parent_id = '$guuy')";
+                    $res = mysqli_query($connection, $org);
+                    $out = '';
+                    while ($row = mysqli_fetch_array($res))
+                    {
+                      $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                    }
+                    return $out;
                   }
                   function fill_role($connection)
                   {
@@ -130,19 +148,19 @@ $destination = "report_institution.php";
                 <h4 class="card-title">Inventory Schedule Report</h4>
             </div>
             <?php
-                  function fill_branch($connection)
-                  {
-                  $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
-                  $res = mysqli_query($connection, $org);
-                  $out = '';
-                  while ($row = mysqli_fetch_array($res))
-                  {
-                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
-                  }
-                  return $out;
-                  }
-                  ?>
+function fill_branch($connection) {
+  $sint_id = $_SESSION["int_id"];
+  $guuy = $_SESSION['branch_id'];
+  $org = "SELECT * FROM branch WHERE int_id = '$sint_id' AND (id = '$guuy' OR parent_id = '$guuy')";
+  $res = mysqli_query($connection, $org);
+  $out = '';
+  while ($row = mysqli_fetch_array($res))
+  {
+    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+  }
+  return $out;
+}
+?>
                 <div class="card-body">
                   <form action="">
                     <div class="row">
@@ -228,18 +246,18 @@ $startdate = $year."-01-01";
                         <input type="date" name="" id="end" class="form-control">
                       </div>
                       <?php
-                  function fill_branch($connection)
-                  {
-                  $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
-                  $res = mysqli_query($connection, $org);
-                  $out = '';
-                  while ($row = mysqli_fetch_array($res))
-                  {
-                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
-                  }
-                  return $out;
-                  }
+                                    function fill_branch($connection) {
+                                      $sint_id = $_SESSION["int_id"];
+                                      $guuy = $_SESSION['branch_id'];
+                                      $org = "SELECT * FROM branch WHERE int_id = '$sint_id' AND (id = '$guuy' OR parent_id = '$guuy')";
+                                      $res = mysqli_query($connection, $org);
+                                      $out = '';
+                                      while ($row = mysqli_fetch_array($res))
+                                      {
+                                        $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                                      }
+                                      return $out;
+                                    }
                   ?>
                       <div class="form-group col-md-3">
                         <label for="">Branch</label>
