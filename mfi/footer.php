@@ -8,6 +8,7 @@
             </ul>
           </nav>
           <div class="copyright float-right">
+            Copyright
             &copy;
               <i class="material-icons">group</i> 
                 <a target="blank" href="https://sekanisystems.com.ng/">Sekani Systems</a> 
