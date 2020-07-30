@@ -26,7 +26,7 @@ $destination = "report_current.php";
 ?>
 
 <?php
-    $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1' && (client.branch_id ='$br_id' $branches) ";
+    $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1' && (client.branch_id ='$br_id' $branches)";
     $result = mysqli_query($connection, $query);
     while($d = mysqli_fetch_array($result)){
       $clid = $d['id'];
