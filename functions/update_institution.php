@@ -36,7 +36,7 @@ if($_FILES['int_logo']['name']) {
   rcn = '$rcn', lga = '$lga', int_state = '$int_state', email = '$email',
   office_address = '$office_address', website = '$website', office_phone = '$office_phone',
   pc_title = '$pc_title', pc_surname = '$pc_surname', pc_other_name = '$pc_other_name', pc_designation = '$pc_designation',
-  pc_phone = '$pc_phone', pc_email = '$pc_email', img = '$img' sender_id = '$sender_id' WHERE int_id = '$int_id'";
+  pc_phone = '$pc_phone', pc_email = '$pc_email', img = '$img', sender_id = '$sender_id' WHERE int_id = '$int_id'";
   $result = mysqli_query($connection, $query);
   if($result) {
      echo header("location: ../institution.php");
@@ -44,13 +44,13 @@ if($_FILES['int_logo']['name']) {
   } else {
       echo "nop";
   }
-  if ($connection->error) {
-        try {   
-            throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
-        } catch(Exception $e ) {
-            echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-            echo nl2br($e->getTraceAsString());
-        }
-    }
+  // if ($connection->error) {
+  //       try {   
+  //           throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
+  //       } catch(Exception $e ) {
+  //           echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+  //           echo nl2br($e->getTraceAsString());
+  //       }
+  //   }
 }
 ?>
