@@ -6,6 +6,7 @@ require_once "../bat/phpmailer/PHPMailerAutoload.php";
 
 <?php
 $emailu = $_SESSION["email"];
+$brand = $_SESSION["branch_id"];
 $int_name = $_SESSION["int_name"];
 $int_email = $_SESSION["int_email"];
 $int_web = $_SESSION["int_web"];
@@ -23,7 +24,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
     // Declaring variables
     $randms = str_pad(rand(0, pow(10, 8)-1), 10, '0', STR_PAD_LEFT);
     $type = $_POST['type'];
-    $branchid = $_POST['branch'];
+    $branchid = $_POST['branch_id'];
     $tid = $_POST['teller_id'];
     $amount = $_POST['amount'];
     $balance =$_POST['balance'];
@@ -69,7 +70,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
 
                 $blnc = number_format($new_vaultbalance);
                 $amt = number_format($amount);
-                $vaultinquery = "UPDATE institution_account SET account_balance_derived = '$new_tellbalance' WHERE teller_id = '$tid'";
+                $vaultinquery = "UPDATE institution_account SET account_balance_derived = '$new_tellbalance' WHERE teller_id = '$tid' AND int_id = '$sessint_id' AND branch_id = '$brand'";
                 $ein = mysqli_query($connection, $vaultinquery);
                 $description = "Deposited into Vault";
                 if($ein){
@@ -295,7 +296,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                 $blnc = number_format($new_vaultbalance);
                 $amt = number_format($amount);
 
-                $vaultinquery = "UPDATE institution_account SET account_balance_derived = '$new_tellbalance' WHERE teller_id = '$tid' && int_id = '$sint_id'";
+                $vaultinquery = "UPDATE institution_account SET account_balance_derived = '$new_tellbalance' WHERE teller_id = '$tid' && int_id = '$sint_id' AND int_id = '$sessint_id' AND branch_id = '$brand'";
                 $ein = mysqli_query($connection, $vaultinquery);
 
                 $ddffd = "UPDATE acc_gl_account SET organization_running_balance_derived = '$newtellgl' WHERE gl_code = '$tellgl' && int_id = '$sint_id' AND branch_id = '$branchid'";

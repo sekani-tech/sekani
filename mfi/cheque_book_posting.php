@@ -90,7 +90,8 @@ $transid = $randms;
                            // a function for client data fill
                            function fill_client($connection) {
                             $sint_id = $_SESSION["int_id"];
-                            $org = "SELECT * FROM client WHERE int_id = '$sint_id' AND status = 'Approved' ORDER BY firstname ASC";
+                            $branc = $_SESSION["branch_id"];
+                            $org = "SELECT client.id, client.firstname, client.lastname, client.display_name FROM client JOIN branch ON client.branch_id = branch.id WHERE client.int_id = '$sint_id' AND (branch.id = '$branc' OR branch.parent_id = '$branc') AND status = 'Approved' ORDER BY firstname ASC";
                             $res = mysqli_query($connection, $org);
                             $out = '';
                             while ($row = mysqli_fetch_array($res))
