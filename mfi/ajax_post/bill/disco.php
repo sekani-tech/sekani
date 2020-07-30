@@ -136,7 +136,36 @@ if ($status == "200" && $status != "") {
     <!-- MY MIND -->
     <button id="print_disco" name="submit" value="add_payment" type="button" class="btn btn-primary">Print</button>
     <!-- SUG PRESIDENT -->
-   
+    <script>
+    $(document).ready(function() {
+                   $('#print_disco').on("click", function (){
+                    var int_id = $('#int_id').val();
+                    var branch_id = $('#branch_id').val();
+                    var sender_id = $('#sender_id').val();
+                    var phone = $('#phone').val();
+                    var client_id = $('#client_id').val();
+                    var account_no = $('#account_no').val();
+                    // function
+                    var amount = $('#s_amount').val();
+                    var int_name = $('#s_int_name').val();
+                    var date = $('#s_date').val();
+                    // Dt
+                    var token = $('#s_token').val();
+                    var disco = $('#s_disco').val();
+                    var meter = $('#s_meter').val();
+                    // now we work on the body.
+                    var msg = int_name+" "+"Disco: "+disco+" \n" + "TOKEN: "+token+" \n AMOUNT: "+amount+"\nMETER: "+meter+" \nDate: "+date+"\n Thanks!";
+                    $.ajax({
+                      url:"ajax_post/sms/sms.php",
+                      method:"POST",
+                      data:{int_id:int_id, branch_id:branch_id, sender_id:sender_id, phone:phone, msg:msg, client_id:client_id, account_no:account_no },
+                      success:function(data){
+                        $('#make_display').html(data);
+                      }
+                    });
+                   });
+                });
+    </script>
     <?php
          } else {
             //  NOTHING AT ALL

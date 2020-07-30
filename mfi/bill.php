@@ -387,36 +387,6 @@ if ($per_bills == 1 || $per_bills == "1") {
             <div id="m_check"></div>
             <div id="make_display"></div>
             </div>
-            <script>
-    $(document).ready(function() {
-                   $('#print_disco').on("click", function (){
-                    var int_id = $('#int_id').val();
-                    var branch_id = $('#branch_id').val();
-                    var sender_id = $('#sender_id').val();
-                    var phone = $('#phone').val();
-                    var client_id = $('#client_id').val();
-                    var account_no = $('#account_no').val();
-                    // function
-                    var amount = $('#s_amount').val();
-                    var int_name = $('#s_int_name').val();
-                    var date = $('#s_date').val();
-                    // Dt
-                    var token = $('#s_token').val();
-                    var disco = $('#s_disco').val();
-                    var meter = $('#s_meter').val();
-                    // now we work on the body.
-                    var msg = int_name+" "+"Disco"+" \n" + "TOKEN: "+token+" \n DISCO: "+acct_no+"\nMETER: "+meter+" \nDate: "+date+"\n Thanks!";
-                    $.ajax({
-                      url:"ajax_post/sms/sms.php",
-                      method:"POST",
-                      data:{int_id:int_id, branch_id:branch_id, sender_id:sender_id, phone:phone, msg:msg, client_id:client_id, account_no:account_no },
-                      success:function(data){
-                        $('#make_display').html(data);
-                      }
-                    });
-                   });
-                });
-    </script>
                            <script>
                               $(document).ready(function() {
                                 $('#meter_no').on("change keyup paste click", function() {
