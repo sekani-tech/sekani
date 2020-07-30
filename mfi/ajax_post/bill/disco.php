@@ -154,7 +154,7 @@ if ($status == "200" && $status != "") {
                     var disco = $('#s_disco').val();
                     var meter = $('#s_meter').val();
                     // now we work on the body.
-                    var msg = int_name+" "+"Disco: "+disco+" \n" + "TOKEN: "+token+" \n AMOUNT: "+amount+"\nMETER: "+meter+" \nDate: "+date+"\n Thanks!";
+                    var msg = int_name+" "+"Disco: "+disco+" \n" + "TOKEN: "+token+" \n AMOUNT: "+amount+"\nMETER: "+meter+" \nDate: "+date+"\n Thank You!";
                     $.ajax({
                       url:"ajax_post/sms/sms.php",
                       method:"POST",

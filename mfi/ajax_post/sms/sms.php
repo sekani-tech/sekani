@@ -126,6 +126,7 @@ if ($status == "Success") {
             showConfirmButton: false,
             timer: 3000
         });
+        document.getElementById("print_disco").setAttribute("hidden", "");
     });
     </script>
     ';
