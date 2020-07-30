@@ -4,7 +4,9 @@ include("../../../functions/connect.php");
 // porty
 session_start();
 $int_id = $_SESSION["int_id"];
+$int_name = $_SESSION["int_name"];
 $branch_id = $_SESSION["branch_id"];
+$sender_id = $_SESSION["sender_id"];
 $disco = $_POST["disco"];
 $meter = $_POST["meter"];
 $phonenumber = $_POST["phone"];
@@ -102,7 +104,7 @@ if ($status == "200" && $status != "") {
         $insert_transaction = mysqli_query($connection, "INSERT INTO `sekani_wallet_transaction` (`int_id`, `branch_id`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `wallet_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, 
         `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`,
         `int_profit`, `sekani_charge`, `merchant_charge`)
-         VALUES ('{$int_id}', '{$branch_id}', '{$trans}', 'Disco Recharge $disco - $meter', 'bill_disco', NULL, '0', '{$date}', '{$amount}', '{$cal_bal}', '{$cal_bal}', {$date}, 
+         VALUES ('{$int_id}', '{$branch_id}', '{$trans}', 'TOKEN: $token, Disco: $disco, Meter: $meter', 'bill_disco', NULL, '0', '{$date}', '{$amount}', '{$cal_bal}', '{$cal_bal}', {$date}, 
          NULL, NULL, '{$date2}', '0', '0.00', '{$amount}', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
          if ($insert_transaction) {
             //  go withdra
@@ -113,11 +115,54 @@ if ($status == "200" && $status != "") {
             title: "Paid - '.$msg.'",
             text: "TOKEN: '.$token.'",
             showConfirmButton: false,
-            timer: 60000
+            timer: 3000
         });
     });
     </script>
     ';
+    ?>
+    <input type="text" id="int_id" value="<?php echo $int_id;?>" hidden>
+    <input type="text" id="branch_id" value="<?php echo $branch_id;?>" hidden>
+    <input type="text" id="sender_id" value="<?php echo $sender_id;?>" hidden>
+    <input type="text" id="phone" value="<?php echo $phonenumber;;?>" hidden>
+    <input type="text" id="client_id" value="<?php echo "0";?>" hidden>
+    <input type="text" id="account_no" value="<?php echo "0";?>" hidden>
+    <input type="text" id="s_amount" value="<?php echo $amount; ?>" hidden>
+    <input type="text" id="s_token" value="<?php echo $token; ?>" hidden>
+    <input type="text" id="s_meter" value="<?php echo $meter; ?>" hidden>
+    <input type="text" id="s_disco" value="<?php echo $disco; ?>" hidden>
+    <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
+    <input type="text" id="s_date" value="<?php echo $date; ?>" hidden>
+    <script>
+    $(document).ready(function() {
+                    var int_id = $('#int_id').val();
+                    var branch_id = $('#branch_id').val();
+                    var sender_id = $('#sender_id').val();
+                    var phone = $('#phone').val();
+                    var client_id = $('#client_id').val();
+                    var account_no = $('#account_no').val();
+                    // function
+                    var amount = $('#s_amount').val();
+                    var int_name = $('#s_int_name').val();
+                    var date = $('#s_date').val();
+                    // Dt
+                    var token = $('#s_token').val();
+                    var disco = $('#s_disco').val();
+                    var meter = $('#s_meter').val();
+                    // now we work on the body.
+                    var msg = int_name+" "+"Disco"+" \n" + "TOKEN: "+token+" \n DISCO: "+acct_no+"\nMETER: "+meter+" \nDate: "+date+"\nThanks!";
+                    $.ajax({
+                      url:"ajax_post/sms/sms.php",
+                      method:"POST",
+                      data:{int_id:int_id, branch_id:branch_id, sender_id:sender_id, phone:phone, msg:msg, client_id:client_id, account_no:account_no },
+                      success:function(data){
+                        $('#make_display').html(data);
+                      }
+                    });
+                });
+    </script>
+    <div id="make_display"></div>
+    <?php
          } else {
             //  NOTHING AT ALL
             echo "ERROR IN TRANSACTION";
