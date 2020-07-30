@@ -609,8 +609,8 @@ $transid2 = $randms2;
                   function fill_client($connection)
                   {
                   $sint_id = $_SESSION["int_id"];
-                  $ber = $_SESSION["branch_option"];
-                  $org = "SELECT * FROM client WHERE int_id = '$sint_id' AND status = 'Approved' AND ($ber) ORDER BY firstname ASC";
+                  $branc = $_SESSION["branch_id"];
+                  $org = "SELECT client.id, client.firstname, client.lastname, client.middlename FROM client JOIN branch ON client.branch_id = branch.id WHERE client.int_id = '$sint_id' AND (branch.id = '$branc' OR branch.parent_id = '$branc') AND status = 'Approved' ORDER BY firstname ASC";
                   $res = mysqli_query($connection, $org);
                   $out = '';
                   while ($row = mysqli_fetch_array($res))
@@ -655,7 +655,7 @@ $transid2 = $randms2;
     </div>
     <div class="col-md-4">
       <div class="form-group">
-          <label for=""></label>
+          <label for="">Transaction ID</label>
           <input type="text" readonly value="<?php echo $transid2; ?>" name="transid" class="form-control" id="tsit">
       </div>
     </div>
