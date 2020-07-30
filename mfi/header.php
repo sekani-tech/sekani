@@ -362,7 +362,9 @@ input[type=number] {
               <?php
                 }
               ?>
-          
+<?php
+  $br_id = $_SESSION["branch_id"];
+?>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -385,25 +387,37 @@ input[type=number] {
                 ?>
                 <!-- Notification for client approval -->
                 <?php
-                  $query = "SELECT client.id,client.submittedon_date, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Not Approved'";
+                  $query = "SELECT client.id,client.submittedon_date, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Not Approved' AND client.branch_id = '$br_id'";
                   $result = mysqli_query($connection, $query);
                   $approvd = mysqli_num_rows($result);
                 ?>
                 <!-- Notification for institution transactions -->
                 <?php
-                  $sfsf = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' AND status = 'Pending'";
+                  $sfsf = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' AND status = 'Pending' AND branch_id = '$br_id'";
                   $sdwr = mysqli_query($connection, $sfsf);
                   $trans = mysqli_num_rows($sdwr);
                 ?>
                 <!-- notification for client fund transfer -->
                 <?php
-                  $sdf = "SELECT * FROM transfer_cache WHERE int_id = '$sessint_id' AND status = 'Pending'";
+                  $sdf = "SELECT * FROM transfer_cache WHERE int_id = '$sessint_id' AND status = 'Pending' AND branch_id = '$br_id'";
                   $wyj = mysqli_query($connection, $sdf);
                   $client = mysqli_num_rows($wyj);
                 ?>
+                <!-- Notification for disbursed loans -->
+                <?php
+                  $ruyj = "SELECT * FROM loan_disbursement_cache WHERE int_id = '$sessint_id' AND status = 'Pending'";
+                  $eroi = mysqli_query($connection, $ruyj);
+                  $loan = mysqli_num_rows($eroi);
+                ?>
+                <!-- Notificaion for charges -->
+                <?php
+                  $fdef = "SELECT * FROM client_charge WHERE int_id = '$sessint_id' AND (branch_id ='$br_id')";
+                  $sdf = mysqli_query($connection, $fdef);
+                  $charge = mysqli_num_rows($sdf);
+                ?>
                 <!-- Notification for banner -->
                 <?php
-                $fomd = $dfn + $dn + $approvd + $trans + $client;
+                $fomd = $dfn + $dn + $approvd + $trans + $client + $loan + $charge;
                 ?>
                 <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">notifications</i>
@@ -411,6 +425,7 @@ input[type=number] {
                   <span class="badge badge-danger"><?php echo $fomd;?></span>
                   <?php }?>
                 </a>
+                <?php if($fomd > 0){?>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                 <?php 
                   if($dfn){?>
@@ -427,8 +442,15 @@ input[type=number] {
                 <?php }
                 if($client){?>
                   <a class="dropdown-item" href="transfer_approval.php"><?php echo $client;?> client transfer(s) in need of approval</a>
+                <?php }
+                if($loan){?>
+                  <a class="dropdown-item" href="disbursement_approval.php"><?php echo $loan;?> Loans disbursement(s) in need of approval</a>
+                <?php }
+                if($charge){?>
+                  <a class="dropdown-item" href="charge_approval.php"><?php echo $charge;?> charge(s) in need of approval</a>
                 <?php }?>
                 </div>
+                <?php }?>
               </li>
               <!-- user setup -->
               <li class="nav-item dropdown">

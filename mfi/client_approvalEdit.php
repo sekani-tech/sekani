@@ -88,7 +88,7 @@ if(isset($_GET["edit"])) {
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/client_update.php" method="POST" enctype="multipart/form-data">
+                  <form action="../functions/client_appupdate.php" method="POST" enctype="multipart/form-data">
                     <div class="row">
                       <div class="col-md-5">
                         <div class="form-group">
@@ -430,7 +430,7 @@ if(isset($_GET["edit"])) {
                       </div>
                     </div>
                     <a href="client.php" class="btn btn-danger">Back</a>
-                    <button type="submit" class="btn btn-primary pull-right">Update Client</button>
+                    <button type="submit" class="btn btn-primary pull-right">Approve Client</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>
@@ -1350,7 +1350,7 @@ else if($ctype = 'CORPORATE'){
 </div>
                     </div>
                     <a href="client.php" class="btn btn-danger">Back</a>
-                    <button type="submit" class="btn btn-primary pull-right">Update Client</button>
+                    <button type="submit" class="btn btn-primary pull-right">Approve Client</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>
