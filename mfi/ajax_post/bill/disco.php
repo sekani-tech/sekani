@@ -152,7 +152,7 @@ if ($status == "200" && $status != "") {
                     // now we work on the body.
                     var msg = int_name+" "+"Disco"+" \n" + "TOKEN: "+token+" \n DISCO: "+acct_no+"\nMETER: "+meter+" \nDate: "+date+"\nThanks!";
                     $.ajax({
-                      url:"ajax_post/sms/sms.php",
+                      url:"../sms/sms.php",
                       method:"POST",
                       data:{int_id:int_id, branch_id:branch_id, sender_id:sender_id, phone:phone, msg:msg, client_id:client_id, account_no:account_no },
                       success:function(data){
