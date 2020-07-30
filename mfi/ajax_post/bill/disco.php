@@ -121,48 +121,22 @@ if ($status == "200" && $status != "") {
     </script>
     ';
     ?>
-    <input type="text" id="int_id" value="<?php echo $int_id;?>" >
-    <input type="text" id="branch_id" value="<?php echo $branch_id;?>" >
-    <input type="text" id="sender_id" value="<?php echo $sender_id;?>" >
-    <input type="text" id="phone" value="<?php echo $phonenumber;?>" >
-    <input type="text" id="client_id" value="<?php echo "0";?>" >
-    <input type="text" id="account_no" value="<?php echo "0";?>">
-    <input type="text" id="s_amount" value="<?php echo $amount; ?>" >
-    <input type="text" id="s_token" value="<?php echo $token; ?>" >
-    <input type="text" id="s_meter" value="<?php echo $meter; ?>" >
-    <input type="text" id="s_disco" value="<?php echo $disco; ?>" >
-    <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" >
-    <input type="text" id="s_date" value="<?php echo $date; ?>" >
+    <input type="text" id="int_id" value="<?php echo $int_id;?>" hidden>
+    <input type="text" id="branch_id" value="<?php echo $branch_id;?>" hidden>
+    <input type="text" id="sender_id" value="<?php echo $sender_id;?>" hidden>
+    <input type="text" id="phone" value="<?php echo $phonenumber;?>" hidden>
+    <input type="text" id="client_id" value="<?php echo "0";?>" hidden>
+    <input type="text" id="account_no" value="<?php echo "0";?>" hidden>
+    <input type="text" id="s_amount" value="<?php echo $amount; ?>" hidden>
+    <input type="text" id="s_token" value="<?php echo $token; ?>" hidden>
+    <input type="text" id="s_meter" value="<?php echo $meter; ?>" hidden>
+    <input type="text" id="s_disco" value="<?php echo $disco; ?>" hidden>
+    <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
+    <input type="text" id="s_date" value="<?php echo $date; ?>" hidden>
+    <!-- MY MIND -->
+    <button id="print_disco" name="submit" value="add_payment" type="button" class="btn btn-primary">Print</button>
     <!-- SUG PRESIDENT -->
-    <script>
-    $(document).ready(function() {
-                    var int_id = $('#int_id').val();
-                    var branch_id = $('#branch_id').val();
-                    var sender_id = $('#sender_id').val();
-                    var phone = $('#phone').val();
-                    var client_id = $('#client_id').val();
-                    var account_no = $('#account_no').val();
-                    // function
-                    var amount = $('#s_amount').val();
-                    var int_name = $('#s_int_name').val();
-                    var date = $('#s_date').val();
-                    // Dt
-                    var token = $('#s_token').val();
-                    var disco = $('#s_disco').val();
-                    var meter = $('#s_meter').val();
-                    // now we work on the body.
-                    var msg = int_name+" "+"Disco"+" \n" + "TOKEN: "+token+" \n DISCO: "+acct_no+"\nMETER: "+meter+" \nDate: "+date+"\nThanks!";
-                    $.ajax({
-                      url:"ajax_post/sms/sms.php",
-                      method:"POST",
-                      data:{int_id:int_id, branch_id:branch_id, sender_id:sender_id, phone:phone, msg:msg, client_id:client_id, account_no:account_no },
-                      success:function(data){
-                        $('#make_display').html(data);
-                      }
-                    });
-                });
-    </script>
-    
+   
     <?php
          } else {
             //  NOTHING AT ALL

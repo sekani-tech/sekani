@@ -38,7 +38,6 @@ $phone = "234".$phone;
             // start
             // make it possible
     $curl = curl_init();
-
 curl_setopt_array($curl, array(
   CURLOPT_URL => "https://hordecall.net/sms/postSms.php",
   CURLOPT_RETURNTRANSFER => true,

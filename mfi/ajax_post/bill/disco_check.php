@@ -77,6 +77,7 @@ $phoneNumber = $obj['phoneNumber'];
 if ($status == "200" && $status != "") {
         // echo $someArray[0]["code"];
     ?>
+    <div class="row">
     <div class="col-md-12">
             <div class="form-group">
                <label class="bmd-label-floating">Amount</label>
@@ -103,7 +104,7 @@ if ($status == "200" && $status != "") {
                <input type = "text" value="<?php echo $customerAddress ?>" id="customerAddress" class="form-control" name = ""/>
               </div>
     </div>
-    
+    </div>
     <?php
     
 } else {
