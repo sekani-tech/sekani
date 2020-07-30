@@ -385,6 +385,7 @@ if ($per_bills == 1 || $per_bills == "1") {
               </div>
             </div>
             <div id="m_check"></div>
+            <div id="make_display"></div>
             </div>
                            <script>
                               $(document).ready(function() {
