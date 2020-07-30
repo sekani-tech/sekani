@@ -5,6 +5,24 @@ $destination = "report_current.php";
     include("header.php");
 ?>
 <?php
+  function branch_opt($connection)
+  {  
+      $br_id = $_SESSION["branch_id"];
+      $sint_id = $_SESSION["int_id"];
+      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+      $dof = mysqli_query($connection, $dff);
+      $out = '';
+      while ($row = mysqli_fetch_array($dof))
+      {
+        $do = $row['id'];
+      $out .= " OR client.branch_id ='$do'";
+      }
+      return $out;
+  }
+  $br_id = $_SESSION["branch_id"];
+  $branches = branch_opt($connection);
+?>
+<?php
  if (isset($_GET["view31"])) {
 ?>
 <!-- Content added here -->
@@ -23,7 +41,7 @@ $destination = "report_current.php";
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '3'";
+                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '3' && (client.branch_id ='$br_id' $branches)";
                           $result = mysqli_query($connection, $querys);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -56,7 +74,7 @@ $destination = "report_current.php";
                     <table id="tabledt" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                          $query = "SELECT client.id, client.client_type, account.product_id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '3' ORDER BY firstname ASC";
+                          $query = "SELECT client.id, client.client_type, account.product_id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '3' && (client.branch_id ='$br_id' $branches) ORDER BY firstname ASC";
                           $result = mysqli_query($connection, $query);
                       ?>
                         <th>

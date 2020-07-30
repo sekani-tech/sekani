@@ -194,7 +194,7 @@ else if (isset($_GET["message5"])) {
 // right now we will program
 // first step - check if this person is authorized
 if ($valut == 1 || $valut == "1") {
-?>
+?> 
 <?php
 // output the branch name
   $bch_name =  mysqli_query($connection, "SELECT * FROM branch WHERE id = '$bch_id' && int_id = '$sessint_id'");
@@ -246,14 +246,29 @@ $transaction_id = str_pad(rand(0, pow(10, 7)-1), 7, '0', STR_PAD_LEFT);
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <?php
+                        function branch_option($connection)
+                        {  
+                            $br_id = $_SESSION["branch_id"];
+                            $sint_id = $_SESSION["int_id"];
+                            $fod = "SELECT * FROM branch WHERE int_id = '$sint_id' AND id = '$br_id'";
+                            $dof = mysqli_query($connection, $fod);
+                            $out = '';
+                            while ($row = mysqli_fetch_array($dof))
+                            {
+                            $out .= '<option value="'.$row["id"].'">' .$row["name"]. '</option>';
+                            }
+                            return $out;
+                        }
+                      ?>
+                     <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Branch Name</label>
-                          <!-- populate available balance -->
-                          <input type="text" value="<?php echo $bname; ?>" name="dd" id="branch_id" class="form-control"  readonly>
-                          <input type="text" value="<?php echo $get_b_r_n; ?>" name="branch" hidden id="branch_id" class="form-control" readonly>
+                            <label class="">Branch:</label>
+                            <select class="form-control" name="branch_id">
+                            <?php echo branch_option($connection);?>
+                            </select>
                         </div>
-                      </div>
+                        </div>
                       <script>
                               $(document).ready(function() {
                                 $('#selctttype').change(function(){
