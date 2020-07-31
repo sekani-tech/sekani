@@ -156,7 +156,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                 `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
                 `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
                 VALUES ('{$int_id}', '{$branch_id}', '0', '{$account_id}', '$acct_no', '{$client_id}', '0', '{$trans_id}',
-                'Loan Repayment', 'loan_repayment', '0', '{$gen_date}', '{$collection_due_paid}', '{$collection_due_paid}',
+                'Loan_Repayment', 'loan_repayment', '0', '{$gen_date}', '{$collection_due_paid}', '{$collection_due_paid}',
                 '{$gen_date}', '0', '{$balance_remaining}',
                 '{$balance_remaining}', '{$gen_date}', '0', '0', '{$collection_due_paid}', '0.00')");
                 if ($insert_client_trans) {
@@ -185,7 +185,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                         $update_repayment = mysqli_query($connection, "INSERT INTO `loan_repayment_schedule_history` (`int_id`, `loan_id`, `client_id`, `loan_reschedule_request_id`, `fromdate`, `duedate`, `installment`, `principal_amount`, `interest_amount`, `fee_charges_amount`, `penalty_charges_amount`, `createdby_id`, `created_date`, `lastmodified_date`)
                         VALUES ('{$int_id}', '{$loan_id}', '{$client_id}', '{$collection_id}', '{$repayment_start}', '{$matured_date}', '1', '{$collection_principal}', '{$collection_interest}', '0', '0', NULL, '{$gen_date}', '{$gen_date}')");
                         if ($update_repayment) {
-                            // loan repayment status
+                            // Loan_Repayment status
                             $update_rep_status = mysqli_query($connection, "INSERT INTO `loan_repayment_status` (`int_id`, `loan_id`, `client_id`, `product_id`, `date_due`, `date_paid`, `status`, `pay_descript`, `loan_status`, `loan_status_descript`, `pay_type`, `pay_status`) 
                             VALUES ('{$int_id}', '{$loan_id}', '{$client_id}', '{$product_id}', '{$general_date_due}', '{$gen_date}', '0', 'early', '0', 'active', 'account', '0')");
                             if ($update_rep_status) {
@@ -215,14 +215,14 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                                         // damn with
                                         $insert_loan_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
                                          `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
-                                        VALUES ('{$int_id}', '{$branch_id}', '{$loan_port}', '{$trans_id}', 'Loan Repayment Principal / {$client_firstname}', 'Loan Repayment Principal', '0', '0', '{$gen_date}',
+                                        VALUES ('{$int_id}', '{$branch_id}', '{$loan_port}', '{$trans_id}', 'Loan_Repayment Principal / {$client_firstname}', 'Loan_Repayment Principal', '0', '0', '{$gen_date}',
                                          '{$collection_principal}', '{$updated_loan_port}', '{$updated_loan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_principal}', '0.00')");
                                          if ($insert_loan_port) {
                                             $update_the_int_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$intloan_port' WHERE int_id = '$int_id' AND gl_code ='$int_loan_port'");
                                             if ($update_the_int_loan) {
                                                 $insert_i_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
                                          `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
-                                        VALUES ('{$int_id}', '{$branch_id}', '{$int_loan_port}', '{$trans_id}', 'Loan Repayment Interest / {$client_firstname}', 'Loan Repayment Interest', '0', '0', '{$gen_date}',
+                                        VALUES ('{$int_id}', '{$branch_id}', '{$int_loan_port}', '{$trans_id}', 'Loan_Repayment Interest / {$client_firstname}', 'Loan_Repayment Interest', '0', '0', '{$gen_date}',
                                          '{$collection_interest}', '{$intloan_port}', '{$intloan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_interest}', '0.00')");
                                                 // done
                                                 if ($insert_i_port) {
@@ -291,7 +291,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                    `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
                    `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
                    VALUES ('{$int_id}', '{$branch_id}', '0', '{$account_id}', '$acct_no', '{$client_id}', '0', '{$trans_id}',
-                   'Loan Repayment', 'loan_repayment', '0', '{$gen_date}', '{$collection_due_paid}', '{$collection_due_paid}',
+                   'Loan_Repayment', 'loan_repayment', '0', '{$gen_date}', '{$collection_due_paid}', '{$collection_due_paid}',
                    '{$gen_date}', '0', '{$balance_remaining}',
                    '{$balance_remaining}', '{$gen_date}', '0', '0', '{$collection_due_paid}', '0.00')");
                    if ($insert_client_trans) {
@@ -321,7 +321,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                            $update_repayment = mysqli_query($connection, "INSERT INTO `loan_repayment_schedule_history` (`int_id`, `loan_id`, `client_id`, `loan_reschedule_request_id`, `fromdate`, `duedate`, `installment`, `principal_amount`, `interest_amount`, `fee_charges_amount`, `penalty_charges_amount`, `createdby_id`, `created_date`, `lastmodified_date`)
                             VALUES ('{$int_id}', '{$loan_id}', '{$client_id}', '{$collection_id}', '{$repayment_start}', '{$matured_date}', '1', '{$collection_principal}', '{$collection_interest}', '0', '0', NULL, '{$gen_date}', '{$gen_date}')");
                            if ($update_repayment) {
-                               // loan repayment status
+                               // Loan_Repayment status
                                $update_rep_status = mysqli_query($connection, "INSERT INTO `loan_repayment_status` (`int_id`, `loan_id`, `client_id`, `product_id`, `date_due`, `date_paid`, `status`, `pay_descript`, `loan_status`, `loan_status_descript`, `pay_type`, `pay_status`) 
                                VALUES ('{$int_id}', '{$loan_id}', '{$client_id}', '{$product_id}', '{$general_date_due}', '{$gen_date}', '0', 'early', '0', 'active', 'account', '0')");
                                if ($update_rep_status) {
