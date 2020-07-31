@@ -23,8 +23,13 @@ if(isset($_GET["edit"])) {
     $man_ent = $n['manual_journal_entries_allowed'];
     $disable_acct = $n['disabled'];
     $enb_bank_recon = $n['reconciliation_enabled'];
+    $parent_id = $n['parent_id'];
     $class_enum = $n['classification_enum'];
   }
+
+  $dso = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE id = '$parent_id'");
+  $dpd = mysqli_fetch_array($dso);
+  $kdo = $dpd['name'];
   if($acct_use == 1){
     $acct_use_name = "GL ACCOUNT";
   }
@@ -185,6 +190,7 @@ elseif($class_enum  == 5){
                     <div >
                     <label>GL GROUP</label>
                       <select type="text"style="text-transform: uppercase;" class="form-control" value="" id="dropping" name="parent_id" >
+                      <option value="<?php echo $parent_id;?>"><?php echo $kdo;?></option>
                     </select>
                     </div>           
                     </div>

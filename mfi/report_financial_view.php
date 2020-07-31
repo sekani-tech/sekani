@@ -3,8 +3,9 @@
 $page_title = "Financial Report";
 $destination = "report_financial.php";
     include("header.php");
-    session_start();
+    // session_start();
     $branch = $_SESSION['branch_id'];
+    $sessint_id = $_SESSION['int_id'];
 ?>
 <?php
   function branch_opt($connection)
@@ -25,8 +26,129 @@ $destination = "report_financial.php";
   $branches = branch_opt($connection);
 ?>
 <?php
- if (isset($_GET["view24"])) {
+ if (isset($_GET["view26"])) {
 ?>
+<!-- Content added here -->
+<div class="content">
+        <div class="container-fluid">
+          <!-- your content here -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Provisioning</h4>
+                  <script>
+                  $(document).ready(function() {
+                  $('#tabledat').DataTable();
+                  });
+                  </script>
+                  <!-- Insert number users institutions -->
+                  <p class="card-category"><?php
+                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1'";
+                          $result = mysqli_query($connection, $querys);
+                   if ($result) {
+                     $inr = mysqli_num_rows($result);
+                     echo $inr;
+                   }?> current Accounts</p>
+                </div>
+                <div class="card-body">
+                <div class="form-group">
+                <form method = "POST" action = "../composer/current_account.php">
+              <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
+              <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
+              <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
+              <input hidden name ="acc_bal" type="text" value="<?php echo $ttlacc;?>"/>
+              <div class="col-md-6">
+                      </div>
+              <button type="submit" id="currentlist" class="btn btn-primary pull-left">Download PDF</button>
+              <script>
+              $(document).ready(function () {
+              $('#currentlist').on("click", function () {
+                swal({
+                    type: "success",
+                    title: "CURRENT ACCOUNT REPORT",
+                    text: "Printing Successful",
+                    showConfirmButton: false,
+                    timer: 5000
+                          
+                  })
+              });
+            });
+     </script>
+            </form>
+                </div>
+                  <div class="table-responsive">
+                    <table id="tabledt" class="table" cellspacing="0" style="width:100%">
+                      <thead class=" text-primary">
+                      <?php
+                          $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id'";
+                          $result = mysqli_query($connection, $query);
+                      ?>
+                        <th>
+                          Customer Name
+                        </th>
+                        <th>
+                          Past Due Date
+                        </th>
+                        <th>
+                          Last Repayment Date
+                        </th>
+                        <th>
+                          Principal Due
+                        </th>
+                        <th>
+                          Interest Due
+                        </th>
+                        <th>
+                          Total NPD
+                        </th>
+                        <th>
+                          1 - 30 days
+                        </th>
+                        <th>
+                        31 - 60 days
+                        </th>
+                        <th>
+                        61 - 90 days
+                        </th>
+                        <th>
+                        91 and Above
+                        </th>
+                        <th>
+                        Bank Provision
+                        </th>
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                          <?php
+                            $cid = $row['client_id'];
+                            $sdip = "SELECT * FROM client WHERE id = '$cid'";
+                            $sdo = mysqli_query($connection, $sdip);
+                            $fe = mysqli_fetch_array($sdo);
+                            $client_name = $fe['firstname']." ".$fe["lastname"];
+                          ?>
+                          <th><?php echo $client_name;?></th>
+                          <th><?php echo $row['fromdate'];?></th>
+                          <th><?php echo $row['duedate'];?></th>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                          <!-- <th></th> -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
  <?php
  }

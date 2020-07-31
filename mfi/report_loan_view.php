@@ -73,7 +73,7 @@ $destination = "report_loan.php";
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
-                        <?php $row["id"]; ?>
+                        <?php $lo_id = $row["id"]; ?>
                         <?php 
                             $name = $row['client_id'];
                             $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
@@ -91,7 +91,7 @@ $destination = "report_loan.php";
                           ?>
                           <th><?php echo $row["loan_term"]; ?></th>
                           <th><?php echo $row["disbursement_date"]; ?></th>
-                          <th><?php echo $row["repayment_date"];?></th>
+                          <th><?php echo $row["maturedon_date"];?></th>
                           <th><?php echo $row["interest_rate"]."%"; ?></th>
                           <?php
                           $int_rate = $row["interest_rate"];
@@ -109,10 +109,24 @@ $destination = "report_loan.php";
                           $income = $fee + $total;
                           $ttlinc += $income;
                           ?>
+                            <?php
+                              $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$lo_id'";
+                              $sdoi = mysqli_query($connection, $dd);
+                              $e = mysqli_fetch_array($sdoi);
+                              $interest = $e['interest_amount'];
+
+                              $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$lo_id'";
+                              $sdswe = mysqli_query($connection, $dfdf);
+                              $u = mysqli_fetch_array($sdswe);
+                              $prin = $u['principal_amount'];
+
+                              $outstanding = $prin + $interest;
+                            ?>
                           <th><?php $bal = $row["total_outstanding_derived"];
                           $df = $bal;
-                           echo number_format($bal);
-                           $ttloutbalance += $bal;
+                          $ttloutbalance = 0;
+                           echo number_format($outstanding);
+                           $ttloutbalance += $outstanding;
                             ?></th>
                             <th><?php echo $account; ?></th>
                           <!-- <td><a href="client_view.php?edit=<?php echo $cid;?>" class="btn btn-info">View</a></td> -->
@@ -792,11 +806,13 @@ $destination = "report_loan.php";
 
         </div>
  </div>
+
  <?php
  }
  else if(isset($_GET["view39"])){
    $main_date = $_GET["view39"];
  ?>
+ 
  <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
