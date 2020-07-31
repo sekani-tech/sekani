@@ -130,7 +130,7 @@ elseif($class_enum  == 5){
                     <div class="form-group">
                       <label >Account Type</label>
                       <select class="form-control" name="class_enum" id="give" required>
-                        <option value="<?php echo $class_enum?>"><?php echo $acc_type?></option>
+                        <option hidden value="<?php echo $class_enum?>"><?php echo $acc_type?></option>
                         <option value="1">ASSET</option>
                         <option value="2">LIABILITY</option>
                         <option value="3">EQUITY</option>
