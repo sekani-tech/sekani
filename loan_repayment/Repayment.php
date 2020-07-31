@@ -1,7 +1,7 @@
 <?php
 // START
 // echo "HERE I AM";
-include("../functions/connect.php");
+include("DB/connect.php");
 // GET THE LOAN DISBURSMENT CACHE CHECK BY DISBURSMENT CHACHE ID
 // GET THE LOAN
 // WIRTE A CODE FOR THE REPAYMENT FUNCTION - IF
