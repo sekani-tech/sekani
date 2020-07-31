@@ -81,7 +81,7 @@ $destination = "report_financial.php";
                     <table id="tabledt" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                          $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id'";
+                          $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1'";
                           $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -132,6 +132,16 @@ $destination = "report_financial.php";
                           <th><?php echo $client_name;?></th>
                           <th><?php echo $row['fromdate'];?></th>
                           <th><?php echo $row['duedate'];?></th>
+                          <th><?php echo number_format($row['principal_amount'], 2);?></th>
+                          <th><?php echo number_format($row['interest_amount'], 2);?></th>
+                          <th><?php echo number_format(($row['interest_amount'] + $row['principal_amount']), 2);?></th>
+                          <?php
+                            $days_no = $row['counter'];
+                            if(30 > $days_no){
+                              $fod = number_format($row['principal_amount'], 2);
+                            }
+                          ?>
+                          <th><?php echo $fod;?></th>
                         </tr>
                         <?php }
                           }

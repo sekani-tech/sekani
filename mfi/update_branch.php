@@ -11,7 +11,7 @@ $destination = "branch.php";
   $update = true;
   $value = mysqli_query($connection, "SELECT * FROM branch WHERE id='$user_id'");
 
-  if (count([$value] == 1)) {
+  if ($value) {
     $n = mysqli_fetch_array($value);
     $name = $n['name'];
     $email = $n['email'];
@@ -30,27 +30,20 @@ $destination = "branch.php";
 <?php
                       function fill_branch($connection)
                       {
-                        $us_id = $_GET["edit"];
                         $sint_id = $_SESSION["int_id"];
                         $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
                         $res = mysqli_query($connection, $org);
                         $output = '';
                         while ($row = mysqli_fetch_array($res))
                         {
-                          $cyr_id = $row["id"];
-                          if($us_id == $cyr_id){
                             $output .= '<option hidden value = "'.$row["id"].'"> '.$row["name"].' </option>';
                           }
-                          else{
-                          $output .= '<option value = "'.$row["id"].'"> '.$row["name"].' </option>';
-                          }
-                        }
                         return $output;
                       }
                               function fill_in($connection)
                               {
                                 $sint_id = $_SESSION["int_id"];
-                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && parent_id !='0' && classification_enum = '1' && disabled = '0' ORDER BY name ASC";
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && parent_id !='0' && classification_enum = '1' && disabled = '0' ORDER BY gl_code ASC";
                                 $res = mysqli_query($connection, $org);
                                 $output = '';
                                 while ($row = mysqli_fetch_array($res))
