@@ -45,9 +45,9 @@ if (move_uploaded_file($_FILES['int_logo']['tmp_name'], "instimg/" . $imagex)) {
 }
 
 $query = "INSERT INTO institutions (int_name, int_full, rcn, lga, int_state, email,
-office_address, website, office_phone, pc_title, pc_surname, pc_other_name,
+office_address, incorporation_date, website, office_phone, pc_title, pc_surname, pc_other_name,
 pc_designation, pc_phone, pc_email, img, sender_id) VALUES ('{$int_name}','{$int_full}','{$rcn}',
-'{$lga}', '{$int_state}', '{$email}', '{$office_address}', '{$website}', '{$office_phone}',
+'{$lga}', '{$int_state}', '{$email}', '{$office_address}', '{$submitted_on}', '{$website}', '{$office_phone}',
 '{$pc_title}', '{$pc_surname}', '{$pc_other_name}', '{$pc_designation}',
 '{$pc_phone}', '{$pc_email}', '{$imagex}', '{$sender_id}')";
 // add
