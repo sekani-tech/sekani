@@ -1,7 +1,7 @@
 <?php
 // here
 // netwr
-include("connect.php");
+include("../functions/connect.php");
 
 $account_table = mysqli_query($connection, "SELECT * FROM account WHERE int_id = '5'");
 // FIRST ONE
