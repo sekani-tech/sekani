@@ -13,7 +13,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
     $product_id = $x["product_id"];
     $int_id = $x["int_id"];
     // NOW CHECK THE ACCOUNT
-    $select_loan_client = mysqli_query($connection, "SELECT * FROM `loan` WHERE client_id = '$client_id' AND $product_id = '$product_id' AND int_id = '$int_id'");
+    $select_loan_client = mysqli_query($connection, "SELECT * FROM `loan` WHERE client_id = '$client_id' AND product_id = '$product_id' AND int_id = '$int_id'");
     while ($y = mysqli_fetch_array($select_loan_client)) {
         // GET THE LOAN DETAILS FOR THE REPAYMENT
         // SELECT THE REPAYMENT SCH. IF IT IS ZERO - DO A REPAYMENT, IF IT IS MORE THAN.
