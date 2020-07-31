@@ -231,7 +231,7 @@ $res = mysqli_query($connection, $query);
             }
           } else {
             // export an output
-            echo "DAMN BVN HAS PROBLEM CALL US NOW";
+            echo "SAVINGS PRODUCT BVN GL NOT FOUND";
           }
           // $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
           // echo header ("Location: ../mfi/client.php?message1=$randms");
@@ -1044,9 +1044,13 @@ $mail->AltBody = "This is the plain text version of the email content";
 if(!$mail->send()) 
 {
     echo "Mailer Error: " . $mail->ErrorInfo;
+    $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
+    echo header ("Location: ../mfi/client.php?message1=$randms");
 } else
 {
     echo $xm = "Changing Password?";
+    $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
+    echo header ("Location: ../mfi/client.php?message1=$randms");
 }
         } else {
            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";

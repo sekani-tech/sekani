@@ -130,12 +130,12 @@ $destination = "report_loan.php";
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th><?php echo number_format($totalint);?></th>
-                            <th><?php echo number_format($ttlinc);?></th>
                             <th>
                               <?php
                                echo number_format($ttloutbalance);
                             ?></th>
+                            <th></th>
+                            
                           </tr>
                           <!-- <th></th> -->
                       </tbody>
