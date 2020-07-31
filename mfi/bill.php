@@ -525,7 +525,7 @@ if ($per_bills == 1 || $per_bills == "1") {
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Cable Tv</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Cable Tv - NOTE: WITHOUT AD ONS FOR NOW</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -534,43 +534,42 @@ if ($per_bills == 1 || $per_bills == "1") {
       <!-- action="../functions/pay.php" -->
       <form method="POST"  enctype="multipart/form-data">
           <div class="row">
-            <!-- <div class="col-md-12">
+          <div class="col-md-12">
             <div class="form-group">
-               <label class="bmd-label-floating">Phone Number</label>
-               <input type = "text" id="phone_d" class="form-control" name = ""/>
+               <label class="bmd-label-floating">Smart Card No</label>
+               <input type = "text" id="smartcard" class="form-control" name = ""/>
               </div>
-            </div> -->
-            <!-- <div class="col-md-12">
+            </div>
+            <div class="col-md-12">
               <div class="form-group">
                <label class="bmd-label-floating">Select a Network</label>
-               <select name="" id="network_d" class="form-control">
-                 <option value="">select a network</option>
-                 <option value="MTN">MTN</option>
-                 <option value="AIRTEL">AIRTEL</option>
-                 <option value="9mobile">9MOBILE</option>
-                 <option value="GLO">GLO</option>
+               <select name="" id="cabletv" class="form-control">
+                 <option value="">select a cable Tv</option>
+                 <option value="DSTV">DSTV</option>
+                 <option value="GOTV">GOTV</option>
+                 <option value="STARTIMES">STARTIMES</option>
              </select>
               </div>
-            </div> -->
+            </div>
             <div class="col-md-12">
             <div class="form-group">
             <div id="qwerty"></div>
               </div>
             </div>
             <div class="col-md-12">
-    <p id="msg"></p>
+            <p id="msg"></p>
             </div>
             </div>
                          <script>
                               $(document).ready(function() {
-                                $('#network_d').on("change keyup paste click", function() {
-                                  var net = $('#network_d').val();
-                                  if (net != "") {
-                                    var phone = $('#phone_d').val();
+                                $('#cabletv').on("change", function() {
+                                  var cable = $('#cabletv').val();
+                                  if (cable != "") {
+                                    var smart = $('#smartcard').val();
                                     $.ajax({
-                                      url:"ajax_post/bill/data_request.php",
+                                      url:"ajax_post/bill/cable_check.php",
                                       method:"POST",
-                                      data:{net:net, phone:phone},
+                                      data:{cable:cable, smart:smart},
                                       success:function(data){
                                       $('#qwerty').html(data);
                                     }
@@ -589,13 +588,13 @@ if ($per_bills == 1 || $per_bills == "1") {
            <!-- Next -->
            <script>
         $(document).ready(function() {
-            $('#data_pay').on("click", function() {
-                                  var phone = $('#phone_d').val();
-                                  var net = $('#network_d').val();
+            $('#cable_pay').on("click", function() {
+                                  var cable = $('#cabletv').val();
+                                  var smart = $('#smartcard').val();
                                   $.ajax({
-                                    url:"ajax_post/bill/data.php",
+                                    url:"ajax_post/bill/cable_go.php",
                                     method:"POST",
-                                    data:{ phone:phone, net:net},
+                                    data:{ cable:cable, smart:smart},
                                     success:function(data){
                                       $('#finish_buying').html(data);
                                     }
@@ -607,7 +606,7 @@ if ($per_bills == 1 || $per_bills == "1") {
                     </div>
                     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="data_pay" name="submit" disabled value="add_payment" type="button" class="btn btn-primary">Buy</button>
+        <button id="cable_pay" name="submit" disabled value="add_payment" type="button" class="btn btn-primary">Buy</button>
       </div>
                 </form>
                 </div>
