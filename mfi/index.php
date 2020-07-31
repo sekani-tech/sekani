@@ -122,10 +122,23 @@ setInterval(function() {
                   $re = "SELECT SUM(total_outstanding_derived) AS total_outstanding_derived FROM loan JOIN client ON loan.client_id = client.id WHERE loan.int_id = '$sessint_id'";
                   $resultxx = mysqli_query($connection, $re);
                   if (count([$resultxx]) == 1) {
-                  $jk = mysqli_fetch_array($resultxx); 
+                  $jk = mysqli_fetch_array($resultxx);
                   $sum = $jk['total_outstanding_derived'];
                   ?>
-                  <h3 class="card-title">NGN - <?php echo number_format(round($sum), 2); ?></h3>
+                  <?php
+                    $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
+                    $sdoi = mysqli_query($connection, $dd);
+                    $e = mysqli_fetch_array($sdoi);
+                    $interest = $e['interest_amount'];
+
+                    $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
+                    $sdswe = mysqli_query($connection, $dfdf);
+                    $u = mysqli_fetch_array($sdswe);
+                    $prin = $u['principal_amount'];
+
+                    $outstanding = $prin + $interest;
+                  ?>
+                  <h3 class="card-title">NGN - <?php echo number_format(round($outstanding), 2); ?></h3>
                   <?php
                   }
                   ?>
