@@ -84,6 +84,8 @@ if ($result) {
         VALUES ('$intid', '$org_ole', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1')";
         $fdpoijf = mysqli_query($connection, $fdopf);
 if($fdpoijf){
+    $dos = "";
+    $dsp = mysqli_query($connection, $dos);
         echo header("Location: ../institution.php");
     // if ($connection->error) {
     //     try {   

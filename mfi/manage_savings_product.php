@@ -404,7 +404,7 @@ $dos = mysqli_query($connection, $fd);
                       {
                       $sint_id = $_SESSION["int_id"];
                       $main_p  = $_SESSION["product_temp"];
-                      $org = "SELECT * FROM charge WHERE int_id = '$sint_id' && charge_applies_to_enum = '1' && is_active = '1'";
+                      $org = "SELECT * FROM charge WHERE int_id = '$sint_id' && is_active = '1'";
                       $res = mysqli_query($connection, $org);
                       $output = '';
                       while ($row = mysqli_fetch_array($res))

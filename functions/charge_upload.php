@@ -19,8 +19,8 @@ $charge_option = $_POST['charge_option'];
 $income_gl = $_POST["Income_gl"];
 // credit checks and accounting rules
 // insertion query for product
-$query ="INSERT INTO charge (int_id, name, charge_time_enum, charge_applies_to_enum, charge_calculation_enum, charge_payment_mode_enum, amount, gl_code)
-VALUES ('{$sessint_id}', '{$name}', '{$charge_type}', '{$product}', '{$charge_option}', '{$charge_payment}', '{$amount}', '{$income_gl}')";
+$query ="INSERT INTO charge (int_id, name, charge_time_enum, charge_applies_to_enum, charge_calculation_enum, charge_payment_mode_enum, amount, gl_code, is_active)
+VALUES ('{$sessint_id}', '{$name}', '{$charge_type}', '{$product}', '{$charge_option}', '{$charge_payment}', '{$amount}', '{$income_gl}', '1')";
 
 $res = mysqli_query($connection, $query);
 
