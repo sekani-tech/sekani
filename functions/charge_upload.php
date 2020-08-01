@@ -48,15 +48,15 @@ $res = mysqli_query($connection, $query);
         } else {
            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
            echo "error";
-           if ($connection->error) {
-            try {   
-                throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
-            } catch(Exception $e ) {
-                echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-                echo nl2br($e->getTraceAsString());
-            }
-        }
-          // echo header ("Location: ../mfi/products_config.php?message2=$randms");
+        //    if ($connection->error) {
+        //     try {   
+        //         throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
+        //     } catch(Exception $e ) {
+        //         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+        //         echo nl2br($e->getTraceAsString());
+        //     }
+        // }
+          echo header ("Location: ../mfi/products_config.php?message2=$randms");
             // echo header("location: ../mfi/client.php");
         }
 }
