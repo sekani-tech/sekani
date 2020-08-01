@@ -168,18 +168,32 @@ if($fdpoijf){
     ('$intid', 1, '{$br_id}', 'dues from bank', 0, NULL, '10200', 0, 0, 2, 1, NULL, '', 0, 0.00, NULL);
     ";
     $dsp = mysqli_query($connection, $dos);
-        echo header("Location: ../institution.php");
-    // if ($connection->error) {
-    //     try {   
-    //         throw new Exception("MySQL error $connection->error <br> Query:<br> $queryx", $mysqli->error);   
-    //     } catch(Exception $e ) {
-    //         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-    //         echo nl2br($e->getTraceAsString());
-    //     }
-    // }
-    // successfully inserted the data
-    // header("Location: ../../manage_users.php");
-    exit;
+    if($dsp){
+        echo header ("Location: ../institution.php?message1=$randms");
+        // if ($connection->error) {
+        //     try {   
+        //         throw new Exception("MySQL error $connection->error <br> Query:<br> $queryx", $mysqli->error);   
+        //     } catch(Exception $e ) {
+        //         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+        //         echo nl2br($e->getTraceAsString());
+        //     }
+        // }
+        // successfully inserted the data
+        // header("Location: ../../manage_users.php");
+        exit;
+    }
+    else{
+        echo 'problem';
+           if ($connection->error) {
+            try {   
+                throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
+            } catch(Exception $e ) {
+                echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+                echo nl2br($e->getTraceAsString());
+            }
+        }
+    }
+       
 } else {
     // Display an error message
     echo "<p>Bad</p>";

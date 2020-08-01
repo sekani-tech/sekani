@@ -3,6 +3,28 @@
     include("header.php");
     // start session
 ?>
+<?php
+  if (isset($_GET["message1"])) {
+    $key = $_GET["message1"];
+    $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "success",
+            title: "Registration Successful",
+            text: "Institution has",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+}
+?>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">

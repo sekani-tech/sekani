@@ -490,7 +490,7 @@ $dos = mysqli_query($connection, $fd);
                             </select>
                             </div>
                           </div>
-                          <div class="form-group">
+                          <!-- <div class="form-group">
                             <div class="col-md-8">
                             <label for="charge" class="form-align">Insufficient Repayment</label>
                             <select class="form-control form-control-sm" name="insufficient_repaymentlk">
@@ -498,9 +498,9 @@ $dos = mysqli_query($connection, $fd);
                               <?php echo fill_asset($connection) ?>
                             </select>
                             </div>
+                          </div> -->
                           </div>
-                          </div>
-                      <h5 class="card-title">Liabilities</h5>
+                      <!-- <h5 class="card-title">Liabilities</h5> -->
                       <?php
                               function fill_lia($connection)
                               {
@@ -515,7 +515,7 @@ $dos = mysqli_query($connection, $fd);
                                 return $output;
                               }
                               ?>
-                      <div class="position-relative form-group">
+                      <!-- <div class="position-relative form-group">
                         <div class="form-group">
                         <div class="col-md-8">
                             <label for="charge" class="form-align ">Overpayments</label>
@@ -534,7 +534,7 @@ $dos = mysqli_query($connection, $fd);
                             </select>
                           </div>
                           </div>
-                      </div>                 
+                      </div>                  -->
                           </div>
                       <div class="col-md-6">
                       <p>
