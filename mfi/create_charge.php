@@ -100,7 +100,7 @@ $destination = "products_config.php";
                       <div class=" col-md-2 form-group">
                         <div class="form-check form-check-inline">
                             <label class="form-check-label">
-                                <input class="form-check-input" name="" type="checkbox" value="1">
+                                <input class="form-check-input" name="is_pen" type="checkbox" value="1">
                                 Penalty
                                 <span class="form-check-sign">
                                     <span class="check"></span>
@@ -111,7 +111,7 @@ $destination = "products_config.php";
                         <div class=" col-md-2 form-group">
                         <div class="form-check form-check-inline">
                             <label class="form-check-label">
-                                <input class="form-check-input" name="" type="checkbox" value="1">
+                                <input class="form-check-input" name="is_active" type="checkbox" value="1">
                                 Active
                                 <span class="form-check-sign">
                                     <span class="check"></span>
@@ -122,7 +122,7 @@ $destination = "products_config.php";
                         <div class=" col-md-2 form-group">
                         <div class="form-check form-check-inline">
                             <label class="form-check-label">
-                                <input class="form-check-input" name="" type="checkbox" value="1">
+                                <input class="form-check-input" name="allow_over" type="checkbox" value="1">
                                 Allowed to Override
                                 <span class="form-check-sign">
                                     <span class="check"></span>
