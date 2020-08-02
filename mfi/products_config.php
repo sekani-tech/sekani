@@ -191,7 +191,7 @@ else if (isset($_GET["message5"])) {
           }
           }
           else if (isset($_GET["message10"])) {
-            $key = $_GET["message9"];
+            $key = $_GET["message10"];
             // $out = $_SESSION["lack_of_intfund_$key"];
             $tt = 0;
             if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
@@ -210,6 +210,26 @@ else if (isset($_GET["message5"])) {
             $_SESSION["lack_of_intfund_$key"] = 0;
             }
             }
+            else if (isset($_GET["message11"])) {
+              $key = $_GET["message11"];
+              // $out = $_SESSION["lack_of_intfund_$key"];
+              $tt = 0;
+              if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+              echo '<script type="text/javascript">
+              $(document).ready(function(){
+                  swal({
+                      type: "error",
+                      title: "Error",
+                      text: "Product may already Exist!",
+                      showConfirmButton: false,
+                      timer: 2000
+                  })
+              });
+              </script>
+              ';
+              $_SESSION["lack_of_intfund_$key"] = 0;
+              }
+              }
 ?>
 <?php
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {

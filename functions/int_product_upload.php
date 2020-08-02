@@ -49,6 +49,17 @@ $inc_recovery = $_POST["inc_recovery"];
 $exp_loss_written_off = $_POST["exp_loss_written_off"];
 $exp_interest_written_off = $_POST["exp_interest_written_off"];
 // insertion query for product
+$dfpfi = "SELECT * from product WHERE int_id = '$sessint_id' AND (name = '$name' OR short_name = '$short_name')";
+$dp = mysqli_query($connection, $dfpfi);
+$d = mysqli_fetch_array($dp);
+$naming = $d['name'];
+$shrtnaming = $d['short_name'];
+if($naming == $name || $shrtnaming == $short_name) {
+    $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+    echo "error";
+   echo header ("Location: ../mfi/products_config.php?message11=$randms");
+}
+else{
 $query = "INSERT INTO product (int_id, charge_id, rand_id, name, short_name, description, 
 in_amt_multiples, principal_amount, min_principal_amount, max_principal_amount,
 loan_term, min_loan_term, max_loan_term, repayment_frequency, repayment_every,
@@ -86,7 +97,7 @@ $res = mysqli_query($connection, $query);
             } else {
                 $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
             echo "error";
-           echo header ("Location: ../mfi/products.php?message2=$randms");
+           echo header ("Location: ../mfi/products_config.php?message2=$randms");
             }
             }
             $select_charge = mysqli_query($connection, "SELECT * FROM `charges_cache` WHERE cache_prod_id = '$id_trans'");
@@ -100,18 +111,18 @@ $res = mysqli_query($connection, $query);
                             $delet_cache = mysqli_query($connection, "DELETE FROM `charges_cache` WHERE cache_prod_id = '$id_trans'");
                             if ($delet_cache) {
                                 $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
-                    echo header ("Location: ../mfi/products.php?message1=$randms");
+                    echo header ("Location: ../mfi/products_config.php?message1=$randms");
                             } else {
                                 // error
                                 $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
             echo "error";
-           echo header ("Location: ../mfi/products.php?message2=$randms");
+           echo header ("Location: ../mfi/products_config.php?message2=$randms");
                             }
                         } else {
                             // error
                             $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
             echo "error";
-           echo header ("Location: ../mfi/products.php?message2=$randms");
+           echo header ("Location: ../mfi/products_config.php?message2=$randms");
                         }
                     }
                 } else{
@@ -120,18 +131,18 @@ $res = mysqli_query($connection, $query);
         } else {
             $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
             echo "error";
-           echo header ("Location: ../mfi/products.php?message2=$randms");
+           echo header ("Location: ../mfi/products_config.php?message2=$randms");
         }
     } else {
         // echo out
         $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
         echo "error";
-       echo header ("Location: ../mfi/products.php?message2=$randms");
+       echo header ("Location: ../mfi/products_config.php?message2=$randms");
     }
         } else {
            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
            echo "error";
-          echo header ("Location: ../mfi/products.php?message2=$randms");
+          echo header ("Location: ../mfi/products_config.php?message2=$randms");
             // echo header("location: ../mfi/client.php");
         }
 if ($connection->error) {
@@ -142,5 +153,5 @@ if ($connection->error) {
             echo nl2br($e->getTraceAsString());
         }
     }
-
+}
 ?>

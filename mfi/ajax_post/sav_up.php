@@ -2,7 +2,8 @@
 include("../../functions/connect.php");
 $output = '';
 session_start();
-if(isset($_POST["id"]))
+$sint_id = $_SESSION["savings_temp"];
+if(isset($_POST["int_id"]))
 {
     if($_POST["id"] !='')
     {

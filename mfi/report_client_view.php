@@ -114,7 +114,7 @@ $destination = "report_client.php";
                             if (count([$atype]) == 1) {
                                 $yxx = mysqli_fetch_array($atype);
                                 $actype = $yxx['product_id'];
-                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
+                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype' AND int_id = '$sessint_id'");
                            if (count([$spn])) {
                              $d = mysqli_fetch_array($spn);
                              $savingp = $d["name"];
@@ -284,7 +284,7 @@ $destination = "report_client.php";
                             if (count([$atype]) == 1) {
                                 $yxx = mysqli_fetch_array($atype);
                                 $actype = $yxx['product_id'];
-                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
+                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype' AND int_id = '$sessint_id'");
                            if (count([$spn])) {
                              $d = mysqli_fetch_array($spn);
                              $savingp = $d["name"];
@@ -580,7 +580,7 @@ Content added here
                             if (count([$atype]) == 1) {
                                 $yxx = mysqli_fetch_array($atype);
                                 $actype = $yxx['product_id'];
-                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
+                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype' AND int_id = '$sessint_id'");
                            if (count([$spn])) {
                              $d = mysqli_fetch_array($spn);
                              $savingp = $d["name"];

@@ -32,7 +32,17 @@ $lock_per_freq_time = $_POST['lock_per_freq_time'];
 $allover = $_POST['allover'];
 $trk_dormancy = $_POST['trk_dormancy'];
 // $with_notice = $_POST['with_notice'];
-
+$dfpfi = "SELECT * from savings_product WHERE int_id = '$sessint_id' AND (name = '$name' OR short_name = '$short_name')";
+$dp = mysqli_query($connection, $dfpfi);
+$d = mysqli_fetch_array($dp);
+$naming = $d['name'];
+$shrtnaming = $d['short_name'];
+if(($naming == $name) || ($shrtnaming == $short_name)) {
+    $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+    echo "error";
+   echo header ("Location: ../mfi/products_config.php?message11=$randms");
+}
+else{
 // Query to Input data into table
 $fomd = "INSERT INTO `savings_product` (`int_id`, `branch_id`, `name`, `short_name`, `description`,
  `currency_code`, `currency_digits`, `nominal_annual_interest_rate`, `interest_compounding_period_enum`,
@@ -117,16 +127,40 @@ $fomd = "INSERT INTO `savings_product` (`int_id`, `branch_id`, `name`, `short_na
                         $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
                         echo header ("Location: ../mfi/products_config.php?message1=$randms");
                     } else {
+                        
                         $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                        echo "error";
-                        echo header ("Location: ../mfi/products_config.php?message2=$randms");
-                        // echo header("location: ../mfi/client.php");
+                        echo "error4";
+                        // echo header ("Location: ../mfi/products_config.php?message2=$randms");
                     }
+                    
                 
                 }
+                else{
+                    if ($connection->error) {
+                        try {   
+                            throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $msqli->errno);   
+                        } catch(Exception $e ) {
+                            echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+                            echo nl2br($e->getTraceAsString());
+                        }
+                }
+                echo "error3";
+                }
+            }
+            else{
+                if ($connection->error) {
+                    try {   
+                        throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $msqli->errno);   
+                    } catch(Exception $e ) {
+                        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+                        echo nl2br($e->getTraceAsString());
+                    }
+            }
+            echo "error2";
             }
         }
-        if ($connection->error) {
+        else{
+            if ($connection->error) {
             try {   
                 throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $msqli->errno);   
             } catch(Exception $e ) {
@@ -134,4 +168,7 @@ $fomd = "INSERT INTO `savings_product` (`int_id`, `branch_id`, `name`, `short_na
                 echo nl2br($e->getTraceAsString());
             }
         }
+        echo "error1";
+        }
+    }
 ?>

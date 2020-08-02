@@ -137,11 +137,30 @@ $destination = "report_financial.php";
                           <th><?php echo number_format(($row['interest_amount'] + $row['principal_amount']), 2);?></th>
                           <?php
                             $days_no = $row['counter'];
+                            $thirty = '0.00';
+                            $sixty = '0.00';
+                            $ninety = '0.00';
+                            $above = '0.00';
                             if(30 > $days_no){
-                              $fod = number_format($row['principal_amount'], 2);
+                              $thirty = number_format($row['counter'], 2);
+                            }else if(60 > $days_no && $days_no > 30){
+                              $sixty = number_format($row['principal_amount'], 2);
+                            }
+                            else if(90 > $days_no && $days_no > 60){
+                              $ninety = number_format($row['principal_amount'], 2);
+                            }
+                            else if($days_no > 90){
+                              $above = number_format($row['principal_amount'], 2);
                             }
                           ?>
-                          <th><?php echo $fod;?></th>
+                          <th><?php echo $thirty;?></th>
+                          <th><?php echo $sixty;?></th>
+                          <th><?php echo $ninety;?></th>
+                          <th><?php echo $above;?></th>
+                          <?php
+                           $bnk_prov = (0.05* $thirty)+(0.2* $sixty)+(0.5* $ninety)+(0.75* $above);
+                          ?>
+                          <th><?php echo $bnk_prov;?></th>
                         </tr>
                         <?php }
                           }
