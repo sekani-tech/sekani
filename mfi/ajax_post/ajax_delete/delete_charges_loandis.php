@@ -1,11 +1,14 @@
 <?php
-include("../../functions/connect.php");
-session_start();
-$sessint_id = $_SESSION["int_id"];
-if (isset($_POST["id"]))
-{
-    ?>
-    <table class="table table-bordered">
+include("../../../functions/connect.php");
+
+if ($_POST['id_to_be_deleted']) {
+$delete = $_POST['id_to_be_deleted'];
+//do db delete query here i.e 
+$dom = "DELETE FROM product_loan_charge WHERE id='$delete'";
+$cms = mysqli_query($connection, $dom);
+}
+?>
+<table class="table table-bordered">
                     <?php
                     $p_id = $_POST["id"];
                    $query = "SELECT * FROM product_loan_charge WHERE product_loan_id = '$p_id' && int_id = '$sessint_id'";
@@ -27,7 +30,6 @@ if (isset($_POST["id"]))
                         <tr>
                             <?php
                             $c_id = $row["charge_id"];
-                            $edd = $row["id"];
                             $select_chg = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' && int_id = '$sessint_id'");
                             while ($xm = mysqli_fetch_array($select_chg)) {
                                 $values = $xm["charge_time_enum"];
@@ -70,7 +72,7 @@ if (isset($_POST["id"]))
                           <td><?php echo $amt."".$amt2; ?></td>
                           <td><?php echo $xs; ?></td>
                           <td><div class="media-body media-right">
-                            <span onclick="delete_charge(<?php echo $edd;?>)" class="btn btn-danger">Delete</span>
+                            <span onclick="delete_charge(<?php echo $c_id;?>)" class="btn btn-danger">Delete</span>
                           </div></td>
                         </tr>
                         <?php
@@ -99,13 +101,10 @@ if (isset($_POST["id"]))
                                     success:function(data){
                                       $('#lend_charge').html(data);
                                       // document.getElementById("off_me").setAttribute("hidden", "");
-                                      // alert('success' + data);
+                                      alert('success' + data);
                                     }
                                     });
                                   }
                             </script>
                           </tbody>
                         </table>
-    <?php
-}
-?>
