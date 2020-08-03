@@ -704,7 +704,7 @@ if ($per_con == 1 || $per_con == "1") {
            <div class="form-check form-check-inline">
               <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" value="" name="approve_loan" id="l">
-                Loan Approval
+                Loan Creation
                 <span class="form-check-sign">
                 <span class="check"></span>
                 </span>

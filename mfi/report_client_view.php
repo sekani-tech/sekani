@@ -41,8 +41,8 @@ $destination = "report_client.php";
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved' && (branch_id ='$br_id' $branches)";
-                   $result = mysqli_query($connection, $query);
+                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && (client.branch_id ='$br_id' $branches) ";
+                        $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
@@ -203,7 +203,7 @@ $destination = "report_client.php";
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved' && (branch_id ='$br_id' $branches) ";
+                   $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved' && (branch_id ='$br_id' $branches)";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -369,10 +369,7 @@ function fill_client($connection) {
   return $out;
 }
 ?>
-Content added here
     <div class="content">
-        <div class="container-fluid">
-         your content here
           <div class="row">
             <div class="col-md-12">
               <div class="card">
@@ -449,7 +446,7 @@ Content added here
                   $thismonth = date("m");
                   // $end = date('Y-m-d', strtotime('-30 days'));
                   $curren = $thisyear."-".$thismonth."-01";
-                        $query = "SELECT * FROM client WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std' && (branch_id ='$br_id' $branches) ";
+                        $query = "SELECT * FROM client WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std' && (branch_id ='$br_id' $branches)";
                         $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);

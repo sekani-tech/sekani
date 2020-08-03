@@ -16,13 +16,29 @@ session_start();
       $branch_location = $ans['location'];
       $branch_phone = $ans['phone'];
     }
-  function fill_report($connection)
+    function branch_opt($connection)
+  {  
+      $br_id = $_SESSION["branch_id"];
+      $sint_id = $_SESSION["int_id"];
+      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+      $dof = mysqli_query($connection, $dff);
+      $out = '';
+      while ($row = mysqli_fetch_array($dof))
+      {
+        $do = $row['id'];
+      $out .= " OR client.branch_id ='$do'";
+      }
+      return $out;
+  }
+  $br_id = $_SESSION["branch_id"];
+  $sessint_id =$_SESSION['int_id'];
+  function fill_report($connection, $br_id, $branches)
         {
             $out = '';
             $sessint_id =$_SESSION['int_id'];
           // import
         //   $glcode = $_POST['glcode'];
-        $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' ORDER BY client.firstname ASC";
+        $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && (client.branch_id ='$br_id' $branches)  ORDER BY client.firstname ASC";
         $result = mysqli_query($connection, $query);
         while ($q = mysqli_fetch_array($result, MYSQLI_ASSOC))
           {
@@ -122,7 +138,7 @@ session_start();
       </tr>
     </thead>
   <tbody>
-  "'.fill_report($connection).'"
+  "'.fill_report($connection, $br_id, $branches).'"
   </tbody>
   </table>
   </main>

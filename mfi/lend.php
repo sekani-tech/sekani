@@ -101,6 +101,11 @@ $destination = "transaction.php";
             }
           }
         ?>
+        <?php
+// right now we will program
+// first step - check if this person is authorized
+if ($loan_appv == 1 || $loan_appv == "1") {
+?> 
           <!-- your content here -->
         <div class="row">
           <div class="col-md-12">
@@ -890,5 +895,28 @@ function fixStepIndicator(n) {
 <?php
 
     include("footer.php");
+
+?>
+<?php
+} else {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+   swal({
+    type: "error",
+    title: "Authorization Denied",
+    text: "You Dont Have permission to Book a loan",
+   showConfirmButton: false,
+    timer: 2000
+    }).then(
+    function (result) {
+      history.go(-1);
+    }
+    )
+    });
+   </script>
+  ';
+  // $URL="transact.php";
+  // echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+}
 
 ?>

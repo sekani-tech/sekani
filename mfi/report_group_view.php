@@ -386,7 +386,7 @@ function fill_client($connection) {
                   $thismonth = date("m");
                   // $end = date('Y-m-d', strtotime('-30 days'));
                   $curren = $thisyear."-".$thismonth."-01";
-                        $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std'";
+                        $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved' AND (branch_id ='$br_id' $branches) && submittedon_date BETWEEN '$curren' AND '$std'";
                         $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -472,7 +472,7 @@ function fill_client($connection) {
                     <table id="dismonth" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std'";
+                        $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved'AND (branch_id ='$br_id' $branches)  && submittedon_date BETWEEN '$curren' AND '$std'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>

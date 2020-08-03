@@ -357,7 +357,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
            <div class="form-check form-check-inline">
               <label class="form-check-label">
                 <input <?php echo $c;?>  class="form-check-input" type="checkbox" value="" name="approve_loan" id="n4">
-                Approve Loan
+                Loan Creation
                 <span class="form-check-sign">
                 <span class="check"></span>
                 </span>
