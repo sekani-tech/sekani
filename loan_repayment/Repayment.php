@@ -417,8 +417,37 @@ while ($iq = mysqli_fetch_array($select_arrears)) {
     $cal_end = strtotime($current_date);
     // do your calculation
     $days_between = ceil(abs($cal_end - $cal_start) / 86400);
+    // percentage Value
+                  $days_no = $iq['counter'];
+                  $prin = $iq['principal_amount'];
+                  $thirty = '0.00';
+                  $sixty = '0.00';
+                  $ninety = '0.00';
+                  $above = '0.00';
+                  if(30 > $days_no && $days_no > 0){
+                    $thirty = number_format($iq['principal_amount'], 2);
+                    $ffd = $iq['principal_amount'];
+                    $bnk_prov = (0.05 * $ffd);
+                  }
+                  else if(60 > $days_no && $days_no > 30){
+                    $sixty = number_format($iq['principal_amount'], 2);
+                    $fdfdf = $iq['principal_amount'];
+                    $bnk_prov = (0.2 * $fdfdf);
+                  }
+                  else if(90 > $days_no && $days_no > 60){
+                    $ninety = number_format($iq['principal_amount'], 2);
+                    $dfgd = $iq['principal_amount'];
+                    $bnk_prov = (0.5 * $dfgd);
+                  }
+                  else if($days_no > 90){
+                    $above = number_format($iq['principal_amount'], 2);
+                    $juiui = $iq['principal_amount'];
+                    $bnk_prov = $juiui;
+                  }
+                  $pfar = 0;
+                  $par = ($bnk_prov/$prin) * 100;
     // update ok
-    $arrear_update = mysqli_query($connection, "UPDATE `loan_arrear` SET counter = '$days_between' WHERE id = '$a_id' AND int_id = '$a_int_id' AND loan_id = '$a_loan_id' AND client_id = '$a_client_id'");
+    $arrear_update = mysqli_query($connection, "UPDATE `loan_arrear` SET counter = '$days_between', par='$par' WHERE id = '$a_id' AND int_id = '$a_int_id' AND loan_id = '$a_loan_id' AND client_id = '$a_client_id'");
     // aiit running.
     if ($arrear_update) {
         echo "IT HAS BEEN RECORDED";
