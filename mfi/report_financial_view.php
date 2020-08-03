@@ -91,9 +91,6 @@ $destination = "report_financial.php";
                           Past Due Date
                         </th>
                         <th>
-                          Last Repayment Date
-                        </th>
-                        <th>
                           Principal Due
                         </th>
                         <th>
@@ -131,7 +128,6 @@ $destination = "report_financial.php";
                           ?>
                           <th><?php echo $client_name;?></th>
                           <th><?php echo $row['fromdate'];?></th>
-                          <th><?php echo $row['duedate'];?></th>
                           <th><?php echo number_format($row['principal_amount'], 2);?></th>
                           <th><?php echo number_format($row['interest_amount'], 2);?></th>
                           <th><?php echo number_format(($row['interest_amount'] + $row['principal_amount']), 2);?></th>
@@ -142,15 +138,20 @@ $destination = "report_financial.php";
                             $ninety = '0.00';
                             $above = '0.00';
                             if(30 > $days_no){
-                              $thirty = number_format($row['counter'], 2);
-                            }else if(60 > $days_no && $days_no > 30){
+                              $thirty = number_format($row['principal_amount'], 2);
+                              $ffd = $row['principal_amount'];
+                            }
+                            else if(60 > $days_no && $days_no > 30){
                               $sixty = number_format($row['principal_amount'], 2);
+                              $fdfdf = $row['principal_amount'];
                             }
                             else if(90 > $days_no && $days_no > 60){
                               $ninety = number_format($row['principal_amount'], 2);
+                              $dfgd = $row['principal_amount'];
                             }
                             else if($days_no > 90){
                               $above = number_format($row['principal_amount'], 2);
+                              $juiui = $row['principal_amount'];
                             }
                           ?>
                           <th><?php echo $thirty;?></th>
@@ -158,9 +159,9 @@ $destination = "report_financial.php";
                           <th><?php echo $ninety;?></th>
                           <th><?php echo $above;?></th>
                           <?php
-                           $bnk_prov = (0.05* $thirty)+(0.2* $sixty)+(0.5* $ninety)+(0.75* $above);
+                           $bnk_prov = (0.05* $ffd)+(0.2* $fdfdf)+(0.5* $dfgd)+$juiui;
                           ?>
-                          <th><?php echo $bnk_prov;?></th>
+                          <th><?php echo number_format($bnk_prov, 2);?></th>
                         </tr>
                         <?php }
                           }

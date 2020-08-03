@@ -241,7 +241,7 @@ $destination = "report_loan.php";
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
-                        <?php $row["id"]; ?>
+                        <?php $fi =  $row["id"]; ?>
                         <?php 
                             $name = $row['client_id'];
                             $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
@@ -253,7 +253,20 @@ $destination = "report_loan.php";
                           <th><?php echo $row["principal_amount"]; ?></th>
                           <th><?php echo $row["disbursement_date"];?></th>
                           <th><?php echo $row["repayment_date"];?></th>
-                          <th><?php echo $row["total_outstanding_derived"]; ?></th>
+                          <?php
+                            $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                            $sdoi = mysqli_query($connection, $dd);
+                            $e = mysqli_fetch_array($sdoi);
+                            $interest = $e['interest_amount'];
+
+                            $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                            $sdswe = mysqli_query($connection, $dfdf);
+                            $u = mysqli_fetch_array($sdswe);
+                            $prin = $u['principal_amount'];
+
+                            $outstanding = $prin + $interest;
+                          ?>
+                          <th><?php echo $outstanding; ?></th>
                           <td><a href="loan_report_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                          </tr>
                         <?php }
@@ -372,30 +385,18 @@ $destination = "report_loan.php";
                     <div class="row">
                       <div class="form-group col-md-3">
                         <label for="">Start Date</label>
-                        <input type="date" name="" id="" class="form-control">
+                        <input type="date" name="" id="start" class="form-control">
                       </div>
                       <div class="form-group col-md-3">
                         <label for="">End Date</label>
-                        <input type="date" name="" id="" class="form-control">
+                        <input type="date" name="" id="end" class="form-control">
                       </div>
-                      <div class="form-group col-md-3">
+                      <!-- <div class="form-group col-md-3">
                         <label for="">Branch</label>
-                        <select name="" id="" class="form-control">
+                        <select name="" id="branch" class="form-control">
                             <option value="">Head Office</option>
                         </select>
-                      </div>
-                      <div class="form-group col-md-3">
-                        <label for="">Break Down per Branch</label>
-                        <select name="" id="" class="form-control">
-                            <option value="">No</option>
-                        </select>
-                      </div>
-                      <div class="form-group col-md-3">
-                        <label for="">Hide Zero Balances</label>
-                        <select name="" id="" class="form-control">
-                            <option value="">No</option>
-                        </select>
-                      </div>
+                      </div> -->
                     </div>
                     <button type="reset" class="btn btn-danger">Reset</button>
                     <span id="runclass" type="submit" class="btn btn-primary">Run report</span>
@@ -407,13 +408,10 @@ $destination = "report_loan.php";
                       $('#runclass').on("click", function () {
                         var start = $('#start').val();
                         var end = $('#end').val();
-                        var branch = $('#input').val();
-                        var teller = $('#till').val();
-                        var int_id = $('#int_id').val();
                         $.ajax({
                           url: "items/loan_class.php",
                           method: "POST",
-                          data:{start:start, end:end, branch:branch, teller:teller, int_id:int_id},
+                          data:{start:start, end:end},
                           success: function (data) {
                             $('#shclass').html(data);
                           }
@@ -440,7 +438,7 @@ $destination = "report_loan.php";
             <div class="col-md-10">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Loan Collaterals</h4>
+                  <h4 class="card-title ">Loan Collaterals Schedule</h4>
                   <script>
                   $(document).ready(function() {
                   $('#tabledat').DataTable();
@@ -453,7 +451,7 @@ $destination = "report_loan.php";
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> Collaterals</p>
+                   }?> Collaterals </p>
                 </div>
                 <div class="card-body">
                 <div class="form-group">
