@@ -495,6 +495,9 @@ if ($per_bills == 1 || $per_bills == "1") {
                         <th>
                           Date
                         </th>
+                        <th>
+                        Print
+                        </th>
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
@@ -502,10 +505,14 @@ if ($per_bills == 1 || $per_bills == "1") {
                         <tr>
                         <?php $row["id"]; ?>
                         <th><?php echo $row["description"]; ?></th>
+                        <?php
+                        $harsh = $hash = password_hash($row["id"], PASSWORD_DEFAULT);
+                        ?>
                         <th></th>
                           <th><?php echo number_format($row["amount"], 2); ?></th>
                           <th><?php echo number_format($row["wallet_balance_derived"], 2); ?></th>
                           <td><?php echo $row["created_date"];?></td>
+                          <td><a href="../composer/bill.php?id=<?php echo $harsh;?>&x=<?php echo $row["id"]; ?>" class="btn btn-info">print</a></td>
                         </tr>
                         <?php }
                           }

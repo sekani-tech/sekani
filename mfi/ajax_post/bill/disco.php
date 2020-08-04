@@ -104,7 +104,7 @@ if ($status == "200" && $status != "") {
         $insert_transaction = mysqli_query($connection, "INSERT INTO `sekani_wallet_transaction` (`int_id`, `branch_id`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `wallet_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, 
         `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`,
         `int_profit`, `sekani_charge`, `merchant_charge`)
-         VALUES ('{$int_id}', '{$branch_id}', '{$trans}', 'TOKEN: $token, Disco: $disco, Meter: $meter', 'bill_disco', NULL, '0', '{$date}', '{$amount}', '{$cal_bal}', '{$cal_bal}', {$date}, 
+         VALUES ('{$int_id}', '{$branch_id}', '{$trans}', 'TOKEN: $token, Disco: $disco, Meter: $meter, Unit: $unit', 'bill_disco', NULL, '0', '{$date}', '{$amount}', '{$cal_bal}', '{$cal_bal}', {$date}, 
          NULL, NULL, '{$date2}', '0', '0.00', '{$amount}', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
          if ($insert_transaction) {
             //  go withdra
