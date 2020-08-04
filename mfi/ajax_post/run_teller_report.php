@@ -77,7 +77,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
             if ($client_id == 0 && $q["is_vault"] == 0) {
               if ($q["transaction_type"] == "Debit" || $q["transaction_type"] == "debit" && $client_id = 0) {
               $xm = $q["teller_id"];
-                $expq = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$xm' WHERE int_id = '$int_id'");
+                $expq = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$xm' AND int_id = '$int_id'");
               // }
               $cc = mysqli_fetch_array($expq);
               $client_name = $cc["name"];
