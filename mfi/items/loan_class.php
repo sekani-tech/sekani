@@ -44,12 +44,12 @@
               $fdl = $is['interest_amount'];
 
               // Total Outstanding Derived
-                $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
+                $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND (duedate > '$end')";
                 $sdoi = mysqli_query($connection, $dd);
                 $e = mysqli_fetch_array($sdoi);
                 $interest = $e['interest_amount'];
 
-                $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
+                $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND (duedate > '$end')";
                 $sdswe = mysqli_query($connection, $dfdf);
                 $u = mysqli_fetch_array($sdswe);
                 $prin = $u['principal_amount'];

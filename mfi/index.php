@@ -73,7 +73,17 @@
                   <i class="material-icons">info_outline</i>
                   </div>
                   <p class="card-category">Portfolio at Risk</p>
+                  <?php if ($do > 0){
+                    ?>
                   <h3 class="card-title"><?php echo number_format($do);?>%</h3>
+                   <?php 
+                  }
+                  else{
+                    ?>
+                    <h3 class="card-title">0%</h3>
+                    <?php
+                  }
+                  ?>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
