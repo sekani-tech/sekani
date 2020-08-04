@@ -107,6 +107,7 @@ setInterval(function() {
     // alert('I will appear every 4 seconds');
     // we are done now
     var int_id = $('#int_idioioioio').val();
+    // which kind vex be this abeg :-}
     var user = $('#usernameoioio').val();
     $.ajax({
       url:"ajax_post/logout/log_staff.php",
@@ -138,7 +139,7 @@ setInterval(function() {
                   <div class="card-icon">
                     <i class="material-icons">account_balance_wallet</i>
                   </div>
-                  <p class="card-category">Outstanding Loan Balance</p>
+                  <p class="card-category">Outstanding Loa Balance</p>
                   <!-- Populate with the total value of outstanding loans -->
                   <?php
                   $re = "SELECT SUM(total_outstanding_derived) AS total_outstanding_derived FROM loan JOIN client ON loan.client_id = client.id WHERE loan.int_id = '$sessint_id'";

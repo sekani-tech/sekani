@@ -110,6 +110,7 @@ $destination = "report_loan.php";
                           $ttlinc += $income;
                           ?>
                             <?php
+                            // repaymeny
                               $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$lo_id'";
                               $sdoi = mysqli_query($connection, $dd);
                               $e = mysqli_fetch_array($sdoi);
@@ -121,12 +122,25 @@ $destination = "report_loan.php";
                               $prin = $u['principal_amount'];
 
                               $outstanding = $prin + $interest;
+// Arrears
+                              $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$lo_id'";
+                              $fosdi = mysqli_query($connection, $ldfkl);
+                              $l = mysqli_fetch_array($fosdi);
+                              $interesttwo = $l['interest_amount'];
+
+                              $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$lo_id'";
+                              $sodi = mysqli_query($connection, $sdospd);
+                              $s = mysqli_fetch_array($sodi);
+                              $printwo = $s['principal_amount'];
+
+                              $outstandingtwo = $printwo + $interesttwo;
                             ?>
                           <th><?php $bal = $row["total_outstanding_derived"];
                           $df = $bal;
                           $ttloutbalance = 0;
-                           echo number_format($outstanding);
-                           $ttloutbalance += $outstanding;
+                          $ttloustanding = $outstanding + $outstandingtwo;
+                           echo number_format($ttloustanding);
+                           $ttloutbalance += $ttloustanding;
                             ?></th>
                             <th><?php echo $account; ?></th>
                           <!-- <td><a href="client_view.php?edit=<?php echo $cid;?>" class="btn btn-info">View</a></td> -->
@@ -137,7 +151,7 @@ $destination = "report_loan.php";
                             // echo "0 Document";
                           }
                           ?>
-                          <tr>
+                          <!-- <tr>
                             <th>Total</th>
                             <th></th>
                             <th></th>
@@ -150,7 +164,7 @@ $destination = "report_loan.php";
                             ?></th>
                             <th></th>
                             
-                          </tr>
+                          </tr> -->
                           <!-- <th></th> -->
                       </tbody>
                     </table>
