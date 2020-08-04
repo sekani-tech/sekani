@@ -41,7 +41,7 @@ $destination = "report_loan.php";
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
+                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' ORDER BY maturedon_date ASC";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th style="width:50px;">
