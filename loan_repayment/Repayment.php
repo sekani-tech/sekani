@@ -143,6 +143,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
             // $ppx = mysqli_fetch_array($loan_account);
             if ($client_account_balance >= $collection_due_paid) {
                 // DO THE MOVE BY TAKING THE CARD
+                // 2 NAIRA PER MINUTES
                 $digits = 5;
                 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
                 $trans_id = $client_firstname.$randms.$branch_id;
@@ -152,7 +153,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                 // update client account transaction
                 $insert_client_trans = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
                 `product_id`, `account_id`, `account_no`, `client_id`, `teller_id`, `transaction_id`,
-                `description`, `transaction_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
+                `description`, `transac$total_out_stand = $general_payment - $collection_due_paid;tion_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
                 `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
                 `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
                 VALUES ('{$int_id}', '{$branch_id}', '0', '{$account_id}', '$acct_no', '{$client_id}', '0', '{$trans_id}',
@@ -161,7 +162,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                 '{$balance_remaining}', '{$gen_date}', '0', '0', '{$collection_due_paid}', '0.00')");
                 if ($insert_client_trans) {
                     // update loan
-                    $total_out_stand = $general_payment - $collection_due_paid;
+                    
                   $up_client_loan = mysqli_query($connection, "UPDATE loan SET total_outstanding_derived = '$total_out_stand' WHERE int_id = '$int_id' AND client_id = '$client_id' AND (id = '$loan_id' AND account_no = '$acct_no')");
                   if ($up_client_loan) {
                     // update the loan transaction
@@ -268,11 +269,132 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                 }
                 // END UPDATE
             }
-            //  else if ($client_account_balance < $collection_due_paid && $client_account_balance >= 1) {
-            //     // DO CARD COLLECTION
-            //     echo "TAKE FUND HERE AND ALSO ON THE FLUTTER ACCOUNT";
-            //     //  DO REPAYMENT COLLECTION
-            //  }
+             else if ($client_account_balance < $collection_due_paid && $client_account_balance >= 1) {
+                // DO CARD COLLECTION
+                $digits = 5;
+                $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+                $trans_id = $client_firstname.$randms.$branch_id;
+                // check of the account balance is up to or not up to
+                $new_c_bal = $client_account_balance - $collection_interest;
+                if ($new_c_bal >= 0) {
+                    // dman
+                    $client_loan_bal = $new_c_bal;
+                    // PUT THE INTEREST HERE
+                    $open_acct_rule = mysqli_query($connection, "SELECT * FROM acct_rule WHERE int_id = '$int_id' AND loan_product_id = '$product_id'");
+                    $ty = mysqli_fetch_array($open_acct_rule);
+                        // reduce
+                        $int_loan_port = $ty["inc_interest"];
+                    $int_d_s = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$int_loan_port' AND int_id = '$int_id'");
+                        if (mysqli_num_rows($int_d_s) > 0) {
+                            $igdb = mysqli_fetch_array($int_d_s);
+                            $intbalport = $igdb["organization_running_balance_derived"];
+                            $intloan_port = $intbalport + $collection_interest;
+                            // run the port folio
+                            $update_the_int_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$intloan_port' WHERE int_id = '$int_id' AND gl_code ='$int_loan_port'");
+                            if ($update_the_int_loan) {
+                            $insert_i_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
+                            `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
+                            VALUES ('{$int_id}', '{$branch_id}', '{$int_loan_port}', '{$trans_id}', 'Loan_Repayment Interest / {$client_firstname}', 'Loan_Repayment Interest', '0', '0', '{$gen_date}',
+                            '{$collection_interest}', '{$intloan_port}', '{$intloan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_interest}', '0.00')");
+                            if ($insert_i_port) {
+                                // noew update the interest
+                                $update_rep_sch = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET interest_amount = '0.00' WHERE id = '$collection_id'");
+                                if ($update_rep_sch) {
+                                    echo "UPDATE LOAN REPAYMENT FOR AVAILABLE INTERESR";
+                                }
+                            } else {
+                                echo "PROBLEM WITH GL INTEREST";
+                            }
+                            } else {
+                                echo "ERROR IN INTEREST UPDATE";
+                            }
+                        } else {
+                            echo "CANT FIND INTEREST PORTFOLIO";
+                        }
+                } else if ($new_c_bal < 0) {
+                    // damn
+                    $client_loan_bal = 0.00;
+                    $new_interest_balance = $collection_interest - $client_account_balance;
+                    $collection_interest = $client_account_balance;
+                    // $client_loan_bal = ;
+                    $open_acct_rule = mysqli_query($connection, "SELECT * FROM acct_rule WHERE int_id = '$int_id' AND loan_product_id = '$product_id'");
+                    $ty = mysqli_fetch_array($open_acct_rule);
+                        // reduce
+                        $int_loan_port = $ty["inc_interest"];
+                    $int_d_s = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$int_loan_port' AND int_id = '$int_id'");
+                        if (mysqli_num_rows($int_d_s) > 0) {
+                            $igdb = mysqli_fetch_array($int_d_s);
+                            $intbalport = $igdb["organization_running_balance_derived"];
+                            $intloan_port = $intbalport + $collection_interest;
+                            // run the port folio
+                            $update_the_int_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$intloan_port' WHERE int_id = '$int_id' AND gl_code ='$int_loan_port'");
+                            if ($update_the_int_loan) {
+                            $insert_i_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
+                            `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
+                            VALUES ('{$int_id}', '{$branch_id}', '{$int_loan_port}', '{$trans_id}', 'Loan_Repayment Interest / {$client_firstname}', 'Loan_Repayment Interest', '0', '0', '{$gen_date}',
+                            '{$collection_interest}', '{$intloan_port}', '{$intloan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_interest}', '0.00')");
+                            if ($insert_i_port) {
+                                // noew update the interest
+                                $update_rep_sch = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET interest_amount = '$new_interest_balance' WHERE id = '$collection_id'");
+                                if ($update_rep_sch) {
+                                    echo "UPDATE LOAN REPAYMENT FOR AVAILABLE INTERESR";
+                                }
+                            } else {
+                                echo "PROBLEM WITH GL INTEREST";
+                            }
+                            } else {
+                                echo "ERROR IN INTEREST UPDATE";
+                            }
+                        } else {
+                            echo "CANT FIND INTEREST PORTFOLIO";
+                        }
+                    // make a new look.
+                }
+                // MAKE A RECORD and leave the interest as 1. --- MAKE UP THE MOVES
+                // TAKE THE INTEREST FROM THE BALANCE
+                $update_client_account = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$client_loan_bal' WHERE int_id = '$int_id' AND client_id = '$client_id' AND account_no = '$acct_no'");
+                   if ($update_client_account) {
+                    $insert_client_trans = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
+                    `product_id`, `account_id`, `account_no`, `client_id`, `teller_id`, `transaction_id`,
+                    `description`, `transaction_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
+                    `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
+                    `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
+                    VALUES ('{$int_id}', '{$branch_id}', '0', '{$account_id}', '{$acct_no}', '{$client_id}', '0', '{$trans_id}',
+                    'Loan_Principal_Repayment', 'loan_repayment', '0', '{$gen_date}', '{$collection_interest}', '{$collection_interest}',
+                    '{$gen_date}', '0', '{$client_loan_bal}',
+                    '{$collection_interest}', '{$gen_date}', '0', '0', '{$collection_interest}', '0.00')");
+                    if ($insert_client_trans) {
+                        // make an update moves
+                        $total_out_stand = $general_payment - $collection_interest;
+                        $update_loan_trans = mysqli_query($connection, "INSERT INTO `loan_transaction` (`int_id`, `branch_id`, `product_id`, `loan_id`, `transaction_id`, `client_id`, `account_no`, `is_reversed`, `external_id`, `transaction_type`, `transaction_date`, `amount`,
+                        `payment_method`, `principal_portion_derived`, `interest_portion_derived`, `fee_charges_portion_derived`, `penalty_charges_portion_derived`,
+                        `overpayment_portion_derived`, `unrecognized_income_portion`, `suspended_interest_portion_derived`, `suspended_fee_charges_portion_derived`, 
+                        `suspended_penalty_charges_portion_derived`, `outstanding_loan_balance_derived`, `recovered_portion_derived`, `submitted_on_date`, `manually_adjusted_or_reversed`, `created_date`, `appuser_id`, `is_account_transfer`) 
+                       VALUES ('{$int_id}', '{$branch_id}', '0', '{$collection_loan}', '{$trans_id}', '{$client_id}', '{$acct_no}', '0', '0', 'Repayment_interest', '{$gen_date}', '{$collection_interest}', 
+                       'auto_account', '{$collection_interest}', '{$collection_interest}', '0', '0', 
+                       '0', NULL, '0', '0', '0', '{$total_out_stand}', '{$collection_interest}', '{$gen_date}', '0', '{$gen_date}', '0', '1')");
+                       if ($update_loan_trans) {
+                        // START QWERTY
+                        echo "DONE WITH THE INTEREST REPAYMENT";
+                        // -----++----
+                        // END QWERTY
+                       } else {
+                        echo "ERROR IN UPDATE LOAN TRANSACTION";
+                       }
+                    } else {
+                        echo "INTEREST TRANSACTION ERROR";
+                    }
+                    } else {
+                        echo "ERROR IN INSERT TRANSACTION!";
+                    }
+                // THE NEW INTEREST- BALANCE
+                // RECORED IN NECESSARY PLACES TO THE TRANSACTION -- UPDATE CLIENT ACCOUNT RECORD.
+                // CHECK IF THE PRINCPAL CAN GO AND DO SOME CHANGES
+                // -----MAKE A GOOD MOVE HERE-----
+                // TAKE THE INTEREST AMOUNT HERE
+                // check it can also take interest
+                //  DO REPAYMENT COLLECTION
+             }
               else {
                 // $balance_remaining = "Insufficient Fund";
                 // DO THE INSUFFICIENT POSTING
@@ -290,7 +412,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                    `description`, `transaction_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
                    `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
                    `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
-                   VALUES ('{$int_id}', '{$branch_id}', '0', '{$account_id}', '$acct_no', '{$client_id}', '0', '{$trans_id}',
+                   VALUES ('{$int_id}', '{$branch_id}', '0', '{$account_id}', '{$acct_no}', '{$client_id}', '0', '{$trans_id}',
                    'Loan_Repayment', 'loan_repayment', '0', '{$gen_date}', '{$collection_due_paid}', '{$collection_due_paid}',
                    '{$gen_date}', '0', '{$balance_remaining}',
                    '{$balance_remaining}', '{$gen_date}', '0', '0', '{$collection_due_paid}', '0.00')");
@@ -359,6 +481,8 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                        echo "Error in client transaction";
                    }            
                    //  THINK ABOUT SOMETHING ELSE
+                   //  ALRUGHT INTEREST FIRST -- PRINCIpal
+                // TAKE CHARGE EVERY 28 DAYS
                    } else {
                        echo "Error in Update Client Account";
                    }
