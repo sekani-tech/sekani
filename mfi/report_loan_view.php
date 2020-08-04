@@ -39,7 +39,7 @@ $destination = "report_loan.php";
                 </div>
                   <div class="table-responsive">
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
-                      <thead class=" text-primary">
+                      <thead class="text-primary">
                       <?php
                         $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' ORDER BY maturedon_date ASC";
                         $result = mysqli_query($connection, $query);
@@ -268,19 +268,38 @@ $destination = "report_loan.php";
                           <th><?php echo $row["disbursement_date"];?></th>
                           <th><?php echo $row["repayment_date"];?></th>
                           <?php
-                            $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
-                            $sdoi = mysqli_query($connection, $dd);
-                            $e = mysqli_fetch_array($sdoi);
-                            $interest = $e['interest_amount'];
+                            // repaymeny
+                              $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                              $sdoi = mysqli_query($connection, $dd);
+                              $e = mysqli_fetch_array($sdoi);
+                              $interest = $e['interest_amount'];
 
-                            $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
-                            $sdswe = mysqli_query($connection, $dfdf);
-                            $u = mysqli_fetch_array($sdswe);
-                            $prin = $u['principal_amount'];
+                              $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                              $sdswe = mysqli_query($connection, $dfdf);
+                              $u = mysqli_fetch_array($sdswe);
+                              $prin = $u['principal_amount'];
 
-                            $outstanding = $prin + $interest;
-                          ?>
-                          <th><?php echo $outstanding; ?></th>
+                              $outstanding = $prin + $interest;
+// Arrears
+                              $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                              $fosdi = mysqli_query($connection, $ldfkl);
+                              $l = mysqli_fetch_array($fosdi);
+                              $interesttwo = $l['interest_amount'];
+
+                              $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                              $sodi = mysqli_query($connection, $sdospd);
+                              $s = mysqli_fetch_array($sodi);
+                              $printwo = $s['principal_amount'];
+
+                              $outstandingtwo = $printwo + $interesttwo;
+                            ?>
+                          <th><?php $bal = $row["total_outstanding_derived"];
+                          $df = $bal;
+                          $ttloutbalance = 0;
+                          $ttloustanding = $outstanding + $outstandingtwo;
+                           echo number_format($ttloustanding);
+                           $ttloutbalance += $ttloustanding;
+                            ?></th>
                           <td><a href="loan_report_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                          </tr>
                         <?php }
