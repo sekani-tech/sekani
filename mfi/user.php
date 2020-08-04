@@ -72,7 +72,7 @@ $destination = "users.php";
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Branch</label>
-                          <select name="" id="branch" class="form-control">
+                          <select name="branch" id="branch" class="form-control">
                             <?php echo fill_branch($connection);?>
                         </select>
                         </div>
