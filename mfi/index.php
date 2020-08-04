@@ -161,8 +161,22 @@ setInterval(function() {
                     $prin = $u['principal_amount'];
 
                     $outstanding = $prin + $interest;
+
+                    // Arrears
+                    $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id'";
+                    $fosdi = mysqli_query($connection, $ldfkl);
+                    $l = mysqli_fetch_array($fosdi);
+                    $interesttwo = $l['interest_amount'];
+
+                    $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id'";
+                    $sodi = mysqli_query($connection, $sdospd);
+                    $s = mysqli_fetch_array($sodi);
+                    $printwo = $s['principal_amount'];
+
+                    $outstandingtwo = $printwo + $interesttwo;
+                    $ttout = $outstanding + $outstandingtwo;
                   ?>
-                  <h3 class="card-title">NGN - <?php echo number_format(round($outstanding), 2); ?></h3>
+                  <h3 class="card-title">NGN - <?php echo number_format(round($ttout), 2); ?></h3>
                   <?php
                   }
                   ?>
