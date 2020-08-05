@@ -68,7 +68,7 @@ $jfjf = mysqli_query($connection, "SELECT * FROM acct_rule WHERE int_id = '$sess
 // Fines and Fees gl
 function fill_charge($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly)
 {
-  $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '4'";
+  $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '4' AND gl_code !='80010000'";
   $state1 = mysqli_query($connection, $stateg);
   $outxx = '';
   while ($row = mysqli_fetch_array($state1))
@@ -142,7 +142,7 @@ while ($op = mysqli_fetch_array($sdreo))
 
 }
 // Liabilities Report
-$liab = "SELECT * FROM acc_gl_account WHERE int_id='$sessint_id' AND classification_enum = '2'";
+$liab = "SELECT * FROM acc_gl_account WHERE int_id='$sessint_id' AND name LIKE 'INTEREST EXPENSE'";
 $iod = mysqli_query($connection, $liab);
 while($re = mysqli_fetch_array($iod)){
   $dofs = $re['gl_code'];
@@ -176,7 +176,7 @@ $ttl_revenue_last = $net_interest_income_last + $total_fees_last;
 // Operating Expenses
 function fill_operation($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly)
 {
-  $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id !='0' AND classification_enum ='5' ORDER BY name ASC";
+  $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id !='0' AND classification_enum ='5' AND gl_code !='90010000' ORDER BY name ASC";
   $state1 = mysqli_query($connection, $stateg);
   $outxx = '';
   while ($row = mysqli_fetch_array($state1))
@@ -316,7 +316,7 @@ $out = '
 
       '.fill_charge($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly).'
       <tr>
-      <td style="font-weight:bold;"><b>Total</b></td>
+      <td style="font-weight:bold;"><b>Total Interest Income</b></td>
       <td style="text-align: center">'.number_format($total_fees_current, 2).'</td>
       <td style="text-align: center">'.number_format($total_fees_last, 2).'</td>
     </tr>
@@ -326,7 +326,7 @@ $out = '
         <td style="text-align: center">0.00</td>
       </tr>
       <tr>
-        <td style="font-weight:bold;"><b>Total Income</b></td>
+        <td style="font-weight:bold;"><b>Sub Total Income</b></td>
         <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttl_revenue_curren).'</b></td>
         <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttl_revenue_last).'</b></td>
       </tr>
@@ -348,7 +348,7 @@ $out = '
     <tbody>
     '.fill_operation($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly).'
       <tr>
-        <td style="font-weight:bold;">TOTAL</td>
+        <td style="font-weight:bold;">TOTAL OPERATING INCOME</td>
         <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttlcurrenmonth).'</b></td>
         <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttlastmonth).'</b></td>
       </tr>
