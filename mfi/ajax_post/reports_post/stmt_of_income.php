@@ -116,22 +116,20 @@ $oieio = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classifi
 $sdreo = mysqli_query($connection, $oieio);
 while ($op = mysqli_fetch_array($sdreo))
 {
-  $namde = $op['name'];
-
   $gldo = $op['gl_code'];
 
   $sldksp = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gldo' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
   $reprop = mysqli_query($connection, $sldksp);
     $i = mysqli_fetch_array($reprop);
     if(isset($i)){
-    $ending = number_format($i['credit'], 2);
+    $ending = $i['credit'];
     }
   
     $opso = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gldo' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
   $sdpo = mysqli_query($connection, $opso);
     $q = mysqli_fetch_array($sdpo);
     if(isset($q)){
-    $pdospo = number_format($q['credit'], 2);
+    $pdospo = $q['credit'];
     }
       $total_fees_current += $ending;
       $total_fees_last += $pdospo;

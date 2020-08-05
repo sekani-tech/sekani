@@ -89,6 +89,7 @@ if($fdpoijf){
     ('$intid', 0, '{$br_id}', 'MAIN VAULT', 420, NULL, '10101', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
     ('$intid', 0, '{$br_id}', 'TELLER FUNDS', 420, NULL, '10102', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
     ('$intid', 0, '{$br_id}', 'CASH', 420, NULL, '10103', 0, 0, 1, 1, NULL, '', 0, 0.00, NULL),
+    ('$intid', 1, '{$br_id}', 'dues from bank', 0, NULL, '10200', 0, 0, 2, 1, NULL, '', 0, 0.00, NULL),
     ('$intid', 0, '{$br_id}', 'FIRST BANK', 500, NULL, '10201', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
     ('$intid', 0, '{$br_id}', 'WEMA BANK', 500, NULL, '10202', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
     ('$intid', 0, '{$br_id}', 'SKYE BANK', 500, NULL, '10203', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
@@ -164,8 +165,7 @@ if($fdpoijf){
     ('$intid', 0, '{$br_id}', 'OFFICE CONSUMABLES', 461, NULL, '50124', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
     ('$intid', 0, '{$br_id}', 'loan WRITe OFF', 461, NULL, '50125', 0, 0, 1, 5, NULL, '', 0, 0.00, NULL),
     ('$intid', 0, '{$br_id}', 'DEPRECIATION OF FIXED ASSETS', 461, NULL, '50126', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'MISCELLANEOUS', 461, NULL, '50127', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 1, '{$br_id}', 'dues from bank', 0, NULL, '10200', 0, 0, 2, 1, NULL, '', 0, 0.00, NULL);
+    ('$intid', 0, '{$br_id}', 'MISCELLANEOUS', 461, NULL, '50127', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL);
     ";
     $dsp = mysqli_query($connection, $dos);
     if($dsp){

@@ -280,7 +280,7 @@ $destination = "report_loan.php";
                               $prin = $u['principal_amount'];
 
                               $outstanding = $prin + $interest;
-// Arrears
+                              // Arrears
                               $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
                               $fosdi = mysqli_query($connection, $ldfkl);
                               $l = mysqli_fetch_array($fosdi);
