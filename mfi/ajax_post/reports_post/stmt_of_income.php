@@ -146,21 +146,21 @@ $liab = "SELECT * FROM acc_gl_account WHERE int_id='$sessint_id' AND classificat
 $iod = mysqli_query($connection, $liab);
 while($re = mysqli_fetch_array($iod)){
   $dofs = $re['gl_code'];
-  $dops = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$dofs' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+  $dops = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$dofs' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
 $sklsd = mysqli_query($connection, $dops);
 $ui = mysqli_fetch_array($sklsd);
 if(isset($ui)){
-$rer = $ui['gl_account_balance_derived'];
+$rer = $ui['credit'];
 }else{
   $rer = "0.00";
 }
 $liabilities += $rer;
 
-$kldfk = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$dofs' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+$kldfk = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$dofs' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
 $odf = mysqli_query($connection, $kldfk);
 $pdfo = mysqli_fetch_array($odf);
 if(isset($pdfo)){
-$pso = $pdfo['gl_account_balance_derived'];
+$pso = $pdfo['credit'];
 }
 else{
   $pso = "0.00";
@@ -299,12 +299,12 @@ $out = '
     </thead>
     <tbody>
       <tr>
-        <td>Interest on Loans:</td>
+        <td>Interest Income:</td>
         <td style="text-align: center">'.number_format($int_on_loans).'</td>
         <td style="text-align: center">'.number_format($last_int_on_loans).'</td>
       </tr>
       <tr>
-        <td>Less interest on borrowings and deposit liabilities:</td>
+        <td>Less interest Expense:</td>
         <td style="text-align: center">'.number_format($liabilities).'</td>
         <td style="text-align: center">'.number_format($otgerliabi).'</td>
       </tr>
