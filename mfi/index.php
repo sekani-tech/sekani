@@ -55,16 +55,10 @@
             <!-- Portfolio at risk -->
             <!-- not in use yet -->
             <?php
-                $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1'";
-                $result = mysqli_query($connection, $query);
-                $resu = mysqli_num_rows($result);
-
-                $dewe = "SELECT SUM(par) AS par FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1'";
+                $dewe = "SELECT AVG(par) AS par FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1'";
                 $sdd = mysqli_query($connection, $dewe);
                 $sdt = mysqli_fetch_array($sdd);
                 $pfar = $sdt['par'];
-               
-                $do = ($resu/$pfar) * 100;
             ?>
             <div class="col-lg-3 col-md-6 col-sm-6">
               <div class="card card-stats">
@@ -73,9 +67,9 @@
                   <i class="material-icons">info_outline</i>
                   </div>
                   <p class="card-category">Portfolio at Risk</p>
-                  <?php if ($do > 0){
+                  <?php if ($pfar > 0){
                     ?>
-                  <h3 class="card-title"><?php echo number_format($do);?>%</h3>
+                  <h3 class="card-title"><?php echo number_format($pfar);?>%</h3>
                    <?php 
                   }
                   else{

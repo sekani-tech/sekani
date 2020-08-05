@@ -13,6 +13,8 @@ if (isset($_POST["start_date"]) && isset($_POST["end_date"]) && isset($_POST["in
     $onemonthly = $_POST['previous_month_date'];
     $current_interest_on_loans = $_POST['current_interest_on_loans'];
     $previous_interest_on_loans = $_POST['previous_interest_on_loans'];
+    $total_current_fees = $_POST['total_current_fees'];
+    $total_previous_fees = $_POST['total_previous_fees'];
     $current_liabilities = $_POST['current_liabilities'];
     $previous_liabilities = $_POST['previous_liabilities'];
     $current_net_interest_on_income = $_POST['current_net_interest_on_income'];
@@ -52,7 +54,7 @@ if (isset($_POST["start_date"]) && isset($_POST["end_date"]) && isset($_POST["in
 
     $glcode = $row['gl_code'];
 
-    $opbalance = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+    $opbalance = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
     $fodf = mysqli_query($connection, $opbalance);
       $n = mysqli_fetch_array($fodf);
       if(isset($n['credit'])){
@@ -61,7 +63,7 @@ if (isset($_POST["start_date"]) && isset($_POST["end_date"]) && isset($_POST["in
         $endbal = "0.00";
       }
     
-    $fdf = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+    $fdf = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
     $ss = mysqli_query($connection, $fdf);
       $u = mysqli_fetch_array($ss);
       if(isset($u['credit'])){
@@ -163,7 +165,7 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
     </thead>
     <tbody>
     <tr>
-        <td style="height:35px;">Interest on Loans:</td>
+        <td style="height:35px;"><b>Interest on Loans:</b></td>
         <td style="height:35px;">'.number_format($current_interest_on_loans).'</td>
         <td style="height:35px;">'.number_format($previous_interest_on_loans).'</td>
       </tr>
@@ -178,11 +180,16 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
         <td style="height:35px;" ><b>'.number_format($previous_net_interest_on_income).'</b></td>
       </tr>
       <tr>
-        <td style="height:35px;">Services fees, fines and penalties</td>
+        <td style="height:35px;"><b>Services fees, fines and penalties</b></td>
         <td style="height:35px;"></td>
         <td style="height:35px;"></td>
       </tr>
       '.fill_charge($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly).'
+      <tr>
+        <td style="height:35px;"><b>Total</b></td>
+        <td style="height:35px;"><b>'.number_format($total_current_fees).'</b></td>
+        <td style="height:35px;"><b>'.number_format($total_previous_fees).'</b></td>
+      </tr>
       <tr>
         <td style="height:35px;">Other services and other income</td>
         <td style="height:35px;">0.00</td>
@@ -211,9 +218,9 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
         <td style="height:35px;"><b>'.number_format($previous_total_operating_expense).'</b></td>
       </tr>
       <tr>
-        <td style="height:35px;">NET PROFIT FROM OPERATIONS</td>
-        <td style="height:35px;">'.number_format($current_net_profit_from_operation).'</td>
-        <td style="height:35px;">'.number_format($previous_net_profit_from_operation).'</td>
+        <td style="height:35px;"><b>NET PROFIT FROM OPERATIONS</td>
+        <td style="height:35px;"><b>'.number_format($current_net_profit_from_operation).'</b></td>
+        <td style="height:35px;"><b>'.number_format($previous_net_profit_from_operation).'</b></td>
       </tr>
       <tr>
         <td style="height:35px;">Depreciation</td>
@@ -226,9 +233,9 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
         <td style="height:35px;">0.00</td>
       </tr>
       <tr>
-        <td style="height:35px;">PROFIT FOR THE YEAR</td>
-        <td style="height:35px;">'.number_format($profit_current_year).'</td>
-        <td style="height:35px;">'.number_format($profit_previous_year).'</td>
+        <td style="height:35px;"><b>PROFIT FOR THE YEAR</b></td>
+        <td style="height:35px;"><b>'.number_format($profit_current_year).'</b></td>
+        <td style="height:35px;"><b>'.number_format($profit_previous_year).'</b></td>
       </tr>
     </tbody>
     </table>

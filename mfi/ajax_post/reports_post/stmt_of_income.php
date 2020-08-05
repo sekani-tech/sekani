@@ -49,14 +49,14 @@ $jfjf = mysqli_query($connection, "SELECT * FROM acct_rule WHERE int_id = '$sess
     else{
       while($er = mysqli_fetch_array($fdof)){
         // interest on loans current month
-      $fdfi = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$interest_income' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+      $fdfi = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$interest_income' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
       $dov = mysqli_query($connection, $fdfi);
       $oof = mysqli_fetch_array($dov);
       $gl = $oof['credit'];
       $int_on_loans += $gl;
     
       // interest on loans previous month
-      $fkdlf = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$interest_income' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+      $fkdlf = "SELECT * FROM gl_account_transaction WHERE int_id ='$sessint_id' AND gl_code = '$interest_income' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
       $dff = mysqli_query($connection, $fkdlf);
       $df = mysqli_fetch_array($dff);
       $gfl = $df['credit'];
@@ -77,7 +77,7 @@ function fill_charge($connection, $sessint_id, $start, $onemontstart, $end, $one
 
     $glcode = $row['gl_code'];
 
-    $opbalance = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+    $opbalance = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
     $fodf = mysqli_query($connection, $opbalance);
       $n = mysqli_fetch_array($fodf);
       if(isset($n['credit'])){
@@ -86,7 +86,7 @@ function fill_charge($connection, $sessint_id, $start, $onemontstart, $end, $one
         $endbal = "0.00";
       }
     
-    $fdf = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+    $fdf = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$glcode' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
     $ss = mysqli_query($connection, $fdf);
       $u = mysqli_fetch_array($ss);
       if(isset($u['credit'])){
@@ -118,18 +118,24 @@ while ($op = mysqli_fetch_array($sdreo))
 {
   $gldo = $op['gl_code'];
 
-  $sldksp = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gldo' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
+  $sldksp = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gldo' AND transaction_date BETWEEN '$start' AND '$end' ORDER BY id DESC LIMIT 1";
   $reprop = mysqli_query($connection, $sldksp);
     $i = mysqli_fetch_array($reprop);
     if(isset($i)){
     $ending = $i['credit'];
     }
+    else{
+      $ending = '0.00';
+    }
   
-    $opso = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gldo' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
+    $opso = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gldo' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
   $sdpo = mysqli_query($connection, $opso);
     $q = mysqli_fetch_array($sdpo);
     if(isset($q)){
     $pdospo = $q['credit'];
+    }
+    else{
+      $pdospo = '0.00';
     }
       $total_fees_current += $ending;
       $total_fees_last += $pdospo;
@@ -381,6 +387,8 @@ $out = '
  <input hidden type="text" name="previous_month_date" value="'.$onemonthly.'"/>
  <input hidden type="text" name="current_interest_on_loans" value="'.$int_on_loans.'"/>
  <input hidden type="text" name="previous_interest_on_loans" value="'.$last_int_on_loans.'"/>
+ <input hidden type="text" name="total_current_fees" value="'.$total_fees_current.'"/>
+ <input hidden type="text" name="total_previous_fees" value="'.$total_fees_last.'"/>
  <input hidden type="text" name="current_liabilities" value="'.$liabilities.'"/>
  <input hidden type="text" name="previous_liabilities" value="'.$otgerliabi.'"/>
  <input hidden type="text" name="current_net_interest_on_income" value="'.$net_interest_income.'"/>
