@@ -309,14 +309,14 @@ $out = '
         <td style="text-align: center">'.number_format($otgerliabi).'</td>
       </tr>
       <tr>
-        <td style="font-weight:bold;"><b>Net Interest Income</b></td>
+        <td style="font-weight:bold;"><b>NET INTEREST INCOME</b></td>
         <td style="text-align: center; font-weight:bold;"><b>'.number_format($net_interest_income).'</b></td>
         <td style="text-align: center; font-weight:bold;"><b>'.number_format($net_interest_income_last).'</b></td>
       </tr>
 
       '.fill_charge($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly).'
       <tr>
-      <td style="font-weight:bold;"><b>Total Interest Income</b></td>
+      <td style="font-weight:bold;"><b>SUB TOTAL OPERATING INCOME/b></td>
       <td style="text-align: center">'.number_format($total_fees_current, 2).'</td>
       <td style="text-align: center">'.number_format($total_fees_last, 2).'</td>
     </tr>
@@ -326,7 +326,7 @@ $out = '
         <td style="text-align: center">0.00</td>
       </tr>
       <tr>
-        <td style="font-weight:bold;"><b>Sub Total Income</b></td>
+        <td style="font-weight:bold;"><b>TOTAL OPERATING EXPENSE</b></td>
         <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttl_revenue_curren).'</b></td>
         <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttl_revenue_last).'</b></td>
       </tr>
@@ -348,12 +348,12 @@ $out = '
     <tbody>
     '.fill_operation($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly).'
       <tr>
-        <td style="font-weight:bold;">TOTAL OPERATING INCOME</td>
+        <td style="font-weight:bold;">SUB TOTAL EXPENSE</td>
         <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttlcurrenmonth).'</b></td>
         <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttlastmonth).'</b></td>
       </tr>
       <tr>
-        <td style="font-weight:bold;">NET PROFIT FROM OPERATIONS</td>
+        <td style="font-weight:bold;">GROSS PROFIT/(LOSS) FROM OPERATIONS</td>
         <td style="font-weight:bold; text-align: center">'.number_format($net_prof_from_op).'</td>
         <td style="font-weight:bold; text-align: center">'.number_format($net_prof_last_op).'</td>
       </tr>
@@ -368,7 +368,7 @@ $out = '
         <td style="text-align: center">0.00</td>
       </tr>
       <tr>
-        <td style="font-weight:bold;">PROFIT FOR THE YEAR</td>
+        <td style="font-weight:bold;">NET PROFIT/(LOSS) FOR THE YEAR</td>
         <td style="font-weight:bold; text-align: center">'.number_format($profit_for_year).'</td>
         <td style="font-weight:bold; text-align: center">'.number_format($profit_for_year_last).'</td>
       </tr>
