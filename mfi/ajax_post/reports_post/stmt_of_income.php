@@ -316,7 +316,7 @@ $out = '
 
       '.fill_charge($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly).'
       <tr>
-      <td style="font-weight:bold;"><b>SUB TOTAL OPERATING INCOME/b></td>
+      <td style="font-weight:bold;"><b>SUB TOTAL OPERATING INCOME</b></td>
       <td style="text-align: center">'.number_format($total_fees_current, 2).'</td>
       <td style="text-align: center">'.number_format($total_fees_last, 2).'</td>
     </tr>
