@@ -44,8 +44,8 @@ $destination = "report_financial.php";
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1'";
-                          $result = mysqli_query($connection, $querys);
+                          $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1'";
+                          $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
@@ -140,27 +140,28 @@ $destination = "report_financial.php";
                             if(30 > $days_no){
                               $thirty = number_format($row['principal_amount'], 2);
                               $ffd = $row['principal_amount'];
+                              $bnk_prov = (0.05 * $ffd);
                             }
                             else if(60 > $days_no && $days_no > 30){
                               $sixty = number_format($row['principal_amount'], 2);
                               $fdfdf = $row['principal_amount'];
+                              $bnk_prov = (0.2 * $fdfdf);
                             }
                             else if(90 > $days_no && $days_no > 60){
                               $ninety = number_format($row['principal_amount'], 2);
                               $dfgd = $row['principal_amount'];
+                              $bnk_prov = (0.5 * $dfgd);
                             }
                             else if($days_no > 90){
                               $above = number_format($row['principal_amount'], 2);
                               $juiui = $row['principal_amount'];
+                              $bnk_prov = $juiui;
                             }
                           ?>
                           <th><?php echo $thirty;?></th>
                           <th><?php echo $sixty;?></th>
                           <th><?php echo $ninety;?></th>
                           <th><?php echo $above;?></th>
-                          <?php
-                           $bnk_prov = (0.05* $ffd)+(0.2* $fdfdf)+(0.5* $dfgd)+$juiui;
-                          ?>
                           <th><?php echo number_format($bnk_prov, 2);?></th>
                         </tr>
                         <?php }
