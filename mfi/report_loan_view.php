@@ -1171,6 +1171,7 @@ else if(isset($_GET["view45"])){
                         <th>
                           Principal Due
                         </th>
+                        <th>Days in Arrears</th>
                         <th>
                           Interest Due
                         </th>
@@ -1185,9 +1186,6 @@ else if(isset($_GET["view45"])){
                         </th>
                         <th>
                           Outstanding Loan Balance
-                        </th>
-                        <th>
-                         Status
                         </th>
                         <!-- <th>
                           Status
@@ -1228,6 +1226,7 @@ else if(isset($_GET["view45"])){
                           }
                           ?>
                           <th><?php echo number_format($row["principal_amount"], 2); ?></th>
+                          <th><?php echo $row["counter"];?></th>
                           <th><?php echo number_format($row["interest_amount"], 2); ?></th>
                           <th><?php echo $l_n; ?></th>
                           <th><?php echo $row["fromdate"];?></th>
@@ -1242,7 +1241,6 @@ else if(isset($_GET["view45"])){
                             }
                           ?>
                           <th><?php echo number_format($outbalance, 2);?></th>
-                          <th><?php echo $eod;?></th>
                           <?php
                           
                           ?>
