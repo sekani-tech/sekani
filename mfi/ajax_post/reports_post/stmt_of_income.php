@@ -13,12 +13,12 @@ if(isset($_POST['start'])){
     $starttime = strtotime($start);
     $endtime = strtotime($end);
     $curren = date("F d, Y", $endtime);
-    $onemonth = date("F d, Y", strtotime("-1 month", $endtime));
-    $onemonthly = date("Y-m-d", strtotime("-1 month", $endtime));
+    $onemonth = date("F d, Y", strtotime("-31 days", $endtime));
+    $onemonthly = date("Y-m-d", strtotime("-31 days", $endtime));
     $osdnd = strtotime($onemonthly);
 
     if($starttime > $osdnd){
-      $onemontstart = date("Y-m-d", strtotime("-1 month", $starttime));
+      $onemontstart = date("Y-m-d", strtotime("-31 days", $starttime));
     }
     else{
       $onemontstart = $start;
@@ -229,22 +229,22 @@ while ($q = mysqli_fetch_array($fdff))
     $cxcxfd = mysqli_query($connection, $kutty);
     $j = mysqli_fetch_array($cxcxfd);
     if(isset($j)){
-    $endbal = $j['credit'];
+    $fdpfodp = $j['credit'];
     }else{
-      $endbal = "0.00";
+      $fdpfodp = "0.00";
     }
     // previous month
     $kuoo = "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND gl_code = '$gllcode' AND transaction_date BETWEEN '$onemontstart' AND '$onemonthly' ORDER BY id DESC LIMIT 1";
     $po = mysqli_query($connection, $kuoo);
       $o = mysqli_fetch_array($po);
       if(isset($o)){
-      $lastmon = $o['credit'];
+      $sweowee = $o['credit'];
       }
       else{
-        $lastmon = "0.00";
+        $sweowee = "0.00";
       }
-      $ttlcurrenmonth +=$endbal;
-      $ttlastmonth +=$lastmon;
+      $ttlcurrenmonth += $fdpfodp;
+      $ttlastmonth += $sweowee;
   }
   // Depreciation Amount
   $fdkfm = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id !='0' AND classification_enum ='5' AND name LIKE '%depreciation%' ORDER BY name ASC";
@@ -284,6 +284,92 @@ while ($t = mysqli_fetch_array($fdfs))
   $net_prof_last_op = $ttl_revenue_last - $ttlastmonth;
   $profit_for_year = $net_prof_from_op - ($depreciation_current + $income_tax_current);
   $profit_for_year_last = $net_prof_last_op - ($depreciation_last + $income_tax_last);
+
+  // FINAL FORMAT FOR NEGATIVE VALUES
+  // Net interest income
+  if($net_interest_income < 0){
+    $netint = "(".number_format(abs($net_interest_income), 2).")";
+  }
+  else{
+    $netint = number_format($net_interest_income, 2);
+  }
+  if($net_interest_income_last < 0){
+    $netint_last = "(".number_format(abs($net_interest_income_last), 2).")";
+  }
+  else{
+    $netint_last = number_format($net_interest_income_last, 2);
+  }
+
+  // total fees
+  if($total_fees_current < 0){
+    $totalfeecurrent = "(".number_format(abs($total_fees_current), 2).")";
+  }
+  else{
+    $totalfeecurrent = number_format($total_fees_current, 2);
+  }
+  if($total_fees_last < 0){
+    $totalfeelast = "(".number_format(abs($total_fees_last), 2).")";
+  }
+  else{
+    $totalfeelast = number_format($total_fees_last, 2);
+  }
+  
+  // total current revenue
+  if($ttl_revenue_curren < 0){
+    $ttl_revenue = "(".number_format(abs($ttl_revenue_curren), 2).")";
+  }
+  else{
+    $ttl_revenue = number_format($ttl_revenue_curren, 2);
+  }
+  if($ttl_revenue_last < 0){
+    $ttl_revenuelast = "(".number_format(abs($ttl_revenue_last), 2).")";
+  }
+  else{
+    $ttl_revenuelast = number_format($ttl_revenue_last, 2);
+  }
+
+  // subtotal expense
+  if($ttlcurrenmonth < 0){
+    $tlcurmont = "(".number_format(abs($ttlcurrenmonth), 2).")";
+  }
+  else{
+    $tlcurmont = number_format($ttlcurrenmonth, 2);
+  }
+  if($ttlastmonth < 0){
+    $tllasmont = "(".number_format(abs($ttlastmonth), 2).")";
+  }
+  else{
+    $tllasmont = number_format($ttlastmonth, 2);
+  }
+
+  // Gross profit from operation
+  if($net_prof_from_op < 0){
+    $netprof = "(".number_format(abs($net_prof_from_op), 2).")";
+  }
+  else{
+    $netprof = number_format($net_prof_from_op, 2);
+  }
+  if($net_prof_last_op < 0){
+    $netprof_last = "(".number_format(abs($net_prof_last_op), 2).")";
+  }
+  else{
+    $netprof_last = number_format($net_prof_last_op, 2);
+  }
+
+  // profit/loss for year
+  if($profit_for_year < 0){
+    $prof_year = "(".number_format(abs($profit_for_year), 2).")";
+  }
+  else{
+    $prof_year = number_format($profit_for_year, 2);
+  }
+  if($profit_for_year_last < 0){
+    $prof_year_last = "(".number_format(abs($profit_for_year_last), 2).")";
+  }
+  else{
+    $prof_year_last = number_format($profit_for_year_last, 2);
+  }
+
 $out = '';
 $out = '
 <div class="card">
@@ -310,15 +396,15 @@ $out = '
       </tr>
       <tr>
         <td style="font-weight:bold;"><b>NET INTEREST INCOME</b></td>
-        <td style="text-align: center; font-weight:bold;"><b>'.number_format($net_interest_income).'</b></td>
-        <td style="text-align: center; font-weight:bold;"><b>'.number_format($net_interest_income_last).'</b></td>
+        <td style="text-align: center; font-weight:bold;"><b>'.$netint.'</b></td>
+        <td style="text-align: center; font-weight:bold;"><b>'.$netint_last.'</b></td>
       </tr>
 
       '.fill_charge($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly).'
       <tr>
-      <td style="font-weight:bold;"><b>SUB TOTAL OPERATING INCOME</b></td>
-      <td style="text-align: center"><b>'.number_format($total_fees_current, 2).'</b></td>
-      <td style="text-align: center"><b>'.number_format($total_fees_last, 2).'</b></td>
+      <td style="font-weight:bold;"><b>SUB TOTAL INCOME</b></td>
+      <td style="text-align: center"><b>'.$totalfeecurrent.'</b></td>
+      <td style="text-align: center"><b>'.$totalfeelast.'</b></td>
     </tr>
       <tr>
         <td>Other services and other income</td>
@@ -326,9 +412,9 @@ $out = '
         <td style="text-align: center">0.00</td>
       </tr>
       <tr>
-        <td style="font-weight:bold;"><b>TOTAL OPERATING EXPENSE</b></td>
-        <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttl_revenue_curren).'</b></td>
-        <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttl_revenue_last).'</b></td>
+        <td style="font-weight:bold;"><b>GROSS OPERATING INCOME</b></td>
+        <td style="text-align: center; font-weight:bold;"><b>'.$ttl_revenue.'</b></td>
+        <td style="text-align: center; font-weight:bold;"><b>'.$ttl_revenuelast.'</b></td>
       </tr>
     </tbody>
   </table>
@@ -349,13 +435,13 @@ $out = '
     '.fill_operation($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly).'
       <tr>
         <td style="font-weight:bold;">SUB TOTAL EXPENSE</td>
-        <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttlcurrenmonth).'</b></td>
-        <td style="text-align: center; font-weight:bold;"><b>'.number_format($ttlastmonth).'</b></td>
+        <td style="text-align: center; font-weight:bold;"><b>'.$tlcurmont.'</b></td>
+        <td style="text-align: center; font-weight:bold;"><b>'.$tllasmont.'</b></td>
       </tr>
       <tr>
         <td style="font-weight:bold;">GROSS PROFIT/(LOSS) FROM OPERATIONS</td>
-        <td style="font-weight:bold; text-align: center">'.number_format($net_prof_from_op).'</td>
-        <td style="font-weight:bold; text-align: center">'.number_format($net_prof_last_op).'</td>
+        <td style="font-weight:bold; text-align: center">'.$netprof.'</td>
+        <td style="font-weight:bold; text-align: center">'.$netprof_last.'</td>
       </tr>
       <tr>
         <td>Depreciation</td>
@@ -369,8 +455,8 @@ $out = '
       </tr>
       <tr>
         <td style="font-weight:bold;">NET PROFIT/(LOSS) FOR THE YEAR</td>
-        <td style="font-weight:bold; text-align: center">'.number_format($profit_for_year).'</td>
-        <td style="font-weight:bold; text-align: center">'.number_format($profit_for_year_last).'</td>
+        <td style="font-weight:bold; text-align: center">'.$prof_year.'</td>
+        <td style="font-weight:bold; text-align: center">'.$prof_year_last.'</td>
       </tr>
     </tbody>
   </table>

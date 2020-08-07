@@ -539,6 +539,15 @@ $destination = "config.php";
                             </select>
                             </div>
                           </div>
+                          <div class="form-group">
+                          <div class="col-md-8">
+                            <label for="charge" class="form-align ">Suspended Income</label>
+                            <select class="form-control form-control-sm" name="li_suspended_income">
+                              <option value="<?php echo $li_suspended_income;?>"><?php echo $li_susd_ime;?></option>
+                              <?php echo fill_lia($connection)?>
+                            </select>
+                          </div>
+                          </div>
                           </div>
                       <h5 class="card-title">Liabilities</h5>
                       <?php
@@ -564,16 +573,7 @@ $destination = "config.php";
                               <?php echo fill_lia($connection)?>
                             </select>
                         </div>
-                          </div>
-                          <div class="form-group">
-                          <div class="col-md-8">
-                            <label for="charge" class="form-align ">Suspended Income</label>
-                            <select class="form-control form-control-sm" name="li_suspended_income">
-                              <option value="<?php echo $li_suspended_income;?>"><?php echo $li_susd_ime;?></option>
-                              <?php echo fill_lia($connection)?>
-                            </select>
-                          </div>
-                          </div>
+                            </div>
                       </div> 
                       <h5 class="card-title">Income</h5>
                       <div class="position-relative form-group">

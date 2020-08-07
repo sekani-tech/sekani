@@ -43,9 +43,10 @@ if (isset($_POST["start_date"]) && isset($_POST["end_date"]) && isset($_POST["in
       $branch_location = $ans['location'];
       $branch_phone = $ans['phone'];
     }
+    // loop for charges
     function fill_charge($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly)
 {
-  $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '4' AND parent_id = '198'";
+  $stateg = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '4' AND gl_code !='80010000'";
   $state1 = mysqli_query($connection, $stateg);
   $outxx = '';
   while ($row = mysqli_fetch_array($state1))
@@ -159,23 +160,23 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
     <thead>
     <tr>
     <th>GL Account</th>
-    <th >'.$curren.'<br/>(NGN)</th>
-    <th >'.$onemonth.'<br/>(NGN)</th>
+    <th>'.$curren.'<br/>(NGN)</th>
+    <th>'.$onemonth.'<br/>(NGN)</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <td style="height:35px;"><b>Interest on Loans:</b></td>
+        <td style="height:35px;"><b>Interest Income:</b></td>
         <td style="height:35px;">'.number_format($current_interest_on_loans).'</td>
         <td style="height:35px;">'.number_format($previous_interest_on_loans).'</td>
       </tr>
       <tr>
-        <td style="height:35px;">Less interest on borrowings and deposit liabilities:</td>
+        <td style="height:35px;">Less interest Expense:</td>
         <td style="height:35px;">'.number_format($current_liabilities).'</td>
         <td style="height:35px;">'.number_format($previous_liabilities).'</td>
       </tr>
       <tr>
-        <td style="height:35px;"><b>Net Interest Income</b></td>
+        <td style="height:35px;"><b>NET INTEREST INCOME</b></td>
         <td style="height:35px;" ><b>'.number_format($current_net_interest_on_income).'</b></td>
         <td style="height:35px;" ><b>'.number_format($previous_net_interest_on_income).'</b></td>
       </tr>
@@ -186,7 +187,7 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
       </tr>
       '.fill_charge($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly).'
       <tr>
-        <td style="height:35px;"><b>Total</b></td>
+        <td style="height:35px;"><b>SUB TOTAL INCOME</b></td>
         <td style="height:35px;"><b>'.number_format($total_current_fees).'</b></td>
         <td style="height:35px;"><b>'.number_format($total_previous_fees).'</b></td>
       </tr>
@@ -196,7 +197,7 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
         <td style="height:35px;">0.00</td>
       </tr>
       <tr>
-        <td style="height:35px;"><b>Total Income</b></td>
+        <td style="height:35px;"><b>GROSS OPERATING INCOME</b></td>
         <td style="height:35px;" ><b>'.number_format($current_total_revenue).'</b></td>
         <td style="height:35px;" ><b>'.number_format($previous_total_revenue).'</b></td>
       </tr>
@@ -213,12 +214,12 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
     <tbody>
     '.fill_operation($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly).'
     <tr>
-        <td style="height:35px;">TOTAL</td>
+        <td style="height:35px;">SUB TOTAL EXPENSE</td>
         <td style="height:35px;"><b>'.number_format($current_total_operating_expense).'</b></td>
         <td style="height:35px;"><b>'.number_format($previous_total_operating_expense).'</b></td>
       </tr>
       <tr>
-        <td style="height:35px;"><b>NET PROFIT FROM OPERATIONS</td>
+        <td style="height:35px;"><b>GROSS PROFIT/(LOSS) FROM OPERATIONS</td>
         <td style="height:35px;"><b>'.number_format($current_net_profit_from_operation).'</b></td>
         <td style="height:35px;"><b>'.number_format($previous_net_profit_from_operation).'</b></td>
       </tr>
@@ -233,7 +234,7 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
         <td style="height:35px;">0.00</td>
       </tr>
       <tr>
-        <td style="height:35px;"><b>PROFIT FOR THE YEAR</b></td>
+        <td style="height:35px;"><b>NET PROFIT/(LOSS) FOR THE YEAR</b></td>
         <td style="height:35px;"><b>'.number_format($profit_current_year).'</b></td>
         <td style="height:35px;"><b>'.number_format($profit_previous_year).'</b></td>
       </tr>

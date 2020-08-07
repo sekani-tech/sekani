@@ -24,7 +24,7 @@ session_start();
           // import
         //   $glcode = $_POST['glcode'];
         $currentdate = $_POST['end'];
-        $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id'";
+        $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= '1'";
         $result = mysqli_query($connection, $query);
         while ($q = mysqli_fetch_array($result, MYSQLI_ASSOC))
           {
