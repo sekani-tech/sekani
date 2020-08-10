@@ -193,7 +193,7 @@ if ($bvn_length == 11) {
         });
         document.getElementById("cbvn").setAttribute("hidden", "");
         document.getElementById("wbvn").removeAttribute("hidden");
-        $(":input[type=submit]").prop("disabled", false);
+        $(":input[type=submit]").prop("disabled", true);
     });
     </script>
     ';
@@ -243,7 +243,7 @@ if ($bvn_length == 11) {
             });
             document.getElementById("cbvn").setAttribute("hidden", "");
             document.getElementById("wbvn").removeAttribute("hidden");
-            $(":input[type=submit]").prop("disabled", false);
+            $(":input[type=submit]").prop("disabled", true);
         });
         </script>
         ';
