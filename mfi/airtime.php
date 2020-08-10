@@ -378,6 +378,33 @@ if ($per_bills == 1 || $per_bills == "1") {
             </div>
             </div>
             <script>
+              $(document).ready(function() {
+                $('#submitme').on("click", function() {
+                  Swal({
+  title: 'Processing!',
+  html: 'Please Wait! <b></b> .',
+  timer: 800,
+  timerProgressBar: true,
+  onBeforeOpen: () => {
+    Swal.showLoading()
+    timerInterval = setInterval(() => {
+      const content = Swal.getContent()
+      if (content) {
+        const b = content.querySelector('b')
+        if (b) {
+          b.textContent = Swal.getTimerLeft()
+        }
+      }
+    }, 100)
+  },
+  onClose: () => {
+    clearInterval(timerInterval)
+  }
+});
+                });
+              });
+            </script>
+            <script>
                               $(document).ready(function() {
                                 $('#submitme').on("click", function() {
                                   var net = $('#network').val();
@@ -405,7 +432,7 @@ if ($per_bills == 1 || $per_bills == "1") {
                     </div>
                     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="submitme" name="submit" value="add_payment" type="button" class="btn btn-primary">Buy</button>
+        <button id="submitme" name="submit" value="add_payment" type="button" data-dismiss="modal" class="btn btn-primary">Buy</button>
       </div>
                 </form>
                 </div>
@@ -547,11 +574,38 @@ if ($per_bills == 1 || $per_bills == "1") {
                                 });
                               });
                             </script>
+                             <script>
+              $(document).ready(function() {
+                $('#data_pay').on("click", function() {
+                  Swal({
+  title: 'Processing!',
+  html: 'Please Wait! <b></b> .',
+  timer: 800,
+  timerProgressBar: true,
+  onBeforeOpen: () => {
+    Swal.showLoading()
+    timerInterval = setInterval(() => {
+      const content = Swal.getContent()
+      if (content) {
+        const b = content.querySelector('b')
+        if (b) {
+          b.textContent = Swal.getTimerLeft()
+        }
+      }
+    }, 100)
+  },
+  onClose: () => {
+    clearInterval(timerInterval)
+  }
+});
+                });
+              });
+            </script>
                             <div id="finish_buying"></div>
                     </div>
                     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="data_pay" name="submit" disabled value="add_payment" type="button" class="btn btn-primary">Buy</button>
+        <button id="data_pay" name="submit" disabled value="add_payment" data-dismiss="modal" type="button" class="btn btn-primary">Buy</button>
       </div>
                 </form>
                 </div>
