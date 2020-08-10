@@ -379,7 +379,7 @@ if ($per_bills == 1 || $per_bills == "1") {
             </div>
             <script>
                               $(document).ready(function() {
-                                $('#submitme').on("change keyup paste click", function() {
+                                $('#submitme').on("click", function() {
                                   var net = $('#network').val();
                                   var phone = $('#phone').val();
                                   var amt = $('#amount').val();
