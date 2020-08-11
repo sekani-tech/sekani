@@ -11,6 +11,7 @@ if (isset($_POST["id"]))
                    $query = "SELECT * FROM product_loan_charge WHERE product_loan_id = '$p_id' && int_id = '$sessint_id'";
                    $result = mysqli_query($connection, $query);
                    ?>
+                   <input type="text" value="<?php echo $p_id;?>" id="mrome"/>
                           <thead>
                             <tr>
                               <th>Name</th>
@@ -87,6 +88,7 @@ if (isset($_POST["id"]))
                               // delete methodology
                                 var id_to_be_deleted = I;
                                 var formData = new FormData();
+                                var p_id = $('#mrome').val();
                                 formData.append("id_to_be_deleted", id_to_be_deleted);
                                 $.ajax({
                                     method: "POST",
