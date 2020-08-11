@@ -382,15 +382,12 @@ $dos = mysqli_query($connection, $fd);
                       <div class="row">
                       <div class="col-md-4">
                       <label>Charges:</label>
-                      <div id="damn_men" hidden>
-                      </div>
-                      <div id="takeme">
                       <input type="text" hidden value="<?php echo $main_p; ?>" id="main_p">
                       <select name="charge_id" class="form-control" id="charges">
                         <option value="">select an option</option>
                         <?php echo fill_charges($connection); ?>
                       </select>
-                      </div>
+
                       </div>
                       <div class="col-md-6">
                       <div id="show_charges">
