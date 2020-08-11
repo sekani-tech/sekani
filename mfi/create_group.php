@@ -70,6 +70,29 @@ $b_id = $_SESSION['branch_id'];
                             <input type="text" name="gname" id="" class="form-control" required>
                         </div>
                         <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Account Type</label>
+                      <?php
+                  function fill_savings($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM savings_product WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
+                        <select required name="acct_type" class="form-control" data-style="btn btn-link" id="collat">
+                          <option value="">select a Account Type</option>
+                          <?php echo fill_savings($connection); ?>
+                        </select>
+                    </div>
+                  </div>
+                        <div class="col-md-6">
                         <div class="form-group">
                             <label class="">Branch:</label>
                             <select class="form-control" name="branch_id">
@@ -115,6 +138,10 @@ $b_id = $_SESSION['branch_id'];
                         <div class="col-md-6">
                             <label for="">Meeting Time :</label>
                             <input type="time" name="meet_time" class="form-control" id="">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Primary Contact Phone Number:</label>
+                            <input type="text" name="pc_phone" class="form-control" id="">
                         </div>
                     </div>
                     </div>    
