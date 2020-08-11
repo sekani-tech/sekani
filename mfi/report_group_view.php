@@ -522,6 +522,119 @@ function fill_client($connection) {
           </div>
         </div>
       </div>
+      <?php
+}
+ else if (isset($_GET["view46"])) {
+?>
+<div class="content">
+        <div class="container-fluid">
+                    <!-- your content here -->
+                    <div class="row">
+            <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                <h4 class="card-title">Collection Report</h4>
+            </div>
+            <?php
+                  function fill_branch($connection) {
+                    $sint_id = $_SESSION["int_id"];
+                    $guuy = $_SESSION['branch_id'];
+                    $org = "SELECT * FROM branch WHERE int_id = '$sint_id' AND (id = '$guuy' OR parent_id = '$guuy')";
+                    $res = mysqli_query($connection, $org);
+                    $out = '';
+                    while ($row = mysqli_fetch_array($res))
+                    {
+                      $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                    }
+                    return $out;
+                  }
+                  function fill_officer($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM staff WHERE int_id = '$sint_id' AND employee_status = 'Employed'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["display_name"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
+                  <script>
+                    $(document).ready(function () {
+                      $('#brne').on("change click", function () {
+                        var id = $(this).val();
+                        $.ajax({
+                          url: "ajax_post/reports_post/staff.php", 
+                          method: "POST",
+                          data:{id:id},
+                          success: function (data) {
+                            $('#outstaff').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                <div class="card-body">
+                  <form action="">
+                    <div class="row">
+                      <div class="form-group col-md-3">
+                        <label for="">Start Date</label>
+                        <input type="date" name="" id="start" class="form-control">
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label for="">End Date</label>
+                        <input type="date" name="" id="end" class="form-control">
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label for="">Branch</label>
+                        <select name="" id="brne" class="form-control">
+                            <?php echo fill_branch($connection); ?>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label for="">Account Officer</label>
+                        <select name="" id="officer" class="form-control">
+                        <option value="all">All</option>
+                        <?php echo fill_officer($connection); ?>
+                        </select>
+                      </div>
+                    </div>
+                    <button type="reset" class="btn btn-danger">Reset</button>
+                    <span id="runstaff" type="submit" class="btn btn-primary">Run report</span>
+                  </form>
+                </div>
+              <script>
+                    $(document).ready(function () {
+                      $('#runstaff').on("click", function () {
+                        var start = $('#start').val();
+                        var end = $('#end').val();
+                        var branch = $('#brne').val();
+                        var officer = $('#officer').val();
+                        $.ajax({
+                          url: "ajax_post/reports_post/group_collection.php",
+                          method: "POST",
+                          data:{start:start, end:end, branch:branch, officer:officer},
+                          success: function (data) {
+                            $('#shstaff').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                  <div class="card-body">
+                      <div class="col-md-8">
+                      </div>
+                  </div>
+
+                  </div>
+            </div>
+            <div id = "shstaff"> </div>
+          </div>
+
+        </div>
+ </div>
 <?php
  }
- ?>
+?>
