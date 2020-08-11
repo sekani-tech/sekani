@@ -362,13 +362,6 @@ $destination = "report_loan.php";
                             <?php echo fill_branch($connection); ?>
                         </select>
                       </div>
-                      <div class="form-group col-md-4">
-                        <label for="">Hide Zero Balances</label>
-                        <select name="" id="hide" class="form-control">
-                            <option value="1">No</option>
-                            <option value="2">Yes</option>
-                        </select>
-                      </div>
                     </div>
                     <button type="reset" class="btn btn-danger">Reset</button>
                     <span id="runanalysis" class="btn btn-primary">Run report</span>
