@@ -630,7 +630,7 @@ if(isset($_POST['id'])){
             <div class="col-md-4">
             
             <div class="form-group">
-                <label for="">Account Officer:</label>
+                <label for="">Loan Officer:</label>
                 <select  name="acct_of" class="form-control" id="">
                 '.fill_officer($connection).'
                 </select>
