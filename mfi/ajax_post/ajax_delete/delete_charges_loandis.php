@@ -1,17 +1,23 @@
 <?php
 include("../../../functions/connect.php");
+session_start();
+$sessint_id = $_SESSION['int_id'];
 
 if ($_POST['id_to_be_deleted']) {
 $delete = $_POST['id_to_be_deleted'];
-//do db delete query here i.e 
+//do db delete query here i.e
+// To get loan id
+$sdpk = "SELECT * FROM product_loan_charge WHERE id='$delete'";
+$sioa = mysqli_query($connection, $sdpk); 
+$fif = mysqli_fetch_array($sioa);
+$loanid = $fif['product_loan_id'];
 $dom = "DELETE FROM product_loan_charge WHERE id='$delete'";
 $cms = mysqli_query($connection, $dom);
 }
 ?>
 <table class="table table-bordered">
                     <?php
-                    $p_id = $_POST["id"];
-                   $query = "SELECT * FROM product_loan_charge WHERE product_loan_id = '$p_id' && int_id = '$sessint_id'";
+                   $query = "SELECT * FROM product_loan_charge WHERE product_loan_id = '$loanid' && int_id = '$sessint_id'";
                    $result = mysqli_query($connection, $query);
                    ?>
                           <thead>
@@ -101,7 +107,7 @@ $cms = mysqli_query($connection, $dom);
                                     success:function(data){
                                       $('#lend_charge').html(data);
                                       // document.getElementById("off_me").setAttribute("hidden", "");
-                                      alert('success' + data);
+                                      // alert('success' + data);
                                     }
                                     });
                                   }
