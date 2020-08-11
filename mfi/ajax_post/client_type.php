@@ -482,7 +482,7 @@ if(isset($_POST['id'])){
             <div class="col-md-4">
             <div class="form-group">
                 <label >Middle Name</label>
-                <input  type="text" style="text-transform: uppercase;" class="form-control" name="middlename" required>
+                <input  type="text" style="text-transform: uppercase;" class="form-control" name="middlename">
             </div>
             </div>
             <div class="col-md-4">
@@ -632,7 +632,6 @@ if(isset($_POST['id'])){
             <div class="form-group">
                 <label for="">Account Officer:</label>
                 <select  name="acct_of" class="form-control" id="">
-                <option value="">select account officer</option>
                 '.fill_officer($connection).'
                 </select>
             </div>
