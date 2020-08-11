@@ -16,7 +16,7 @@ if ($acc_update == 1 || $acc_update == "1") {
   $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id' && int_id='$sessint_id'");
   $n = mysqli_fetch_array($person);
     $ctype = $n['client_type'];
-if($ctype =='INDIVIDUAL')
+if($ctype =='INDIVIDUAL' || $ctype =='GROUP')
 {
   ?>
   <?php
