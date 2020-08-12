@@ -52,7 +52,7 @@ $destination = "approval.php";
                     swal({
                         type: "success",
                         title: "Success",
-                        text: "Client Deleted",
+                        text: "",
                         showConfirmButton: false,
                         timer: 2000
                     })
