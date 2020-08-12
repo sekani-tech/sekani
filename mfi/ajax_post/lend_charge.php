@@ -11,7 +11,7 @@ if (isset($_POST["id"]))
                    $query = "SELECT * FROM product_loan_charge WHERE product_loan_id = '$p_id' && int_id = '$sessint_id'";
                    $result = mysqli_query($connection, $query);
                    ?>
-                   <input type="text" value="<?php echo $p_id;?>" id="mrome"/>
+                   <input type="text" hidden value="<?php echo $p_id;?>" id="mrome"/>
                           <thead>
                             <tr>
                               <th>Name</th>

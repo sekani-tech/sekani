@@ -387,7 +387,7 @@ input[type=number] {
                 ?>
                 <!-- Notification for client approval -->
                 <?php
-                  $query = "SELECT * FROM client WHERE int_id = '$sessint_id' AND status = 'Not Approved' AND client.branch_id = '$br_id'";
+                  $query = "SELECT client.id, client.submittedon_date, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' AND client.status = 'Not Approved' AND client.branch_id = '$br_id'";
                   $result = mysqli_query($connection, $query);
                   $approvd = mysqli_num_rows($result);
                 ?>
