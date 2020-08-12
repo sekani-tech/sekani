@@ -32,6 +32,9 @@
               $img = $n['img'];
               $int_img = $n['img'];
               $sender_id = $n['sender_id'];
+              $facebook = $n['facebook'];
+              $twitter = $n['twitter'];
+              $instagram = $n['instagram'];
             }
           }
         ?>
@@ -144,6 +147,7 @@
                                 <input type="text" value="<?php echo $sender_id; ?>" name="sender_id" class="form-control" id="">
                             </div>
                         </div>
+                        
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Title</label>
@@ -185,6 +189,24 @@
                             <div class="form-group">
                                 <label class="bmd-label-floating">Primary Contact Email</label>
                                 <input type="email" value="<?php echo $pc_email; ?>" name="pc_email" class="form-control" id="">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Facebook</label>
+                                <input type="text" value="<?php echo $facebook; ?>" name="face" class="form-control" id="">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Twitter</label>
+                                <input type="text" value="<?php echo $twitter; ?>" name="tweet" class="form-control" id="">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Instagram</label>
+                                <input type="text" value="<?php echo $instagram; ?>" name="ingram" class="form-control" id="">
                             </div>
                         </div>
                         <style>

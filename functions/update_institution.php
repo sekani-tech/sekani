@@ -17,6 +17,9 @@ $pc_designation = $_POST['pc_designation'];
 $pc_phone = $_POST['pc_phone'];
 $pc_email = $_POST['pc_email'];
 $sender_id = $_POST['sender_id'];
+$ingram = $_POST['ingram'];
+$tweet = $_POST['tweet'];
+$face = $_POST['face'];
 
 $digits = 10;
 if($_FILES['int_logo']['name']) {
@@ -36,7 +39,8 @@ if($_FILES['int_logo']['name']) {
   rcn = '$rcn', lga = '$lga', int_state = '$int_state', email = '$email',
   office_address = '$office_address', website = '$website', office_phone = '$office_phone',
   pc_title = '$pc_title', pc_surname = '$pc_surname', pc_other_name = '$pc_other_name', pc_designation = '$pc_designation',
-  pc_phone = '$pc_phone', pc_email = '$pc_email', img = '$img', sender_id = '$sender_id' WHERE int_id = '$int_id'";
+  pc_phone = '$pc_phone', pc_email = '$pc_email', img = '$img', sender_id = '$sender_id', instagram = '$ingram', twitter = '$tweet'
+  , facebook = '$face' WHERE int_id = '$int_id'";
   $result = mysqli_query($connection, $query);
   if($result) {
      echo header("location: ../institution.php");
