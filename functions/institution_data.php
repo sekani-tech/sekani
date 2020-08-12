@@ -7,6 +7,9 @@ session_start();
 <?php
 $int_name = $_POST['int_name'];
 $int_full = $_POST['int_full'];
+$ingram = $_POST['ingram'];
+$tweet = $_POST['tweet'];
+$face = $_POST['face'];
 $rcn = $_POST['rcn'];
 $lga = $_POST['lga'];
 $int_state = $_POST['int_state'];
@@ -46,10 +49,10 @@ if (move_uploaded_file($_FILES['int_logo']['tmp_name'], "instimg/" . $imagex)) {
 
 $query = "INSERT INTO institutions (int_name, int_full, rcn, lga, int_state, email,
 office_address, incorporation_date, website, office_phone, pc_title, pc_surname, pc_other_name,
-pc_designation, pc_phone, pc_email, img, sender_id) VALUES ('{$int_name}','{$int_full}','{$rcn}',
+pc_designation, pc_phone, pc_email, img, sender_id, facebook, twitter, instagram) VALUES ('{$int_name}','{$int_full}','{$rcn}',
 '{$lga}', '{$int_state}', '{$email}', '{$office_address}', '{$submitted_on}', '{$website}', '{$office_phone}',
 '{$pc_title}', '{$pc_surname}', '{$pc_other_name}', '{$pc_designation}',
-'{$pc_phone}', '{$pc_email}', '{$imagex}', '{$sender_id}')";
+'{$pc_phone}', '{$pc_email}', '{$imagex}', '{$sender_id}', '{$face}', '{$tweet}', '{$ingram}')";
 // add
 $result = mysqli_query($connection, $query);
 if ($result) {

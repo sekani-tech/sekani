@@ -148,6 +148,24 @@
                                 <input type="text" name="sender_id" class="form-control" id="">
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-check-label">Instagram</label>
+                                <input type="text" name="ingram" class="form-control" id="">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-check-label">Twitter</label>
+                                <input type="text" name="tweet" class="form-control" id="">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-check-label">Facebook</label>
+                                <input type="text" name="face" class="form-control" id="">
+                            </div>
+                        </div>
                         <style>
                         input[type="file"]{
                           display: none;
