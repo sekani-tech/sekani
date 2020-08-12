@@ -387,7 +387,24 @@ input[type=number] {
                 ?>
                 <!-- Notification for client approval -->
                 <?php
-                  $query = "SELECT client.id,client.submittedon_date, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Not Approved' AND client.branch_id = '$br_id'";
+                  function brii($connection)
+                  {  
+                      $br_id = $_SESSION["branch_id"];
+                      $sint_id = $_SESSION["int_id"];
+                      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+                      $dof = mysqli_query($connection, $dff);
+                      $out = '';
+                      while ($row = mysqli_fetch_array($dof))
+                      {
+                        $do = $row['id'];
+                      $out .= " OR client.branch_id ='$do'";
+                      }
+                      return $out;
+                  }
+                  $ghgd = brii($connection);
+                ?>
+                <?php
+                  $query = "SELECT * FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' AND client.status = 'Not Approved' AND (client.branch_id ='$br_id'$ghgd)";
                   $result = mysqli_query($connection, $query);
                   $approvd = mysqli_num_rows($result);
                 ?>

@@ -31,8 +31,8 @@ $res = mysqli_fetch_array($queryd);
 $accttname = $res['name'];
 $type_id = $res['accounting_type'];
 
-$qurry = "INSERT INTO `groups` (`int_id`, `branch_id`,`g_name`, `account_type`, `loan_officer`, `reg_date`, `reg_type`, `meeting_day`, `meeting_frequency`, `meeting_time`, `meeting_location`, `submittedon_date`, `submittedon_userid`, `pc_phone`, `status`)
- VALUES ('{$ssint_id}', '{$branch_id}', '{$gname}', '{$acc_type}', '{$acc_off}', '{$reg_date}', '{$reg_type}', '{$meet_day}', '{$meet_frequency}', '{$meet_time}', '{$meet_address}', '{$submitted_on}', '{$user}', '{$pc_phone}', 'Pending')";
+$qurry = "INSERT INTO `groups` (`int_id`, `branch_id`,`g_name`, `account_no`, `account_type`, `loan_officer`, `reg_date`, `reg_type`, `meeting_day`, `meeting_frequency`, `meeting_time`, `meeting_location`, `submittedon_date`, `submittedon_userid`, `pc_phone`, `status`)
+ VALUES ('{$ssint_id}', '{$branch_id}', '{$gname}', '{$acc_type}', '{$account_no}', '{$acc_off}', '{$reg_date}', '{$reg_type}', '{$meet_day}', '{$meet_frequency}', '{$meet_time}', '{$meet_address}', '{$submitted_on}', '{$user}', '{$pc_phone}', 'Pending')";
 $fodf = mysqli_query($connection, $qurry);
 
 if($fodf){
