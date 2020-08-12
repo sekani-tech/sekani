@@ -91,6 +91,26 @@ $(document).ready(function(){
 $_SESSION["lack_of_intfund_$key"] = 0;
   }
 }
+else if (isset($_GET["message5"])) {
+  $key = $_GET["message5"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Success",
+          text: "Client Closed!",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+  }
 ?>
 <!-- Content added here -->
     <div class="content">
@@ -168,7 +188,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           BVN
                         </th>
                         <th>View</th>
-                        <th>Edit </th>
+                        <th>Close</th>
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>
@@ -240,7 +260,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           <th><?php echo $row["mobile_no"]; ?></th>
                           <th><?php echo $row["BVN"]; ?></th>
                           <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
-                          <td><a href="update_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Close</a></td>
+                          <td><a href="../functions/close_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Close</a></td>
                         </tr>
                         <?php }
                           }
