@@ -111,7 +111,7 @@ $destination = "index.php";
                   <p>Fund Your Sekani Wallet to be able to use our service</p>
                   <!-- Insert number users institutions -->
                 </div>
-                <form id="form" action="paystack/initialize.php" method="POST">
+                <form id="form" action="flutter/initialize.php" method="POST">
                 <div class="card-body">
                 <div class = "row">
                   <div class="col-md-12">
