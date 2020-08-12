@@ -618,19 +618,19 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                     <div class="tab"><h3> Repayment Schedule:</h3>
                       <div class="form-group">
                       <script>
-                              $(document).ready(function() {
-                                $('#charges').change(function(){
-                                  var id = $(this).val();
-                                  $.ajax({
-                                    url:"loan_calculation_table.php",
-                                    method:"POST",
-                                    data:{id:id},
-                                    success:function(data){
-                                      $('#show_table').html(data);
-                                    }
-                                  })
-                                });
-                              })
+                              // $(document).ready(function() {
+                              //   $('#charges').change(function(){
+                              //     var id = $(this).val();
+                              //     $.ajax({
+                              //       url:"loan_calculation_table.php",
+                              //       method:"POST",
+                              //       data:{id:id},
+                              //       success:function(data){
+                              //         $('#show_table').html(data);
+                              //       }
+                              //     })
+                              //   });
+                              // })
                             </script>
                             <table id = "accname" class="table table-bordered">
 

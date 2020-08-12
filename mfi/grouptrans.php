@@ -72,7 +72,8 @@ $b_id = $_SESSION['branch_id'];
                           <div id="post" class="col-md-12">
                           
                           </div>
-                    </div>    
+                    </div>   
+                    </div> 
                     <!-- group payment -->
                     <div class="tab">
                       <h3> Collect Payments:</h3>

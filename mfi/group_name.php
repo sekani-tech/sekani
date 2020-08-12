@@ -99,11 +99,11 @@ if(isset($_POST["id"]))
     $('#group').on("change keyup paste click", function(){
         var id = $(this).val();
         $.ajax({
-        url:"group_paylist.php",
+        url:"ajax_post/group_paylist.php",
         method:"POST",
         data:{id:id},
         success:function(data){
-            $('#grlist').html(data);
+        $('#grlist').html(data);
         }
         })
     });
