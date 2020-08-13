@@ -25,7 +25,7 @@ if($num>0){
   
     // products array
     $loan_arr=array();
-    $loan_arr["records"]=array();
+    $loan_arr["loan"]=array();
   
     // retrieve our table contents
     // fetch() is faster than fetchAll()
@@ -47,14 +47,15 @@ if($num>0){
             "first_name" => $firstname,
             "last_name" => $lastname,
             "dob" => $date_of_birth,
-            "city" => $ADDRESS,
+            "address" => $ADDRESS,
             "lga" => $LGA,
             "state" => $STATE_OF_ORIGIN,
             "employment_type" => $emp_stat,
-            "job_length" => $years_in_job
+            "job_length_years" => $years_in_job,
+            "customer_income" => $income
         );
   
-        array_push($loan_arr["records"], $loan_item);
+        array_push($loan_arr["loan"], $loan_item);
     }
   
     // set response code - 200 OK
