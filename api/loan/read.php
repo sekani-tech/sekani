@@ -44,6 +44,8 @@ if($num>0){
             "interest_rate" => $interest_rate,
             "loan_creation_date" => $submittedon_date,
             "repayment_date" => $repayment_date,
+            "first_name" => $firstname,
+            "last_name" => $lastname,
             "dob" => $date_of_birth,
             "city" => $ADDRESS,
             "lga" => $LGA,

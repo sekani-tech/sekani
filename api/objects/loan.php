@@ -13,6 +13,8 @@ class Loan{
     public $loan_creation_date;
     public $repayment_date;
     // client data
+    public $first_name;
+    public $last_name;
     public $dob;
     public $city;
     public $lga;
@@ -29,14 +31,14 @@ class Loan{
 function read(){
     // select all query
     $query = "SELECT
-                loan.id, loan.int_id, loan.client_id, loan.principal_amount, loan.interest_rate, loan.submittedon_date, loan.repayment_date, client.date_of_birth, client.ADDRESS, client.LGA, client.STATE_OF_ORIGIN, kyc.emp_stat, kyc.years_in_job
+                loan.id, loan.int_id, loan.client_id, loan.principal_amount, loan.interest_rate, loan.submittedon_date, loan.repayment_date, client.firstname, client.lastname, client.date_of_birth, client.ADDRESS, client.LGA, client.STATE_OF_ORIGIN, kyc.emp_stat, kyc.years_in_job
             FROM
                 " . $this->table_name . " JOIN 
             client ON loan.client_id = client.id 
             JOIN kyc ON client.id = kyc.client_id
             ORDER BY
                 loan.id DESC";
-  
+    // loan the statment here
     // prepare query statement
     $stmt = $this->conn->prepare($query);
   
