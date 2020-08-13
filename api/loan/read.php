@@ -35,7 +35,7 @@ if($num>0){
         // this will make $row['name'] to
         // just $name only
         extract($row);
-  
+
         $loan_item=array(
             "id" => $id,
             "int_id" => $int_id,
@@ -44,8 +44,8 @@ if($num>0){
             "interest_rate" => $interest_rate,
             "loan_creation_date" => $submittedon_date,
             "repayment_date" => $repayment_date,
-            "first_name" => $firstname,
-            "last_name" => $lastname,
+            "disbursement_date" => $disbursement_date,
+            "maturity_date" => $maturedon_date,
             "dob" => $date_of_birth,
             "address" => $ADDRESS,
             "lga" => $LGA,
@@ -54,7 +54,6 @@ if($num>0){
             "job_length_years" => $years_in_job,
             "customer_income" => $income
         );
-  
         array_push($loan_arr["loan"], $loan_item);
     }
   
