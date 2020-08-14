@@ -129,6 +129,26 @@ else if (isset($_GET["message6"])) {
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
 }
+else if (isset($_GET["message9"])) {
+  $key = $_GET["message9"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "GL Code Error",
+          text: "GL Code Already Exsits",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
 ?>
 <!-- Content added here -->
 <!-- POST INTO -->
@@ -146,7 +166,17 @@ if($efd == "gl_accounto"){
   $dsp = mysqli_fetch_array($qed);
   $gll = $dsp['gl_code'];
   if($gl_code == $gll){
-
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+         type: "error",
+          title: "Error",
+            text: "GL Code Already Exist",
+         showConfirmButton: false,
+       timer: 2000
+        })
+        });
+ </script>';
   }
   else{
 

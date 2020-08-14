@@ -54,7 +54,16 @@ if (isset($_POST['id'])) {
         $disable = 0;
     }
 
-    
+    $qed = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '$gl_code'");
+    $dsp = mysqli_fetch_array($qed);
+    $gll = $dsp['gl_code'];
+    if(count([$qed]) == 1){
+        $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+        echo "error";
+       echo header ("Location: ../mfi/chart_account.php?message9=$randms");
+    }
+    else{
+
         $fdop = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '$class_enum' AND parent_id = '0'";
         $fdos = mysqli_query($connection, $fdop);
         $pdfo = mysqli_num_rows($fdos);
@@ -81,5 +90,6 @@ if (isset($_POST['id'])) {
            echo "error";
           echo header ("Location: ../mfi/chart_account.php?message4=$randms");
         }
+}
 }
 ?>
