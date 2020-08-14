@@ -178,8 +178,8 @@ $sessint_id = $_SESSION['int_id'];
                           }
                           ?>
                           <td class="column3"><?php echo $desc; ?></td>
-                          <td class="column4"><?php echo $row["debit"]; ?></td>
-                          <td class="column5"><?php echo $row["credit"]; ?></td>
+                          <td class="column4"><?php echo number_format($row["debit"], 2); ?></td>
+                          <td class="column5"><?php echo number_format($row["credit"], 2); ?></td>
                           <?php
                           // $newnext = mysqli_query($connection, "SELECT transaction_date, running_balance_derived, RunningTotal = SUM(running_balance_derived) AS OVER (ORDER BY transaction_date ROWS UNBOUNDED PRECEDING) FROM account_transaction WHERE account_id = '$acc_id' && (int_id = $sessint_id && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
                           // $mink = mysqli_fetch_array($newnext);
