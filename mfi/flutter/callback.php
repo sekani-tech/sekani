@@ -5,11 +5,11 @@ include("../../functions/connect.php");
 $curl = curl_init();
 $reference = isset($_GET['transaction_id']) ? $_GET['transaction_id'] : '';
 if(!$reference){
+  echo header("Location: ../sekani_wallet.php");
   die('No reference supplied');
 } else {
   echo "...";
 }
-
 // CHECK FLUTTER
 $curl = curl_init();
 

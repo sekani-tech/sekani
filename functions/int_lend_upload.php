@@ -124,24 +124,29 @@ $branch_id = $_SESSION["branch_id"];
                                     $res_type = $_POST["res_type"];
                                     $rent_per_year = $_POST["rent_per_year"];
                                     $years_in_res = $_POST["years_in_res"];
-                                   $kyc_query = mysqli_query($connection, "INSERT INTO `kyc` (`int_id`, `client_id`, `marital_status`, `no_of_dependent`, `level_of_ed`, `emp_stat`, `emp_bus_name`, `income`, `years_in_job`, `res_type`, `rent_per_year`, `year_in_res`)
-                                   VALUES ('{$sessint_id}', '{$client_id}', '{$marital_stat}', '{$no_dep}', 
-                                   '{$ed_level}', '{$emp_stat}', '{$emp_bus_name}', '{$income}',
-                                   '{$years_in_job}', '{$res_type}', '{$rent_per_year}', '{$years_in_res}')");
-                                   if ($kyc_query) {
-                                    $_SESSION["Lack_of_intfund_$randms"] = "Successfully Uploaded, Awaiting Disbursement Approval";
-                                    header ("Location: ../mfi/lend.php?message=$randms");
-    //                                 if ($connection->error) {
-    //     try {   
-    //         throw new Exception("MySQL error $connection->error <br> Query:<br> $colkt", $mysqli->error);   
-    //     } catch(Exception $e ) {
-    //         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-    //         echo nl2br($e->getTraceAsString());
-    //     }
-    // }
+                                   $get_kyc_if_ex = mysqli_query($connection, "SELECT * FROM `kyc` WHERE `kyc`.`client_id` = '$client_id'");
+                                   if (mysqli_num_rows($get_kyc_if_ex) <= 0) {
+                                    $kyc_query = mysqli_query($connection, "INSERT INTO `kyc` (`int_id`, `client_id`, `marital_status`, `no_of_dependent`, `level_of_ed`, `emp_stat`, `emp_bus_name`, `income`, `years_in_job`, `res_type`, `rent_per_year`, `year_in_res`)
+                                    VALUES ('{$sessint_id}', '{$client_id}', '{$marital_stat}', '{$no_dep}', 
+                                    '{$ed_level}', '{$emp_stat}', '{$emp_bus_name}', '{$income}',
+                                    '{$years_in_job}', '{$res_type}', '{$rent_per_year}', '{$years_in_res}')");
+                                    if ($kyc_query) {
+                                     $_SESSION["Lack_of_intfund_$randms"] = "Successfully Uploaded, Awaiting Disbursement Approval";
+                                     header ("Location: ../mfi/lend.php?message=$randms");
+                                    } else {
+                                     $_SESSION["Lack_of_intfund_$randms"] = "Error in Posting For Approval";
+                                     header ("Location: ../mfi/lend.php?message2=$randms");
+                                    }
                                    } else {
-                                    $_SESSION["Lack_of_intfund_$randms"] = "Error in Posting For Approval";
-                                    header ("Location: ../mfi/lend.php?message2=$randms");
+                                       $update_kyc = mysqli_query($connection, "UPDATE `kyc` SET `marital_status` = '$marital_stat', `no_of_dependent` = '$no_dep', `level_of_ed` = '$ed_level',
+                                       `emp_stat` = '$emp_stat', `emp_bus_name` = '$emp_bus_name', `income` = '$income', `years_in_job` = '$years_in_job' WHERE `kyc`.`client_id` = '$client_id'");
+                                       if ($update_kyc) {
+                                        $_SESSION["Lack_of_intfund_$randms"] = "Successfully Uploaded, Awaiting Disbursement Approval";
+                                        header ("Location: ../mfi/lend.php?message=$randms");
+                                       } else {
+                                        $_SESSION["Lack_of_intfund_$randms"] = "Error in Posting For Approval";
+                                        header ("Location: ../mfi/lend.php?message2=$randms");
+                                       }
                                    }
                                 }
             } else {
