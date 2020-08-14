@@ -6,6 +6,7 @@ $output2 = '';
 
 if(isset($_POST["id"]))
 {
+    echo 'payment was selected';
 ?>
 <div class="row">
 <div class="col-md-12">
@@ -13,18 +14,7 @@ if(isset($_POST["id"]))
         <p></p>
         <p></p>
     </div>
-    <div class="col-md-6">
-    <div class="custom-radio custom-control">
-        <input type="radio" id="fetcpostloanoff"  name="fech_post" class="custom-control-input">
-        <label class="custom-control-label" for="fetcpostloanoff">Fetch Posting by loan officer</label>
-    </div>
-    </div>
-    <div class="col-md-6">
-        <div class="custom-radio custom-control">
-            <input type="radio" id="fetcpostgroup" name="fech_post" class="custom-control-input">
-            <label class="custom-control-label" for="fetcpostgroup">Fetch posting by group</label>
-        </div>
-    </div>
+   
     <div class="col-md-12">
         <p></p>
     </div>
@@ -110,5 +100,8 @@ if(isset($_POST["id"]))
     });
 </script>
 <?php
+}
+else if(isset($_POST["perf"])){
+    echo 'withdrawal was selected';
 }
 ?>

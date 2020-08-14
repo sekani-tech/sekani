@@ -58,10 +58,30 @@ $b_id = $_SESSION['branch_id'];
                               $(document).ready(function() {
                                 $('#collct').on("change keyup paste click", function(){
                                   var id = $(this).val();
+                                  var perf = $('#perfwith').val();
+                                  var fetchoff = $('#fetcpostloanoff').val();
+                                  var fetchgroup = $('#fetcpostgroup').val();
                                   $.ajax({
                                     url:"group_name.php",
                                     method:"POST",
-                                    data:{id:id},
+                                    data:{id:id, perf:perf, fetchoff:fetchoff, fetchgroup:fetchgroup},
+                                    success:function(data){
+                                      $('#post').html(data);
+                                    }
+                                  })
+                                });
+                              });
+
+                              $(document).ready(function() {
+                                $('#perfwith').on("change keyup paste click", function(){
+                                  var id = $('#collct').val();
+                                  var perf = $(this).val();
+                                  var fetchoff = $('#fetcpostloanoff').val();
+                                  var fetchgroup = $('#fetcpostgroup').val();
+                                  $.ajax({
+                                    url:"group_name.php",
+                                    method:"POST",
+                                    data:{id:id, perf:perf, fetchoff:fetchoff, fetchgroup:fetchgroup},
                                     success:function(data){
                                       $('#post').html(data);
                                     }
@@ -69,6 +89,27 @@ $b_id = $_SESSION['branch_id'];
                                 });
                               });
                           </script>
+                          <div class="col-md-12">
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                        </div>
+
+                        <div class="col-md-12">
+                            <p></p>
+                        </div>
+                           <div class="col-md-6">
+    <div class="custom-radio custom-control">
+        <input type="radio" id="fetcpostloanoff"  name="fech_post" class="custom-control-input">
+        <label class="custom-control-label" for="fetcpostloanoff">Fetch Posting by loan officer</label>
+    </div>
+    </div>
+    <div class="col-md-6">
+        <div class="custom-radio custom-control">
+            <input type="radio" id="fetcpostgroup" name="fech_post" class="custom-control-input">
+            <label class="custom-control-label" for="fetcpostgroup">Fetch posting by group</label>
+        </div>
+    </div>
                           <div id="post" class="col-md-12">
                           
                           </div>

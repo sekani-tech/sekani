@@ -61,14 +61,14 @@ if ($result) {
     $intid = $df['int_id'];
     $foi = "INSERT INTO `branch` (`int_id`, `parent_id`, `opening_date`, `name`, `email`, `state`, `lga`, `location`,`phone`)
      VALUES ('{$intid}','0', '{$submitted_on}', 'Head Office', '{$int_state}', '{$lga}', '{$email}', '{$office_address}', '{$office_phone}')";
-    $foia = mysqli_query($connection,$foi);
+    $foia = mysqli_query($connection, $foi);
     // vault for the branch
-    $brna = mysqli_query($connection, "SELECT * FROM branch WHERE int_id = '{$ssint_id}' AND name = '{$name}'");
+    $brna = mysqli_query($connection, "SELECT * FROM branch WHERE int_id = '$intid' AND name = 'Head Office'");
     $gom = mysqli_fetch_array($brna);
     $br_id = $gom['id']; 
         $mvamt = 10000000.00;
         $bal = 0.00;
-        $queryx = "INSERT INTO int_vault (int_id, branch_id, movable_amount, balance, date, last_withdrawal, last_deposit, gl_code) VALUES ('{$ssint_id}',
+        $queryx = "INSERT INTO int_vault (int_id, branch_id, movable_amount, balance, date, last_withdrawal, last_deposit, gl_code) VALUES ('{$intid}',
     '{$br_id}', '{$mvamt}', '{$bal}', '{$submitted_on}', '{$bal}', '{$bal}', '{$incomegl}')";
     $gogoo = mysqli_query($connection, $queryx);
 
@@ -87,91 +87,227 @@ if ($result) {
         VALUES ('$intid', '$org_ole', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1')";
         $fdpoijf = mysqli_query($connection, $fdopf);
 if($fdpoijf){
-    $dos = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
-    ('$intid', 1, '{$br_id}', 'CASH BALANCES', 0, NULL, '10100', 0, 1, 2, 1, NULL, 'CASH BALANCES', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'MAIN VAULT', 420, NULL, '10101', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'TELLER FUNDS', 420, NULL, '10102', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'CASH', 420, NULL, '10103', 0, 0, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 1, '{$br_id}', 'dues from bank', 0, NULL, '10200', 0, 0, 2, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'FIRST BANK', 500, NULL, '10201', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'WEMA BANK', 500, NULL, '10202', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'SKYE BANK', 500, NULL, '10203', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'ECO BANK', 500, NULL, '10204', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'FCMB', 500, NULL, '10205', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 1, '{$br_id}', 'PREPAYMENT', 0, NULL, '10300', 0, 0, 2, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'RENT PREPAYMENT', 429, NULL, '10301', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'INSURANCE', 429, NULL, '10302', 0, 0, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 1, '{$br_id}', 'SHORT TERM INVESTMENT', 0, NULL, '10400', 0, 0, 2, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'TREASURY BILLS', 432, NULL, '10401', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 1, '{$br_id}', 'LOANS AND ADVANCES/LEASES 	', 0, NULL, '10500', 0, 0, 2, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'Micro loans', 434, NULL, '10501', 0, 0, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'Small & Medium enterprises loan', 434, NULL, '10502', 0, 0, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 1, '{$br_id}', 'NON CURRENT ASSET', 0, NULL, '10600', 0, 0, 2, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'freehold LAND AND BUILDING', 437, NULL, '10601', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'LEASEHOLD land & building', 437, NULL, '10602', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'FURNITURE AND FITTINGS', 437, NULL, '10603', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'MOTOR VEHICLE', 437, NULL, '10604', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'OFFICE EQUIPMENT', 437, NULL, '10605', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'PLANT AND MaCHINeRY', 437, NULL, '10606', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'accumulated depreciation', 437, NULL, '10614', 0, 0, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 1, '{$br_id}', 'deposits', 0, NULL, '20100', 0, 0, 2, 2, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'Demand deposit', 445, NULL, '20101', 0, 0, 1, 2, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'mandatary deposit', 445, NULL, '20102', 0, 0, 1, 2, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'voluntary savings deposit', 445, NULL, '20103', 0, 0, 1, 2, NULL, 'VOLUNTARY SAVINGS DEPOSIT', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'Time/term deposit', 445, NULL, '20104', 0, 0, 1, 2, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'LOANS FROM OTHER BANKS', 445, NULL, '20105', 0, 1, 1, 2, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'LOANS FROM DIRECTORS', 445, NULL, '20106', 0, 1, 1, 2, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'deposit FROM government agency for on-lending', 445, NULL, '20107', 0, 0, 1, 2, NULL, '', 0, 0.00, NULL),
-    ('$intid', 1, '{$br_id}', 'Capital', 0, NULL, '30100', 0, 0, 2, 3, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'Authorized Share Capital', 453, NULL, '30101', 0, 0, 1, 3, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'Issued & fully paid', 453, NULL, '30102', 0, 0, 1, 3, NULL, '', 0, 0.00, NULL),
-    ('$intid', 2, '{$br_id}', 'reserves', 0, NULL, '30200', 0, 0, 2, 3, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'General Reserves', 456, NULL, '30201', 0, 0, 1, 3, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'Retained profit/loss', 456, NULL, '30202', 0, 0, 1, 3, NULL, '', 0, 0.00, NULL),
-    ('$intid', 1, '{$br_id}', 'OPERATING INCOME', 0, NULL, '40100', 0, 0, 2, 4, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'Interest income', 459, NULL, '40101', 0, 0, 1, 4, NULL, '', 0, 0.00, NULL),
-    ('$intid', 1, '{$br_id}', 'operating expense', 0, NULL, '50100', 0, 0, 2, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'interest expense', 461, NULL, '50102', 0, 0, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'fees/charges income', 459, NULL, '40102', 0, 1, 1, 4, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'income from other investment', 459, NULL, '40103', 0, 1, 1, 4, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'SALARIES, WAGES AND ALLOWANCES', 461, NULL, '50101', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'oFFICE RENT', 461, NULL, '50103', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'POSTAGE', 461, NULL, '50104', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'BVN SEARCH', 461, NULL, '50105', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 2, '{$br_id}', 'non-current liability', 0, NULL, '20200', 0, 0, 2, 2, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'Account payable', 469, NULL, '20201', 0, 1, 1, 2, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'Account recievable', 437, NULL, '10608', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'Accrued interest recievable', 437, NULL, '10609', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'inventory', 437, NULL, '10610', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'other prepayment', 429, NULL, '10303', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'suspense account', 437, NULL, '10611', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'Goodwill and Other Intangible Assets', 437, NULL, '10612', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'FUELING AND LUBRICANT', 461, NULL, '50106', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'ELECTRICITY AND OTHER  Utilities  EXPENSES', 461, NULL, '50107', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'Specific Loan/Lease Loss Provision ', 437, NULL, '10613', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'SUBSCRIPTION AND WEB SEVICES', 461, NULL, '50108', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'STATIONERies', 461, NULL, '50109', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'TELEPHONE AND COMMUNICATIONS', 461, NULL, '50110', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'PRINTING', 461, NULL, '50111', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'PROFESSIONAL AND CONSULTANCY FEE', 461, NULL, '50112', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'VEHICLE REPAIRS', 461, NULL, '50113', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'OFFICE BUILDING REPAIRS', 461, NULL, '50114', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'PLANT AND MACHINERY REPAIRS', 461, NULL, '50115', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'ELECTRICALS REPAIRS', 461, NULL, '50116', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'FURNITURE AND FITTINGS REPAIRS', 461, NULL, '50117', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'OFFICE EQUIP REPAIRS', 461, NULL, '50118', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'Government dues & subscriptions', 461, NULL, '50119', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'DIRECTORS COST', 461, NULL, '50120', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'AUDIT FEE', 461, NULL, '50121', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'LEGAL FEE', 461, NULL, '50122', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'OFFICE ENTERTAINMENT', 461, NULL, '50123', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'OFFICE CONSUMABLES', 461, NULL, '50124', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'loan WRITe OFF', 461, NULL, '50125', 0, 0, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'DEPRECIATION OF FIXED ASSETS', 461, NULL, '50126', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '{$br_id}', 'MISCELLANEOUS', 461, NULL, '50127', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL);
-    ";
-    $dsp = mysqli_query($connection, $dos);
-    if($dsp){
+    // Cash Balances GL
+    $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+            ('$intid', 1, '$br_id', 'CASH BALANCES', 0, NULL, '10100', 0, 0, 2, 1, NULL, 'CASH BALANCES', 0, 0.00, NULL)";
+    $balf = mysqli_query($connection, $cash);
+    if($balf){
+        $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$intid' AND name = 'CASH BALANCES'");
+        $as = mysqli_fetch_array($diis);
+        $pid = $as['id'];
+        $fdop = mysqli_query($connection, 
+        "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+        ('$intid', 0, 20, 'MAIN VAULT', '$pid', NULL, '10101', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, 20, 'TELLER FUNDS', '$pid', NULL, '10102', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, 20, 'CASH', '$pid', NULL, '10103', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL)
+        ");
+    }
+
+        // dues from bank
+        $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+        ('$intid', 1, '$br_id', 'DUES FROM BANK', 0, NULL, '10200', 0, 0, 2, 1, NULL, '', 0, 0.00, NULL),";
+    $balf = mysqli_query($connection, $cash);
+    if($balf){
+    $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$intid' AND name = 'DUES FROM BANK'");
+    $as = mysqli_fetch_array($diis);
+    $pid = $as['id'];
+    $fdop = mysqli_query($connection, 
+    "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+    ('$intid', 0, '$br_id', 'Eco BANK', '$pid', NULL, '10201', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'GT BANK', '$pid', NULL, '10202', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL)
+    ");
+}
+
+    // PREPAYMENT
+    $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+            ('$intid', 1, '$br_id', 'PREPAYMENT', 0, NULL, '10300', 0, 0, 2, 1, NULL, '', 0, 0.00, NULL)";
+    $balf = mysqli_query($connection, $cash);
+    if($balf){
+        $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$intid' AND name = 'PREPAYMENT'");
+        $as = mysqli_fetch_array($diis);
+        $pid = $as['id'];
+        $fdop = mysqli_query($connection, 
+        "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+        ('$intid', 0, '$br_id', 'RENT PREPAYMENT', '$pid', NULL, '10301', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'INSURANCE', '$pid', NULL, '10302', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'other prepayment', '$pid', NULL, '10303', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+        ");
+    }
+
+        // SHORT TERM INVESTMENT
+        $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+        ('$intid', 1, '$br_id', 'SHORT TERM INVESTMENT', 0, NULL, '10400', 0, 0, 2, 1, NULL, '', 0, 0.00, NULL)";
+    $balf = mysqli_query($connection, $cash);
+    if($balf){
+    $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$intid' AND name = 'SHORT TERM INVESTMENT'");
+    $as = mysqli_fetch_array($diis);
+    $pid = $as['id'];
+    $fdop = mysqli_query($connection, 
+    "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+    ('$intid', 0, '$br_id', 'TREASURY BILLS', '$pid', NULL, '10401', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL)
+    ");
+}
+
+    // LOANS AND ADVANCES/LEASES
+    $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+    ('$intid', 1, '$br_id', 'LOANS AND ADVANCES/LEASES', 0, NULL, '10500', 0, 0, 2, 1, NULL, '', 0, 0.00, NULL)";
+    $balf = mysqli_query($connection, $cash);
+    if($balf){
+        $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$intid' AND name = 'LOANS AND ADVANCES/LEASES'");
+        $as = mysqli_fetch_array($diis);
+        $pid = $as['id'];
+        $fdop = mysqli_query($connection, 
+        "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+        ('$intid', 0, '$br_id', 'Micro loans', '$pid', NULL, '10501', 0, 0, 1, 1, NULL, '', 0, 0.00, NULL)
+        ");
+    }
+
+        // NON CURRENT ASSET
+        $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+        ('$intid', 1, '$br_id', 'NON CURRENT ASSET', 0, NULL, '10600', 0, 0, 2, 1, NULL, '', 0, 0.00, NULL)";
+    $balf = mysqli_query($connection, $cash);
+    if($balf){
+    $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$intid' AND name = 'NON CURRENT ASSET'");
+    $as = mysqli_fetch_array($diis);
+    $pid = $as['id'];
+    $fdop = mysqli_query($connection, 
+    "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+    ('$intid', 0, '$br_id', 'freehold LAND AND BUILDING', '$pid', NULL, '10601', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'LEASEHOLD land & building', '$pid', NULL, '10602', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'FURNITURE AND FITTINGS', '$pid', NULL, '10603', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'MOTOR VEHICLE', '$pid', NULL, '10604', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'OFFICE EQUIPMENT', '$pid', NULL, '10605', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'PLANT AND MaCHINeRY', '$pid', NULL, '10606', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'accumulated depreciation', '$pid', NULL, '10607', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'Account recievable', '$pid', NULL, '10608', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'Accrued interest recievable', '$pid', NULL, '10609', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'inventory', '$pid', NULL, '10610', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'suspense account', '$pid', NULL, '10611', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'Goodwill and Other Intangible Assets', '$pid', NULL, '10612', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'Specific Loan/Lease Loss Provision ', '$pid', NULL, '10613', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+    ");
+}
+
+    // deposits
+    $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+            ('$intid', 1, '$br_id', 'DEPOSITS', 0, NULL, '20100', 0, 0, 2, 2, NULL, '', 0, 0.00, NULL)";
+    $balf = mysqli_query($connection, $cash);
+    if($balf){
+        $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$intid' AND name = 'DEPOSITS'");
+        $as = mysqli_fetch_array($diis);
+        $pid = $as['id'];
+        $fdop = mysqli_query($connection, 
+        "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+        ('$intid', 0, '$br_id', 'Demand deposit', '$pid', NULL, '20101', 0, 0, 1, 2, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'mandatary deposit', '$pid', NULL, '20102', 0, 1, 1, 2, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'voluntary savings deposit', '$pid', NULL, '20103', 0, 0, 1, 2, NULL, 'VOLUNTARY SAVINGS DEPOSIT', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'Time/term deposit', '$pid', NULL, '20104', 0, 0, 1, 2, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'LOANS FROM OTHER BANKS', '$pid', NULL, '20105', 0, 1, 1, 2, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'LOANS FROM DIRECTORS', '$pid', NULL, '20106', 0, 1, 1, 2, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'deposit FROM government agency for on-lending', '$pid', NULL, '20107', 0, 1, 1, 2, NULL, '', 0, 0.00, NULL)
+        ");
+    }
+
+        // Capital
+        $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+        ('$intid', 1, '$br_id', 'Capital', 0, NULL, '30100', 0, 0, 2, 3, NULL, '', 0, 0.00, NULL),";
+    $balf = mysqli_query($connection, $cash);
+    if($balf){
+    $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$intid' AND name = 'Capital'");
+    $as = mysqli_fetch_array($diis);
+    $pid = $as['id'];
+    $fdop = mysqli_query($connection, 
+    "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+    ('$intid', 0, '$br_id', 'Authorized Share Capital', '$pid', NULL, '30101', 0, 0, 1, 3, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'Issued & fully paid', '$pid', NULL, '30102', 0, 0, 1, 3, NULL, '', 0, 0.00, NULL)
+    ");
+}
+
+    // reserves
+    $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+            ('$intid', 2, '$br_id', 'RESERVES', 0, NULL, '30200', 0, 0, 2, 3, NULL, '', 0, 0.00, NULL)";
+    $balf = mysqli_query($connection, $cash);
+    if($balf){
+        $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$intid' AND name = 'RESERVES'");
+        $as = mysqli_fetch_array($diis);
+        $pid = $as['id'];
+        $fdop = mysqli_query($connection, 
+        "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+        ('$intid', 0, '$br_id', 'General Reserves', '$pid', NULL, '30201', 0, 0, 1, 3, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'Retained profit/loss', '$pid', NULL, '30202', 0, 0, 1, 3, NULL, '', 0, 0.00, NULL)
+        ");
+    }
+
+        // OPERATING INCOME
+        $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+        ('$intid', 1, '$br_id', 'OPERATING INCOME', 0, NULL, '40100', 0, 0, 2, 4, NULL, '', 0, 0.00, NULL)";
+    $balf = mysqli_query($connection, $cash);
+    if($balf){
+    $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$intid' AND name = 'OPERATING INCOME'");
+    $as = mysqli_fetch_array($diis);
+    $pid = $as['id'];
+    $fdop = mysqli_query($connection, 
+    "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+    ('$intid', 0, '$br_id', 'Interest income', '$pid', NULL, '40101', 0, 0, 1, 4, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'fees/charges income', '$pid', NULL, '40102', 0, 1, 1, 4, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'income from other investment', '$pid', NULL, '40103', 0, 1, 1, 4, NULL, '', 0, 0.00, NULL)
+    ");
+}
+
+    // operating expense
+    $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+            ('$intid', 1, '$br_id', 'operating expense', 0, NULL, '50100', 0, 0, 2, 5, NULL, '', 0, 0.00, NULL)";
+    $balf = mysqli_query($connection, $cash);
+    if($balf){
+        $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$intid' AND name = 'operating expense'");
+        $as = mysqli_fetch_array($diis);
+        $pid = $as['id'];
+        $fdop = mysqli_query($connection, 
+        "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+        ('$intid', 0, '$br_id', 'SALARIES, WAGES AND ALLOWANCES', '$pid', NULL, '50101', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'interest expense', '$pid', NULL, '50102', 0, 0, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'oFFICE RENT', '$pid', NULL, '50103', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'POSTAGE', '$pid', NULL, '50104', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'BVN SEARCH', '$pid', NULL, '50105', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'FUELING AND LUBRICANT', '$pid', NULL, '50106', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'ELECTRICITY AND OTHER  Utilities  EXPENSES', '$pid', NULL, '50107', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'SUBSCRIPTION AND WEB SEVICES', '$pid', NULL, '50108', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'STATIONERies', '$pid', NULL, '50109', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'TELEPHONE AND COMMUNICATIONS', '$pid', NULL, '50110', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'PRINTING', '$pid', NULL, '50111', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'PROFESSIONAL AND CONSULTANCY FEE', '$pid', NULL, '50112', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'VEHICLE REPAIRS', '$pid', NULL, '50113', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'OFFICE BUILDING REPAIRS', '$pid', NULL, '50114', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'PLANT AND MACHINERY REPAIRS', '$pid', NULL, '50115', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'ELECTRICALS REPAIRS', '$pid', NULL, '50116', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'FURNITURE AND FITTINGS REPAIRS', '$pid', NULL, '50117', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'OFFICE EQUIP REPAIRS', '$pid', NULL, '50118', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'Government dues & subscriptions', '$pid', NULL, '50119', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'DIRECTORS COST', '$pid', NULL, '50120', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'AUDIT FEE', '$pid', NULL, '50121', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'LEGAL FEE', '$pid', NULL, '50122', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'OFFICE ENTERTAINMENT', '$pid', NULL, '50123', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'OFFICE CONSUMABLES', '$pid', NULL, '50124', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'loan WRITe OFF', '$pid', NULL, '50125', 0, 0, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'DEPRECIATION OF FIXED ASSETS', '$pid', NULL, '50126', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'MISCELLANEOUS', '$pid', NULL, '50127', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL)
+        ");
+    }
+
+        // non-current liability
+        $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+        ('$intid', 2, '$br_id', 'non-current liability', 0, NULL, '20200', 0, 0, 2, 2, NULL, '', 0, 0.00, NULL),";
+    $balf = mysqli_query($connection, $cash);
+    if($balf){
+    $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$intid' AND name = 'non-current liability'");
+    $as = mysqli_fetch_array($diis);
+    $pid = $as['id'];
+    $fdop = mysqli_query($connection, 
+    "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+    ('$intid', 0, '$br_id', 'Account payable', '$pid', NULL, '20201', 0, 1, 1, 2, NULL, '', 0, 0.00, NULL),
+    ");
+}
+    if($fdop){
         echo header ("Location: ../institution.php?message1=$randms");
         // if ($connection->error) {
         //     try {   

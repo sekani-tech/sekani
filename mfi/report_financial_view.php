@@ -53,7 +53,7 @@ $destination = "report_financial.php";
                 </div>
                 <div class="card-body">
                 <div class="form-group">
-                <form method = "POST" action = "../composer/current_account.php">
+                <form method = "POST" action = "../composer/provision.php">
               <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
               <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
               <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
@@ -93,27 +93,18 @@ $destination = "report_financial.php";
                         <th>
                           Principal Due
                         </th>
-                        <th>
+                        <th style="width:20px;">
                           Interest Due
                         </th>
                         <th>
                           Total NPD
                         </th>
-                        <th>
-                          1 - 30 days
-                        </th>
-                        <th>
-                        31 - 60 days
-                        </th>
-                        <th>
-                        61 - 90 days
-                        </th>
-                        <th>
-                        91 and Above
-                        </th>
-                        <th>
-                        Bank Provision
-                        </th>
+                        <th>< 1 day</th>
+                        <th>1 - 30 days</th>
+                        <th>31 - 60 days</th>
+                        <th>61 - 90 days</th>
+                        <th>91 and Above</th>
+                        <th>Bank Provision</th>
                       </thead>
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
@@ -129,14 +120,20 @@ $destination = "report_financial.php";
                           <th><?php echo $client_name;?></th>
                           <th><?php echo $row['fromdate'];?></th>
                           <th><?php echo number_format($row['principal_amount'], 2);?></th>
-                          <th><?php echo number_format($row['interest_amount'], 2);?></th>
+                          <th  style="width:20px;"><?php echo number_format($row['interest_amount'], 2);?></th>
                           <th><?php echo number_format(($row['interest_amount'] + $row['principal_amount']), 2);?></th>
                           <?php
                             $days_no = $row['counter'];
+                            $zero = '0.00';
                             $thirty = '0.00';
                             $sixty = '0.00';
                             $ninety = '0.00';
                             $above = '0.00';
+                            if($days_no <= 1){
+                              $zero = number_format($row['principal_amount'], 2);
+                              $fdfs = $row['principal_amount'];
+                              $bnk_prov = (0.01 * $fdfs);
+                            }
                             if(30 > $days_no){
                               $thirty = number_format($row['principal_amount'], 2);
                               $ffd = $row['principal_amount'];
@@ -158,6 +155,7 @@ $destination = "report_financial.php";
                               $bnk_prov = $juiui;
                             }
                           ?>
+                          <th><?php echo $zero;?></th>
                           <th><?php echo $thirty;?></th>
                           <th><?php echo $sixty;?></th>
                           <th><?php echo $ninety;?></th>
