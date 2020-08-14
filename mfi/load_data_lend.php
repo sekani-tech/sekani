@@ -7,7 +7,7 @@ if(isset($_POST["id"]))
     if($_POST["id"] !='')
     {
         $sql = "SELECT * FROM product WHERE id = '".$_POST["id"]."'";
-    }
+      }
     else
     {
         $sql = "SELECT * FROM product";
@@ -94,7 +94,7 @@ if(isset($_POST["id"]))
                   </div>
                 </div>
                 <div id="verifyl"></div>
-                <input type="number"  value="" name="principal_amount" class="form-control" required id="principal_amount">
+                <input type="number"  value="'.$row["principal_amount"].'" name="principal_amount" class="form-control" required id="principal_amount">
               </div>
             </div>
 
@@ -103,11 +103,12 @@ if(isset($_POST["id"]))
           <div class="row">
             <div class="col-md-4">
               <label>Loan Term *:</label>
-              <input type="number" value="" name="loan_term" class="form-control" id="loan_term" />
+              <input type="number" value="'.$row["loan_term"].'" name="loan_term" class="form-control" id="loan_term" />
             </div>
             <div class="col-md-5">
             <label> </label>
               <select id="repay" name="repay_eve" class="form-control">
+              <option hidden value ="'.$row["repayment_every"].'">'.$row["repayment_every"].'</option>
                 <option value ="day">Days</option>
                 <option value ="week">Weeks</option>
                 <option value ="month">Months</option>
@@ -131,7 +132,7 @@ if(isset($_POST["id"]))
             </div>
           </div>
           <div id="verifyi"></div>
-          <input type="number" step= "1" value="" name="interest_rate" class="form-control" id="interest_rate">
+          <input type="number" step= "1" value="'.$row["interest_rate"].'" name="interest_rate" class="form-control" id="interest_rate">
         </div>
       </div>
 
@@ -140,7 +141,7 @@ if(isset($_POST["id"]))
           <div class="row">
             <div class="col-md-5">
               <label>Repayment Every:</label>
-              <input type="number" name="repay_every_no" class="form-control id="repayno"/>
+              <input type="number" value="'.$row["repayment_frequency"].'" name="repay_every_no" class="form-control id="repayno"/>
             </div>
             <div class="col-md-5">
             <label> </label></br>

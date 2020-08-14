@@ -49,7 +49,7 @@ $destination = "../index.php";
                         <tr>
                           <th>Assets Registration</th>
                           <th>To register assets belonging to the institution</th>
-                          <td><a href="#" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="asset_register.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>Bank Reconciliation</th>

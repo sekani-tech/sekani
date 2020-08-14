@@ -48,7 +48,7 @@ $b_id = $_SESSION['branch_id'];
                                     <label class="custom-control-label" for="collct">Collect Payment</label>
                                 </div>
                                 <div class="custom-radio custom-control">
-                                    <input type="radio" id="perfwith" disabled name="acc" class="custom-control-input">
+                                    <input type="radio" id="perfwith" name="acc" class="custom-control-input">
                                     <label class="custom-control-label" for="perfwith">Perform Withdrawal</label>
                                 </div>
                             </div>
