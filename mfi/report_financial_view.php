@@ -427,16 +427,26 @@ $destination = "report_financial.php";
                             <?php echo fill_branch($connection);?>
                         </select>
                       </div>
+                      <?php
+                        function fill_asset($connection)
+                        {
+                        $sint_id = $_SESSION["int_id"];
+                        $org = "SELECT * FROM asset_type WHERE int_id = '$sint_id'";
+                        $res = mysqli_query($connection, $org);
+                        $out = '';
+                        while ($row = mysqli_fetch_array($res))
+                        {
+                          $out .= '<option value="'.$row["id"].'">'.$row["asset_name"].'</option>';
+                        }
+                        return $out;
+                        }
+                      ?>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="">Type of Asset:</label>
                           <select id="asstype" class="form-control" style="text-transform: uppercase;" name="ass_type">
                           <option value="0">ALL</option>
-                          <option value="PLANT & MACHINERY">PLANT & MACHINERY</option>
-                          <option value="MOTOR VEHICLE">MOTOR VEHICLE</option>
-                          <option value="FURNIURE & FITTINGS">FURNIURE & FITTINGS</option>
-                          <option value="OFFICE EQUIPMENT">OFFICE EQUIPMENT</option>
-                          <option value="LAND & BUILDING">LAND & BUILDING</option>
+                          <?php echo fill_asset($connection);?>
                           </select>
                         </div>
                       </div>
