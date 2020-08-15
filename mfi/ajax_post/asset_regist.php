@@ -32,7 +32,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             $querytoget = mysqli_query($connection, "SELECT * FROM assets WHERE int_id ='$int_id' AND date BETWEEN '$start' AND '$end' ORDER BY date, id ASC");
           }
           else{
-            $querytoget = mysqli_query($connection, "SELECT * FROM assets WHERE int_id ='$int_id' AND type = '$ass_type' AND date BETWEEN '$start' AND '$end' ORDER BY date, id ASC");
+            $querytoget = mysqli_query($connection, "SELECT * FROM assets WHERE int_id ='$int_id' AND asset_type_id = '$ass_type' AND date BETWEEN '$start' AND '$end' ORDER BY date, id ASC");
           }
           while ($q = mysqli_fetch_array($querytoget, MYSQLI_ASSOC))
           {
@@ -59,6 +59,10 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             <td>'.$asset.'</td>
             <td>'.$location.'</td>
             <td>'.$branch.'</td>
+            <td>0.00</td>
+            <td>0.00</td>
+            <td>0.00</td>
+            <td>0.00</td>
             </tr>
           ';
           }
@@ -117,14 +121,24 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             <div class="table-responsive">
               <table id="tabledat4" class="table" style="width: 100%;">
                 <thead class="text-primary">
+                <tr>
+                  <th colspan="8">General Asset Details</th>
+                  <th colspan="4">Current Year Depreciation</th>
+                  </tr>
+                <tr>
                   <th>Asset Name</th>
-                  <th>Asset_type</th>
+                  <th>Asset Type</th>
                   <th>Quantity</th>
                   <th>Unit Price</th>
                   <th>Amount</th>
                   <th>Asset No</th>
                   <th>Location</th>
                   <th>Branch</th>
+                  <th>Purchase Date</th>
+                  <th>Current Year(2020)</th>
+                  <th>Previous Year(2019)</th>
+                  <th>Net Present Value</th>
+                </tr>
                 </thead>
                 <tbody>
                 '.fill_report($connection, $int_id, $start, $end, $ass_type).'
@@ -134,6 +148,9 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                <th>'.$ttlqty.'</th>
                <th>'.number_format($ttlunit, 2).'</th>
                <th>'.number_format($ttlamount, 2).'</th>
+               <th></th>
+               <th></th>
+               <th></th>
                <th></th>
                <th></th>
                <th></th>

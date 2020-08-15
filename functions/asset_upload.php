@@ -4,14 +4,20 @@ session_start();
 ?>
 <?php
 $ssint_id = $_SESSION["int_id"];
-$b_id = $_SESSION['branch_id'];
+$b_id = $_POST['branch'];
 $user_id = $_SESSION['user_id'];
 $assname = $_POST['assname'];
 $asstype = $_POST['asstype'];
+
+$org = "SELECT * FROM asset_type WHERE int_id = '$sint_id' AND id = '$asstype'";
+$res = mysqli_query($connection, $org);
+$gdi = mysqli_fetch_array($res);
+$asset_name = $gdi['asset_name'];
+
 $qty = $_POST['qty'];
 $price = $_POST['price'];
 $ass_no = $_POST['ass_no'];
-$location = $_POST['location'];
+$location = $_POST['branch'];
 $depre = $_POST['depre'];
 $purdate = $_POST['purdate'];
 
@@ -21,9 +27,9 @@ $submited_by = $_SESSION['user_id'];
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 
-$query = "INSERT INTO `assets` (`int_id`, `branch_id`, `asset_name`, `type`, `qty`,
+$query = "INSERT INTO `assets` (`int_id`, `branch_id`, `asset_name`, `asset_type_id`, `type`, `qty`,
  `unit_price`, `asset_no`, `location`, `date`, `depreciation_value`, `appuser_id`) 
- VALUES ('{$ssint_id}', '{$b_id}', '{$assname}', '{$asstype}', '{$qty}', '{$price}', '{$ass_no}',
+ VALUES ('{$ssint_id}', '{$b_id}', '{$assname}', '{$asstype}', '{$asset_name}', '{$qty}', '{$price}', '{$ass_no}',
   '{$location}', '{$purdate}', '{$depre}', '{$user_id}')";
 $result = mysqli_query($connection, $query);
 

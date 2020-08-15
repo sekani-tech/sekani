@@ -36,6 +36,11 @@ $destination = "../index.php";
                         </th>
                       </thead>
                       <tbody>
+                      <tr>
+                          <th>Asset Depreciation</th>
+                          <th>Setup the Depreciation Value for the Assets in the institution</th>
+                          <td><a href="dep_setup.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                        </tr>
                         <tr>
                           <th>Products</th>
                           <th>Add, edit and update the Loan products of the instution</th>
