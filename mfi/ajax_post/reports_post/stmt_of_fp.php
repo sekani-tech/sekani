@@ -6,8 +6,15 @@
 $name = $_SESSION['int_full'];
 $sessint_id = $_SESSION['int_id'];
 $current = date('d/m/Y');
+
 $start = $_POST['start'];
-    $end = $_POST['end'];
+$starttime = strtotime($start);
+$startd = date("F d, Y", $starttime);
+
+$end = $_POST['end'];
+$endtime = strtotime($end);
+$current = date("F d, Y", $endtime);
+
 $duefrom = mysqli_query($connection, "SELECT sum(organization_running_balance_derived) AS organization_running_balance_derived FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '5'");
 $otws = mysqli_fetch_array($duefrom);
 $bank = $otws['organization_running_balance_derived'];
@@ -26,8 +33,8 @@ $out = '
       <thead>
         <th style="font-weight:bold;"></th>
         <th style="font-weight:bold;"></th>
-        <th style="text-align: center; font-weight:bold;">'.$start.' <br/>(NGN)</th>
-        <th style="text-align: center; font-weight:bold;">'.$end.' <br/>(NGN)</th>
+        <th style="text-align: center; font-weight:bold;">'.$current.' <br/>(NGN)</th>
+        <th style="text-align: center; font-weight:bold;">'.$startd.' <br/>(NGN)</th>
       </thead>
       <tbody>
           <tr>

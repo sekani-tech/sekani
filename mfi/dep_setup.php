@@ -105,7 +105,7 @@ if ($per_con == 1 || $per_con == "1") {
             <div class="col-md-6">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Assets Types</h4>
+                  <h4 class="card-title ">Depreciation Setup</h4>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
                    $query = "SELECT * FROM asset_type WHERE int_id = '$sessint_id'";
@@ -131,7 +131,7 @@ if ($per_con == 1 || $per_con == "1") {
                         <!-- <th>
                           ID
                         </th> -->
-                        <th>Category</th>
+                        <th colspan="2">Category</th>
                         <th>
                          Depreciation Value(%)
                         </th>
@@ -145,6 +145,7 @@ if ($per_con == 1 || $per_con == "1") {
                         <tr>
                         <?php $row["id"]; ?>
                           <th><?php echo $row["asset_name"]; ?></th>
+                          <th></th>
                           <th><?php echo $row["depreciation_value"]; ?></th>
                           <td style="text-align:end;"><a href="edit_assetdep.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                           </tr>

@@ -7,7 +7,9 @@ include('header.php');
 ?>
 <?php
 $year = date('Y');
-$startdate =$year."-01-01";
+$sdoins =$year."-01-01";
+$endtime = strtotime($sdoins);
+$startdate = date("Y-m-d", strtotime("-1 day", $sdoins));
 ?>
 <!-- Content added here -->
 <!-- print content -->
