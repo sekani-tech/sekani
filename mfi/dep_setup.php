@@ -102,7 +102,7 @@ if ($per_con == 1 || $per_con == "1") {
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Assets Types</h4>

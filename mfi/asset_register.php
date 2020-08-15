@@ -164,7 +164,7 @@ else if (isset($_GET["message2"])) {
                       <div class="col-md-4" id="fd">
                         <div class="form-group">
                           <label class="bmd-label-floating">Asset No</label>
-                          <input type="number" value="<?php echo $asset_no;?>" class="form-control" name="ass_no">
+                          <input type="number" class="form-control" name="ass_no">
                         </div>
                       </div>
                       <div class="col-md-4">

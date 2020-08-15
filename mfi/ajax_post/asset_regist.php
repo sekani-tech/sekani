@@ -128,7 +128,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                 <tr>
                   <th>Asset Name</th>
                   <th>Asset Type</th>
-                  <th>Quantity</th>
+                  <th>Qty</th>
                   <th>Unit Price</th>
                   <th>Amount</th>
                   <th>Asset No</th>
