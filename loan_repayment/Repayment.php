@@ -571,7 +571,7 @@ while ($iq = mysqli_fetch_array($select_arrears)) {
                   $pfar = 0;
                   $par = ($bnk_prov/$prin) * 100;
     // update ok
-    $arrear_update = mysqli_query($connection, "UPDATE `loan_arrear` SET counter = '$days_between', par='$par' WHERE id = '$a_id' AND int_id = '$a_int_id' AND loan_id = '$a_loan_id' AND client_id = '$a_client_id'");
+    $arrear_update = mysqli_query($connection, "UPDATE `loan_arrear` SET counter = '$days_between', par='$par', bank_provision = '$bnk_prov' WHERE id = '$a_id' AND int_id = '$a_int_id' AND loan_id = '$a_loan_id' AND client_id = '$a_client_id'");
     // aiit running.
     if ($arrear_update) {
         echo "IT HAS BEEN RECORDED";

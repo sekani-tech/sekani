@@ -55,10 +55,38 @@
             <!-- Portfolio at risk -->
             <!-- not in use yet -->
             <?php
-                $dewe = "SELECT AVG(par) AS par FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1'";
+                $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
+                $sdoi = mysqli_query($connection, $dd);
+                $e = mysqli_fetch_array($sdoi);
+                $interest = $e['interest_amount'];
+
+                $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
+                $sdswe = mysqli_query($connection, $dfdf);
+                $u = mysqli_fetch_array($sdswe);
+                $prin = $u['principal_amount'];
+
+                $outstanding = $prin + $interest;
+
+                // Arrears
+                $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id'";
+                $fosdi = mysqli_query($connection, $ldfkl);
+                $l = mysqli_fetch_array($fosdi);
+                $interesttwo = $l['interest_amount'];
+
+                $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id'";
+                $sodi = mysqli_query($connection, $sdospd);
+                $s = mysqli_fetch_array($sodi);
+                $printwo = $s['principal_amount'];
+
+                $outstandingtwo = $printwo + $interesttwo;
+                $ttout = $outstanding + $outstandingtwo;
+
+                $dewe = "SELECT SUM(bank_provision) AS bank_provision FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1'";
                 $sdd = mysqli_query($connection, $dewe);
                 $sdt = mysqli_fetch_array($sdd);
-                $pfar = $sdt['par'];
+                $bnk_prov = $sdt['bank_provision'];
+
+                $pfar = ($bnk_prov/$ttout) * 100;
             ?>
             <div class="col-lg-3 col-md-6 col-sm-6">
               <div class="card card-stats">
@@ -136,14 +164,6 @@ setInterval(function() {
                   <p class="card-category">Outstanding Loan Balance</p>
                   <!-- Populate with the total value of outstanding loans -->
                   <?php
-                  $re = "SELECT SUM(total_outstanding_derived) AS total_outstanding_derived FROM loan JOIN client ON loan.client_id = client.id WHERE loan.int_id = '$sessint_id'";
-                  $resultxx = mysqli_query($connection, $re);
-                  if (count([$resultxx]) == 1) {
-                  $jk = mysqli_fetch_array($resultxx);
-                  $sum = $jk['total_outstanding_derived'];
-                  ?>
-                  
-                  <?php
                     $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
                     $sdoi = mysqli_query($connection, $dd);
                     $e = mysqli_fetch_array($sdoi);
@@ -171,9 +191,6 @@ setInterval(function() {
                     $ttout = $outstanding + $outstandingtwo;
                   ?>
                   <h3 class="card-title">NGN - <?php echo number_format(round($ttout), 2); ?></h3>
-                  <?php
-                  }
-                  ?>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
