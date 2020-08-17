@@ -24,6 +24,7 @@ if(isset($_GET['id'])){
    $acc_op = $v['acc_op'];
    $acc_update = $v['acc_update'];
    $pole = $v['role_id'];
+   $bills = $v['bills'];
    $rpo = mysqli_query($connection, "SELECT * FROM org_role WHERE id = '$pole' && int_id = '$sessint_id'");
    $u = mysqli_fetch_array($rpo);
    $rolename = $u['role'];
@@ -99,6 +100,12 @@ if(isset($_GET['id'])){
    else{
      $m = 'unchecked';
    }
+   if($bills == 1){
+    $n = 'checked';
+   }
+   else{
+     $n = 'unchecked';
+   }
 }
 ?>
 <?php
@@ -142,10 +149,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    }else{
     $view_report = 0;
    }
-  if(isset($_POST['approve'])){
+  if(isset($_POST['dash'])){
     $dash = 1;
    }else{
     $dash = 0;
+   }
+   if(isset($_POST['staff_cabal'])){
+    $staff_cabal = 1;
+   }else{
+    $staff_cabal = 0;
    }
    if(isset($_POST['accup'])){
     $accup = 1;
@@ -162,8 +174,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    }else{
     $emai = 0;
    }
+   if(isset($_POST['bill'])){
+    $bill = 1;
+   }else{
+    $bill = 0;
+   }
    $rod = "UPDATE permission SET acc_op = '$accop', acc_update = '$accup', trans_appv = '$approve', staff_cabal = '$staff_cabal', trans_post = '$post_transact', loan_appv = '$approve_loan', acct_appv = '$approve_acc', valut = '$vault_trans',
-    vault_email = '$emai', view_report = '$view_report', view_dashboard = '$dash', configuration = '$access_config' WHERE int_id = '$sessint_id'
+    vault_email = '$emai', view_report = '$view_report', view_dashboard = '$dash', bills = '$bill', configuration = '$access_config' WHERE int_id = '$sessint_id'
     && role_id = '$id'";
     $rox = mysqli_query($connection, $rod);
     if($rox){
@@ -243,6 +260,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   document.getElementById('n11').checked = true;
                   document.getElementById('n12').checked = true;
                   document.getElementById('n13').checked = true;
+                  document.getElementById('n14').checked = true;
                 } else {
                   document.getElementById('n1').checked = false;
                   document.getElementById('n2').checked = false;
@@ -256,6 +274,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   document.getElementById('n11').checked = false;
                   document.getElementById('n12').checked = false;
                   document.getElementById('n13').checked = false;
+                  document.getElementById('n14').checked = false;
                 }
                });
              })
@@ -338,7 +357,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
            <div class="form-check form-check-inline">
               <label class="form-check-label">
                 <input <?php echo $c;?>  class="form-check-input" type="checkbox" value="" name="approve_loan" id="n4">
-                Approve Loan
+                Loan Creation
                 <span class="form-check-sign">
                 <span class="check"></span>
                 </span>
@@ -398,6 +417,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               <label class="form-check-label">
                 <input <?php echo $f;?> class="form-check-input" type="checkbox" value="" name="emai" id="n9">
                 Vault Email
+                <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+              </label>
+           </div>
+            </div>
+            <div class="col-md-4">
+           <!-- Last -->
+           <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input <?php echo $n;?> class="form-check-input" type="checkbox" value="" name="bill" id="n14">
+                Bills
                 <span class="form-check-sign">
                 <span class="check"></span>
                 </span>

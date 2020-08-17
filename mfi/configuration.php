@@ -36,6 +36,11 @@ $destination = "../index.php";
                         </th>
                       </thead>
                       <tbody>
+                      <tr>
+                          <th>Asset Depreciation</th>
+                          <th>Setup the Depreciation Value for the Assets in the institution</th>
+                          <td><a href="dep_setup.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                        </tr>
                         <tr>
                           <th>Products</th>
                           <th>Add, edit and update the Loan products of the instution</th>
@@ -54,8 +59,13 @@ $destination = "../index.php";
                         <tr>
                           <th>Alerts</th>
                           <th>Handle the alerts that the system recieves</th>
-                          <td><a href="#" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="alert.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
+                        <!-- <tr>
+                          <th>General Ledger Template</th>
+                          <th>Assign General Ledgers to system posting activities</th>
+                          <td><a href="gl_template.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                        </tr> -->
                         <tr>
                           <th> <b> SEKANI WALLET </b></th>
                           <th>Fund Institution Sekani Wallet, Keep Activity Up to Date</th>

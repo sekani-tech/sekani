@@ -17,10 +17,28 @@ $amount = $_POST['amount'];
 $charge_payment = $_POST['charge_payment'];
 $charge_option = $_POST['charge_option'];
 $income_gl = $_POST["Income_gl"];
+if(isset($_POST['is_active'])){
+  $is_active = '1';
+}
+else{
+  $is_active = '0';
+}
+if(isset($_POST['is_pen'])){
+  $is_pen = '1';
+}
+else{
+  $is_pen = '0';
+}
+if(isset($_POST['allow_over'])){
+  $allow_over = '1';
+}
+else{
+  $allow_over = '0';
+}
 // credit checks and accounting rules
 // insertion query for product
-$query ="INSERT INTO charge (int_id, name, charge_time_enum, charge_applies_to_enum, charge_calculation_enum, charge_payment_mode_enum, amount, gl_code)
-VALUES ('{$sessint_id}', '{$name}', '{$charge_type}', '{$product}', '{$charge_option}', '{$charge_payment}', '{$amount}', '{$income_gl}')";
+$query ="INSERT INTO charge (int_id, name, charge_time_enum, charge_applies_to_enum, charge_calculation_enum, charge_payment_mode_enum, amount, gl_code, is_active, is_penalty, allow_override)
+VALUES ('{$sessint_id}', '{$name}', '{$charge_type}', '{$product}', '{$charge_option}', '{$charge_payment}', '{$amount}', '{$income_gl}', '{$is_active}', '{$is_pen}', '{$allow_over}')";
 
 $res = mysqli_query($connection, $query);
 
@@ -30,6 +48,14 @@ $res = mysqli_query($connection, $query);
         } else {
            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
            echo "error";
+        //    if ($connection->error) {
+        //     try {   
+        //         throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
+        //     } catch(Exception $e ) {
+        //         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+        //         echo nl2br($e->getTraceAsString());
+        //     }
+        // }
           echo header ("Location: ../mfi/products_config.php?message2=$randms");
             // echo header("location: ../mfi/client.php");
         }

@@ -53,7 +53,7 @@ else if (isset($_GET["message2"])) {
         swal({
             type: "success",
             title: "Success",
-            text: "Transfer Successful",
+            text: "Transfer Successful, Awaiting Approval",
             showConfirmButton: false,
             timer: 2000
         })
@@ -80,7 +80,7 @@ $transaction_id = str_pad(rand(0, pow(10, 7)-1), 7, '0', STR_PAD_LEFT);
 // Loop to pull all client
 function fill_client($connection) {
     $sint_id = $_SESSION["int_id"];
-    $org = "SELECT * FROM client WHERE int_id = '$sint_id' AND status = 'Approved'";
+    $org = "SELECT * FROM client WHERE int_id = '$sint_id' AND status = 'Approved' ORDER BY firstname ASC";
     $res = mysqli_query($connection, $org);
     $out = '';
     while ($row = mysqli_fetch_array($res))
@@ -101,7 +101,7 @@ function fill_client($connection) {
                   <!-- <p class="card-category">Fill in all important data</p> -->
                 </div>
                 <div class="card-body">
-                  <form action="../functions/cash_trans.php" method="POST">
+                  <form action="../functions/trans_cache.php" method="POST">
                     <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">

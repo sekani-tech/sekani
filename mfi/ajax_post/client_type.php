@@ -5,18 +5,19 @@ $output2 = '';
 $output3 = '';
 session_start();
 if(isset($_POST['id'])){
-    function fill_branch($connection)
+    function branch_option($connection)
+    {  
+        $br_id = $_SESSION["branch_id"];
+        $sint_id = $_SESSION["int_id"];
+        $fod = "SELECT * FROM branch WHERE int_id = '$sint_id' AND parent_id='$br_id' || id = '$br_id'";
+        $dof = mysqli_query($connection, $fod);
+        $out = '';
+        while ($row = mysqli_fetch_array($dof))
         {
-            $sint_id = $_SESSION["int_id"];
-            $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
-            $res = mysqli_query($connection, $org);
-            $out = '';
-            while ($row = mysqli_fetch_array($res))
-            {
-            $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
-            }
-            return $out;
+        $out .= '<option value="'.$row["id"].'">' .$row["name"]. '</option>';
         }
+        return $out;
+    }
     function fill_officer($connection)
         {
             $sint_id = $_SESSION["int_id"];
@@ -78,18 +79,17 @@ if(isset($_POST['id'])){
         <div class="col-md-4">
             <div class="form-group">
                 <label >Registered Address</label>
-                <input type="text" style="text-transform: uppercase;" class="form-control" name="addressa">
+                <input type="text" style="text-transform: uppercase;"$br_id class="form-control" name="addressa">
             </div>
         </div>
 
         <div class="col-md-4">
         <div class="form-group">
-        <label class="">Branch:</label>
-        <select  name="brancha" class="form-control " id="collat">
-            <option value="">select a Branch</option>
-            '.fill_branch($connection).'
-        </select>
-    </div>
+            <label class="">Branch:</label>
+            <select class="form-control" name="branch">
+            '.branch_option($connection).'
+            </select>
+        </div>
         </div>
 
         <div class="col-md-4">
@@ -465,7 +465,7 @@ if(isset($_POST['id'])){
         
     }
     // Data for Individual Account
-    elseif($_POST['id'] == 'Individual'){
+    elseif($_POST['id'] == 'Individual' || $_POST['id'] == 'Group'){
         $output3 ='<div class="row">
         <div class="col-md-4">
             <div class="form-group">
@@ -482,7 +482,7 @@ if(isset($_POST['id'])){
             <div class="col-md-4">
             <div class="form-group">
                 <label >Middle Name</label>
-                <input  type="text" style="text-transform: uppercase;" class="form-control" name="middlename" required>
+                <input  type="text" style="text-transform: uppercase;" class="form-control" name="middlename">
             </div>
             </div>
             <div class="col-md-4">
@@ -531,12 +531,10 @@ if(isset($_POST['id'])){
             </div>
             </div>
             <div class="col-md-4">
-            
             <div class="form-group">
                 <label class="">Branch:</label>
-                <select  name="branch" class="form-control " id="collat">
-                    <option value="">select a Branch</option>
-                    '.fill_branch($connection).'
+                <select class="form-control" name="branch">
+                '.branch_option($connection).'
                 </select>
             </div>
             </div>
@@ -632,9 +630,8 @@ if(isset($_POST['id'])){
             <div class="col-md-4">
             
             <div class="form-group">
-                <label for="">Account Officer:</label>
+                <label for="">Loan Officer:</label>
                 <select  name="acct_of" class="form-control" id="">
-                <option value="">select account officer</option>
                 '.fill_officer($connection).'
                 </select>
             </div>
@@ -648,6 +645,8 @@ if(isset($_POST['id'])){
                 <option value="Drivers Liscense">Drivers Liscense</option>
             </select>
             </div>
+            <input id="int_id" hidden value = '.$_SESSION["int_id"].' hidden></input>
+            <input id="branch_id" hidden value = '.$_SESSION["branch_id"].' hidden></input>
             </div>';
             echo $output3;
     }
@@ -666,10 +665,12 @@ if(isset($_POST['id'])){
             var first = $('#first').val();
             var last = $('#last').val();
             var phone = $('#phone').val();
+            var int_id = $('#int_id').val();
+            var branch_id = $('#branch_id').val();
             $.ajax({
                 url:"ajax_post/BVN/bvn_checking.php",
                 method:"POST",
-            data:{bvn:bvn, dob: dob, first:first, last:last, phone:phone},
+            data:{bvn:bvn, dob: dob, first:first, last:last, phone:phone, int_id:int_id, branch_id:branch_id},
             success:function(data){
             $('#bvn_result').html(data);
             }

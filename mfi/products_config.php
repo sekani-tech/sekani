@@ -130,6 +130,106 @@ else if (isset($_GET["message5"])) {
     $_SESSION["lack_of_intfund_$key"] = 0;
     }
     }
+    else if (isset($_GET["message7"])) {
+      $key = $_GET["message7"];
+      // $out = $_SESSION["lack_of_intfund_$key"];
+      $tt = 0;
+      if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+      echo '<script type="text/javascript">
+      $(document).ready(function(){
+          swal({
+              type: "success",
+              title: "Success",
+              text: "Product Updated!",
+              showConfirmButton: false,
+              timer: 2000
+          })
+      });
+      </script>
+      ';
+      $_SESSION["lack_of_intfund_$key"] = 0;
+      }
+      }
+      else if (isset($_GET["message8"])) {
+        $key = $_GET["message8"];
+        // $out = $_SESSION["lack_of_intfund_$key"];
+        $tt = 0;
+        if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "Error",
+                text: "Error Updating product!",
+                showConfirmButton: false,
+                timer: 2000
+            })
+        });
+        </script>
+        ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+        }
+        }
+        else if (isset($_GET["message9"])) {
+          $key = $_GET["message9"];
+          // $out = $_SESSION["lack_of_intfund_$key"];
+          $tt = 0;
+          if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+          echo '<script type="text/javascript">
+          $(document).ready(function(){
+              swal({
+                  type: "success",
+                  title: "Success",
+                  text: "Payment Type Updated!",
+                  showConfirmButton: false,
+                  timer: 2000
+              })
+          });
+          </script>
+          ';
+          $_SESSION["lack_of_intfund_$key"] = 0;
+          }
+          }
+          else if (isset($_GET["message10"])) {
+            $key = $_GET["message10"];
+            // $out = $_SESSION["lack_of_intfund_$key"];
+            $tt = 0;
+            if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+            echo '<script type="text/javascript">
+            $(document).ready(function(){
+                swal({
+                    type: "error",
+                    title: "Error",
+                    text: "Error Updating Payment Type!",
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            });
+            </script>
+            ';
+            $_SESSION["lack_of_intfund_$key"] = 0;
+            }
+            }
+            else if (isset($_GET["message11"])) {
+              $key = $_GET["message11"];
+              // $out = $_SESSION["lack_of_intfund_$key"];
+              $tt = 0;
+              if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+              echo '<script type="text/javascript">
+              $(document).ready(function(){
+                  swal({
+                      type: "error",
+                      title: "Error",
+                      text: "Product may already Exist!",
+                      showConfirmButton: false,
+                      timer: 2000
+                  })
+              });
+              </script>
+              ';
+              $_SESSION["lack_of_intfund_$key"] = 0;
+              }
+              }
 ?>
 <?php
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -143,15 +243,8 @@ else if (isset($_GET["message5"])) {
       $bran = $_SESSION["branch_id"];
       $desc = $_POST['des'];
       $default = $_POST['default'];
-      $gl_type = $_POST['gl_type'];
       $gl_code = $_POST['gl_code'];
 
-      $resu = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '$gl_type'";
-      $relt = mysqli_query($connection, $resu);
-      if ($relt) {
-        $inr = mysqli_num_rows($relt);
-        $gl_o = $inr + 1;
-        $gl_no = '.'.$gl_o.'.';
     }
     if(isset($_POST['is_bank'])){
       $is_bank = 1;
@@ -163,13 +256,7 @@ else if (isset($_GET["message5"])) {
       }else{
         $is_cash = 0;
       }
-      $glq ="INSERT INTO `acc_gl_account`(`int_id`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`,
-      `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`,
-       `organization_running_balance_derived`, `last_entry_id_derived`) VALUES ('{$sessint_id}', '{$bran}', '{$value}', '{$gl_type}',
-        '{$gl_no}', '{$gl_code}', '0', '1', '1', '{$class}', NULL, '{$desc}', '0', '0.00', NULL)";
-        $glw = mysqli_query($connection, $glq);
      
-      if($glw){
         $wen = "INSERT INTO payment_type (int_id, branch_id, value, description, gl_code, is_cash_payment, is_bank, order_position)
         VALUES('{$sesint_id}', '{$bran}', '{$value}', '{$desc}', '{$gl_code}', '{$is_cash}', '{$is_bank}', '{$default}')";
         $quoery = mysqli_query($connection, $wen);
@@ -202,9 +289,7 @@ else if (isset($_GET["message5"])) {
         </script>
         ';
       }
-      }
     }
-  }
 ?>
 <?php
 // right now we will program
@@ -244,6 +329,12 @@ if ($per_con == 1 || $per_con == "1") {
                         <li class="nav-item">
                           <a class="nav-link" href="#saving" data-toggle="tab">
                             <i class="material-icons">attach_money</i> Savings Product
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#fixed" data-toggle="tab">
+                            <i class="material-icons">attach_money</i> Fixed Term Deposit Product
                             <div class="ripple-container"></div>
                           </a>
                         </li>
@@ -348,7 +439,64 @@ if ($per_con == 1 || $per_con == "1") {
                     <table id="tabledat4" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM savings_product WHERE int_id ='$sessint_id'";
+                        $query = "SELECT * FROM savings_product WHERE int_id ='$sessint_id' AND (accounting_type = '1' OR accounting_type = '2')";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                        <!-- <th>
+                          ID
+                        </th> -->
+                        <th>Name</th>
+                        <th>
+                          Description
+                        </th>
+                        <th>
+                          Product Group
+                        </th>
+                        <th>
+                          Edit
+                        </th>
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                          <th><?php echo $row["name"]; ?></th>
+                          <th><?php echo $row["description"]; ?></th>
+                          <?php
+                          $fefo = $row["accounting_type"];
+                          if($fefo == 1){
+                            $dfo = "Current";
+                          }
+                          else if($fefo == 2){
+                            $dfo = "Savings";
+                          }
+                          ?>
+                          <th><?php echo $dfo; ?></th>
+                          <td><a href="update_savings_product.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                      </tbody>
+                    </table>
+                  </div>
+                    </div>
+                    <div class="tab-pane" id="fixed">
+                      <a href="manage_fd_product.php" class="btn btn-primary"> Create New Product</a>
+                      <div class="table-responsive">
+                  <script>
+                  $(document).ready(function() {
+                  $('#tabledatc4').DataTable();
+                  });
+                  </script>
+                    <table id="tabledat4" class="table" style="width: 100%;">
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM savings_product WHERE int_id ='$sessint_id' AND accounting_type = '3'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
@@ -373,7 +521,7 @@ if ($per_con == 1 || $per_con == "1") {
                           <th><?php echo $row["name"]; ?></th>
                           <th><?php echo $row["description"]; ?></th>
                           <th><?php echo $row["short_name"]; ?></th>
-                          <td><a href="update_product.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
+                          <td><a href="update_ftd_product.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Edit</a></td>
                         </tr>
                         <?php }
                           }
@@ -629,48 +777,28 @@ if ($per_con == 1 || $per_con == "1") {
               </div>
             </div>
             <script>
-                        // coment on later
-                          $(document).ready(function(){
-                            $('#give').change(function() {
-                              var id = $(this).val();
-                              if (id == "") {
-                                document.getElementById('tit').readOnly = false;
-                                $('#tit').val("choose an account type");
-                              } else if (id == "1") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("1" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "2") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("2" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "3") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("3" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "4") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("4" + Math.floor(1000 + Math.random() * 9000));
-                              } else if (id == "5") {
-                                document.getElementById('tit').readOnly = true;
-                                $('#tit').val("5" + Math.floor(1000 + Math.random() * 9000));
-                              } else {
-                                $('#tit').val("Nothing");
-                              }
-                            });
-                          });
-                        </script>
-            <div class ="col-md-6">
-              <div class="form-group">
-              <label class="bmd-label-floating">Account Type</label>
-              <select class="form-control" name="acct_type" id="give">
-                        <option value="">Select an option</option>
-                        <option value="1">ASSET</option>
-                        <option value="2">LIABILITY</option>
-                        <option value="3">EQUITY</option>
-                        <option value="4">INCOME</option>
-                        <option value="5">EXPENSE</option>
-                      </select>
-              </div>
-            </div>
+                    $(document).ready(function () {
+                      $('#role').on("change", function () {
+                        var ch = $('#role').val();
+                        $.ajax({
+                          url: "ajax_post/glss.php", 
+                          method: "POST",
+                          data:{ch:ch},
+                          success: function (data) {
+                            $('#tit').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
             <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">GL Account</label>
+                      <select id ="tit" class="form-control" name= "gl_code">
+                      </select>    
+                    </div>
+                  </div>
+                  <div class="col-md-6">
             <div class="form-group">
                <label class="bmd-label-floating">Default</label>
               <select class="form-control" name= "default">
@@ -679,12 +807,6 @@ if ($per_con == 1 || $per_con == "1") {
               </select>
               </div>
             </div>  
-            <div class="col-md-6">
-                    <div class="form-group">
-                      <label >GL Code*</label>
-                      <input type="text" id="tit" style="text-transform: uppercase;" class="form-control" value="" name="gl_code" required readonly>
-                    </div>
-                  </div>
             <div class="col-md-6">
             <div class="form-check form-check-inline">
               <label class="form-check-label">
@@ -757,7 +879,7 @@ if ($per_con == 1 || $per_con == "1") {
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
-                        <?php $row["id"]; ?>
+                        <?php $dop = $row["id"]; ?>
                           <th><?php echo $row["value"]; ?></th>
                           <th><?php echo $row["description"]; ?></th>
                           <?php 
@@ -778,7 +900,7 @@ if ($per_con == 1 || $per_con == "1") {
                           }
                           ?>
                          <th><?php echo $cash; ?></th>
-                          <td><a href="#" class="btn btn-info">Edit</a></td>
+                          <td><a href="editpay_type.php?edit=<?php echo $dop;?>" class="btn btn-info">Edit</a></td>
                           </tr>
                         <?php }
                           }

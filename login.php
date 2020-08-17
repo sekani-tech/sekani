@@ -1,7 +1,9 @@
 <?php
+// We are done
 // Initialize the session
 session_start();
-
+// YHA
+$_SESSION['timestamp']=time();
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
   if($_SESSION["usertype"] == "super_admin"){
@@ -102,6 +104,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $int_img = $res["img"];
                             $int_address = $res["office_address"];
                             $int_full = $res["int_full"];
+                            $sender_id = $res["sender_id"];
 
                             $_SESSION["int_name"] = $intname;
                             $_SESSION["int_email"] = $intemail;
@@ -110,6 +113,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["int_logo"] = $int_img;
                             $_SESSION["int_address"] = $int_address;
                             $_SESSION["int_full"] = $int_full;
+                            $_SESSION["sender_id"] = $sender_id;
+
+
+                            $br_id = $_SESSION["branch_id"];
+                            $sint_id = $_SESSION["int_id"];
+                            // function branch_option($connection, $br_id, $sint_id)
+                            // {  
+                            //     $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+                            //     $dof = mysqli_query($connection, $dff);
+                            //     $out = '';
+                            //     while ($row = mysqli_fetch_array($dof))
+                            //     {
+                            //       $do = $row['id'];
+                            //     $out .= " OR branch_id ='$do'";
+                            //     }
+                            //     return $out;
+                            // }
+                            // $branches = branch_option($connection, $br_id, $sint_id);
+                            // $fdf = $_SESSION["branch_id"];
+                            // $_SESSION['branch_option'] = 'branch_id = '.$fdf.$branches;
+                            // mr favor
                             $altemail = mysqli_query($link, "SELECT * FROM `institutions` WHERE int_id ='1'");
                             if (count([$altemail]) == 1) {
                             $alt = mysqli_fetch_array($altemail);

@@ -15,7 +15,7 @@ if(isset($_POST["id"]))
         $values = $o["charge_time_enum"];
         $nameofc = $o["name"];
         $forp = $o["charge_calculation_enum"];
-        $main_p = $_SESSION["product_temp"];
+        $main_p = $_SESSION["savings_temp"];
         $amt = number_format($o["amount"], 2);
         if ($forp == 1) {
           $chg = $amt." Flat";
@@ -45,6 +45,15 @@ if(isset($_POST["id"]))
         $branch_id = $_POST["branch_id"];
         $charge_id = $_POST["id"];
         $colon = date('Y-m-d H:i:s');
+        $sdsd = "SELECT * FROM charges_cache WHERE int_id = '$int_id' && cache_prod_id = '$main_p' AND charge_id = '$charge_id'";
+        $ifd = mysqli_query($connection, $sdsd);
+        $fido = mysqli_fetch_array($ifd);
+        $of = $fido['charge_id'];
+        if($of == $charge_id){
+          echo 'charge already applied';
+        }
+        else{
+          echo 'charge added';
         // $date_p = date('Y-m-d');
         $inload = mysqli_query($connection, "INSERT INTO charges_cache 
         (`int_id`, `branch_id`, `charge_id`, `name`, `charge`, `collected_on`,
@@ -52,10 +61,11 @@ if(isset($_POST["id"]))
         VALUES ('{$int_id}', '{$branch_id}', '{$charge_id}',
         '{$nameofc}', '{$chg}', '{$xs}', '{$colon}', '0', '{$main_p}')");
         $sql = "SELECT * FROM charge WHERE id = '".$_POST["id"]."'";
+      }
     }
     else
     {
-        $sql = "SELECT * FROM charges_cache WHERE int_id = '$int_id' && cache_prod_id = '$main_p' ";
+        $sql = "SELECT * FROM charges_cache WHERE int_id = '$int_id' && cache_prod_id = '$main_p'";
     }
     $sql = "SELECT * FROM charges_cache WHERE int_id = '$int_id' && cache_prod_id = '$main_p' ";
     $result = mysqli_query($connection, $sql);
@@ -63,14 +73,14 @@ if(isset($_POST["id"]))
     <input type="text" id="idq" value="<?php echo $charge_id; ?>" hidden>
     <input type="text" id="int_idq" value="<?php echo $int_id; ?>" hidden>
     <input type="text" id="main_pq" value="<?php echo $main_p; ?>" hidden>
-    <script>
+    <!-- <script>
   $(document).ready(function() {
         var id = $('#idq').val();
         var int_id = $('#int_idq').val();
           var branch_id = $('#branch_idq').val();
           var main_p = $('#main_pq').val();
           $.ajax({
-          url:"ajax_post/check_up.php",
+          url:"ajax_post/sav_up.php",
           method:"POST",
           data:{id:id, int_id:int_id, branch_id:branch_id, main_p: main_p},
           success:function(data){
@@ -78,7 +88,7 @@ if(isset($_POST["id"]))
        }
    })
 })
-</script>
+</script> -->
 
     <div class="table-responsive">
   <table id="tabledat" class="table" cellspacing="0" style="width:100%">

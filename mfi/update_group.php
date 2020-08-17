@@ -1,357 +1,167 @@
 <?php
 
-$page_title = "Update Group";
-$destination = "index.php";
+$page_title = "View Group";
+$destination = "branch.php";
     include("header.php");
 
+?>
+<?php
+ if (isset($_GET["edit"])) {
+  $user_id = $_GET["edit"];
+  $update = true;
+  $value = mysqli_query($connection, "SELECT * FROM groups WHERE id='$user_id'");
+
+  if (count([$value] == 1)) {
+    $n = mysqli_fetch_array($value);
+    $name = $n['g_name'];
+    $regtyp = $n['reg_type'];
+    $meet_dat = $n['meeting_day'];
+    $time = $n['meeting_time'];
+    $phone = $n['meeting_location'];
+    $location = $n['meeting_location'];
+    $meet_freq = $n['meeting_frequency'];
+
+  }
+}
 ?>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header card-header-primary">
-                <h4 class="card-title">Create Group</h4>
-                <p class="card-category">Fill in all important data</p>
-              </div>
-              <div class="card-body">
-              <form id="form" action="" method="POST">
-                  <div class = "row">
-                    <div class = "col-md-12">
-                      <div class = "form-group">
-                        <!-- Group info _ Tab1 -->
-                    <div class="tab"><h3> Group info:</h3>
-                        <div class="col-md-4">
-                            <label class = "bmd-label-floating">Group Name *:</label>
-                            <input type="text" name="" id="" class="form-control" required>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Edit</h4>
+                  <p class="card-category">Modify Group Data</p>
+                </div>
+                <div class="card-body">
+                  <form action="../functions/updategroup.php" method="post">
+                    <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">ID</label>
+                          <input type="text"  readonly class="form-control" value="<?php echo $user_id; ?>" name="id">
                         </div>
-                        <div class="col-md-4">
-                            <label for="">Branch Name *:</label>
-                            <select name="" id="" class="form-control" required>
-                                <option value="">...........</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Loan Officer *:</label>
-                            <select name="" id="" class="form-control" required>
-                                <option value="">...........</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Registration Date *:</label>
-                            <input type="date" name="" class="form-control" id="" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Registration :</label>
-                            <select name="" id="" class="form-control">
-                                <option value="Informal">Informal</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Meeting Day :</label>
-                            <select name="" id="" class="form-control" placeholder="Select an Option">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Meeting Frequency :</label>
-                            <select name="" id="" class="form-control" placeholder="Select an Option">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Meeting Location :</label>
-                            <input type="text" name="" class="form-control" id="">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Meeting Time :</label>
-                            <input type="text" name="" class="form-control" id="">
-                        </div>
-                    </div>    
-                    <!-- Clients Selection -->
-                    <div class="tab"><h3> Select Clients:</h3>
-                        <div class="col-md-4">
-                            <label for="">Clients</label>
-                            <input type="text" name="" class="form-control" id="">
-                        </div>
-                        <table class="table">
-                            <thead>
-                                <th style="font-weight:bold;">Client ID</th>
-                                <th style="font-weight:bold;">Client Name</th>
-                            </thead>
-                            <tbody>
-                                <td></td>
-                                <td></td>
-                            </tbody>
-                        </table>
                     </div>
-                    <!-- /Client Selection -->
-                    <!-- Oberview -->
-                    <div class="tab">
-                        <h3>Overview:</h3>
-                        <div class="col-md-4">
-                            <label class = "bmd-label-floating">Group Name *:</label>
-                            <input type="text" name="" id="" class="form-control" readonly>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Branch Name *:</label>
-                            <select name="" id="" class="form-control" readonly>
-                                <option value="">...........</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Loan Officer *:</label>
-                            <select name="" id="" class="form-control" readonly>
-                                <option value="">...........</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Registration Date *:</label>
-                            <input type="date" name="" class="form-control" id="" readonly>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Registration :</label>
-                            <select name="" id="" class="form-control">
-                                <option value="Informal">Informal</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Meeting Day :</label>
-                            <select name="" id="" class="form-control" placeholder="Select an Option" readonly>
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Meeting Frequency :</label>
-                            <select name="" id="" class="form-control" placeholder="Select an Option" readonly>
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Meeting Location :</label>
-                            <input type="text" name="" class="form-control" id="" readonly>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Meeting Time :</label>
-                            <input type="text" name="" class="form-control" id="" readonly>
-                        </div>
-                        <table class="table">
-                            <thead>
-                                <th style="font-weight:bold;">Client ID</th>
-                                <th style="font-weight:bold;">Client Name</th>
-                            </thead>
-                            <tbody>
-                                <td></td>
-                                <td></td>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- Buttons -->
-                    <div style="overflow:auto;">
-                          <div style="float:right;">
-                            <button class="btn btn-primary pull-right" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-                            <button class="btn btn-primary pull-right" type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                          </div>
-                        </div>
-                      <!-- Steppers -->
-                      <!-- Circles which indicates the steps of the form: -->
-                      <div style="text-align:center;margin-top:40px;">
-                          <span class="step"></span>
-                          <span class="step"></span>
-                          <!-- <span class="step"></span> -->
-                          <span class="step"></span>
-                          <span class="step"></span>
-                          <span class="step"></span>
-                          <span class="step"></span>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Name</label>
+                          <input type="text" class="form-control" value="<?php echo $name; ?>" name="name">
                         </div>
                       </div>
-                    </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Group Type</label>
+                          <select name="gtype" class="form-control">
+                                <option hidden value="<?php echo $regtyp;?>"><?php echo $regtyp;?></option>
+                                <option  value="formal">Formal</option>
+                                <option  value="informal">Informal</option>
+                              </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Meeting Day</label>
+                          <input  type="date" class="form-control" value="<?php echo $meet_dat; ?>" name="meet_day">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-6">
+                            <label class="bmd-label-floating">Time</label>
+                            <input type="time" class="form-control" value="<?php echo $time; ?>" name="meet_time">
+                            </div>
+                            <div class="col-md-6">
+                              <label class="bmd-label-floating">Frequency</label>
+                              <select name="freq" class="form-control">
+                                <option hidden value="<?php echo $meet_freq;?>"><?php echo $meet_freq;?></option>
+                                <option  value="daily">Daily</option>
+                                <option  value="weekly">Weekly</option>
+                                <option  value="monthly">Monthly</option>
+                                <option  value="annually">Annually</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Location</label>
+                          <input type="text" class="form-control" value="<?php echo $location; ?>" name="location">
+                        </div>
+                      </div>
+                      <script>
+                        $(document).ready(function () {
+                          $('#sds').on("click", function () {
+                            var id = $(this).val();
+                            $.ajax({
+                              url: "ajax_post/delete_group_client.php", 
+                              method: "POST",
+                              data:{id:id},
+                              success: function (data) {
+                                $('#huh').html(data);
+                              }
+                            })
+                          });
+                        });
+                      </script>
+                      <div id = "huh" class="col-md-12">
+                      <div class="table-responsive">
+                    <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM group_clients WHERE group_id = '$user_id' AND int_id = '$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                        <th>
+                         Members
+                        </th>
+                        <th>
+                          Branch
+                        </th>
+                        <th width="20px">Delete</th>
+                        <!-- <th>Phone</th> -->
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                        <?php $row["id"]; ?>
+                          <th><?php echo $row["client_name"]; ?></th>
+                          <?php
+                          $ds= $row["branch_id"];
+                           $query = "SELECT * FROM branch WHERE int_id = '$sessint_id' && id = '$ds'";
+                           $erre = mysqli_query($connection, $query);
+                           $ds = mysqli_fetch_array($erre);
+                           $dfd = $ds['name'];
+                          ?>
+                          <th><?php echo $dfd; ?></th>
+                          <td><a href="../functions/delete_group_client.php?edit=<?php echo $row["id"];?>" class="btn btn-danger">Remove</a></td>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                      </tbody>
+                    </table>
                   </div>
-                </form>
-              </div>
-
-                  
-                  <!-- /stepper  -->
+                      </div>
+                      </div>
+                    <button type="submit" class="btn btn-primary pull-right">Update Branch</button>
+                    <div class="clearfix"></div>
+                  </form>
                 </div>
               </div>
             </div>
-            <!-- <div class="col-md-4">
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="../assets/img/faces/marc.jpg" />
-                  </a>
-                </div>
-                 Get session data and populate user profile 
-                <div class="card-body">
-                  <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                  <h4 class="card-title">Alec Thompson</h4>
-                  <p class="card-description">
-                    Sekani Systems
-                  </p>
-                   <a href="#pablo" class="btn btn-primary btn-round">Follow</a> 
-                </div>
-              </div>
-            </div> -->
           </div>
           <!-- /content -->
         </div>
       </div>
-      <style>
-* {
-  box-sizing: border-box;
-}
 
-body {
-  background-color: #f1f1f1;
-}
-
-/* #regForm {
-  background-color: #ffffff;
-  margin: 100px auto;
-  font-family: Raleway;
-  padding: 40px;
-  width: 70%;
-  min-width: 300px;
-} */
-
-h1 {
-  text-align: center;  
-}
-
-input {
-  padding: 10px;
-  width: 100%;
-  font-size: 17px;
-  font-family: Raleway;
-  border: 1px solid #aaaaaa;
-}
-
-/* Mark input boxes that gets an error on validation: */
-input.invalid {
-  background-color: #ffdddd;
-}
-
-/* Hide all steps by default: */
-.tab {
-  display: none;
-}
-
-button {
-  background-color: #a13cb6;
-  color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 17px;
-  font-family: Raleway;
-  cursor: pointer;
-}
-
-button:hover {
-  opacity: 0.8;
-}
-
-#prevBtn {
-  background-color: #bbbbbb;
-}
-
-/* Make circles that indicate the steps of the form: */
-.step {
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbbbbb;
-  border: none;  
-  border-radius: 50%;
-  display: inline-block;
-  opacity: 0.5;
-}
-
-.step.active {
-  opacity: 1;
-}
-
-/* Mark the steps that are finished and valid: */
-.step.finish {
-  background-color: #9e38b5;
-}
-</style>
-      <script>
-var currentTab = 0; // Current tab is set to be the first tab (0)
-showTab(currentTab); // Display the current tab
-
-function showTab(n) {
-  // This function will display the specified tab of the form...
-  var x = document.getElementsByClassName("tab");
-  x[n].style.display = "block";
-  //... and fix the Previous/Next buttons:
-  if (n == 0) {
-    document.getElementById("prevBtn").style.display = "none";
-  } else {
-    document.getElementById("prevBtn").style.display = "inline";
-  }
-  if (n == (x.length - 1)) {
-    document.getElementById("nextBtn").innerHTML = "Submit";
-  } else {
-    document.getElementById("nextBtn").innerHTML = "Next";
-  }
-  //... and run a function that will display the correct step indicator:
-  fixStepIndicator(n)
-}
-
-function nextPrev(n) {
-  // This function will figure out which tab to display
-  var x = document.getElementsByClassName("tab");
-  // Exit the function if any field in the current tab is invalid:
-  if (n == 1 && !validateForm()) return false;
-  // Hide the current tab:
-  x[currentTab].style.display = "none";
-  // Increase or decrease the current tab by 1:
-  currentTab = currentTab + n;
-  // if you have reached the end of the form...
-  if (currentTab >= x.length) {
-    // ... the form gets submitted:
-    document.getElementById("form").submit();
-    return false;
-  }
-  // Otherwise, display the correct tab:
-  showTab(currentTab);
-}
-
-function validateForm() {
-  // This function deals with validation of the form fields
-  var x, y, i, valid = true;
-  x = document.getElementsByClassName("tab");
-  y = x[currentTab].getElementsByTagName("input");
-  // A loop that checks every input field in the current tab:
-  for (i = 0; i < y.length; i++) {
-    // If a field is empty...
-    if (y[i].value == "") {
-      // add an "invalid" class to the field:
-      y[i].className += " invalid";
-      // and set the current valid status to false
-      valid = true;
-    }
-  }
-  // If the valid status is true, mark the step as finished and valid:
-  if (valid) {
-    document.getElementsByClassName("step")[currentTab].className += " finish";
-  }
-  return valid; // return the valid status
-}
-
-function fixStepIndicator(n) {
-  // This function removes the "active" class of all steps...
-  var i, x = document.getElementsByClassName("step");
-  for (i = 0; i < x.length; i++) {
-    x[i].className = x[i].className.replace(" active", "");
-  }
-  //... and adds the "active" class on the current step:
-  x[n].className += " active";
-}
-</script>
 <?php
 
     include("footer.php");

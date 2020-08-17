@@ -5,6 +5,145 @@ $destination = "index.php";
     include("header.php");
 
 ?>
+<?php
+if (isset($_GET["message1"])) {
+  $key = $_GET["message1"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Group Created",
+          text: "",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
+else if (isset($_GET["message2"])) {
+$key = $_GET["message2"];
+// $out = $_SESSION["lack_of_intfund_$key"];
+$tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "error",
+        title: "Error Creating Group",
+        text: "Contact TechSupport.",
+        showConfirmButton: false,
+        timer: 2000
+    })
+});
+</script>
+';
+$_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
+else if (isset($_GET["message3"])) {
+  $key = $_GET["message3"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Group Updated",
+          text: "Contact TechSupport.",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+  }
+  else if (isset($_GET["message4"])) {
+    $key = $_GET["message4"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+      if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "Error Updating Group",
+            text: "Contact TechSupport.",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+    }
+    else if (isset($_GET["message5"])) {
+      $key = $_GET["message5"];
+      // $out = $_SESSION["lack_of_intfund_$key"];
+      $tt = 0;
+        if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+      echo '<script type="text/javascript">
+      $(document).ready(function(){
+          swal({
+              type: "success",
+              title: "Group Closed",
+              text: "",
+              showConfirmButton: false,
+              timer: 2000
+          })
+      });
+      </script>
+      ';
+      $_SESSION["lack_of_intfund_$key"] = 0;
+      }
+      }
+      else if (isset($_GET["message6"])) {
+        $key = $_GET["message6"];
+        // $out = $_SESSION["lack_of_intfund_$key"];
+        $tt = 0;
+          if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "Error Closing Group",
+                text: "Contact TechSupport.",
+                showConfirmButton: false,
+                timer: 2000
+            })
+        });
+        </script>
+        ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+        }
+        }
+?>
+<?php
+  function branch_opt($connection)
+  {  
+      $br_id = $_SESSION["branch_id"];
+      $sint_id = $_SESSION["int_id"];
+      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+      $dof = mysqli_query($connection, $dff);
+      $out = '';
+      while ($row = mysqli_fetch_array($dof))
+      {
+        $do = $row['id'];
+      $out .= " OR branch_id ='$do'";
+      }
+      return $out;
+  }
+  $br_id = $_SESSION["branch_id"];
+  $branches = branch_opt($connection);
+?>
 <!-- Content added here -->
 <div class="content">
         <div class="container-fluid">
@@ -26,19 +165,19 @@ $destination = "index.php";
                         <li class="nav-item">
                           <a class="nav-link active" href="#products" data-toggle="tab">
                           <!-- visibility -->
-                            <i class="material-icons">attach_money</i> Groups
+                            <i class="material-icons">supervisor_account</i> Groups
                             <div class="ripple-container"></div>
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#messages" data-toggle="tab">
-                            <i class="material-icons">supervisor_account</i> Pending Approval
+                            <i class="material-icons">supervised_user_circle</i> Pending Approval
                             <div class="ripple-container"></div>
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#perform" data-toggle="tab">
-                            <i class="material-icons">supervisor_account</i> Closed Groups
+                            <i class="material-icons">remove_circle</i> Closed Groups
                             <div class="ripple-container"></div>
                           </a>
                         </li>

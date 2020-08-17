@@ -3,6 +3,7 @@
 $page_title = "Clients";
 $destination = "index.php";
     include("header.php");
+    $br_id = $_SESSION['branch_id'];
 
 ?>
 <?php
@@ -90,6 +91,26 @@ $(document).ready(function(){
 $_SESSION["lack_of_intfund_$key"] = 0;
   }
 }
+else if (isset($_GET["message5"])) {
+  $key = $_GET["message5"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Success",
+          text: "Client Closed!",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+  }
 ?>
 <!-- Content added here -->
     <div class="content">
@@ -106,9 +127,26 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                   });
                   </script>
                   <!-- Insert number users institutions -->
+                  <?php
+                        function branch_opt($connection)
+                        {  
+                            $br_id = $_SESSION["branch_id"];
+                            $sint_id = $_SESSION["int_id"];
+                            $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+                            $dof = mysqli_query($connection, $dff);
+                            $out = '';
+                            while ($row = mysqli_fetch_array($dof))
+                            {
+                              $do = $row['id'];
+                            $out .= " OR client.branch_id ='$do'";
+                            }
+                            return $out;
+                        }
+                        $branches = branch_opt($connection);
+                        ?>
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved'";
-                   $result = mysqli_query($connection, $query);
+                        $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && (client.branch_id ='$br_id' $branches) && client.status = 'Approved'";
+                        $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
@@ -119,7 +157,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
+                        $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && (client.branch_id ='$br_id' $branches) && client.status = 'Approved'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -150,7 +188,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           BVN
                         </th>
                         <th>View</th>
-                        <th>Edit </th>
+                        <th>Close</th>
                         <!-- <th>Phone</th> -->
                       </thead>
                       <tbody>
@@ -168,11 +206,13 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                             $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
                             if (count([$atype]) == 1) {
                                 $yxx = mysqli_fetch_array($atype);
-                                $actype = $yxx['product_id'];
-                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
+                                if(isset($yxx['product_id'])){
+                                $actype = $yxx['product_id'];}
+                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype' AND int_id = '$sessint_id'");
                            if (count([$spn])) {
                              $d = mysqli_fetch_array($spn);
-                             $savingp = $d["name"];
+                             if(isset($d["name"])){
+                             $savingp = $d["name"];}
                            }
                             }
                            
@@ -220,7 +260,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                           <th><?php echo $row["mobile_no"]; ?></th>
                           <th><?php echo $row["BVN"]; ?></th>
                           <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
-                          <td><a href="update_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Close</a></td>
+                          <td><a href="../functions/close_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Close</a></td>
                         </tr>
                         <?php }
                           }

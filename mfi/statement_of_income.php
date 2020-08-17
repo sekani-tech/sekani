@@ -20,6 +20,20 @@ include('header.php');
                 <div class="card-body">
                 <form action="">
                     <div class="row">
+                      <?php
+                    function fill_branch($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
                       <div class="form-group col-md-3">
                         <label for="">Start Date</label>
                         <input type="date" name="" id="start" class="form-control">
@@ -30,8 +44,8 @@ include('header.php');
                       </div>
                       <div class="form-group col-md-3">
                         <label for="">Branch</label>
-                        <select name="" id="" class="form-control">
-                            <option value="">Head Office</option>
+                        <select name="" id="branch_id" class="form-control">
+                        <?php echo fill_branch($connection);?>
                         </select>
                       </div>
                       <!-- <div class="form-group col-md-3">
@@ -79,10 +93,11 @@ include('header.php');
                       $('#input').on("click", function () {
                         var start = $('#start').val();
                         var end = $('#end').val();
+                        var branch = $('#branch_id').val();
                         $.ajax({
                           url: "ajax_post/reports_post/stmt_of_income.php", 
                           method: "POST",
-                          data:{start:start, end:end},
+                          data:{start:start, end:end, branch:branch},
                           success: function (data) {
                             $('#outjournal').html(data);
                           }

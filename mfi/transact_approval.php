@@ -91,6 +91,24 @@ if ($can_transact == 1 || $can_transact == "1") {
 <!-- <link href="vendor/css/addons/datatables.min.css" rel="stylesheet">
 <script type="text/javascript" src="vendor/js/addons/datatables.min.js"></script> -->
 <!-- Content added here -->
+<?php
+  function branch_opt($connection)
+  {  
+      $br_id = $_SESSION["branch_id"];
+      $sint_id = $_SESSION["int_id"];
+      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+      $dof = mysqli_query($connection, $dff);
+      $out = '';
+      while ($row = mysqli_fetch_array($dof))
+      {
+        $do = $row['id'];
+      $out .= " OR branch_id ='$do'";
+      }
+      return $out;
+  }
+  $br_id = $_SESSION["branch_id"];
+  $branches = branch_opt($connection);
+?>
 <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
@@ -106,7 +124,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM transact_cache WHERE int_id='$sessint_id' && status = 'Pending'";
+                   $query = "SELECT * FROM transact_cache WHERE int_id='$sessint_id' && status = 'Pending' && (branch_id ='$br_id' $branches)";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -123,13 +141,16 @@ if ($can_transact == 1 || $can_transact == "1") {
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' AND status = 'Pending'";
+                        $query = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' AND status = 'Pending' && (branch_id ='$br_id' $branches)";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <!-- <th>
                           ID
                         </th> -->
                         <tr>
+                        <th class="th-sm">
+                          Branch
+                        </th>
                         <th class="th-sm">
                           Transaction Type
                         </th>
@@ -153,6 +174,14 @@ if ($can_transact == 1 || $can_transact == "1") {
                         <tr>
                         <?php $row["id"]; ?>
                           <th><?php echo $row["transact_type"]; ?></th>
+                          <?php
+                          $wpeo = $row["branch_id"];
+                          $wepoa = "SELECT * FROM branch WHERE int_id = '$sessint_id' AND id = '$wpeo'";
+                          $sdpoe = mysqli_query($connection, $wepoa);
+                          $i = mysqli_fetch_array($sdpoe);
+                          $sgger = $i['name'];
+                          ?>
+                          <th><?php echo $sgger; ?></th>
                           <th><?php echo number_format($row["amount"], 2); ?></th>
                           <th><?php echo $row["account_off_name"]; ?></th>
                           <th><?php echo $row["client_name"]; ?></th>

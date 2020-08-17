@@ -3,7 +3,22 @@
 $page_title = "Create Group";
 $destination = "index.php";
     include("header.php");
-
+$b_id = $_SESSION['branch_id'];
+?>
+<?php
+    function branch_option($connection)
+    {  
+        $br_id = $_SESSION["branch_id"];
+        $sint_id = $_SESSION["int_id"];
+        $fod = "SELECT * FROM branch WHERE int_id = '$sint_id' AND parent_id='$br_id' || id = '$br_id'";
+        $dof = mysqli_query($connection, $fod);
+        $out = '';
+        while ($row = mysqli_fetch_array($dof))
+        {
+        $out .= '<option value="'.$row["id"].'">' .$row["name"]. '</option>';
+        }
+        return $out;
+    }
 ?>
 <!-- Content added here -->
     <div class="content">
@@ -16,140 +31,232 @@ $destination = "index.php";
                 <h4 class="card-title">Create Group</h4>
                 <p class="card-category">Fill in all important data</p>
               </div>
+              <?php
+                  function fill_branch($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                  }
+                  return $out;
+                  }
+                  function fill_officer($connection)
+                  {
+                      $sint_id = $_SESSION["int_id"];
+                      $org = "SELECT * FROM staff WHERE int_id = '$sint_id' AND employee_status = 'Employed' ORDER BY staff.display_name ASC";
+                      $res = mysqli_query($connection, $org);
+                      $out = '';
+                      while ($row = mysqli_fetch_array($res))
+                      {
+                      $out .= '<option value="'.$row["id"].'">' .$row["display_name"]. '</option>';
+                      }
+                      return $out;
+                  }
+                  ?>
               <div class="card-body">
-              <form id="form" action="" method="POST">
+              <form id="form" action="../functions/group_upload.php" method="POST">
                   <div class = "row">
                     <div class = "col-md-12">
                       <div class = "form-group">
                         <!-- Group info _ Tab1 -->
                     <div class="tab"><h3> Group info:</h3>
-                        <div class="row">
-                          <div class="col-md-4">
-                              <label class = "bmd-label-floating">Group Name *:</label>
-                              <input type="text" name="" id="" class="form-control" required>
-                          </div>
-                          <div class="col-md-4">
-                              <label for="">Branch Name *:</label>
-                              <select name="" id="" class="form-control" required>
-                                  <option value="">...........</option>
-                              </select>
-                          </div>
-                          <div class="col-md-4">
-                              <label for="">Loan Officer *:</label>
-                              <select name="" id="" class="form-control" required>
-                                  <option value="">...........</option>
-                              </select>
-                          </div>
-                          <div class="col-md-4">
-                              <label for="">Registration Date *:</label>
-                              <input type="date" name="" class="form-control" id="" required>
-                          </div>
-                          <div class="col-md-4">
-                              <label for="">Registration :</label>
-                              <select name="" id="" class="form-control">
-                                  <option value="Informal">Informal</option>
-                              </select>
-                          </div>
-                          <div class="col-md-4">
-                              <label for="">Meeting Day :</label>
-                              <select name="" id="" class="form-control" placeholder="Select an Option">
-                                  <option value=""></option>
-                              </select>
-                          </div>
-                          <div class="col-md-4">
-                              <label for="">Meeting Frequency :</label>
-                              <select name="" id="" class="form-control" placeholder="Select an Option">
-                                  <option value=""></option>
-                              </select>
-                          </div>
-                          <div class="col-md-4">
-                              <label for="">Meeting Location :</label>
-                              <input type="text" name="" class="form-control" id="">
-                          </div>
-                          <div class="col-md-4">
-                              <label for="">Meeting Time :</label>
-                              <input type="text" name="" class="form-control" id="">
-                          </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class = "bmd-label-floating">Group Name *:</label>
+                            <input type="text" name="gname" id="" class="form-control" required>
                         </div>
+                        <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Account Type</label>
+                      <?php
+                  function fill_savings($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM savings_product WHERE int_id = '$sint_id'";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
+                        <select required name="acct_type" class="form-control" data-style="btn btn-link" id="collat">
+                          <option value="">select a Account Type</option>
+                          <?php echo fill_savings($connection); ?>
+                        </select>
+                    </div>
+                  </div>
+                        <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="">Branch:</label>
+                            <select class="form-control" name="branch_id">
+                            <?php echo branch_option($connection);?>
+                            </select>
+                        </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Loan Officer *:</label>
+                            <select name="acc_off" id="" class="form-control" required>
+                               <option hidden value="">select an option</option>
+                                <?php echo fill_officer($connection);?>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Registration Date *:</label>
+                            <input type="date" name="reg_date" class="form-control" id="" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Registration :</label>
+                            <select name="reg_type" id="" class="form-control">
+                                <option value="Informal">Informal</option>
+                                <option value="Formal">Formal</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Meeting Day :</label>
+                            <input type="date" name="meet_day" class="form-control" id="" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Meeting Frequency :</label>
+                            <select name="meet_frequency" id="" class="form-control" placeholder="Select an Option">
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="annually">Annually</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Meeting Location :</label>
+                            <input type="text" name="meet_address" class="form-control" id="">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Meeting Time :</label>
+                            <input type="time" name="meet_time" class="form-control" id="">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Primary Contact Phone Number:</label>
+                            <input type="text" name="pc_phone" class="form-control" id="">
+                        </div>
+                    </div>
                     </div>    
                     <!-- Clients Selection -->
                     <div class="tab"><h3> Select Clients:</h3>
-                        <div class="col-md-4">
-                            <label for="">Clients</label>
-                            <input type="text" name="" class="form-control" id="">
+                    <?php
+                    function fill_client($connection) {
+                      $sint_id = $_SESSION["int_id"];
+                      $org = "SELECT * FROM client WHERE int_id = '$sint_id' ORDER BY firstname ASC";
+                      $res = mysqli_query($connection, $org);
+                      $out = '';
+                      while ($row = mysqli_fetch_array($res))
+                      {
+                        $out .= '<option value="'.$row["id"].'">'.$row["firstname"].' '.$row["lastname"].'</option>';
+                      }
+                      return $out;
+                    }
+                    $digits = 6;
+                    $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+                    $_SESSION['group_temp'] = $randms;
+                    $group_cache_id = $_SESSION['group_temp'];
+                    ?>
+                         <div class="col-md-6">
+                            <label for="">Client name *:</label>
+                            <select name="" id="client_id" class="form-control" required>
+                                <option hidden value="">select an option</option>
+                                <?php echo fill_client($connection);?>
+                            </select>
+                            <input type="text" name ="group_cache_id" hidden id="cache_id" value="<?php echo $group_cache_id;?>" />
                         </div>
-                        <table class="table">
-                            <thead>
-                                <th style="font-weight:bold;">Client ID</th>
-                                <th style="font-weight:bold;">Client Name</th>
-                            </thead>
-                            <tbody>
-                                <td></td>
-                                <td></td>
-                            </tbody>
-                        </table>
+                        <script>
+                        $(document).ready(function () {
+                          $('#client_id').on("change", function () {
+                            var client_id = $(this).val();
+                            var cache_id = $('#cache_id').val();
+                            $.ajax({
+                              url: "ajax_post/post_client_group.php", 
+                              method: "POST",
+                              data:{client_id:client_id, cache_id:cache_id},
+                              success: function(data) {
+                                $('#erio').html(data);
+                              }
+                            })
+                          });
+                        });
+                      </script>
+                      <div class="col-md-4" id="erio">
+
+                      </div>
                     </div>
                     <!-- /Client Selection -->
                     <!-- Oberview -->
-                    <div class="tab">
+                    <!-- <div class="tab">
                         <h3>Overview:</h3>
-                        <div class="col-md-4">
+                        <div class="row">
+                        <div class="col-md-6">
                             <label class = "bmd-label-floating">Group Name *:</label>
                             <input type="text" name="" id="" class="form-control" readonly>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="">Branch Name *:</label>
                             <select name="" id="" class="form-control" readonly>
                                 <option value="">...........</option>
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="">Loan Officer *:</label>
                             <select name="" id="" class="form-control" readonly>
                                 <option value="">...........</option>
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="">Registration Date *:</label>
                             <input type="date" name="" class="form-control" id="" readonly>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="">Registration :</label>
                             <select name="" id="" class="form-control">
                                 <option value="Informal">Informal</option>
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="">Meeting Day :</label>
                             <select name="" id="" class="form-control" placeholder="Select an Option" readonly>
                                 <option value=""></option>
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="">Meeting Frequency :</label>
                             <select name="" id="" class="form-control" placeholder="Select an Option" readonly>
                                 <option value=""></option>
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="">Meeting Location :</label>
                             <input type="text" name="" class="form-control" id="" readonly>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="">Meeting Time :</label>
                             <input type="text" name="" class="form-control" id="" readonly>
                         </div>
+                        </div>
+                        <div class="col-md-10" id="erio">
                         <table class="table">
                             <thead>
-                                <th style="font-weight:bold;">Client ID</th>
-                                <th style="font-weight:bold;">Client Name</th>
+                                <th>Client ID</th>
+                                <th>Client Name</th>
                             </thead>
                             <tbody>
                                 <td></td>
                                 <td></td>
                             </tbody>
                         </table>
-                    </div>
+                      </div>
+                    </div> -->
                     <!-- Buttons -->
                     <div style="overflow:auto;">
                           <div style="float:right;">
@@ -161,11 +268,8 @@ $destination = "index.php";
                       <!-- Circles which indicates the steps of the form: -->
                       <div style="text-align:center;margin-top:40px;">
                           <span class="step"></span>
-                          <span class="step"></span>
                           <!-- <span class="step"></span> -->
-                          <span class="step"></span>
-                          <span class="step"></span>
-                          <span class="step"></span>
+                          <!-- <span class="step"></span> -->
                           <span class="step"></span>
                         </div>
                       </div>
@@ -179,7 +283,7 @@ $destination = "index.php";
                 </div>
               </div>
             </div>
-            <!-- <div class="col-md-4">
+            <!-- <div class="col-md-6">
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">

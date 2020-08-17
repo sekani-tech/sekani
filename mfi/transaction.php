@@ -42,9 +42,14 @@ $destination = "../index.php";
                           <td><a href="transact.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
+                          <th>Group Deposit</th>
+                          <th>Make deposits or withdrawal for group accounts</th>
+                          <td><a href="grouptrans.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                        </tr>
+                        <tr>
                           <th>FTD Booking</th>
                           <th>Book a Fixed deposit Loan for an account</th>
-                          <td><a href="#" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="ftd_booking.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>Book Loan</th>

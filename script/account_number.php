@@ -1,7 +1,7 @@
 <?php
 // here
 // netwr
-include("connect.php");
+include("../functions/connect.php");
 
 $account_table = mysqli_query($connection, "SELECT * FROM account WHERE int_id = '5'");
 // FIRST ONE
@@ -87,6 +87,51 @@ while ($rx = mysqli_fetch_array($client_table)) {
 
     $update_client = mysqli_query($connection, "UPDATE client SET account_no = '$acc1' WHERE id = '$id' && int_id = '5'");
 }
+
+// PRAY
+$account_table_z = mysqli_query($connection, "SELECT * FROM `account_transaction` WHERE int_id = '5'");
+// FIRST ONE
+while ($row = mysqli_fetch_array($account_table_z)) {
+    $client_id = $row["client_id"];
+    $soc = $row["account_no"];
+    $acct_id = $row["id"];
+    $length = strlen($soc);
+    if ($length == 1) {
+      $acc ="000000000" . $soc;
+    }
+    elseif ($length == 2) {
+      $acc ="00000000" . $soc;
+    }
+    elseif ($length == 3) {
+      $acc ="00000000" . $soc;
+    }
+    elseif ($length == 4) {
+      $acc ="0000000" . $soc;
+    }
+    elseif ($length == 5) {
+      $acc ="000000" . $soc;
+    }
+    elseif ($length == 6) {
+      $acc ="0000" . $soc;
+    }
+    elseif ($length == 7) {
+      $acc ="000" . $soc;
+    }
+    elseif ($length == 8) {
+      $acc ="00" . $soc;
+    }
+    elseif ($length == 9) {
+      $acc ="0" . $soc;
+    }
+    elseif ($length == 10) {
+      $acc = $row["account_no"];
+    }else{
+      $acc = $row["account_no"];
+    }
+
+    $update_account = mysqli_query($connection, "UPDATE `account_transaction` SET account_no = '$acc' WHERE client_id = '$client_id' && int_id = '5' && id = '$acct_id'");
+}
+
 if ($update_account) {
     echo " ACCOUNT TABLE UPDATED";
 } else {

@@ -43,7 +43,7 @@ $destination = "../index.php";
                         <tr>
                           <th>Register Group</th>
                           <th>Register a group account in the instituion</th>
-                          <td><a href="#" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="create_group.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>View Approved Client List</th>
@@ -51,14 +51,9 @@ $destination = "../index.php";
                           <td><a href="client.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
-                          <th>Client Balance Report</th>
-                          <th>View the list of Clients and account Balances</th>
-                          <td><a href="report_client_view.php?view1" class="btn btn-info"><i class="material-icons">description</i></a></td>
-                        </tr>
-                        <tr>
-                          <th>Client Summary</th>
-                          <th>View the summary of a specifically selected client</th>
-                          <td><a href="report_client_view.php?view4" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <th>View Groups List</th>
+                          <th>View the list of all the approved clients in the institution</th>
+                          <td><a href="groups.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <!-- <tr>
                           <th>Vault Posting</th>

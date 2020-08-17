@@ -38,7 +38,7 @@ $destination = "../index.php";
                       <tbody>
                         <tr>
                           <th>Account Opening</th>
-                          <th>View and approve all newly registered clients in teh institution</th>
+                          <th>View and approve all newly registered clients in the institution</th>
                           <td><a href="client_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
@@ -50,6 +50,11 @@ $destination = "../index.php";
                           <th>Transactions</th>
                           <th>View and approve all recently made transactions</th>
                           <td><a href="transact_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                        </tr>
+                        </tr>
+                          <th>Client Cash Tranfer</th>
+                          <th>View and approve all recently made transactions by clients</th>
+                          <td><a href="transfer_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
                           <th>CHQ/Pass Book</th>

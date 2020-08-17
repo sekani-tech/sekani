@@ -4,9 +4,28 @@ include("../functions/connect.php");
 session_start();
 ?>
 <?php
+  function branch_opt($connection)
+  {  
+      $br_id = $_SESSION["branch_id"];
+      $sint_id = $_SESSION["int_id"];
+      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+      $dof = mysqli_query($connection, $dff);
+      $out = '';
+      while ($row = mysqli_fetch_array($dof))
+      {
+        $do = $row['id'];
+      $out .= " OR client.branch_id ='$do'";
+      }
+      return $out;
+  }
+  $branch_id = $_SESSION["branch_id"];
+  $branches = branch_opt($connection);
+?>
+<?php
   $intname = $_SESSION['int_name'];
   $branch_id = $_SESSION["branch_id"];
   $date = date('d/m/Y');
+  $ttlacc = $_POST["acc_bal"];
   // $staff = $_POST["staff"];
   $branchquery = mysqli_query($connection, "SELECT * FROM branch WHERE id='$branch_id'");
     if (count([$branchquery]) == 1) {
@@ -16,13 +35,24 @@ session_start();
       $branch_location = $ans['location'];
       $branch_phone = $ans['phone'];
     }
-  function fill_report($connection)
+    if(isset($_POST['rer'])){
+      $sad = "in Debit";
+    }
+    else{
+      $sad = "";
+    }
+  function fill_report($connection, $br_id, $branches)
         {
             $out = '';
             $sessint_id =$_SESSION['int_id'];
           // import
         //   $glcode = $_POST['glcode'];
-        $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.product_id = '1'";
+        if(isset($_POST['rer'])){
+          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1' && (client.branch_id ='$br_id' $branches) AND account.account_balance_derived < '0.00'";
+        }
+        else{
+          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1' && (client.branch_id ='$br_id' $branches)";
+        }
         $result = mysqli_query($connection, $query);
         while ($q = mysqli_fetch_array($result, MYSQLI_ASSOC))
           {
@@ -75,7 +105,7 @@ session_start();
 <div id="logo">
   <img src="'.$_SESSION["int_logo"].'" height="80" width="80">
 </div>
-<h1>'.$_SESSION["int_full"].' <br/> Current Account Report</h1>
+<h1>'.$_SESSION["int_full"].' <br/> Current Account Report '.$sad.'</h1>
 <div id="company" class="clearfix">
   <div>'.$branch.'</div>
   <div>'.$branch_location.'</div>
@@ -84,6 +114,7 @@ session_start();
 </div>
 <div id="project">
   <div><span>BRANCH</span> '.$branch.' </div>
+  <div><span>Total Account Balances</span> '.number_format($ttlacc, 2).' </div>
 </div>
 </header>
   <main>
@@ -111,11 +142,11 @@ session_start();
       </tr>
     </thead>
   <tbody>
-  "'.fill_report($connection).'"
+  "'.fill_report($connection, $br_id, $branches).'"
   </tbody>
   </table>
   </main>
   ');
-  $file_name = 'Current Account Report for '.$intname.'-'.$date.'.pdf';
+  $file_name = 'Current Account Report '.$sad.' for '.$intname.'-'.$date.'.pdf';
   $mpdf->Output($file_name, 'D');
 ?>

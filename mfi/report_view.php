@@ -23,16 +23,13 @@ if(isset($_GET["edit"])) {
     echo header("Location: report_client_view.php?view5");
   }
   else if($location == "6"){
-
-  }
-  else if($location == "7"){
-
+    echo header("Location: report_group_view.php?view6");
   }
   else if($location == "8"){
-
+    echo header("Location: report_group_view.php?view8");
   }
   else if($location == "9"){
-
+    echo header("Location: report_group_view.php?view9");
   }
   else if($location == "10"){
     echo header("Location: report_savings_view.php?view10");
@@ -83,7 +80,7 @@ if(isset($_GET["edit"])) {
     echo header("Location: report_financial_view.php?view25");
   }
   else if($location == "26"){
-
+    echo header("Location: report_financial_view.php?view26");
   }
   else if($location == "27"){
     echo header("Location: statement_of_fp.php");
@@ -100,7 +97,7 @@ if(isset($_GET["edit"])) {
 
   }
   else if($location == "31"){
-
+    echo header("Location: report_fixed_deposit_view.php?view31");
   }
   else if($location == "32"){
 
@@ -119,6 +116,27 @@ if(isset($_GET["edit"])) {
   }
   else if($location == "39"){
     echo header("Location: report_loan_view.php?view39");
+  }
+  else if($location == "41"){
+    echo header("Location: report_savings_view.php?view41");
+  }
+  else if($location == "42"){
+    echo header("Location: report_current_view.php?view42");
+  }
+  else if($location == "43"){
+    echo header("Location: report_financial_view.php?view43");
+  }
+  else if($location == "44"){
+    echo header("Location: report_institution_view.php?view44");
+  }
+  else if($location == "45"){
+    echo header("Location: report_loan_view.php?view45");
+  }
+  else if($location == "46"){
+    echo header("Location: report_group_view.php?view46");
+  }
+  else if($location == "47"){
+    echo header("Location: report_financial_view.php?view47");
   }
 }
 ?>

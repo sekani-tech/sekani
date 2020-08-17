@@ -9,6 +9,7 @@ if(isset($_POST["id"])) {
     $id = $_POST["id"];
     $start = $_POST["start"];
     $end = $_POST["end"];
+    $acc_no = $_POST['account_no'];
 
     $query1 = mysqli_query($connection, "SELECT * FROM client WHERE id='$id'");
     if (count([$query1]) == 1) {
@@ -17,7 +18,6 @@ if(isset($_POST["id"])) {
         $lname = $a['lastname'];
         $int_id = $a['int_id'];
         $actype = $a['account_type'];
-        $acc_no = $a['account_no'];
         $branch = $a['branch_id'];
         $query2 = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$int_id'");
         if (count([$query2]) == 1) {
@@ -40,21 +40,26 @@ if(isset($_POST["id"])) {
         $client_id = $d['client_id'];
         $acc_id = $d['id'];
         }
-        $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY id ASC");
+        $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$start' AND '$end') ORDER BY transaction_date ASC");
         $deb = mysqli_fetch_array($totald);
         $tdp = $deb['debit'];
         $totaldb = number_format($tdp, 2);
   
-        $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY id ASC");
+        $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$start' AND '$end') ORDER BY transaction_date ASC");
         $cred = mysqli_fetch_array($totalc);
         $tcp = $cred['credit'];
         $totalcd = number_format($tcp, 2);
 
+              // Closing Balance
+      $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$start' AND '$end') ORDER BY id DESC");
+      $rerc = mysqli_fetch_array($result);
+      $closing_bal = $rerc['running_balance_derived'];
 
-        function fill_data($connection, $acc_id, $sessint_id, $start, $end, $branch){
+
+        function fill_data($connection, $acc_no, $sessint_id, $start, $end, $branch){
         $id = $_GET["edit"];
       // import
-      $accountquery = "SELECT * FROM account_transaction WHERE account_id = '$acc_id' && int_id = $sessint_id && branch_id = '$branch' && transaction_date BETWEEN '$start' AND '$end' ORDER BY id ASC";
+      $accountquery = "SELECT * FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$start' AND '$end') ORDER BY transaction_date ASC";
       $resul = mysqli_query($connection, $accountquery);
       $out = '';
 
@@ -86,7 +91,7 @@ if(isset($_POST["id"])) {
             <td class="column3">'.$description .'</td>
             <td class="column4">'.$amt2.'</td>
             <td class="column5">'.$amt.'</td>
-            <td class="column6">'.$balance.'</td>
+            <td class="column6">'.number_format($balance).'</td>
         </tr>
       ';
       }
@@ -120,18 +125,18 @@ if(isset($_POST["id"])) {
         <tr>
             <td><div class="head"><span>Currency: </span>'.$currtype.'</div></td> 
             <td></td>
-            <td><div class="tail"><span>Total credit: '.$totalcd.'</span></div></td>
+            <td><div class="tail"><span>Total credit: &#8358;'.$totalcd.'</span></div></td>
             
         </tr>
         <tr>
             <td><div class="tail"><span>Account number: </span>'.$acc_no.'</div></td>
             <td></td>
-            <td><div class="tail"><span>Total debit: '.$totaldb.'</span></div></td> 
+            <td><div class="tail"><span>Total debit: &#8358;'.$totaldb.'</span></div></td> 
         </tr>
         <tr>
             <td><div class="tail"><span>Statement Period: </span>'.$start.' - '.$end.'</div></td>
             <td></td>
-            <td></td> 
+            <td><div class="tail"><span>Closing Balance: </span> &#8358;'.number_format($closing_bal, 2).'</div></td>
         </tr>
          </table>
         </div>
@@ -152,7 +157,7 @@ if(isset($_POST["id"])) {
                         </tr>
                     </thead>
                     <tbody>
-                    "'.fill_data($connection, $acc_id, $sessint_id, $start, $end, $branch).'"
+                    "'.fill_data($connection, $acc_no, $sessint_id, $start, $end, $branch).'"
                     </tbody>
                 </table>
             </div>

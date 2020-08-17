@@ -1,12 +1,29 @@
 <?php
+//  BEFOR THE SESSION START
+session_set_cookie_params(0);
     session_start();
+    $autologout = 1000;
+    $lastactive = $_SESSION['timestamp'] ?? 0;
+    if ((time() - $lastactive) > $autologout) {
+      // echo header("location: ../functions/logout.php");
+      // echo "ALRIGHT";
+    } else {
+      $_SESSION['timestamp']=time(); //Or reset the timestamp
+      // echo "READING...";
+	  }
+// THE NEW CODES HERE WILL BE FOR THE NEXT INSTANCE
+// WRITING A QUICK ALROGRITHM
+// 1. GET THE CURRENT TIME
+// 2. YOU UPDATE
+// 3. YOU CHECK
+// Let's make a new move
+  // ID
     if(!$_SESSION["usertype"] == "admin"){
       header("location: ../login.php");
       exit;
   }
   $staff_id = $_SESSION["staff_id"];
 ?>
-
 <?php
   // get connections for all pages
   include("../functions/connect.php");
@@ -37,6 +54,7 @@ if (count([$getpermission]) == 1) {
   $staff_cabal = $pms['staff_cabal'];
   $acc_update = $pms['acc_update'];
   $per_con = $pms['configuration'];
+  $per_bills = $pms['bills'];
   $bch_id = $_SESSION["branch_id"];
 }
 ?>
@@ -85,6 +103,31 @@ $timmer_check = $_SESSION['last_login_timestamp'];
 $activeq = "UPDATE users SET users.status ='$activecode', users.last_logged = '$ts' WHERE users.username ='$acuser'";
 $rezz = mysqli_query($connection, $activeq);
 ?>
+<input type="text" value="<?php echo $acuser;?>" id="usernameoioio" hidden>
+<input type="text" value="<?php echo $sessint_id; ?>" id="int_idioioioio" hidden>
+<script>
+setInterval(function() {
+    // alert('I will appear every 4 seconds');
+    var int_id = $('#int_idioioioio').val();
+    var user = $('#usernameoioio').val();
+    $.ajax({
+      url:"ajax_post/logout/record.php",
+      method:"POST",
+      data:{int_id:int_id, user: user},
+      success:function(data){
+        $('#time_recorder').html(data);
+      }
+    });
+    $.ajax({
+      url:"../loan_repayment/Repayment.php",
+      method:"POST",
+      data:{int_id:int_id, user: user},
+      success:function(data){
+        $('#r_bb').html(data);
+      }
+    });
+}, 1000);   // Interval set to 4 seconds
+</script>
 <!doctype html>
 <html lang="en">
 
@@ -92,7 +135,7 @@ $rezz = mysqli_query($connection, $activeq);
   <title><?php echo "$int_name - $page_title"?></title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-  <!-- <meta http-equiv="refresh" content="1000;url=../functions/logout.php" /> -->
+  <meta http-equiv="refresh" content="1000;url=../functions/logout.php" />
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <!--     Fonts and icons     -->
@@ -100,6 +143,9 @@ $rezz = mysqli_query($connection, $activeq);
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- Material Kit CSS -->
   <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+  <!-- Search Query -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> -->
   <!-- accordion -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
   <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
@@ -262,22 +308,12 @@ input[type=number] {
               Reports
             </a>
           </li>
-          <!-- <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-              <i class="material-icons">content_paste</i>
-              Reports
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="bill_airtime.php">
+              <i class="material-icons">description</i>
+              Bills & Airtime
             </a>
-            <div class="dropdown-menu">
-              <a href="report_client.php" class="dropdown-item">Client Report</a>
-              <a href="report_group.php" class="dropdown-item">Group Report</a>
-              <a href="report_savings.php" class="dropdown-item">Savings Report</a>
-              <a href="report_current.php" class="dropdown-item">Current Accounts Report</a>
-              <a href="report_loan.php" class="dropdown-item">Loan reports</a>
-              <a href="report_financial.php" class="dropdown-item">Financial report</a>
-              <a href="report_fixed_deposit.php" class="dropdown-item">Fixed Deposit Report</a>
-              <a href="report_institution.php" class="dropdown-item">Institutional Report</a>
-            </div>
-          </li> -->
+          </li>
           <!-- end of report -->
           <li class="nav-item dropdown">
             <a class="nav-link" href="configuration.php">
@@ -308,6 +344,8 @@ input[type=number] {
       </div>
     </div>
     <div class="main-panel">
+      <div id="time_recorder"></div>
+      <div id="r_bb" hidden></div>
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
@@ -324,7 +362,9 @@ input[type=number] {
               <?php
                 }
               ?>
-          
+<?php
+  $br_id = $_SESSION["branch_id"];
+?>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -335,15 +375,66 @@ input[type=number] {
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
             <li class="nav-item dropdown">
+              <!-- Notification for matured loans -->
             <?php
                 $today = date('Y-m-d');
-                $fom = mysqli_query($connection, "SELECT * FROM loan WHERE repayment_date = '$today'");
+                $fom = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$today'");
                 $dn = mysqli_num_rows($fom);
 
                 $tomorrow = date( 'Y-m-d' , strtotime ( $today . ' + 1 days' ));
-                $fodm = mysqli_query($connection, "SELECT * FROM loan WHERE repayment_date = '$tomorrow'");
+                $fodm = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$tomorrow'");
                 $dfn = mysqli_num_rows($fodm);
-                $fomd = $dfn + $dn;
+                ?>
+                <!-- Notification for client approval -->
+                <?php
+                  function brii($connection)
+                  {  
+                      $br_id = $_SESSION["branch_id"];
+                      $sint_id = $_SESSION["int_id"];
+                      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+                      $dof = mysqli_query($connection, $dff);
+                      $out = '';
+                      while ($row = mysqli_fetch_array($dof))
+                      {
+                        $do = $row['id'];
+                      $out .= " OR client.branch_id ='$do'";
+                      }
+                      return $out;
+                  }
+                  $ghgd = brii($connection);
+                ?>
+                <?php
+                  $query = "SELECT * FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' AND client.status = 'Not Approved' AND (client.branch_id ='$br_id'$ghgd)";
+                  $result = mysqli_query($connection, $query);
+                  $approvd = mysqli_num_rows($result);
+                ?>
+                <!-- Notification for institution transactions -->
+                <?php
+                  $sfsf = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' AND status = 'Pending' AND branch_id = '$br_id'";
+                  $sdwr = mysqli_query($connection, $sfsf);
+                  $trans = mysqli_num_rows($sdwr);
+                ?>
+                <!-- notification for client fund transfer -->
+                <?php
+                  $sdf = "SELECT * FROM transfer_cache WHERE int_id = '$sessint_id' AND status = 'Pending' AND branch_id = '$br_id'";
+                  $wyj = mysqli_query($connection, $sdf);
+                  $client = mysqli_num_rows($wyj);
+                ?>
+                <!-- Notification for disbursed loans -->
+                <?php
+                  $ruyj = "SELECT * FROM loan_disbursement_cache WHERE int_id = '$sessint_id' AND status = 'Pending'";
+                  $eroi = mysqli_query($connection, $ruyj);
+                  $loan = mysqli_num_rows($eroi);
+                ?>
+                <!-- Notificaion for charges -->
+                <?php
+                  $fdef = "SELECT * FROM client_charge WHERE int_id = '$sessint_id' AND (branch_id ='$br_id')";
+                  $sdf = mysqli_query($connection, $fdef);
+                  $charge = mysqli_num_rows($sdf);
+                ?>
+                <!-- Notification for banner -->
+                <?php
+                $fomd = $dfn + $dn + $approvd + $trans + $client + $loan + $charge;
                 ?>
                 <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">notifications</i>
@@ -351,11 +442,32 @@ input[type=number] {
                   <span class="badge badge-danger"><?php echo $fomd;?></span>
                   <?php }?>
                 </a>
+                <?php if($fomd > 0){?>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                  <a class="dropdown-item" href="report_loan_view.php?view39"><?php echo $dn;?> Loans matured today</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#"><?php echo $dfn;?> Loans due tommorow</a>
+                <?php 
+                  if($dfn){?>
+                  <a class="dropdown-item" href="report_loan_view.php?view39b=<?php echo $tomorrow; ?>"><?php echo $dfn;?> Loan(s) due tommorow</a>
+                  <?php }
+                  if($dn){?>
+                  <a class="dropdown-item" href="report_loan_view.php?view39=<?php echo $today;?>"><?php echo $dn;?> Loan(s) matured today</a>
+                <?php }
+                if($approvd){?>
+                  <a class="dropdown-item" href="client_approval.php"><?php echo $approvd;?> client(s) in need of approval</a>
+                <?php }
+                if($trans){?>
+                  <a class="dropdown-item" href="transact_approval.php"><?php echo $trans;?> transaction(s) in need of approval</a>
+                <?php }
+                if($client){?>
+                  <a class="dropdown-item" href="transfer_approval.php"><?php echo $client;?> client transfer(s) in need of approval</a>
+                <?php }
+                if($loan){?>
+                  <a class="dropdown-item" href="disbursement_approval.php"><?php echo $loan;?> Loans disbursement(s) in need of approval</a>
+                <?php }
+                if($charge){?>
+                  <a class="dropdown-item" href="charge_approval.php"><?php echo $charge;?> charge(s) in need of approval</a>
+                <?php }?>
                 </div>
+                <?php }?>
               </li>
               <!-- user setup -->
               <li class="nav-item dropdown">

@@ -5,7 +5,7 @@ $int_id = $_POST['int_id'];
 $int_name = $_POST['int_name'];
 $rcn = $_POST['rcn'];
 $lga = $_POST['lga'];
-$int_state = $_POST['int_state'];
+$int_state = $_POST['state'];
 $email = $_POST['email'];
 $office_address = $_POST['office_address'];
 $website = $_POST['website'];
@@ -16,6 +16,10 @@ $pc_other_name = $_POST['pc_other_name'];
 $pc_designation = $_POST['pc_designation'];
 $pc_phone = $_POST['pc_phone'];
 $pc_email = $_POST['pc_email'];
+$sender_id = $_POST['sender_id'];
+$ingram = $_POST['ingram'];
+$tweet = $_POST['tweet'];
+$face = $_POST['face'];
 
 $digits = 10;
 if($_FILES['int_logo']['name']) {
@@ -35,14 +39,22 @@ if($_FILES['int_logo']['name']) {
   rcn = '$rcn', lga = '$lga', int_state = '$int_state', email = '$email',
   office_address = '$office_address', website = '$website', office_phone = '$office_phone',
   pc_title = '$pc_title', pc_surname = '$pc_surname', pc_other_name = '$pc_other_name', pc_designation = '$pc_designation',
-  pc_phone = '$pc_phone', pc_email = '$pc_email', img = '$img' WHERE int_id = '$int_id'";
-  $result = mysqli_prepare($connection, $query);
-  if(mysqli_stmt_execute($result)) {
+  pc_phone = '$pc_phone', pc_email = '$pc_email', img = '$img', sender_id = '$sender_id', instagram = '$ingram', twitter = '$tweet'
+  , facebook = '$face' WHERE int_id = '$int_id'";
+  $result = mysqli_query($connection, $query);
+  if($result) {
      echo header("location: ../institution.php");
     echo "<p>done</p>";
   } else {
       echo "nop";
   }
+  if ($connection->error) {
+        try {   
+            throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
+        } catch(Exception $e ) {
+            echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+            echo nl2br($e->getTraceAsString());
+        }
+    }
 }
-mysqli_close($connection);
 ?>

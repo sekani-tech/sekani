@@ -1,5 +1,6 @@
 <?php 
-include("connect.php")
+include("connect.php");
+session_start();
 ?>
 <?php
 if (isset($_POST['id'])) {
@@ -13,6 +14,17 @@ if (isset($_POST['id'])) {
     $disable = $_POST['disable'];
     $descript = $_POST['descript'];
 
+    $fdos = "SELECT * FROM acc_gl_account WHERE id = '$id'";
+    $dpos = mysqli_query($connection, $fdos);
+    $dqp = mysqli_fetch_array($dpos);
+    $prev_code = $dqp['gl_code'];
+    if(isset($_POST['parent_id'])){
+        $parent = $_POST['parent_id'];
+    }
+    else{
+        $parent = 0;
+    }
+    
     $acct_type = 0;
     if($class_enum == 1){
         $acct_type = "ASSET";
@@ -42,11 +54,34 @@ if (isset($_POST['id'])) {
         $disable = 0;
     }
 
+    $qed = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '$gl_code'");
+    $dsp = mysqli_fetch_array($qed);
+    $gll = $dsp['gl_code'];
+    if(count([$qed]) == 1){
+        $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+        echo "error";
+       echo header ("Location: ../mfi/chart_account.php?message9=$randms");
+    }
+    else{
+
+        $fdop = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '$class_enum' AND parent_id = '0'";
+        $fdos = mysqli_query($connection, $fdop);
+        $pdfo = mysqli_num_rows($fdos);
+        if($parent == 0){
+          $int_id_no = $pdfo + 1;
+        }
+        else{
+            $int_id_no = 0;
+        }
+
+
         $sec = "UPDATE acc_gl_account SET name = '$acct_name', gl_code = '$gl_code',
-        account_usage = '$acct_use', classification_enum='$class_enum', manual_journal_entries_allowed='$man_allow',
+        account_usage = '$acct_use', parent_id = '$parent', int_id_no = '$int_id_no', classification_enum='$class_enum', manual_journal_entries_allowed='$man_allow',
         disabled = '$disable', description = '$descript' WHERE id = '$id'";
         $res = mysqli_query($connection, $sec);
-
+        if($res) {
+            
+        }
         if ($res) {
           $_SESSION["Lack_of_intfund_$randms"] = " Account was updated successfully!";
           echo header ("Location: ../mfi/chart_account.php?message3=$randms");
@@ -55,5 +90,6 @@ if (isset($_POST['id'])) {
            echo "error";
           echo header ("Location: ../mfi/chart_account.php?message4=$randms");
         }
+}
 }
 ?>

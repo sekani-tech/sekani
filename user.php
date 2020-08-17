@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $inst_id = $_POST["inst_id"];
   $username = $_POST['username'];
 $user_t = $_POST['user_t'];
+$branch_id = $_POST['b_id'];
 $display_name = $_POST['display_name'];
 $email = $_POST['email'];
 $first_name = $_POST['first_name'];
@@ -57,20 +58,25 @@ if (count([$person]) == 1) {
       $imgmsg = "Failed to upload image";
     }
     // then query for the users
-    $queryuser = "INSERT INTO users (int_id, username, fullname, password, usertype, status, time_created, pics)
-VALUES ('{$inst_id}', '{$username}', '{$display_name}', '{$hash}', '{$user_t}', '{$std}', '{$date_joined}', '{$image3}')";
+    $queryuser = "INSERT INTO users (int_id, username, branch_id, fullname, password, usertype, status, time_created, pics)
+VALUES ('{$inst_id}', '{$username}', '{$branch_id}', '{$display_name}', '{$hash}', '{$user_t}', '{$std}', '{$date_joined}', '{$image3}')";
 
 $result = mysqli_query($connection, $queryuser);
 
 if ($result) {
-$qrys = "SELECT id FROM users WHERE username = '$username'";
+$qrys = "SELECT id FROM users WHERE fullname = '$display_name'";
 $res = mysqli_query($connection, $qrys);
 $row = mysqli_fetch_array($res);
 $ui = $row["id"];
- if ($res) {
-    $qrys = "INSERT INTO staff (int_id, int_name, user_id, username, display_name, email, first_name, last_name,
-description, address, date_joined, org_role, phone) VALUES ('{$inst_id}', '{$int_name}', '{$ui}', '{$username}', '{$display_name}', '{$email}',
-'{$first_name}', '{$last_name}', '{$description}', '{$address}', '{$date_joined}', '{$org_role}', '{$phone}')";
+
+$dsid = "SELECT * FROM org_role WHERE int_id = '$inst_id' AND role = 'super user'";
+$perv = mysqli_query($connection, $dsid);
+$di = mysqli_fetch_array($perv);
+$org_ole = $di['id'];
+
+    $qrys = "INSERT INTO staff (int_id, branch_id, int_name, user_id, username, display_name, email, first_name, last_name,
+description, address, date_joined, org_role, phone) VALUES ('{$inst_id}', '{$branch_id}', '{$int_namex}', '{$ui}', '{$username}', '{$display_name}', '{$email}',
+'{$first_name}', '{$last_name}', '{$description}', '{$address}', '{$date_joined}', '{$org_ole}', '{$phone}')";
 
 $result = mysqli_query($connection, $qrys);
 // if ($connection->error) {
@@ -93,10 +99,6 @@ if ($result) {
      echo "<p>ERROR</p>";
      $imgmsg = "";
  }
-} else {
-   echo "<p>Error</p>";
-   $imgmsg = "";
-}
 // if ($connection->error) {
 //     try {   
 //         throw new Exception("MySQL error $connection->error <br> Query:<br> $queryuser", $msqli->errno);   
@@ -125,7 +127,7 @@ if ($result) {
                 <div class="card-body">
                   <form method="POST">
                     <div class="row">
-                      <div class="col-md-5">
+                      <div class="col-md-4">
                         <div class="form-group">
                         <?php
                   function fill_int($connection)
@@ -142,10 +144,37 @@ if ($result) {
                   }
                   ?>
                           <label class="bmd-label-floating">Institution</label>
-                          <select name="inst_id" class="form-control">
+                          <select name="inst_id" id="static" class="form-control">
                         <option value="">select Institution</option>
                         <?php echo fill_int($connection); ?>
                       </select>
+                        </div>
+                      </div>
+                      <script>
+                    $(document).ready(function() {
+                      $('#static').on("change", function(){
+                        var id = $(this).val();
+                        $.ajax({
+                          url:"mfi/ajax_post/branching.php",
+                          method:"POST",
+                          data:{id:id},
+                          success:function(data){
+                            $('#showme').html(data);
+                          }
+                        })
+                      });
+                    });
+                </script>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Branch</label>
+                          <select id="showme" name="b_id" class="form-control">
+                      </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating"></label>
                         </div>
                       </div>
                       <div class="col-md-4">
@@ -155,13 +184,13 @@ if ($result) {
                           <span class="help-block" style="color: red;"><?php echo $usext;?></span>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Display name</label>
                           <input type="text" class="form-control" name="display_name">
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Email address</label>
                           <input type="email" class="form-control" name="email">
@@ -205,7 +234,7 @@ if ($result) {
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Date Joined:</label>
+                          <label class="form-check-label">Date Joined:</label>
                           <input type="date" class="form-control" name="date_joined">
                         </div>
                       </div>
@@ -213,10 +242,7 @@ if ($result) {
                         <div class="form-group">
                           <label for="role" class="bmd-label-floating">Organization Role:</label>
                           <select name="org_role" id="" class="form-control">
-                              <option value="">...</option>
-                              <?php foreach ( $results as $option ) : ?>
-                              <option value="<?php echo $option->role; ?>"><?php echo $option->role; ?></option>
-                              <?php endforeach; ?>
+                              <option value="super user">Super User</option>
                           </select>
                         </div>
                       </div>
@@ -228,24 +254,23 @@ if ($result) {
                       </div>
                     </div>
                     <div class="row">
-                    <div class="col-md-6">
-                    <span class="help-block" style="color: red;"><?php echo $imgmsg;?></span>
-                    <!-- insert passport -->
-                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                        <div class="fileinput-new thumbnail img-raised">
-                            <!-- <img src="http://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" rel="nofollow" alt="..."> -->
-                        </div>
-                        <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
-                        <div>
-                            <span class="btn btn-raised btn-round btn-default btn-file">
-                                <span class="fileinput-new">Select Image</span>
-                                <span class="fileinput-exists">Change</span>
-                                <input type="file" name="passport" id="passport" />
-                            </span>
-                            <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
-                        </div>
+                    <style>
+                        input[type="file"]{
+                          display: none;
+                        }
+                        .custom-file-upload{
+                          border: 1px solid #ccc;
+                          display: inline-block;
+                          padding: 6px 12px;
+                          cursor: pointer;
+                        }
+                      </style>
+                    <div class="col-md-4">
+                    <label for="file-insert" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                    <input id ="file-insert" name="passport" type="file" class="inputFileHidden"/>
+                    <label> Select Passport</label>
+                    <div id="iup"></div>
                     </div>
-                  </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">UserType</label>

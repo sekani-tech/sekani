@@ -54,6 +54,7 @@ if ($acc_op == 1 || $acc_op == "1") {
                           <option value="Individual">Individual Account</option>
                           <option value="Joint">Joint Account</option>
                           <option value="Corporate">Corporate Account</option>
+                          <option value="Group">Group Account</option>
                         </select>
                     </div>
                   </div>

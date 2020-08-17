@@ -11,12 +11,14 @@ if (isset($_POST["id"]))
                    $query = "SELECT * FROM product_loan_charge WHERE product_loan_id = '$p_id' && int_id = '$sessint_id'";
                    $result = mysqli_query($connection, $query);
                    ?>
+                   <input type="text" hidden value="<?php echo $p_id;?>" id="mrome"/>
                           <thead>
                             <tr>
                               <th>Name</th>
                               <th>Charge</th>
                               <th>Amount</th>
                               <th>Collected On</th>
+                              <th>Delete</th>
                               <!-- <th>Date</th> -->
                             </tr>
                           </thead>
@@ -26,6 +28,7 @@ if (isset($_POST["id"]))
                         <tr>
                             <?php
                             $c_id = $row["charge_id"];
+                            $edd = $row["id"];
                             $select_chg = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' && int_id = '$sessint_id'");
                             while ($xm = mysqli_fetch_array($select_chg)) {
                                 $values = $xm["charge_time_enum"];
@@ -67,6 +70,9 @@ if (isset($_POST["id"]))
                           <td><?php echo $chg2; ?></td>
                           <td><?php echo $amt."".$amt2; ?></td>
                           <td><?php echo $xs; ?></td>
+                          <td><div class="media-body media-right">
+                            <span onclick="delete_charge(<?php echo $edd;?>)" class="btn btn-danger">Delete</span>
+                          </div></td>
                         </tr>
                         <?php
                         }
@@ -76,7 +82,30 @@ if (isset($_POST["id"]))
                           else {
                             // echo "0 Document";
                           }
-                          ?>   
+                          ?>  
+                          <script>
+                             function delete_charge(I) {
+                              // delete methodology
+                                var id_to_be_deleted = I;
+                                var formData = new FormData();
+                                var p_id = $('#mrome').val();
+                                formData.append("id_to_be_deleted", id_to_be_deleted);
+                                $.ajax({
+                                    method: "POST",
+                                    url: "ajax_post/ajax_delete/delete_charges_loandis.php",
+                                    contentType: false,
+                                    processData: false,
+                                    //contentType: "application/json; charset=utf-8",
+                                    // dataType: "json",
+                                    data : formData,
+                                    success:function(data){
+                                      $('#lend_charge').html(data);
+                                      // document.getElementById("off_me").setAttribute("hidden", "");
+                                      // alert('success' + data);
+                                    }
+                                    });
+                                  }
+                            </script>
                           </tbody>
                         </table>
     <?php

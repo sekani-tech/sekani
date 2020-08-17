@@ -25,7 +25,8 @@ if (isset($_GET["message"])) {
     ';
     $_SESSION["lack_of_intfund_$key"] = 0;
  }
- else if (isset($_GET["message1"])) {
+}
+else if (isset($_GET["message1"])) {
   $key = $_GET["message1"];
   // $out = $_SESSION["lack_of_intfund_$key"];
   $tt = 0;
@@ -45,7 +46,7 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
  }
-} else if (isset($_GET["message2"])) {
+ else if (isset($_GET["message2"])) {
     $key = $_GET["message2"];
     // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
@@ -380,8 +381,10 @@ if ($trans_post == 1 || $trans_post == "1") {
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $randms1= str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$randms2 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $transid = $randms;
 $transid1 = $randms1;
+$transid2 = $randms2;
 ?>
 <!-- Content added here -->
 <div class="content">
@@ -417,9 +420,10 @@ $transid1 = $randms1;
             <div class="form-group">
                 <label for="">Type</label>
                 <select class="form-control" name="test">
-                    <option> </option>
+                    <option hidden>select an option</option>
                     <option value="deposit">Deposit</option>
                     <option value="withdraw">Withdraw</option>
+                    <option value="deposit">Salary</option>
                  </select>
             </div>
             <div id="acct_name"></div>
@@ -605,7 +609,8 @@ $transid1 = $randms1;
                   function fill_client($connection)
                   {
                   $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM client WHERE int_id = '$sint_id' AND status = 'Approved' ORDER BY firstname ASC";
+                  $branc = $_SESSION["branch_id"];
+                  $org = "SELECT client.id, client.firstname, client.lastname, client.middlename FROM client JOIN branch ON client.branch_id = branch.id WHERE client.int_id = '$sint_id' AND (branch.id = '$branc' OR branch.parent_id = '$branc') AND status = 'Approved' ORDER BY firstname ASC";
                   $res = mysqli_query($connection, $org);
                   $out = '';
                   while ($row = mysqli_fetch_array($res))
@@ -626,9 +631,23 @@ $transid1 = $randms1;
         </div>
         <div class="col-md-4">
         <div class="form-group">
+
+          <script>
+           // In your Javascript (external .js resource or <script> tag)
+           $(document).ready(function() {
+              $('.js-example-basic-single').select2();
+          });
+          </script>
+                <!-- <label for="">Client</label>
+                <select class="js-example-basic-single" name="state">
+                  <option>one</option>
+                  <option>two</option>
+                  <option>three</option>
+                </select> -->
                 <label for="">Client</label>
-                <select id="sdd" name="client_id" class="form-control">
-                  <option></option>
+                <select id="sdd" name="client_id" class="js-example-basic-single form-control">
+                <option hidden>select clients</option>
+                  <option value="000">All</option>
                   <?php echo fill_client($connection);?>
                 </select>
                 <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id;?>" id="int_id">
@@ -636,8 +655,8 @@ $transid1 = $randms1;
     </div>
     <div class="col-md-4">
       <div class="form-group">
-          <label for="">Transaction ID:</label>
-          <input type="text" readonly value="<?php echo $transid; ?>" name="transid" class="form-control" id="tsit">
+          <label for="">Transaction ID</label>
+          <input type="text" readonly value="<?php echo $transid2; ?>" name="transid" class="form-control" id="tsit">
       </div>
     </div>
     <div class="col-md-4">

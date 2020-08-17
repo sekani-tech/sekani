@@ -2,7 +2,7 @@
 include("material.php");
 include("functions/connect.php");
 require_once "bat/phpmailer/PHPMailerAutoload.php";
-
+// finsh off here
 session_start();
 
 $intname = $_SESSION["int_name"];

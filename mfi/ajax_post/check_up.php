@@ -12,7 +12,7 @@ if(isset($_POST["id"]))
 <?php
      function fill_charges2($connection, $sint_id)
      {
-     $org = "SELECT charge.id, charge.name, charges_cache.charge_id FROM charge LEFT JOIN charges_cache ON charges_cache.charge_id = charge.id WHERE charges_cache.charge_id IS NULL && charge.int_id = '$sint_id' && charge.charge_applies_to_enum = '1' && charge.is_active = '1'";
+     $org = "SELECT charge.id, charge.name, charges_cache.charge_id FROM charge LEFT JOIN charges_cache ON charges_cache.charge_id = charge.id WHERE charges_cache.charge_id IS NULL && charge.int_id = '$sint_id' && charge.is_active = '1'";
      $res = mysqli_query($connection, $org);
      $output = '';
      while ($row = mysqli_fetch_array($res))

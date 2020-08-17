@@ -5,6 +5,24 @@ $destination = "report_client.php";
     include("header.php");
 ?>
 <?php
+  function branch_opt($connection)
+  {  
+      $br_id = $_SESSION["branch_id"];
+      $sint_id = $_SESSION["int_id"];
+      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+      $dof = mysqli_query($connection, $dff);
+      $out = '';
+      while ($row = mysqli_fetch_array($dof))
+      {
+        $do = $row['id'];
+      $out .= " OR client.branch_id ='$do'";
+      }
+      return $out;
+  }
+  $br_id = $_SESSION["branch_id"];
+  $branches = branch_opt($connection);
+?>
+<?php
  if (isset($_GET["view1"])) {
 ?>
 <!-- Content added here -->
@@ -23,8 +41,8 @@ $destination = "report_client.php";
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved'";
-                   $result = mysqli_query($connection, $query);
+                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && (client.branch_id ='$br_id' $branches) ";
+                        $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
@@ -57,7 +75,7 @@ $destination = "report_client.php";
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
+                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && (client.branch_id ='$br_id' $branches) ";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -96,7 +114,7 @@ $destination = "report_client.php";
                             if (count([$atype]) == 1) {
                                 $yxx = mysqli_fetch_array($atype);
                                 $actype = $yxx['product_id'];
-                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
+                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype' AND int_id = '$sessint_id'");
                            if (count([$spn])) {
                              $d = mysqli_fetch_array($spn);
                              $savingp = $d["name"];
@@ -185,12 +203,12 @@ $destination = "report_client.php";
                   </script>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved'";
+                   $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved' && (branch_id ='$br_id' $branches)";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> registered clients || <a style = "color: white;" href="manage_client.php">Create New client</a></p>
+                   }?> registered clients
                 </div>
                 <div class="card-body">
                 <div class="form-group">
@@ -217,9 +235,9 @@ $destination = "report_client.php";
             </div>
                   <div class="table-responsive">
                     <table id="tableddat" class="table" cellspacing="0" style="width:100%">
-                      <thead class=" text-primary">
+                      <thead class="text-primary">
                       <?php
-                        $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' ORDER BY client.firstname ASC";
+                        $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && (client.branch_id ='$br_id' $branches)  ORDER BY client.firstname ASC";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -266,7 +284,7 @@ $destination = "report_client.php";
                             if (count([$atype]) == 1) {
                                 $yxx = mysqli_fetch_array($atype);
                                 $actype = $yxx['product_id'];
-                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
+                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype' AND int_id = '$sessint_id'");
                            if (count([$spn])) {
                              $d = mysqli_fetch_array($spn);
                              $savingp = $d["name"];
@@ -341,7 +359,7 @@ $destination = "report_client.php";
     <?php
 function fill_client($connection) {
   $sint_id = $_SESSION["int_id"];
-  $org = "SELECT * FROM client WHERE int_id = '$sint_id'";
+  $org = "SELECT * FROM client WHERE int_id = '$sint_id' ORDER BY firstname ASC";
   $res = mysqli_query($connection, $org);
   $out = '';
   while ($row = mysqli_fetch_array($res))
@@ -351,10 +369,7 @@ function fill_client($connection) {
   return $out;
 }
 ?>
-Content added here
     <div class="content">
-        <div class="container-fluid">
-         your content here
           <div class="row">
             <div class="col-md-12">
               <div class="card">
@@ -431,7 +446,7 @@ Content added here
                   $thismonth = date("m");
                   // $end = date('Y-m-d', strtotime('-30 days'));
                   $curren = $thisyear."-".$thismonth."-01";
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std'";
+                        $query = "SELECT * FROM client WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std' && (branch_id ='$br_id' $branches)";
                         $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -517,7 +532,7 @@ Content added here
                     <table id="dismonth" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std'";
+                        $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std' && (branch_id ='$br_id' $branches) ";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -546,7 +561,14 @@ Content added here
                         <?php $row["id"]; ?>
                           <th><?php echo $row["firstname"]; ?></th>
                           <th><?php echo $row["lastname"]; ?></th>
-                          <th><?php echo strtoupper($row["first_name"]." ".$row["last_name"]); ?></th>
+                          <?php $ffd = $row["loan_officer_id"];
+                          $ds = "SELECT * FROM staff WHERE int_id ='$sessint_id' AND id = '$ffd'";
+                          $fdi = mysqli_query($connection, $ds);
+                          $fd = mysqli_fetch_array($fdi);
+                          $fn = $fd['first_name'];
+                          $ln = $fd['last_name'];
+                          ?>
+                          <th><?php echo strtoupper($fn." ".$ln); ?></th>
                           <?php
                             $class = "";
                             $row["account_type"];
@@ -555,7 +577,7 @@ Content added here
                             if (count([$atype]) == 1) {
                                 $yxx = mysqli_fetch_array($atype);
                                 $actype = $yxx['product_id'];
-                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
+                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype' AND int_id = '$sessint_id'");
                            if (count([$spn])) {
                              $d = mysqli_fetch_array($spn);
                              $savingp = $d["name"];

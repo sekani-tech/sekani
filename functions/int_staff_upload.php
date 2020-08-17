@@ -31,7 +31,7 @@ $address = $_POST['address'];
 $date_joined = $_POST['date_joined'];
 $org_role = $_POST['org_role'];
 $std = "Not Active";
-$branch_id = $_SESSION['branch_id'];
+$branch_id = $_POST['branch'];
 $phone = $_POST['phone'];
 $digits = 10;
 $temp2 = explode(".", $_FILES['idimg']['name']);
@@ -848,12 +848,12 @@ if(!$mail->send())
 } else
 {
   $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was created successfully!";
-  echo header ("Location: ../mfi/users.php?message1=$randms");
+  echo header ("Location: ../mfi/staff_mgmt.php?message1=$randms");
 }
   // end Mail system
  } else {
     $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-   echo header ("Location: ../mfi/users.php?message2=$randms");
+   echo header ("Location: ../mfi/staff_mgmt.php?message2=$randms");
      // echo header("location: ../mfi/client.php");
  }
  } else {

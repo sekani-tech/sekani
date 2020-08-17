@@ -101,6 +101,11 @@ $destination = "transaction.php";
             }
           }
         ?>
+        <?php
+// right now we will program
+// first step - check if this person is authorized
+if ($loan_appv == 1 || $loan_appv == "1") {
+?> 
           <!-- your content here -->
         <div class="row">
           <div class="col-md-12">
@@ -132,7 +137,8 @@ $destination = "transaction.php";
                               // a function for client data fill
                               function fill_client($connection) {
                                 $sint_id = $_SESSION["int_id"];
-                                $org = "SELECT * FROM client WHERE int_id = '$sint_id' AND status = 'Approved' ORDER BY firstname ASC";
+                                $branc = $_SESSION["branch_id"];
+                                $org = "SELECT client.id, client.firstname, client.lastname, client.middlename FROM client JOIN branch ON client.branch_id = branch.id WHERE client.int_id = '$sint_id' AND (branch.id = '$branc' OR branch.parent_id = '$branc') AND status = 'Approved' ORDER BY firstname ASC";
                                 $res = mysqli_query($connection, $org);
                                 $out = '';
                                 while ($row = mysqli_fetch_array($res))
@@ -612,19 +618,19 @@ $destination = "transaction.php";
                     <div class="tab"><h3> Repayment Schedule:</h3>
                       <div class="form-group">
                       <script>
-                              $(document).ready(function() {
-                                $('#charges').change(function(){
-                                  var id = $(this).val();
-                                  $.ajax({
-                                    url:"loan_calculation_table.php",
-                                    method:"POST",
-                                    data:{id:id},
-                                    success:function(data){
-                                      $('#show_table').html(data);
-                                    }
-                                  })
-                                });
-                              })
+                              // $(document).ready(function() {
+                              //   $('#charges').change(function(){
+                              //     var id = $(this).val();
+                              //     $.ajax({
+                              //       url:"loan_calculation_table.php",
+                              //       method:"POST",
+                              //       data:{id:id},
+                              //       success:function(data){
+                              //         $('#show_table').html(data);
+                              //       }
+                              //     })
+                              //   });
+                              // })
                             </script>
                             <table id = "accname" class="table table-bordered">
 
@@ -889,5 +895,28 @@ function fixStepIndicator(n) {
 <?php
 
     include("footer.php");
+
+?>
+<?php
+} else {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+   swal({
+    type: "error",
+    title: "Authorization Denied",
+    text: "You Dont Have permission to Book a loan",
+   showConfirmButton: false,
+    timer: 2000
+    }).then(
+    function (result) {
+      history.go(-1);
+    }
+    )
+    });
+   </script>
+  ';
+  // $URL="transact.php";
+  // echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+}
 
 ?>

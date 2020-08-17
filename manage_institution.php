@@ -31,6 +31,10 @@
               $pc_email = $n['pc_email'];
               $img = $n['img'];
               $int_img = $n['img'];
+              $sender_id = $n['sender_id'];
+              $facebook = $n['facebook'];
+              $twitter = $n['twitter'];
+              $instagram = $n['instagram'];
             }
           }
         ?>
@@ -51,26 +55,62 @@
                           <input type="text" readonly value="<?php echo $int_id; ?>" class="form-control" name="int_id">
                         </div>
                       </div>
-                      <div class="col-md-11">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Name</label>
                           <input type="text" value="<?php echo $int_name; ?>" class="form-control" name="int_name">
                         </div>
                       </div>
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Full Name</label>
+                          <input type="text" value="<?php echo $int_name; ?>" class="form-control" name="int_name">
+                        </div>
+                      </div>
+                      <?php
+                          function fill_state($connection)
+                            {
+                            $org = "SELECT * FROM states";
+                            $res = mysqli_query($connection, $org);
+                            $out = '';
+                            while ($row = mysqli_fetch_array($res))
+                            {
+                              $out .= '<option value="'.$row["name"].'">' .$row["name"]. '</option>';
+                            }
+                            return $out;
+                            }?>
+                      <script>
+                    $(document).ready(function() {
+                      $('#static').on("change", function(){
+                        var id = $(this).val();
+                        $.ajax({
+                          url:"mfi/ajax_post/lga.php",
+                          method:"POST",
+                          data:{id:id},
+                          success:function(data){
+                            $('#showme').html(data);
+                          }
+                        })
+                      });
+                    });
+                </script>
                       <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">State:</label>
-                      <select class="form-control" style="text-transform: uppercase;" name="state" id="selState" onchange="configureDropDownLists()">
-                      </select>
-                    </div> 
-                    </div> 
-                    <div class="col-md-6">
-                      <div class="form-group">
-                      <label for="">LGA:</label>
-                      <select  class="form-control"name="lga" id="selCity">
-                      </select>
-                    </div>
-                  </div>
+                        <div class="form-group">
+                          <label for="">State:</label>
+                          <select id="static" class="form-control" style="text-transform: uppercase;" name="state">
+                          <option value="<?php echo $int_state;?>" hidden><?php echo $int_state;?></option>
+                          <?php echo fill_state($connection);?>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="form-check-label">LGA</label>
+                          <option value="<?php echo $lga;?>" hidden><?php echo $lga;?></option>
+                          <select id="showme" class="form-control" style="text-transform: uppercase;" name="lga">
+                          </select>
+                        </div>
+                      </div>
                   <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">RCN</label>
@@ -101,6 +141,13 @@
                                 <input type="text" value="<?php echo $office_phone; ?>" name="office_phone" class="form-control" id="">
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Sender ID</label>
+                                <input type="text" value="<?php echo $sender_id; ?>" name="sender_id" class="form-control" id="">
+                            </div>
+                        </div>
+                        
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Title</label>
@@ -142,6 +189,24 @@
                             <div class="form-group">
                                 <label class="bmd-label-floating">Primary Contact Email</label>
                                 <input type="email" value="<?php echo $pc_email; ?>" name="pc_email" class="form-control" id="">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Facebook</label>
+                                <input type="text" value="<?php echo $facebook; ?>" name="face" class="form-control" id="">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Twitter</label>
+                                <input type="text" value="<?php echo $twitter; ?>" name="tweet" class="form-control" id="">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Instagram</label>
+                                <input type="text" value="<?php echo $instagram; ?>" name="ingram" class="form-control" id="">
                             </div>
                         </div>
                         <style>

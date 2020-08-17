@@ -54,6 +54,29 @@ $destination = "users.php";
                           <span class="help-block" style="color: red;"><div id="warnuser"></div></span>
                         </div>
                       </div>
+                      <?php
+                      function fill_branch($connection)
+                      {
+                      $sint_id = $_SESSION["int_id"];
+                      $dks = $_SESSION["branch_id"];
+                      $org = "SELECT * FROM branch WHERE int_id = '$sint_id' AND id = '$dks' OR parent_id = '$dks'";
+                      $res = mysqli_query($connection, $org);
+                      $out = '';
+                      while ($row = mysqli_fetch_array($res))
+                      {
+                        $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                      }
+                      return $out;
+                      }
+                      ?>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Branch</label>
+                          <select name="branch" id="branch" class="form-control">
+                            <?php echo fill_branch($connection);?>
+                        </select>
+                        </div>
+                      </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Display name</label>

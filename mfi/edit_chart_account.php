@@ -23,8 +23,13 @@ if(isset($_GET["edit"])) {
     $man_ent = $n['manual_journal_entries_allowed'];
     $disable_acct = $n['disabled'];
     $enb_bank_recon = $n['reconciliation_enabled'];
+    $parent_id = $n['parent_id'];
     $class_enum = $n['classification_enum'];
   }
+
+  $dso = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE id = '$parent_id'");
+  $dpd = mysqli_fetch_array($dso);
+  $kdo = $dpd['name'];
   if($acct_use == 1){
     $acct_use_name = "GL ACCOUNT";
   }
@@ -123,31 +128,71 @@ elseif($class_enum  == 5){
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >GL Code</label>
-                      <input type="text" value="<?php echo $gl_code; ?>" style="text-transform: uppercase;" class="form-control" name="gl_code" required>
+                      <input type="text" value="<?php echo $gl_code; ?>"  style="text-transform: uppercase;" class="form-control" name="gl_code" required>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account Type</label>
-                      <select class="form-control" name="class_enum" id="" required>
-                        <option value="<?php echo $class_enum?>"><?php echo $acc_type?></option>
+                      <select class="form-control" name="class_enum" id="give" required>
+                        <option hidden value="<?php echo $class_enum?>"><?php echo $acc_type?></option>
                         <option value="1">ASSET</option>
                         <option value="2">LIABILITY</option>
                         <option value="3">EQUITY</option>
                         <option value="4">INCOME</option>
                         <option value="5">EXPENSE</option>
                       </select>
+                      <input hidden type="text" id="int_id" value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
                     </div>
                   </div>
-
+                  <script>
+                    $(document).ready(function() {
+                      $('#atu').change(function() {
+                        var gl = $(this).val();
+                        var ch = $('#give').val();
+                        var id = $('#int_id').val();
+                        $.ajax({
+                          url:"ajax_post/chart_acct_post.php",
+                          method: "POST",
+                          data:{gl:gl, ch:ch, id:id},
+                          success:function(data){
+                            $('#dropping').html(data);
+                          }
+                        })
+                      });
+                      $('#give').change(function() {
+                        var ch = $(this).val();
+                        var gl = $('#atu').val();
+                        var id = $('#int_id').val();
+                        $.ajax({
+                          url:"ajax_post/chart_acct_post.php",
+                          method: "POST",
+                          data:{ch:ch, gl:gl, id:id},
+                          success:function(data){
+                            $('#dropping').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account Usage</label>
-                      <select class="form-control" name="acct_use" id="" required>
-                        <option value="<?php echo $acct_use;?>"><?php echo $acct_use_name;?></option>
+                      <select class="form-control" name="acct_use" id="atu">
+                        <option hidden value="<?php echo $acct_use;?>"><?php echo $acct_use_name;?></option>
                         <option value="1">GL ACCOUNT</option>
                         <option value="2">GL GROUP</option>
                       </select>                    
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">    
+                    <div >
+                    <label>GL GROUP</label>
+                      <select type="text"style="text-transform: uppercase;" class="form-control" value="" id="dropping" name="parent_id" >
+                      <option value="<?php echo $parent_id;?>"><?php echo $kdo;?></option>
+                    </select>
+                    </div>           
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -187,7 +232,6 @@ elseif($class_enum  == 5){
                     </div>
                   </div>
                 </div>
-                <a href="client.php" class="btn btn-danger">Back</a>
                 <button type="submit" name="submit" id="submit" class="btn btn-primary pull-right">Update Account</button>
                 <div class="clearfix"></div>
               </form>

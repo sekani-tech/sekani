@@ -6,7 +6,7 @@ session_start();
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $ctype = $_POST['ctype'];
-if($ctype == 'INDIVIDUAL')
+if($ctype == 'INDIVIDUAL' || $ctype == 'GROUP')
 {
     if (isset($_POST['id']) && isset($_POST['ctype'])) {
         $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id'");

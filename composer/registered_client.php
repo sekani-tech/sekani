@@ -3,7 +3,23 @@ $output = '';
 include("../functions/connect.php");
 session_start();
 ?>
+
 <?php
+  function branch_opt($connection)
+  {  
+      $br_id = $_SESSION["branch_id"];
+      $sint_id = $_SESSION["int_id"];
+      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+      $dof = mysqli_query($connection, $dff);
+      $out = '';
+      while ($row = mysqli_fetch_array($dof))
+      {
+        $do = $row['id'];
+      $out .= " OR client.branch_id ='$do'";
+      }
+      return $out;
+  }
+  
   $intname = $_SESSION['int_name'];
   $branch_id = $_SESSION["branch_id"];
   $date = date('d/m/Y');
@@ -122,13 +138,13 @@ session_start();
         $std = $mog.$ms;
         $curdate = "Dec, ".$mog;
      }
-  function fill_report($connection, $curren, $std)
+  function fill_report($connection, $curren, $std, $br_id, $branches)
         {
             $out = '';
             $sessint_id =$_SESSION['int_id'];
           // import
         //   $glcode = $_POST['glcode'];
-        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std'";
+        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' AND (client.branch_id ='$br_id' $branches) && submittedon_date BETWEEN '$curren' AND '$std'";
         $result = mysqli_query($connection, $query);
         while ($q = mysqli_fetch_array($result, MYSQLI_ASSOC))
           {

@@ -4,7 +4,15 @@ include('../../functions/connect.php');
 ?>
 <?php
 if(isset($_POST['id'])){
-
+  $dsd = $_POST['id'];
+  if($dsd == "000"){
+    $out = '<select name="acctdi" class="form-control">
+    <option value="000">All Clients</option>
+  </select>
+    ';
+          echo $out;
+  }
+else{
     function fill_account($connection) {
         $int_id = $_POST['ist'];
          $client_id = $_POST['id'];
@@ -28,6 +36,7 @@ if(isset($_POST['id'])){
       ';
     
             echo $out;
+    }
     }
     else {
         echo 'ID not posted';

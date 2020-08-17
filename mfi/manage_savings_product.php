@@ -5,18 +5,23 @@ $destination = "index.php";
     include("header.php");
 
 ?>
+<?php
+$sint_id = $_SESSION['int_id'];
+$fd = "DELETE FROM charges_cache WHERE int_id = '$sint_id'";
+$dos = mysqli_query($connection, $fd);
+?>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Create new Product</h4>
                   <p class="card-category">Fill in all important data</p>
                 </div>
-                <form id="form" action="../functions/int_product_upload.php" method="POST">
+                <form id="form" action="../functions/int_savings_prod_upload.php" method="POST">
                 <div class="card-body">
                 <div class = "row">
                     <div class = "col-md-12">
@@ -46,73 +51,74 @@ $destination = "index.php";
                     </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="installmentAmount" >Product Type</label>
+                          <label for="installmentAmount" >Account Type</label>
                           <select class="form-control" name="product_type" >
                            <option value="1">Current</option>
                             <option value="2">Savings</option>
+                            <option value="3">Fixed-Deposit</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="installmentAmount" >Savings Category</label>
-                          <select class="form-control" name="enable" >
-                           <option value="no">Voluntary</option>
-                            <option value="yes">Compulsory</option>
+                          <select class="form-control" name="saving_cat" >
+                           <option value="1">Voluntary</option>
+                            <option value="2">Compulsory</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="installmentAmount" >Auto Create</label>
-                          <select class="form-control" name="enable" >
-                           <option value="no">No</option>
-                            <option value="yes">Yes</option>
+                          <select class="form-control" name="autocreate" >
+                           <option value="2">No</option>
+                            <option value="1">Yes</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="installmentAmount" >Currency</label>
-                          <select class="form-control" name="enable" >
-                           <option value="no">Nigerian Naira(NGN)</option>
+                          <select class="form-control" name="currency" >
+                           <option value="NGN">Nigerian Naira(NGN)</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Nominal Annual Interest rate</label>
-                        <input type="text" class="form-control" name="short_name" value="" placeholder="Short Name..." required>
+                        <input type="text" class="form-control" name="nominal_int_rate" value="" placeholder="enter value" required>
                       </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                           <label for="installmentAmount" >Compounding Period</label>
-                          <select class="form-control" name="enable" >
-                           <option value="no">Daily</option>
-                           <option value="no">Monthly</option>
-                           <option value="no">Quarterly</option>
-                           <option value="no">Bi-Annually</option>
-                           <option value="no">Annually</option>
+                          <select class="form-control" name="compound_period" >
+                           <option value="1">Daily</option>
+                           <option value="2">Monthly</option>
+                           <option value="3">Quarterly</option>
+                           <option value="4">Bi-Annually</option>
+                           <option value="5">Annually</option>
                           </select>
                         </div>
                       </div>                  
                         <div class="col-md-6">
                         <div class="form-group">
                           <label for="interestRateApplied" >Interest Posting period Type</label>
-                          <select class="form-control" name="enable" >
-                           <option value="no">Daily</option>
-                           <option value="no">Monthly</option>
-                           <option value="no">Quarterly</option>
-                           <option value="no">Bi-Annually</option>
-                           <option value="no">Annually</option>
+                          <select class="form-control" name="int_post_type" >
+                           <option value="1">Daily</option>
+                           <option value="2">Monthly</option>
+                           <option value="3">Quarterly</option>
+                           <option value="4">Bi-Annually</option>
+                           <option value="5">Annually</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="interestMethodology" >Interest Calculation Type</label>
-                          <select class="form-control" name="interest_rate_methodoloy" >
+                          <select class="form-control" name="int_cal_type" >
                             <option value="1">Daily Balance</option>
                             <option value="2">Average Daily Balance</option>
                           </select>
@@ -121,49 +127,49 @@ $destination = "index.php";
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="amortizatioMethody" >Interest Calculation Days in Year type</label>
-                          <select class="form-control" name="ammortization_method" required>
-                            <option value="equal_installment">360 days</option>
-                            <option value="equal_principal_payment">365 days</option>
+                          <select class="form-control" name="int_cal_days" required>
+                            <option value="360">360 days</option>
+                            <option value="365">365 days</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
                       <div class="form-group">
-                        <label for="shortLoanName" >Automatic Opening Balance *</label>
-                        <input type="text" class="form-control" name="short_name" value="" placeholder="Short Name..." required>
+                        <label for="shortLoanName" >Minimum Balance *</label>
+                        <input type="number" class="form-control" name="auto_op_bal" value="" placeholder="1000" required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Mininmum Balance for Interest Calculation *</label>
-                        <input type="text" class="form-control" name="short_name" value="" placeholder="Short Name..." required>
+                        <input type="number" class="form-control" name="min_balance_cal" value="" placeholder="10" required>
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Maximum Positive Balance*</label>
-                        <input type="text" class="form-control" name="short_name" value="" placeholder="Short Name..." required>
+                        <input type="number" class="form-control" name="max_pve_bal" value="" placeholder="100,000,000.00" required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="shortLoanName" >Minimum Negative Balance</label>
-                        <input type="text" class="form-control" name="short_name" value="" placeholder="Short Name..." required>
+                        <input type="number" class="form-control" name="min_nve_bal" value="" placeholder="-20000" required>
                       </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-6">
                         <div class="form-group">
                           <label for="principal" >Lockin Period Frequency</label>
                           <div class="row">
                             <div class="col-md-4">
-                              <input type="text" class="form-control" name="principal_amount" value="" placeholder="Default" required>
+                              <input type="number" class="form-control" name="lock_per_freq" value="" placeholder="Default" required>
                             </div>
                             <div class="col-md-8">
-                          <select class="form-control" name="interest_rate_methodoloy" >
+                          <select class="form-control" name="lock_per_freq_time" >
                             <option value="1">Days</option>
                             <option value="2">Weeks</option>
-                            <option value="1">Months</option>
-                            <option value="2">Years</option>
+                            <option value="3">Months</option>
+                            <option value="4">Years</option>
                           </select>
                             </div>
                           </div>
@@ -172,126 +178,49 @@ $destination = "index.php";
                       <div class="col-md-6">
                        <div class="form-group">
                           <label for="additionalCharges" >Allow OverDraft</label>
-                          <select class="form-control" name="additional_charge" required>
-                            <option value="no">No</option>
-                            <option value="yes">Yes</option>
+                          <select class="form-control" name="allover" required>
+                            <option value="2">No</option>
+                            <option value="1">Yes</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
                        <div class="form-group">
                           <label for="additionalCharges" >Track Dormancy</label>
-                          <select class="form-control" name="additional_charge" required>
-                            <option value="no">No</option>
-                            <option value="yes">Yes</option>
+                          <select class="form-control" name="trk_dormancy" required>
+                            <option value="2">No</option>
+                            <option value="1">Yes</option>
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <!-- <div class="col-md-6">
                        <div class="form-group">
                           <label for="additionalCharges" >Enable Withdrawal Notice</label>
-                          <select class="form-control" name="additional_charge" required>
-                            <option value="no">No</option>
-                            <option value="yes">Yes</option>
+                          <select class="form-control" name="with_notice" required>
+                            <option value="2">No</option>
+                            <option value="1">Yes</option>
                           </select>
                         </div>
-                      </div>
+                      </div> -->
                   </div>
                   </div>
                   <!-- First Tab -->
                   <!-- Second Tab -->
-                  <div class="tab">
-                    <h3>Charges</h3>
-                    <input type="text" hidden readonly id="int_id" value="<?php echo $sessint_id; ?>">
-                    <input type="text" hidden readonly id="branch_id" value="<?php echo $branch_id; ?>">
-                    <script>
-                      $(document).ready(function() {
-                        $('#charges').change(function(){
-                          var id = $(this).val();
-                          var int_id = $('#int_id').val();
-                          var branch_id = $('#branch_id').val();
-                          var main_p = $('#main_p').val();
-                          $.ajax({
-                            url:"savings_charges.php",
-                            method:"POST",
-                            data:{id:id, int_id:int_id, branch_id:branch_id, main_p: main_p},
-                            success:function(data){
-                              $('#show_charges').html(data);
-                              document.getElementById("takeme").setAttribute("hidden", "");
-                              document.getElementById("damn_men").removeAttribute("hidden");
-                            }
-                          })
-                        });
-                      })
-                    </script>
-                    <div class="form-group">
-                      <?php
-                      $digits = 6;
-                      $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-                      $_SESSION["savings_temp"] = $randms;
-                      $main_p = $_SESSION["savings_temp"];
-                      ?>
-                    </div>
-                    <div class="form-group">
-                      <div class="row">
-                      <div class="col-md-4">
-                      <label>Charges:</label>
-                      <div id="damn_men" hidden>
-                      </div>
-                      <div id="takeme">
-                      <input type="text" hidden value="<?php echo $main_p; ?>" id="main_p">
-                      <select name="charge_id" class="form-control" id="charges">
-                        <option value="">select an option</option>
-                        <?php echo fill_charges($connection); ?>
-                      </select>
-                      </div>
-                      </div>
-                      <div class="col-md-6">
-                      <div id="show_charges">
-                      </div>
-                      </div>
-                      </div>
-                    </div>
-                    <?php
-                      // load user role data
-                      function fill_charges($connection)
-                      {
-                      $sint_id = $_SESSION["int_id"];
-                      $main_p  = $_SESSION["product_temp"];
-                      $org = "SELECT * FROM charge WHERE int_id = '$sint_id' && charge_applies_to_enum = '1' && is_active = '1'";
-                      $res = mysqli_query($connection, $org);
-                      $output = '';
-                      while ($row = mysqli_fetch_array($res))
-                      {
-                        $output .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
-                      }
-                      return $output;
-                      }
-                      ?>
-                      <script>
-                              $(document).ready(function() {
-                                $('#credit').on("change keyup paste click", function(){
-                                  var id = $(this).val();
-                                  $.ajax({
-                                    url:"credit_check.php",
-                                    method:"POST",
-                                    data:{id:id},
-                                    success:function(data){
-                                      $('#show_credit').html(data);
-                                    }
-                                  })
-                                });
-                              });
-                            </script>
-                  </div>
-                  <!-- Second Tab -->
-                  <!-- Third Tab -->
                   <div class="tab">
                   <h3> Interest Rate Chart:</h3>
                     <div class="form-group">
                       <button type="button" class="btn btn-primary" name="button" onclick="showDialog()"> <i class="fa fa-plus"></i> Add</button>
                       </div>
                       <div class="form-group">
+                      <?php
+                      $digits = 6;
+                      $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+                      $_SESSION["savings_temp"] = $randms;
+                      $main_p = $_SESSION["savings_temp"];
+                      $_SESSION["stemp"] = $_SESSION["savings_temp"];
+                      $dbcache = $_SESSION["stemp"];
+                      $_SESSION["product_temp"] = $randms;
+                      ?>
                       <script>
                               $(document).ready(function() {
                                 $('#clickit').on("change keyup paste click", function() {
@@ -421,6 +350,84 @@ $destination = "index.php";
                       </div>
                     </div>
                   </div>
+                  <!-- Second Tab -->
+                  <!-- Third Tab -->
+                  <div class="tab">
+                    <h3>Charges</h3>
+                    <input type="text" hidden readonly id="int_id" value="<?php echo $sessint_id; ?>">
+                    <input type="text" hidden readonly id="branch_id" value="<?php echo $branch_id; ?>">
+                    <script>
+                      $(document).ready(function() {
+                        $('#charges').change(function(){
+                          var id = $(this).val();
+                          var int_id = $('#int_id').val();
+                          var branch_id = $('#branch_id').val();
+                          var main_p = $('#main_p').val();
+                          $.ajax({
+                            url:"savings_charges.php",
+                            method:"POST",
+                            data:{id:id, int_id:int_id, branch_id:branch_id, main_p: main_p},
+                            success:function(data){
+                              $('#show_charges').html(data);
+                              document.getElementById("takeme").setAttribute("hidden", "");
+                              document.getElementById("damn_men").removeAttribute("hidden");
+                            }
+                          })
+                        });
+                      })
+                    </script>
+                    <div class="form-group">
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                      <div class="col-md-4">
+                      <label>Charges:</label>
+                      <input type="text" hidden value="<?php echo $main_p; ?>" id="main_p">
+                      <select name="charge_id" class="form-control" id="charges">
+                        <option value="">select an option</option>
+                        <?php echo fill_charges($connection); ?>
+                      </select>
+
+                      </div>
+                      <div class="col-md-6">
+                      <div id="show_charges">
+                      </div>
+                      </div>
+                      </div>
+                    </div>
+                    <?php
+                      // load user role data
+                      function fill_charges($connection)
+                      {
+                      $sint_id = $_SESSION["int_id"];
+                      $main_p  = $_SESSION["product_temp"];
+                      $org = "SELECT * FROM charge WHERE int_id = '$sint_id' && is_active = '1'";
+                      $res = mysqli_query($connection, $org);
+                      $output = '';
+                      while ($row = mysqli_fetch_array($res))
+                      {
+                        $output .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                      }
+                      return $output;
+                      }
+                      ?>
+                      <script>
+                              $(document).ready(function() {
+                                $('#credit').on("change keyup paste click", function(){
+                                  var id = $(this).val();
+                                  $.ajax({
+                                    url:"credit_check.php",
+                                    method:"POST",
+                                    data:{id:id},
+                                    success:function(data){
+                                      $('#show_credit').html(data);
+                                    }
+                                  })
+                                });
+                              });
+                            </script>
+                  </div>
+                  
                   <!-- Third Tab -->
                   <!-- Fourth Tab -->
                   <div class="tab">
@@ -473,24 +480,24 @@ $destination = "index.php";
                             </div>
                             <div class="form-group">
                             <div class="col-md-8">
-                            <label for="charge" class="form-align ">Loan Portfolio</label>
+                            <label for="charge" class="form-align ">Savings Portfolio</label>
                             <select class="form-control form-control-sm" name="asst_loan_port">
                               <option value="">--</option>
                               <?php echo fill_asset($connection) ?>
                             </select>
                             </div>
                           </div>
-                          <div class="form-group">
+                          <!-- <div class="form-group">
                             <div class="col-md-8">
                             <label for="charge" class="form-align">Insufficient Repayment</label>
-                            <select class="form-control form-control-sm" name="asst_insuff_rep">
+                            <select class="form-control form-control-sm" name="insufficient_repaymentlk">
                               <option value="">--</option>
                               <?php echo fill_asset($connection) ?>
                             </select>
                             </div>
+                          </div> -->
                           </div>
-                          </div>
-                      <h5 class="card-title">Liabilities</h5>
+                      <!-- <h5 class="card-title">Liabilities</h5> -->
                       <?php
                               function fill_lia($connection)
                               {
@@ -505,7 +512,7 @@ $destination = "index.php";
                                 return $output;
                               }
                               ?>
-                      <div class="position-relative form-group">
+                      <!-- <div class="position-relative form-group">
                         <div class="form-group">
                         <div class="col-md-8">
                             <label for="charge" class="form-align ">Overpayments</label>
@@ -524,7 +531,7 @@ $destination = "index.php";
                             </select>
                           </div>
                           </div>
-                      </div>                 
+                      </div>                  -->
                           </div>
                       <div class="col-md-6">
                       <p>
@@ -641,6 +648,16 @@ $destination = "index.php";
                               </select>
                           </div>
                           </div>
+                          <div class="form-group">
+                          <div class="col-md-8">
+                              <label for="charge" class="form-align ">BVN Income</label>
+                              <select class="form-control form-control-sm" name="bvn_income">
+                                <option value="">--</option>
+                                <?php echo fill_in($connection) ?>
+                              </select>
+                          </div>
+                          </div>
+                          
                           <!-- <div class="form-group">
                           <div class="col-md-8">
                               <label for="charge" class="form-align ">Income from Recovery</label>
@@ -680,6 +697,15 @@ $destination = "index.php";
                           <div class="col-md-8">
                               <label for="charge" class="form-align ">Interest Written Off</label>
                               <select class="form-control form-control-sm" name="exp_interest_written_off">
+                                <option value="">--</option>
+                                <?php echo fill_exp($connection) ?>
+                              </select>
+                          </div>
+                          </div>
+                          <div class="form-group">
+                          <div class="col-md-8">
+                              <label for="charge" class="form-align ">BVN Expense</label>
+                              <select class="form-control form-control-sm" name="bvn_expense">
                                 <option value="">--</option>
                                 <?php echo fill_exp($connection) ?>
                               </select>

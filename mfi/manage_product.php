@@ -5,12 +5,19 @@ $destination = "index.php";
     include("header.php");
 
 ?>
+<?php
+$sint_id = $_SESSION['int_id'];
+$fd = "DELETE FROM charges_cache WHERE int_id = '$sint_id'";
+$dos = mysqli_query($connection, $fd);
+$fd = "DELETE FROM prod_acct_cache WHERE int_id = '$sint_id'";
+$dos = mysqli_query($connection, $fd);
+?>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Create new Product</h4>
@@ -282,7 +289,7 @@ $destination = "index.php";
                       {
                       $sint_id = $_SESSION["int_id"];
                       $main_p  = $_SESSION["product_temp"];
-                      $org = "SELECT * FROM charge WHERE int_id = '$sint_id' && charge_applies_to_enum = '1' && is_active = '1'";
+                      $org = "SELECT * FROM charge WHERE int_id = '$sint_id' && is_active = '1'";
                       $res = mysqli_query($connection, $org);
                       $output = '';
                       while ($row = mysqli_fetch_array($res))
@@ -451,7 +458,7 @@ $destination = "index.php";
                             </select>
                             </div>
                           </div>
-                          <div class="form-group">
+                          <!-- <div class="form-group">
                             <div class="col-md-8">
                             <label for="charge" class="form-align">Insufficient Repayment</label>
                             <select class="form-control form-control-sm" name="asst_insuff_rep">
@@ -459,9 +466,9 @@ $destination = "index.php";
                               <?php echo fill_asset($connection) ?>
                             </select>
                             </div>
+                          </div> -->
                           </div>
-                          </div>
-                      <h5 class="card-title">Liabilities</h5>
+                      <h5 class="card-title"></h5>
                       <?php
                               function fill_lia($connection)
                               {
@@ -476,7 +483,7 @@ $destination = "index.php";
                                 return $output;
                               }
                               ?>
-                      <div class="position-relative form-group">
+                      <!-- <div class="position-relative form-group">
                         <div class="form-group">
                         <div class="col-md-8">
                             <label for="charge" class="form-align ">Overpayments</label>
@@ -495,7 +502,7 @@ $destination = "index.php";
                             </select>
                           </div>
                           </div>
-                      </div>                 
+                      </div>                  -->
                           </div>
                       <div class="col-md-6">
                       <p>
@@ -680,7 +687,7 @@ $destination = "index.php";
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Accounting Insturction</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Accounting Instruction</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
