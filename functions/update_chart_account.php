@@ -13,6 +13,7 @@ if (isset($_POST['id'])) {
     $man_acct = $_POST['man_allow'];
     $disable = $_POST['disable'];
     $descript = $_POST['descript'];
+    $sessint_id = $_SESSION['int_id'];
 
     $fdos = "SELECT * FROM acc_gl_account WHERE id = '$id'";
     $dpos = mysqli_query($connection, $fdos);
@@ -57,12 +58,14 @@ if (isset($_POST['id'])) {
     $qed = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND gl_code = '$gl_code'");
     $dsp = mysqli_fetch_array($qed);
     $gll = $dsp['gl_code'];
-    if(count([$qed]) == 1){
+    $test_id = $dsp['id'];
+    if($gll == $gl_code && $test_id != $id){
         $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
         echo "error";
        echo header ("Location: ../mfi/chart_account.php?message9=$randms");
+       echo '$gl_code = '.$gl_code.'and $gll = '.$gll.' are the same!';
     }
-    else{
+    else if($gll == $gl_code && $test_id == $id){
 
         $fdop = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '$class_enum' AND parent_id = '0'";
         $fdos = mysqli_query($connection, $fdop);
@@ -90,6 +93,7 @@ if (isset($_POST['id'])) {
            echo "error";
           echo header ("Location: ../mfi/chart_account.php?message4=$randms");
         }
+        echo 'didnt work';
 }
 }
 ?>

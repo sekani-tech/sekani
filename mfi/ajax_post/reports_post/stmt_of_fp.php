@@ -37,6 +37,12 @@ $out = '
         <th style="text-align: center; font-weight:bold;">'.$startd.' <br/>(NGN)</th>
       </thead>
       <tbody>
+      <tr>
+          <td></td>
+          <td><b>ASSETS</b></td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+        </tr>
           <tr>
               <td></td>
               <td><b>Current Assets</b></td>
@@ -63,7 +69,7 @@ $out = '
         </tr>
         <tr>
           <td></td>
-          <td><b>Prepaid Expenses</b></td>
+          <td>Prepayment</td>
           <td style="text-align: center"></td>
           <td style="text-align: center"></td>
         </tr>
@@ -74,12 +80,6 @@ $out = '
           <td style="text-align: center"><b>70.456,088</b></td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
               <td></td>
               <td><b>Non-Current Assets</b></td>
               <td></td>
@@ -88,12 +88,6 @@ $out = '
         <tr>
           <td></td>
           <td>Land and Building</td>
-          <td style="text-align: center">0</td>
-          <td style="text-align: center">0</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>Leasehold</td>
           <td style="text-align: center">0</td>
           <td style="text-align: center">0</td>
         </tr>
@@ -123,12 +117,6 @@ $out = '
         </tr>
         <tr>
           <td></td>
-          <td>Intangible Assets</td>
-          <td style="text-align: center">0</td>
-          <td style="text-align: center">0</td>
-        </tr>
-        <tr>
-          <td></td>
           <td><b>Total Non-Current Assets</b></td>
           <td style="text-align: center"><b>70.456,088</b></td>
           <td style="text-align: center"><b>70.456,088</b></td>
@@ -141,7 +129,7 @@ $out = '
         </tr>
         <tr>
           <td></td>
-          <td><b>NBV</b></td>
+          <td><b>NPV</b></td>
           <td style="text-align: center"><b>70.456,088</b></td>
           <td style="text-align: center"><b>70.456,088</b></td>
         </tr>
@@ -167,6 +155,11 @@ $out = '
         <th style="text-align: center; font-weight:bold;">'.$end.' <br/>(NGN)</th>
       </thead>
       <tbody>
+      <tr>
+              <td><b>LIABILITIES & EQUITY</b></td>
+              <td></td>
+              <td></td>
+          </tr>
           <tr>
               <td><b>Current Liabilities</b></td>
               <td></td>
@@ -186,11 +179,6 @@ $out = '
           <td><b>Total Current Liabilities</b></td>
           <td style="text-align: center"><b>70.456,088</b></td>
           <td style="text-align: center"><b>70.456,088</b></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
         </tr>
         <tr>
               <td><b>Non-Current Liabilities</b></td>
@@ -213,22 +201,17 @@ $out = '
           <td style="text-align: center"><b>70.456,088</b></td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
             <td><b>Shareholders Equity</b></td>
             <td></td>
             <td></td>
         </tr>
         <tr>
-          <td>Share Capital</td>
+          <td> Authorised Share Capital</td>
           <td style="text-align: center">0</td>
           <td style="text-align: center">0</td>
         </tr>
         <tr>
-          <td>Retained Surplus</td>
+          <td> Current Retained Earning</td>
           <td style="text-align: center"></td>
           <td style="text-align: center"></td>
         </tr>

@@ -6,10 +6,11 @@ include('header.php');
 
 ?>
 <?php
+$today = date('Y-m-d');
 $year = date('Y');
 $sdoins =$year."-01-01";
 $endtime = strtotime($sdoins);
-$startdate = date("Y-m-d", strtotime("-1 day", $sdoins));
+$startdate = date("Y-m-d", strtotime("-1 day", $endtime));
 ?>
 <!-- Content added here -->
 <!-- print content -->
@@ -27,7 +28,7 @@ $startdate = date("Y-m-d", strtotime("-1 day", $sdoins));
                     <div class="row">
                       <div class="form-group col-md-3">
                         <label for="">As At:</label>
-                        <input type="date" name="" id="end" class="form-control">
+                        <input type="date" name="" value="<?php echo $today?>" id="end" class="form-control">
                       </div>
                       <?php
                   function fill_branch($connection)
