@@ -23,91 +23,115 @@ $destination = "index.php";
                       <div class = "form-group">
                         <!-- Group info _ Tab1 -->
                     <div class="tab"><h3> New Product:</h3>
-                        <div class="col-md-4">
-                            <label class = "bmd-label-floating">Name *:</label>
-                            <input type="text" name="" id="" class="form-control" required>
+                        <div class="row">
+                          <div class="col-md-4">
+                              <label class = "bmd-label-floating">Name *:</label>
+                              <input type="text" name="" id="" class="form-control" required>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="">Short Name *:</label>
+                              <input type="text" name="" id="" class="form-control" required>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="">Description *:</label>
+                              <input type="text" name="" id="" class="form-control" required>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="">Registration Date *:</label>
+                              <input type="date" name="" class="form-control" id="" required>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="">Interest Posting Product Type :</label>
+                              <select name="" id="" class="form-control">
+                                  <option value="Informal">Monthly</option>
+                              </select>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="">Interest Compounding period :</label>
+                              <select name="" id="" class="form-control" placeholder="Select an Option">
+                                  <option value=""></option>
+                              </select>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="">Interest Calculation Type :</label>
+                              <select name="" id="" class="form-control" placeholder="Select an Option">
+                                  <option value=""></option>
+                              </select>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="">Interest Calculation Days in Year Type :</label>
+                              <select name="" id="" class="form-control" placeholder="Select an Option">
+                                  <option value=""></option>
+                              </select>
+                          </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="">Short Name *:</label>
-                            <input type="text" name="" id="" class="form-control" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Description *:</label>
-                            <input type="text" name="" id="" class="form-control" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Registration Date *:</label>
-                            <input type="date" name="" class="form-control" id="" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Interest Posting Product Type :</label>
+                        <div class="row">
+                          <div class="col-md-4">
+                              <label for="">Lockin Period Frequency :</label>
+                              <input type="text" name="" class="form-control" id="">
+                          </div>
+                          <div class="col-md-4">
                             <select name="" id="" class="form-control">
-                                <option value="Informal">Monthly</option>
-                            </select>
+                                  <option value="">Days</option>
+                              </select>
+                          </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="">Interest Compounding period :</label>
-                            <select name="" id="" class="form-control" placeholder="Select an Option">
-                                <option value=""></option>
-                            </select>
+                        <div class="row">
+                          <div class="col-md-4">
+                              <label for="">Min Deposit Term :</label>
+                              <input type="number" name="" class="form-control" id="">
+                          </div>
+                          <div class="col-md-4">
+                            <select name="" id="" class="form-control">
+                                  <option value="">Days</option>
+                              </select>
+                          </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="">Interest Calculation Type :</label>
-                            <select name="" id="" class="form-control" placeholder="Select an Option">
-                                <option value=""></option>
-                            </select>
+                        <div class="row">
+                          <div class="col-md-4">
+                              <label for="">Max Deposit Term :</label>
+                              <input type="number" name="" class="form-control" id="">
+                          </div>
+                          <div class="col-md-4">
+                            <select name="" id="" class="form-control">
+                                  <option value="">Days</option>
+                              </select>
+                          </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="">Interest Calculation Days in Year Type :</label>
-                            <select name="" id="" class="form-control" placeholder="Select an Option">
-                                <option value=""></option>
-                            </select>
+                        <div class="row">
+                          <div class="col-md-4">
+                              <label for="">Max Deposit Term :</label>
+                              <input type="number" name="" class="form-control" id="">
+                          </div>
+                          <div class="col-md-4">
+                              <select name="" id="" class="form-control">
+                                  <option value="">Days</option>
+                              </select>
+                          </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="">Lockin Period Frequency :</label>
-                            <input type="text" name="" class="form-control" id="">
-                            <select name="" id="" class="form-control" placeholder="Days">
-                                <option value=""></option>
-                            </select>
+                        <div class="row">
+                          <div class="col-md-4">
+                              <label for="">In Multiple Of Deposit Term :</label>
+                              <input type="number" name="" class="form-control" id="">
+                          </div>
+                          <div class="col-md-4">
+                              <select name="" id="" class="form-control">
+                                  <option value="">Days</option>
+                              </select>
+                          </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="">Min Deposit Term :</label>
-                            <input type="number" name="" class="form-control" id="">
-                            <select name="" id="" class="form-control" placeholder="Days">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Max Deposit Term :</label>
-                            <input type="number" name="" class="form-control" id="">
-                            <select name="" id="" class="form-control" placeholder="Days">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Max Deposit Term :</label>
-                            <input type="number" name="" class="form-control" id="">
-                            <select name="" id="" class="form-control" placeholder="Days">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">In Multiple Of Deposit Term :</label>
-                            <input type="number" name="" class="form-control" id="">
-                            <select name="" id="" class="form-control" placeholder="Days">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for=""> Auto renew on maturity</label>
-                            <input type="checkbox" name="" class="form-control" id="">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Apply pre-mature Closure Penalty :</label>
-                            <select name="" id="" class="form-control" placeholder="Select an Option">
-                                <option value="No">No</option>
-                                <option value="Yes">Yes</option>
-                            </select>
+                        <div class="row">
+                          <div class="col-md-4">
+                              <label for=""> Auto renew on maturity</label>
+                              <input type="checkbox" name="" class="form-control" id="">
+                          </div>
+                          <div class="col-md-4">
+                              <label for="">Apply pre-mature Closure Penalty :</label>
+                              <select name="" id="" class="form-control" placeholder="Select an Option">
+                                  <option value="No">No</option>
+                                  <option value="Yes">Yes</option>
+                              </select>
+                          </div>
                         </div>
                     </div>    
                     <!-- interest charts -->

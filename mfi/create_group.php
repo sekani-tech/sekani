@@ -23,51 +23,53 @@ $destination = "index.php";
                       <div class = "form-group">
                         <!-- Group info _ Tab1 -->
                     <div class="tab"><h3> Group info:</h3>
-                        <div class="col-md-4">
-                            <label class = "bmd-label-floating">Group Name *:</label>
-                            <input type="text" name="" id="" class="form-control" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Branch Name *:</label>
-                            <select name="" id="" class="form-control" required>
-                                <option value="">...........</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Loan Officer *:</label>
-                            <select name="" id="" class="form-control" required>
-                                <option value="">...........</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Registration Date *:</label>
-                            <input type="date" name="" class="form-control" id="" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Registration :</label>
-                            <select name="" id="" class="form-control">
-                                <option value="Informal">Informal</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Meeting Day :</label>
-                            <select name="" id="" class="form-control" placeholder="Select an Option">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Meeting Frequency :</label>
-                            <select name="" id="" class="form-control" placeholder="Select an Option">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Meeting Location :</label>
-                            <input type="text" name="" class="form-control" id="">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Meeting Time :</label>
-                            <input type="text" name="" class="form-control" id="">
+                        <div class="row">
+                          <div class="col-md-4">
+                              <label class = "bmd-label-floating">Group Name *:</label>
+                              <input type="text" name="" id="" class="form-control" required>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="">Branch Name *:</label>
+                              <select name="" id="" class="form-control" required>
+                                  <option value="">...........</option>
+                              </select>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="">Loan Officer *:</label>
+                              <select name="" id="" class="form-control" required>
+                                  <option value="">...........</option>
+                              </select>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="">Registration Date *:</label>
+                              <input type="date" name="" class="form-control" id="" required>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="">Registration :</label>
+                              <select name="" id="" class="form-control">
+                                  <option value="Informal">Informal</option>
+                              </select>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="">Meeting Day :</label>
+                              <select name="" id="" class="form-control" placeholder="Select an Option">
+                                  <option value=""></option>
+                              </select>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="">Meeting Frequency :</label>
+                              <select name="" id="" class="form-control" placeholder="Select an Option">
+                                  <option value=""></option>
+                              </select>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="">Meeting Location :</label>
+                              <input type="text" name="" class="form-control" id="">
+                          </div>
+                          <div class="col-md-4">
+                              <label for="">Meeting Time :</label>
+                              <input type="text" name="" class="form-control" id="">
+                          </div>
                         </div>
                     </div>    
                     <!-- Clients Selection -->
