@@ -18,66 +18,85 @@ $destination = "index.php";
               </div>
               <div class="card-body">
               <form id="form" action="" method="POST">
-                  <div class = "row">
-                    <div class = "col-md-12">
-                      <div class = "form-group">
+                  <!-- <div class = "row"> -->
+                    <!-- <div class = "col-md-12"> -->
+                      <!-- <div class = "form-group"> -->
                         <!-- Group info _ Tab1 -->
                     <div class="tab"><h3> New Product:</h3>
-                        <div class="col-md-4">
-                            <label class = "bmd-label-floating">Name *:</label>
-                            <input type="text" name="" id="" class="form-control" required>
+                        <div class="row">
+                          <!-- <div class="form-group"> -->
+                            <div class="col-md-4">
+                              <label class = "bmd-label-floating">Name *:</label>
+                              <input type="text" name="" id="" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="">Short Name *:</label>
+                                <input type="text" name="" id="" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="">Description *:</label>
+                                <input type="text" name="" id="" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="">Nominal Annual Interest Rate *:</label>
+                                <input type="date" name="" class="form-control" id="" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="">Minimum Balance for Interest Calculation :</label>
+                                <input type="number" name="" class="form-control" id="">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="">Maximum Postive Balance :</label>
+                                <input type="number" name="" class="form-control" id="">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="">Minimum Negative Balance :</label>
+                                <input type="number" name="" class="form-control" id="">
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="">Short Name *:</label>
-                            <input type="text" name="" id="" class="form-control" required>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="">Lockin Period Frequency :</label>
+                                <input type="text" name="" class="form-control" id="">
+                            </div>
+                            <div class="col-md-4">
+                                <select name="" id="" class="form-control">
+                                    <option value="">Days</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="">Description *:</label>
-                            <input type="text" name="" id="" class="form-control" required>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="">Allow Overdraft :</label>
+                                <input type="number" name="" class="form-control" id="">
+                            </div>
+                            <div class="col-md-4">
+                                <select name="" id="" class="form-control">
+                                    <option value="">Days</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="">Nominal Annual Interest Rate *:</label>
-                            <input type="date" name="" class="form-control" id="" required>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="">Track domancy :</label>
+                                <input type="number" name="" class="form-control" id="">
+                            </div>
+                            <div class="col-md-4">
+                                <select name="" id="" class="form-control">
+                                    <option value="">Days</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="">Minimum Balance for Interest Calculation :</label>
-                            <input type="number" name="" class="form-control" id="">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Maximum Postive Balance :</label>
-                            <input type="number" name="" class="form-control" id="">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Minimum Negative Balance :</label>
-                            <input type="number" name="" class="form-control" id="">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Lockin Period Frequency :</label>
-                            <input type="text" name="" class="form-control" id="">
-                            <select name="" id="" class="form-control" placeholder="Days">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Allow Overdraft :</label>
-                            <input type="number" name="" class="form-control" id="">
-                            <select name="" id="" class="form-control" placeholder="Days">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Track domancy :</label>
-                            <input type="number" name="" class="form-control" id="">
-                            <select name="" id="" class="form-control" placeholder="Days">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="">Enable Withdrawal Notice :</label>
-                            <input type="number" name="" class="form-control" id="">
-                            <select name="" id="" class="form-control" placeholder="Days">
-                                <option value=""></option>
-                            </select>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="">Enable Withdrawal Notice :</label>
+                                <input type="number" name="" class="form-control" id="">
+                            </div>
+                            <div class="col-md-4">
+                                <select name="" id="" class="form-control">
+                                    <option value="">Days</option>
+                                </select>
+                            </div>
                         </div>
                     </div>    
                     <!-- interest charts -->
@@ -176,8 +195,8 @@ $destination = "index.php";
                           <span class="step"></span>
                         </div>
                       </div>
-                    </div>
-                  </div>
+                    <!-- </div> -->
+                  <!-- </div> -->
                 </form>
               </div>
 
