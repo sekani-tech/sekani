@@ -7,22 +7,26 @@ $name = $_SESSION['int_full'];
 $sessint_id = $_SESSION['int_id'];
 $current = date('d/m/Y');
 
+// Start date
 $start = $_POST['start'];
 $starttime = strtotime($start);
 $startd = date("F d, Y", $starttime);
 
+// End date
 $end = $_POST['end'];
 $endtime = strtotime($end);
 $current = date("F d, Y", $endtime);
 
-$duefrom = mysqli_query($connection, "SELECT sum(organization_running_balance_derived) AS organization_running_balance_derived FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '5'");
-$otws = mysqli_fetch_array($duefrom);
-$bank = $otws['organization_running_balance_derived'];
+// Current Assets
+function fill_charge($connection)
+{
+  $sessint_id = $_SESSION['int_id'];
+  $curr = mysqli_query($connection, "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND classification_enum = '1'");
+  while($a = mysqli_fetch_array($curr)){
 
-$cash = mysqli_query($connection, "SELECT sum(organization_running_balance_derived) AS organization_running_balance_derived FROM acc_gl_account WHERE int_id = '$sessint_id' AND parent_id = '1'");
-$otss = mysqli_fetch_array($cash);
-$cassh = $otss['organization_running_balance_derived'];
-$cashbank = $cassh + $bank;
+  }
+}
+
 $out = '
 <div class="card">
   <div class="card-header card-header-primary">

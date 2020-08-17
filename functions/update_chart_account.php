@@ -95,5 +95,34 @@ if (isset($_POST['id'])) {
         }
         echo 'didnt work';
 }
+else{
+    $fdop = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND classification_enum = '$class_enum' AND parent_id = '0'";
+    $fdos = mysqli_query($connection, $fdop);
+    $pdfo = mysqli_num_rows($fdos);
+    if($parent == 0){
+      $int_id_no = $pdfo + 1;
+    }
+    else{
+        $int_id_no = 0;
+    }
+
+
+    $sec = "UPDATE acc_gl_account SET name = '$acct_name', gl_code = '$gl_code',
+    account_usage = '$acct_use', parent_id = '$parent', int_id_no = '$int_id_no', classification_enum='$class_enum', manual_journal_entries_allowed='$man_allow',
+    disabled = '$disable', description = '$descript' WHERE id = '$id'";
+    $res = mysqli_query($connection, $sec);
+    if($res) {
+        
+    }
+    if ($res) {
+      $_SESSION["Lack_of_intfund_$randms"] = " Account was updated successfully!";
+      echo header ("Location: ../mfi/chart_account.php?message3=$randms");
+    } else {
+       $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+       echo "error";
+      echo header ("Location: ../mfi/chart_account.php?message4=$randms");
+    }
+    
+}
 }
 ?>
