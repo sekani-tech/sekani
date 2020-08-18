@@ -19,9 +19,8 @@ if(isset($_POST['id'])){
       $dssdw = "Yes";
     }
 
-    $dfdf = mysqli_query($connection, "SELECT * FROM account WHERE int_id ='$int_id' AND type_id = '3'");
+    $dfdf = mysqli_query($connection, "SELECT * FROM ftd_booking_account WHERE int_id ='$int_id'");
     $ifo = mysqli_fetch_array($dfdf);
-    $fdre = $ifo['client_id'];
     $ifdo = mysqli_num_rows($dfdf);
     $ft_no = '00'.($ifdo + 1);
     $date = date('dmY');

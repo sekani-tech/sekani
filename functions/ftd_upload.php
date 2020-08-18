@@ -71,19 +71,19 @@ if(isset($_POST['ftd_no'])){
             $res3 = mysqli_query($connection, $iat);
 
             if($res3){
-                $accountins = "INSERT INTO account (int_id, branch_id, account_no, account_type,
-                type_id, product_id, client_id, field_officer_id, submittedon_date, submittedon_userid,
-                currency_code, activatedon_date, activatedon_userid,
-                account_balance_derived, term, int_rate, maturedon_date, linked_savings_account, last_deposit, auto_renew_on_closure,
+                $accountins = "INSERT INTO ftd_booking_account (int_id, branch_id, account_no,
+                product_id, client_id, field_officer_id, submittedon_date, submittedon_userid,
+                currency_code, account_balance_derived, term, int_rate, maturedon_date, linked_savings_account, 
+                last_deposit, auto_renew_on_closure,
                 interest_repayment)
-                 VALUES ('{$sint_id}', '{$branch_id}', '{$account_no}', '{$pname}', '{$type_id}', '{$sproduct_id}',
-                 '{$client}', '{$acc_off}', '{$dating}', '{$user_id}', '{$currency_code}', '{$dating}', 
-                 '{$user_id}', '{$amount}', '{$l_term}', '{$int_rate}', '{$mat_date}', '{$lsaa}', '{$amount}', '{$auto_renew}',
+                 VALUES ('{$sint_id}', '{$branch_id}', '{$account_no}', '{$pname}',
+                 '{$client}', '{$acc_off}', '{$dating}', '{$user_id}', '{$currency_code}', 
+                 '{$amount}', '{$l_term}', '{$int_rate}', '{$mat_date}', '{$lsaa}', '{$amount}', '{$auto_renew}',
                  '{$int_repay}')";
 
                 $fd = mysqli_query($connection, $accountins);
                 if($fd){
-                    $fdiae = mysqli_query($connection, "SELECT * FROM account WHERE int_id = '$sint_id' AND account_no = '$account_no'");
+                    $fdiae = mysqli_query($connection, "SELECT * FROM ftd_booking_account WHERE int_id = '$sint_id' AND account_no = '$account_no'");
                     $if = mysqli_fetch_array($fdiae);
                     $ifod = $if['id'];
                     $iat = "INSERT INTO account_transaction (int_id, branch_id,

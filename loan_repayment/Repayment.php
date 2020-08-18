@@ -583,3 +583,8 @@ while ($iq = mysqli_fetch_array($select_arrears)) {
 }
 // count out
 ?>
+<?php
+// THIS PROCESS ID FOR THE PAYMENT OF FIXED DEPOSIT INTEREST TO THEIR ACCOUNTS
+$ftd_booking_account = mysqli_query($connection, "SELECT * FROM ftd_booking_account")
+
+?>
