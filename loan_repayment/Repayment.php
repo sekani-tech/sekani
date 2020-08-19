@@ -584,8 +584,46 @@ while ($iq = mysqli_fetch_array($select_arrears)) {
 // count out
 ?>
 <?php
+echo '</br></br></br>FTD Booking Auto Code right here:</br>';
 // THIS PROCESS ID FOR THE PAYMENT OF FIXED DEPOSIT INTEREST TO THEIR ACCOUNTS
 $ftd_booking_account = mysqli_query($connection, "SELECT * FROM ftd_booking_account WHERE status = 'Approved'");
-$exec = mysqli_fetch_array($ftd_booking_account);
+while($a = mysqli_fetch_array($ftd_booking_account)){
+    // To pull all data concerning each FTD account
+    $id = $a['id'];
+    $int_id = $a['int_id'];
+    $branch_id = $a['branch_id'];
+    $client_id = $a['client_id']; 
+    $account_no = $a['account_no']; 
+    $product_id = $a['product_id']; 
+    $ftd_id = $a['ftd_id']; 
+    $field_officer_id  = $a['field_officer_id']; 
+    $submittedon_date = $a['submittedon_date']; 
+    $submittedon_userid = $a['submittedon_userid']; 
+    $currency_code = $a['currency_code']; 
+    $account_balance_derived = $a['account_balance_derived']; 
+    $term = $a['term']; 
+    $int_rate = $a['int_rate']; 
+    $maturedon_date = $a['maturedon_date']; 
+    $linked_savings_account = $a['linked_savings_account']; 
+    $last_deposit = $a['last_deposit']; 
+    $last_withdrawal = $a['last_withdrawal']; 
+    $auto_renew_on_closure = $a['auto_renew_on_closure']; 
+    $interest_repayment = $a['interest_repayment']; 
+    $status = 'status';
+
+    // To check if the interest repayment is monthly or Bullet
+    // if interest repayment is monthly
+    $actualend_date = date('Y-m-d', strtotime("+".$loan_term1." days", strtotime($repayment_start)));
+
+    if($interest_repayment == 1){
+        
+    }
+    // if interest repayment is  Bullet
+    else if($interest_repayment == 2){
+
+    }
+
+}
+
 
 ?>
