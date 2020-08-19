@@ -15,7 +15,7 @@ if (isset($_GET["message1"])) {
       swal({
           type: "success",
           title: "Success!",
-          text: "FTD Booked",
+          text: "FTD Booked, Awaiting Approval",
           showConfirmButton: false,
           timer: 2000
       })
@@ -149,7 +149,7 @@ else if (isset($_GET["message3"])) {
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/ftd_upload.php" method="post">
+                  <form action="../functions/ftd_upload.php" method="POST">
                     <div class="row">
                     <div class="col-md-4">
                         <?php
@@ -187,7 +187,7 @@ else if (isset($_GET["message3"])) {
                                 return $out;
                               }
                         ?>
-                      <label class = "bmd-label-floating">Client Account no*:</label>
+                      <label class = "bmd-label-floating">Client Account No*:</label>
                         <select name="client" class="form-control" id="collat">
                           <option value="">select an option</option>
                           <?php echo fill_client($connection); ?>
@@ -211,9 +211,7 @@ else if (isset($_GET["message3"])) {
                             });
                         </script>
                       <div class="row" id="ddjf"></div>
-                      <a href="client.php" class="btn btn-secondary">Back</a>
                     <button type="submit" class="btn btn-primary pull-right">Book FTD</button>
-                    <div class="clearfix"></div>
                   </form>
                 </div>
               </div>

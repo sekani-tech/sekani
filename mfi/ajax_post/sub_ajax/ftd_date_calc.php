@@ -7,5 +7,5 @@ $actualend_date = date('Y-m-d', strtotime("+".$term." days", strtotime($curr_dat
 //   $actualend_date = date('d/m/Y', strtotime($repayment_start.' + '.$date2.' days'));
 
   echo '<label>Maturity Date</label>
-  <input type="text" name ="mat_date" readonly class="form-control" id ="ed" value="'.$actualend_date.'">';
+  <input type="text" name ="mat_date" readonly class="form-control" id ="ed" value="'.$actualend_date.'"/>';
 ?>

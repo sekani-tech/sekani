@@ -62,13 +62,13 @@ if(isset($_POST['id'])){
         <div class="col-md-4">
         <div class="form-group">
           <label class="bmd-label-floating">Amount</label>
-          <input type="text" class="form-control" name="amount">
+          <input type="number" class="form-control" name="amount">
         </div>
       </div>
       <div class="col-md-4">
         <div class="form-group">
           <label class="bmd-label-floating">FTD Number</label>
-          <input type="text" readonly  value="'.$ftd_no.'"class="form-control" name="ftd_no">
+          <input type="text" readonly  value="'.$ftd_no.'" class="form-control" name="ftd_no">
         </div>
       </div>
       <div class="col-md-4">

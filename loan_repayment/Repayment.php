@@ -585,6 +585,7 @@ while ($iq = mysqli_fetch_array($select_arrears)) {
 ?>
 <?php
 // THIS PROCESS ID FOR THE PAYMENT OF FIXED DEPOSIT INTEREST TO THEIR ACCOUNTS
-$ftd_booking_account = mysqli_query($connection, "SELECT * FROM ftd_booking_account")
+$ftd_booking_account = mysqli_query($connection, "SELECT * FROM ftd_booking_account WHERE status = 'Approved'");
+$exec = mysqli_fetch_array($ftd_booking_account);
 
 ?>

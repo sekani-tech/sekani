@@ -71,15 +71,26 @@ if(isset($_POST['ftd_no'])){
             $res3 = mysqli_query($connection, $iat);
 
             if($res3){
-                $accountins = "INSERT INTO ftd_booking_account (int_id, branch_id, account_no,
+                $dsopdo = "INSERT INTO account (int_id, branch_id, account_no, account_type, type_id,
                 product_id, client_id, field_officer_id, submittedon_date, submittedon_userid,
                 currency_code, account_balance_derived, term, int_rate, maturedon_date, linked_savings_account, 
                 last_deposit, auto_renew_on_closure,
                 interest_repayment)
-                 VALUES ('{$sint_id}', '{$branch_id}', '{$account_no}', '{$pname}',
+                 VALUES ('{$sint_id}', '{$branch_id}', '{$account_no}', '{$pname}', '{$type_id}', '{$sproduct_id}',
                  '{$client}', '{$acc_off}', '{$dating}', '{$user_id}', '{$currency_code}', 
                  '{$amount}', '{$l_term}', '{$int_rate}', '{$mat_date}', '{$lsaa}', '{$amount}', '{$auto_renew}',
                  '{$int_repay}')";
+                $fd = mysqli_query($connection, $dsopdo);
+
+                $accountins = "INSERT INTO ftd_booking_account (int_id, branch_id, ftd_id, account_no,
+                product_id, client_id, field_officer_id, submittedon_date, submittedon_userid,
+                currency_code, account_balance_derived, term, int_rate, maturedon_date, linked_savings_account, 
+                last_deposit, auto_renew_on_closure,
+                interest_repayment, status)
+                 VALUES ('{$sint_id}', '{$branch_id}', '{$ftd_no}', '{$account_no}', '{$sproduct_id}',
+                 '{$client}', '{$acc_off}', '{$dating}', '{$user_id}', '{$currency_code}', 
+                 '{$amount}', '{$l_term}', '{$int_rate}', '{$mat_date}', '{$lsaa}', '{$amount}', '{$auto_renew}',
+                 '{$int_repay}', 'Pending')";
 
                 $fd = mysqli_query($connection, $accountins);
                 if($fd){
