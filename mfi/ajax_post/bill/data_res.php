@@ -12,7 +12,7 @@ if ($data_res != "") {
     <input type="text" value="<?php echo $price; ?>" hidden id="price">
     <script>
     $(document).ready(function() {
-        $(":input[type=button]").prop("disabled", false);
+        $("#data_pay").prop("disabled", false);
     })
     </script>
     

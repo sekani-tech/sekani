@@ -14,8 +14,16 @@ $package = $_SESSION["package"];
 $digits = 9;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 // end the code
+$username = $_SESSION["username"];
+$pass = $_POST["pin"];
 // end
-if ($network != "" && $phone != "" && $amount != "" && $int_id != "" && $branch_id != "" && $bundle != "" && $package != "") {
+if ($pass != "") {
+    $query_pass = mysqli_query($connection, "SELECT * FROM users WHERE username = '$username'");
+    $x = mysqli_fetch_array($query_pass);
+    $harsh_code = $x["pin"];
+    if (password_verify($pass, $harsh_code) || $harsh_code == $pass) {
+        // damn
+        if ($network != "" && $phone != "" && $amount != "" && $int_id != "" && $branch_id != "" && $bundle != "" && $package != "") {
     // finnin
     $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
         $qw = mysqli_fetch_array($sql_fund);
@@ -147,5 +155,34 @@ if ($status == "200" && $status != "") {
             </script>
             ';
         }
+}
+        // end
+    } else {
+        echo '<script type="text/javascript">
+                    $(document).ready(function(){
+                        swal({
+                            type: "error",
+                            title: "WRONG PIN",
+                            text: "Please verify your pin",
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+            });
+         </script>
+        ';
+    }
+} else {
+    echo '<script type="text/javascript">
+                    $(document).ready(function(){
+                        swal({
+                            type: "error",
+                            title: "PLEASE ENTER PIN",
+                            text: "please enter your transaction pin",
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+            });
+         </script>
+        ';
 }
 ?>

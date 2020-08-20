@@ -534,7 +534,85 @@ if ($per_bills == 1 || $per_bills == "1") {
                     </div>
                     <div class="tab-pane" id="saving">
                     <center>
-                      <button data-toggle="modal" data-target="#exampleModal1" class="btn btn-primary"> Buy Data</button>
+                      <!-- <button  class="btn btn-primary"> Buy Data</button> -->
+                      <div class="row">
+  <div class="col-md-4 ml-auto mr-auto">
+    <div class="card card-pricing bg-primary"><div class="card-body">
+        <!-- <div class="card-icon">
+            <i class="material-icons">business</i>
+        </div> -->
+        <p>Purchase Data</p>
+        <form id="form" action="" method="POST">
+                <div class="card-body">
+                <div class="row">
+                <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating" style="color: white;">Phone Number</label>
+               <input type = "text" id="phone_d" class="form-control" name = "" style="color: white;"/>
+              </div>
+            </div>
+          <div class="col-md-12" style="color: white;">
+              <div class="form-group">
+               <label class="bmd-label-floating" style="color: white;">Select a Network</label>
+               <select name="" id="network_d" class="form-control" style="color: white;">
+                 <option value="" style="color: black;">SELECT NETWORK</option>
+                 <option value="MTN" style="color: black;">MTN</option>
+                 <option value="AIRTEL" style="color: black;">AIRTEL</option>
+                 <option value="9mobile" style="color: black;">9MOBILE</option>
+                 <option value="GLO" style="color: black;">GLO</option>
+             </select>
+             <input type="text" id="int_id" hidden  value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-12">
+            <div class="form-group">
+            <div id="qwerty"></div>
+              </div>
+            </div>
+            <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating" style="color: white;">Transaction Pin</label>
+               <input type ="password" id="pin_d" class="form-control" name = "" style="color: white;"/>
+              </div>
+            </div>
+            </div>
+                </div>
+                <a class="btn btn-white btn-round pull-right" id="process_d"  data-toggle="modal" data-target="#exampleModal1" style="color:black;">Proceed</a>
+                <script>
+              $(document).ready(function() {
+                $('#process_d').on("click", function() {
+                  var net_con_d = $("#network_d").val();
+                  var phone_con_d = $("#phone_d").val();
+                  var bundle_con_d = $("#bundle").val();
+                  var package_con_d = $("#package").val();
+                  var price_con_d = $("#price").val();
+                  var pin = $('#pin_d').val();
+                  if (net_con_d != "" && phone_con_d != "" && package_con_d != "" && bundle_con_d != "" && price_con_d != "" && pin != "") {
+                    $("#net_com_d").val(net_con_d);
+                    $("#phone_com_d").val(phone_con_d);
+                    $("#bundle_com_d").val(bundle_con_d);
+                    $("#package_com_d").val(package_con_d);
+                    $("#price_com_d").val(price_con_d);
+                    // activate button
+                    $("#data_pay").prop("disabled", false);
+                  } else {
+                    // move
+                    $("#net_com_d").val("please input missing field");
+                    $("#phone_com_d").val("please input missing field");
+                    $("#bundle_com_d").val("please input missing field");
+                    $("#package_com_d").val("please input missing field");
+                    $("#price_com_d").val("please input missing field");
+                    // deactivate button
+                    $("#data_pay").prop("disabled", true);
+                  }
+                });
+              });
+            </script>
+                </form>
+        </div>
+    </div>
+  </div>
+</div>
                       </center>
                       <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -552,25 +630,31 @@ if ($per_bills == 1 || $per_bills == "1") {
             <div class="col-md-12">
             <div class="form-group">
                <label class="bmd-label-floating">Phone Number</label>
-               <input type = "text" id="phone_d" class="form-control" name = ""/>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="form-group">
-               <label class="bmd-label-floating">Select a Network</label>
-               <select name="" id="network_d" class="form-control">
-                 <option value="">select a network</option>
-                 <option value="MTN">MTN</option>
-                 <option value="AIRTEL">AIRTEL</option>
-                 <option value="9mobile">9MOBILE</option>
-                 <option value="GLO">GLO</option>
-             </select>
-             <input type="text" id="int_id" hidden  value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
+               <input type = "text" id="phone_com_d" class="form-control" name = "" readonly/>
               </div>
             </div>
             <div class="col-md-12">
             <div class="form-group">
-            <div id="qwerty"></div>
+               <label class="bmd-label-floating">Network</label>
+               <input type = "text" id="net_com_d" class="form-control" name = "" readonly/>
+              </div>
+            </div>
+            <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating">Data Bundle</label>
+               <input type = "text" id="bundle_com_d" class="form-control" name = "" readonly/>
+              </div>
+            </div>
+            <div class="col-md-12" hidden>
+            <div class="form-group">
+               <label class="bmd-label-floating">Data Package</label>
+               <input type = "text" id="package_com_d" class="form-control" name = "" readonly/>
+              </div>
+            </div>
+            <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating">Data Amount (NGN)</label>
+               <input type = "text" id="price_com_d" class="form-control" name = "" readonly/>
               </div>
             </div>
             <div class="col-md-12">
@@ -579,9 +663,10 @@ if ($per_bills == 1 || $per_bills == "1") {
             </div>
                          <script>
                               $(document).ready(function() {
-                                $('#network_d').on("change keyup paste click", function() {
+                                $('#network_d').on("change", function() {
                                   var net = $('#network_d').val();
-                                  if (net != "") {
+                                  var phone = $('#phone_d').val();
+                                  if (net != "" && phone != "") {
                                     var phone = $('#phone_d').val();
                                     $.ajax({
                                       url:"ajax_post/bill/data_request.php",
@@ -608,10 +693,11 @@ if ($per_bills == 1 || $per_bills == "1") {
             $('#data_pay').on("click", function() {
                                   var phone = $('#phone_d').val();
                                   var net = $('#network_d').val();
+                                  var pin = $('#pin_d').val();
                                   $.ajax({
                                     url:"ajax_post/bill/data.php",
                                     method:"POST",
-                                    data:{ phone:phone, net:net},
+                                    data:{ phone:phone, net:net, pin:pin},
                                     success:function(data){
                                       $('#finish_buying').html(data);
                                     }
@@ -619,38 +705,11 @@ if ($per_bills == 1 || $per_bills == "1") {
                                 });
                               });
                             </script>
-                             <script>
-              $(document).ready(function() {
-                $('#data_pay').on("click", function() {
-                  Swal({
-  title: 'Processing!',
-  html: 'Please Wait! <b></b> .',
-  timer: 800,
-  timerProgressBar: true,
-  onBeforeOpen: () => {
-    Swal.showLoading()
-    timerInterval = setInterval(() => {
-      const content = Swal.getContent()
-      if (content) {
-        const b = content.querySelector('b')
-        if (b) {
-          b.textContent = Swal.getTimerLeft()
-        }
-      }
-    }, 100)
-  },
-  onClose: () => {
-    clearInterval(timerInterval)
-  }
-});
-                });
-              });
-            </script>
                             <div id="finish_buying"></div>
                     </div>
                     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="data_pay" name="submit" disabled value="add_payment" data-dismiss="modal" type="button" class="btn btn-primary">Buy</button>
+        <button id="data_pay" name="submit" disabled value="add_payment" data-dismiss="modal" type="button" class="btn btn-primary">Comfirm</button>
       </div>
                 </form>
                 </div>

@@ -74,20 +74,20 @@ $me = json_encode($product);
 if ($status == "200" && $status != "") {
         // echo $someArray[0]["code"];
     ?>
-    <label class="bmd-label-floating">Date Plan <div id="data_ress"></div></label>
-    <select id="see" class="form-control" style="text-transform: uppercase;">
+    <label class="bmd-label-floating" style="color: white;">Date Plan <div id="data_ress"></div></label>
+    <select id="see" class="form-control" style="text-transform: uppercase; color: white;">
         <option value="">SELECT DATA PLAN</option>
     <?php
     $someArray = json_decode($me, true);
     foreach ($someArray as $key => $value) {
-            echo "<option value=".$value["allowance"].":".$value["code"].":".$value["price"]."> " . " ". $value["allowance"] ." &#8358;". number_format($value["price"], 2) . " TERM: ". $value["validity"] . "</option>";
+            echo "<option value=".$value["allowance"].":".$value["code"].":".$value["price"]." style='color: black;' > " . " ". $value["allowance"] ." &#8358;". number_format($value["price"], 2) . " TERM: ". $value["validity"] . "</option>";
           }
           ?>
     </select>
     <!-- ow te script -->
     <script>
                 $(document).ready(function() {
-                                $('#see').on("change keyup paste click", function() {
+                                $('#see').on("change", function() {
                                   var datac = $('#see').val();
                                     $.ajax({
                                       url:"ajax_post/bill/data_res.php",
