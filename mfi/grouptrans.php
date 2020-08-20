@@ -44,11 +44,11 @@ $b_id = $_SESSION['branch_id'];
                         <div class="position-relative form-group ">
                             <div>
                                 <div class="custom-radio custom-control">
-                                    <input type="radio" id="collct" name="acc" class="custom-control-input">
+                                    <input type="radio" id="collct" name="acc" value="a" class="custom-control-input">
                                     <label class="custom-control-label" for="collct">Collect Payment</label>
                                 </div>
                                 <div class="custom-radio custom-control">
-                                    <input type="radio" id="perfwith" name="acc" class="custom-control-input">
+                                    <input type="radio" id="perfwith" name="acc" value="b" class="custom-control-input">
                                     <label class="custom-control-label" for="perfwith">Perform Withdrawal</label>
                                 </div>
                             </div>
@@ -74,8 +74,8 @@ $b_id = $_SESSION['branch_id'];
 
                               $(document).ready(function() {
                                 $('#perfwith').on("change keyup paste click", function(){
-                                  var id = $('#collct').val();
-                                  var perf = $(this).val();
+                                  var perf = $('#collct').val();
+                                  var id = $(this).val();
                                   var fetchoff = $('#fetcpostloanoff').val();
                                   var fetchgroup = $('#fetcpostgroup').val();
                                   $.ajax({
@@ -88,6 +88,7 @@ $b_id = $_SESSION['branch_id'];
                                   })
                                 });
                               });
+                              
                           </script>
                           <div class="col-md-12">
                             <p></p>
@@ -123,6 +124,7 @@ $b_id = $_SESSION['branch_id'];
                               <thead>
                                 <tr>
                                   <th>Client Name</th>
+                                  <th>Balance Derived</th>
                                   <th>Total due</th>
                                   <th>Total Expected Repayment</th>
                                 </tr>
@@ -136,8 +138,8 @@ $b_id = $_SESSION['branch_id'];
                     <!-- Buttons -->
                     <div style="overflow:auto;">
                           <div style="float:right;">
+                          <button class="btn btn-primary pull-right" type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
                             <button class="btn btn-primary pull-right" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-                            <button class="btn btn-primary pull-right" type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
                           </div>
                         </div>
                       <!-- Steppers -->

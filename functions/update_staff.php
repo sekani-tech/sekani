@@ -34,7 +34,7 @@ if($_FILES['imagefile']['name']) {
   $img = $_POST['imagefileL'];
 }
 
-    $query = "UPDATE users SET username = '$username', usertype = '$usertype' WHERE id = '$user_id'";
+    $query = "UPDATE users SET username = '$username', usertype = '$usertype', branch_id = '$branch_id' WHERE id = '$user_id'";
     $result = mysqli_query($connection, $query);
     // if($result) {
         $sec = "UPDATE staff SET int_name = '$int_name', username = '$username', branch_id = '$branch_id', display_name = '$display_name', email = '$email',

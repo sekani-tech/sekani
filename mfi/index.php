@@ -94,7 +94,7 @@
                   <div class="card-icon">
                   <i class="material-icons">info_outline</i>
                   </div>
-                  <p class="card-category">Portfolio at Risk</p>
+                  <p class="card-category">Portfolios at Risk</p>
                   <?php if ($pfar > 0){
                     ?>
                   <h3 class="card-title"><?php echo number_format($pfar);?>%</h3>

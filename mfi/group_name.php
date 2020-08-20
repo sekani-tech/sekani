@@ -6,7 +6,15 @@ $output2 = '';
 
 if(isset($_POST["id"]))
 {
-    echo 'payment was selected';
+    if($_POST["id"] == "payment"){
+        $fkd = $_POST["id"];
+        echo  $fkd.' was selected';
+    }
+    else if($_POST["id"] == "withdrawal"){
+        $fkd = $_POST["id"];
+        echo $fkd.' was selected';
+    }
+    
 ?>
 <div class="row">
 <div class="col-md-12">
