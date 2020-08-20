@@ -13,6 +13,7 @@ $sint_id = $_SESSION['int_id'];
         <td>'.$c_name.'</td>
         <td></td>
         <td></td>
+        <td></td>
         </tr>
         ';
         echo $out;

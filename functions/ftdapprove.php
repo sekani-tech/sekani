@@ -53,7 +53,16 @@ if (isset($_POST['id'])) {
             else{
                  // FTD not Successfull
                 $_SESSION["Lack_of_intfund_$randms"] = "";
-                echo header ("Location: ../mfi/ftd_approval.php?message2=$randms");
+                // echo header ("Location: ../mfi/ftd_approval.php?message2=$randms");
+                echo $l_term.'tom';
+                if ($connection->error) {
+                    try {   
+                        throw new Exception("MySQL error $connection->error <br> Query:<br> $up", $mysqli->error);   
+                    } catch(Exception $e ) {
+                        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+                        echo nl2br($e->getTraceAsString());
+                    }
+                }
             }
         }
         else if($prev_amount != $amount){

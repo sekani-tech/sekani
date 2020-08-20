@@ -174,8 +174,13 @@ $l_account = $fdio['account_no'];
                     <div class="col-md-4">
                         <div class="form-group">
                         <label class="bmd-label-floating">Tenure</label>
-                        <input type="text" class="form-control" value="<?php echo $term;?>" id="lterm" name="l_term">
-                        </div>
+                        <select class="form-control" id="lterm" name="l_term" required>
+                          <option hidden value="<?php echo $term;?>"><?php echo $term;?></option>
+                          <option value="30">30</option>
+                          <option value="60">60</option>
+                          <option value="90">90</option>
+                          <option value="120">120</option>
+                        </select>                        </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group" id ="matdate" >

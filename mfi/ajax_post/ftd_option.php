@@ -79,8 +79,14 @@ if(isset($_POST['id'])){
       </div>
       <div class="col-md-4">
         <div class="form-group">
-          <label class="bmd-label-floating">Tenure</label>
-          <input type="text" class="form-control" id="lterm" name="l_term">
+          <label class="bmd-label-floating">Tenure(days)</label>
+          <select class="form-control" id="lterm" name="l_term" required>
+          <option hidden value="'.$autore.'">'.$autore.'</option>
+          <option value="30">30</option>
+          <option value="60">60</option>
+          <option value="90">90</option>
+          <option value="120">120</option>
+        </select>
         </div>
       </div>
       <div class="col-md-4">
