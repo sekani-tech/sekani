@@ -57,6 +57,11 @@ $destination = "../index.php";
                           <td><a href="transfer_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
                         <tr>
+                        </tr>
+                          <th>Fixed Deposit Accounts</th>
+                          <th>View and approve all recently booked FTDs</th>
+                          <td><a href="ftd_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                        </tr>
                           <th>CHQ/Pass Book</th>
                           <th>Approve all the issued Cheque/pass books</th>
                           <td><a href="chq_approval.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
