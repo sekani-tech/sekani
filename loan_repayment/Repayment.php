@@ -81,7 +81,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
             `fee_charges_waived_derived`, `accrual_fee_charges_derived`, `suspended_fee_charges_derived`, `penalty_charges_amount`, `penalty_charges_completed_derived`, 
             `penalty_charges_writtenoff_derived`, `penalty_charges_waived_derived`, `accrual_penalty_charges_derived`, `suspended_penalty_charges_derived`, 
             `total_paid_in_advance_derived`, `total_paid_late_derived`, `completed_derived`, `obligations_met_on_date`, `createdby_id`, `created_date`, `lastmodified_date`, 
-            `lastmodifiedby_id`, `recalculated_interest_component`) 
+            `lastmodifiedby_id`, `recalculated_interest_component`)
             VALUES ('{$int_id}', '{$loan_id}', '{$rep_client_id}', '{$offical_repayment}', '{$rep_fromdate}', '{$rep_install}', 
             '{$rep_comp_derived}', '{$rep_comp_derived}', '0', '{$rep_int_amt}', '{$rep_int_amt}', '0',
             NULL, '0', '0', '0', '0', '0',
@@ -582,4 +582,7 @@ while ($iq = mysqli_fetch_array($select_arrears)) {
     echo "DIFFERENCE BETWEEN DATE IS".$days_between;
 }
 // count out
+?>
+<?php
+// FIXED DEOSIT REPAYMENT.
 ?>
