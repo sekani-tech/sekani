@@ -36,7 +36,7 @@ if($_FILES['imagefile']['name']) {
 
     $query = "UPDATE users SET username = '$username', usertype = '$usertype', branch_id = '$branch_id' WHERE id = '$user_id'";
     $result = mysqli_query($connection, $query);
-    // if($result) {
+    if($result) {
         $sec = "UPDATE staff SET int_name = '$int_name', username = '$username', branch_id = '$branch_id', display_name = '$display_name', email = '$email',
         first_name = '$first_name', last_name = '$last_name', phone = '$phone', employee_status = '$status', address = '$address', date_joined = '$date_joined',
         org_role = '$org_role', img = '$img' WHERE id = '$staff_id'";
@@ -50,8 +50,16 @@ if($_FILES['imagefile']['name']) {
           echo header ("Location: ../mfi/staff_mgmt.php?message4=$randms");
             // echo header("location: ../mfi/client.php");
         }
-    // } else {
-    //   echo header ("Location: ../mfi/staff_mgmt.php?message2=$randms");
+    } else {
+    //   if ($connection->error) {
+    //     try {   
+    //         throw new Exception("MySQL error $connection->error <br> Query:<br> $query", $mysqli->error);   
+    //     } catch(Exception $e ) {
+    //         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+    //         echo nl2br($e->getTraceAsString());
+    //     }
     // }
+      echo header ("Location: ../mfi/staff_mgmt.php?message2=$randms");
+    }
 }
 ?>

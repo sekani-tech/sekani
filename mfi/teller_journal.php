@@ -196,6 +196,8 @@ else if (isset($_GET["message5"])) {
 if ($valut == 1 || $valut == "1") {
 ?> 
 <?php
+session_start();
+$bch_id = $_SESSION['branch_id'];
 // output the branch name
   $bch_name =  mysqli_query($connection, "SELECT * FROM branch WHERE id = '$bch_id' && int_id = '$sessint_id'");
   $grn = mysqli_fetch_array($bch_name);

@@ -71,7 +71,7 @@ if (isset($_GET["edit"])) {
                         <div class="form-group">
                           <label class="bmd-label-floating">ID</label>
                           <input type="text" readonly name="staff_id" value="<?php echo $staff_id; ?>" class="form-control">
-                          <input type="text" readonly name="user_id" hidden value="<?php echo $user_id; ?>" class="form-control">
+                          <input type="text" readonly name="user_id" hidden value="<?php echo $us_id; ?>" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-5">
