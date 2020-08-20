@@ -46,11 +46,11 @@ $destination = "../index.php";
                           <th> Recharge Airtime and Data.</th>
                           <td><a href="airtime.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                           <th>Transaction Pin</th>
                           <th> Generate or Update your Bill & Airtime Transaction pin.</th>
                           <td><a href="bill_pin.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
-                        </tr>
+                        </tr> -->
                       </tbody>
                     </table>
                   </div>

@@ -584,9 +584,6 @@ while ($iq = mysqli_fetch_array($select_arrears)) {
 // count out
 ?>
 <?php
-<<<<<<< HEAD
-// FIXED DEOSIT REPAYMENT.
-=======
 echo '</br></br></br>FTD Booking Auto Code right here:</br>';
 // THIS PROCESS ID FOR THE PAYMENT OF FIXED DEPOSIT INTEREST TO THEIR ACCOUNTS
 $ftd_booking_account = mysqli_query($connection, "SELECT * FROM ftd_booking_account WHERE status = 'Approved'");
@@ -629,5 +626,4 @@ while($a = mysqli_fetch_array($ftd_booking_account)){
 }
 
 
->>>>>>> be5d85caffcef7094dba56c322de44402c2cb563
 ?>
