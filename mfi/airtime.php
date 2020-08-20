@@ -1,7 +1,7 @@
 <?php
 
-$page_title = "Products Configuration";
-$destination = "index.php";
+$page_title = "Airtime & Data";
+$destination = "bill_airtime.php";
     include("header.php");
 
 ?>
@@ -337,13 +337,85 @@ if ($per_bills == 1 || $per_bills == "1") {
                     </div> -->
                     <div class="tab-pane active" id="products">
                         <center>
-                      <button data-toggle="modal" data-target="#exampleModal" class="btn btn-primary"> Buy Airtime</button>
+                      <!-- start a merge -->
+                      <div class="row">
+  <div class="col-md-4 ml-auto mr-auto">
+    <div class="card card-pricing bg-primary"><div class="card-body">
+        <!-- <div class="card-icon">
+            <i class="material-icons">business</i>
+        </div> -->
+        <p>Purchase Airtime</p>
+        <form id="form" action="" method="POST">
+                <div class="card-body">
+                <div class="row">
+          <div class="col-md-12" style="color: white;">
+              <div class="form-group">
+               <label class="bmd-label-floating" style="color: white;">Select a Network</label>
+               <select name="" id="network" class="form-control" style="color: white;">
+                 <option value="MTN" style="color: black;">MTN</option>
+                 <option value="AIRTEL" style="color: black;">AIRTEL</option>
+                 <option value="9mobile" style="color: black;">9MOBILE</option>
+                 <option value="GLO" style="color: black;">GLO</option>
+             </select>
+             <input type="text" id="int_id" hidden  value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating" style="color: white;">Phone Number</label>
+               <input type = "text" id="phone" class="form-control" name = "" style="color: white;"/>
+              </div>
+            </div>
+            <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating" style="color: white;">Amount NGN</label>
+               <input type = "number" id="amount" class="form-control" name = "" style="color: white;"/>
+              </div>
+            </div>
+            <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating" style="color: white;">Transaction Pin</label>
+               <input type ="password" id="pin" class="form-control" name = "" style="color: white;"/>
+              </div>
+            </div>
+            </div>
+                </div>
+                <a class="btn btn-white btn-round pull-right" id="process"  data-toggle="modal" data-target="#exampleModal" style="color:black;">Proceed</a>
+                <script>
+              $(document).ready(function() {
+                $('#process').on("click", function() {
+                  var net_con = $("#network").val();
+                  var phone_con = $("#phone").val();
+                  var amt_con = $("#amount").val();
+                  if (net_con != "" && phone_con != "" && amt_con != "") {
+                    $("#net_com").val(net_con);
+                    $("#phone_com").val(phone_con);
+                    $("#amt_com").val(amt_con);
+                    // activate button
+                    $("#submitme").prop("disabled", false);
+                  } else {
+                    // move
+                    $("#net_com").val("please input missing field");
+                    $("#phone_com").val("please input missing field");
+                    $("#amt_com").val("please input missing field");
+                    // deactivate button
+                    $("#submitme").prop("disabled", true);
+                  }
+                });
+              });
+            </script>
+                </form>
+        </div>
+    </div>
+  </div>
+</div>
+                      <!-- finish the merge -->
                       </center>
                       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Buy Airtime</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Airtime</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -351,69 +423,42 @@ if ($per_bills == 1 || $per_bills == "1") {
       <div class="modal-body">
       <!-- action="../functions/pay.php" -->
       <form method="POST"  enctype="multipart/form-data">
-          <div class="row">
+      <div class="row">
           <div class="col-md-12">
               <div class="form-group">
-               <label class="bmd-label-floating">Select a Network</label>
-               <select name="" id="network" class="form-control">
-                 <option value="MTN">MTN</option>
-                 <option value="AIRTEL">AIRTEL</option>
-                 <option value="9mobile">9MOBILE</option>
-                 <option value="GLO">GLO</option>
-             </select>
-             <input type="text" id="int_id" hidden  value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
+                <p>Please confirm your Airtime Recharge below</p>
               </div>
-            </div>
-            <div class="col-md-12">
-            <div class="form-group">
-               <label class="bmd-label-floating">Phone Number</label>
-               <input type = "text" id="phone" class="form-control" name = ""/>
+          </div>
+          <div class="col-md-12">
+              <div class="form-group">
+              <label class="bmd-label-floating">Network</label>
+               <input type = "text" id="net_com" class="form-control" name = "" readonly/>
               </div>
-            </div>
-            <div class="col-md-12">
-            <div class="form-group">
-               <label class="bmd-label-floating">Amount NGN</label>
-               <input type = "text" id="amount" class="form-control" name = ""/>
+          </div>
+          <div class="col-md-12">
+              <div class="form-group">
+              <label class="bmd-label-floating">Phone</label>
+               <input type = "text" id="phone_com" class="form-control" name = "" readonly/>
               </div>
-            </div>
-            </div>
-            <script>
-              $(document).ready(function() {
-                $('#submitme').on("click", function() {
-                  Swal({
-  title: 'Processing!',
-  html: 'Please Wait! <b></b> .',
-  timer: 800,
-  timerProgressBar: true,
-  onBeforeOpen: () => {
-    Swal.showLoading()
-    timerInterval = setInterval(() => {
-      const content = Swal.getContent()
-      if (content) {
-        const b = content.querySelector('b')
-        if (b) {
-          b.textContent = Swal.getTimerLeft()
-        }
-      }
-    }, 100)
-  },
-  onClose: () => {
-    clearInterval(timerInterval)
-  }
-});
-                });
-              });
-            </script>
+          </div>
+          <div class="col-md-12">
+          <div class="form-group">
+              <label class="bmd-label-floating">Amount NGN</label>
+               <input type = "text" id="amt_com" class="form-control" name = "" readonly/>
+              </div>
+          </div>
+      </div>
             <script>
                               $(document).ready(function() {
                                 $('#submitme').on("click", function() {
                                   var net = $('#network').val();
                                   var phone = $('#phone').val();
                                   var amt = $('#amount').val();
+                                  var pin = $('#pin').val();
                                   $.ajax({
                                     url:"ajax_post/bill/airtime.php",
                                     method:"POST",
-                                    data:{net:net, phone:phone, amt:amt},
+                                    data:{net:net, phone:phone, amt:amt, pin:pin},
                                     success:function(data){
                                       $('#coll').html(data);
                                     }
@@ -432,7 +477,7 @@ if ($per_bills == 1 || $per_bills == "1") {
                     </div>
                     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="submitme" name="submit" value="add_payment" type="button" data-dismiss="modal" class="btn btn-primary">Buy</button>
+        <button id="submitme" name="submit" value="add_payment" type="button" data-dismiss="modal" class="btn btn-primary">Confirm</button>
       </div>
                 </form>
                 </div>

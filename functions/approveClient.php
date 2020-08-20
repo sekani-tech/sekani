@@ -18,6 +18,6 @@ $date = date('Y-m-d h:m:s');
         $_SESSION["Lack_of_intfund_$randms"] = "Client Approved";
         header ("Location: ../mfi/client_approval.php?message=$randms");
     } else {
-        
+        // echo an error:
     }
 ?>
