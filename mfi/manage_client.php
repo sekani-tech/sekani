@@ -78,7 +78,7 @@ if ($acc_op == 1 || $acc_op == "1") {
                 <div id="client">
                     </div>
                 <a href="client.php" class="btn btn-danger">Back</a>
-                <input type="submit" value="Create Client" name="submit" id="submit" class="btn btn-primary pull-right"/>
+                <input type="submit" value="Create Client" name="submit" id="submit" disabled class="btn btn-primary pull-right"/>
                 <div class="clearfix"></div>
               </form>
             </div>
