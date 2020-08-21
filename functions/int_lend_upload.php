@@ -32,7 +32,7 @@ if ($repay_start == NULL || $repay_start == "" && $disbursement_date == "" && $l
     $repay_every = $_POST["repay_eve"];
     $repay_st1 =  $_POST["repay_start"];
 $date = str_replace('/', '-', $repay_st1);
-$repay_st =  date('Y-m-d', strtotime($date));
+$repay_st =  date('Y-m-d h:i:sa', strtotime($date));
     // echo "Repayement Datw".$repay_st;
     // echo "XDisgb Datw".$disbursement_date;
 // Part for Charges

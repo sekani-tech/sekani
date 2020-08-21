@@ -6,7 +6,7 @@ require_once "../bat/phpmailer/PHPMailerAutoload.php";
 $int_name = $_SESSION["int_name"];
 $int_email = $_SESSION["int_email"];
 $branch_id = $_SESSION["branch_id"];
-$submittedon_date = date('Y-m-d h:m:s');
+$submittedon_date = date('Y-m-d h:i:sa');
 $submittedon_userid = $_SESSION['user_id'];
 
 ?>

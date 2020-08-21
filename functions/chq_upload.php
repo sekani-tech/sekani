@@ -17,7 +17,7 @@ $book = $_POST['book_type'];
 $leaves_no = $_POST['no_leaves'];
 $charge_app = $_POST['charge_app'];
 $range = $_POST['range'];
-$date = date('Y-m-d');
+$date = date('Y-m-d h:i:sa');
 
 if(($leaves_no =="0" || $leaves_no =="") && ($book == "2")){
   $_SESSION["Lack_of_intfund_$randms"] = " no cheque book";

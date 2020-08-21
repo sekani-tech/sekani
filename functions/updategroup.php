@@ -14,7 +14,7 @@ if(isset($_POST['id'])){
     $mtime = $_POST['meet_time'];
     $frq = $_POST['freq'];
     $loc = $_POST['location'];
-    $date = date('Y-m-d');
+    $date = date('Y-m-d h:i:sa');
 
     $sjsjjd = mysqli_query($connection, "SELECT * FROM groups WHERE id='$id'");
     $ods = mysqli_fetch_array($sjsjjd);
