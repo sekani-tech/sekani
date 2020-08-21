@@ -434,9 +434,15 @@ input[type=number] {
                   $sdf = mysqli_query($connection, $fdef);
                   $charge = mysqli_num_rows($sdf);
                 ?>
+                <!-- Notification for Groups -->
+                <?php
+                 $ifdofi = "SELECT * FROM groups WHERE int_id = '$sessint_id' AND (branch_id ='$br_id') AND status = 'Pending'";
+                 $fdio = mysqli_query($connection, $ifdofi);
+                 $group = mysqli_num_rows($fdio);
+                ?>
                 <!-- Notification for banner -->
                 <?php
-                $fomd = $dfn + $dn + $approvd + $trans + $client + $loan + $charge;
+                $fomd = $dfn + $dn + $approvd + $trans + $client + $loan + $charge + $group;
                 ?>
                 <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">notifications</i>
@@ -467,7 +473,14 @@ input[type=number] {
                 <?php }
                 if($charge){?>
                   <a class="dropdown-item" href="charge_approval.php"><?php echo $charge;?> charge(s) in need of approval</a>
-                <?php }?>
+                <?php
+                 }
+                 if($group){
+                ?>
+                  <a class="dropdown-item" href="approve_group.php"><?php echo $group;?> Group(s) in need of approval</a>
+                <?php
+                 }
+                ?>
                 </div>
                 <?php }?>
               </li>
