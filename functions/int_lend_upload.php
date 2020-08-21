@@ -25,9 +25,9 @@ $loan_purpose = $_POST['loan_purpose'];
 $standing_instruction = $_POST['standing_instruction'];
 $linked_savings_acct = $_POST['linked_savings_acct'];
 $repay_start =  $_POST["repay_start"];
-if ($repay_start == NULL || $repay_start == "") {
-    echo $repay_start;
-    echo $repay_every;
+if ($repay_start == NULL || $repay_start == "" && $disbursement_date == "" && $loan_term == "") {
+    $_SESSION["Lack_of_intfund_$randms"] = "Please fill some field";
+       echo header ("Location: ../mfi/lend.php?messfill=$randms");
 } else {
     $repay_every = $_POST["repay_eve"];
     $repay_st1 =  $_POST["repay_start"];
