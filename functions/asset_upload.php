@@ -17,9 +17,10 @@ $asset_name = $gdi['asset_name'];
 $qty = $_POST['qty'];
 $price = $_POST['price'];
 $ass_no = $_POST['ass_no'];
-$location = $_POST['branch'];
+$location = $_POST['location'];
 $depre = $_POST['depre'];
 $purdate = $_POST['purdate'];
+$amount = $price * $qty;
 
 $submitted_on = date('Y-m-d h:m:s');
 $submited_by = $_SESSION['user_id'];
@@ -28,9 +29,9 @@ $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 
 $query = "INSERT INTO `assets` (`int_id`, `branch_id`, `asset_name`, `asset_type_id`, `type`, `qty`,
- `unit_price`, `asset_no`, `location`, `date`, `depreciation_value`, `appuser_id`) 
+ `unit_price`, `asset_no`, `location`,  `amount`, `date`, `depreciation_value`, `appuser_id`) 
  VALUES ('{$ssint_id}', '{$b_id}', '{$assname}', '{$asstype}', '{$asset_name}', '{$qty}', '{$price}', '{$ass_no}',
-  '{$location}', '{$purdate}', '{$depre}', '{$user_id}')";
+  '{$location}', '{$amount}', '{$purdate}', '{$depre}', '{$user_id}')";
 $result = mysqli_query($connection, $query);
 
 if ($result) {

@@ -19,7 +19,7 @@
       $int_id = $a['int_id'];
      }
 
-    $get_gau = mysqli_query($connection, "SELECT * FROM loan_gaurantor WHERE client_id = '$client_id' AND phone = '$phone' OR phone2 = '$phone_b' OR email = '$email' AND int_id = '$int_id'");
+    $get_gau = mysqli_query($connection, "SELECT * FROM loan_gaurantor WHERE client_id = '$client_id' AND phone = '$phone' OR email = '$email' AND int_id = '$int_id'");
     $mp = mysqli_num_rows($get_gau);
     if ($mp <= 0) {
         $coll = "INSERT INTO loan_gaurantor (int_id, client_id, first_name, last_name, phone, phone2, home_address, office_address, email) VALUES ( '{$int_id}','{$client_id}','{$firstname}','{$lastname}','{$phone}','{$phone_b}','{$h_address}',
