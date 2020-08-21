@@ -57,4 +57,20 @@ elseif(isset($_GET['close'])){
         // echo header("location: ../mfi/client.php");
     }
 }
+elseif(isset($_GET['app'])){
+  $id = $_GET['app'];
+
+  $doe = mysqli_query($connection, "UPDATE groups SET status='Approved' WHERE id='$id'");
+
+    if($doe) {
+      // If 'result' is successful, it will send the required message to client.php
+    $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
+    echo header ("Location: ../mfi/approve_group.php?message1=$randms");
+  } else {
+     $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+     echo "error";
+    echo header ("Location: ../mfi/approve_group.php?message2=$randms");
+      // echo header("location: ../mfi/client.php");
+  }
+}
 ?>
