@@ -60,7 +60,7 @@ elseif(isset($_GET['close'])){
 elseif(isset($_GET['app'])){
   $id = $_GET['app'];
 
-  $doe = mysqli_query($connection, "UPDATE groups SET status='Approved' WHERE id='$id'");
+  $doe = mysqli_query($connection, "UPDATE groups SET status='Approved', approvedon_date = '$date' WHERE id='$id'");
 
     if($doe) {
       // If 'result' is successful, it will send the required message to client.php
