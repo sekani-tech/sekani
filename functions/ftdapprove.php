@@ -18,7 +18,7 @@ if (isset($_POST['id'])) {
     $auto_renew = $_POST['auto_renew'];
     $acc_off = $_POST['acc_off'];
     $sessint_id = $_SESSION['int_id'];
-    $curr_date = date('Y-m-d');
+    $curr_date = date('Y-m-d h:i:sa');
     $user_id = $_SESSION['user_id'];
 
     // Collect extra data needed

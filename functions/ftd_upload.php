@@ -19,7 +19,7 @@ if(isset($_POST['ftd_no'])){
     $sproduct_id = $_POST['s_product'];
     $int_repay = $_POST['int_repay'];
     $currency_code = 'NGN';
-    $dating = date('Y-m-d');
+    $dating = date('Y-m-d h:i:sa');
     if(isset($_POST['auto_renew'])){
         $auto_renew = '1';
     }

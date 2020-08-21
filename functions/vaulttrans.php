@@ -53,7 +53,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
     $rocka = mysqli_query($connection, $quet);
     $yy = mysqli_fetch_array($rocka);
     $tellname = $yy['description'];
-    $transdate = date('Y-m-d');
+    $transdate = date('Y-m-d h:i:sa');
     $crdate = date('Y-m-d H:m:s');
     $vault = mysqli_query($connection, "SELECT * FROM int_vault WHERE branch_id = '$branchid' && int_id = '$sint_id'");
     $itb = mysqli_fetch_array($vault);
