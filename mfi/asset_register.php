@@ -10,7 +10,7 @@ $sint_id = $_SESSION['int_id'];
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $asset_no = $sint_id."00".$randms;
-$date = date('Y-m-d');
+$date = date('Y-m-d h:i:sa');
 
 if (isset($_GET["message1"])) {
     $key = $_GET["message1"];

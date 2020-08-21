@@ -645,7 +645,7 @@ else{
               $trans_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
               $gends = $disburse_date;
               $gen_date = $disburse_date;
-              $crd_d = date('Y-m-d');
+              $crd_d = date('Y-m-d h:i:sa');
               $insert_gl_trans = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
               `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,
               `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`,
@@ -908,7 +908,7 @@ else{
               $trans_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
               $gends = $disburse_date;
               $gen_date = $disburse_date;
-              $crd_d = date('Y-m-d');
+              $crd_d = date('Y-m-d h:i:sa');
               // transaction
               $insert_charge_gl = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
               `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,
@@ -1205,7 +1205,7 @@ else{
               $trans_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
               $gends = $disburse_date;
               $gen_date = $disburse_date;
-              $app_on = date('Y-m-d');
+              $app_on = date('Y-m-d h:i:sa');
               // transaction
               $insert_charge_gl5 = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
               `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,

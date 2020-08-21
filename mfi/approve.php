@@ -19,8 +19,8 @@ $sessint_id = $_SESSION["int_id"];
 $appuser_id = $_SESSION['user_id'];
 $sender_id = $_SESSION["sender_id"];
 $gen_date = date('Y-m-d H:i:s');
-$pint = date('Y-m-d H:i:s');
-$gends = date('Y-m-d');
+$pint = date('Y-m-d h:i:sa');
+$gends = date('Y-m-d h:i:sa');
 ?>
 <?php
 if (isset($_GET['approve']) && $_GET['approve'] !== '') {
@@ -61,7 +61,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
   }
 }
 $gen_date = date('Y-m-d H:i:s');
-$gends = date('Y-m-d');
+$gends = date('Y-m-d h:i:sa');
 // we will call the institution account
 
 ?>
