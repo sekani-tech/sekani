@@ -44,11 +44,14 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             $asset = $q['asset_no'];
             $location = $q['location'];
             $branch_id = $q['branch_id'];
+            $date = $q['date'];
+            $dep = $q['depreciation_value'];
             $branchquery = mysqli_query($connection, "SELECT * FROM branch WHERE id='$branch_id'");
             if (count([$branchquery]) == 1) {
               $ans = mysqli_fetch_array($branchquery);
               $branch = $ans['name'];
             }
+            // Current year depreciation
             $out .= '
             <tr>
             <td>'.$name.'</td>
@@ -59,7 +62,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             <td>'.$asset.'</td>
             <td>'.$location.'</td>
             <td>'.$branch.'</td>
-            <td>0.00</td>
+            <td>'.$date.'</td>
             <td>0.00</td>
             <td>0.00</td>
             <td>0.00</td>
@@ -117,7 +120,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                   </div>
                 </div>
               <div class="clearfix"></div>
-            
+              <button id="pddf" type="sumbit" class="btn btn-primary pull-right">Download PDF</button>
             <div class="table-responsive">
               <table id="tabledat4" class="table" style="width: 100%;">
                 <thead class="text-primary">
@@ -162,7 +165,6 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             <p><b>Checked By: '.$_SESSION["username"].'</b>                             <b>Date/Sign: '.$start." - ".$end.' </b></p>
 
             <p>
-            <button id="pddf" type="sumbit" class="btn btn-primary pull-right">Download PDF</button>
             <div id=""></div>
             </p>
             </form>
