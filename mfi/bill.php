@@ -336,9 +336,104 @@ if ($per_bills == 1 || $per_bills == "1") {
                       </form>
                     </div> -->
                     <div class="tab-pane active" id="products">
-                        <center>
-                      <button data-toggle="modal" data-target="#exampleModal" class="btn btn-primary"> Pay Electricity Bills</button>
-                      </center>
+                      <!-- <center> -->
+                      <!-- start a merge -->
+                      <div class="row">
+  <div class="col-md-4 ml-auto mr-auto">
+    <div class="card card-pricing bg-primary"><div class="card-body">
+        <!-- <div class="card-icon">
+            <i class="material-icons">business</i>
+        </div> -->
+        <p>Pay Electricity Bill</p>
+        <form id="form" action="" method="POST">
+                <div class="card-body">
+                <div class="row">
+                <div class="col-md-12">
+              <div class="form-group">
+               <label class="bmd-label-floating" style="color: white;">Select a Disco</label>
+               <select name="" id="disco" class="form-control" style="text-transform:uppercase; color: white;">
+                 <option value="AEDC" style="color: black;">AEDC: Abuja</option>
+                 <option value="KAEDC" style="color: black;">KAEDC: Kaduna</option>
+                 <option value="JEDC" style="color: black;">JEDC: Jos</option>
+                 <option value="IKEDC" style="color: black;">IKEDC: Ikeja</option>
+                 <option value="EKEDC" style="color: black;">EKEDC: Eko</option>
+                 <option value="KEDC" style="color: black;">KEDC: Kano</option>
+                 <option value="EEDC" style="color: black;">EEDC: Enugu</option>
+                 <option value="PHEDC" style="color: black;">PHEDC: Phortharcout</option>
+                 <option value="IBEDC" style="color: black;">IBEDC: Ibadan</option>
+             </select>
+             <input type="text" id="int_id" hidden  value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating" style="color: white;">Type</label>
+               <select name="" id="dis_type" class="form-control" style="text-transform:uppercase; color: white;">
+               <option value="PREPAID" style="color: black;">PREPAID</option>
+               <option value="POSTPAID" style="color: black;">POSTPAID</option>
+               </select>
+              </div>
+            </div>
+            <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating" style="color: white;">Meter No</label>
+               <input type = "number" id="meter_no" class="form-control" name = "" style="color: white;"/>
+              </div>
+            </div>
+            <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating" style="color: white;">Transaction Pin</label>
+               <input type ="password" id="pin" class="form-control" name = "" style="color: white;"/>
+              </div>
+            </div>
+            <div id="m_check"></div>
+            <div id="make_display"></div>
+            </div>
+                </div>
+                <a class="btn btn-white btn-round pull-right" id="process"  data-toggle="modal" data-target="#exampleModal" style="color:black;">Proceed</a>
+                <script>
+              $(document).ready(function() {
+                $('#process').on("click", function() {
+                  var dis_con = $("#disco").val();
+                  var typ_con = $("#dis_type").val();
+                  var met_con = $("#meter_no").val();
+                  var amt_con = $("#amount").val();
+                  var nam_con = $("#name").val();
+                  var ph_con = $("#phonenumber").val();
+                  var cadd_con = $("#customerAddress").val();
+                  if (dis_con != "" && typ_con != "" && met_con != "" && amt_con != "" && nam_con != "" && ph_con != "" && cadd_con != "") {
+                    $("#dis_com").val(dis_con);
+                    $("#typ_com").val(typ_con);
+                    $("#met_com").val(met_con);
+                    $("#amt_com").val(amt_con);
+                    $("#nam_com").val(nam_con);
+                    $("#ph_com").val(ph_con);
+                    $("#cadd_com").val(cadd_con);
+                    // activate button
+                    $("#submitme").prop("disabled", false);
+                  } else {
+                    // move
+                    $("#net_com").val("please input missing field");
+                    $("#dis_com").val("please input missing field");
+                    $("#typ_com").val("please input missing field");
+                    $("#met_com").val("please input missing field");
+                    $("#amt_com").val("please input missing field");
+                    $("#nam_com").val("please input missing field");
+                    $("#ph_com").val("please input missing field");
+                    $("#cadd_com").val("please input missing field");
+                    // deactivate button
+                    $("#submitme").prop("disabled", true);
+                  }
+                });
+              });
+            </script>
+                </form>
+        </div>
+    </div>
+  </div>
+</div>
+                      <!-- finish the merge -->
+                      <!-- </center> -->
                       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -351,42 +446,55 @@ if ($per_bills == 1 || $per_bills == "1") {
       <div class="modal-body">
       <!-- action="../functions/pay.php" -->
       <form method="POST"  enctype="multipart/form-data">
-          <div class="row">
+      <div class="row">
           <div class="col-md-12">
               <div class="form-group">
-               <label class="bmd-label-floating">Select a Disco</label>
-               <select name="" id="disco" class="form-control" style="text-transform:uppercase">
-                 <option value="AEDC">AEDC: Abuja</option>
-                 <option value="KAEDC">KAEDC: Kaduna</option>
-                 <option value="JEDC">JEDC: Jos</option>
-                 <option value="IKEDC">IKEDC: Ikeja</option>
-                 <option value="EKEDC">EKEDC: Eko</option>
-                 <option value="KEDC">KEDC: Kano</option>
-                 <option value="EEDC">EEDC: Enugu</option>
-                 <option value="PHEDC">PHEDC: Phortharcout</option>
-                 <option value="IBEDC">IBEDC: Ibadan</option>
-             </select>
-             <input type="text" id="int_id" hidden  value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
+                <p>Please confirm your Airtime Recharge below</p>
               </div>
-            </div>
-            <div class="col-md-12">
-            <div class="form-group">
-               <label class="bmd-label-floating">Type</label>
-               <select name="" id="dis_type" class="form-control" style="text-transform:uppercase">
-               <option value="PREPAID">PREPAID</option>
-               <option value="POSTPAID">POSTPAID</option>
-               </select>
+          </div>
+          <div class="col-md-12">
+              <div class="form-group">
+              <!-- <label class="bmd-label-floating">Network</label> -->
+               <input type = "text" id="dis_com" class="form-control" name = "" readonly/>
               </div>
-            </div>
-            <div class="col-md-12">
-            <div class="form-group">
-               <label class="bmd-label-floating">Meter No</label>
-               <input type = "text" id="meter_no" class="form-control" name = ""/>
+          </div>
+          <div class="col-md-12">
+              <div class="form-group">
+              <!-- <label class="bmd-label-floating">Phone</label> -->
+               <input type = "text" id="typ_com" class="form-control" name = "" readonly/>
               </div>
-            </div>
-            <div id="m_check"></div>
-            <div id="make_display"></div>
-            </div>
+          </div>
+          <div class="col-md-12">
+          <div class="form-group">
+              <!-- <label class="bmd-label-floating">Amount NGN</label> -->
+               <input type = "text" id="met_com" class="form-control" name = "" readonly/>
+              </div>
+          </div>
+          <div class="col-md-12">
+          <div class="form-group">
+              <!-- <label class="bmd-label-floating">Amount NGN</label> -->
+               <input type = "text" id="amt_com" class="form-control" name = "" readonly/>
+              </div>
+          </div>
+          <div class="col-md-12">
+          <div class="form-group">
+              <!-- <label class="bmd-label-floating">Amount NGN</label> -->
+               <input type = "text" id="nam_com" class="form-control" name = "" readonly/>
+              </div>
+          </div>
+          <div class="col-md-12">
+          <div class="form-group">
+              <!-- <label class="bmd-label-floating">Amount NGN</label> -->
+               <input type = "text" id="ph_com" class="form-control" name = "" readonly/>
+              </div>
+          </div>
+          <div class="col-md-12">
+          <div class="form-group">
+              <!-- <label class="bmd-label-floating">Amount NGN</label> -->
+               <input type = "text" id="cadd_com" class="form-control" name = "" readonly/>
+              </div>
+          </div>
+      </div>
                            <script>
                               $(document).ready(function() {
                                 $('#meter_no').on("change keyup paste click", function() {
@@ -402,7 +510,7 @@ if ($per_bills == 1 || $per_bills == "1") {
                                     }
                                   });
                                 });
-                                $('#disco').on("change keyup paste click", function() {
+                                $('#disco').on("change", function() {
                                   var disco = $('#disco').val();
                                   var dis_type = $('#dis_type').val();
                                   var meter = $('#meter_no').val();
@@ -415,7 +523,7 @@ if ($per_bills == 1 || $per_bills == "1") {
                                     }
                                   });
                                 });
-                                $('#dis_type').on("change keyup paste click", function() {
+                                $('#dis_type').on("change", function() {
                                   var disco = $('#disco').val();
                                   var dis_type = $('#dis_type').val();
                                   var meter = $('#meter_no').val();
@@ -440,10 +548,11 @@ if ($per_bills == 1 || $per_bills == "1") {
                                   var name = $('#name').val();
                                   var phone = $('#phonenumber').val();
                                   var address = $('#customerAddress').val();
+                                  var pin = $('#pin').val();
                                   $.ajax({
                                     url:"ajax_post/bill/disco.php",
                                     method:"POST",
-                                    data:{disco:disco, dis_type:dis_type, meter:meter, amt:amt, name:name, phone:phone, address:address},
+                                    data:{disco:disco, dis_type:dis_type, meter:meter, amt:amt, name:name, phone:phone, address:address, pin:pin},
                                     success:function(data){
                                       $('#coll').html(data);
                                     }

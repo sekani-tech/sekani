@@ -80,28 +80,28 @@ if ($status == "200" && $status != "") {
     <div class="row">
     <div class="col-md-12">
             <div class="form-group">
-               <label class="bmd-label-floating">Amount</label>
-               <input type = "text" value="" id="amount" class="form-control" name = ""/>
+               <label class="bmd-label-floating" style="color: white;">Amount</label>
+               <input type = "text" value="" id="amount" style="color: white;" class="form-control" name = ""/>
               </div>
     </div>
     <div class="col-md-12">
             <div class="form-group">
-               <label class="bmd-label-floating">Customer Name</label>
-               <input type = "text" value="<?php echo $customer ?>" id="name" class="form-control" name = "" readonly/>
+               <label class="bmd-label-floating" style="color: white;">Customer Name</label>
+               <input type = "text" style="color: black;" value="<?php echo $customer ?>" id="name" class="form-control" name = "" readonly/>
               </div>
     </div>
     <!-- ow te script -->
     <div class="col-md-12">
             <div class="form-group">
-               <label class="bmd-label-floating">Customer Phone</label>
-               <input type = "text" value="<?php echo $phoneNumber ?>" id="phonenumber" class="form-control" name = ""/>
+               <label class="bmd-label-floating" style="color: white;">Customer Phone</label>
+               <input type = "text" style="color: white;" value="<?php echo $phoneNumber ?>" id="phonenumber" class="form-control" name = ""/>
               </div>
     </div>
     <!-- DATA respomze -->
     <div class="col-md-12">
             <div class="form-group">
-               <label class="bmd-label-floating">Customer Address</label>
-               <input type = "text" value="<?php echo $customerAddress ?>" id="customerAddress" class="form-control" name = ""/>
+               <label class="bmd-label-floating" style="color: white;">Customer Address</label>
+               <input type = "text" style="color: white;" value="<?php echo $customerAddress ?>" id="customerAddress" class="form-control" name = ""/>
               </div>
     </div>
     </div>

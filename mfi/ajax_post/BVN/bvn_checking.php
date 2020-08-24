@@ -72,7 +72,7 @@ if ($bvn_length == 11) {
         </script>
         ';
         } else {
-           echo $response;
+        //    echo $response;
            $obj = json_decode($response, TRUE);
            $status = $obj['status'];
            $bvn_fn = "";
@@ -218,7 +218,7 @@ if ($bvn_length == 11) {
         $('#dob').val(qdob);
         // output something
         swal({
-            type: "error",
+            type: "success",
             title: "DATA REFILL",
             text: "DATA HAS BEEN REFILLED",
             showConfirmButton: false,
