@@ -308,6 +308,15 @@ if($fdpoijf){
     ");
 }
     if($fdop){
+        $fiweo = "INSERT INTO `asset_type` 
+        (`int_id`, `branch_id`, `asset_name`, `depreciation_value`, `total_amount`) VALUES
+        ('$intid', '$br_id', 'PLANT & MACHINERY', '5', ''),
+        ('$intid', '$br_id', 'MOTOR VEHICLE', '5', ''),
+        ('$intid', '$br_id', 'FURNIURE & FITTINGS', '5', ''),
+        ('$intid', '$br_id', 'OFFICE EQUIPMENT', '5', ''),
+        ('$intid', '$br_id', 'LAND & BUILDING', '6', '');
+        ";
+        $pore = mysqli_query($connection, $fiweo);
         echo header ("Location: ../institution.php?message1=$randms");
         // if ($connection->error) {
         //     try {   
