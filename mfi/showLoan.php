@@ -1492,7 +1492,8 @@ else{
           }
           // YOU NEED TO TEST THE QUERY HERE THEN TAKE OFF
           // DISBUSE TO LOAN
-          if ($insert_client_trans1) {
+          $check_charge = 1;
+          if ($insert_client_trans1 || $check_charge == 1) {
             // OK MAKE MOVE
             // loan inputting
             $l_d_m = "INSERT INTO `loan` (`int_id`, `account_no`, `client_id`, `product_id`,
@@ -1577,8 +1578,8 @@ else{
                 $(document).ready(function(){
                     swal({
                         type: "error",
-                        title: "Loan Error",
-                        text: "DB",
+                        title: "Loan Disbursement Error",
+                        text: "Database Error at Loan",
                         showConfirmButton: false,
                         timer: 4000
                     })
@@ -1593,7 +1594,7 @@ else{
                 $(document).ready(function(){
                     swal({
                         type: "error",
-                        title: "Loan Error",
+                        title: "Loan Error - No Charge",
                         text: "DB",
                         showConfirmButton: false,
                         timer: 4000

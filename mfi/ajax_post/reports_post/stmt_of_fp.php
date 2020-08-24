@@ -18,14 +18,7 @@ $endtime = strtotime($end);
 $current = date("F d, Y", $endtime);
 
 // Current Assets
-function fill_charge($connection)
-{
-  $sessint_id = $_SESSION['int_id'];
-  $curr = mysqli_query($connection, "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' AND classification_enum = '1'");
-  while($a = mysqli_fetch_array($curr)){
-
-  }
-}
+$fdio = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' WHERE gl_code ='10100'";
 
 $out = '
 <div class="card">

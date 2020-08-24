@@ -122,7 +122,7 @@ if ($status == "Success") {
         swal({
             type: "success",
             title: "Message sent Successfully! - '.$status.'",
-            text: "API Looks Good!",
+            text: "SMS HAS BEEN SENT",
             showConfirmButton: false,
             timer: 3000
         });

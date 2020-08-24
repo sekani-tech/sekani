@@ -21,7 +21,7 @@ $disbursement_date = $_POST['disbursement_date'];
 $grace_on_principal = $_POST['grace_on_principal'];
 $grace_on_interest = $_POST['grace_on_interest'];
 $loan_officer = $_POST['loan_officer'];
-$loan_purpose = $_POST['loan_purpose'];
+$loan_purpose = preg_replace('/[^\w]/', '', $_POST['loan_purpose']);
 $standing_instruction = $_POST['standing_instruction'];
 $linked_savings_acct = $_POST['linked_savings_acct'];
 $repay_start =  $_POST["repay_start"];
@@ -40,15 +40,15 @@ $charges = $_POST['charge'];
 // Part for collateral
 $col_id = $_POST['col_id'];
 $col_type = $_POST['col_name'];
-$col_description = $_POST['col_description'];
+$col_description = preg_replace('/[^\w]/', '', $_POST['col_description']);
 $col_val = $_POST['col_value'];
 // Part for Gaurantors
 $first_name = $_POST['gau_first_name'];
 $last_name = $_POST['gau_last_name'];
 $phone = $_POST['gau_phone'];
 $phone2 = $_POST['gau_phone2'];
-$home_address = $_POST['gau_home_address'];
-$office_address = $_POST['gau_office_address'];
+$home_address = preg_replace('/[^\w]/', '', $_POST['gau_home_address']);
+$office_address = preg_replace('/[^\w]/', '', $_POST['gau_office_address']);
 $position_held = $_POST['gau_position_held'];
 $email = $_POST['gau_email'];
 // date of submitted
