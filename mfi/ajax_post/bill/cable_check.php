@@ -27,6 +27,7 @@ if ($cable != "" && $smart != "" && $int_id != "" && $branch_id != "") {
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
+              // CURLOPT_URL => "http://34.68.51.255/shago/public/api/test/b2b",
               CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
@@ -38,11 +39,14 @@ if ($cable != "" && $smart != "" && $int_id != "" && $branch_id != "") {
               CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"GDS\",\r\n\"smartCardNo\" : \"$smart\",\r\n\"type\" : \"$cable\"\r\n}",
               CURLOPT_HTTPHEADER => array(
                 "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
-                "Content-Type: application/json"
+                "Content-Type: application/json",
+                // "email: test@shagopayments.com",
+                // "password: test123"
               ),
             ));
             
             $response = curl_exec($curl);
+            // echo $response;
 $err = curl_close($curl);
 if ($err) {
     //    echo "cURL Error #:" . $err;
@@ -77,16 +81,18 @@ $product = $obj['product'];
 // make a move
 $_SESSION['customerName'] = $customer;
 $me = json_encode($product);
+// echo "-------------------";
+// echo $me;
 if ($status == "200" && $status != "") {
         // echo $someArray[0]["code"];
     ?>
-     <label class="bmd-label-floating">Select Product<div id="data_ress"></div></label>
-    <select id="see" class="form-control" style="text-transform: uppercase;">
+     <label class="bmd-label-floating" style="color: white;">Select Product<div id="data_ress"></div></label>
+    <select id="see" style="color: white;" class="form-control" style="text-transform: uppercase;">
         <option value="">SELECT PRODUCT</option>
     <?php
     $someArray = json_decode($me, true);
     foreach ($someArray as $key => $value) {
-            echo "<option value=".$value["name"].":".$value["code"].":".$value["month"].":".$value["price"].":".$value["period"]."> " . " ". $value["name"] ." &#8358;". number_format($value["price"], 2) . " TERM: ". $value["month"] . "Month(S)". "</option>";
+            echo "<option style='color:black;' value=".preg_replace('/\s+/', '', $value["name"])."&".$value["code"]."&".$value["month"]."&".$value["price"]."&".$value["period"]."> " . " ". $value["name"] ." &#8358;". number_format($value["price"], 2) . " TERM: ". $value["month"] . "Month(S)". "</option>";
           }
           ?>
     </select>

@@ -449,7 +449,7 @@ if ($per_bills == 1 || $per_bills == "1") {
       <div class="row">
           <div class="col-md-12">
               <div class="form-group">
-                <p>Please confirm your Airtime Recharge below</p>
+                <p>Please confirm your details below</p>
               </div>
           </div>
           <div class="col-md-12">
@@ -634,36 +634,31 @@ if ($per_bills == 1 || $per_bills == "1") {
                   </div>
                     </div>
                     <div class="tab-pane" id="saving">
-                    <center>
-                      <button data-toggle="modal" data-target="#exampleModal1" class="btn btn-primary"> Cable Tv</button>
-                      </center>
-                      <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Cable Tv - NOTE: WITHOUT AD ONS FOR NOW</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <!-- action="../functions/pay.php" -->
-      <form method="POST"  enctype="multipart/form-data">
-          <div class="row">
+                    <!-- <center> -->
+                      <div class="row">
+  <div class="col-md-4 ml-auto mr-auto">
+    <div class="card card-pricing bg-primary"><div class="card-body">
+        <!-- <div class="card-icon">
+            <i class="material-icons">business</i>
+        </div> -->
+        <p>Pay Cable Tv</p>
+        <form id="form" action="" method="POST">
+                <div class="card-body">
+                <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-               <label class="bmd-label-floating">Smart Card No</label>
-               <input type = "text" id="smartcard" class="form-control" name = ""/>
+               <label class="bmd-label-floating" style="color:white;">Smart Card No</label>
+               <input type = "text" id="smartcard" style="color:white;" class="form-control" name = ""/>
               </div>
             </div>
             <div class="col-md-12">
               <div class="form-group">
-               <label class="bmd-label-floating">Select a Network</label>
-               <select name="" id="cabletv" class="form-control">
-                 <option value="">select a cable Tv</option>
-                 <option value="DSTV">DSTV</option>
-                 <option value="GOTV">GOTV</option>
-                 <option value="STARTIMES">STARTIMES</option>
+               <label class="bmd-label-floating" style="color:white;">Select Cable Tv</label>
+               <select name="" id="cabletv" style="color:white;" class="form-control">
+                 <option value="" style="color:black;">select a cable Tv</option>
+                 <option value="DSTV" style="color:black;">DSTV</option>
+                 <option value="GOTV" style="color:black;">GOTV</option>
+                 <option value="STARTIMES" style="color:black;">STARTIMES</option>
              </select>
               </div>
             </div>
@@ -676,6 +671,89 @@ if ($per_bills == 1 || $per_bills == "1") {
             <p id="msg"></p>
             </div>
             </div>
+                </div>
+                <a class="btn btn-white btn-round pull-right" id="processc"  data-toggle="modal" data-target="#exampleModal1" style="color:black;">Proceed</a>
+                <script>
+              $(document).ready(function() {
+                $('#processc').on("click", function() {
+                  var smart = $("#smartcard").val();
+                  var cable = $('#cabletv').val();
+                  var pn = $('#pn').val();
+                  var pr = $('#pr').val();
+                  var mn = $('#mn').val();
+                  if (smart != "" && cable != "" && pn != "" && pr != "" && mn != "") {
+                    $("#s_com").val("Smart Card: " + smart);
+                    $("#c_com").val("Cable Tv: " + cable);
+                    $("#pn_com").val("Package Name: " +pn);
+                    $("#pr_com").val("Price: NGN" + pr);
+                    $("#mn_com").val("Month Period: " + mn + " Month(s)");
+                    // activate button
+                    $("#cable_pay").prop("disabled", false);
+                  } else {
+                    // move
+                    $("#s_com").val("please input missing field");
+                    $("#c_com").val("please input missing field");
+                    // deactivate button
+                    $("#cable_pay").prop("disabled", true);
+                  }
+                });
+              });
+            </script>
+                </form>
+        </div>
+    </div>
+  </div>
+</div>
+                      <!-- </center> -->
+                      <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cable Tv Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <!-- action="../functions/pay.php" -->
+      <form method="POST"  enctype="multipart/form-data">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="form-group">
+                <p>Please confirm your Cable Tv Purchase below</p>
+              </div>
+          </div>
+          <div class="col-md-12">
+              <div class="form-group">
+              <!-- <label class="bmd-label-floating">Network</label> -->
+               <input type = "text" id="s_com" class="form-control" name = "" readonly/>
+              </div>
+          </div>
+          <div class="col-md-12">
+              <div class="form-group">
+              <!-- <label class="bmd-label-floating">Network</label> -->
+               <input type = "text" id="c_com" class="form-control" name = "" readonly/>
+              </div>
+          </div>
+          <div class="col-md-12">
+              <div class="form-group">
+              <!-- <label class="bmd-label-floating">Network</label> -->
+               <input type = "text" id="pn_com" class="form-control" name = "" readonly/>
+              </div>
+          </div>
+          <div class="col-md-12">
+              <div class="form-group">
+              <!-- <label class="bmd-label-floating">Network</label> -->
+               <input type = "text" id="pr_com" class="form-control" name = "" readonly/>
+              </div>
+          </div>
+          <div class="col-md-12">
+              <div class="form-group">
+              <!-- <label class="bmd-label-floating">Network</label> -->
+               <input type = "text" id="mn_com" class="form-control" name = "" readonly/>
+              </div>
+          </div>
+      </div>
                          <script>
                               $(document).ready(function() {
                                 $('#cabletv').on("change", function() {

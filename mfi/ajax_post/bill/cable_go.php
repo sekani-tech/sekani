@@ -32,7 +32,7 @@ if ($type != "" && $smart != "" && $productsCode != "" && $amount != "" && $int_
         if ($balance >= $amount) {
             // STAT API
             $curl = curl_init();
-
+            // soon
 curl_setopt_array($curl, array(
   CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
   CURLOPT_RETURNTRANSFER => true,
