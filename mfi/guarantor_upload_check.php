@@ -5,7 +5,7 @@ $client_id = $_POST['client_id'];
 $don = "";
 
 if ($client_id != "") {
-        $don = "SELECT * FROM loan_gaurantor WHERE client_id = '$client_id'";
+        $don = "SELECT * FROM loan_gaurantor WHERE client_id = '$client_id' ORDER BY id ASC LIMIT 1";
             $result = mysqli_query($connection, $don);
             if (mysqli_num_rows($result) >= 1) {
             while ($row = mysqli_fetch_array($result)) {
