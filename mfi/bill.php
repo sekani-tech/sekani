@@ -668,6 +668,12 @@ if ($per_bills == 1 || $per_bills == "1") {
               </div>
             </div>
             <div class="col-md-12">
+            <div class="form-group">
+               <label class="bmd-label-floating" style="color: white;">Transaction Pin</label>
+               <input type ="password" id="pinc" class="form-control" name = "" style="color: white;"/>
+              </div>
+            </div>
+            <div class="col-md-12">
             <p id="msg"></p>
             </div>
             </div>
@@ -681,7 +687,8 @@ if ($per_bills == 1 || $per_bills == "1") {
                   var pn = $('#pn').val();
                   var pr = $('#pr').val();
                   var mn = $('#mn').val();
-                  if (smart != "" && cable != "" && pn != "" && pr != "" && mn != "") {
+                  var pinc = $('#pinc').val();
+                  if (smart != "" && cable != "" && pinc != "" && pn != "" && pr != "" && mn != "") {
                     $("#s_com").val("Smart Card: " + smart);
                     $("#c_com").val("Cable Tv: " + cable);
                     $("#pn_com").val("Package Name: " +pn);
@@ -785,6 +792,7 @@ if ($per_bills == 1 || $per_bills == "1") {
             $('#cable_pay').on("click", function() {
                                   var cable = $('#cabletv').val();
                                   var smart = $('#smartcard').val();
+                                  var pin = $('#pinc').val();
                                   $.ajax({
                                     url:"ajax_post/bill/cable_go.php",
                                     method:"POST",
