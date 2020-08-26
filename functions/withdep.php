@@ -67,7 +67,7 @@ $irvs = 0;
 // $transid = $randms2;
 $gen_date = date('Y-m-d H:i:s');
 $pint = date('Y-m-d H:i:s');
-$gends = date('Y-m-d');
+$gends = date('Y-m-d h:i:sa');
 // we will call the institution account
 $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
     if (count([$damn]) == 1) {

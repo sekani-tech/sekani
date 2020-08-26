@@ -97,7 +97,7 @@ function fill_client($connection) {
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Cash Transfer</h4>
+                  <h4 class="card-title">Funds Transfer</h4>
                   <!-- <p class="card-category">Fill in all important data</p> -->
                 </div>
                 <div class="card-body">

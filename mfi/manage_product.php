@@ -51,7 +51,7 @@ $dos = mysqli_query($connection, $fd);
                         <input type="text" class="form-control" name="description" value="" placeholder="Description...." required>
                       </div>
                     </div>
-                      <div class="col-md-6">
+                      <div class="col-md-6" hidden>
                         <div class="form-group">
                           <label for="installmentAmount" >Installment Amount in Multiples</label>
                           <input type="text" class="form-control" name="in_amt_multiples" value="" required>
@@ -132,7 +132,7 @@ $dos = mysqli_query($connection, $fd);
                         </div>
                       </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-6" hidden>
                         <div class="form-group">
                           <label for="interestRateApplied" >Enable Balloon repayment</label>
                           <select class="form-control" name="enable" >
@@ -156,7 +156,7 @@ $dos = mysqli_query($connection, $fd);
                         <input type="text" class="form-control" name="grace_on_interest" value="" required>
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" hidden>
                       <div class="form-group">
                         <label for="loanDescription" >Grace on interest charged</label>
                         <input type="text" class="form-control" name="grace_on_interest_charged" value="" required>
@@ -169,7 +169,7 @@ $dos = mysqli_query($connection, $fd);
                           <label for="interestMethodology" >Interest Methodology *</label>
                           <select class="form-control" name="interest_rate_methodoloy" >
                             <option value="1">Flat</option>
-                            <option value="">Declining Balance</option>
+                            <option value="2">Declining Balance</option>
                           </select>
                         </div>
                       </div>
@@ -191,7 +191,7 @@ $dos = mysqli_query($connection, $fd);
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-6" hidden>
                         <div class="form-group">
                           <label for="overPayment" >Automatically Allocate Overpayment </label>
                           <select class="form-control" name="auto_allocate_overpayment" required>
@@ -200,7 +200,7 @@ $dos = mysqli_query($connection, $fd);
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-6" hidden>
                        <div class="form-group">
                           <label for="additionalCharges" >Allow Additional Charges </label>
                           <select class="form-control" name="additional_charge" required>

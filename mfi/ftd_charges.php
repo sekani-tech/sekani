@@ -63,7 +63,7 @@ if(isset($_POST["id"]))
         $branch_id = $_POST["branch_id"];
         $charge_id = $_POST["id"];
         $colon = date('Y-m-d H:i:s');
-        // $date_p = date('Y-m-d');
+        // $date_p = date('Y-m-d h:i:sa');
         $inload = mysqli_query($connection, "INSERT INTO charges_cache 
         (`int_id`, `branch_id`, `charge_id`, `name`, `charge`, `collected_on`,
         `date`, `is_status`, `cache_prod_id`)

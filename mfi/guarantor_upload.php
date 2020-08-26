@@ -11,7 +11,11 @@
     $h_address = $_POST['h_address'];
     $o_address = $_POST['o_address'];
     $email = $_POST['email'];
+    $don = "";
 
+    // check
+    
+    // done
     if ($phone != "" || $email != "") {
         $org = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id'");
     if (count([$org]) == 1) {
@@ -19,7 +23,7 @@
       $int_id = $a['int_id'];
      }
 
-    $get_gau = mysqli_query($connection, "SELECT * FROM loan_gaurantor WHERE client_id = '$client_id' AND phone = '$phone' OR phone2 = '$phone_b' OR email = '$email' AND int_id = '$int_id'");
+    $get_gau = mysqli_query($connection, "SELECT * FROM loan_gaurantor WHERE client_id = '$client_id' AND phone = '$phone' OR email = '$email' AND int_id = '$int_id'");
     $mp = mysqli_num_rows($get_gau);
     if ($mp <= 0) {
         $coll = "INSERT INTO loan_gaurantor (int_id, client_id, first_name, last_name, phone, phone2, home_address, office_address, email) VALUES ( '{$int_id}','{$client_id}','{$firstname}','{$lastname}','{$phone}','{$phone_b}','{$h_address}',
@@ -28,18 +32,18 @@
         $query = mysqli_query($connection, $coll);
     
         if($query){
-            $don = "SELECT * FROM loan_gaurantor WHERE client_id = '$client_id'";
-            $result = mysqli_query($connection, $don);
-            while ($row = mysqli_fetch_array($result)) {
-                $display = '
-                <tr>
-                <td>'.$row["first_name"].'</td>
-                <td>'.$row["phone"].'</td>
-                <td>'.$row["email"].'</td>
-                </tr>
-                ';
-                echo $display;
-            }
+            // $don = "SELECT * FROM loan_gaurantor WHERE client_id = '$client_id' ORDER BY id DESC LIMIT 1";
+            // $result = mysqli_query($connection, $don);
+            // while ($row = mysqli_fetch_array($result)) {
+            //     $display = '
+            //     <tr>
+            //     <td>'.$row["first_name"].'</td>
+            //     <td>'.$row["phone"].'</td>
+            //     <td>'.$row["email"].'</td>
+            //     </tr>
+            //     ';
+            //     echo $display;
+            // }
             echo '<script type="text/javascript">
         $(document).ready(function(){
             swal({
@@ -55,18 +59,18 @@
         ';
         }
     } else {
-        $don = "SELECT * FROM loan_gaurantor WHERE client_id = '$client_id'";
-        $result = mysqli_query($connection, $don);
-        while ($row = mysqli_fetch_array($result)) {
-            $display = '
-            <tr>
-            <td>'.$row["first_name"].'</td>
-            <td>'.$row["phone"].'</td>
-            <td>'.$row["email"].'</td>
-            </tr>
-            ';
-            echo $display;
-        }
+        // $don = "SELECT * FROM loan_gaurantor WHERE client_id = '$client_id' ORDER BY id DESC LIMIT 1";
+        // $result = mysqli_query($connection, $don);
+        // while ($row = mysqli_fetch_array($result)) {
+        //     $display = '
+        //     <tr>
+        //     <td>'.$row["first_name"].'</td>
+        //     <td>'.$row["phone"].'</td>
+        //     <td>'.$row["email"].'</td>
+        //     </tr>
+        //     ';
+        //     echo $display;
+        // }
         echo '<script type="text/javascript">
         $(document).ready(function(){
             swal({
@@ -81,7 +85,7 @@
         </script>
         ';
     }
-    } else {
+} else {
         echo '<script type="text/javascript">
         $(document).ready(function(){
             swal({

@@ -185,7 +185,7 @@ $sessint_id = $_SESSION['int_id'];
                           // $mink = mysqli_fetch_array($newnext);
                           // $qwe = $mink["running_balance_derived"];
                           ?>
-                          <td class="column6">&#8358; <?php echo  number_format($nxtbal, 2);?></td>
+                          <td class="column6"><?php echo  number_format($nxtbal, 2);?></td>
                         </tr>
                         <?php 
                         }

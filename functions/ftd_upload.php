@@ -18,8 +18,9 @@ if(isset($_POST['ftd_no'])){
     $acc_off = $_POST['acc_off'];
     $sproduct_id = $_POST['s_product'];
     $int_repay = $_POST['int_repay'];
+    $int_post = $_POST['int_post'];
     $currency_code = 'NGN';
-    $dating = date('Y-m-d');
+    $dating = date('Y-m-d h:i:sa');
     if(isset($_POST['auto_renew'])){
         $auto_renew = '1';
     }
@@ -85,12 +86,12 @@ if(isset($_POST['ftd_no'])){
                 $accountins = "INSERT INTO ftd_booking_account (int_id, branch_id, ftd_id, account_no,
                 product_id, client_id, field_officer_id, submittedon_date, submittedon_userid,
                 currency_code, account_balance_derived, term, int_rate, maturedon_date, linked_savings_account, 
-                last_deposit, auto_renew_on_closure,
+                last_deposit, auto_renew_on_closure, interest_posting_period_enum,
                 interest_repayment, status)
                  VALUES ('{$sint_id}', '{$branch_id}', '{$ftd_no}', '{$account_no}', '{$sproduct_id}',
                  '{$client}', '{$acc_off}', '{$dating}', '{$user_id}', '{$currency_code}', 
                  '{$amount}', '{$l_term}', '{$int_rate}', '{$mat_date}', '{$lsaa}', '{$amount}', '{$auto_renew}',
-                 '{$int_repay}', 'Pending')";
+                 '{$int_post}', '{$int_repay}', 'Pending')";
 
                 $fd = mysqli_query($connection, $accountins);
                 if($fd){

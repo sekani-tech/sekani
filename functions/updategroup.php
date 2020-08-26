@@ -14,7 +14,7 @@ if(isset($_POST['id'])){
     $mtime = $_POST['meet_time'];
     $frq = $_POST['freq'];
     $loc = $_POST['location'];
-    $date = date('Y-m-d');
+    $date = date('Y-m-d h:i:sa');
 
     $sjsjjd = mysqli_query($connection, "SELECT * FROM groups WHERE id='$id'");
     $ods = mysqli_fetch_array($sjsjjd);
@@ -56,5 +56,21 @@ elseif(isset($_GET['close'])){
       echo header ("Location: ../mfi/groups.php?message6=$randms");
         // echo header("location: ../mfi/client.php");
     }
+}
+elseif(isset($_GET['app'])){
+  $id = $_GET['app'];
+
+  $doe = mysqli_query($connection, "UPDATE groups SET status='Approved', approvedon_date = '$date' WHERE id='$id'");
+
+    if($doe) {
+      // If 'result' is successful, it will send the required message to client.php
+    $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
+    echo header ("Location: ../mfi/approve_group.php?message1=$randms");
+  } else {
+     $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+     echo "error";
+    echo header ("Location: ../mfi/approve_group.php?message2=$randms");
+      // echo header("location: ../mfi/client.php");
+  }
 }
 ?>

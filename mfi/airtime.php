@@ -431,19 +431,19 @@ if ($per_bills == 1 || $per_bills == "1") {
           </div>
           <div class="col-md-12">
               <div class="form-group">
-              <label class="bmd-label-floating">Network</label>
+              <!-- <label class="bmd-label-floating">Network</label> -->
                <input type = "text" id="net_com" class="form-control" name = "" readonly/>
               </div>
           </div>
           <div class="col-md-12">
               <div class="form-group">
-              <label class="bmd-label-floating">Phone</label>
+              <!-- <label class="bmd-label-floating">Phone</label> -->
                <input type = "text" id="phone_com" class="form-control" name = "" readonly/>
               </div>
           </div>
           <div class="col-md-12">
           <div class="form-group">
-              <label class="bmd-label-floating">Amount NGN</label>
+              <!-- <label class="bmd-label-floating">Amount NGN</label> -->
                <input type = "text" id="amt_com" class="form-control" name = "" readonly/>
               </div>
           </div>
@@ -629,31 +629,31 @@ if ($per_bills == 1 || $per_bills == "1") {
           <div class="row">
             <div class="col-md-12">
             <div class="form-group">
-               <label class="bmd-label-floating">Phone Number</label>
+               <!-- <label class="bmd-label-floating">Phone Number</label> -->
                <input type = "text" id="phone_com_d" class="form-control" name = "" readonly/>
               </div>
             </div>
             <div class="col-md-12">
             <div class="form-group">
-               <label class="bmd-label-floating">Network</label>
+               <!-- <label class="bmd-label-floating">Network</label> -->
                <input type = "text" id="net_com_d" class="form-control" name = "" readonly/>
               </div>
             </div>
             <div class="col-md-12">
             <div class="form-group">
-               <label class="bmd-label-floating">Data Bundle</label>
+               <!-- <label class="bmd-label-floating">Data Bundle</label> -->
                <input type = "text" id="bundle_com_d" class="form-control" name = "" readonly/>
               </div>
             </div>
             <div class="col-md-12" hidden>
             <div class="form-group">
-               <label class="bmd-label-floating">Data Package</label>
+               <!-- <label class="bmd-label-floating">Data Package</label> -->
                <input type = "text" id="package_com_d" class="form-control" name = "" readonly/>
               </div>
             </div>
             <div class="col-md-12">
             <div class="form-group">
-               <label class="bmd-label-floating">Data Amount (NGN)</label>
+               <!-- <label class="bmd-label-floating">Data Amount (NGN)</label> -->
                <input type = "text" id="price_com_d" class="form-control" name = "" readonly/>
               </div>
             </div>

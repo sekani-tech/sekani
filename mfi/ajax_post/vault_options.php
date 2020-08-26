@@ -23,7 +23,6 @@ $output='
 <div class="row">
   <div class="col-md-6">
     <div class="form-group">
-  <!-- populate from db -->
     <label class="bmd-label-floating"> Teller Name</label>
     <input type="text" hidden name ="cash" value =""/>
     <select name="teller_id" id="tell" class="form-control">
@@ -52,12 +51,17 @@ $output='
                   }
 
       $output='
-    <div class="form-group">
-    <label class="bmd-label-floating">Bank</label>
-    <select name="bank_type" id="tell" class="form-control">
-      <option value="0">Select Bank</option>
-        '.fill_payment($connection).'
-    </select>
+      <div class="row">
+      <div class="col-md-6">
+      <div class="form-group">
+      <label class="bmd-label-floating">Bank</label>
+      <select name="bank_type" id="bnk" class="form-control">
+        <option value="0">Select Bank</option>
+          '.fill_payment($connection).'
+      </select>
+      </div>
+    </div>
+    <div id = "bank_acc"></div>
     </div>';
     echo $output;
     }
@@ -76,6 +80,20 @@ $output='
           data:{id:id},
           success:function(data){
             $('#tell_acc').html(data);
+          }
+        })
+      });
+    })
+
+    $(document).ready(function() {
+      $('#bnk').change(function(){
+        var ib = $(this).val();
+        $.ajax({
+          url:"ajax_post/sub_ajax/teller_balance.php",
+          method:"POST",
+          data:{ib:ib},
+          success:function(data){
+            $('#bank_acc').html(data);
           }
         })
       });

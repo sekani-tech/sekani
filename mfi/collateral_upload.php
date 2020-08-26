@@ -6,7 +6,7 @@
     $colval = $_POST['colval'];
     $colname = $_POST['colname'];
     $coldes = $_POST['coldes']; 
-    $coldate = date('Y-m-d');
+    $coldate = date('Y-m-d h:i:sa');
 
     $org = mysqli_query($connection, "SELECT * FROM client WHERE id = '$clientid'");
     if (count([$org]) == 1) {

@@ -645,7 +645,7 @@ else{
               $trans_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
               $gends = $disburse_date;
               $gen_date = $disburse_date;
-              $crd_d = date('Y-m-d');
+              $crd_d = date('Y-m-d h:i:sa');
               $insert_gl_trans = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
               `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,
               `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`,
@@ -908,7 +908,7 @@ else{
               $trans_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
               $gends = $disburse_date;
               $gen_date = $disburse_date;
-              $crd_d = date('Y-m-d');
+              $crd_d = date('Y-m-d h:i:sa');
               // transaction
               $insert_charge_gl = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
               `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,
@@ -1205,7 +1205,7 @@ else{
               $trans_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
               $gends = $disburse_date;
               $gen_date = $disburse_date;
-              $app_on = date('Y-m-d');
+              $app_on = date('Y-m-d h:i:sa');
               // transaction
               $insert_charge_gl5 = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
               `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,
@@ -1492,7 +1492,8 @@ else{
           }
           // YOU NEED TO TEST THE QUERY HERE THEN TAKE OFF
           // DISBUSE TO LOAN
-          if ($insert_client_trans1) {
+          $check_charge = 1;
+          if ($insert_client_trans1 || $check_charge == 1) {
             // OK MAKE MOVE
             // loan inputting
             $l_d_m = "INSERT INTO `loan` (`int_id`, `account_no`, `client_id`, `product_id`,
@@ -1577,8 +1578,8 @@ else{
                 $(document).ready(function(){
                     swal({
                         type: "error",
-                        title: "Loan Error",
-                        text: "DB",
+                        title: "Loan Disbursement Error",
+                        text: "Database Error at Loan",
                         showConfirmButton: false,
                         timer: 4000
                     })
@@ -1593,7 +1594,7 @@ else{
                 $(document).ready(function(){
                     swal({
                         type: "error",
-                        title: "Loan Error",
+                        title: "Loan Error - No Charge",
                         text: "DB",
                         showConfirmButton: false,
                         timer: 4000

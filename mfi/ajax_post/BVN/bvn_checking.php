@@ -72,7 +72,7 @@ if ($bvn_length == 11) {
         </script>
         ';
         } else {
-           echo $response;
+        //    echo $response;
            $obj = json_decode($response, TRUE);
            $status = $obj['status'];
            $bvn_fn = "";
@@ -218,7 +218,7 @@ if ($bvn_length == 11) {
         $('#dob').val(qdob);
         // output something
         swal({
-            type: "error",
+            type: "success",
             title: "DATA REFILL",
             text: "DATA HAS BEEN REFILLED",
             showConfirmButton: false,
@@ -250,7 +250,7 @@ if ($bvn_length == 11) {
     }
     ?>
     <div class="card card-nav-tabs" style="width: 20rem;">
-  <div class="card-header card-header-danger">
+  <div class="card-header card-header-success">
     Verifiy The Data
   </div>
   <ul class="list-group list-group-flush">
@@ -258,7 +258,31 @@ if ($bvn_length == 11) {
     <li class="list-group-item">Lastname:<?php echo $bvn_ln;?></li>
     <li class="list-group-item">Phone: <?php echo $bvn_phone;?></li>
     <li class="list-group-item">DOB: <?php echo $bvn_dob;?></li>
+    <input type="text" id="f_n_com" value="<?php echo $bvn_fn ?>" hidden>
+    <input type="text" id="l_n_com" value="<?php echo $bvn_ln ?>" hidden>
+    <input type="text" id="phone_com" value="<?php echo $bvn_phone ?>" hidden>
   </ul>
+  <script>
+              $(document).ready(function() {
+                  var fn_con = $("#f_n_com").val();
+                  var ln_con = $("#l_n_com").val();
+                  var phone_con = $("#phone_com").val();
+                  if (fn_con != "" && phone_con != "" && ln_con != "") {
+                    $("#first").val(fn_con);
+                    $("#last").val(ln_con);
+                    $("#phone").val(phone_con);
+                    // activate button
+                    $("#submit").prop("disabled", false);
+                  } else {
+                    // move
+                    // $("#net_com").val("please input missing field");
+                    // $("#phone_com").val("please input missing field");
+                    // $("#amt_com").val("please input missing field");
+                    // deactivate button
+                    $("#submit").prop("disabled", true);
+                  }
+              });
+            </script>
 </div>
     <?php
          } else {

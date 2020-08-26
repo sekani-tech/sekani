@@ -29,10 +29,10 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
           // import
           $as = $ass_type;
           if($as == '0'){
-            $querytoget = mysqli_query($connection, "SELECT * FROM assets WHERE int_id ='$int_id' AND date BETWEEN '$start' AND '$end' ORDER BY date, id ASC");
+            $querytoget = mysqli_query($connection, "SELECT * FROM assets WHERE int_id ='$int_id' AND date BETWEEN '$start' AND '$end'");
           }
           else{
-            $querytoget = mysqli_query($connection, "SELECT * FROM assets WHERE int_id ='$int_id' AND asset_type_id = '$ass_type' AND date BETWEEN '$start' AND '$end' ORDER BY date, id ASC");
+            $querytoget = mysqli_query($connection, "SELECT * FROM assets WHERE int_id ='$int_id' AND asset_type_id = '$ass_type' AND date BETWEEN '$start' AND '$end'");
           }
           while ($q = mysqli_fetch_array($querytoget, MYSQLI_ASSOC))
           {
@@ -44,24 +44,39 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             $asset = $q['asset_no'];
             $location = $q['location'];
             $branch_id = $q['branch_id'];
+            $date = $q['date'];
+            $curr = date('Y-m-d');
+            $dep = $q['depreciation_value'];
             $branchquery = mysqli_query($connection, "SELECT * FROM branch WHERE id='$branch_id'");
             if (count([$branchquery]) == 1) {
               $ans = mysqli_fetch_array($branchquery);
               $branch = $ans['name'];
             }
+            // to get difference in years
+            $purdate = strtotime($date);
+            $currentdate = strtotime($curr);
+            $datediff = $currentdate - $purdate;
+            $datt = round($datediff / (60 * 60 * 24 * 365));
+
+            // to get percentage
+            $dom = ($dep/100) * $unit;
+
+            // to get current year depreciation
+            $currentyear = $unit - ($dom * $datt);
+            $lastyear = $unit - ($dom * ($datt - 1));
             $out .= '
             <tr>
             <td>'.$name.'</td>
             <td>'.$type.'</td>
             <td>'.$qty.'</td>
-            <td>'.$unit.'</td>
-            <td>'.$amount.'</td>
+            <td>'.number_format($unit, 2).'</td>
+            <td>'.number_format($amount, 2).'</td>
             <td>'.$asset.'</td>
             <td>'.$location.'</td>
             <td>'.$branch.'</td>
-            <td>0.00</td>
-            <td>0.00</td>
-            <td>0.00</td>
+            <td>'.$date.'</td>
+            <td>'.number_format($currentyear, 2).'</td>
+            <td>'.number_format($lastyear, 2).'</td>
             <td>0.00</td>
             </tr>
           ';
@@ -117,7 +132,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                   </div>
                 </div>
               <div class="clearfix"></div>
-            
+              <button id="pddf" type="sumbit" class="btn btn-primary pull-right">Download PDF</button>
             <div class="table-responsive">
               <table id="tabledat4" class="table" style="width: 100%;">
                 <thead class="text-primary">
@@ -162,7 +177,6 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             <p><b>Checked By: '.$_SESSION["username"].'</b>                             <b>Date/Sign: '.$start." - ".$end.' </b></p>
 
             <p>
-            <button id="pddf" type="sumbit" class="btn btn-primary pull-right">Download PDF</button>
             <div id=""></div>
             </p>
             </form>

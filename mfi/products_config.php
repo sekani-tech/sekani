@@ -328,7 +328,7 @@ if ($per_con == 1 || $per_con == "1") {
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#saving" data-toggle="tab">
-                            <i class="material-icons">attach_money</i> Savings Product
+                            <i class="material-icons">attach_money</i> Account Products
                             <div class="ripple-container"></div>
                           </a>
                         </li>

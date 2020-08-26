@@ -3,6 +3,7 @@
 $page_title = "Loan Disbursement";
 $destination = "transaction.php";
     include("header.php");
+    include("ajaxcallx.php");
 
 ?>
 <!-- Content added here -->
@@ -91,6 +92,24 @@ $destination = "transaction.php";
                     type: "error",
                     title: "Error",
                     text: "Error in Posting For Loan Gaurantor",
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            });
+            </script>
+            ';
+            $_SESSION["lack_of_intfund_$key"] = 0;
+            }
+          } else if (isset($_GET["messfill"])) {
+            $key = $_GET["messfill"];
+            $tt = 0;
+            if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+            echo '<script type="text/javascript">
+            $(document).ready(function(){
+                swal({
+                    type: "error",
+                    title: "MISSING ENTRY FIELD",
+                    text: "Please fill loan data properly",
                     showConfirmButton: false,
                     timer: 2000
                 })
@@ -248,7 +267,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                       <div class="form-group">
                       <script>
                               $(document).ready(function() {
-                                $('#clickit').on("change keyup paste click", function() {
+                                $('#clickit').on("click", function() {
                                   var id = $(this).val();
                                   var client_id = $('#client_name').val();
                                   var colname = $('#colname').val();
@@ -260,11 +279,24 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                                     data:{id:id, client_id:client_id, colval:colval, colname:colname, coldes:coldes},
                                     success:function(data){
                                       $('#coll').html(data);
-                                      document.getElementById("off_me").setAttribute("hidden", "");
                                     }
                                   })
                                 });
                               });
+                              setInterval(function() {
+            // auto run the col.
+            var client_id = $('#client_name').val();
+            if (client_id != "") {
+              $.ajax({
+                url:"collateral_upload_check.php",
+                method:"POST",
+                data:{client_id:client_id},
+                success:function(data){
+                  $('#collx').html(data);
+                }
+              })
+            }
+          }, 1000);
                             </script>
                       <!-- <button class="btn btn-primary pull-right" id="clickit">Add</button> -->
                       <div id="off_me">     
@@ -276,6 +308,8 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                                   <td>Description</td>
                                 </tr>
                               </thead>
+                              <tbody id="collx">
+                              </tbody>
                               <tbody>
                               </tbody>
                             </table>
@@ -377,6 +411,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                           </thead>
                           <tbody id="disgau">
                           </tbody>
+                          <div id="disgaux"></div>
                         </table>
                       </div>
                       <!-- dialog box -->
@@ -442,7 +477,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
 </div>
       <script>
           $(document).ready(function() {
-            $('#gau').on("change keyup paste click", function(){
+            $('#gau').on("click", function(){
               var id = $(this).val();
               var client_id = $('#client_name').val();
               var firstname = $('#gau_first_name').val();
@@ -458,11 +493,25 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                 method:"POST",
                 data:{id:id, client_id:client_id, firstname:firstname, lastname:lastname, phone:phone, phone_b:phone_b, h_address:h_address, o_address:o_address, position:position, email:email},
                 success:function(data){
-                  $('#disgau').html(data);
+                  $('#disgaux').html(data);
                 }
               })
             });
           });
+          setInterval(function() {
+            // auto run the col.
+            var client_id = $('#client_name').val();
+            if (client_id != "") {
+              $.ajax({
+                url:"guarantor_upload_check.php",
+                method:"POST",
+                data:{client_id:client_id},
+                success:function(data){
+                  $('#disgau').html(data);
+                }
+              })
+            }
+          }, 1000);
         </script>
 <script>
     function DlgAdd(){
@@ -525,7 +574,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                        </select>
                     </div>
                     <div class=" col-md-6 form-group">
-                      <label class = "bmd-label-floating">Number of Dependents:</label>
+                      <label class = "bmd-label-floating">Number of Dependants:</label>
                       <!-- <input type="number" value="" name="no_of_dep" class="form-control" required> -->
                       <select class="form-control" name="no_of_dep">
                          <option value="0">Non</option>

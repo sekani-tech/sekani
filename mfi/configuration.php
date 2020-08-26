@@ -71,6 +71,11 @@ $destination = "../index.php";
                           <th>Fund Institution Sekani Wallet, Keep Activity Up to Date</th>
                           <td><a href="sekani_wallet.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
                         </tr>
+                        <tr>
+                          <th> <b> Track Dormancy </b></th>
+                          <th>Keep track of all Accounts that have not been in use</th>
+                          <td><a href="trk_dormant.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>

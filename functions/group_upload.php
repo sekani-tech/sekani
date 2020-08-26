@@ -17,7 +17,7 @@ $meet_day = $_POST['meet_day'];
 $meet_frequency = $_POST['meet_frequency'];
 $meet_address = $_POST['meet_address'];
 $meet_time = $_POST['meet_time'];
-$submitted_on = date('Y-m-d');
+$submitted_on = date('Y-m-d h:i:sa');
 $digit = 8;
 $randms = str_pad(rand(0, pow(10, $digit)-1), 7, '0', STR_PAD_LEFT);
 

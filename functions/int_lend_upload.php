@@ -21,18 +21,18 @@ $disbursement_date = $_POST['disbursement_date'];
 $grace_on_principal = $_POST['grace_on_principal'];
 $grace_on_interest = $_POST['grace_on_interest'];
 $loan_officer = $_POST['loan_officer'];
-$loan_purpose = $_POST['loan_purpose'];
+$loan_purpose = preg_replace('/[^\w]/', '', $_POST['loan_purpose']);
 $standing_instruction = $_POST['standing_instruction'];
 $linked_savings_acct = $_POST['linked_savings_acct'];
 $repay_start =  $_POST["repay_start"];
-if ($repay_start == NULL || $repay_start == "") {
-    echo $repay_start;
-    echo $repay_every;
+if ($repay_start == NULL || $repay_start == "" && $disbursement_date == "" && $loan_term == "") {
+    $_SESSION["Lack_of_intfund_$randms"] = "Please fill some field";
+       echo header ("Location: ../mfi/lend.php?messfill=$randms");
 } else {
     $repay_every = $_POST["repay_eve"];
     $repay_st1 =  $_POST["repay_start"];
 $date = str_replace('/', '-', $repay_st1);
-$repay_st =  date('Y-m-d', strtotime($date));
+$repay_st =  date('Y-m-d h:i:sa', strtotime($date));
     // echo "Repayement Datw".$repay_st;
     // echo "XDisgb Datw".$disbursement_date;
 // Part for Charges
@@ -40,15 +40,15 @@ $charges = $_POST['charge'];
 // Part for collateral
 $col_id = $_POST['col_id'];
 $col_type = $_POST['col_name'];
-$col_description = $_POST['col_description'];
+$col_description = preg_replace('/[^\w]/', '', $_POST['col_description']);
 $col_val = $_POST['col_value'];
 // Part for Gaurantors
 $first_name = $_POST['gau_first_name'];
 $last_name = $_POST['gau_last_name'];
 $phone = $_POST['gau_phone'];
 $phone2 = $_POST['gau_phone2'];
-$home_address = $_POST['gau_home_address'];
-$office_address = $_POST['gau_office_address'];
+$home_address = preg_replace('/[^\w]/', '', $_POST['gau_home_address']);
+$office_address = preg_replace('/[^\w]/', '', $_POST['gau_office_address']);
 $position_held = $_POST['gau_position_held'];
 $email = $_POST['gau_email'];
 // date of submitted
