@@ -11,8 +11,27 @@ if(isset($_POST['id'])){
     $dfd = mysqli_query($connection, "SELECT * FROM savings_product WHERE int_id ='$int_id' AND id='$sav_id'");
     $podfs = mysqli_fetch_array($dfd);
     $autore = $podfs['auto_renew_on_closure'];
+    $dep_amount = $podfs['deposit_amount'];
+    $min_dep_amount = $podfs['min_deposit_amount'];
+    $max_dep_amount = $podfs['max_deposit_amount'];
+    $in_mul_trm = $podfs['in_multiples_deposit_term'];
+    $in_mul_trm_time = $podfs['in_multiples_deposit_term_time'];
+    $int_post_type = $podfs['interest_posting_period_enum'];
+    $min_dep_term = $podfs['minimum_deposit_term'];
+    $max_dep_term = $podfs['maximum_deposit_term'];
 
-    if($autore == '1'){
+
+    if($in_mul_trm_time == 1){
+      $inmul_term = "Days";
+    }
+    else if($in_mul_trm_time == 3){
+      $inmul_term = "Months";
+    }
+    else if($in_mul_trm_time == 4){
+      $inmul_term = "Years";
+    }
+
+    if($autore == '2'){
       $dssdw = "No";
     }
     else if($autore == '1'){
@@ -40,6 +59,25 @@ if(isset($_POST['id'])){
             return $out;
         }
 
+        function fill_tenure($in_mul_trm, $in_mul_trm_time, $min_dep_term, $max_dep_term) {
+          $out = '';
+          $i = $min_dep_term;
+          while($i <= $max_dep_term){
+            $fio = $i * $in_mul_trm;
+            if($in_mul_trm_time == 1){
+              $inmul_term = $fio * 1;
+            }
+            else if($in_mul_trm_time == 3){
+              $inmul_term = $fio * 30;
+            }
+            else if($in_mul_trm_time == 4){
+              $inmul_term = $fio * 365;
+            }
+            $out .= '<option value="'.$inmul_term.'">'.$fio.'</option>';
+            $i++;
+          }
+          return $out;
+        }
     function fill_account($connection, $id, $int_id) {
         $id = $_POST["id"];
         $int_id = $_SESSION['int_id'];
@@ -61,8 +99,11 @@ if(isset($_POST['id'])){
     $fd = '
         <div class="col-md-4">
         <div class="form-group">
-          <label class="bmd-label-floating">Amount</label>
-          <input type="number" class="form-control" name="amount">
+          <label class="bmd-label-floating">Deposit Amount (min: '.number_format($min_dep_amount).' | max: '.number_format($max_dep_amount).')</label>
+          <div id="verrify"></div>
+          <input type="number" id ="dep" value = "'.$dep_amount.'" class="form-control" name="amount">
+          <input type="number" id ="min" hidden value = "'.$min_dep_amount.'" class="form-control" name="">
+          <input type="number" id ="max" hidden value = "'.$max_dep_amount.'" class="form-control" name="">
         </div>
       </div>
       <div class="col-md-4">
@@ -79,14 +120,10 @@ if(isset($_POST['id'])){
       </div>
       <div class="col-md-4">
         <div class="form-group">
-          <label class="bmd-label-floating">Tenure(days)</label>
-          <select class="form-control" id="lterm" name="l_term" required>
-          <option hidden value="'.$autore.'">'.$autore.'</option>
-          <option value="30">30</option>
-          <option value="60">60</option>
-          <option value="90">90</option>
-          <option value="120">120</option>
-        </select>
+          <label class="bmd-label-floating">Tenure('.$inmul_term.')</label>
+          <select class="form-control" id="lterm" name="l_term">
+          '.fill_tenure($in_mul_trm, $in_mul_trm_time, $min_dep_term, $max_dep_term).'
+          </select>
         </div>
       </div>
       <div class="col-md-4">
@@ -99,6 +136,7 @@ if(isset($_POST['id'])){
         <div class="form-group">
           <label class="bmd-label-floating">Interest Rate</label>
           <input type="number" class="form-control" name="int_rate">
+          <input type="text" class="form-control" value ="'.$int_post_type.'"  name="int_post">
         </div>
       </div>
       <div class="col-md-4">
@@ -121,7 +159,7 @@ if(isset($_POST['id'])){
           <div class="form-group">
             <label for="installmentAmount" >Interest Repayment</label>
             <select class="form-control" name="int_repay" >
-              <option value="1">Monthly Repayment</option>
+              <option value="1">Interval Repayment</option>
               <option value="2">Bullet Repayment</option>
             </select>
           </div>
@@ -170,6 +208,22 @@ if(isset($_POST['id'])){
         data:{term:term, repay:repay},
         success: function (data) {
             $('#matdate').html(data);
+        }
+        })
+    });
+    });
+
+    $(document).ready(function () {
+    $('#dep').on("change keyup paste click", function () {
+        var dd = $(this).val();
+        var min = $('#min').val();
+        var max = $('#max').val();
+        $.ajax({
+        url: "ajax_post/sub_ajax/min_max_ftd_check.php", 
+        method: "POST",
+        data:{dd:dd, min:min, max:max},
+        success: function (data) {
+            $('#verrify').html(data);
         }
         })
     });
