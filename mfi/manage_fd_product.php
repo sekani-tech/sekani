@@ -87,11 +87,10 @@ $dos = mysqli_query($connection, $fd);
                         <div class="form-group">
                           <label for="interestRateApplied" >Interest Posting period Type</label>
                           <select class="form-control" name="int_post_type" >
-                           <option value="1">Daily</option>
-                           <option value="2">Monthly</option>
-                           <option value="3">Quarterly</option>
-                           <option value="4">Bi-Annually</option>
-                           <option value="5">Annually</option>
+                           <option value="30">Monthly</option>
+                           <option value="90">Quarterly</option>
+                           <option value="180">Bi-Annually</option>
+                           <option value="365">Annually</option>
                           </select>
                         </div>
                       </div>
@@ -99,7 +98,6 @@ $dos = mysqli_query($connection, $fd);
                         <div class="form-group">
                           <label for="installmentAmount" >Interest Compounding Period</label>
                           <select class="form-control" name="compound_period" >
-                           <option value="1">Daily</option>
                            <option value="2">Monthly</option>
                            <option value="3">Quarterly</option>
                            <option value="4">Bi-Annually</option>
@@ -107,7 +105,7 @@ $dos = mysqli_query($connection, $fd);
                           </select>
                         </div>
                       </div>    
-                      <div class="col-md-6">
+                      <div class="col-md-6" hidden>
                         <div class="form-group">
                           <label for="interestMethodology" >Interest Calculation Type</label>
                           <select class="form-control" name="int_cal_type" >
@@ -129,7 +127,7 @@ $dos = mysqli_query($connection, $fd);
                           </select>
                         </div>
                       </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" hidden>
                         <div class="form-group">
                           <label for="principal" >Lockin Period Frequency</label>
                           <div class="row">
@@ -139,7 +137,6 @@ $dos = mysqli_query($connection, $fd);
                             <div class="col-md-8">
                           <select class="form-control" name="lock_per_freq_time" >
                             <option value="1">Days</option>
-                            <option value="2">Weeks</option>
                             <option value="3">Months</option>
                             <option value="4">Years</option>
                           </select>
@@ -157,7 +154,6 @@ $dos = mysqli_query($connection, $fd);
                             <div class="col-md-8">
                           <select class="form-control" name="minimum_dep_term_time" >
                             <option value="1">Days</option>
-                            <option value="2">Weeks</option>
                             <option value="3">Months</option>
                             <option value="4">Years</option>
                           </select>
@@ -184,7 +180,6 @@ $dos = mysqli_query($connection, $fd);
                             <div class="col-md-8">
                           <select class="form-control" name="maximum_dep_term_time" >
                             <option value="1">Days</option>
-                            <option value="2">Weeks</option>
                             <option value="3">Months</option>
                             <option value="4">Years</option>
                           </select>
@@ -211,7 +206,6 @@ $dos = mysqli_query($connection, $fd);
                             <div class="col-md-8">
                           <select class="form-control" name="inmultiples_dep_term_time" >
                             <option value="1">Days</option>
-                            <option value="2">Weeks</option>
                             <option value="3">Months</option>
                             <option value="4">Years</option>
                           </select>
