@@ -63,16 +63,16 @@ $destination = "config.php";
     if($interest_posting_period_enum == "1"){
       $int_post_type = "Daily";
     }
-    else if($interest_posting_period_enum == "2"){
+    else if($interest_posting_period_enum == "30"){
       $int_post_type = "Monthly";
     }
-    else if($interest_posting_period_enum == "3"){
+    else if($interest_posting_period_enum == "90"){
       $int_post_type = "Quarterly";
     }
-    else if($interest_posting_period_enum == "4"){
+    else if($interest_posting_period_enum == "180"){
       $int_post_type = "Bi-Annually";
     }
-    else if($interest_posting_period_enum == "5"){
+    else if($interest_posting_period_enum == "365"){
       $int_post_type = "Annually";
     }
 
@@ -296,11 +296,10 @@ $destination = "config.php";
                           <label for="interestRateApplied" >Interest Posting period Type</label>
                           <select class="form-control"  name="int_post_type" >
                           <option hidden value="<?php echo $interest_posting_period_enum;?>"><?php echo $int_post_type;?></option>
-                           <option value="1">Daily</option>
-                           <option value="2">Monthly</option>
-                           <option value="3">Quarterly</option>
-                           <option value="4">Bi-Annually</option>
-                           <option value="5">Annually</option>
+                           <option value="30">Monthly</option>
+                           <option value="90">Quarterly</option>
+                           <option value="180">Bi-Annually</option>
+                           <option value="365">Annually</option>
                           </select>
                         </div>
                       </div>
@@ -309,7 +308,6 @@ $destination = "config.php";
                           <label for="installmentAmount" >Interest Compounding Period</label>
                           <select class="form-control" name="compound_period">
                           <option hidden value="<?php echo $interest_compounding_period_enum;?>"><?php echo $compound_period;?></option>
-                           <option value="1">Daily</option>
                            <option value="2">Monthly</option>
                            <option value="3">Quarterly</option>
                            <option value="4">Bi-Annually</option>
@@ -317,7 +315,7 @@ $destination = "config.php";
                           </select>
                         </div>
                       </div>    
-                      <div class="col-md-6">
+                      <div class="col-md-6" hidden>
                         <div class="form-group">
                           <label for="interestMethodology" >Interest Calculation Type</label>
                           <select class="form-control" name="int_cal_type" >
@@ -341,7 +339,7 @@ $destination = "config.php";
                           </select>
                         </div>
                       </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" hidden>
                         <div class="form-group">
                           <label for="principal" >Lockin Period Frequency</label>
                           <div class="row">
@@ -352,7 +350,6 @@ $destination = "config.php";
                           <select class="form-control" name="lock_per_freq_time" >
                           <option hidden value="<?php echo $lockin_period_frequency_enum;?>"><?php echo $lock_per_freq_time;?></option>
                             <option value="1">Days</option>
-                            <option value="2">Weeks</option>
                             <option value="3">Months</option>
                             <option value="4">Years</option>
                           </select>
@@ -371,7 +368,6 @@ $destination = "config.php";
                           <select class="form-control" name="minimum_dep_term_time" >
                           <option hidden value="<?php echo $minimum_deposit_term_time;?>"><?php echo $min_dep_time;?></option>
                             <option value="1">Days</option>
-                            <option value="2">Weeks</option>
                             <option value="3">Months</option>
                             <option value="4">Years</option>
                           </select>
@@ -400,7 +396,6 @@ $destination = "config.php";
                           <select class="form-control" name="maximum_dep_term_time" >
                           <option hidden value="<?php echo $maximum_deposit_term_time;?>"><?php echo $max_dep_time;?></option>
                             <option value="1">Days</option>
-                            <option value="2">Weeks</option>
                             <option value="3">Months</option>
                             <option value="4">Years</option>
                           </select>
@@ -428,7 +423,6 @@ $destination = "config.php";
                           <select class="form-control" name="inmultiples_dep_term_time" >
                           <option hidden value="<?php echo $in_multiples_deposit_term_time;?>"><?php echo $in_multiples;?></option>
                             <option value="1">Days</option>
-                            <option value="2">Weeks</option>
                             <option value="3">Months</option>
                             <option value="4">Years</option>
                           </select>

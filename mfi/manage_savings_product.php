@@ -29,7 +29,7 @@ $dos = mysqli_query($connection, $fd);
                         <!-- Each tab equals a stepper page -->
                   <!-- First Tab -->
                   <div class="tab">
-                  <h3> New Savings Product:</h3>
+                  <h3> New Account Product:</h3>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
@@ -55,7 +55,6 @@ $dos = mysqli_query($connection, $fd);
                           <select class="form-control" name="product_type" >
                            <option value="1">Current</option>
                             <option value="2">Savings</option>
-                            <option value="3">Fixed-Deposit</option>
                           </select>
                         </div>
                       </div>
@@ -115,7 +114,7 @@ $dos = mysqli_query($connection, $fd);
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-6" hidden>
                         <div class="form-group">
                           <label for="interestMethodology" >Interest Calculation Type</label>
                           <select class="form-control" name="int_cal_type" >
@@ -157,7 +156,7 @@ $dos = mysqli_query($connection, $fd);
                         <input type="number" class="form-control" name="min_nve_bal" value="" placeholder="-20000" required>
                       </div>
                     </div> -->
-                    <div class="col-md-6">
+                    <div class="col-md-6" hidden>
                         <div class="form-group">
                           <label for="principal" >Lockin Period Frequency</label>
                           <div class="row">
@@ -175,7 +174,7 @@ $dos = mysqli_query($connection, $fd);
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-6" hidden>
                        <div class="form-group">
                           <label for="additionalCharges" >Allow OverDraft</label>
                           <select class="form-control" name="allover" required>
@@ -184,7 +183,7 @@ $dos = mysqli_query($connection, $fd);
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-6" hidden>
                        <div class="form-group">
                           <label for="additionalCharges" >Track Dormancy</label>
                           <select class="form-control" name="trk_dormancy" required>
