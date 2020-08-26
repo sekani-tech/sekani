@@ -278,11 +278,24 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                                     data:{id:id, client_id:client_id, colval:colval, colname:colname, coldes:coldes},
                                     success:function(data){
                                       $('#coll').html(data);
-                                      document.getElementById("off_me").setAttribute("hidden", "");
                                     }
                                   })
                                 });
                               });
+                              setInterval(function() {
+            // auto run the col.
+            var client_id = $('#client_name').val();
+            if (client_id != "") {
+              $.ajax({
+                url:"collateral_upload_check.php",
+                method:"POST",
+                data:{client_id:client_id},
+                success:function(data){
+                  $('#collx').html(data);
+                }
+              })
+            }
+          }, 1000);
                             </script>
                       <!-- <button class="btn btn-primary pull-right" id="clickit">Add</button> -->
                       <div id="off_me">     
@@ -294,6 +307,8 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                                   <td>Description</td>
                                 </tr>
                               </thead>
+                              <tbody id="collx">
+                              </tbody>
                               <tbody>
                               </tbody>
                             </table>
@@ -395,6 +410,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                           </thead>
                           <tbody id="disgau">
                           </tbody>
+                          <div id="disgaux"></div>
                         </table>
                       </div>
                       <!-- dialog box -->
@@ -476,11 +492,25 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                 method:"POST",
                 data:{id:id, client_id:client_id, firstname:firstname, lastname:lastname, phone:phone, phone_b:phone_b, h_address:h_address, o_address:o_address, position:position, email:email},
                 success:function(data){
-                  $('#disgau').html(data);
+                  $('#disgaux').html(data);
                 }
               })
             });
           });
+          setInterval(function() {
+            // auto run the col.
+            var client_id = $('#client_name').val();
+            if (client_id != "") {
+              $.ajax({
+                url:"guarantor_upload_check.php",
+                method:"POST",
+                data:{client_id:client_id},
+                success:function(data){
+                  $('#disgau').html(data);
+                }
+              })
+            }
+          }, 1000);
         </script>
 <script>
     function DlgAdd(){

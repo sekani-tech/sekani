@@ -434,6 +434,24 @@ if(isset($_POST["id"]))
       });
     });
   });
+  setInterval(function() {
+    var id = $('#loan_term').val();
+      var ist = $('#int_id').val();
+      var loant = $('#loan_term').val();
+      var repay = $('#repay').val();
+      var repay_start = $('#repay_start').val();
+      var disbd = $('#disb_date').val();
+      if (id != "" && ist != "" && loant != "" && repay != "" && repay_start != "" && disbd != "") {
+        $.ajax({
+        url:"date_calculation.php",
+        method:"POST",
+        data:{id:id, ist: ist,loant:loant,repay:repay,repay_start:repay_start,disbd:disbd},
+        success:function(data){
+          $('#sekat').html(data);
+        }
+      });
+      }
+  }, 1000);
   $(document).ready(function() {
     var id = $('#repay').val();
     $.ajax({
