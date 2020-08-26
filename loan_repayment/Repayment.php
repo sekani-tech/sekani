@@ -608,7 +608,9 @@ while($a = mysqli_fetch_array($ftd_booking_account)){
     $last_deposit = $a['last_deposit']; 
     $last_withdrawal = $a['last_withdrawal']; 
     $auto_renew_on_closure = $a['auto_renew_on_closure']; 
-    $interest_repayment = $a['interest_repayment']; 
+    $interest_repayment = $a['interest_repayment'];
+    $int_post_period = $a['interest_posting_period_enum'];
+
     $status = 'status';
     $todaysdate = date('Y-m-d');
 
@@ -668,11 +670,11 @@ while($a = mysqli_fetch_array($ftd_booking_account)){
     if($interest_repayment == 1){
         // date calculation
         $i = 1;
-        $feio = number_format($term/30);
+        $feio = number_format($term/$int_post_period);
         if(strtotime($todaysdate) <= strtotime($maturedon_date)){
             while($i <= $feio){
                 // to calculate start date
-                $day = $i * 30;
+                $day = $i * $int_post_period;
                 // start date
                 $dsl = date('Y-m-d', strtotime($submittedon_date. ' + '.$day.' days'));
                 // interest_amount

@@ -45,7 +45,7 @@ $insufficient_repayment = $_POST['asst_insuff_rep'];
 
   $query = "UPDATE product SET  name = '$name', short_name = '$short_name', description = '$description', in_amt_multiples = '$in_amt_multiples',
    principal_amount = '$principal_amount', min_principal_amount = '$min_principal_amount', max_principal_amount = '$max_principal_amount', loan_term = '$loan_term', min_loan_term = '$min_loan_term', max_loan_term = '$max_loan_term',
-   repayment_frequency = '$repayment_frequency', repayment_every = '$repayment_every', interest_rate = '$interest_rate', min_interest_rate = '$min_interest_rate',  max_interest_rate = '$max_interest_rate', interest_rate_applied = '$interest_rate_applied',
+   repayment_frequency = '$repayment_frequency', repayment_every = '$repayment_every', grace_on_principal_amount = '$grace_on_principal', grace_on_interest_amount = '$grace_on_interest', grace_on_interest_charged = '$grace_on_interest_charged', interest_rate = '$interest_rate', min_interest_rate = '$min_interest_rate',  max_interest_rate = '$max_interest_rate', interest_rate_applied = '$interest_rate_applied',
    interest_rate_methodoloy = '$interest_rate_methodology', ammortization_method = '$ammortization_method', cycle_count = '$cycle_count', auto_allocate_overpayment = '$auto_allocate_overpayment', additional_charge = '$additional_charge'
     WHERE int_id = '$sint_id' AND id = '$Loan_prod'";
 
