@@ -543,7 +543,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                        </select>
                     </div>
                     <div class=" col-md-6 form-group">
-                      <label class = "bmd-label-floating">Number of Dependents:</label>
+                      <label class = "bmd-label-floating">Number of Dependants:</label>
                       <!-- <input type="number" value="" name="no_of_dep" class="form-control" required> -->
                       <select class="form-control" name="no_of_dep">
                          <option value="0">Non</option>
