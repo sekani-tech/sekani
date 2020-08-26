@@ -18,7 +18,7 @@ $int_address = $_SESSION["int_address"];
 $sessint_id = $_SESSION["int_id"];
 $appuser_id = $_SESSION['user_id'];
 $sender_id = $_SESSION["sender_id"];
-$gen_date = date('Y-m-d H:i:s');
+$gen_date = date('Y-m-d h:i:sa');
 $pint = date('Y-m-d h:i:sa');
 $gends = date('Y-m-d h:i:sa');
 ?>
@@ -60,7 +60,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $new_gl_bal2x = $E_acct_bal - $amount;
   }
 }
-$gen_date = date('Y-m-d H:i:s');
+$gen_date = date('Y-m-d h:i:sa');
 $gends = date('Y-m-d h:i:sa');
 // we will call the institution account
 
@@ -127,7 +127,7 @@ $resx1 = mysqli_num_rows($q1);
            $transact_type = $x['transact_type'];
            $product_type = $x['product_type'];
            $stat = $x['status'];
-           $gen_date = date("Y-m-d");
+           $gen_date = date("Y-m-d h:i:sa");
            $digits = 9;
            $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
            $transid = $transid;

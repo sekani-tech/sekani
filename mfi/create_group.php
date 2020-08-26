@@ -120,15 +120,21 @@ $b_id = $_SESSION['branch_id'];
                         </div>
                         <div class="col-md-6">
                             <label for="">Meeting Day :</label>
-                            <input type="date" name="meet_day" class="form-control" id="" required>
-                        </div>
+                            <select name="meet_day" id="" class="form-control" placeholder="Select an Option">
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                                <option value="Saturday">Saturday</option>
+                                <option value="Sunday">Sunday</option>
+                            </select>                        
+                          </div>
                         <div class="col-md-6">
                             <label for="">Meeting Frequency :</label>
                             <select name="meet_frequency" id="" class="form-control" placeholder="Select an Option">
-                                <option value="daily">Daily</option>
                                 <option value="weekly">Weekly</option>
                                 <option value="monthly">Monthly</option>
-                                <option value="annually">Annually</option>
                             </select>
                         </div>
                         <div class="col-md-6">
