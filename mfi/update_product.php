@@ -275,7 +275,7 @@ $destination = "config.php";
                         </div>
                       </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-6" hidden>
                         <div class="form-group">
                           <label for="interestRateApplied" >Enable Balloon repayment</label>
                           <select class="form-control" name="enable" >
@@ -299,7 +299,7 @@ $destination = "config.php";
                         <input type="text" class="form-control" name="grace_on_interest" value="<?php echo $grace_on_int_amt;?>" required>
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" hidden>
                       <div class="form-group">
                         <label for="loanDescription" >Grace on interest charged</label>
                         <input type="text" class="form-control" name="grace_on_interest_charged" value="<?php echo $grace_on_int_charged;?>" required>
@@ -337,7 +337,7 @@ $destination = "config.php";
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-6" hidden>
                         <div class="form-group">
                           <label for="overPayment" >Automatically Allocate Overpayment </label>
                           <select class="form-control" name="auto_allocate_overpayment" required>
@@ -347,7 +347,7 @@ $destination = "config.php";
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-6" hidden>
                        <div class="form-group">
                           <label for="additionalCharges" >Allow Additional Charges </label>
                           <select class="form-control" name="additional_charge" required>

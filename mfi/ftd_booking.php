@@ -209,6 +209,21 @@ else if (isset($_GET["message3"])) {
                                 })
                             });
                             });
+
+                            $(document).ready(function () {
+                            $('#sav_prod_id').on("change", function () {
+                                var id = $('#collat').val();
+                                var sav_id = $(this).val();
+                                $.ajax({
+                                url: "ajax_post/ftd_option.php", 
+                                method: "POST",
+                                data:{id:id, sav_id:sav_id},
+                                success: function (data) {
+                                    $('#ddjf').html(data);
+                                }
+                                })
+                            });
+                            });
                         </script>
                       <div class="row" id="ddjf"></div>
                     <button type="submit" class="btn btn-primary pull-right">Book FTD</button>

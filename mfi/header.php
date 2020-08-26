@@ -440,9 +440,15 @@ input[type=number] {
                  $fdio = mysqli_query($connection, $ifdofi);
                  $group = mysqli_num_rows($fdio);
                 ?>
+                 <!-- Notification for FTD -->
+                 <?php
+                 $dsod = "SELECT * FROM ftd_booking_account WHERE int_id = '$sessint_id' AND (branch_id ='$br_id') AND status = 'Pending'";
+                 $dsoe = mysqli_query($connection, $dsod);
+                 $ftd = mysqli_num_rows($dsoe);
+                ?>
                 <!-- Notification for banner -->
                 <?php
-                $fomd = $dfn + $dn + $approvd + $trans + $client + $loan + $charge + $group;
+                $fomd = $dfn + $dn + $approvd + $trans + $client + $loan + $charge + $group + $ftd;
                 ?>
                 <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">notifications</i>
@@ -475,9 +481,12 @@ input[type=number] {
                   <a class="dropdown-item" href="charge_approval.php"><?php echo $charge;?> charge(s) in need of approval</a>
                 <?php
                  }
-                 if($group){
-                ?>
+                 if($group){?>
                   <a class="dropdown-item" href="approve_group.php"><?php echo $group;?> Group(s) in need of approval</a>
+                <?php
+                 }
+                 if($ftd){?>
+                  <a class="dropdown-item" href="ftd_approval.php"><?php echo $ftd;?> FTD Accounts in need of approval</a>
                 <?php
                  }
                 ?>
