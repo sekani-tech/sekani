@@ -222,7 +222,7 @@ $destination = "config.php";
                       <div class = "form-group">
                         <!-- First tab -->
                         <div class="tab">
-                        <h3> New Savings Product:</h3>
+                        <h3> Update Account Product:</h3>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
@@ -314,7 +314,7 @@ $destination = "config.php";
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-6" hidden>
                         <div class="form-group">
                           <label for="interestMethodology" >Interest Calculation Type</label>
                           <select class="form-control" name="interest_calculation_type_enum" >
@@ -358,7 +358,7 @@ $destination = "config.php";
                         <input type="number" value="<?php echo $minimum_negative_balance;?>" class="form-control" name="minimum_negative_balance" value="" placeholder="-20000" required>
                       </div>
                     </div> -->
-                    <div class="col-md-6">
+                    <div class="col-md-6" hidden>
                         <div class="form-group">
                           <label for="principal" >Lockin Period Frequency</label>
                           <div class="row">
@@ -377,7 +377,7 @@ $destination = "config.php";
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-6" hidden>
                        <div class="form-group">
                           <label for="additionalCharges" >Allow OverDraft</label>
                           <select class="form-control" name="allow_overdraft" required>
@@ -387,7 +387,7 @@ $destination = "config.php";
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-6" hidden>
                        <div class="form-group">
                           <label for="additionalCharges" >Track Dormancy</label>
                           <select class="form-control" name="is_dormancy_tracking_active" required>
