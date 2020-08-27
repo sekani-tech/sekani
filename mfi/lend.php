@@ -300,7 +300,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                             </script>
                       <!-- <button class="btn btn-primary pull-right" id="clickit">Add</button> -->
                       <div id="off_me">     
-                      <table class = "table table-bordered">
+                      <table class = "table table-bordered" style="width: 100%;">
                               <thead>
                                 <tr>
                                   <td>Name/Type</td>
@@ -401,7 +401,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                       <button type="button" class="btn btn-primary" name="button" onclick="DisplayDialog()"> <i class="fa fa-plus"></i> Add</button>
                       </div>
                       <div class="form-group">
-                      <table class="table table-bordered">
+                      <table class="table table-bordered" style="width: 100%;">
                           <thead>
                             <tr>
                               <th>Name</th>
