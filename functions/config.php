@@ -7,9 +7,6 @@ define('DB_PASSWORD', '4r6WY#JP+rnl67');
 define('DB_CHARSET', 'utf8');
 define('DB_NAME', 'sekanisy_admin');
 // hello
-// test
-// DB
-// MUTE NOTICES
 error_reporting(E_ALL & ~E_NOTICE);
 
 // LIB PATH

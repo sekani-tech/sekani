@@ -59,6 +59,16 @@
   <script src="assets/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
+  <script>
+  $(document).ready(function() {
+    var table = $('.table').DataTable( {
+        rowReorder: {
+            selector: 'td:nth-child(2)'
+        },
+        responsive: true
+    } );
+  } );
+  </script>
 </body>
 
 </html>

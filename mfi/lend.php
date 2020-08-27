@@ -3,6 +3,7 @@
 $page_title = "Loan Disbursement";
 $destination = "transaction.php";
     include("header.php");
+    include("ajaxcallx.php");
 
 ?>
 <!-- Content added here -->
@@ -266,7 +267,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                       <div class="form-group">
                       <script>
                               $(document).ready(function() {
-                                $('#clickit').on("change keyup paste click", function() {
+                                $('#clickit').on("click", function() {
                                   var id = $(this).val();
                                   var client_id = $('#client_name').val();
                                   var colname = $('#colname').val();
@@ -476,7 +477,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
 </div>
       <script>
           $(document).ready(function() {
-            $('#gau').on("change keyup paste click", function(){
+            $('#gau').on("click", function(){
               var id = $(this).val();
               var client_id = $('#client_name').val();
               var firstname = $('#gau_first_name').val();
