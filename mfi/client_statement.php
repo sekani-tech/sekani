@@ -8,7 +8,7 @@ $sessint_id = $_SESSION['int_id'];
   $id = $_POST["id"];
 
   $std = $_POST["start"];
-  $acc_no = '0020000158';
+  $acc_no = $_POST["accno"];
       //  echo $std;
        $endx = $_POST["end"];
 
