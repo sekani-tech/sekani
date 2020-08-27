@@ -91,7 +91,7 @@ if(isset($_GET["edit"])) {
 
   }
   else if($location == "29"){
-
+    echo header("Location: report_financial_view.php?view29");
   }
   else if($location == "30"){
 

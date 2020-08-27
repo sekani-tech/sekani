@@ -28,10 +28,10 @@ $startdate = date("Y-m-d", strtotime("-1 day", $endtime));
                     <div class="row">
                     <div class="form-group col-md-3">
                         <label for="">Select Dormancy Date</label>
-                        <select name="" id="brne" class="form-control">
+                        <select name="" id="dorm" class="form-control">
                             <option value="90">90 Days</option>
-                            <option value="90">180 Days</option>
-                            <option value="90">365 Days</option>
+                            <option value="180">180 Days</option>
+                            <option value="365">365 Days</option>
                         </select>
                       </div>
                       <?php
@@ -50,13 +50,9 @@ $startdate = date("Y-m-d", strtotime("-1 day", $endtime));
                   ?>
                       <div class="form-group col-md-3">
                         <label for="">Branch</label>
-                        <select name="" id="brne" class="form-control">
+                        <select name="" id="bran" class="form-control">
                             <?php echo fill_branch($connection); ?>
                         </select>
-                      </div>
-                      <div class="form-group col-md-3">
-                        <label for=""></label>
-                        <input type="date" hidden value="<?php echo $startdate; ?>" name="" id="start" class="form-control">
                       </div>
                     </div>
                     <button type="reset" class="btn btn-danger">Reset</button>
@@ -66,13 +62,12 @@ $startdate = date("Y-m-d", strtotime("-1 day", $endtime));
                 <script>
                     $(document).ready(function () {
                       $('#input').on("click", function () {
-                        var start = $('#start').val();
-                        var end = $('#end').val();
-                        var branch = $('#brne').val();
+                        var dorm = $('#dorm').val();
+                        var bran = $('#bran').val();
                         $.ajax({
                           url: "ajax_post/trk_dorm.php", 
                           method: "POST",
-                          data:{start:start, end:end},
+                          data:{dorm:dorm, bran:bran},
                           success: function (data) {
                             $('#outjournal').html(data);
                           }
@@ -81,7 +76,7 @@ $startdate = date("Y-m-d", strtotime("-1 day", $endtime));
                     });
                   </script>
             </div>
-            <div id="outjournal" class="col-md-10">
+            <div id="outjournal" class="col-md-12">
 
               </div>
           </div>

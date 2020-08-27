@@ -9,7 +9,7 @@ if(isset($_POST["id"])) {
     $id = $_POST["id"];
     $start = $_POST["start"];
     $end = $_POST["end"];
-    $acc_no = $_POST['account_no'];
+    $acc_no = '0020000158';
 
     $query1 = mysqli_query($connection, "SELECT * FROM client WHERE id='$id'");
     if (count([$query1]) == 1) {
