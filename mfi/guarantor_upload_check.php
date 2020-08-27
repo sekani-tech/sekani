@@ -3,7 +3,7 @@ include("../functions/connect.php");
 $display = '';
 $client_id = $_POST['client_id'];
 $don = "";
-
+// check it up
 if ($client_id != "") {
         $don = "SELECT * FROM loan_gaurantor WHERE client_id = '$client_id' ORDER BY id DESC LIMIT 1";
             $result = mysqli_query($connection, $don);
