@@ -31,7 +31,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                         $dc = mysqli_fetch_array($wrer);
                         $bname = $dc['name'];
 
-                      // Closing Balance
+                      // Opening Balance
                       $result = mysqli_query($connection, "SELECT * FROM gl_account_transaction WHERE (gl_code = '$gl_code' && int_id = '$sint_id' && branch_id = '$brid') && (transaction_date BETWEEN '$start' AND '$end') ORDER BY transaction_date, id  ASC LIMIT 1");
                       $rerc = mysqli_fetch_array($result);
                       if(isset($rerc)){
@@ -40,8 +40,18 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                       else{
                         $open_bal = 0.00;
                       }
+                      // total debit
+                      $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM gl_account_transaction WHERE  (gl_code = '$gl_code' && int_id = '$sint_id' && branch_id = '$brid') && (transaction_date BETWEEN '$start' AND '$end') ORDER BY transaction_date ASC");
+                      $deb = mysqli_fetch_array($totald);
+                      $tdp = $deb['debit'];
+                      $totaldb = number_format($tdp, 2);
 
-                      // Opening Balance
+                      // total credit
+                      $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM gl_account_transaction WHERE (gl_code = '$gl_code' && int_id = '$sint_id' && branch_id = '$brid') && (transaction_date BETWEEN '$start' AND '$end') ORDER BY transaction_date ASC");
+                      $cred = mysqli_fetch_array($totalc);
+                      $tcp = $cred['credit'];
+                      $totalcd = number_format($tcp, 2);
+                      // Closing Balance
                       $sdop = mysqli_query($connection, "SELECT * FROM gl_account_transaction WHERE (gl_code = '$gl_code' && int_id = '$sint_id' && branch_id = '$brid') && (transaction_date BETWEEN '$start' AND '$end') ORDER BY transaction_date, id DESC LIMIT 1");
                       $epow = mysqli_fetch_array($sdop);
                       if(isset($epow)){
@@ -53,17 +63,29 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                     $out .= '
                     <tr>
                     <th>'.$gl_code.'</th>
-                    <th>'.$name.'</th>
-                    <th>'.$bname.'</th>
-                    <th>'.$open_bal.'</th>
-                    <th>'.$name.'</th>
                     <td>'.$name.'</td>
-                    <td>'.$closing_bal.'</td>
+                    <td>'.$bname.'</td>
+                    <th>'.number_format($open_bal, 2).'</th>
+                    <th>'.$totaldb.'</th>
+                    <th>'.$totalcd.'</th>
+                    <th>'.number_format($closing_bal, 2).'</th>
                     </tr>
                   ';
                     }
                   return $out;
                   }
+                  // total debit
+                  $totald = mysqli_query($connection,"SELECT SUM(debit)  AS debit FROM gl_account_transaction WHERE  (int_id = '$sint_id') && (transaction_date BETWEEN '$start' AND '$end') ORDER BY transaction_date ASC");
+                  $deb = mysqli_fetch_array($totald);
+                  $tdp = $deb['debit'];
+                  $totaldb = number_format($tdp, 2);
+
+                  // total credit
+                  $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM gl_account_transaction WHERE (&& int_id = '$sint_id') && (transaction_date BETWEEN '$start' AND '$end') ORDER BY transaction_date ASC");
+                  $cred = mysqli_fetch_array($totalc);
+                  $tcp = $cred['credit'];
+                  $totalcd = number_format($tcp, 2);
+
 
         $output = '<div class="col-md-12">
         <div class="card">
@@ -91,13 +113,13 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                 <div class="col-md-3">
                   <div class="form-group">
                     <label class="bmd-label-floating">Total Debit:</label>
-                    <input type="text" value="" name="" class="form-control" id="" readonly>
+                    <input type="text" value="'.$totaldb.'" name="" class="form-control" id="" readonly>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
                     <label class="bmd-label-floating">Total Credit:</label>
-                    <input type="text" value="" name="" class="form-control" id="" readonly>
+                    <input type="text" value="'.$totalcd.'" name="" class="form-control" id="" readonly>
                   </div>
                 </div>
                 <div class="col-md-3 form-group">
@@ -105,8 +127,6 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                       <input type="text" name="start" value="'.$start.'" id="start1" class="form-control" hidden>
                       <input type="text" name="end" value="'.$end.'" id="end1" class="form-control" hidden>
                       <input type="text" name="branch" value="'.$branch_id.'" id="branch1" class="form-control" hidden>
-                      <input type="text" name="int_id1" value="'.$int_id.'" id="int_id1" class="form-control" hidden>
-                      <input type="text" name="gl_acc" value="'.$glcode.'" id="" class="form-control" hidden readonly>
                   </div>
                 </div>
               <div class="clearfix"></div>
@@ -135,7 +155,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                 </tbody>
               </table>
             </div>
-            <p><b>Checked By: '.$_SESSION["username"].'</b>                             <b>Date/Sign: '.$std." - ".$endx.' </b></p>
+            <p><b>Checked By: '.$_SESSION["username"].'</b>                             <b>Date/Sign: '.$start." - ".$end.' </b></p>
 
             <p>
             <button id="pddf" type="sumbit" class="btn btn-primary pull-right">Download PDF</button>
