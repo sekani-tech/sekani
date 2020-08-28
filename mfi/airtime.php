@@ -336,7 +336,7 @@ if ($per_bills == 1 || $per_bills == "1") {
                       </form>
                     </div> -->
                     <div class="tab-pane active" id="products">
-                        <center>
+                        <!-- <center> -->
                       <!-- start a merge -->
                       <div class="row">
   <div class="col-md-4 ml-auto mr-auto">
@@ -410,7 +410,7 @@ if ($per_bills == 1 || $per_bills == "1") {
   </div>
 </div>
                       <!-- finish the merge -->
-                      </center>
+                      <!-- </center> -->
                       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
