@@ -487,10 +487,10 @@ if ($per_bills == 1 || $per_bills == "1") {
                       <div class="table-responsive">
                   <script>
                   $(document).ready(function() {
-                  $('#tabledatc4').DataTable();
+                  $('#tabledatc4z').DataTable();
                   });
                   </script>
-                    <table id="tabledatc4" class="table" style="width: 100%;">
+                    <table id="tabledatc4z" class="table" style="width: 100%;">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM `sekani_wallet_transaction` WHERE int_id ='$sessint_id' AND branch_id = '$bch_id' AND transaction_type = 'bill_airtime' ORDER BY id DESC";

@@ -149,13 +149,13 @@ setInterval(function() {
   <!-- accordion -->
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> -->
   <script src="../datatable/sweetalert.min.js"></script>
-  <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <!-- <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css"> -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="../datatable/jquery-3.3.1.min.js"></script>
   <script src="../datatable/jquery-3.3.2.js"></script>
   <script src="../datatable/jquery.dataTables.min.js"></script>
   <script src="../datatable/dataTables.bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/materia/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/materia/bootstrap.min.css"> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <style>
     div[data-acc-content] { display: none;  }
