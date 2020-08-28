@@ -81,11 +81,11 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                   $totaldb = number_format($tdp, 2);
 
                   // total credit
-                  $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM gl_account_transaction WHERE (&& int_id = '$sint_id') && (transaction_date BETWEEN '$start' AND '$end') ORDER BY transaction_date ASC");
+                  $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM gl_account_transaction WHERE (int_id = '$sint_id') && (transaction_date BETWEEN '$start' AND '$end') ORDER BY transaction_date ASC");
                   $cred = mysqli_fetch_array($totalc);
                   $tcp = $cred['credit'];
                   $totalcd = number_format($tcp, 2);
-
+                  
 
         $output = '<div class="col-md-12">
         <div class="card">
@@ -104,12 +104,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                     <input type="text" value="'.$date.'" name="" class="form-control" id="" readonly>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Total Running Balance:</label>
-                    <input type="text" value="" name="" class="form-control" id="" readonly>
-                  </div>
-                </div>
+
                 <div class="col-md-3">
                   <div class="form-group">
                     <label class="bmd-label-floating">Total Debit:</label>
