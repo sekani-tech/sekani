@@ -37,11 +37,7 @@ $destination = "report_financial.php";
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Provisioning</h4>
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
+                  
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
                           $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1'";
@@ -78,7 +74,7 @@ $destination = "report_financial.php";
             </form>
                 </div>
                   <div class="table-responsive">
-                    <table id="tabledt" class="table" cellspacing="0" style="width:100%">
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                           $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1'";
@@ -378,11 +374,7 @@ $destination = "report_financial.php";
                 <div class="card">
                   <div class="card-header card-header-primary">
                     <h4 class="card-title ">Daily Transactions</h4>
-                    <script>
-                    $(document).ready(function() {
-                    $('#tabledat').DataTable();
-                    });
-                    </script>
+                    
                     <!-- Insert number users institutions -->
                     <p class="card-category">
                         <?php
@@ -418,7 +410,7 @@ $destination = "report_financial.php";
               </form>
                   </div>
                     <div class="table-responsive">
-                      <table id="tabledatv" class="table" cellspacing="0" style="width:100%">
+                      <table class="rtable display nowrap" style="width:100%">
                         <thead class=" text-primary">
                         <?php
                           $query = "SELECT * FROM institution_account_transaction WHERE branch_id = '$branch' AND int_id = '$sessint_id' AND transaction_date = '$currentdate'";
@@ -584,11 +576,7 @@ $destination = "report_financial.php";
                 <div class="card">
                   <div class="card-header card-header-primary">
                     <h4 class="card-title ">Daily Transactions</h4>
-                    <script>
-                    $(document).ready(function() {
-                    $('#tabledat').DataTable();
-                    });
-                    </script>
+                    
                     <!-- Insert number users institutions -->
                     <p class="card-category">
                         <?php
@@ -624,7 +612,7 @@ $destination = "report_financial.php";
               </form>
                   </div>
                     <div class="table-responsive">
-                      <table id="tabledatv" class="table" cellspacing="0" style="width:100%">
+                      <table class="rtable display nowrap" style="width:100%">
                         <thead class=" text-primary">
                         <?php
                           $query = "SELECT * FROM institution_account_transaction WHERE branch_id = '$branch' AND int_id = '$sessint_id' AND transaction_date = '$currentdate'";

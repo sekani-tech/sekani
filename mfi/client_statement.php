@@ -125,12 +125,8 @@ $sessint_id = $_SESSION['int_id'];
     <div class="ody">
         <div class="wrap-table100">
             <div class="table100">
-            <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                </script>
-            <table id="p" class="table" cellspacing="0" style="width:100%">
+            
+            <table id="p" class="rtable display nowrap" style="width:100%">
                         <thead>
                           <!-- <input type='text' value='<?php echo $branch;?>'/> -->
                         <?php

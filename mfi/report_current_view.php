@@ -46,11 +46,7 @@ $destination = "report_current.php";
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Current Accounts</h4>
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
+                 
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
                           $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1'";
@@ -91,7 +87,7 @@ $destination = "report_current.php";
             </form>
                 </div>
                   <div class="table-responsive">
-                    <table id="tabledt" class="table" cellspacing="0" style="width:100%">
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                           $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1' && (client.branch_id ='$br_id' $branches)";
@@ -216,11 +212,7 @@ $destination = "report_current.php";
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Current Accounts in Debit</h4>
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
+                  
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
                           $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1' AND account.account_balance_derived < '0.00' && (client.branch_id ='$br_id' $branches) ORDER BY firstname ASC";
@@ -254,7 +246,7 @@ $destination = "report_current.php";
             </form>
                 </div>
                   <div class="table-responsive">
-                    <table id="tabledt" class="table" cellspacing="0" style="width:100%">
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                           $query = "SELECT client.client_type, client.id, client.account_type, account.product_id, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '1' AND account.account_balance_derived < '0' && (client.branch_id ='$br_id' $branches)";

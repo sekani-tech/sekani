@@ -359,12 +359,8 @@ if ($per_con == 1 || $per_con == "1") {
                     <div class="tab-pane active" id="messages">
                     <a href="user.php" class="btn btn-primary"> Create new User</a>
                     <div class="table-responsive">
-                    <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
-                    <table id="tabledat" class="table" style="width:100%">
+                    
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT staff.id, users.int_id, display_name, users.username, staff.int_name, staff.email, users.status, staff.employee_status FROM staff JOIN users ON users.id = staff.user_id WHERE staff.int_id ='$sessint_id' && (users.branch_id ='$br_id' $branches)";
@@ -434,14 +430,10 @@ if ($per_con == 1 || $per_con == "1") {
                       </form>
                       <!-- A new stuff -->
                   <div class="table-responsive">
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat4').DataTable();
-                  });
-                  </script>
+                  
                   <br>
                   <div class="card-title">Role List</div>
-                    <table id="tabledat4" class="table" style="width: 100%;">
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM org_role WHERE int_id ='$sessint_id' ORDER BY id ASC";
@@ -724,14 +716,10 @@ if ($per_con == 1 || $per_con == "1") {
 </div>
                       <!-- Table Below -->
                       <div class="table-responsive">
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat1').DataTable();
-                  });
-                  </script>
+                  
                   <br>
                   <div class="card-title">Create Permission to Staff</div>
-                    <table id="tabledat1" class="table" style="width: 100%;">
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT org_role.id, org_role.role, org_role.description FROM org_role JOIN permission ON org_role.id = permission.role_id WHERE org_role.int_id = '$sessint_id'";
@@ -766,12 +754,8 @@ if ($per_con == 1 || $per_con == "1") {
                     <div class="tab-pane" id="teller">
                       <a href="create_teller.php" class="btn btn-primary"> Create New Teller</a>
                       <div class="table-responsive">
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat4').DataTable();
-                  });
-                  </script>
-                    <table id="tabledat4" class="table" style="width: 100%;">
+                  
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
   function branch_opondt($connection)

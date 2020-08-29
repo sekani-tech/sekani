@@ -1,11 +1,7 @@
-<script>
-                  $(document).ready(function() {
-                  $('#tabledata').DataTable();
-                  });
-                  </script>
+
                   
                    <div class="table-responsive">
-                   <table id="tabledata" class="table" cellspacing="0" style="width:100%">
+                   <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && (branch_id ='$br_id' $branches) && status = 'Closed'";
@@ -34,7 +30,7 @@
                            $dfd = $ds['name'];
                           ?>
                           <th><?php echo $dfd; ?></th>
-                          <td><a href="update_group.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
+                          <td><a href="update_group.php?edit=<?php echo $row["id"];?>" class="btn btn-info" >View</a></td>
                         </tr>
                         <?php }
                           }

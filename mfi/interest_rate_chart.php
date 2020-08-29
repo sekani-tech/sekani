@@ -32,7 +32,7 @@
     if ($coll) {
         $donc = mysqli_query($connection, "SELECT * FROM interest_rate_chart WHERE int_id ='$int_id' AND prod_cache_id = '$cache_id' ORDER BY id DESC");
 ?>
-             <table id="tabled" class="table table-bordered" cellspacing="0" style="width:100%;">
+             <table class="rtable display nowrap" style="width:100%">
              <thead>
              <tr>
                <th>Name</th>

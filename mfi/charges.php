@@ -88,17 +88,13 @@ $_SESSION["lack_of_intfund_$key"] = null;
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Charges</h4>
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
+                  
                   <!-- Insert number users institutions -->
                   <p class="card-category"> Current Charges || <a style = "color: white;" href="add_charges.php">Create New Charge</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table id="tabledat" class="table" cellspacing="1" style="width:100%">
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                         <th>
                           Name

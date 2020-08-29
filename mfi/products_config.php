@@ -383,12 +383,8 @@ if ($per_con == 1 || $per_con == "1") {
                     <div class="tab-pane active" id="products">
                       <a href="manage_product.php" class="btn btn-primary"> Create New Product</a>
                       <div class="table-responsive">
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat4').DataTable();
-                  });
-                  </script>
-                    <table id="tabledat4" class="table" style="width: 100%;">
+                 
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM product WHERE int_id ='$sessint_id'";
@@ -431,12 +427,8 @@ if ($per_con == 1 || $per_con == "1") {
                     <div class="tab-pane" id="saving">
                       <a href="manage_savings_product.php" class="btn btn-primary"> Create New Product</a>
                       <div class="table-responsive">
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledatc4').DataTable();
-                  });
-                  </script>
-                    <table id="tabledat4" class="table" style="width: 100%;">
+                  
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM savings_product WHERE int_id ='$sessint_id' AND (accounting_type = '1' OR accounting_type = '2')";
@@ -488,12 +480,8 @@ if ($per_con == 1 || $per_con == "1") {
                     <div class="tab-pane" id="fixed">
                       <a href="manage_fd_product.php" class="btn btn-primary"> Create New Product</a>
                       <div class="table-responsive">
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledatc4').DataTable();
-                  });
-                  </script>
-                    <table id="tabledat4" class="table" style="width: 100%;">
+                  
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM savings_product WHERE int_id ='$sessint_id' AND accounting_type = '3'";
@@ -534,13 +522,9 @@ if ($per_con == 1 || $per_con == "1") {
                   </div>
                     </div>
                     <div class="tab-pane" id="messages">
-                    <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
+                    
                     <a href="create_charge.php" class="btn btn-primary"> Add Charge</a>
-                      <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+                      <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM `charge` WHERE int_id = '$sessint_id'";
@@ -637,14 +621,10 @@ if ($per_con == 1 || $per_con == "1") {
                     </div>
                     <!-- credit checks -->
                     <div class="tab-pane" id="credit">
-                    <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
+                    
                    <!-- <a href="add_credit_check.php" class="btn btn-primary"> Add Credit Check</a> -->
                     <div class="table-responsive">
-                    <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM credit_check WHERE int_id = '$sessint_id'";
@@ -847,12 +827,8 @@ if ($per_con == 1 || $per_con == "1") {
                 </div>
             </div>
             </div>
-            <script>
-                  $(document).ready(function() {
-                  $('#tabledat4').DataTable();
-                  });
-                  </script>
-                    <table id="tabledat4" class="table">
+            
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM payment_type WHERE int_id ='$sessint_id'";

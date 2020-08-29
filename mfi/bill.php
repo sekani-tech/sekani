@@ -579,12 +579,8 @@ if ($per_bills == 1 || $per_bills == "1") {
             </div>
                       <hr>
                       <div class="table-responsive">
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledatc4').DataTable();
-                  });
-                  </script>
-                    <table id="tabledatc4" class="table" style="width: 100%;">
+                  
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM `sekani_wallet_transaction` WHERE int_id ='$sessint_id' AND branch_id = '$bch_id' AND transaction_type = 'bill_disco' ORDER BY id DESC";
@@ -816,12 +812,8 @@ if ($per_bills == 1 || $per_bills == "1") {
             </div>
                       <hr>
                     <div class="table-responsive">
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledatcc4').DataTable();
-                  });
-                  </script>
-                    <table id="tabledatcc4" class="table" style="width: 100%;">
+                  
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM `sekani_wallet_transaction` WHERE int_id ='$sessint_id' AND branch_id = '$bch_id' AND transaction_type = 'bill_cable' ORDER BY id DESC";

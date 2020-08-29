@@ -117,12 +117,8 @@ if ($per_con == 1 || $per_con == "1") {
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat4').DataTable();
-                  });
-                  </script>
-                    <table id="tabledat4" class="table">
+                  
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM branch WHERE int_id ='$sessint_id'";

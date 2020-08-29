@@ -3,8 +3,7 @@
                   <h4 class="card-title">SMS Campaigns</h4>
                 </div>
                 <div class="card-body">
-                  <table class="table">
-                    <thead>
+                  <table class="rtable display nowrap" style="width:100%">
                     <thead>
                       <th style="font-weight:bold;">Campaign Name</th>
                       <th style="font-weight:bold">Type</th>
@@ -14,7 +13,6 @@
                       <th style="font-weight:bold;">Approved BY</th>
                       <th style="font-weight:bold;">Status</th>
                       <th></th>
-                    </thead>
                     </thead>
                     <tbody>
                         <tr>

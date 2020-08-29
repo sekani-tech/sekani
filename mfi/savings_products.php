@@ -100,11 +100,7 @@ $destination = "index.php";
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Savings Products</h4>
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
+                  
                   <!-- Insert number users institutions -->
                   <p class="card-category">
                    <a class="btn btn-primary" href="create_savings_product.php">Create Savings Products</a>
@@ -114,7 +110,7 @@ $destination = "index.php";
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                         <th>Name</th>
                         <th>Description</th>

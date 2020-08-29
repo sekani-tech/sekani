@@ -153,10 +153,17 @@ setInterval(function() {
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="../datatable/jquery-3.3.1.min.js"></script>
   <script src="../datatable/jquery-3.3.2.js"></script>
-  <script src="../datatable/jquery.dataTables.min.js"></script>
-  <!-- <script src="../datatable/dataTables.bootstrap.min.js"></script> -->
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css">
+  <!-- DataTables scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/materia/bootstrap.min.css"> -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
   <style>
     div[data-acc-content] { display: none;  }
     div[data-acc-step]:not(.open) { background: #f2f2f2;  }

@@ -150,11 +150,7 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                 </div>
                 <div class="card-body">
                 <div class="table-responsive">
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat4').DataTable();
-                  });
-                  </script>
+                  
                    <?php
                         function branch_opt($connection)
                         {  
@@ -173,7 +169,7 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                         $br_id = $_SESSION["branch_id"];
                         $branches = branch_opt($connection);
                         ?>
-                    <table id="tabledat4" class="table">
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT client.id,client.submittedon_date, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && (client.branch_id ='$br_id' $branches) && client.status = 'Not Approved'";
@@ -295,12 +291,8 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                 </div>
                 <div class="card-body">
                 <div class="table-responsive">
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat4').DataTable();
-                  });
-                  </script>
-                    <table id="tabledat4" class="table">
+                  
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT client.submittedon_date, client.id, client.account_type, client.account_no, client.branch_id, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON (client.loan_officer_id = staff.id) WHERE (client.int_id = '$sessint_id' && (client.branch_id ='$br_id' $branches) client.status = 'Pending')";
@@ -392,9 +384,9 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                           }
                           ?>
                           <th><?php echo $acc; ?></th>
-                          <td><a href="client_approvalEdit.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">edit</i></a></td>
-                          <td><a href="../functions/approveClient.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">check</i></a></td>
-                          <td><a href="../functions/deleteClient.php?edit=<?php echo $row["id"];?>" class="btn btn-danger"><i class="material-icons">close</i></a></td>
+                          <td><a href="client_approvalEdit.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons" style="margin: auto;">edit</i></a></td>
+                          <td><a href="../functions/approveClient.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons" style="margin: auto;">check</i></a></td>
+                          <td><a href="../functions/deleteClient.php?edit=<?php echo $row["id"];?>" class="btn btn-danger"><i class="material-icons" style="margin:auto;">close</i></a></td>
                           </tr>
                         <?php }
                           }
@@ -420,12 +412,8 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                 </div>
                 <div class="card-body">
                 <div class="table-responsive">
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat4').DataTable();
-                  });
-                  </script>
-                    <table id="tabledat4" class="table">
+                  
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT client.submittedon_date, client.id, client.account_type, client.account_no, client.branch_id, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON (client.loan_officer_id = staff.id) WHERE (client.int_id = '$sessint_id' && (client.branch_id ='$br_id' $branches) AND client.status = 'Closed')";
@@ -517,9 +505,9 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                           }
                           ?>
                           <th><?php echo $acc; ?></th>
-                          <td><a href="client_approvalEdit.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">edit</i></a></td>
-                          <td><a href="../functions/approveClient.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons">check</i></a></td>
-                          <td><a href="../functions/deleteClient.php?edit=<?php echo $row["id"];?>" class="btn btn-danger"><i class="material-icons">close</i></a></td>
+                          <td><a href="client_approvalEdit.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons" style="margin: auto;">edit</i></a></td>
+                          <td><a href="../functions/approveClient.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons" style="margin: auto;">check</i></a></td>
+                          <td><a href="../functions/deleteClient.php?edit=<?php echo $row["id"];?>" class="btn btn-danger"><i class="material-icons" style="margin: auto;">close</i></a></td>
                           </tr>
                         <?php }
                           }

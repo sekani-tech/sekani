@@ -118,11 +118,7 @@ if ($can_transact == 1 || $can_transact == "1") {
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Group Opening Approval</h4>
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
+                  
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
                    $query = "SELECT * FROM client_charge WHERE int_id = '$sessint_id' AND (branch_id ='$br_id' $branches)";
@@ -139,7 +135,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                 </div>
                 <div class="card-body">
                 <div class="table-responsive">
-                   <table id="tabledats" class="table" cellspacing="0" style="width:100%">
+                   <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && (branch_id ='$br_id' $branches) && status = 'Pending'";
