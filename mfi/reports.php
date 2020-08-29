@@ -6,11 +6,7 @@ $destination = "../index.php";
     // include("../../functions/connect.php");
 
 ?>
-<style>
-    td{
-        text-align: right;
-    }
-</style>
+
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -20,11 +16,7 @@ $destination = "../index.php";
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Reports</h4>
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
+                  
                   <!-- Insert number users institutions -->
                 </div>
                 <div class="card-body">
