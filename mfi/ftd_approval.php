@@ -118,11 +118,7 @@ if ($can_transact == 1 || $can_transact == "1") {
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">FTD Approval</h4>
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
+                  
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
                    $query = "SELECT * FROM ftd_booking_account WHERE int_id = '$sessint_id' AND (branch_id ='$br_id' $branches) AND status = 'Pending'";
@@ -139,7 +135,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM ftd_booking_account WHERE int_id = '$sessint_id' AND (branch_id ='$br_id' $branches)  AND status = 'Pending'";

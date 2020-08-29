@@ -31,7 +31,7 @@
               <div class="card card-stats">
                 <div class="card-header card-header-info card-header-icon">
                   <div class="card-icon">
-                    <i class="fa fa-users"></i>
+                    <i class="material-icons">people</i>
                   </div>
                   <p class="card-category">Clients</p>
                   <!-- Populate with number of existing clients -->
@@ -94,15 +94,17 @@
                   <div class="card-icon">
                   <i class="material-icons">info_outline</i>
                   </div>
-                  <p class="card-category">Portfolio at Risk</p>
+                  <p class="card-category">PAR</p>
                   <?php if ($pfar > 0){
                     ?>
-                  <h3 class="card-title"><?php echo number_format($pfar);?>%</h3>
+                  <h4 class="card-title">30 days - <?php echo number_format($pfar);?>%</h4>
+                  <h4 class="card-title">60 days -<?php echo number_format($pfar);?>%</h4>
                    <?php 
                   }
                   else{
                     ?>
-                    <h3 class="card-title">0%</h3>
+                    <h4 class="card-title">30 days - 0%</h4>
+                    <h4 class="card-title">60 days - 0%</h4>
                     <?php
                   }
                   ?>
@@ -120,7 +122,7 @@
               <div class="card card-stats">
                 <div class="card-header card-header-success card-header-icon">
                   <div class="card-icon">
-                    <i class="fa fa-users"></i>
+                    <i class="material-icons">person</i>
                   </div>
                   <p class="card-category">Logged in Staff</p>
                   <!-- Populate with number of logged in staff -->

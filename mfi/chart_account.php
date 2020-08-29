@@ -309,15 +309,11 @@ else {
                      echo $inr;
                    }?> Chart of Accounts || <a style = "color: white;" data-toggle="modal" data-target=".bd-example-modal-lg" href="#">Add Account</a></p>
                   <!-- Insert number users institutions -->
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat2').DataTable();
-                  });
-                  </script>
+                  
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table id="tabledat2" class="table" style="width:100%">
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM acc_gl_account WHERE int_id ='$sessint_id' ORDER BY classification_enum ASC, name ASC";

@@ -91,7 +91,7 @@ if(isset($_POST["id"]))
 </script> -->
 
     <div class="table-responsive">
-  <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+  <table class="rtable display nowrap" style="width:100%">
   <thead class=" text-primary">
     <th>Name</th>
     <th>Charge</th>

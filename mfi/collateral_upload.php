@@ -17,6 +17,6 @@
     $coll = mysqli_query($connection, "INSERT INTO collateral (int_id, client_id, date, type, value, description) VALUES ('{$int_id}',
     '{$clientid}', '{$coldate}', '{$colval}', '{$colname}', '{$coldes}')");
     if ($coll) {
-        // 
+        // check if
     }    
 ?>

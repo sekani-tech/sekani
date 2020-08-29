@@ -249,11 +249,7 @@ if ($can_transact == 1 || $can_transact == "1") {
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">CHQ Book Approval</h4>
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
+                  
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
                    $query = "SELECT * FROM chq_book WHERE int_id = '$sessint_id' && status = 'Pending' && (branch_id ='$br_id' $branches)";
@@ -270,7 +266,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM chq_book WHERE int_id = '$sessint_id' AND status = 'Pending' && (branch_id ='$br_id' $branches)";

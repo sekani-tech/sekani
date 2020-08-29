@@ -10,7 +10,7 @@
           <div class="copyright float-right">
             Copyright
             &copy;
-              <i class="material-icons">group</i> 
+              <!-- <i class="material-icons">group</i>  -->
                 <a target="blank" href="https://sekanisystems.com.ng/">Sekani Systems</a> 
                 <script>
               document.write(new Date().getFullYear())
@@ -22,7 +22,7 @@
     </div>
   </div>
   <!--   Core JS Files   -->
-  <script src="../assets/js/core/jquery.min.js"></script>
+  <!-- <script src="../assets/js/core/jquery.min.js"></script> -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap-material-design.min.js"></script>
   <!-- <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script> -->
@@ -39,7 +39,7 @@
   <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
   <script src="../assets/js/plugins/bootstrap-datetimepicker.min.js"></script>
   <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
-  <script src="../assets/js/plugins/jquery.dataTables.min.js"></script>
+  
   <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
   <script src="../assets/js/plugins/bootstrap-tagsinput.js"></script>
   <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
@@ -54,8 +54,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
   <!-- Library for adding dinamically elements -->
   <script src="../assets/js/plugins/arrive.min.js"></script>
-  <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <!-- Chartist JS -->
   <script src="../assets/js/plugins/chartist.min.js"></script>
   <!--  Notifications Plugin    -->
@@ -96,10 +94,8 @@
           md.initDashboardPageCharts();
 
         });
-      </script>
-      <script>
-      $(document).ready(function() {
-        var table = $('.table').DataTable( {
+        $(document).ready(function() {
+        var table = $('.rtable').DataTable( {
             rowReorder: {
                 selector: 'td:nth-child(2)'
             },
@@ -107,10 +103,7 @@
         } );
       } );
       </script>
-          <!-- script for chart -->
-      <!-- <script>
-        
-      </script> -->
+      
 </body>
 
 </html>

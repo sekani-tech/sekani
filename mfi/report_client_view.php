@@ -34,11 +34,7 @@ $destination = "report_client.php";
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Clients Balance Report</h4>
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledaot').DataTable();
-                  });
-                  </script>
+                  
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
                         $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && (client.branch_id ='$br_id' $branches) ";
@@ -72,7 +68,7 @@ $destination = "report_client.php";
             </form>
             </div>
                   <div class="table-responsive">
-                    <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && (client.branch_id ='$br_id' $branches) ";
@@ -196,11 +192,7 @@ $destination = "report_client.php";
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Clients</h4>
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
+                  
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
                    $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved' && (branch_id ='$br_id' $branches)";
@@ -234,7 +226,7 @@ $destination = "report_client.php";
             </form>
             </div>
                   <div class="table-responsive">
-                    <table id="tableddat" class="table" cellspacing="0" style="width:100%">
+                    <table class="rtable display nowrap" style="width:100%">
                       <thead class="text-primary">
                       <?php
                         $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && (client.branch_id ='$br_id' $branches)  ORDER BY client.firstname ASC";
@@ -434,11 +426,7 @@ function fill_client($connection) {
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Registered Clients</h4>
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
+                  
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
                   $std = date("Y-m-d");
@@ -529,7 +517,7 @@ function fill_client($connection) {
                   </div>
                   <div class="table-responsive">
                     <div ></div>
-                    <table id="dismonth" class="table" cellspacing="0" style="width:100%">
+                    <table id="dismonth" class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
                         $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std' && (branch_id ='$br_id' $branches) ";

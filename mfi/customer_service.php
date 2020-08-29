@@ -6,11 +6,6 @@ $destination = "../index.php";
     // include("../../functions/connect.php");
 
 ?>
-<style>
-    td{
-        text-align: right;
-    }
-</style>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -20,40 +15,36 @@ $destination = "../index.php";
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Customer Service</h4>
-                  <script>
-                  $(document).ready(function() {
-                  $('#tabledat').DataTable();
-                  });
-                  </script>
-                  <!-- Insert number users institutions -->
+                  
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                  <table id="tabledat" class="table" cellspacing="0" style="width:100%">
+                  <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
-                        <th colspan = "3">
-                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                       </thead>
                       <tbody>
                         <tr>
                           <th>Register Client</th>
                           <th>Register a Corporate/Individual account for a client</th>
-                          <td><a href="manage_client.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="manage_client.php" class="btn btn-info"><i class="material-icons" style="margin:auto">description</i></a></td>
                         </tr>
                         <tr>
                           <th>Register Group</th>
                           <th>Register a group account in the instituion</th>
-                          <td><a href="create_group.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="create_group.php" class="btn btn-info"><i class="material-icons" style="margin:auto">description</i></a></td>
                         </tr>
                         <tr>
                           <th>View Approved Client List</th>
                           <th>View the list of all the approved clients in the institution</th>
-                          <td><a href="client.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="client.php" class="btn btn-info"><i class="material-icons" style="margin:auto">description</i></a></td>
                         </tr>
                         <tr>
                           <th>View Groups List</th>
                           <th>View the list of all the approved clients in the institution</th>
-                          <td><a href="groups.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
+                          <td><a href="groups.php" class="btn btn-info"><i class="material-icons" style="margin:auto">description</i></a></td>
                         </tr>
                         <!-- <tr>
                           <th>Vault Posting</th>

@@ -17,11 +17,13 @@
             </ul>
           </nav>
           <div class="copyright float-right">
+            Copyright
             &copy;
-            <script>
+              <!-- <i class="material-icons">group</i>  -->
+                <a target="blank" href="https://sekanisystems.com.ng/">Sekani Systems</a> 
+                <script>
               document.write(new Date().getFullYear())
-            </script>, made <i class="material-icons">group</i> by
-                <a target="blank" href="https://www.sekanisytems.com.ng">Sekani Systems</a>
+            </script>
           </div>
           <!-- your footer here -->
         </div>
