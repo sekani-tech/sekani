@@ -32,7 +32,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                         $bname = $dc['name'];
 
                       // Opening Balance
-                      $result = mysqli_query($connection, "SELECT * FROM gl_account_transaction WHERE (gl_code = '$gl_code' && int_id = '$sint_id' && branch_id = '$brid') && (transaction_date BETWEEN '$start' AND '$end') ORDER BY transaction_date, id  ASC LIMIT 1");
+                      $result = mysqli_query($connection, "SELECT * FROM gl_account_transaction WHERE (gl_code = '$gl_code' && int_id = '$sint_id' && branch_id = '$brid') && (transaction_date < '$start') ORDER BY transaction_date DESC");
                       $rerc = mysqli_fetch_array($result);
                       if(isset($rerc)){
                         $open_bal = $rerc['gl_account_balance_derived'];
@@ -52,7 +52,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                       $tcp = $cred['credit'];
                       $totalcd = number_format($tcp, 2);
                       // Closing Balance
-                      $sdop = mysqli_query($connection, "SELECT * FROM gl_account_transaction WHERE (gl_code = '$gl_code' && int_id = '$sint_id' && branch_id = '$brid') && (transaction_date BETWEEN '$start' AND '$end') ORDER BY transaction_date, id DESC LIMIT 1");
+                      $sdop = mysqli_query($connection, "SELECT * FROM gl_account_transaction WHERE (gl_code = '$gl_code' && int_id = '$sint_id' && branch_id = '$brid') && (transaction_date <= '$end') ORDER BY transaction_date DESC");
                       $epow = mysqli_fetch_array($sdop);
                       if(isset($epow)){
                         $closing_bal = $epow['gl_account_balance_derived'];

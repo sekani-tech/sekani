@@ -16,6 +16,7 @@
               $n = mysqli_fetch_array($person);
               $int_id = $n['int_id'];
               $int_name = $n['int_name'];
+              $int_full = $n['int_full'];
               $rcn = $n['rcn'];
               $lga = $n['lga'];
               $int_state = $n['int_state'];
@@ -64,7 +65,7 @@
                       <div class="col-md-8">
                         <div class="form-group">
                           <label class="bmd-label-floating">Full Name</label>
-                          <input type="text" value="<?php echo $int_name; ?>" class="form-control" name="int_name">
+                          <input type="text" value="<?php echo $int_full; ?>" class="form-control" name="int_full">
                         </div>
                       </div>
                       <?php
