@@ -4,7 +4,7 @@ class Database{
     // specify your own database credentials
     // pushing live
     private $host = "localhost";
-    private $db_name = "sekanisy_demo";
+    private $db_name = "sekanisy_admin";
     private $username = "sekanisy";
     private $password = "4r6WY#JP+rnl67";
     public $conn;
