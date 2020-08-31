@@ -136,7 +136,7 @@ if(isset($_POST['id'])){
         <div class="form-group">
           <label class="bmd-label-floating">Interest Rate</label>
           <input type="number" class="form-control" name="int_rate">
-          <input type="text" class="form-control" value ="'.$int_post_type.'"  name="int_post">
+          <input type="text" hidden class="form-control" value ="'.$int_post_type.'"  name="int_post">
         </div>
       </div>
       <div class="col-md-4">

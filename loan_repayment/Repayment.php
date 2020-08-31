@@ -755,3 +755,73 @@ while($a = mysqli_fetch_array($ftd_booking_account)){
 }
 
 ?>
+<?php
+// CODE TO TRACK DORMANCY IN THE SYSTEM
+echo '</br></br></br>Track Dormancy Code right here:</br>';
+// Declaring the variables for dormant accounts
+$account = "SELECT * FROM account";
+$exec = mysqli_query($connection, $account);
+while($que = mysqli_fetch_array($exec)){
+    $name = $que['account_no'];
+    $id = $que['id'];
+    $intid = $que['int_id'];
+    $last_edit = $que['updatedon_date'];
+    $date = date('Y-m-d');
+    $status = $que['status'];
+    $current = strtotime($date);
+    $last_update = strtotime($last_edit);
+
+    $fdi = "SELECT * FROM dormancy_counter WHERE int_id = '$intid'";
+    $idfo = mysqli_query($connection, $fdi);
+    if($idfo){
+        $qp = mysqli_fetch_array($idfo);
+        $ina = $qp['day_to_inactive'];
+        $dor = $qp['day_to_dormancy'];
+        $arc = $qp['day_to_archive'];
+
+        $days = ceil(abs($current - $last_update) / 86400);
+        if($days <= $ina){
+            if($status == 'Active'){
+                echo 'its already active</br>';
+            }
+            else{
+                $fdi = "UPDATE account SET status = 'Active' WHERE id = '$id'";
+                $ufd = mysqli_query($connection, $fdi);
+                echo 'its active</br>';
+            }
+        }
+        else if($days > $ina && $days <= $dor){
+            if($status == 'Inactive'){
+                echo 'its already Inactive</br>';
+            }
+            else{
+                $fdi = "UPDATE account SET status = 'Inactive' WHERE id = '$id'";
+                $ufd = mysqli_query($connection, $fdi);
+                echo 'its Inactive';
+            }
+            
+        }
+        else if($days > $dor && $days <= $arc){
+            if($status == 'Dormant'){
+                echo 'its already Dormant</br>';
+            }
+            else{
+                $fdi = "UPDATE account SET status = 'Dormant' WHERE id = '$id'";
+                $ufd = mysqli_query($connection, $fdi);
+                echo 'its Dormant';
+            }
+        }
+        else if($days > $arc){
+            if($status == 'Archived'){
+                echo 'its already Archived</br>';
+            }
+            else{
+                $fdi = "UPDATE account SET status = 'Archived' WHERE id = '$id'";
+                $ufd = mysqli_query($connection, $fdi);
+                echo 'its archived';
+            }
+        }
+    }
+
+}
+?>

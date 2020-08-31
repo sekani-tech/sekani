@@ -5,14 +5,63 @@ $destination = "report_financial.php";
 include('header.php');
 
 ?>
+<!-- Content added here -->
+<?php
+$int_id = $_SESSION['int_id'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $efd = $_POST['submit'];
+  if($efd == "subs"){
+    $ina = $_POST['inactive'];
+    $dor = $_POST['dormant'];
+    $arc = $_POST['archive'];
+
+    $sdoi = "SELECT * FROM dormancy_counter WHERE int_id = '$int_id'";
+    $dsio = mysqli_query($connection, $sdoi);
+    $yr = mysqli_fetch_array($dsio);
+    $fi = $yr['int_id'];
+    $dskj = $yr['day_to_inactive'];
+    $sdio = $yr['day_to_dormancy'];
+    $aspo = $yr['day_to_archive'];
+
+    $user_id = $_SESSION['user_id'];
+    $date = date('Y-m-d');
+    if($fi == $int_id & $dskj == $ina & $sdio == $dor & $aspo == $arc){
+
+    }
+    else if($fi == $int_id){
+      $ioi = "UPDATE dormancy_counter SET day_to_inactive = '$ina', day_to_dormancy = '$dor', day_to_archive = '$arc', updated_on = '$date', updated_by = '$user_id' WHERE int_id = '$int_id'";
+      $fkd = mysqli_query($connection, $ioi);
+    }
+    else{
+      $ioi = "INSERT INTO `dormancy_counter` (`int_id`, `day_to_inactive`, `day_to_dormancy`, `day_to_archive`, `updated_on`, `updated_by`)
+       VALUES ('$int_id', '$ina', '$dor', '$arc', '$date', '$user_id')";
+      $fkd = mysqli_query($connection, $ioi);
+    }
+  }
+  if($fkd){
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+         type: "success",
+          title: "Success",
+            text: "Dormancy Days set!",
+         showConfirmButton: false,
+       timer: 2000
+        })
+        });
+ </script>';
+  }
+}
+?>
 <?php
 $today = date('Y-m-d');
-$year = date('Y');
-$sdoins =$year."-01-01";
-$endtime = strtotime($sdoins);
-$startdate = date("Y-m-d", strtotime("-1 day", $endtime));
+$wpem = "SELECT * FROM dormancy_counter WHERE int_id = '$int_id'";
+$wp = mysqli_query($connection, $wpem);
+$erer = mysqli_fetch_array($wp);
+$inactive = $erer['day_to_inactive'];
+$dormant = $erer['day_to_dormancy'];
+$archive = $erer['day_to_archive'];
 ?>
-<!-- Content added here -->
 <!-- print content -->
 <div class="content">
         <div class="container-fluid">
@@ -24,57 +73,31 @@ $startdate = date("Y-m-d", strtotime("-1 day", $endtime));
                     <h4 class="card-title">Track Dormancy</h4>
                 </div>
                 <div class="card-body">
-                <form action="">
+                <form method = "POST">
                     <div class="row">
-                    <div class="form-group col-md-3">
-                        <label for="">Select Dormancy Date</label>
-                        <select name="" id="dorm" class="form-control">
-                            <option value="90">90 Days</option>
-                            <option value="180">180 Days</option>
-                            <option value="365">365 Days</option>
-                        </select>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Days to Inactive</label>
+                          <input type="text" value="<?php echo $inactive;?>" class="form-control" name="inactive">
+                        </div>
                       </div>
-                      <?php
-                  function fill_branch($connection)
-                  {
-                  $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
-                  $res = mysqli_query($connection, $org);
-                  $out = '';
-                  while ($row = mysqli_fetch_array($res))
-                  {
-                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
-                  }
-                  return $out;
-                  }
-                  ?>
-                      <div class="form-group col-md-3">
-                        <label for="">Branch</label>
-                        <select name="" id="bran" class="form-control">
-                            <?php echo fill_branch($connection); ?>
-                        </select>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Days to Dormancy</label>
+                          <input type="text" value="<?php echo $dormant;?>" class="form-control" name="dormant">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Days to Archive</label>
+                          <input type="text" value="<?php echo $archive;?>" class="form-control" name="archive">
+                        </div>
                       </div>
                     </div>
                     <button type="reset" class="btn btn-danger">Reset</button>
-                    <span id="input" type="submit" class="btn btn-primary">Run report</span>
+                    <button id="input" name ="submit" type="submit" value="subs" class="btn btn-primary">Set Days</button>
                   </form>
                 </div>
-                <script>
-                    $(document).ready(function () {
-                      $('#input').on("click", function () {
-                        var dorm = $('#dorm').val();
-                        var bran = $('#bran').val();
-                        $.ajax({
-                          url: "ajax_post/trk_dorm.php", 
-                          method: "POST",
-                          data:{dorm:dorm, bran:bran},
-                          success: function (data) {
-                            $('#outjournal').html(data);
-                          }
-                        })
-                      });
-                    });
-                  </script>
             </div>
             <div id="outjournal" class="col-md-12">
 
