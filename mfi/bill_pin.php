@@ -1,11 +1,73 @@
 <?php
 
 $page_title = "Bill & Airtime Pin";
-$destination = "bill_airtime.php";
+$destination = "settings.php";
     include("header.php");
     // include("../../functions/connect.php");
 
 ?>
+<?php
+ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  //  check the new field out
+  $pin = $_POST["newpin"];
+  $password = $_POST["passkey"];
+  $new = password_hash($pin, PASSWORD_DEFAULT);
+  $user_email = $_SESSION["email"];
+ //  select the db
+ $username = $_SESSION["username"];
+
+ $query_pass = mysqli_query($connection, "SELECT * FROM users WHERE username = '$username'");
+   $x = mysqli_fetch_array($query_pass);
+   $id_user = $x["id"];
+   $user_pass = $x["password"];
+   // making a change
+   if (password_verify($password, $user_pass)) {
+    //  new change
+    $update_query = mysqli_query($connection, "UPDATE `users` SET `pin` = '$new' WHERE `users`.`id` = '$id_user'");
+    // tell me the time dont build me the clock
+    if ($update_query) {
+      echo '<script type="text/javascript">
+                  $(document).ready(function(){
+                      swal({
+                          type: "success",
+                          title: "Transaction Pin Change Successful",
+                          text: "Your pin is now '.$pin.'",
+                          showConfirmButton: false,
+                          timer: 5000
+                      })
+                  });
+                  </script>
+      ';
+    } else {
+      echo '<script type="text/javascript">
+      $(document).ready(function(){
+          swal({
+              type: "error",
+              title: "Entry Error",
+              text: "Please Check Your Password Character",
+              showConfirmButton: false,
+              timer: 4000
+          })
+      });
+      </script>
+';
+    }
+   } else {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "Wrong Password",
+            text: "you need to insert correct password to change your tansaction pin",
+            showConfirmButton: false,
+            timer: 4000
+        })
+    });
+    </script>
+';
+   }
+ }
+   ?>
 <?php
 // right now we will program
 // first step - check if this person is authorized
@@ -26,19 +88,19 @@ if ($per_bills == 1 || $per_bills == "1") {
             <i class="material-icons">business</i>
         </div> -->
         <p>Change your Transaction Pin (defualt - 1234)</p>
-        <form id="form" action="paystack_general/initialize.php" method="POST">
+        <form id="form" method="POST">
                 <div class="card-body">
                 <div class = "row">
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="installmentAmount" style="color: white;" >New Pin</label>
-                      <input type="number" class="form-control" style="color: white;" name="amt" value="<?php echo $r_n_b; ?>" required>
+                      <input type="number" class="form-control" style="color: white;" name="newpin" required>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
                       <label for="installmentAmount" style="color: white;">Password</label>
-                      <input type="password" class="form-control" style="color: white;" name="password" value="">
+                      <input type="password" class="form-control" style="color: white;" name="passkey" value="">
                     </div>
                 </div>
                 </div>
