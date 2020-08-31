@@ -759,7 +759,7 @@ while($a = mysqli_fetch_array($ftd_booking_account)){
 // CODE TO TRACK DORMANCY IN THE SYSTEM
 echo '</br></br></br>Track Dormancy Code right here:</br>';
 // Declaring the variables for dormant accounts
-$account = "SELECT * FROM account";
+$account = "SELECT * FROM account WHERE type_id = '1'";
 $exec = mysqli_query($connection, $account);
 while($que = mysqli_fetch_array($exec)){
     $name = $que['account_no'];

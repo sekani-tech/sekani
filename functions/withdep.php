@@ -14,6 +14,7 @@ $int_address = $_SESSION["int_address"];
 $sessint_id = $_SESSION["int_id"];
 $m_id = $_SESSION["user_id"];
 $sender_id = $_SESSION["sender_id"];
+$tday = date('Y-m-d');
 // declare it into the inputs
 $getacct1 = mysqli_query($connection, "SELECT * FROM staff WHERE user_id = '$m_id' && int_id = '$sessint_id'");
 if (count([$getacct1]) == 1) {
@@ -43,6 +44,12 @@ $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 // 1234567890
 // fetch the clients account
+$account = $_POST['account_no'];
+$fdi = "SELECT * FROM account WHERE account_no = '$account' AND int_id = '$sessint_id'";
+$dfo = mysqli_query($connection, $fdi);
+$fodp = mysqli_fetch_array($dfo);
+$ds = $fodp['status'];
+if($ds == 'Active' || $ds == 'Inactive'){
 $getacct = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' && int_id = '$sessint_id'");
 if (count([$getacct]) == 1) {
 $y = mysqli_fetch_array($getacct);
@@ -155,7 +162,7 @@ if ($is_del == "0" && $is_del != NULL) {
        if ($test == "deposit") {
         // update the clients account
         $new_abd = $comp;
-        $iupq = "UPDATE account SET account_balance_derived = '$new_abd', last_deposit = '$amt', total_deposits_derived = '$tbd' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
+        $iupq = "UPDATE account SET account_balance_derived = '$new_abd', updatedon_date = '$tday', last_deposit = '$amt', total_deposits_derived = '$tbd' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
         $iupqres = mysqli_query($connection, $iupq);
         if ($iupqres) {
         // update the clients transaction
@@ -577,7 +584,7 @@ if ($is_del == "0" && $is_del != NULL) {
           if ($amt2 <= $post_limit) {
             // update the clients account
             $new_abd2 = $comp2;
-            $iupq = "UPDATE account SET account_balance_derived = '$new_abd2',
+            $iupq = "UPDATE account SET account_balance_derived = '$new_abd2', updatedon_date = '$tday',
             last_withdrawal = '$amt', total_withdrawals_derived = '$tbd2' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
             $iupqres = mysqli_query($connection, $iupq);
             // update the clients transaction
@@ -886,7 +893,12 @@ $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
 echo header ("Location: ../mfi/transact.php?messagex2=$randms");
 // remeber to fix account transaction for approval
 }
-
+}
+else{
+  // To Check if Account is Dormant 
+$_SESSION["Lack_of_intfund_$randms"] = "TELLER";
+echo header ("Location: ../mfi/transact.php?message123=$randms");
+}
 ?>
 <?php
 // qwerty

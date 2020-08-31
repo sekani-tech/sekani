@@ -20,6 +20,7 @@ if (isset($_POST['id'])) {
     $sessint_id = $_SESSION['int_id'];
     $curr_date = date('Y-m-d h:i:sa');
     $user_id = $_SESSION['user_id'];
+    $tday = date('Y-m-d');
 
     // Collect extra data needed
     $odi = mysqli_query($connection, "SELECT * FROM ftd_booking_account WHERE int_id = '$sessint_id' AND id = '$id'");
@@ -82,7 +83,7 @@ if (isset($_POST['id'])) {
                 $update = mysqli_query($connection, $up);
 
                 // to put the money back into the account and record reversal
-                $fdio = "UPDATE account SET account_balance_derived = '$acc_bal', last_withdrawal = '$amount' WHERE int_id = '$sessint_id' AND id = '$linked'";
+                $fdio = "UPDATE account SET account_balance_derived = '$acc_bal', updatedon_date = '$tday', last_withdrawal = '$amount' WHERE int_id = '$sessint_id' AND id = '$linked'";
                 $wow = mysqli_query($connection, $fdio);
 
                 // first transaction is for the reversal
@@ -142,7 +143,7 @@ if (isset($_POST['id'])) {
         else if($linked_savings_amount_b >= $amount){
             // Code to add amount back to the previous account
             $new_bal = $linked_savings_amount + $amount;
-            $fdio = "UPDATE account SET account_balance_derived = '$new_bal', last_deposit = '$amount' WHERE int_id = '$sessint_id' AND id = '$prev_linked_account'";
+            $fdio = "UPDATE account SET account_balance_derived = '$new_bal', updatedon_date = '$tday', last_deposit = '$amount' WHERE int_id = '$sessint_id' AND id = '$prev_linked_account'";
             $wow = mysqli_query($connection, $fdio);
 
             // Reversal transaction for the account
@@ -156,7 +157,7 @@ if (isset($_POST['id'])) {
 
             // Code to Remove amount from to the previous account
             $new_bal_b = $linked_savings_amount_b - $amount;
-            $sodie = "UPDATE account SET account_balance_derived = '$new_bal_b', last_withdrawal = '$amount' WHERE int_id = '$sessint_id' AND id = '$linked'";
+            $sodie = "UPDATE account SET account_balance_derived = '$new_bal_b', updatedon_date = '$tday', last_withdrawal = '$amount' WHERE int_id = '$sessint_id' AND id = '$linked'";
             $eowpsd = mysqli_query($connection, $sodie);
 
             // Transaction for the account

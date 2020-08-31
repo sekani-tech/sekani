@@ -18,6 +18,7 @@ $nm = $_SESSION["username"];
 $sint_id = $_SESSION['int_id'];
 $user_id = $_SESSION["user_id"];
 $digits = 6;
+$tday = date('Y-m-d');
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $getacct1 = mysqli_query($connection, "SELECT * FROM staff WHERE user_id = '$user_id' && int_id = '$sint_id'");
 if (count([$getacct1]) == 1) {
@@ -77,7 +78,7 @@ if(isset($_GET['approve'])){
             $newdeposit = $ttldeposit + $amount;
 
             // to update depositor account balance
-            $aupone = "UPDATE account SET account_balance_derived = '$newaccone', last_withdrawal = '$amount',
+            $aupone = "UPDATE account SET updatedon_date = '$tday', account_balance_derived = '$newaccone', last_withdrawal = '$amount',
              total_withdrawals_derived = '$newwithdrwl' WHERE account_no = '$accountone' && int_id = '$sessint_id'";
             $auponres = mysqli_query($connection, $aupone);
             // update the depositor transaction
@@ -95,7 +96,7 @@ if(isset($_GET['approve'])){
             $res3 = mysqli_query($connection, $aupat);
             if($res3){
                  // to update recepient account balance
-            $auptwo = "UPDATE account SET account_balance_derived = '$newacctwo', last_deposit = '$amount',
+            $auptwo = "UPDATE account SET updatedon_date = '$tday', account_balance_derived = '$newacctwo', last_deposit = '$amount',
             total_deposits_derived = '$newdeposit' WHERE account_no = '$accounttwo' AND int_id = '$sessint_id'";
            $auptwres = mysqli_query($connection, $auptwo);
            // update the depositor transaction

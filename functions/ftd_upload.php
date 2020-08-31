@@ -20,6 +20,7 @@ if(isset($_POST['ftd_no'])){
     $int_repay = $_POST['int_repay'];
     $int_post = $_POST['int_post'];
     $currency_code = 'NGN';
+    $tday = date('Y-m-d');
     $dating = date('Y-m-d h:i:sa');
     if(isset($_POST['auto_renew'])){
         $auto_renew = '1';
@@ -55,7 +56,7 @@ if(isset($_POST['ftd_no'])){
         $l_acc_no = $io['account_no'];
         if($linked_account_bal > $amount){
         $new_linked_account_bal =  $linked_account_bal - $amount;
-        $idofs = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$new_linked_account_bal',
+        $idofs = mysqli_query($connection, "UPDATE account SET updatedon_date = '$tday', account_balance_derived = '$new_linked_account_bal',
          last_withdrawal = '$amount' WHERE id = '$lsaa'");
 
          if($idofs){

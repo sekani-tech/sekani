@@ -4,6 +4,7 @@ session_start();
 ?>
 <?php
 $digits = 6;
+$tday = date('Y-m-d');
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $ctype = $_POST['ctype'];
 if($ctype == 'INDIVIDUAL' || $ctype == 'GROUP')
@@ -125,7 +126,7 @@ if($ctype == 'INDIVIDUAL' || $ctype == 'GROUP')
             $queryd = mysqli_query($connection, "SELECT * FROM savings_product WHERE id='$account_type'");
             $res = mysqli_fetch_array($queryd);
             $accttname = $res['name'];
-            $updateacctp = mysqli_query($connection, "UPDATE account SET account_type = '$accttname', product_id = '$account_type' WHERE account_no = '$account_no'");
+            $updateacctp = mysqli_query($connection, "UPDATE account SET updatedon_date = '$tday', account_type = '$accttname', product_id = '$account_type' WHERE account_no = '$account_no'");
         }
         // If 'result' is successful, it will send the required message to client.php
         $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
@@ -374,7 +375,7 @@ else if($ctype == 'CORPORATE'){
                 $queryd = mysqli_query($connection, "SELECT * FROM savings_product WHERE id='$account_type'");
                 $res = mysqli_fetch_array($queryd);
                 $accttname = $res['name'];
-                $updateacctp = mysqli_query($connection, "UPDATE account SET account_type = '$accttname', product_id = '$account_type' WHERE account_no = '$account_no'");
+                $updateacctp = mysqli_query($connection, "UPDATE account SET updatedon_date = '$tday', account_type = '$accttname', product_id = '$account_type' WHERE account_no = '$account_no'");
             }
             // If 'result' is successful, it will send the required message to client.php
             $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
