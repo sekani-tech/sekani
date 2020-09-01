@@ -67,59 +67,43 @@ $archive = $erer['day_to_archive'];
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
-            <div class="col-md-6">
-              <div class="card">
+            <div class="col-md-12">
+            <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Dormancy Dates</h4>
-                  <!-- Insert number users institutions -->
+                    <h4 class="card-title">Track Dormancy</h4>
                 </div>
                 <div class="card-body">
-                  <div class="table-responsive">
-                  
-                    <table class="rtable display nowrap" style="width:100%">
-                      <thead class=" text-primary">
-                      <?php
-                        $query = "SELECT * FROM asset_type WHERE int_id ='$sessint_id'";
-                        $result = mysqli_query($connection, $query);
-                      ?>
-                        <!-- <th>
-                          ID
-                        </th> -->
-                        <th>S/No</th>
-                        <th>Status</th>
-                        <th>
-                         Days
-                        </th>
-                        <th style="text-align:end;">
-                          Edit
-                        </th>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>inactive</td>
-                          <td><?php echo $inactive;?></td>
-                          <td style="text-align:end;"><a href="dromancy_edit.php" class="btn btn-info">Edit</a></td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>Dormancy</td>
-                          <td><?php echo $dormant;?></td>
-                          <td style="text-align:end;"><a href="dromancy_edit.php" class="btn btn-info">Edit</a></td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>Archive</td>
-                          <td><?php echo $archive;?></td>
-                          <td style="text-align:end;"><a href="dromancy_edit.php" class="btn btn-info">Edit</a></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                <form method = "POST">
+                    <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Days to Inactive</label>
+                          <input type="text" value="<?php echo $inactive;?>" class="form-control" name="inactive">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Days to Dormancy</label>
+                          <input type="text" value="<?php echo $dormant;?>" class="form-control" name="dormant">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Days to Archive</label>
+                          <input type="text" value="<?php echo $archive;?>" class="form-control" name="archive">
+                        </div>
+                      </div>
+                    </div>
+                    <button type="reset" class="btn btn-danger">Reset</button>
+                    <button id="input" name ="submit" type="submit" value="subs" class="btn btn-primary">Set Days</button>
+                  </form>
                 </div>
-              </div>
             </div>
+            <div id="outjournal" class="col-md-12">
+
+              </div>
           </div>
+        </div>
       </div>
 
 <?php

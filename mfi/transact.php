@@ -657,14 +657,8 @@ $transid2 = $randms2;
               $('.js-example-basic-single').select2();
           });
           </script>
-                <!-- <label for="">Client</label>
-                <select class="js-example-basic-single" name="state">
-                  <option>one</option>
-                  <option>two</option>
-                  <option>three</option>
-                </select> -->
                 <label for="">Client</label>
-                <select id="sdd" name="client_id" class="js-example-basic-single form-control">
+                <select id="sdd" name="client_id" class="form-control">
                 <option hidden>select clients</option>
                   <option value="000">All</option>
                   <?php echo fill_client($connection);?>
