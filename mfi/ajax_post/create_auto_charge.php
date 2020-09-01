@@ -91,7 +91,7 @@ $a = mysqli_fetch_array($fjoed);
     <label class="bmd-label-floating">Charge Type</label>
     <select name="charge_type" id="" class="form-control">
         <option hidden value="<?php echo $charge_type;?>"><?php echo $charge_typeb?></option>
-        <option value="1">SMS</option>
+        <option value="sms">SMS</option>
         <option value="2">Account Opening</option>
         
     </select>
