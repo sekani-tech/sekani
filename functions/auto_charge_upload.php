@@ -36,6 +36,7 @@ $name = $fi['name'];
 
 // credit checks and accounting rules
 // insertion query for product
+$fio = 1;
 if($fio == '1'){
     $query = "INSERT INTO `auto_charge` (`int_id`, `charge_id`, `name`, `currency_code`, `charge_type`, `amount`, `fee_on_day`, `charge_cal`,
  `is_active`, `allow_override`, `gl_code`) VALUES ('$int_id', '$ch_id', '$name', 'NGN', '$charge_type', '$amount', '$day', '$charge_payment', '$is_active', '$allow_over', '$income_gl')";
@@ -61,8 +62,8 @@ $res = mysqli_query($connection, $query);
         }
 }
 else if($fio == '2'){
-    $query = "UPDATE `auto_charge` SET  `name` = , `charge_type` = , `amount` = , `fee_on_day` = , `charge_cal` = ,
- `is_active` = , `allow_override` = , `gl_code`) VALUES ('$name', '$charge_type', '$amount', '$day', '$charge_payment', '$is_active', '$allow_over', '$income_gl')";
+    $query = "UPDATE `auto_charge` SET  `name` = '$name', `charge_type` = '$charge_type', `amount` = '$amount', `fee_on_day` = '$day', `charge_cal` = '$charge_payment',
+ `is_active` = '$is_active', `allow_override` = '$allow_over', `gl_code` = '$income_gl') WHERE int_id = '$int_id' AND ";
 
 $res = mysqli_query($connection, $query);
 
