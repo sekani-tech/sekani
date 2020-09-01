@@ -124,12 +124,15 @@ $branch_id = $_SESSION["branch_id"];
                                     $res_type = $_POST["res_type"];
                                     $rent_per_year = $_POST["rent_per_year"];
                                     $years_in_res = $_POST["years_in_res"];
+                                    // ORDER
+                                    $emp_cat = $_POST["emp_category"];
+                                    $other_bank = $_POST["other_banks"];
                                    $get_kyc_if_ex = mysqli_query($connection, "SELECT * FROM `kyc` WHERE `kyc`.`client_id` = '$client_id'");
                                    if (mysqli_num_rows($get_kyc_if_ex) <= 0) {
-                                    $kyc_query = mysqli_query($connection, "INSERT INTO `kyc` (`int_id`, `client_id`, `marital_status`, `no_of_dependent`, `level_of_ed`, `emp_stat`, `emp_bus_name`, `income`, `years_in_job`, `res_type`, `rent_per_year`, `year_in_res`)
+                                    $kyc_query = mysqli_query($connection, "INSERT INTO `kyc` (`int_id`, `client_id`, `marital_status`, `no_of_dependent`, `level_of_ed`, `emp_stat`, `emp_bus_name`, `income`, `years_in_job`, `res_type`, `rent_per_year`, `year_in_res`, `other_bank`, `emp_category`)
                                     VALUES ('{$sessint_id}', '{$client_id}', '{$marital_stat}', '{$no_dep}', 
                                     '{$ed_level}', '{$emp_stat}', '{$emp_bus_name}', '{$income}',
-                                    '{$years_in_job}', '{$res_type}', '{$rent_per_year}', '{$years_in_res}')");
+                                    '{$years_in_job}', '{$res_type}', '{$rent_per_year}', '{$years_in_res}', '{$other_bank}', '{$emp_cat}')");
                                     if ($kyc_query) {
                                      $_SESSION["Lack_of_intfund_$randms"] = "Successfully Uploaded, Awaiting Disbursement Approval";
                                      header ("Location: ../mfi/lend.php?message=$randms");

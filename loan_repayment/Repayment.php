@@ -128,6 +128,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
             $balance_remaining = $client_account_balance - $collection_due_paid;
             $total_withd =  $u["total_withdrawals_derived"] + $collection_due_paid;
             // PILLED
+            $total_out_stand = $general_payment - $collection_due_paid;
             // CLIENT 
             $client_account = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' AND int_id = '$int_id'");
             $cx = mysqli_fetch_array($client_account);
@@ -151,9 +152,10 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                 $update_client_account = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$balance_remaining', total_withdrawals_derived = '$total_withd' WHERE int_id = '$int_id' AND client_id = '$client_id' AND account_no = '$acct_no'");
                 if ($update_client_account) {
                 // update client account transaction
+                
                 $insert_client_trans = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
                 `product_id`, `account_id`, `account_no`, `client_id`, `teller_id`, `transaction_id`,
-                `description`, `transac$total_out_stand = $general_payment - $collection_due_paid;tion_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
+                `description`, `transaction_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
                 `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
                 `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
                 VALUES ('{$int_id}', '{$branch_id}', '0', '{$account_id}', '$acct_no', '{$client_id}', '0', '{$trans_id}',
@@ -824,4 +826,89 @@ while($que = mysqli_fetch_array($exec)){
     }
 
 }
+?>
+
+<?php
+// due date
+$charge_query = mysqli_query($connection, "SELECT * FROM auto_charge WHERE is_active = '1'");
+// end date
+if (mysqli_num_rows($charge_query) >= 1) {
+    while ($bx = mysqli_fetch_array($charge_query)) {
+    $c_id = $bx["id"];
+    $c_int_id = $bx["int_id"];
+    $c_name = $bx["name"];
+    $c_type = $bx["charge_type"];
+    $c_amount = $bx["amount"];
+    $c_fee_day = $bx["fee_on_day"];
+    $c_interval = $bx["interval"];
+    $c_gl = $bx["gl_code"];
+    $c_cal = $bx["charge_cal"];
+        // ok make a new move
+      if ($c_type == "sms") {
+        //   if it is equals to sms
+        $check_sms_table = mysqli_query($connection, "SELECT * FROM `sms_charge` WHERE paid = '0' ORDER BY client_id, account_no LIMIT 1");
+        if (mysqli_num_rows($check_sms_table) >= 1) {
+            $sc = mysqli_fetch_array($check_sms_table);
+                $s_client_id = $sc["client_id"];
+                $s_account = $sc["account_no"];
+                $s_int_id = $sc["int_id"];
+                $s_branch_id = $sc["branch_id"];
+                
+                $sum_account = mysqli_query($connection, "SELECT SUM(amount) AS s_amount FROM `sms_charge` WHERE account_no = '$s_account' AND client_id = '$s_client_id'");
+                $sm = mysqli_fetch_array($sum_account);
+                $s_amount = $sm["s_amount"];
+                // make a charge
+                $select_account = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$s_account' AND client_id = '$s_client_id'");
+                // $s
+                $u = mysqli_fetch_array($select_account);
+            $account_id = $u["id"];
+            $client_account_balance = $u["account_balance_derived"];
+            $balance_remaining = $client_account_balance - $s_amount;
+            $total_withd =  $u["total_withdrawals_derived"] + $s_amount;
+                $current_day = date('Y-m-d');
+                $last_month_day = date("Y-m-t");
+                if ($current_day == $last_month_day) {
+                    // make an echo.
+                    $digits = 5;
+                    $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+                    $trans_id = $randms."SMS";
+                    $update_client_account = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$balance_remaining', total_withdrawals_derived = '$total_withd' WHERE client_id = '$s_client_id' AND account_no = '$s_account'");
+                    if ($update_client_account) {
+                    $insert_client_trans = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
+                `product_id`, `account_id`, `account_no`, `client_id`, `teller_id`, `transaction_id`,
+                `description`, `transaction_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
+                `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
+                `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
+                VALUES ('{$s_int_id}', '{$s_branch_id}', '0', '{$account_id}', '{$s_account}', '{$s_client_id}', '0', '{$trans_id}',
+                'SMS_CHARGE', 'SMS_CHARGE', '0', '{$current_day}', '{$s_amount}', '{$s_amount}',
+                '{$current_day}', '0', '{$balance_remaining}',
+                '{$balance_remaining}', '{$current_day}', '0', '0', '{$s_amount}', '0.00')");
+                if ($insert_client_trans) {
+                    // check it here
+                $update_sms = mysqli_query($connection, "UPDATE sms_charge SET paid = '1' WHERE client_id = '$s_client_id' AND account_no = '$s_account'");
+                if ($update_sms) {
+                    echo "SMS CHARGE SUCCESS";
+                } else {
+                    echo "SMS CHARGE BAD";
+                }
+                } else {
+                    echo "SYSTEM ERROR - INSERT ACCOUNT";
+                }
+        } else {
+            echo "SYSTEM ERROR - UPDATE ACCOUNT";
+        }
+                } else {
+                    // not yet ending
+                }
+        } else {
+            echo "No SMS Charge";
+        }
+      } else if ($c_type == "") {
+        //   make something for something else
+      }
+}
+}
+// ECHO SOMETHING
+echo date("Y-m-d")."CURRENT MONTH";
+echo date("Y-m-t")."ENDING THIS MONTH";
 ?>

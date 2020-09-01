@@ -574,14 +574,17 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                        </select>
                     </div>
                     <div class=" col-md-6 form-group">
-                      <label class = "bmd-label-floating">Number of Dependants:</label>
+                      <label class = "bmd-label-floating">Number of Dependants/Children:</label>
                       <!-- <input type="number" value="" name="no_of_dep" class="form-control" required> -->
                       <select class="form-control" name="no_of_dep">
                          <option value="0">Non</option>
                          <option value="1">1</option>
                          <option value="2">2</option>
                          <option value="3">3</option>
-                         <option value="4">4 or More</option>
+                         <option value="4">4</option>
+                         <option value="5">5</option>
+                         <option value="6">6</option>
+                         <option value="7">7 or More</option>
                        </select>
                     </div>
                     </div>
@@ -593,11 +596,12 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                       <label class = "bmd-label-floating">Level of Education</label>
                       <!-- <input type="number" value="" name="" class="form-control" readonly> -->
                       <select class="form-control" name="ed_level">
-                         <option value="0">Non</option>
-                         <option value="1">Primary</option>
-                         <option value="2">Secondary</option>
-                         <option value="3">Graduate</option>
-                         <option value="4">Post-Graduate</option>
+                         <option value="Unknown">Non/ Unknown</option>
+                         <option value="Secondary School">Secondary School</option>
+                         <option value="College">College</option>
+                         <option value="BSc">Bachelors (Bsc)</option>
+                         <option value="Masters">Masters (Msc)</option>
+                         <option value="PhD">Phd</option>
                        </select>
                     </div>
                     <div class=" col-md-6 form-group">
@@ -607,6 +611,20 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                          <option value="1">Self-Employed</option>
                          <option value="2">Employed</option>
                          <option value="3">Not Working</option>
+                       </select>
+                    </div>
+                    <div class=" col-md-6 form-group">
+                      <label class = "bmd-label-floating">Employment Category/Instiution</label>
+                      <!-- <input type="number" value="" name="" class="form-control" readonly> -->
+                      <select class="form-control" name="emp_category">
+                         <option value="FEDERAL">FEDERAL</option>
+                         <option value="STATE">STATE</option>
+                         <option value="FINANCIAL INSTITUTION/INSURANCE">FINANCIAL INSTITUTION/INSURANCE</option>
+                         <option value="GENERAL">GENERAL</option>
+                         <option value="MANUFACTURING">MANUFACTURING</option>
+                         <option value="INFORMATION AND COMMUNICATION">INFORMATION AND COMMUNICATION</option>
+                         <option value="OIL AND GAS">OIL AND GAS</option>
+                         <option value="OTHER">OTHER</option>
                        </select>
                     </div>
                     <div class=" col-md-6 form-group">
@@ -622,11 +640,20 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                       <label class = "bmd-label-floating">Years in current Job/Business:</label>
                       <!-- <input type="number" value="" name="" class="form-control" required> -->
                       <select class="form-control" name="years_in_job">
-                         <option value="1">1 - 3 years</option>
-                         <option value="2">3 - 5 years</option>
-                         <option value="3">5 - 10 years</option>
-                         <option value="4">10 - 20 years</option>
-                         <option value="5">More than 20 years</option>
+                         <option value="1">1 - 2 years</option>
+                         <option value="3">3 - 4 years</option>
+                         <option value="5">4 - 5 years</option>
+                         <option value="6">5 - 6 years</option>
+                         <option value="7">6 - 7 years</option>
+                         <option value="8">7 - 8 years</option>
+                         <option value="9">8 - 9 years</option>
+                         <option value="10">9 - 10 years</option>
+                         <option value="12">11 - 12 years</option>
+                         <option value="14">13 - 14 years</option>
+                         <option value="15">14 - 15 years</option>
+                         <option value="17">16 - 17 years</option>
+                         <option value="19">18 - 19 years</option>
+                         <option value="9">20 OR MORE</option>
                        </select>
                     </div>
                     <!-- new for years -->
@@ -659,6 +686,23 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                          <option value="3">5 - 10 years</option>
                          <option value="4">10 - 20 years</option>
                          <option value="5">More than 20 years</option>
+                       </select>
+                    </div>
+                    <!-- THE BANK -->
+                    <div class=" col-md-6 form-group">
+                      <label class = "bmd-label-floating">Other Bank</label>
+                      <!-- <input type="number" readonly value="" name="principal_amount" class="form-control" required> -->
+                      <select class="form-control" name="other_banks">
+                         <option value="GUARANTY TRUST BANK">GUARANTY TRUST BANK</option>
+                         <option value="FIRST CITY MONUMENT BANK">FIRST CITY MONUMENT BANK</option>
+                         <option value="FIRST BANK">FIRST BANK</option>
+                         <option value="UNION BANK">UNION BANK</option>
+                         <option value="UNITED BANK FOR AFRICA">UNITED BANK FOR AFRICA</option>
+                         <option value="SKYE BANK">SKYE BANK</option>
+                         <option value="STANBIC IBTC">STANBIC IBTC</option>
+                         <option value="ACCESS BANK">ACCESS BANK</option>
+                         <option value="ECOBANK">ECOBANK</option>
+                         <option value="Other">OTHERs</option>
                        </select>
                     </div>
                     </div>
