@@ -91,13 +91,9 @@ $a = mysqli_fetch_array($fjoed);
     <label class="bmd-label-floating">Charge Type</label>
     <select name="charge_type" id="" class="form-control">
         <option hidden value="<?php echo $charge_type;?>"><?php echo $charge_typeb?></option>
-        <option value="1">Disbursement</option>
-        <option value="2">Specified Due Date</option>
-        <option value="3">Installment Fees</option>
-        <option value="4">Overdue Installment Fees</option>
-        <option value="5">Disbursement - Paid with Repayment</option>
-        <option value="6">Loan Rescheduliing Fee</option>
-        <option value="7">Transaction</option>
+        <option value="1">SMS</option>
+        <option value="2">Account Opening</option>
+        
     </select>
 </div>
 </div>
