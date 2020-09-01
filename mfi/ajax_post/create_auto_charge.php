@@ -92,7 +92,7 @@ $a = mysqli_fetch_array($fjoed);
     <select name="charge_type" id="" class="form-control">
         <option hidden value="<?php echo $charge_type;?>"><?php echo $charge_typeb?></option>
         <option value="sms">SMS</option>
-        <option value="2">Account Opening</option>
+        <option value="account">Account Opening</option>
         
     </select>
 </div>
