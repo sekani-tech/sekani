@@ -62,6 +62,9 @@
   <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
   <!-- chart data ... -->
   <script src="../assets/demo/demo.js"></script>
+  <!-- google analystics script -->
+  <!-- end  -->
+  
   <script>
     var options = {
           mode: 'wizard',

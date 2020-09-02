@@ -840,7 +840,7 @@ if (mysqli_num_rows($charge_query) >= 1) {
     $c_type = $bx["charge_type"];
     $c_amount = $bx["amount"];
     $c_fee_day = $bx["fee_on_day"];
-    $c_interval = $bx["interval"];
+    // $c_interval = $bx["interval"];
     $c_gl = $bx["gl_code"];
     $c_cal = $bx["charge_cal"];
         // ok make a new move
@@ -854,9 +854,14 @@ if (mysqli_num_rows($charge_query) >= 1) {
                 $s_int_id = $sc["int_id"];
                 $s_branch_id = $sc["branch_id"];
                 
-                $sum_account = mysqli_query($connection, "SELECT SUM(amount) AS s_amount FROM `sms_charge` WHERE account_no = '$s_account' AND client_id = '$s_client_id'");
-                $sm = mysqli_fetch_array($sum_account);
-                $s_amount = $sm["s_amount"];
+                $sum_account = mysqli_query($connection, "SELECT * FROM `sms_charge` WHERE account_no = '$s_account' AND client_id = '$s_client_id'");
+                $sm = mysqli_num_rows($sum_account);
+                if ($c_cal <= "1"){
+                    $s_amount = $c_amount * $sm;
+                } else {
+                    $s_amount = $c_amount * $sm;
+                }
+                
                 // make a charge
                 $select_account = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$s_account' AND client_id = '$s_client_id'");
                 // $s
@@ -866,6 +871,7 @@ if (mysqli_num_rows($charge_query) >= 1) {
             $balance_remaining = $client_account_balance - $s_amount;
             $total_withd =  $u["total_withdrawals_derived"] + $s_amount;
                 $current_day = date('Y-m-d');
+                $date_time = date('Y-m-d H:i:s');
                 $last_month_day = date("Y-m-t");
                 if ($current_day == $last_month_day) {
                     // make an echo.
@@ -882,15 +888,35 @@ if (mysqli_num_rows($charge_query) >= 1) {
                 VALUES ('{$s_int_id}', '{$s_branch_id}', '0', '{$account_id}', '{$s_account}', '{$s_client_id}', '0', '{$trans_id}',
                 'SMS_CHARGE', 'SMS_CHARGE', '0', '{$current_day}', '{$s_amount}', '{$s_amount}',
                 '{$current_day}', '0', '{$balance_remaining}',
-                '{$balance_remaining}', '{$current_day}', '0', '0', '{$s_amount}', '0.00')");
+                '{$balance_remaining}', '{$date_time}', '0', '0', '{$s_amount}', '0.00')");
                 if ($insert_client_trans) {
-                    // check it here
-                $update_sms = mysqli_query($connection, "UPDATE sms_charge SET paid = '1' WHERE client_id = '$s_client_id' AND account_no = '$s_account'");
-                if ($update_sms) {
-                    echo "SMS CHARGE SUCCESS";
-                } else {
-                    echo "SMS CHARGE BAD";
-                }
+                    // GET ALL GL
+                    $query_gl = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$c_gl' AND int_id = '$c_int_id'");
+                    $igdb = mysqli_fetch_array($query_gl);
+                    $intbalport = $igdb["organization_running_balance_derived"];
+                    $s_gl_balance = $intbalport + $s_amount;
+                    // get the GL
+                    $update_the_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$s_gl_balance' WHERE int_id ='$c_int_id' AND gl_code = '$c_gl'");
+                    if ($update_the_loan) {
+                        // make a new stuff
+                        $insert_loan_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
+                                         `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
+                                        VALUES ('{$c_int_id}', '{$s_branch_id}', '{$c_gl}', '{$trans_id}', 'SMS CHARGE / {$s_account}', 'sms_charge', '0', '0', '{$current_day}',
+                                         '{$s_amount}', '{$s_gl_balance}', '{$s_gl_balance}', '{$current_day}', '0', '0', '{$current_day}', '0', '0.00', '{$s_amount}')");
+                                         if ($insert_loan_port) {
+                                            //  next code
+                                             $update_sms = mysqli_query($connection, "UPDATE sms_charge SET paid = '1' WHERE client_id = '$s_client_id' AND account_no = '$s_account'");
+                    if ($update_sms) {
+                        echo "SMS CHARGE SUCCESS";
+                    } else {
+                        echo "SMS CHARGE BAD";
+                    }
+                                         } else {
+                                             echo "Error at GL insert";
+                                         }
+                    } else {
+                        echo "error at gl update";
+                    }
                 } else {
                     echo "SYSTEM ERROR - INSERT ACCOUNT";
                 }
