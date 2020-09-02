@@ -61,6 +61,7 @@ $destination = "products_config.php";
                         <div class="form-group">
                           <label class="bmd-label-floating">Charge Type</label>
                           <select name="charge_type" id="" class="form-control">
+                            <option value="sms">SMS</option>
                               <option value="1">Disbursement</option>
                               <option value="2">Specified Due Date</option>
                               <option value="3">Installment Fees</option>

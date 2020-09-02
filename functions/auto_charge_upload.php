@@ -11,6 +11,7 @@ $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $sessint_id = $_SESSION["int_id"];
 $ch_id = $_POST['name'];
+$naming = $_POST['name'];
 $fio = $_POST['fio'];
 $charge_type = $_POST['charge_type'];
 $amount = $_POST['amount'];
@@ -62,8 +63,8 @@ $res = mysqli_query($connection, $query);
         }
 }
 else if($fio == '2'){
-    $query = "UPDATE `auto_charge` SET  `name` = '$name', `charge_type` = '$charge_type', `amount` = '$amount', `fee_on_day` = '$day', `charge_cal` = '$charge_payment',
- `is_active` = '$is_active', `allow_override` = '$allow_over', `gl_code` = '$income_gl') WHERE int_id = '$int_id' AND ";
+    $query = "UPDATE `auto_charge` SET  `name` = '$naming', `charge_type` = '$charge_type', `amount` = '$amount', `fee_on_day` = '$day', `charge_cal` = '$charge_payment',
+ `is_active` = '$is_active', `allow_override` = '$allow_over', `gl_code` = '$income_gl') WHERE int_id = '$int_id' AND id = '$ch_id'";
 
 $res = mysqli_query($connection, $query);
 

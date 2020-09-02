@@ -8,7 +8,7 @@ $sessint_id = $_SESSION['int_id'];
 if(isset($_POST["id"])) {
     $id = $_POST["id"];
     $start = $_POST["start"];
-    $end = $_POST["account_no"];
+    $end = $_POST["end"];
     $acc_no = $_POST["account_no"];
 
     $query1 = mysqli_query($connection, "SELECT * FROM client WHERE id='$id'");

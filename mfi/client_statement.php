@@ -126,7 +126,7 @@ $sessint_id = $_SESSION['int_id'];
         <div class="wrap-table100">
             <div class="table100">
             
-            <table id="p" class="rtable display nowrap" style="width:100%">
+            <table id="p" class="table table-bordered" style="width:100%">
                         <thead>
                           <!-- <input type='text' value='<?php echo $branch;?>'/> -->
                         <?php

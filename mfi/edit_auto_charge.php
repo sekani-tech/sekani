@@ -142,6 +142,7 @@ $a = mysqli_fetch_array($fjoed);
 <div class="form-group">
     <label class="bmd-label-floating">Amount</label>
     <input type="number" value = "<?php echo $amount;?>" class="form-control" name="amount">
+    <input type="number" hidden value = "2" class="form-control" name="fio">
 </div>
 </div>
 <div class=" col-md-4 form-group">

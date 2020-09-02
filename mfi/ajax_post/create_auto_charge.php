@@ -92,8 +92,13 @@ $a = mysqli_fetch_array($fjoed);
     <select name="charge_type" id="" class="form-control">
         <option hidden value="<?php echo $charge_type;?>"><?php echo $charge_typeb?></option>
         <option value="sms">SMS</option>
-        <option value="account">Account Opening</option>
-        
+        <option value="1">Disbursement</option>
+        <option value="2">Specified Due Date</option>
+        <option value="3">Installment Fees</option>
+        <option value="4">Overdue Installment Fees</option>
+        <option value="5">Disbursement - Paid with Repayment</option>
+        <option value="6">Loan Rescheduliing Fee</option>
+        <option value="7">Transaction</option>
     </select>
 </div>
 </div>
@@ -101,6 +106,7 @@ $a = mysqli_fetch_array($fjoed);
 <div class="form-group">
     <label class="bmd-label-floating">Amount</label>
     <input type="number" value = "<?php echo $amount;?>" class="form-control" name="amount">
+    <input type="number" hidden value = "1" class="form-control" name="fio">
 </div>
 </div>
 <div class=" col-md-4 form-group">
