@@ -94,7 +94,7 @@ if(isset($_POST["id"]))
                   </div>
                 </div>
                 <div id="verifyl"></div>
-                <input type="number"  value="'.$row["principal_amount"].'" name="principal_amount" class="form-control" required id="principal_amount">
+                <input type="number"  value="" name="principal_amount" class="form-control" required id="principal_amount">
               </div>
             </div>
 

@@ -36,6 +36,16 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $crn = $cxp["firstname"]." ".$cxp["lastname"];
       $client_phone = $cxp["mobile_no"];
       $client_sms = $cxp["SMS_ACTIVE"];
+      $state = strtolower($cxp["STATE_OF_ORIGIN"]);
+      $state_ai = "other";
+      if ($state == "akute"  || $state == "agege" || $state == "abuja" || $state == "ayobo" || $state == "agbado" || $state == "akure" || $state == "badagry" || $state == "ibadan" || $state == "jos" || $state == "kaduna" || $state == "lagosisland" || $state == "lagos" || $state == "lekki" || $state =="nassarawa" || $state == "ogun" || $state == "oyo" || $state == "ondo" ){
+        $state_ai = $state;
+      } else if ($state == "oshodi" || $state == "surulere" || $state == "zamfara") {
+        $state_ai = $state;
+      } else {
+        $state_ai ="other";
+      }
+      $gender = ucfirst(strtolower($cxp["gender"]));
       $pint = date('Y-m-d H:i:s');
       // phone for email
       $client_phone = $cxp["mobile_no"];
@@ -174,21 +184,17 @@ else{
     $k_mart = $kq["marital_status"];
     $k_dep = $kq["no_of_dependent"];
     $k_edu = $kq["level_of_ed"];
+    $k_other_bank = str_replace(' ', '%20', $kq["other_bank"]);
+    $k_emp_category = $name = str_replace(' ', '%20', $kq["emp_category"]);
     // meaning
     $yicj = "";
     $mst = "";
     $nod = "";
     $loe = "";
-    if ($k_yb == "1") {
-      $yicj = "1 - 3 years";
-    } else if ($k_yb == "2") {
-      $yicj = "3 - 5 years";
-    } else if ($k_yb == "3") {
-      $yicj = "5 - 10 years";
-    } else if ($k_yb == "4") {
-      $yicj = "10 - 20 years";
-    } else if ($k_yb == "5") {
-      $yicj = "More than 20 years";
+    if ($k_yb != "") {
+      $yicj = $k_yb." years";
+    } else {
+      echo "Non";
     }
 
     if ($k_mart == "1") {
@@ -197,28 +203,16 @@ else{
       $mst = "Married";
     }
 
-    if ($k_dep == "0") {
-      $nod = "Nobody";
-    } else if ($k_dep == "1") {
-      $nod = "1";
-    } else if ($k_dep == "2") {
-      $nod = "2";
-    } else if ($k_dep == "3") {
-      $nod = "3";
-    } else if ($k_dep == "4") {
-      $nod = "4 or More";
+    if ($k_dep != "") {
+      $nod = $k_dep;
+    }  else if ($k_dep == "7") {
+      $nod = "7 or More";
     }
 
-    if ($k_edu == "0") {
-      $loe = "Non";
-    } else if ($k_edu == "1") {
-      $loe = "Primary";
-    } else if ($k_edu == "2") {
-      $loe = "Seconday";
-    } else if ($k_edu == "3") {
-      $loe = "Graduate";
-    } else if ($k_edu == "4") {
-      $loe = "Post-Graduate";
+    if ($k_edu != "") {
+      $loe = $k_edu;
+    } else {
+      $loe = "Unknown";
     }
 
 
@@ -2069,11 +2063,55 @@ else{
                            <div class="card-icon">
                              <i class="material-icons">money</i>
                            </div>
-                            <h3 class="card-title">&#x20a6; <?php echo number_format($comp_amt, 2); ?> </h3>
+                           <?php
+                          //  make API call
+                          $curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "http://score.restoration.africa:8000/predict?age=$age&loanAmount=$prin_amt&lga=$state_ai&children=$k_dep&education=$loe&gender=$gender&employLength=$k_yb&employerCategory=$k_emp_category&bankName=$k_other_bank",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "POST",
+));
+
+$response = curl_exec($curl);
+
+$err = curl_close($curl);
+// curl_close($curl);
+// echo $age."p". $prin_amt ."state". $state_ai ."dep". $k_dep ."leo". $loe, $gender, $k_yb, $k_emp_category, $k_other_bank;
+if ($err) {
+  //    echo "cURL Error #:" . $err;
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "CONNECTION ERROR",
+          text: "TIMED OUT",
+          showConfirmButton: false,
+          timer: 3000
+      })
+      document.getElementById("cbvn").setAttribute("hidden", "");
+      document.getElementById("wbvn").removeAttribute("hidden");
+      $(":input[type=submit]").prop("disabled", true);
+  });
+  </script>
+  ';
+  echo "NO INTERNET CONNECTION";
+  } else {
+    // echo $response;
+    $obj = json_decode($response, TRUE);
+        $status = $obj[0];
+  }
+                           ?>
+                            <h3 class="card-title"> <?php echo ($status * 100); ?>% - LOAN REPAYMENT RISK ANALYSIS </h3>
                            <p class="card-description">
-                           System computation <?php echo $auto_perc ?>% of the principal amount.
+                           Artifical Intelligence Credit Scoring Repayment Analysis  | <?php echo $auto_perc ?>% of System Computation.
                            </p>
-                            <button type="submit" value="submit" name="submit" class="btn btn-white btn-round">Approve Plan</button>
+                            <button type="submit" value="submit_b" name="submit" class="btn btn-white btn-round">Approve Plan</button>
                           </div>
                           </div>
                          </div>
