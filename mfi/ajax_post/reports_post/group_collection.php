@@ -10,6 +10,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
     $start = $_POST["start"];
     $int_id = $_SESSION["int_id"];
     $end = $_POST["end"];
+    $group = $_POST["group"];
     $branch_id = $_POST["branch"];
     $officer = $_POST["officer"];
     $odsp = "SELECT * FROM branch WHERE int_id = '$int_id' AND id ='$branch_id'";
@@ -26,6 +27,17 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
     else{
       $officer_name = "All";
     }
+
+    $dfpo = "SELECT * FROM groups WHERE int_id = '$int_id' AND id = '$group' AND loan_officer ='$officer' AND status ='Approved'";
+    $sdoi = mysqli_query($connection, $dfpo);
+    $dio = mysqli_fetch_array($sdoi);
+    if(isset($dio)){
+      $grname = $dio['g_name'];
+    }
+    else{
+      $grname = "All";
+    }
+
     $query = "SELECT * FROM groups WHERE int_id ='$sessint_id'";
         $result = mysqli_query($connection, $query);
         while($row = mysqli_fetch_array($result)){
@@ -39,14 +51,19 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             ';
           }
 
-    function fill_collect($connection, $officer){
+    function fill_collect($connection, $officer, $group){
         $sessint_id = $_SESSION['int_id'];
         $out = '';
         if($officer == 'all'){
           $query = "SELECT * FROM groups WHERE int_id ='$sessint_id'";
         }
         else{
-          $query = "SELECT * FROM groups WHERE int_id ='$sessint_id' AND loan_officer = '$officer'";
+          if($group == 'all'){
+            $query = "SELECT * FROM groups WHERE int_id ='$sessint_id' AND loan_officer = '$officer'";
+          }
+          else{
+            $query = "SELECT * FROM groups WHERE int_id ='$sessint_id' AND loan_officer = '$officer' AND id = '$group'";
+          }
         }
         $result = mysqli_query($connection, $query);
         while($row = mysqli_fetch_array($result)){
@@ -153,6 +170,12 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                 <input type="text" name="usu" value="'.$officer_name.'" id="" class="form-control" readonly>
               </div>
             </div>
+            <div class="col-md-4">
+            <div class="form-group">
+              <label class="bmd-label-floating">Group:</label>
+              <input type="text" name="usu" value="'.$grname.'" id="" class="form-control" readonly>
+            </div>
+          </div>
             </div>
           <div class="clearfix"></div>
         
@@ -173,7 +196,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             <th>Expected Repayment Amount</th>
             <th>Total Savings Balance</th>
             </tr>
-                '.fill_collect($connection, $officer).'
+                '.fill_collect($connection, $officer, $group).'
             </tbody>
           </table>
         </div>

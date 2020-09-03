@@ -588,11 +588,28 @@ function fill_client($connection) {
                         <?php echo fill_officer($connection); ?>
                         </select>
                       </div>
+                      <div class="form-group col-md-3" id="sio">
+                      </div>
                     </div>
                     <button type="reset" class="btn btn-danger">Reset</button>
                     <span id="runstaff" type="submit" class="btn btn-primary">Run report</span>
                   </form>
                 </div>
+                <script>
+                    $(document).ready(function () {
+                      $('#officer').on("change", function () {
+                        var officer = $('#officer').val();
+                        $.ajax({
+                          url: "ajax_post/group_by_acc.php",
+                          method: "POST",
+                          data:{officer:officer},
+                          success: function (data) {
+                            $('#sio').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
               <script>
                     $(document).ready(function () {
                       $('#runstaff').on("click", function () {
@@ -600,10 +617,11 @@ function fill_client($connection) {
                         var end = $('#end').val();
                         var branch = $('#brne').val();
                         var officer = $('#officer').val();
+                        var group = $('#group').val();
                         $.ajax({
                           url: "ajax_post/reports_post/group_collection.php",
                           method: "POST",
-                          data:{start:start, end:end, branch:branch, officer:officer},
+                          data:{start:start, end:end, branch:branch, officer:officer, group:group},
                           success: function (data) {
                             $('#shstaff').html(data);
                           }
