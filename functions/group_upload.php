@@ -47,14 +47,18 @@ while($ew = mysqli_fetch_array($sdsds)){
 
     $clidd = $ew['client_id'];
     $grclcaid = $ew['id'];
+    $account_no = $ew['account_no'];
+    $product = $ew['product_id'];
+    $product_name = $ew['product_name'];
+    $mobile_no = $ew['mobile_no'];
 
     $sdsdf = "SELECT * FROM client WHERE int_id = '$ssint_id' AND id ='$clidd'";
     $sdsdc = mysqli_query($connection, $sdsdf);
     $rtr = mysqli_fetch_array($sdsdc);
     $namec = $rtr['firstname']." ".$rtr['lastname'];
 
-    $dof = "INSERT INTO `group_clients` (`int_id`, `group_name`, `branch_id`, `client_id`, `client_name`, `group_id`)
-     VALUES ('{$ssint_id}', '{$gname}', '{$branch_id}', '{$clidd}', '{$namec}', '{$grou_id}')";
+    $dof = "INSERT INTO `group_clients` (`int_id`, `group_name`, `branch_id`, `client_id`, `client_name`, `account_no`, `product_id`, `product_name`, `mobile_no`, `group_id`)
+     VALUES ('{$ssint_id}', '{$gname}', '{$branch_id}', '{$clidd}', '{$namec}', '{$account_no}', '{$product}', '{$product_name}', '{$mobile_no}', '{$grou_id}')";
      $codf = mysqli_query($connection, $dof);
 
      $rivm = "UPDATE client SET client_type = 'GROUP' WHERE int_id='$ssint_id' AND id='$clidd'";

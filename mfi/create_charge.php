@@ -40,7 +40,7 @@ $destination = "products_config.php";
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Charge Type</label>
-                          <select name="charge_type" id="" class="form-control">
+                          <select name="charge_type" id="ok" class="form-control">
                               <option value="1">Disbursement</option>
                               <option value="2">Specified Due Date</option>
                               <option value="3">Installment Fees</option>
@@ -51,6 +51,23 @@ $destination = "products_config.php";
                           </select>
                         </div>
                       </div>
+                      <script>
+                    $(document).ready(function() {
+                      $('#ok').on("change", function(){
+                        var id = $(this).val();
+                        $.ajax({
+                          url:"ajax_post/specified_date.php",
+                          method:"POST",
+                          data:{id:id},
+                          success:function(data){
+                            $('#okay').html(data);
+                          }
+                        })
+                      });
+                    });
+                </script>
+                <div class="col-md-4" id = "okay">
+                </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Amount</label>

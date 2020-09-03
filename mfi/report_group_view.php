@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Client Report";
+$page_title = "Group Report";
 $destination = "report_client.php";
     include("header.php");
 ?>

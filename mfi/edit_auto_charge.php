@@ -119,6 +119,7 @@ $a = mysqli_fetch_array($fjoed);
                         <div class="form-group">
                           <label class="bmd-label-floating">Name</label>
                           <input type="text" value="<?php echo $name; ?>" name="name" class="form-control"/>
+                          <input type="text" hidden value="<?php echo $id; ?>" name="id" class="form-control"/>
                         </div>
                       </div>
                       </div>
@@ -207,7 +208,7 @@ $a = mysqli_fetch_array($fjoed);
 </div>
                       </div>
                       <a href="products_config.php" class="btn btn-secondary">Back</a>
-                    <button type="submit" class="btn btn-primary pull-right">Create Charge</button>
+                    <button type="submit" class="btn btn-primary pull-right">Update Charge</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>
