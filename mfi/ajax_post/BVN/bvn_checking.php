@@ -12,11 +12,17 @@ $branch_id = $_POST["branch_id"];
 // echo $int_id;
 $bvn = $_POST["bvn"];
 $dob = $_POST["dob"];
-$check_DOB = date('d-F-y', strtotime($dob));
+$check_DOB = date('d-M-y', strtotime($dob));
 // echo "$check_DOB";
 $first = strtoupper($_POST["first"]); 
 $last = strtoupper($_POST["last"]); 
 $phone = $_POST["phone"];
+// MAKE A NEW MOVE
+$token_key = "15314b54abb9e8705358c0f6e0e50f956f46564b5fd17a598e9c0f591feb0d469c10".$bvn;
+// token harsh key generation
+$token_hash = hash('sha256', $token_key);
+// echo $token_hash;
+// end token harsh
 // MOVING TO THE NEXT
 $bvn_length = strlen($bvn);
 // CHECK
@@ -35,24 +41,29 @@ if ($bvn_length == 11) {
         $total_merchant_charge = $qw["merchant_charge"];
         if ($balance >= 50) {
             // BIG CODE START BVN PAYSTACK VERIFICATION
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.flutterwave.com/v3/kyc/bvns/$bvn",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
-        CURLOPT_HTTPHEADER => array(
-          "Authorization: Bearer FLWSECK-2e1fc0c6b08527b62b30f752405be2f2-X",
-          "Cache-Control: no-cache",
-        ),
-        ));
-//   checking up the control
-        $response = curl_exec($curl);
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => "https://confirmme.com/api/BVNImage",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_POSTFIELDS =>"{\r\n  \"bvn\": \"$bvn\"\r\n}\r\n",
+              CURLOPT_HTTPHEADER => array(
+                "CLIENTID: 1531",
+                "HASHTOKEN: $token_hash",
+                "Content-Type: application/json"
+              ),
+            ));
+            
+            $response = curl_exec($curl);
+            
         $err = curl_error($curl);
-        curl_close($curl);
+        // curl_close($curl);
   
         if ($err) {
         //    echo "cURL Error #:" . $err;
@@ -74,19 +85,19 @@ if ($bvn_length == 11) {
         } else {
         //    echo $response;
            $obj = json_decode($response, TRUE);
-           $status = $obj['status'];
+           $status = $obj['ResponseCode'];
            $bvn_fn = "";
-           if ($status != false) {
-           $bvn_fn = $obj['data']['first_name'];
-           $bvn_ln = $obj['data']['last_name'];
-           $bvn_dob = $obj['data']['date_of_birth'];
-           $bvn_phone = $obj['data']['phone_number'];
-           $bvn_bvn = $obj['data']['bvn'];
-           $bvn_nat = $obj['data']['nationality'];
-           $bvn_gend = $obj['data']['gender'];
+           if ($status == "00") {
+           $bvn_fn = $obj['ResponseBVNDetails']['FirstName'];
+           $bvn_ln = $obj['ResponseBVNDetails']['LastName'];
+           $bvn_dob = $obj['ResponseBVNDetails']['DateOfBirth'];
+           $bvn_phone = $obj['ResponseBVNDetails']['PhoneNumber'];
+           $bvn_bvn = $obj['ResponseBVNDetails']['BVN'];
+           $bvn_gend = $obj['ResponseBVNDetails']['Gender'];
+           $bvn_image = $obj['ResponseBVNImage'];
            }
         //    echo $bvn_fn."firstname".$bvn_ln."Lastname".$dob."DATE OF BIRTH";
-        if ($bvn_fn == $first && $bvn_ln == $last && $bvn_dob == $dob && $bvn_phone == $phone) {
+        if ($bvn_fn == $first && $bvn_ln == $last && $bvn_dob == $check_DOB && $bvn_phone == $phone) {
             // BVN VERIFIED
     // UPDATE THE WITHDRAWAL
     // CALCULATION
@@ -123,9 +134,59 @@ if ($bvn_length == 11) {
                 document.getElementById("wbvn").setAttribute("hidden", "");
                 document.getElementById("cbvn").removeAttribute("hidden");
                 $(":input[type=submit]").prop("disabled", false);
+                $("#myModal").modal("show");
             });
             </script>
             ';
+            ?>
+            <!-- popup -->
+            <div class="modal fade bd-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="card card-signup card-plain">
+                      <div class="modal-header">
+                      <h5 class="modal-title card-title">BVN CHECK</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">clear</i>
+                    </button>
+                 </div>
+                 <!-- chill -->
+                 <div class="modal-body">
+          <div class="row">
+            <div class="col-md-5 ml-auto">
+              <div class="info info-horizontal">
+                <div class="icon icon-rose">
+                  <i class="material-icons">timeline</i>
+                </div>
+                <div class="description">
+                  <h4 class="info-title">Customer Details</h4>
+                  <p class="description">
+                  First Name: <?php echo $bvn_fn; ?>
+                  </p>
+                  <p class="description">
+                  Last Name: <?php echo $bvn_ln; ?>
+                  </p>
+                  <p class="description">
+                  Phone: <?php echo $bvn_phone; ?>
+                  </p>
+                  <p class="description">
+                  Date of Birth: <?php echo $bvn_dob; ?>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- profile picture -->
+            <div class="col-md-5 mr-auto">
+                <img src="data:image/png;base64,<?php echo $bvn_image; ?>" alt="" srcset="" height="250px" width="250px">
+            </div>
+          </div>
+                </div>
+              </div>
+             </div>
+            </div>
+            </div>
+            <!-- end popup -->
+            <?php
          } else {
             //  echo wrong
             echo "WRONG TRANSACTION";
@@ -198,7 +259,7 @@ if ($bvn_length == 11) {
     </script>
     ';
     // DISPLAY DATA
-    ?>
+    ?> 
     <?php
     if ($bvn_bvn == $bvn) {
         ?>
@@ -228,8 +289,54 @@ if ($bvn_length == 11) {
         document.getElementById("cbvn").removeAttribute("hidden");
         $(":input[type=submit]").prop("disabled", false);
         document.getElementById("bvn_on_meet").setAttribute("hidden", "");
+        $("#myModal").modal("show");
        });
     </script>
+    <div class="modal fade bd-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="card card-signup card-plain">
+                      <div class="modal-header">
+                      <h5 class="modal-title card-title">BVN CHECK</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">clear</i>
+                    </button>
+                 </div>
+                 <!-- chill -->
+                 <div class="modal-body">
+          <div class="row">
+            <div class="col-md-5 ml-auto">
+              <div class="info info-horizontal">
+                <div class="icon icon-rose">
+                  <i class="material-icons">timeline</i>
+                </div>
+                <div class="description">
+                  <h4 class="info-title">Customer Details</h4>
+                  <p class="description">
+                  First Name: <?php echo $bvn_fn; ?>
+                  </p>
+                  <p class="description">
+                  Last Name: <?php echo $bvn_ln; ?>
+                  </p>
+                  <p class="description">
+                  Phone: <?php echo $bvn_phone; ?>
+                  </p>
+                  <p class="description">
+                  Date of Birth: <?php echo $bvn_dob; ?>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- profile picture -->
+            <div class="col-md-5 mr-auto">
+                <img src="data:image/png;base64,<?php echo $bvn_image; ?>" alt="" srcset="" height="400px" width="400px">
+            </div>
+          </div>
+                </div>
+              </div>
+             </div>
+            </div>
+            </div>
         <?php
     } else {
         echo '<script type="text/javascript">
