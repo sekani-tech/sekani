@@ -129,6 +129,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                 <td>'.$repayment.'</td>
                 <td>'.$matured.'</td>
                 <td>'.number_format($outstanding, 2).'</td>
+                <td></td>
                 <td>'.number_format($balance, 2).'</td>
               </tr>
               ';
@@ -147,16 +148,16 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
       <div class="card-body">
         <!-- sup -->
         <!-- hello -->
-        <form action="../composer/staff_cabal.php" method="POST">
+        <form action="../composer/group_collection.php" method="POST">
           <div class="row">
               <div class="col-md-4 form-group">
                   <label for="">Branch</label>
                   <input type="text" name="start" value="'.$start.'" id="start1" class="form-control" hidden>
                   <input type="text" name="end" value="'.$end.'" id="end1" class="form-control" hidden>
                   <input type="text" name="branch" value="'.$branch_id.'" id="branch1" class="form-control" hidden>
-                  <input type="text" name="int_id" value="'.$int_id.'" id="int_id1" class="form-control" hidden>
-                  <input type="text" name="" value="'.$branch.'" id="" class="form-control" readonly>
+                  <input type="text" name="group" value="'.$group.'" id="int_id1" class="form-control" hidden>
                   <input type="text" name="officer" value="'.$officer.'" id="" class="form-control" readonly hidden>
+                  <input type="text" name="" value="'.$branch.'" id="" class="form-control" readonly>
               </div>
             <div class="col-md-4">
               <div class="form-group">
@@ -194,6 +195,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             <th>Expected Repayment</th>
             <th>Maturity Date</th>
             <th>Expected Repayment Amount</th>
+            <th>Actual Repayment</th>
             <th>Total Savings Balance</th>
             </tr>
                 '.fill_collect($connection, $officer, $group).'
