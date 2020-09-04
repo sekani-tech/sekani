@@ -107,8 +107,8 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="form-check-label">LGA</label>
-                          <option value="<?php echo $lga;?>" hidden><?php echo $lga;?></option>
                           <select id="showme" class="form-control" style="text-transform: uppercase;" name="lga">
+                          <option value="<?php echo $lga;?>" hidden><?php echo $lga;?></option>
                           </select>
                         </div>
                       </div>

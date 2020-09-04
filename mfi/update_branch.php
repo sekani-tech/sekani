@@ -28,18 +28,18 @@ $destination = "branch.php";
 ?>
 <!-- Content added here -->
 <?php
-                      function fill_branch($connection)
-                      {
-                        $sint_id = $_SESSION["int_id"];
-                        $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
-                        $res = mysqli_query($connection, $org);
-                        $output = '';
-                        while ($row = mysqli_fetch_array($res))
-                        {
-                            $output .= '<option hidden value = "'.$row["id"].'"> '.$row["name"].' </option>';
-                          }
-                        return $output;
-                      }
+                  function fill_branch($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM branch WHERE int_id = '$sint_id' ORDER BY id ASC";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">' .$row["name"]. '</option>';
+                  }
+                  return $out;
+                  }
                               function fill_in($connection)
                               {
                                 $sint_id = $_SESSION["int_id"];
