@@ -50,6 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         })
         });
  </script>';
+ $URL="../mfi/trk_dormant.php?message1=$randms";
+
+ echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
   }
 }
 ?>

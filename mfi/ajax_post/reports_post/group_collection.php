@@ -87,8 +87,14 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
               $worp = "SELECT * FROM loan WHERE client_id = '$c_id'";
               $dfoi = mysqli_query($connection, $worp);
               $ds = mysqli_fetch_array($dfoi);
-              $repayment = $ds['repayment_date'];
-              $matured = $ds['maturedon_date'];
+              if(isset($ds)){
+                $repayment = $ds['repayment_date'];
+                $matured = $ds['maturedon_date'];
+              }
+              else{
+                $repayment = '';
+                $matured = '';
+              }
 
               $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND client_id = '$c_id' AND int_id = '$sessint_id'";
               $sdoi = mysqli_query($connection, $dd);
@@ -136,7 +142,6 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             
         }
       }
-         
     return $out;
 }
     $output = '<div class="col-md-12">

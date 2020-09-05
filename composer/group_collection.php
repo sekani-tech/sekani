@@ -73,56 +73,61 @@ if(isset($_POST["start"]) && isset($_POST["end"])){
             $worp = "SELECT * FROM loan WHERE client_id = '$c_id'";
             $dfoi = mysqli_query($connection, $worp);
             $ds = mysqli_fetch_array($dfoi);
-            $repayment = $ds['repayment_date'];
-            $matured = $ds['maturedon_date'];
+            if(isset($ds)){
+              $repayment = $ds['repayment_date'];
+              $matured = $ds['maturedon_date'];
+            }
+            else{
+              $repayment = '';
+              $matured = '';
+            }
 
             $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND client_id = '$c_id' AND int_id = '$sessint_id'";
-            $sdoi = mysqli_query($connection, $dd);
-            $e = mysqli_fetch_array($sdoi);
-            $interest = $e['interest_amount'];
+              $sdoi = mysqli_query($connection, $dd);
+              $e = mysqli_fetch_array($sdoi);
+              $interest = $e['interest_amount'];
 
-            $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND client_id = '$c_id' AND int_id = '$sessint_id'";
-            $sdswe = mysqli_query($connection, $dfdf);
-            $u = mysqli_fetch_array($sdswe);
-            $prin = $u['principal_amount'];
+              $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND client_id = '$c_id' AND int_id = '$sessint_id'";
+              $sdswe = mysqli_query($connection, $dfdf);
+              $u = mysqli_fetch_array($sdswe);
+              $prin = $u['principal_amount'];
 
-            $outstanding = $prin + $interest;
+              $outstanding = $prin + $interest;
 
-            // Arrears
-            $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND client_id = '$c_id' AND int_id = '$sessint_id'";
-            $fosdi = mysqli_query($connection, $ldfkl);
-            $l = mysqli_fetch_array($fosdi);
-            $interesttwo = $l['interest_amount'];
+              // Arrears
+              $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND client_id = '$c_id' AND int_id = '$sessint_id'";
+              $fosdi = mysqli_query($connection, $ldfkl);
+              $l = mysqli_fetch_array($fosdi);
+              $interesttwo = $l['interest_amount'];
 
-            $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND client_id = '$c_id' AND int_id = '$sessint_id'";
-            $sodi = mysqli_query($connection, $sdospd);
-            $s = mysqli_fetch_array($sodi);
-            $printwo = $s['principal_amount'];
+              $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND client_id = '$c_id' AND int_id = '$sessint_id'";
+              $sodi = mysqli_query($connection, $sdospd);
+              $s = mysqli_fetch_array($sodi);
+              $printwo = $s['principal_amount'];
 
-            $outstandingtwo = $printwo + $interesttwo;
-            $ttout = $outstanding + $outstandingtwo;
+              $outstandingtwo = $printwo + $interesttwo;
+              $ttout = $outstanding + $outstandingtwo;
 
             $out .='
             <tr>
-              <td>'.$c_name.'</td>
-              <td>'.$c_id.'</td>
-              <td>'.$g_name.'</td>
-              <td>'.$mobile.'</td>
-              <td>'.$prod.'</td>
-              <td>'.$account.'</td>
-              <td>'.number_format($ttout, 2).'</td>
-              <td>'.number_format($outstanding, 2).'</td>
-              <td>'.$repayment.'</td>
-              <td>'.$matured.'</td>
-              <td>'.number_format($outstanding, 2).'</td>
-              <td></td>
-              <td>'.number_format($balance, 2).'</td>
-            </tr>
+            <td>'.$c_name.'</td>
+            <td>'.$c_id.'</td>
+            <td>'.$g_name.'</td>
+            <td>'.$mobile.'</td>
+            <td>'.$prod.'</td>
+            <td>'.$account.'</td>
+            <td>'.number_format($ttout, 2).'</td>
+            <td>'.number_format($outstanding, 2).'</td>
+            <td>'.$repayment.'</td>
+            <td>'.$matured.'</td>
+            <td>'.number_format($outstanding, 2).'</td>
+            <td style="width: 50px;"></td>
+            <td>'.number_format($balance, 2).'</td>
+          </tr>
             ';
           
       }
     }
-       
   return $out;
 }
   require_once __DIR__ . '/vendor/autoload.php';
@@ -166,11 +171,12 @@ table, th, td {
        <th>Expected Repayment</th>
        <th>Maturity Date</th>
        <th>Expected Repayment Amount</th>
-       <th>Actual Repayment</th>
+       <th style="width: 50px;">Actual Repayment</th>
        <th>Total Savings Balance</th>
   </tr>
   </thead>
   <tbody>
+  "'.fill_collect($connection, $officer, $group).'"
   </tbody>
 </table>
 </body>

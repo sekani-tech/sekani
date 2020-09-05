@@ -504,7 +504,7 @@ $destination = "config.php";
                               function fill_asset($connection)
                               {
                                 $sint_id = $_SESSION["int_id"];
-                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '1' ORDER BY name ASC";
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '1' AND parent_id != 0 ORDER BY name ASC";
                                 $res = mysqli_query($connection, $org);
                                 $output = '';
                                 while ($row = mysqli_fetch_array($res))
@@ -544,17 +544,17 @@ $destination = "config.php";
                             <label for="charge" class="form-align ">Suspended Income</label>
                             <select class="form-control form-control-sm" name="li_suspended_income">
                               <option value="<?php echo $li_suspended_income;?>"><?php echo $li_susd_ime;?></option>
-                              <?php echo fill_lia($connection)?>
+                              <?php echo fill_asset($connection)?>
                             </select>
                           </div>
                           </div>
                           </div>
-                      <h5 class="card-title">Liabilities</h5>
+                      <!-- <h5 class="card-title">Liabilities</h5> -->
                       <?php
                               function fill_lia($connection)
                               {
                                 $sint_id = $_SESSION["int_id"];
-                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '2' ORDER BY name ASC";
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '2' AND parent_id !=0 ORDER BY name ASC";
                                 $res = mysqli_query($connection, $org);
                                 $output = '';
                                 while ($row = mysqli_fetch_array($res))
@@ -564,7 +564,7 @@ $destination = "config.php";
                                 return $output;
                               }
                               ?>
-                      <div class="position-relative form-group">
+                      <div hidden class="position-relative form-group">
                         <div class="form-group">
                         <div class="col-md-8">
                             <label for="charge" class="form-align ">Overpayments</label>
@@ -582,7 +582,7 @@ $destination = "config.php";
                               function fill_in($connection)
                               {
                                 $sint_id = $_SESSION["int_id"];
-                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '4' ORDER BY name ASC";
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '4' AND parent_id !=0 ORDER BY name ASC";
                                 $res = mysqli_query($connection, $org);
                                 $output = '';
                                 while ($row = mysqli_fetch_array($res))
