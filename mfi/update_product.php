@@ -504,7 +504,7 @@ $destination = "config.php";
                               function fill_asset($connection)
                               {
                                 $sint_id = $_SESSION["int_id"];
-                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '1' ORDER BY name ASC";
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '1' AND parent_id != 0 ORDER BY name ASC";
                                 $res = mysqli_query($connection, $org);
                                 $output = '';
                                 while ($row = mysqli_fetch_array($res))
@@ -554,7 +554,7 @@ $destination = "config.php";
                               function fill_lia($connection)
                               {
                                 $sint_id = $_SESSION["int_id"];
-                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '2' ORDER BY name ASC";
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '2' AND parent_id !=0 ORDER BY name ASC";
                                 $res = mysqli_query($connection, $org);
                                 $output = '';
                                 while ($row = mysqli_fetch_array($res))
@@ -582,7 +582,7 @@ $destination = "config.php";
                               function fill_in($connection)
                               {
                                 $sint_id = $_SESSION["int_id"];
-                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '4' ORDER BY name ASC";
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '4' AND parent_id !=0 ORDER BY name ASC";
                                 $res = mysqli_query($connection, $org);
                                 $output = '';
                                 while ($row = mysqli_fetch_array($res))
