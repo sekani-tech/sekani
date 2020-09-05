@@ -71,7 +71,13 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
            $rep_duedate = $matured_date;
             $rep_install = $no_of_rep;
            $rep_comp_derived =  $pincpal_amount / $loan_term;
+           if ($rep_every == "month") {
            $rep_int_amt = ((($interest_rate / 100) * $pincpal_amount) * $loan_term) / $loan_term;
+           } else if ($rep_every == "week") {
+            $rep_int_amt = (((($interest_rate / 100) * $pincpal_amount) * $loan_term) / $loan_term) / 4;
+           } else if ($rep_every == "") {
+            $rep_int_amt = (((($interest_rate / 100) * $pincpal_amount) * $loan_term) / $loan_term) / 28;
+           }
         //    $general_payment = $pincpal_amount + ((($interest_rate / 100) * $pincpal_amount) * $loan_term);
         //    echo "GENERAL PAYMENT".$general_payment;
         //    WE DO A NEXT STUFF
