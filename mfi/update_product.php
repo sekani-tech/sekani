@@ -544,7 +544,7 @@ $destination = "config.php";
                             <label for="charge" class="form-align ">Suspended Income</label>
                             <select class="form-control form-control-sm" name="li_suspended_income">
                               <option value="<?php echo $li_suspended_income;?>"><?php echo $li_susd_ime;?></option>
-                              <?php echo fill_lia($connection)?>
+                              <?php echo fill_asset($connection)?>
                             </select>
                           </div>
                           </div>
