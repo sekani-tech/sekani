@@ -52,7 +52,7 @@ $destination = "products_config.php";
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Amount</label>
-                          <input type="number" class="form-control" name="location">
+                          <input type="number" step=".01" class="form-control" name="location">
                         </div>
                       </div>
                       <div class=" col-md-4 form-group">
