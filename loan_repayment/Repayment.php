@@ -451,7 +451,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                                if ($update_rep_status) {
                                    // YOU STOPPED HERE HERE
                                   // update the repayement sch.
-                                  $uodate_rep_status = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET installment = '$post_installment' WHERE int_id = '$int_id' AND id = '$collection_id'");
+                                  $update_rep_status = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET installment = '$post_installment' WHERE int_id = '$int_id' AND id = '$collection_id'");
                                   if ($update_rep_status) {
                                       echo "SUCCESS AT LAST";
                                         $makebig_move = mysqli_query($connection, "INSERT INTO `loan_arrear` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, `counter`, `principal_amount`, `principal_completed_derived`, `principal_writtenoff_derived`, `interest_amount`, `interest_completed_derived`, `interest_writtenoff_derived`, `total_paid_late_derived`, `completed_derived`, `obligations_met_on_date`, `createdby_id`, `created_date`, `lastmodified_date`) VALUES ('{$int_id}', '{$collection_loan}', '{$collection_client_id}', '{$gen_date}', '{$general_date_due}', '{$collection_installment}', '1', '{$collection_principal}', '{$collection_principal}', '0', '{$collection_interest}', '{$collection_interest}', '0', '0', '0', NULL, '{$approved_by}', '{$sch_date}', '{$sch_date}')");
