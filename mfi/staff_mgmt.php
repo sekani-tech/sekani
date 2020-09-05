@@ -845,7 +845,7 @@ if ($per_con == 1 || $per_con == "1") {
                           $bal = number_format($men["account_balance_derived"], 2);
                           ?>
                           <th><?php echo $bal; ?></th>
-                          <th><button class="btn btn-success">View</button></th>
+                          <th><a  href = "edit_teller.php?id=<?php echo $row['id'];?>" class="btn btn-info">View</a></th>
                         </tr>
                         <?php }
                           }
