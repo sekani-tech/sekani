@@ -126,6 +126,7 @@ $dos = mysqli_query($connection, $fd);
                         <div class="form-group">
                           <label for="interestRateApplied" >Interest Rate Applied *</label>
                           <select class="form-control" name="interest_rate_applied" >
+                          <option value="per_week">Per Week</option>
                             <option value="per_month">Per Month</option>
                             <option value="per_year">Per Year</option>
                           </select>
