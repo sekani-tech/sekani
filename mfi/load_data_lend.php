@@ -94,7 +94,7 @@ if(isset($_POST["id"]))
                   </div>
                 </div>
                 <div id="verifyl"></div>
-                <input type="number"  value="" name="principal_amount" class="form-control" required id="principal_amount">
+                <input type="number"  value="" step=".01"name="principal_amount" class="form-control" required id="principal_amount">
               </div>
             </div>
 
@@ -103,7 +103,7 @@ if(isset($_POST["id"]))
           <div class="row">
             <div class="col-md-4">
               <label>Loan Term *:</label>
-              <input type="number" value="'.$row["loan_term"].'" name="loan_term" class="form-control" id="loan_term" />
+              <input type="number" step=".01" value="'.$row["loan_term"].'" name="loan_term" class="form-control" id="loan_term" />
               <input type ="text" hidden value="'.$row["grace_on_principal_amount"].'" id="grace_prin"/>
             </div>
             <div class="col-md-5">
