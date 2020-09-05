@@ -51,7 +51,7 @@ $destination = "../index.php";
                           <td><a href="branch.php" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
                         </tr>
                         <tr>
-                          <th>Alerts</th>
+                          <th>SMS Campaign</th>
                           <th>Handle the alerts that the system recieves</th>
                           <td><a href="alert.php" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
                         </tr>
