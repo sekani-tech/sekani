@@ -194,7 +194,19 @@ if($fdpoijf){
     ('$intid', 0, '$br_id', 'Accumulate Depreciation', '$pid', NULL, '10614', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL)
     ");
 }
-
+    // Other Asset
+    $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+    ('$intid', 1, '$br_id', 'OTHER ASSET', 0, NULL, '10700', 0, 0, 2, 1, NULL, '', 0, 0.00, NULL)";
+    $balf = mysqli_query($connection, $cash);
+    if($balf){
+        $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$intid' AND name = 'OTHER ASSET'");
+        $as = mysqli_fetch_array($diis);
+        $pid = $as['id'];
+        $fdop = mysqli_query($connection, 
+        "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
+        ('$intid', 0, '$br_id', 'Insufficient Repayment', '$pid', NULL, '10701', 0, 0, 1, 2, NULL, '', 0, 0.00, NULL)
+        ");
+    }
     // deposits
     $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
             ('$intid', 1, '$br_id', 'DEPOSITS', 0, NULL, '20100', 0, 0, 2, 2, NULL, '', 0, 0.00, NULL)";
@@ -257,7 +269,8 @@ if($fdpoijf){
     "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
     ('$intid', 0, '$br_id', 'Interest income', '$pid', NULL, '40101', 0, 0, 1, 4, NULL, '', 0, 0.00, NULL),
     ('$intid', 0, '$br_id', 'fees/charges income', '$pid', NULL, '40102', 0, 1, 1, 4, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '$br_id', 'income from other investment', '$pid', NULL, '40103', 0, 1, 1, 4, NULL, '', 0, 0.00, NULL)
+    ('$intid', 0, '$br_id', 'income from other investment', '$pid', NULL, '40103', 0, 1, 1, 4, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'Recovery Income', '$pid', NULL, '40104', 0, 1, 1, 4, NULL, '', 0, 0.00, NULL)
     ");
 }
 
@@ -297,7 +310,8 @@ if($fdpoijf){
         ('$intid', 0, '$br_id', 'OFFICE CONSUMABLES', '$pid', NULL, '50124', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
         ('$intid', 0, '$br_id', 'loan WRITe OFF', '$pid', NULL, '50125', 0, 0, 1, 5, NULL, '', 0, 0.00, NULL),
         ('$intid', 0, '$br_id', 'DEPRECIATION OF FIXED ASSETS', '$pid', NULL, '50126', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-        ('$intid', 0, '$br_id', 'MISCELLANEOUS', '$pid', NULL, '50127', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL)
+        ('$intid', 0, '$br_id', 'MISCELLANEOUS', '$pid', NULL, '50127', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$intid', 0, '$br_id', 'SOFTWARE', '$pid', NULL, '50128', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL)
         ");
     }
 
