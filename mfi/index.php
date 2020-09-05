@@ -163,7 +163,7 @@ setInterval(function() {
                   <div class="card-icon">
                     <i class="material-icons">account_balance_wallet</i>
                   </div>
-                  <p class="card-category">Outstanding LoanBalance</p>
+                  <p class="card-category">Outstanding Loan Balance</p>
                   <!-- Populate with the total value of outstanding loans -->
                   <?php
                     $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
