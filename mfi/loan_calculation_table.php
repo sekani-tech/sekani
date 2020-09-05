@@ -9,13 +9,6 @@ $repayment_start = $_POST["repay_start"];
 $rep_every = $_POST["repay"];
 $disburse_date = $_POST["disbd"];
 // $repay_no = $_POST["repay_no"];
-// Test Variables
-// $principal_amount = "100000";
-// $loan_term = "5";
-// $int_rate = "2";
-// $repayment_start = '01/13/2020';
-// $rep_every ="month";
-// $disburse_date = '01/05/2020';
 
 $disburse = $principal_amount;
 
@@ -23,26 +16,50 @@ $disburse = $principal_amount;
 $table_day = "";
 $add_date = "";
 $t_d = "";
+// loan term
+$loan_term1 = $loan_term - 1;
+$loan_term2 = $loan_term;
 if($rep_every == "month"){
     $table_day = "Months";
     $t_d = "Month";
+    // replace add date
     $add_date = "30";
+    // replace add date
+    $actualend_date = date('Y-m-d', strtotime("+".$loan_term1." months", strtotime($repayment_start)));
+    $actualend_date1 = date('Y-m-d', strtotime("+".$loan_term2." months", strtotime($repayment_start)));
 } else if($rep_every == "day") {
     $table_day = "Days";
     $t_d = "Day";
+    // replace add date
     $add_date = "1";
+    // replace code below
+    $actualend_date = date('Y-m-d', strtotime("+".$loan_term1." days", strtotime($repayment_start)));
+    $actualend_date1 = date('Y-m-d', strtotime("+".$loan_term2." days", strtotime($repayment_start)));
 } else if($rep_every == "year"){
     $table_day = "Years";
+    // replace in years
     $add_date = "365";
+    // replace here
+    $actualend_date = date('Y-m-d', strtotime("+".$loan_term1." years", strtotime($repayment_start)));
+    $actualend_date1 = date('Y-m-d', strtotime("+".$loan_term2." years", strtotime($repayment_start)));
     $t_d = "Year";
 } else if($rep_every == "week"){
   $table_day = "Weeks";
   $t_d = "Week";
+  // final replace
   $add_date = "7";
+  // end the replace
+  $actualend_date = date('Y-m-d', strtotime("+".$loan_term1." weeks", strtotime($repayment_start)));
+  $actualend_date1 = date('Y-m-d', strtotime("+".$loan_term2." weeks", strtotime($repayment_start)));
 }
 else{
     $table_day = "days";
 }
+// else
+$matured_date = $actualend_date;
+$matured_date2 = $actualend_date1;
+// GET THE END DATE OF THE LOAN
+$matured_date = $actualend_date;
 echo '<thead>
 <tr>
   <th>#</th>
@@ -81,25 +98,33 @@ echo '
 </tr>
 </tbody>
 ';
-while ($i < $loan_term){
+$i = 0;
+while (strtotime("+1 ".$rep_every, strtotime($repayment_start)) <= strtotime($matured_date2)) {
   // if($i % 10 == 0){
   //   echo '<tr>'.PHP_EOL;
   // }
 
   // Date Calculation
   $serial = $i + 1;
-  $date = $i * $add_date;
-  $date2 = $loan_term * $add_date;
+  // $date = $i * $add_date;
+  // $date2 = $loan_term * $add_date;
   $actualend_date = date('d/m/Y', strtotime($repayment_start.' + '.$date2.' days'));
   $start_date = date('d/m/Y', strtotime($disburse_date.' + '.$date.' days'));
-  $end_date = date('d/m/Y', strtotime($repayment_start.' + '.$date.' days'));
+  $end_date = $repayment_start;
   $diff = $t_d." " .$serial;
 
   // Table Calculation
   $minus = $loan_term - 1;
   $disburse = $principal_amount;
   $percent = $int_rate / 100;
-  $inter_due = ((($percent * $disburse) * $loan_term) / $loan_term) * 100;
+  if ($rep_every == "month") {
+    $inter_due = ((($int_rate) * $principal_amount) * $loan_term) / $loan_term;
+  } else if ($rep_every == "week") {
+    $inter_due = (((($int_rate) * $principal_amount) * $loan_term) / $loan_term) / 4;
+  } else if ($rep_every == "day") {
+    $inter_due = (((($int_rate) * $principal_amount) * $loan_term) / $loan_term) / 28;
+  }
+  
   $princi_due = $disburse / $loan_term;
   $princi_due2 = $princi_due * ($i + 1);
   $princi_bal = $disburse - $princi_due2;
@@ -124,6 +149,7 @@ while ($i < $loan_term){
   // if($i % 10 == 0){
   //   echo '</tr>'.PHP_EOL;
   // }
+  $repayment_start = date ("Y-m-d", strtotime("+1 ".$rep_every, strtotime($repayment_start)));
   $i++;
 }
  $princi_due_total = $princi_due * $loan_term;
