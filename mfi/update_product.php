@@ -549,7 +549,7 @@ $destination = "config.php";
                           </div>
                           </div>
                           </div>
-                      <h5 class="card-title">Liabilities</h5>
+                      <!-- <h5 class="card-title">Liabilities</h5> -->
                       <?php
                               function fill_lia($connection)
                               {
@@ -564,7 +564,7 @@ $destination = "config.php";
                                 return $output;
                               }
                               ?>
-                      <div class="position-relative form-group">
+                      <div hidden class="position-relative form-group">
                         <div class="form-group">
                         <div class="col-md-8">
                             <label for="charge" class="form-align ">Overpayments</label>
