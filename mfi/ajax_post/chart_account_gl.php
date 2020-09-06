@@ -8,6 +8,7 @@ if(isset($_POST['type']) && isset($_POST['dso'])){
     $dsd = $_POST['type'];
     $acc_use = $_POST['dso'];
     $parent_id = $_POST['pid'];
+    $if_edit = $_POST['fed'];
     if($acc_use == '1'){
         $pdro = "SELECT * FROM acc_gl_account WHERE int_id = '$sint' AND classification_enum = '$dsd' AND id = '$parent_id'";
         $pdok = mysqli_query($connection, $pdro);
@@ -39,10 +40,18 @@ if(isset($_POST['type']) && isset($_POST['dso'])){
             $gl_code = ($dsd * 10).(($sprtydo + 1) * 100);
         }
     }
+    if($if_edit = 'from_edit'){
+        $out = '
+    <label>GL Code*</label>
+    <input type="text" name="gl_code" style="text-transform: uppercase;" id="" class="form-control" value="'.$gl_code.'">
+    ';
+    }
+    else{
     $out = '
     <label>GL Code*</label>
     <input type="text" name="gl_code" style="text-transform: uppercase;" id="" class="form-control" value="'.$gl_code.'" readonly>
     ';
+    }
           echo $out;
 }
 else{
