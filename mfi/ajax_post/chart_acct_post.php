@@ -22,7 +22,7 @@ if (isset($_POST["gl"]) && isset($_POST["ch"]))
           return $out;
         }
         $output2 = '
-            <option value="0">choose group</option>
+            <option value="0">choose account</option>
             "'.fill_gl($connection).'"
             ';
     echo $output2;

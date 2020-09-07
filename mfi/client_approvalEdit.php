@@ -62,6 +62,10 @@ if(isset($_GET["edit"])) {
     $passportbk = $n['passport'];
     $idimg = $n['id_img_url'];
   }
+  $sql2 = "SELECT * FROM staff WHERE id = '$account_officer'";
+  $res2 = mysqli_query($connection, $sql2);
+  $sds = mysqli_fetch_array($res2);
+  $staff_name = $sds["display_name"];
   function fill_state($connection)
                   {
                   $sint_id = $_SESSION["int_id"];
@@ -116,7 +120,7 @@ if(isset($_GET["edit"])) {
                           <label class="">Account Type:</label>
                           <select name="account_type" class="form-control " id="collat">
                             <?php
-                            $queryd = mysqli_query($connection, "SELECT * FROM account WHERE account_no ='$account_no' && int_id = '$sint_id'");
+                            $queryd = mysqli_query($connection, "SELECT * FROM account WHERE account_no ='$account_no' && int_id = '$sessint_id'");
                             $resx = mysqli_fetch_array($queryd);
                             $prod = $resx['product_id'];
                             $sql2 = "SELECT * FROM savings_product WHERE id = '$prod'";
@@ -124,11 +128,8 @@ if(isset($_GET["edit"])) {
                             $poi = mysqli_fetch_array($res2);
                             $accttypp = $poi["id"];
                             $accttname = $poi["name"];
-                            if ($accttypp == "CURRENT" || $accttypp == "SAVINGS" || $accttypp == "") {
-                              $accttname = "..choose a savings product";
-                            }
                             ?>
-                          <option value="<?php echo $accttypp; ?>"><?php echo $accttname; ?></option>
+                          <option hidden value="<?php echo $accttypp; ?>"><?php echo $accttname; ?></option>
                           <?php echo fill_savings($connection); ?>
                         </select>
                         </div>
@@ -152,7 +153,7 @@ if(isset($_GET["edit"])) {
                   ?>
                           <label class="">Account No</label>
                           <select name="account_no" class="form-control " id="collat">
-                          <option value="<?php echo $account_no; ?>"><?php echo $account_no; ?></option>
+                          <option hidden value="<?php echo $account_no; ?>"><?php echo $account_no; ?></option>
                           <?php echo fill_account($connection, $vd); ?>
                         </select>
                         </div>
@@ -245,7 +246,7 @@ if(isset($_GET["edit"])) {
                   ?>
                           <label class="">Branch:</label>
                           <select name="branch" class="form-control" id="collat">
-                          <option value="<?php echo $branch; ?>"><?php echo $bname; ?></option>
+                          <option hidden value="<?php echo $branch; ?>"><?php echo $bname; ?></option>
                           <?php echo fill_branch($connection); ?>
                         </select>
                         </div>
@@ -380,7 +381,7 @@ if(isset($_GET["edit"])) {
                         <div class="form-group">
                           <label for="">Account Officer:</label>
                           <select name="acct_off" class="form-control " id="">
-                            <option value="<?php echo $account_officer;?>">...</option>
+                            <option value="<?php echo $account_officer;?>"><?php echo $staff_name;?></option>
                             <?php echo fill_officer($connection); ?>
                           </select>
                         </div>
@@ -567,8 +568,12 @@ else if($ctype = 'CORPORATE'){
       $regemail = $n['email_address'];
       $regaddress = $n['ADDRESS'];
       $bran = $n['branch_id'];
+      $fi = "SELECT * FROM branch WHERE int_id = '$sessint_id' AND id = '$bran'";
+      $dfop = mysqli_query($connection, $fi);
+      $bna = mysqli_fetch_array($dfop);
+      $bname = $bna['name'];
       $account_officer = $n['loan_officer_id'];
-      $checkl = "SELECT * FROM staff WHERE user_id = '$account_officer'";
+      $checkl = "SELECT * FROM staff WHERE id = '$account_officer'";
       $resxx = mysqli_query($connection, $checkl);
       $xf = mysqli_fetch_array($resxx);
       $acctn = strtoupper($xf['first_name'] ." ". $xf['last_name']);
@@ -729,7 +734,7 @@ else if($ctype = 'CORPORATE'){
                           <label class="">Account Type:</label>
                           <select name="account_type" class="form-control " id="collat">
                             <?php
-                            $queryd = mysqli_query($connection, "SELECT * FROM account WHERE account_no ='$account_no' && int_id = '$sint_id'");
+                            $queryd = mysqli_query($connection, "SELECT * FROM account WHERE account_no ='$account_no' && int_id = '$sessint_id'");
                             $resx = mysqli_fetch_array($queryd);
                             $prod = $resx['product_id'];
                             $sql2 = "SELECT * FROM savings_product WHERE id = '$prod'";
@@ -737,9 +742,7 @@ else if($ctype = 'CORPORATE'){
                             $poi = mysqli_fetch_array($res2);
                             $accttypp = $poi["id"];
                             $accttname = $poi["name"];
-                            if ($accttypp == "CURRENT" || $accttypp == "SAVINGS" || $accttypp == "") {
-                              $accttname = "..choose a savings product";
-                            }
+                  
                             ?>
                           <option value="<?php echo $accttypp; ?>"><?php echo $accttname; ?></option>
                           <?php echo fill_savings($connection); ?>
@@ -801,7 +804,7 @@ else if($ctype = 'CORPORATE'){
         <div class="form-group">
         <label class="">Branch:</label>
         <select  name="brancha" class="form-control " id="collat">
-            <option value="<?php echo $bran;?>">select a Branch</option>
+            <option hidden value="<?php echo $bran;?>"><?php echo $bname;?></option>
             <?php echo fill_branch($connection);?>
         </select>
     </div>
@@ -825,7 +828,7 @@ else if($ctype = 'CORPORATE'){
                 <div class="form-group">
                 <label for="">Account Officer:</label>
                 <select  name="acct_ofa" class="form-control" id="">
-                <option value="<?php echo $account_officer;?>">select account officer</option>
+                <option value="<?php echo $account_officer;?>"><?php echo $acctn?></option>
                 <?php echo fill_officer($connection);?>
                 </select>
             </div>
