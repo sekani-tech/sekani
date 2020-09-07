@@ -5,9 +5,9 @@ $output = '';
 ?>
 <?php
 
-$dif = "SELECT * FROM `client` WHERE int_id = '10'";
+$dif = "SELECT * FROM `client` WHERE int_id = '8'";
 $sdf = mysqli_query($connection, $dif);
-$int_id = '10';
+$int_id = '8';
 while($d = mysqli_fetch_array($sdf)){
     $id = $d['id'];
     $accno = $d['account_no'];
