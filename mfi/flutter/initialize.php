@@ -29,7 +29,7 @@ curl_setopt_array($curl, array(
   CURLOPT_FOLLOWLOCATION => true,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "POST",
-  CURLOPT_POSTFIELDS =>"{\r\n   \"tx_ref\":\"$trans\",\r\n   \"amount\":\"$amount\",\r\n   \"currency\":\"NGN\",\r\n   \"redirect_url\":\"https://demo.sekanisystems.com.ng/mfi/flutter/callback.php\",\r\n   \"payment_options\":\"card\",\r\n   \"customer\":{\r\n      \"email\":\"$email\",\r\n      \"phonenumber\":\"$int_phone\",\r\n      \"name\":\"$username\"\r\n   },\r\n   \"customizations\":{\r\n      \"title\":\"Institution Account Refill\",\r\n      \"description\":\"Refilling the sekani wallet\",\r\n      \"logo\":\"$int_logo\"\r\n   }\r\n}",
+  CURLOPT_POSTFIELDS =>"{\r\n   \"tx_ref\":\"$trans\",\r\n   \"amount\":\"$amount\",\r\n   \"currency\":\"NGN\",\r\n   \"redirect_url\":\"https://app.sekanisystems.com.ng/mfi/flutter/callback.php\",\r\n   \"payment_options\":\"card\",\r\n   \"customer\":{\r\n      \"email\":\"$email\",\r\n      \"phonenumber\":\"$int_phone\",\r\n      \"name\":\"$username\"\r\n   },\r\n   \"customizations\":{\r\n      \"title\":\"Institution Account Refill\",\r\n      \"description\":\"Refilling the sekani wallet\",\r\n      \"logo\":\"$int_logo\"\r\n   }\r\n}",
   CURLOPT_HTTPHEADER => array(
     "Authorization: Bearer FLWSECK-2e1fc0c6b08527b62b30f752405be2f2-X",
     "Content-Type: application/json"
