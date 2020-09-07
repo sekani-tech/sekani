@@ -26,7 +26,7 @@ while($a = mysqli_fetch_array($queryexec1)) {
     $outstanding = $principal_amount - $amount_paid;
     $today = date('Y-m-d');
 
-    $query2 = "INSERT INTO `loan` ( `id`, `int_id`, `account_no`, `client_id`, `product_id`, `fund_id`, `col_id`, `col_name`, `col_description`, 
+    $query2 = "INSERT INTO `loan` (`id`, `int_id`, `account_no`, `client_id`, `product_id`, `fund_id`, `col_id`, `col_name`, `col_description`, 
     `loan_officer`, `loan_purpose`, `currency_code`, `currency_digits`, `principal_amount_proposed`, `principal_amount`, `loan_term`, `interest_rate`, 
     `approved_principal`, `repayment_date`, `arrearstolerance_amount`, `is_floating_interest_rate`, `interest_rate_differential`, `nominal_interest_rate_per_period`, 
     `interest_period_frequency_enum`, `annual_nominal_interest_rate`, `interest_method_enum`, `interest_calculated_in_period_enum`, 
@@ -60,20 +60,20 @@ while($a = mysqli_fetch_array($queryexec1)) {
         $query3 = "INSERT INTO loan_disbursement_cache (int_id, status, account_no, client_id, product_id, fund_id, col_id, col_name, col_description, loan_officer, 
         loan_purpose, currency_code, currency_digits, principal_amount_proposed, principal_amount, loan_term, interest_rate, approved_principal, repayment_date,
         term_frequency, repay_every, number_of_repayments, submittedon_date, submittedon_userid, approvedon_date, approvedon_userid, expected_disbursedon_date, 
-        expected_firstrepaymenton_date, disbursement_date, term_frequency, disbursedon_userid, repay_principal_every, repay_interest_every, loan_sub_status_id, 
+        expected_firstrepaymenton_date, disbursement_date, disbursedon_userid, repay_principal_every, repay_interest_every, loan_sub_status_id, 
         expected_maturedon_date, maturedon_date, flag) VALUES ('$int_id', 'Approved', '$account_no', '$client_id', '$product_id', NULL, NULL, NULL, NULL, '$loan_officer','$loan_puporse', 
         'NGN', '2', '$principal_amount', '$principal_amount', '$loan_term', '$interest_rate', '$principal_amount', '$repayment_date', '0', '$repay_every', '$no_of_repayments',
-        '$today', NULL, '$today', NULL, NULL, NULL, '$disbursement_date', '1', NULL, '0', '0', '$loan_status', '$maturedon_date', '$maturedon_date', 'old')";
+        '$today', NULL, '$today', NULL, NULL, NULL, '$disbursement_date', NULL, '0', '0', '$loan_status', '$maturedon_date', '$maturedon_date', 'old')";
         $queryexec3 = mysqli_query($connection, $query3);
 
-// if ($connection->error) {
-//     try {   
-//         throw new Exception("MySQL error $connection->error <br> Query:<br> $query3", $mysqli->error);   
-//     } catch(Exception $e ) {
-//         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-//         echo nl2br($e->getTraceAsString());
-//     }
-// }
+if ($connection->error) {
+    try {   
+        throw new Exception("MySQL error $connection->error <br> Query:<br> $query3", $mysqli->error);   
+    } catch(Exception $e ) {
+        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+        echo nl2br($e->getTraceAsString());
+    }
+}
         if($queryexec3){
             echo 'Client no: '.$client_id.' inserted into loan_disbursement_cache</br>';
             $query4 = "UPDATE loan_remodeling SET status = '1' WHERE id = '$id'";
