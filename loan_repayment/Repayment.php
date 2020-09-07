@@ -944,3 +944,98 @@ if (mysqli_num_rows($charge_query) >= 1) {
 echo date("Y-m-d")."CURRENT MONTH";
 echo date("Y-m-t")."ENDING THIS MONTH";
 ?>
+<?php
+echo "<br/><br/> /////////////////////////////////////////////// LOAN REMODEL ////////////////////////////////////// <br/><br/>";
+// here we will work on AUTO BACK DATE REPAYMENT
+$get_back_model = mysqli_query($connection, "SELECT * FROM `loan_remodeling` WHERE status = '1'");
+if (mysqli_num_rows($get_back_model) >= 1) {
+    while ($row = mysqli_fetch_array($get_back_model)) {
+        // display the details
+        $m_id = $row["id"];
+        $m_int_id = $row["int_id"];
+        $m_client_id = $row["client_id"];
+        $m_loan_id = $row["loan_id"];
+        $m_amount_paid = $row["amount_paid"];
+        $m_status = $row["status"];
+        $loan_off = $row["loan_officer"];
+        $today_date = date('Y-m-d');
+        $get_repayment_sch = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE installment = '1' AND (duedate < '$today_date') AND (loan_id = '$m_loan_id' AND client_id = '$m_client_id') ORDER BY id ASC LIMIT 1");
+        if (mysqli_num_rows($get_repayment_sch) >= 1) {
+            // while loop
+            while ($lrp = mysqli_fetch_array($get_repayment_sch)) {
+                $r_id = $lrp["id"];
+                $r_principal = $lrp["principal_amount"];
+                $r_interest = $lrp["interest_amount"];
+                $repayment_amount = $r_principal + $r_interest;
+                $r_loan_id = $lrp["loan_id"];
+                $r_client_id = $lrp["client_id"];
+                $r_from_date = $lrp["fromdate"];
+                $r_due_date = $lrp["duedate"];
+                // DO CALCULATE
+                $get_loan = mysqli_query($connection, "SELECT * FROM `loan` WHERE id = '$r_loan_id'");
+                $gl = mysqli_fetch_array($get_loan);
+                $client_account_no = $gl["account_no"];
+                if ($client_account_no != "") {
+                    // check the amount paid
+                    if ($m_amount_paid >= $repayment_amount) {
+                        // cehck
+                        $new_repayment_balance = $m_amount_paid - $repayment_amount;
+                        // query the new
+                        $query_remodel = mysqli_query($connection, "UPDATE `loan_remodeling` SET `amount_paid` = '$new_repayment_balance' WHERE id = '$m_id' AND client_id = '$m_client_id'");
+                        if ($query_remodel) {
+                            // update the repayment
+                        $query_update_repayment = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET `principal_amount` = '0.00', `interest_amount` = '0.00', `installment` = '0' WHERE `loan_repayment_schedule`.`id` = '$r_id'");
+                        if ($query_update_repayment) {
+                            echo "REPAYED SUCCESSFULLY";
+                        } else {
+                            echo "ERROR IN UPDATING REPAYMENT STRUCTURE";
+                        }
+                        } else {
+                            echo "ERROR IN UPDATING REMODEL";
+                        }
+                        // hit a function here
+                        // enda fucntin
+                    } else if ($m_amount_paid < $repayment_amount && $m_amount_paid >= 1) {
+                        // check it up
+                        $new_repayment_balance = $repayment_amount - $m_amount_paid;
+                        $r_prin = $r_principal - ($repayment_amount / 2);
+                        $r_inte = $r_interest - ($repayment_amount / 2);
+                        $model_balance = 0;
+                        // UPDATE
+                        $query_remodel = mysqli_query($connection, "UPDATE `loan_remodeling` SET `amount_paid` = '$model_balance' WHERE id = '$m_id' AND client_id = '$m_client_id'");
+                        if ($query_remodel) {
+                            // update the repayment
+                        $query_update_repayment = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET `principal_amount` = '$r_prin', `interest_amount` = '$r_inte', `installment` = '0' WHERE `loan_repayment_schedule`.`id` = '$r_id'");
+                        if ($query_update_repayment) {
+                            // add the remaining amount to the arrear table
+                            $check_arrear = mysqli_query($connection, "INSERT INTO `loan_arrear` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, `counter`, `principal_amount`, `principal_completed_derived`, `principal_writtenoff_derived`, `interest_amount`, `interest_completed_derived`, `interest_writtenoff_derived`, `total_paid_late_derived`, `completed_derived`, `obligations_met_on_date`, `createdby_id`, `created_date`, `lastmodified_date`) 
+                            VALUES ('{$m_int_id}', '{$m_loan_id}', '{$m_client_id}', '{$r_from_date}', '{$r_due_date}', '1', '1', '{$r_prin}', '{$r_prin}', '0', '{$r_inte}', '{$r_inte}', '0', '0', '0', NULL, '{$loan_off}', '{$today_date}', '{$today_date}')");
+                            if ($check_arrear) {
+                                echo "REPAYMENT HAS BEEN POSTED TO ARREARS";
+                            } else {
+                                echo "ERROR UPDATING ARREAR";
+                            }
+                            // end adding to the arrrear table
+                        } else {
+                            echo "ERROR IN UPDATING REPAYMENT STRUCTURE";
+                        }
+                        // end here
+                        } else {
+                            echo "ERROR IN UPDATING REMODEL";
+                        }
+                    }
+                } else {
+                    echo "CLIENT ACCOUNT NO IS EMPTY";
+                }
+            }
+            // end while loop
+        } else {
+            echo "NO ACTIVE REPAYMENT";
+        }
+        // end the details
+    }
+} else {
+    echo "NO ACTIVE REMODEL";
+}
+// END AUTO BACK REPAYMENT
+?>
