@@ -126,6 +126,14 @@ setInterval(function() {
         $('#r_bb').html(data);
       }
     });
+    $.ajax({
+      url:"../loan_repayment/remodelling_loan.php",
+      method:"POST",
+      data:{user: user},
+      success:function(data){
+        $('#loan_remodel').html(data);
+      }
+    })
 }, 1000);   // Interval set to 4 seconds
 </script>
 <!doctype html>
@@ -366,6 +374,7 @@ input[type=number] {
     <div class="main-panel">
       <div id="time_recorder"></div>
       <div id="r_bb" hidden></div>
+      <div id="loan_remodel" hidden></div>
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">

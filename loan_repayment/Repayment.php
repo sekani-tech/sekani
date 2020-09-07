@@ -995,7 +995,7 @@ if (mysqli_num_rows($get_back_model) >= 1) {
                         }
                         // hit a function here
                         // enda fucntin
-                    } else if ($m_amount_paid < $repayment_amount && $m_amount_paid >= 1) {
+                    } else if ($m_amount_paid < $repayment_amount && $m_amount_paid >= 0) {
                         // check it up
                         $new_repayment_balance = $repayment_amount - $m_amount_paid;
                         $r_prin = $r_principal - ($repayment_amount / 2);
