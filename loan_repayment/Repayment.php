@@ -998,8 +998,8 @@ if (mysqli_num_rows($get_back_model) >= 1) {
                     } else if ($m_amount_paid < $repayment_amount && $m_amount_paid >= 0) {
                         // check it up
                         $new_repayment_balance = $repayment_amount - $m_amount_paid;
-                        $r_prin = $r_principal - ($repayment_amount / 2);
-                        $r_inte = $r_interest - ($repayment_amount / 2);
+                        $r_prin = $r_principal - ($m_amount_paid / 2);
+                        $r_inte = $r_interest - ($m_amount_paid / 2);
                         $model_balance = 0;
                         // UPDATE
                         $query_remodel = mysqli_query($connection, "UPDATE `loan_remodeling` SET `amount_paid` = '$model_balance' WHERE id = '$m_id' AND client_id = '$m_client_id'");

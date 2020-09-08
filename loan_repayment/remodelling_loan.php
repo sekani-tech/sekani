@@ -66,20 +66,22 @@ while($a = mysqli_fetch_array($queryexec1)) {
         '$today', NULL, '$today', NULL, NULL, NULL, '$disbursement_date', NULL, '0', '0', '$loan_status', '$maturedon_date', '$maturedon_date', 'old')";
         $queryexec3 = mysqli_query($connection, $query3);
 
-// if ($connection->error) {
-//     try {   
-//         throw new Exception("MySQL error $connection->error <br> Query:<br> $query3", $mysqli->error);   
-//     } catch(Exception $e ) {
-//         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-//         echo nl2br($e->getTraceAsString());
-//     }
-// }
+if ($connection->error) {
+    try {   
+        throw new Exception("MySQL error $connection->error <br> Query:<br> $query1", $mysqli->error);   
+    } catch(Exception $e ) {
+        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+        echo nl2br($e->getTraceAsString());
+    }
+}
         if($queryexec3){
             echo 'Client no: '.$client_id.' inserted into loan_disbursement_cache</br>';
             $query4 = "UPDATE loan_remodeling SET status = '1' WHERE id = '$id'";
             $queryexec4 = mysqli_query($connection, $query4);
             if($queryexec4){
                 echo 'Client no: '.$client_id.' updated in loan_remodeling</br></br>';
+            } else {
+                echo "EOOR";
             }
         }
     }
