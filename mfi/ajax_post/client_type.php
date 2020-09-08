@@ -573,6 +573,17 @@ if(isset($_POST['id'])){
             <span id="wbvn" style="color: red;" hidden>WRONG BVN MATCH</span>
             <div id="bvn_result"></div>
             </div>
+            <div class="col-md-12">
+                    <p><label for="">Active Alerts:</label></p>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                            <input class="form-check-input" name="is_staff" type="checkbox" value="1">
+                            IS STAFF
+                            <span class="form-check-sign">
+                                <span class="check"></span>
+                            </span>
+                        </label>
+                    </div>
             <div class="col-md-4">
             <p><label for="">Active Alerts:</label></p>
             <div class="form-check form-check-inline">

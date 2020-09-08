@@ -82,6 +82,12 @@ if ( isset($_POST['email_active']) ) {
     $email_active = 0;
 }
 
+if ( isset($_POST['is_staff']) ) {
+  $is_staff = 1;
+} else { 
+  $is_staff = 0;
+}
+
 $digits = 9;
 
 $temp = explode(".", $_FILES['signature']['name']);
@@ -118,12 +124,12 @@ $query = "INSERT INTO client (int_id, loan_officer_id, client_type, account_type
 display_name, account_no,
 firstname, lastname, middlename, mobile_no, mobile_no_2, email_address, address, gender, date_of_birth,
 branch_id, country, STATE_OF_ORIGIN, lga, occupation, bvn, sms_active, email_active, id_card,
-passport, signature, id_img_url, loan_status, submittedon_date, activation_date) VALUES ('{$sessint_id}', '{$loan_officer_id}', '{$ctype}',
+passport, signature, id_img_url, loan_status, submittedon_date, activation_date, is_staff) VALUES ('{$sessint_id}', '{$loan_officer_id}', '{$ctype}',
 '{$acct_type}', '{$display_name}', '{$account_no}', '{$first_name}', '{$last_name}', '{$middlename}', '{$phone}', '{$phone2}',
 '{$email}', '{$address}', '{$gender}', '{$date_of_birth}', '{$branch}',
 '{$country}', '{$state}', '{$lga}', '{$occupation}', '{$bvn}', '{$sms_active}', '{$email_active}',
 '{$id_card}', '{$image3}', '{$image1}', '{$image2}', '{$loan_status}',
-'{$submitted_on}', '{$activation_date}')";
+'{$submitted_on}', '{$activation_date}', '{$is_staff}')";
 
 $res = mysqli_query($connection, $query);
 
