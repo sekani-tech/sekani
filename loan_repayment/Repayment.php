@@ -998,8 +998,10 @@ if (mysqli_num_rows($get_back_model) >= 1) {
                     } else if ($m_amount_paid < $repayment_amount && $m_amount_paid >= 0) {
                         // check it up
                         $new_repayment_balance = $repayment_amount - $m_amount_paid;
-                        $r_prin = $r_principal - ($repayment_amount / 2);
-                        $r_inte = $r_interest - ($repayment_amount / 2);
+                        $r_prin = $r_principal - ($m_amount_paid / 2);
+                        echo $r_prin."HOLLA NEW PRINCIPAL NOT UPTO";
+                        $r_inte = $r_interest - ($m_amount_paid / 2);
+                        echo $r_inte."INTEREST NOT UPTO";
                         $model_balance = 0;
                         // UPDATE
                         $query_remodel = mysqli_query($connection, "UPDATE `loan_remodeling` SET `amount_paid` = '$model_balance' WHERE id = '$m_id' AND client_id = '$m_client_id'");
@@ -1008,13 +1010,18 @@ if (mysqli_num_rows($get_back_model) >= 1) {
                         $query_update_repayment = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET `principal_amount` = '$r_prin', `interest_amount` = '$r_inte', `installment` = '0' WHERE `loan_repayment_schedule`.`id` = '$r_id'");
                         if ($query_update_repayment) {
                             // add the remaining amount to the arrear table
-                            $check_arrear = mysqli_query($connection, "INSERT INTO `loan_arrear` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, `counter`, `principal_amount`, `principal_completed_derived`, `principal_writtenoff_derived`, `interest_amount`, `interest_completed_derived`, `interest_writtenoff_derived`, `total_paid_late_derived`, `completed_derived`, `obligations_met_on_date`, `createdby_id`, `created_date`, `lastmodified_date`) 
+                            // $check_arrear = mysqli_query($connection, "SELECT * FROM `loan_arrear` WHERE int_id = '$m_int_id' AND loan_id = '$r_loan_id' AND client_id = '$r_client_id' AND duedate = '$r_due_date'");
+                            // if (mysqli_num_rows($check_arrear) <= 0) {
+                                $check_arrear = mysqli_query($connection, "INSERT INTO `loan_arrear` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, `counter`, `principal_amount`, `principal_completed_derived`, `principal_writtenoff_derived`, `interest_amount`, `interest_completed_derived`, `interest_writtenoff_derived`, `total_paid_late_derived`, `completed_derived`, `obligations_met_on_date`, `createdby_id`, `created_date`, `lastmodified_date`) 
                             VALUES ('{$m_int_id}', '{$m_loan_id}', '{$m_client_id}', '{$r_from_date}', '{$r_due_date}', '1', '1', '{$r_prin}', '{$r_prin}', '0', '{$r_inte}', '{$r_inte}', '0', '0', '0', NULL, '{$loan_off}', '{$today_date}', '{$today_date}')");
                             if ($check_arrear) {
                                 echo "REPAYMENT HAS BEEN POSTED TO ARREARS";
                             } else {
                                 echo "ERROR UPDATING ARREAR";
                             }
+                            // } else {
+                            //     "ARREARS EXIST";
+                            // }
                             // end adding to the arrrear table
                         } else {
                             echo "ERROR IN UPDATING REPAYMENT STRUCTURE";

@@ -68,7 +68,7 @@ while($a = mysqli_fetch_array($queryexec1)) {
 
 if ($connection->error) {
     try {   
-        throw new Exception("MySQL error $connection->error <br> Query:<br> $query3", $mysqli->error);   
+        throw new Exception("MySQL error $connection->error <br> Query:<br> $query1", $mysqli->error);   
     } catch(Exception $e ) {
         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
         echo nl2br($e->getTraceAsString());
@@ -80,6 +80,8 @@ if ($connection->error) {
             $queryexec4 = mysqli_query($connection, $query4);
             if($queryexec4){
                 echo 'Client no: '.$client_id.' updated in loan_remodeling</br></br>';
+            } else {
+                echo "EOOR";
             }
         }
     }
