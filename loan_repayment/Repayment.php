@@ -63,7 +63,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
         $select_repayment_sch = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE loan_id = '$loan_id' AND client_id = '$client_id' AND int_id = '$int_id'");
         $dm = mysqli_fetch_array($select_repayment_sch);
         // dman
-        if ($dm <= 0) {
+        if ($dm <= 0 && $int_id > 0) {
             // NOTHING
         while (strtotime("+1 ".$rep_every, strtotime($repayment_start)) <= strtotime($matured_date2)) {
            $rep_client_id =  $client_id;
