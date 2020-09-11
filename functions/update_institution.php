@@ -3,6 +3,7 @@
 if (isset($_POST['int_name']) && isset($_POST['rcn'])  && isset($_POST['email'])) {
 $int_id = $_POST['int_id'];
 $int_name = $_POST['int_name'];
+$int_full = $_POST['int_full'];
 $rcn = $_POST['rcn'];
 $lga = $_POST['lga'];
 $int_state = $_POST['state'];
@@ -36,7 +37,7 @@ if($_FILES['int_logo']['name']) {
 }
 
   $query = "UPDATE institutions SET int_name = '$int_name', 
-  rcn = '$rcn', lga = '$lga', int_state = '$int_state', email = '$email',
+  rcn = '$rcn', lga = '$lga', int_state = '$int_state', email = '$email', int_full = '$int_full',
   office_address = '$office_address', website = '$website', office_phone = '$office_phone',
   pc_title = '$pc_title', pc_surname = '$pc_surname', pc_other_name = '$pc_other_name', pc_designation = '$pc_designation',
   pc_phone = '$pc_phone', pc_email = '$pc_email', img = '$img', sender_id = '$sender_id', instagram = '$ingram', twitter = '$tweet'

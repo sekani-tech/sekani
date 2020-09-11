@@ -708,7 +708,7 @@ $destination = "config.php";
                           <div class="col-md-6">
                             <br>
                         <h5 class="card-title">Assets</h5>
-                          <div class="position-relative form-group">
+                          <div hidden class="position-relative form-group">
                             <div class="form-group">
                               <?php 
                               function fill_asset($connection)
@@ -731,16 +731,7 @@ $destination = "config.php";
                               </select>
                               </div> -->
                             </div>
-                            <div class="form-group">
-                            <div class="col-md-8">
-                            <label for="charge" class="form-align ">Savings Portfolio</label>
-                            <select class="form-control form-control-sm" name="asst_loan_port">
-                              <option hidden value="<?php echo $asst_loan_port;?>"><?php echo $ast_ln_prt;?></option>
-                              <?php echo fill_asset($connection) ?>
-                            </select>
-                            </div>
-                          </div>
-                          <div class="form-group">
+                          <div class="form-group" hidden>
                             <div class="col-md-8">
                             <label for="charge" class="form-align">Insufficient Repayment</label>
                             <select class="form-control form-control-sm" name="insufficient_repayment">
@@ -766,6 +757,15 @@ $destination = "config.php";
                               }
                               ?>
                       <div class="position-relative form-group">
+                      <div class="form-group">
+                            <div class="col-md-8">
+                            <label for="charge" class="form-align ">Savings Portfolio</label>
+                            <select class="form-control form-control-sm" name="asst_loan_port">
+                              <option hidden value="<?php echo $asst_loan_port;?>"><?php echo $ast_ln_prt;?></option>
+                              <?php echo fill_asset($connection) ?>
+                            </select>
+                            </div>
+                          </div>
                         <div class="form-group">
                         <div class="col-md-8">
                             <label for="charge" class="form-align ">Overpayments</label>

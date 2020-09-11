@@ -1,10 +1,23 @@
 <?php
 
-$page_title = "Create Charge";
+$page_title = "Create Auto Charge";
 $destination = "products_config.php";
     include("header.php");
 
+    function fill_charge($connection)
+    {
+        $sint_id = $_SESSION["int_id"];
+        $org = "SELECT * FROM charge WHERE int_id = '$sint_id'";
+        $res = mysqli_query($connection, $org);
+        $out = '';
+        while ($row = mysqli_fetch_array($res))
+        {
+        $out .= '<option value="'.$row["id"].'">' .$row["name"]. '</option>';
+        }
+        return $out;
+    }
 ?>
+
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -17,30 +30,38 @@ $destination = "products_config.php";
                   <p class="card-category">Fill in all important data</p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/charge_upload.php" method="POST">
+                  <form action="../functions/auto_charge_upload.php" method="POST">
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Name</label>
-                          <input type="text" class="form-control" name="name">
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                            <!-- populate from db -->
-                          <label class="bmd-label-floating">Product</label>
-                          <select name="product" id="" class="form-control">
-                              <option value="1">Loan</option>
-                              <option value="2">Savings</option>
-                              <option value="3">Shares</option>
-                              <option value="4">Current</option>
+                          <select name="name" id="sok" class="form-control">
+                            <?php echo fill_charge($connection);?>
                           </select>
                         </div>
                       </div>
+                      </div>
+                      <script>
+                    $(document).ready(function() {
+                      $('#sok').on("change", function(){
+                        var id = $(this).val();
+                        $.ajax({
+                          url:"ajax_post/create_auto_charge.php",
+                          method:"POST",
+                          data:{id:id},
+                          success:function(data){
+                            $('#qwo').html(data);
+                          }
+                        })
+                      });
+                    });
+                </script>
+                      <div class="row" id="qwo">
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Charge Type</label>
-                          <select name="charge_type" id="ok" class="form-control">
+                          <select name="charge_type" id="" class="form-control">
+                            <option value="sms">SMS</option>
                               <option value="1">Disbursement</option>
                               <option value="2">Specified Due Date</option>
                               <option value="3">Installment Fees</option>
@@ -51,27 +72,10 @@ $destination = "products_config.php";
                           </select>
                         </div>
                       </div>
-                      <script>
-                    $(document).ready(function() {
-                      $('#ok').on("change", function(){
-                        var id = $(this).val();
-                        $.ajax({
-                          url:"ajax_post/specified_date.php",
-                          method:"POST",
-                          data:{id:id},
-                          success:function(data){
-                            $('#okay').html(data);
-                          }
-                        })
-                      });
-                    });
-                </script>
-                <div class="col-md-4" id = "okay">
-                </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Amount</label>
-                          <input type="number" step=".01" class="form-control" name="amount">
+                          <input type="number" class="form-control" name="amount">
                         </div>
                       </div>
                       <div class=" col-md-4 form-group">
@@ -87,11 +91,8 @@ $destination = "products_config.php";
                           </select>
                       </div>
                       <div class=" col-md-4 form-group">
-                          <label for="bmd-label-floating">Charge Payment Mode</label>
-                          <select name="charge_payment" id="" class="form-control">
-                              <option value="1">Regular</option>
-                              <option value="2">Account Transfer</option>
-                          </select>
+                          <label for="bmd-label-floating">Fee Day</label>
+                         <input type="number" name="days" class="form-control"/>
                       </div>
                       <div class=" col-md-4 form-group">
                       <?php
@@ -114,17 +115,6 @@ $destination = "products_config.php";
                               <?php echo fill_in($connection) ?>
                           </select>
                       </div>
-                      <div class=" col-md-2 form-group">
-                        <div class="form-check form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" name="is_pen" type="checkbox" value="1">
-                                Penalty
-                                <span class="form-check-sign">
-                                    <span class="check"></span>
-                                </span>
-                            </label>
-                        </div>
-                        </div>
                         <div class=" col-md-2 form-group">
                         <div class="form-check form-check-inline">
                             <label class="form-check-label">

@@ -583,9 +583,6 @@ table{
                       <!-- <td valign='middle' width='50%'>
                         <table role='presentation' cellspacing='0' cellpadding='0' border='0' width='100%'>
                           <tr>
-                            <td>
-                              <img src='https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80' alt='' style='width: 100%; max-width: 600px; height: auto; margin: auto; display: block;'>
-                            </td>
                           </tr>
                         </table>
                       </td> -->

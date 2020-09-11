@@ -41,7 +41,7 @@ $destination = "../index.php";
                         </tr>
                         <tr>
                           <th></th>
-                          <th>View Approved Client List</th>
+                          <th>View Active Client List</th>
                           <th>View the list of all the approved clients in the institution</th>
                           <td><a href="client.php" class="btn btn-info"><i class="material-icons" style="margin:auto">description</i></a></td>
                         </tr>

@@ -63,7 +63,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
         $select_repayment_sch = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE loan_id = '$loan_id' AND client_id = '$client_id' AND int_id = '$int_id'");
         $dm = mysqli_fetch_array($select_repayment_sch);
         // dman
-        if ($dm <= 0) {
+        if ($dm <= 0 && $int_id != "0") {
             // NOTHING
         while (strtotime("+1 ".$rep_every, strtotime($repayment_start)) <= strtotime($matured_date2)) {
            $rep_client_id =  $client_id;
@@ -71,7 +71,13 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
            $rep_duedate = $matured_date;
             $rep_install = $no_of_rep;
            $rep_comp_derived =  $pincpal_amount / $loan_term;
+           if ($rep_every == "month") {
            $rep_int_amt = ((($interest_rate / 100) * $pincpal_amount) * $loan_term) / $loan_term;
+           } else if ($rep_every == "week") {
+            $rep_int_amt = (((($interest_rate / 100) * $pincpal_amount) * $loan_term) / $loan_term) / 4;
+           } else if ($rep_every == "") {
+            $rep_int_amt = (((($interest_rate / 100) * $pincpal_amount) * $loan_term) / $loan_term) / 28;
+           }
         //    $general_payment = $pincpal_amount + ((($interest_rate / 100) * $pincpal_amount) * $loan_term);
         //    echo "GENERAL PAYMENT".$general_payment;
         //    WE DO A NEXT STUFF
@@ -128,6 +134,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
             $balance_remaining = $client_account_balance - $collection_due_paid;
             $total_withd =  $u["total_withdrawals_derived"] + $collection_due_paid;
             // PILLED
+            $total_out_stand = $general_payment - $collection_due_paid;
             // CLIENT 
             $client_account = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' AND int_id = '$int_id'");
             $cx = mysqli_fetch_array($client_account);
@@ -151,9 +158,10 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                 $update_client_account = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$balance_remaining', total_withdrawals_derived = '$total_withd' WHERE int_id = '$int_id' AND client_id = '$client_id' AND account_no = '$acct_no'");
                 if ($update_client_account) {
                 // update client account transaction
+                
                 $insert_client_trans = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
                 `product_id`, `account_id`, `account_no`, `client_id`, `teller_id`, `transaction_id`,
-                `description`, `transac$total_out_stand = $general_payment - $collection_due_paid;tion_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
+                `description`, `transaction_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
                 `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
                 `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
                 VALUES ('{$int_id}', '{$branch_id}', '0', '{$account_id}', '$acct_no', '{$client_id}', '0', '{$trans_id}',
@@ -449,9 +457,16 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                                if ($update_rep_status) {
                                    // YOU STOPPED HERE HERE
                                   // update the repayement sch.
-                                  $uodate_rep_status = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET installment = '$post_installment' WHERE int_id = '$int_id' AND id = '$collection_id'");
+                                  $update_rep_status = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET installment = '$post_installment' WHERE int_id = '$int_id' AND id = '$collection_id'");
                                   if ($update_rep_status) {
                                       echo "SUCCESS AT LAST";
+                                      if ($collection_interest < 0) {
+                                          $collection_interest = 0;
+                                      }
+                                      if ($collection_principal < 0) {
+                                        //  finsih 
+                                          $collection_principal = 0;
+                                      }
                                         $makebig_move = mysqli_query($connection, "INSERT INTO `loan_arrear` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, `counter`, `principal_amount`, `principal_completed_derived`, `principal_writtenoff_derived`, `interest_amount`, `interest_completed_derived`, `interest_writtenoff_derived`, `total_paid_late_derived`, `completed_derived`, `obligations_met_on_date`, `createdby_id`, `created_date`, `lastmodified_date`) VALUES ('{$int_id}', '{$collection_loan}', '{$collection_client_id}', '{$gen_date}', '{$general_date_due}', '{$collection_installment}', '1', '{$collection_principal}', '{$collection_principal}', '0', '{$collection_interest}', '{$collection_interest}', '0', '0', '0', NULL, '{$approved_by}', '{$sch_date}', '{$sch_date}')");
                                             if ($makebig_move) {
                                                 echo "we done over here - LOAN IN ARREARS";
@@ -754,4 +769,309 @@ while($a = mysqli_fetch_array($ftd_booking_account)){
     }
 }
 
+?>
+<?php
+// CODE TO TRACK DORMANCY IN THE SYSTEM
+echo '</br></br></br>Track Dormancy Code right here:</br>';
+// Declaring the variables for dormant accounts
+$account = "SELECT * FROM account WHERE type_id = '1'";
+$exec = mysqli_query($connection, $account);
+while($que = mysqli_fetch_array($exec)){
+    $name = $que['account_no'];
+    $id = $que['id'];
+    $intid = $que['int_id'];
+    $last_edit = $que['updatedon_date'];
+    $date = date('Y-m-d');
+    $status = $que['status'];
+    $current = strtotime($date);
+    $last_update = strtotime($last_edit);
+
+    $fdi = "SELECT * FROM dormancy_counter WHERE int_id = '$intid'";
+    $idfo = mysqli_query($connection, $fdi);
+    if($idfo){
+        $qp = mysqli_fetch_array($idfo);
+        $ina = $qp['day_to_inactive'];
+        $dor = $qp['day_to_dormancy'];
+        $arc = $qp['day_to_archive'];
+
+        $days = ceil(abs($current - $last_update) / 86400);
+        if($days <= $ina){
+            if($status == 'Active'){
+                echo 'its already active</br>';
+            }
+            else{
+                $fdi = "UPDATE account SET status = 'Active' WHERE id = '$id'";
+                $ufd = mysqli_query($connection, $fdi);
+                echo 'its active</br>';
+            }
+        }
+        else if($days > $ina && $days <= $dor){
+            if($status == 'Inactive'){
+                echo 'its already Inactive</br>';
+            }
+            else{
+                $fdi = "UPDATE account SET status = 'Inactive' WHERE id = '$id'";
+                $ufd = mysqli_query($connection, $fdi);
+                echo 'its Inactive';
+            }
+            
+        }
+        else if($days > $dor && $days <= $arc){
+            if($status == 'Dormant'){
+                echo 'its already Dormant</br>';
+            }
+            else{
+                $fdi = "UPDATE account SET status = 'Dormant' WHERE id = '$id'";
+                $ufd = mysqli_query($connection, $fdi);
+                echo 'its Dormant';
+            }
+        }
+        else if($days > $arc){
+            if($status == 'Archived'){
+                echo 'its already Archived</br>';
+            }
+            else{
+                $fdi = "UPDATE account SET status = 'Archived' WHERE id = '$id'";
+                $ufd = mysqli_query($connection, $fdi);
+                echo 'its archived';
+            }
+        }
+    }
+
+}
+?>
+
+<?php
+// due date
+$charge_query = mysqli_query($connection, "SELECT * FROM auto_charge WHERE is_active = '1'");
+// end date
+if (mysqli_num_rows($charge_query) >= 1) {
+    while ($bx = mysqli_fetch_array($charge_query)) {
+    $c_id = $bx["id"];
+    $c_int_id = $bx["int_id"];
+    $c_name = $bx["name"];
+    $c_type = $bx["charge_type"];
+    $c_amount = $bx["amount"];
+    $c_fee_day = $bx["fee_on_day"];
+    // $c_interval = $bx["interval"];
+    $c_gl = $bx["gl_code"];
+    $c_cal = $bx["charge_cal"];
+        // ok make a new move
+      if ($c_type == "sms") {
+        //   if it is equals to sms
+        $check_sms_table = mysqli_query($connection, "SELECT * FROM `sms_charge` WHERE paid = '0' ORDER BY client_id, account_no LIMIT 1");
+        if (mysqli_num_rows($check_sms_table) >= 1) {
+            $sc = mysqli_fetch_array($check_sms_table);
+                $s_client_id = $sc["client_id"];
+                $s_account = $sc["account_no"];
+                $s_int_id = $sc["int_id"];
+                $s_branch_id = $sc["branch_id"];
+                
+                $sum_account = mysqli_query($connection, "SELECT * FROM `sms_charge` WHERE account_no = '$s_account' AND client_id = '$s_client_id'");
+                $sm = mysqli_num_rows($sum_account);
+                if ($c_cal <= "1"){
+                    $s_amount = $c_amount * $sm;
+                } else {
+                    $s_amount = $c_amount * $sm;
+                }
+                
+                // make a charge
+                $select_account = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$s_account' AND client_id = '$s_client_id'");
+                // $s
+                $u = mysqli_fetch_array($select_account);
+            $account_id = $u["id"];
+            $client_account_balance = $u["account_balance_derived"];
+            $balance_remaining = $client_account_balance - $s_amount;
+            $total_withd =  $u["total_withdrawals_derived"] + $s_amount;
+                $current_day = date('Y-m-d');
+                $date_time = date('Y-m-d H:i:s');
+                $last_month_day = date("Y-m-t");
+                if ($current_day == $last_month_day) {
+                    // make an echo.
+                    $digits = 5;
+                    $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+                    $trans_id = $randms."SMS";
+                    $update_client_account = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$balance_remaining', total_withdrawals_derived = '$total_withd' WHERE client_id = '$s_client_id' AND account_no = '$s_account'");
+                    if ($update_client_account) {
+                    $insert_client_trans = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
+                `product_id`, `account_id`, `account_no`, `client_id`, `teller_id`, `transaction_id`,
+                `description`, `transaction_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
+                `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
+                `cumulative_balance_derived`, `created_date`, `appuser_id`, `manually_adjusted_or_reversed`, `debit`, `credit`) 
+                VALUES ('{$s_int_id}', '{$s_branch_id}', '0', '{$account_id}', '{$s_account}', '{$s_client_id}', '0', '{$trans_id}',
+                'SMS_CHARGE', 'SMS_CHARGE', '0', '{$current_day}', '{$s_amount}', '{$s_amount}',
+                '{$current_day}', '0', '{$balance_remaining}',
+                '{$balance_remaining}', '{$date_time}', '0', '0', '{$s_amount}', '0.00')");
+                if ($insert_client_trans) {
+                    // GET ALL GL
+                    $query_gl = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$c_gl' AND int_id = '$c_int_id'");
+                    $igdb = mysqli_fetch_array($query_gl);
+                    $intbalport = $igdb["organization_running_balance_derived"];
+                    $s_gl_balance = $intbalport + $s_amount;
+                    // get the GL
+                    $update_the_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$s_gl_balance' WHERE int_id ='$c_int_id' AND gl_code = '$c_gl'");
+                    if ($update_the_loan) {
+                        // make a new stuff
+                        $insert_loan_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
+                                         `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
+                                        VALUES ('{$c_int_id}', '{$s_branch_id}', '{$c_gl}', '{$trans_id}', 'SMS CHARGE / {$s_account}', 'sms_charge', '0', '0', '{$current_day}',
+                                         '{$s_amount}', '{$s_gl_balance}', '{$s_gl_balance}', '{$current_day}', '0', '0', '{$current_day}', '0', '0.00', '{$s_amount}')");
+                                         if ($insert_loan_port) {
+                                            //  next code
+                                             $update_sms = mysqli_query($connection, "UPDATE sms_charge SET paid = '1' WHERE client_id = '$s_client_id' AND account_no = '$s_account'");
+                    if ($update_sms) {
+                        echo "SMS CHARGE SUCCESS";
+                    } else {
+                        echo "SMS CHARGE BAD";
+                    }
+                                         } else {
+                                             echo "Error at GL insert";
+                                         }
+                    } else {
+                        echo "error at gl update";
+                    }
+                } else {
+                    echo "SYSTEM ERROR - INSERT ACCOUNT";
+                }
+        } else {
+            echo "SYSTEM ERROR - UPDATE ACCOUNT";
+        }
+                } else {
+                    // not yet ending
+                }
+        } else {
+            echo "No SMS Charge";
+        }
+      } else if ($c_type == "") {
+        //   make something for something else
+      }
+}
+}
+// ECHO SOMETHING
+echo date("Y-m-d")."CURRENT MONTH";
+echo date("Y-m-t")."ENDING THIS MONTH";
+?>
+<?php
+echo "<br/><br/> /////////////////////////////////////////////// LOAN REMODEL ////////////////////////////////////// <br/><br/>";
+// here we will work on AUTO BACK DATE REPAYMENT
+$get_back_model = mysqli_query($connection, "SELECT * FROM `loan_remodeling` WHERE status = '1'");
+if (mysqli_num_rows($get_back_model) >= 1) {
+    while ($row = mysqli_fetch_array($get_back_model)) {
+        // display the details
+        $m_id = $row["id"];
+        $m_int_id = $row["int_id"];
+        $m_client_id = $row["client_id"];
+        $m_loan_id = $row["loan_id"];
+        $m_amount_paid = $row["amount_paid"];
+        $m_status = $row["status"];
+        $loan_off = $row["loan_officer"];
+        $today_date = date('Y-m-d');
+        $get_repayment_sch = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE installment = '1' AND (duedate < '$today_date') AND (loan_id = '$m_loan_id' AND client_id = '$m_client_id') ORDER BY id ASC LIMIT 1");
+        if (mysqli_num_rows($get_repayment_sch) >= 1) {
+            // while loop
+            while ($lrp = mysqli_fetch_array($get_repayment_sch)) {
+                $r_id = $lrp["id"];
+                $r_principal = $lrp["principal_amount"];
+                $r_interest = $lrp["interest_amount"];
+                $repayment_amount = $r_principal + $r_interest;
+                $r_loan_id = $lrp["loan_id"];
+                $r_client_id = $lrp["client_id"];
+                $r_from_date = $lrp["fromdate"];
+                $r_due_date = $lrp["duedate"];
+                // DO CALCULATE
+                $get_loan = mysqli_query($connection, "SELECT * FROM `loan` WHERE id = '$r_loan_id'");
+                $gl = mysqli_fetch_array($get_loan);
+                $client_account_no = $gl["account_no"];
+                if ($client_account_no != "") {
+                    // check the amount paid
+                    if ($m_amount_paid >= $repayment_amount) {
+                        // cehck
+                        $new_repayment_balance = $m_amount_paid - $repayment_amount;
+                        // query the new
+                        $query_remodel = mysqli_query($connection, "UPDATE `loan_remodeling` SET `amount_paid` = '$new_repayment_balance' WHERE id = '$m_id' AND client_id = '$m_client_id'");
+                        if ($query_remodel) {
+                            // update the repayment
+                        $query_update_repayment = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET `principal_amount` = '0.00', `interest_amount` = '0.00', `installment` = '0' WHERE `loan_repayment_schedule`.`id` = '$r_id'");
+                        if ($query_update_repayment) {
+                            echo "REPAYED SUCCESSFULLY";
+                        } else {
+                            echo "ERROR IN UPDATING REPAYMENT STRUCTURE";
+                        }
+                        } else {
+                            echo "ERROR IN UPDATING REMODEL";
+                        }
+                        // hit a function here
+                        // enda fucntin
+                    } else if ($m_amount_paid < $repayment_amount && $m_amount_paid >= 0) {
+                        // check it up
+                        $new_repayment_balance = $repayment_amount - $m_amount_paid;
+                        $r_prin = $r_principal;
+                        echo $r_prin."HOLLA NEW PRINCIPAL NOT UPTO";
+                        $r_inte = $r_interest;
+                        echo $r_inte."INTEREST NOT UPTO";
+                        $model_balance = 0;
+                        // UPDATE
+                        $query_remodel = mysqli_query($connection, "UPDATE `loan_remodeling` SET `amount_paid` = '$model_balance' WHERE id = '$m_id' AND client_id = '$m_client_id'");
+                        if ($query_remodel) {
+                            // update the repayment
+                            // check if it is equals to the interest.
+                            if ($m_amount_paid >= $r_inte) {
+                                $new_interest = 0;
+                                $new_bqwe = $m_amount_paid - $r_inte;
+                                $new_principal = $r_principal - $new_bqwe;
+                                // end the principal
+                                $query_update_repayment = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET `principal_amount` = '$new_principal', `interest_amount` = '$new_interest', `installment` = '0' WHERE `loan_repayment_schedule`.`loan_id` = '$r_loan_id' AND client_id = '$r_client_id' AND duedate = '$r_due_date'");
+                        if ($query_update_repayment) {
+                            // add the remaining amount to the arrear table
+                                $check_arrear = mysqli_query($connection, "INSERT INTO `loan_arrear` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, `counter`, `principal_amount`, `principal_completed_derived`, `principal_writtenoff_derived`, `interest_amount`, `interest_completed_derived`, `interest_writtenoff_derived`, `total_paid_late_derived`, `completed_derived`, `obligations_met_on_date`, `createdby_id`, `created_date`, `lastmodified_date`) 
+                            VALUES ('{$m_int_id}', '{$m_loan_id}', '{$m_client_id}', '{$r_from_date}', '{$r_due_date}', '1', '1', '{$new_principal}', '{$new_principal}', '0', '{$new_interest}', '{$new_interest}', '0', '0', '0', NULL, '{$loan_off}', '{$today_date}', '{$today_date}')");
+                            if ($check_arrear) {
+                                echo "REPAYMENT HAS BEEN POSTED TO ARREARS";
+                            } else {
+                                echo "ERROR UPDATING ARREAR";
+                            }
+                            // end adding to the arrrear table
+                        } else {
+                            echo "ERROR IN UPDATING REPAYMENT STRUCTURE";
+                        }
+
+                            } else if ($m_amount_paid < $r_inte) {
+                                // less then just take the 
+                                $new_interest = $r_inte - $m_amount_paid;
+                                $new_principal = $r_prin;
+                                // make post
+                                $query_update_repayment = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET `principal_amount` = '$new_principal', `interest_amount` = '$new_interest', `installment` = '0' WHERE `loan_repayment_schedule`.`loan_id` = '$r_loan_id' AND client_id = '$r_client_id' AND duedate = '$r_due_date'");
+                        if ($query_update_repayment) {
+                            // add the remaining amount to the arrear table
+                                $check_arrear = mysqli_query($connection, "INSERT INTO `loan_arrear` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, `counter`, `principal_amount`, `principal_completed_derived`, `principal_writtenoff_derived`, `interest_amount`, `interest_completed_derived`, `interest_writtenoff_derived`, `total_paid_late_derived`, `completed_derived`, `obligations_met_on_date`, `createdby_id`, `created_date`, `lastmodified_date`) 
+                            VALUES ('{$m_int_id}', '{$m_loan_id}', '{$m_client_id}', '{$r_from_date}', '{$r_due_date}', '1', '1', '{$new_principal}', '{$new_principal}', '0', '{$new_interest}', '{$new_interest}', '0', '0', '0', NULL, '{$loan_off}', '{$today_date}', '{$today_date}')");
+                            if ($check_arrear) {
+                                echo "REPAYMENT HAS BEEN POSTED TO ARREARS";
+                            } else {
+                                echo "ERROR UPDATING ARREAR";
+                            }
+                            // end adding to the arrrear table
+                        } else {
+                            echo "ERROR IN UPDATING REPAYMENT STRUCTURE";
+                        }
+                            }
+                        // end here
+                        } else {
+                            echo "ERROR IN UPDATING REMODEL";
+                        }
+                    }
+                } else {
+                    echo "CLIENT ACCOUNT NO IS EMPTY";
+                }
+            }
+            // end while loop
+        } else {
+            echo "NO ACTIVE REPAYMENT";
+        }
+        // end the details
+    }
+} else {
+    echo "NO ACTIVE REMODEL";
+}
+// END AUTO BACK REPAYMENT
 ?>

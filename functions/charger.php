@@ -6,6 +6,7 @@ session_start();
 
 ?>
 <?php
+$tday = date('Y-m-d');
 if(isset($_GET['approve'])){
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
@@ -64,7 +65,7 @@ if($client == "0"){
     $glsmi += $amount;
     $ttlwith = $ttl + $amount;
     $newbal = $accbal - $amount;
-    $iupq = "UPDATE account SET account_balance_derived = '$newbal', last_withdrawal = '$amount', total_withdrawals_derived = '$ttlwith' WHERE client_id = '$at_id' AND id = '$acct_id' AND int_id = '$sessint_id'";
+    $iupq = "UPDATE account SET updatedon_date = '$tday', account_balance_derived = '$newbal', last_withdrawal = '$amount', total_withdrawals_derived = '$ttlwith' WHERE client_id = '$at_id' AND id = '$acct_id' AND int_id = '$sessint_id'";
             $iupqres = mysqli_query($connection, $iupq);
             if ($iupqres) {
             // update the clients transaction
@@ -132,7 +133,7 @@ else{
   $newglball = $glbalance + $amount;
   $ttlwith = $ttl + $amount;
   $newbal = $accbal - $amount;
-  $iupq = "UPDATE account SET account_balance_derived = '$newbal', last_withdrawal = '$amount', total_withdrawals_derived = '$ttlwith' WHERE id = '$acct_id' AND account_no = '$acct_no' && int_id = '$sessint_id'";
+  $iupq = "UPDATE account SET updatedon_date = '$tday', account_balance_derived = '$newbal', last_withdrawal = '$amount', total_withdrawals_derived = '$ttlwith' WHERE id = '$acct_id' AND account_no = '$acct_no' && int_id = '$sessint_id'";
           $iupqres = mysqli_query($connection, $iupq);
           if ($iupqres) {
           // update the clients transaction

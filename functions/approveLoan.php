@@ -4,6 +4,7 @@ session_start();
 
 $sessint_id = $_SESSION["int_id"];
 $userid = $_SESSION["user_id"];
+$tday = date('Y-m-d');
 $client_id = $_POST["client_id"];
 $goacctn = mysqli_query($connection, "SELECT account_no FROM client WHERE id = '$client_id' ");
 if (count([$goacctn]) == 1) {
@@ -122,7 +123,7 @@ $verify = mysqli_query($connection, "SELECT * FROM institution_account WHERE int
                         // update client account (savings or current)
                         $cabd = $abd + $principal_amount;
                         $ladd = date("Y-m-d h:m:s");
-                        $oyacbu = "UPDATE account SET account_balance_derived = '$cabd',
+                        $oyacbu = "UPDATE account SET updatedon_date = '$tday', account_balance_derived = '$cabd',
                         last_activity_date = '$ladd' WHERE client_id = '$client_id'";
                         $gomrca = mysqli_query($connection, $oyacbu);
                         if ($gomrca) {

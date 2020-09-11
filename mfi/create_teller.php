@@ -62,9 +62,9 @@ $currency = "NGN";
 $abdc = 0;
   $queryx = "INSERT INTO institution_account (int_id, branch_id, account_no,
   teller_id, account_balance_derived,
-    submittedon_date, submittedon_userid, currency_code) VALUES ('{$int_id}',
+    submittedon_date, submittedon_userid, currency_code, gl_code) VALUES ('{$int_id}',
     '{$branch}', '{$account_no}',
-    '{$tell_name}', '{$abdc}', '{$submitted_on}', '{$staff_id}', '{$currency}')";
+    '{$tell_name}', '{$abdc}', '{$submitted_on}', '{$staff_id}', '{$currency}', '{$checkx}')";
     $gogoo = mysqli_query($connection, $queryx);
     if ($gogoo) {
       echo '<script type="text/javascript">

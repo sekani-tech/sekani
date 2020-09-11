@@ -369,7 +369,26 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   ';
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
-} else {
+}  else if (isset($_GET["message123"])) {
+  $key = $_GET["message123"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "info",
+          title: "Notice",
+          text: "This account is Dormant",
+          showConfirmButton: false,
+          timer: 3000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+}else {
     echo "";
 }
 ?>
@@ -638,14 +657,8 @@ $transid2 = $randms2;
               $('.js-example-basic-single').select2();
           });
           </script>
-                <!-- <label for="">Client</label>
-                <select class="js-example-basic-single" name="state">
-                  <option>one</option>
-                  <option>two</option>
-                  <option>three</option>
-                </select> -->
                 <label for="">Client</label>
-                <select id="sdd" name="client_id" class="js-example-basic-single form-control">
+                <select id="sdd" name="client_id" class="form-control">
                 <option hidden>select clients</option>
                   <option value="000">All</option>
                   <?php echo fill_client($connection);?>

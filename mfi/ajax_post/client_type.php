@@ -576,6 +576,13 @@ if(isset($_POST['id'])){
             <div class="col-md-4">
             <p><label for="">Active Alerts:</label></p>
             <div class="form-check form-check-inline">
+            <label class="form-check-label">
+                    <input class="form-check-input" name="is_staff" type="checkbox" value="1">
+                    IS STAFF
+                    <span class="form-check-sign">
+                        <span class="check"></span>
+                    </span>
+                </label>
                 <label class="form-check-label">
                     <input class="form-check-input" name="sms_active" type="checkbox" value="1">
                     SMS

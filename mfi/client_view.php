@@ -3,7 +3,6 @@
 $page_title = "View Client";
 $destination = "client.php";
 include('header.php');
-session_start();
 
 ?>
 <?php
@@ -56,9 +55,11 @@ if(isset($_GET["edit"])) {
       $gogo = mysqli_query($connection, "SELECT * FROM loan WHERE client_id = '$id' && int_id='$sessint_id'");
       if (count([$gogo]) == 1) {
         $ppo = mysqli_fetch_array($gogo);
+        if(isset($ppo)){
         $sum = $ppo['total_outstanding_derived'];
         $olb = $ppo['principal_amount'];
         $prd = $ppo['principal_repaid_derived'];
+        }
         $cv = "Null";
       }
     }
@@ -104,9 +105,9 @@ if(isset($_GET["edit"])) {
     function fill_account($connection) {
       $int_id = $_SESSION['int_id'];
        $client_id = $_GET['edit'];
+       $out = '';
        $pen = "SELECT * FROM account WHERE client_id = '$client_id'";
       $res = mysqli_query($connection, $pen);
-      $out = '';
       while ($row = mysqli_fetch_array($res))
       {
         $product_type = $row["product_id"];

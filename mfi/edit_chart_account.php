@@ -5,7 +5,28 @@ $destination = "chart_account.php";
 include("header.php");
 ?>
 <!-- Content added here -->
+
 <?php
+if (isset($_GET["message9"])) {
+  $key = $_GET["message9"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "GL Code Error",
+          text: "GL Code Already Exsits",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
 // editing the chart account
 if(isset($_GET["edit"])) {
   $id = $_GET["edit"];
@@ -122,13 +143,14 @@ elseif($class_enum  == 5){
                   <div class="col-md-4">
                     <div class="form-group">
                       <label >Account name</label>
+                      <input type="text" value="from_edit" id="fedit" hidden class="form-control" required>
                       <input type="text" value="<?php echo $acct_name; ?>" style="text-transform: uppercase;" class="form-control" name="acct_name" required>
                     </div>
                   </div>
                   <div class="col-md-4">
-                    <div class="form-group">
+                    <div class="form-group" id = "tit">
                       <label >GL Code</label>
-                      <input type="text" value="<?php echo $gl_code; ?>"  style="text-transform: uppercase;" class="form-control" readonly name="gl_code" required>
+                      <input type="text" value="<?php echo $gl_code; ?>" style="text-transform: uppercase;" class="form-control" readonly name="gl_code" required>
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -170,6 +192,61 @@ elseif($class_enum  == 5){
                           data:{ch:ch, gl:gl, id:id},
                           success:function(data){
                             $('#dropping').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                  <!-- GLCODE CALCULATION -->
+                  <script>
+                    $(document).ready(function () {
+                      $('#give').on("change", function () {
+                        var type = $(this).val();
+                        var dso = $('#atu').val();
+                        var pid = $('#dropping').val();
+                        var fed = $('#fedit').val();
+                        $.ajax({
+                          url: "ajax_post/chart_account_gl.php", 
+                          method: "POST",
+                          data:{type:type, dso:dso, pid:pid, fed:fed},
+                          success: function (data) {
+                            $('#tit').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                  <script>
+                    $(document).ready(function () {
+                      $('#atu').on("change", function () {
+                        var dso = $(this).val();
+                        var type = $('#give').val();
+                        var pid = $('#dropping').val();
+                        var fed = $('#fedit').val();
+                        $.ajax({
+                          url: "ajax_post/chart_account_gl.php", 
+                          method: "POST",
+                          data:{type:type, dso:dso, pid:pid, fed:fed},
+                          success: function (data) {
+                            $('#tit').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                  <script>
+                    $(document).ready(function () {
+                      $('#dropping').on("change", function () {
+                        var dso = $('#atu').val();
+                        var type = $('#give').val();
+                        var pid = $(this).val();
+                        var fed = $('#fedit').val();
+                        $.ajax({
+                          url: "ajax_post/chart_account_gl.php", 
+                          method: "POST",
+                          data:{type:type, dso:dso, pid:pid, fed:fed},
+                          success: function (data) {
+                            $('#tit').html(data);
                           }
                         })
                       });

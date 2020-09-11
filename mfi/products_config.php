@@ -345,6 +345,12 @@ if ($per_con == 1 || $per_con == "1") {
                           </a>
                         </li>
                         <li class="nav-item">
+                          <a class="nav-link" href="#auto" data-toggle="tab">
+                            <i class="material-icons">autorenew</i> Auto Charge
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                        <li class="nav-item">
                           <a class="nav-link" href="#credit" data-toggle="tab">
                             <i class="material-icons">find_in_page</i> Credit Check
                             <div class="ripple-container"></div>
@@ -607,6 +613,87 @@ if ($per_con == 1 || $per_con == "1") {
                          <th><?php echo $xs; ?></th>
                           <th><?php echo $me_amt; ?></th>
                           <td><a href="charge_edit.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
+                          <td><a href="../functions/charge_delete.php?delete=<?php echo $row["id"];?>" class="btn btn-danger">Delete</a></td>
+                        </tr>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                          <!-- <th></th> -->
+                      </tbody>
+                      </table>
+                    </div>
+                    <div class="tab-pane" id="auto">
+                    
+                    <a href="create_auto_charge.php" class="btn btn-primary">Create auto Charge</a>
+                      <table class="rtable display nowrap" style="width:100%">
+                      <thead class=" text-primary">
+                      <?php
+                        $query = "SELECT * FROM `auto_charge` WHERE int_id = '$sessint_id'";
+                        $result = mysqli_query($connection, $query);
+                      ?>
+                        <th>
+                          Name
+                        </th>
+                        <th>
+                          Days
+                        </th>
+                        <th>
+                          Charge Type
+                        </th>
+                        <th>
+                         Amount
+                        </th>
+                        <th>
+                         Status
+                        </th>
+                        <th>View</th>
+                        <th>Delete</th>
+                      </thead>
+                      <tbody>
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                        <tr>
+                         <?php $row["id"]; ?>
+                          <th><?php echo $row["name"]; ?></th>
+                          <?php
+                          if ($row["is_active"] == 1) {
+                            $ead = "Active";
+                          } else {
+                            $ead = "Not Active";
+                          }
+                         ?>
+                         <th><?php echo $row["fee_on_day"]; ?></th>
+                          <?php
+                          $xs="";
+                          $me_amt = "";
+                          if ($row["charge_cal"] == 1) {
+                            $me_amt = '&#8358; '.$row["amount"];
+                          } else {
+                            $me_amt = $row["amount"]."%";
+                          }
+                          if ($row["charge_type"] == 1) {
+                            $xs = "Disbursement";
+                          } else if ($row["charge_type"] == 2) {
+                            $xs = "Specified Due Date";
+                          } else if ($row["charge_type"] == 3) {
+                            $xs = "Installment Fees";
+                          } else if ($row["charge_type"] == 5) {
+                            $xs = "Overdue Installment Fees";
+                          } else if ($row["charge_type"] == 6) {
+                            $xs = "Disbursement - Paid with Repayment";
+                          } else if ($row["charge_type"] == 8) {
+                            $xs = "Loan Rescheduliing Fee";
+                          } else if ($row["charge_type"] == 9) {
+                            $xs = "Transaction";
+                          }
+                         ?>
+                         <th><?php echo $xs; ?></th>
+                          <th><?php echo $me_amt; ?></th>
+                          <th><?php echo $ead; ?></th>
+                          <td><a href="edit_auto_charge.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                           <td><a href="../functions/charge_delete.php?delete=<?php echo $row["id"];?>" class="btn btn-danger">Delete</a></td>
                         </tr>
                         <?php }

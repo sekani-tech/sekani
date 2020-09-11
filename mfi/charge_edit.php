@@ -249,7 +249,7 @@ if(isset($_GET['edit'])){
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Amount</label>
-                          <input value="<?php echo $amount;?>" type="number" class="form-control" name="amount">
+                          <input value="<?php echo $amount;?>" type="number" step=".01" class="form-control" name="amount">
                         </div>
                       </div>
                       <div class=" col-md-4 form-group">

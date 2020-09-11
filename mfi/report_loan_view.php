@@ -819,6 +819,7 @@ $destination = "report_loan.php";
  }
  else if(isset($_GET["view39"])){
    $main_date = $_GET["view39"];
+    $main_date = date('Y-m-d');
  ?>
  
  <div class="content">

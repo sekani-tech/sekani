@@ -126,6 +126,14 @@ setInterval(function() {
         $('#r_bb').html(data);
       }
     });
+    $.ajax({
+      url:"../loan_repayment/remodelling_loan.php",
+      method:"POST",
+      data:{user: user},
+      success:function(data){
+        $('#loan_remodel').html(data);
+      }
+    })
 }, 1000);   // Interval set to 4 seconds
 </script>
 <!doctype html>
@@ -164,6 +172,16 @@ setInterval(function() {
   <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/materia/bootstrap.min.css"> -->
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-177058907-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-177058907-1');
+</script>
+
   <style>
     div[data-acc-content] { display: none;  }
     div[data-acc-step]:not(.open) { background: #f2f2f2;  }
@@ -356,6 +374,7 @@ input[type=number] {
     <div class="main-panel">
       <div id="time_recorder"></div>
       <div id="r_bb" hidden></div>
+      <div id="loan_remodel" hidden></div>
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
