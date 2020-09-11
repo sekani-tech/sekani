@@ -707,7 +707,7 @@ $destination = "config.php";
                           </div>
                           <div class="col-md-6">
                             <br>
-                        <h5 class="card-title">Assets</h5>
+                        <h5 class="card-title"></h5>
                           <div hidden class="position-relative form-group">
                             <div class="form-group">
                               <?php 

@@ -17,8 +17,15 @@ $end = $_POST['end'];
 $endtime = strtotime($end);
 $current = date("F d, Y", $endtime);
 
+// Year Before
+$start = $_POST['start'];
+$strto = strtotime($start);
+$yearbefore = date("Y-m-d", strtotime("-1 day", $strto));
+$yeardisplay = date("F d, Y", strtotime("-1 day", $strto));
+
+
 // Current Assets
-$fdio = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' WHERE gl_code ='10100'";
+$fdio = "SELECT * FROM gl_account_transaction WHERE int_id = '$sessint_id' WHERE gl_code LIKE '10100'";
 
 $out = '
 <div class="card">
@@ -31,7 +38,7 @@ $out = '
         <th style="font-weight:bold;"></th>
         <th style="font-weight:bold;"></th>
         <th style="text-align: center; font-weight:bold;">'.$current.' <br/>(NGN)</th>
-        <th style="text-align: center; font-weight:bold;">'.$startd.' <br/>(NGN)</th>
+        <th style="text-align: center; font-weight:bold;">'.$yeardisplay.' <br/>(NGN)</th>
       </thead>
       <tbody>
       <tr>

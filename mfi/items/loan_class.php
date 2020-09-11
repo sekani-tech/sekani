@@ -47,15 +47,29 @@
                 $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
                 $sdoi = mysqli_query($connection, $dd);
                 $e = mysqli_fetch_array($sdoi);
-                $interest = $e['interest_amount'];
+                $interest_rep = $e['interest_amount'];
 
                 $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
                 $sdswe = mysqli_query($connection, $dfdf);
                 $u = mysqli_fetch_array($sdswe);
-                $prin = $u['principal_amount'];
+                $prin_rep = $u['principal_amount'];
 
-                $outstanding = $prin + $interest;
+              // arrears
+                $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id'";
+                $sdoi = mysqli_query($connection, $dd);
+                $e = mysqli_fetch_array($sdoi);
+                $interest_arr = $e['interest_amount'];
 
+                $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id'";
+                $sdswe = mysqli_query($connection, $dfdf);
+                $u = mysqli_fetch_array($sdswe);
+                $prin_arr = $u['principal_amount'];
+
+                $outstandingone = $prin_rep + $interest_rep;
+
+                $outstandingtwo = $prin_arr + $interest_arr;
+
+                $outstanding = $outstandingone + $outstandingtwo;
                 // Performing Loan
                 $performing = $outstanding - ($fdl + $tpar);
               ?>

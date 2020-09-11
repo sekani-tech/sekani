@@ -9,7 +9,7 @@ $user_id = $_SESSION['user_id'];
 $assname = $_POST['assname'];
 $asstype = $_POST['asstype'];
 
-$org = "SELECT * FROM asset_type WHERE int_id = '$sint_id' AND id = '$asstype'";
+$org = "SELECT * FROM asset_type WHERE int_id = '$ssint_id' AND id = '$asstype'";
 $kfdlf = mysqli_query($connection, $org);
 $gdi = mysqli_fetch_array($kfdlf);
 $asset_name = $gdi['asset_name'];

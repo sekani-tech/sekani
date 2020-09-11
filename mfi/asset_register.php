@@ -94,19 +94,6 @@ else if (isset($_GET["message2"])) {
   return $out;
   }
 
-  function fill_($connection)
-  {
-  $sint_id = $_SESSION["int_id"];
-  $org = "SELECT * FROM asset_type WHERE int_id = '$sint_id'";
-  $res = mysqli_query($connection, $org);
-  $out = '';
-  while ($row = mysqli_fetch_array($res))
-  {
-    $out .= '<option value="'.$row["id"].'">'.$row["asset_name"].'</option>';
-  }
-  return $out;
-  }
-
   function branch_option($connection)
   {  
       $br_id = $_SESSION["branch_id"];
