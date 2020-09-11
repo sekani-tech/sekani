@@ -107,6 +107,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
                         $query = "SELECT * FROM reports WHERE category = 'group'";
                         $result = mysqli_query($connection, $query);
                       ?>
+                        <th></th>
                         <th>
                           Name
                         </th>
@@ -124,6 +125,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
+                          <th></th>
                           <th><?php echo $row["name"]; ?></th>
                           <th><?php echo $row["category"]; ?></th>
                           <th><?php echo strtoupper($row["description"]); ?></th>

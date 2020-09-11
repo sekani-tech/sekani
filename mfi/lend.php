@@ -231,17 +231,21 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                                 });
                               })
                             </script>
-                    <div class="col-md-4">
-                      <label class = "bmd-label-floating">Client Name *:</label>
-                        <select name="client_id" class="form-control" id="client_name">
-                          <option value="">select an option</option>
-                          <?php echo fill_client($connection); ?>
-                        </select>
-                        <label class="bmd-label-floating" >Product *:</label>
-                        <select name="product_id" class="form-control" id="charges">
-                          <option value="">select an option</option>
-                          <?php echo fill_product($connection); ?>
-                        </select>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label class = "bmd-label-floating">Client Name *:</label>
+                          <select name="client_id" class="form-control" id="client_name">
+                            <option value="">select an option</option>
+                            <?php echo fill_client($connection); ?>
+                          </select>
+                        </div>
+                        <div class="col-md-4">
+                          <label class="bmd-label-floating" >Product *:</label>
+                          <select name="product_id" class="form-control" id="charges">
+                            <option value="">select an option</option>
+                            <?php echo fill_product($connection); ?>
+                          </select>
+                      </div>
                     </div>
                     <div class="col-md-12" id="show_product"></div>
                     </div>

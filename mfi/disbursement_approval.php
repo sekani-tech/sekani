@@ -120,6 +120,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                           ID
                         </th> -->
                         <tr>
+                          <th>sn</th>
                         <th class="th-sm">
                           Name
                         </th>
@@ -141,6 +142,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
+                          <td></td>
                         <?php $row["id"]; ?>
                           <th><?php echo $row["display_name"]; ?></th>
                           <?php

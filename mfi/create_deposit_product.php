@@ -141,18 +141,24 @@ $destination = "index.php";
                         <div class="col-md-4">
                             <label for=""><b>Start Date:</b> 15-05-2020  -  <b>End Date:</b> 30-05-2020</label>
                         </div>
-                        <table class="table">
+                        <table class="rtable display nowrap" style="width:100%">
                             <thead>
+                              <tr>
+                                <th>sn</th>
                                 <th style="font-weight:bold;">Amount Range</th>
                                 <th style="font-weight:bold;">Interest </th>
                                 <th style="font-weight:bold;">Description</th>
                                 <th></th>
+                              </tr>
                             </thead>
                             <tbody>
+                              <tr>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td><a href="" class="btn btn-danger">Delete</a></td>
+                              </tr>
                             </tbody>
                         </table>
                     </div>
@@ -167,16 +173,22 @@ $destination = "index.php";
                             </select>
                             <a href="" class="btn btn-primary">Add to Product</a>
                         </div>
-                        <table class="table">
+                        <table class="rtable display nowrap" style="width:100%">
                             <thead>
+                              <tr>
+                                <th>sn</th>
                                 <th style="font-weight:bold;">Name</th>
                                 <th style="font-weight:bold;">Charge</th>
                                 <th style="font-weight:bold;">Collected on</th>
+                              </tr>
                             </thead>
                             <tbody>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <tr>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -187,27 +199,39 @@ $destination = "index.php";
                             <label class = "bmd-label-floating">Advanced Accounting Rules :</label>
                             <a href="" class="btn btn-primary">Add</a>
                         </div>
-                        <table class="table">
+                        <table class="rtable display nowrap" style="width:100%">
                             <thead>
+                              <tr>
+                                <td>sn</td>
                                 <th style="font-weight:bold;">Payment Type</th>
                                 <th style="font-weight:bold;">Fund Source</th>
+                              </tr>
                             </thead>
                             <tbody>
+                              <tr>
                                 <td></td>
                                 <td></td>
+                                <td></td>
+                              </tr>
                             </tbody>
                         </table>
                         <div class="col-md-4">
                             <a href="" class="btn nbtn-primary">Add</a>Map Fees to Specific Income Accounts
                         </div>
-                        <table class="table">
+                        <table class="rtable display nowrap" style="width:100%">
                             <thead>
+                              <tr>
+                                <th>sn</th>
                                 <th style="font-weight:bold;">Fee</th>
                                 <th style="font-weight:bold;">Income Account</th>
+                              </tr>
                             </thead>
                             <tbody>
+                              <tr>
                                 <td></td>
                                 <td></td>
+                                <td></td>
+                              </tr>
                             </tbody>
                         </table>
                     </div>

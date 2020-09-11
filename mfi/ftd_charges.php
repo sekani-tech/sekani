@@ -87,6 +87,7 @@ if(isset($_POST["id"]))
     <div class="table-responsive">
   <table class="rtable display nowrap" style="width:100%">
   <thead class=" text-primary">
+    <th>sn</th>
     <th>Name</th>
     <th>Charge</th>
     <th>Collected On</th>
@@ -96,6 +97,7 @@ if(isset($_POST["id"]))
     <?php if (mysqli_num_rows($result) > 0) {
       while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?> 
       <tr>
+        <th></th>
         <th> <?php echo $row["name"] ?></th>
         <th><?php echo $row["charge"] ?></th>
         <th> <?php echo $row["collected_on"] ?></th>

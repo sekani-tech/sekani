@@ -21,27 +21,32 @@ $destination = "../index.php";
                   <div class="table-responsive">
                   <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
+                        <th>sn</th>
                         <th></th>
                         <th></th>
                         <th></th>
                       </thead>
                       <tbody>
                         <tr>
+                          <th></th>
                           <th>Register Client</th>
                           <th>Register a Corporate/Individual account for a client</th>
                           <td><a href="manage_client.php" class="btn btn-info"><i class="material-icons" style="margin:auto">description</i></a></td>
                         </tr>
                         <tr>
+                          <th></th>
                           <th>Register Group</th>
                           <th>Register a group account in the instituion</th>
                           <td><a href="create_group.php" class="btn btn-info"><i class="material-icons" style="margin:auto">description</i></a></td>
                         </tr>
                         <tr>
+                          <th></th>
                           <th>View Approved Client List</th>
                           <th>View the list of all the approved clients in the institution</th>
                           <td><a href="client.php" class="btn btn-info"><i class="material-icons" style="margin:auto">description</i></a></td>
                         </tr>
                         <tr>
+                          <th></th>
                           <th>View Groups List</th>
                           <th>View the list of all the approved clients in the institution</th>
                           <td><a href="groups.php" class="btn btn-info"><i class="material-icons" style="margin:auto">description</i></a></td>

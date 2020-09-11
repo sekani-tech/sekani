@@ -175,9 +175,7 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                         $query = "SELECT client.id,client.submittedon_date, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && (client.branch_id ='$br_id' $branches) && client.status = 'Not Approved'";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <!-- <th>
-                          ID
-                        </th> -->
+                        <th>sn</th>
                         <th>
                           First Name
                         </th>
@@ -202,6 +200,7 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
+                          <th></th>
                         <?php $row["id"]; ?>
                         <th><?php echo $row["firstname"]; ?></th>
                           <th><?php echo $row["lastname"]; ?></th>
@@ -298,9 +297,7 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                         $query = "SELECT client.submittedon_date, client.id, client.account_type, client.account_no, client.branch_id, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON (client.loan_officer_id = staff.id) WHERE (client.int_id = '$sessint_id' && (client.branch_id ='$br_id' $branches) client.status = 'Pending')";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <!-- <th>
-                          ID
-                        </th> -->
+                        <th>sn</th>
                         <th>
                           First Name
                         </th>
@@ -325,6 +322,7 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
+                          <th></th>
                         <?php $row["id"]; ?>
                         <th><?php echo $row["firstname"]; ?></th>
                           <th><?php echo $row["lastname"]; ?></th>
@@ -419,9 +417,7 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                         $query = "SELECT client.submittedon_date, client.id, client.account_type, client.account_no, client.branch_id, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON (client.loan_officer_id = staff.id) WHERE (client.int_id = '$sessint_id' && (client.branch_id ='$br_id' $branches) AND client.status = 'Closed')";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <!-- <th>
-                          ID
-                        </th> -->
+                        <th></th>
                         <th>
                           First Name
                         </th>
@@ -446,6 +442,7 @@ if ($acct_appv == 1 || $acct_appv == "1") {
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
+                          <th></th>
                         <?php $row["id"]; ?>
                         <th><?php echo $row["firstname"]; ?></th>
                           <th><?php echo $row["lastname"]; ?></th>

@@ -124,6 +124,7 @@ $b_id = $_SESSION['branch_id'];
                           <table class="table table-bordered">
                               <thead>
                                 <tr>
+                                  <th>sn</th>
                                   <th>Client Name</th>
                                   <th>Balance Derived</th>
                                   <th>Total due</th>
@@ -131,7 +132,7 @@ $b_id = $_SESSION['branch_id'];
                                 </tr>
                               </thead>
                               <tbody id ="grlist">
-
+<!-- insert td in list -->
                               </tbody>
                           </table>
                         </div>

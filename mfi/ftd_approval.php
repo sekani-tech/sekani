@@ -145,6 +145,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                           ID
                         </th> -->
                         <tr>
+                          <th>sn</th>
                         <th class="th-sm">
                           Creation Date
                         </th>
@@ -172,6 +173,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
+                          <td></td>
                         <?php $row["id"]; ?>
                           <th><?php echo $row["submittedon_date"]; ?></th>
                           <?php

@@ -141,30 +141,28 @@ if ($can_transact == 1 || $can_transact == "1") {
                         $query = "SELECT * FROM client_charge WHERE int_id = '$sessint_id' AND (branch_id ='$br_id' $branches)";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <!-- <th>
-                          ID
-                        </th> -->
                         <tr>
-                        <th class="th-sm">
-                          Date
-                        </th>
-                        <th class="th-sm">
-                         Client Name
-                        </th>
-                        <th class="th-sm">
-                         Branch
-                        </th>
-                        <th class="th-sm">
-                         Charges
-                        </th>
-                        <th class="th-sm">
-                        Amount
-                        </th>
-                        <th class="th-sm">
-                       Description
-                        </th>
-                        <th>Approval</th>
-                        <th>Decline</th>
+                          <th>sn</th>
+                          <th class="th-sm">
+                            Date
+                          </th>
+                          <th class="th-sm">
+                            Client Name
+                          </th>
+                          <th class="th-sm">
+                            Branch
+                          </th>
+                          <th class="th-sm">
+                            Charges
+                          </th>
+                          <th class="th-sm">
+                            Amount
+                          </th>
+                          <th class="th-sm">
+                            Description
+                          </th>
+                          <th>Approval</th>
+                          <th>Decline</th>
                         </tr>
                         <!-- <th>Phone</th> -->
                       </thead>
@@ -173,6 +171,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
+                          <th></th>
                           <th><?php echo $row["date"]; ?></th>
                           <?php
                           

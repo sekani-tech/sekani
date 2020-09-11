@@ -141,6 +141,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                         $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && (branch_id ='$br_id' $branches) && status = 'Pending'";
                         $result = mysqli_query($connection, $query);
                       ?>
+                        <th>sn</th>
                         <th>
                           Group
                         </th>
@@ -157,6 +158,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
+                          <th></th>
                           <th><?php echo $row["g_name"]; ?></th>
                           <?php
                           $ds= $row["branch_id"];

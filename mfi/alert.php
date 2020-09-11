@@ -24,6 +24,7 @@ $destination = "../index.php";
                   <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                         <tr>
+                          <th>sn</th>
                           <th></th>
                           <th></th>
                           <th></th>
@@ -31,11 +32,13 @@ $destination = "../index.php";
                       </thead>
                       <tbody>
                         <tr>
+                          <th></th>
                           <th>E-mail</th>
                           <th>Manage E-mail Content</th>
                           <td><a href="#" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
                         </tr>
                         <tr>
+                          <th></th>
                           <th>SMS</th>
                           <th>Manage SMS</th>
                           <td><a href="alerts_sms.php" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
