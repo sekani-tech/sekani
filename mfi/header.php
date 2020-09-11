@@ -106,7 +106,7 @@ $rezz = mysqli_query($connection, $activeq);
 <input type="text" value="<?php echo $acuser;?>" id="usernameoioio" hidden>
 <input type="text" value="<?php echo $sessint_id; ?>" id="int_idioioioio" hidden>
 <script>
-setInterval(function() {
+// setInterval(function() {
 //     // alert('I will appear every 4 seconds');
 //     var int_id = $('#int_idioioioio').val();
 //     var user = $('#usernameoioio').val();
