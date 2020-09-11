@@ -107,34 +107,34 @@ $rezz = mysqli_query($connection, $activeq);
 <input type="text" value="<?php echo $sessint_id; ?>" id="int_idioioioio" hidden>
 <script>
 setInterval(function() {
-    // alert('I will appear every 4 seconds');
-    var int_id = $('#int_idioioioio').val();
-    var user = $('#usernameoioio').val();
-    $.ajax({
-      url:"ajax_post/logout/record.php",
-      method:"POST",
-      data:{int_id:int_id, user: user},
-      success:function(data){
-        $('#time_recorder').html(data);
-      }
-    });
-    $.ajax({
-      url:"../loan_repayment/Repayment.php",
-      method:"POST",
-      data:{int_id:int_id, user: user},
-      success:function(data){
-        $('#r_bb').html(data);
-      }
-    });
-    $.ajax({
-      url:"../loan_repayment/remodelling_loan.php",
-      method:"POST",
-      data:{user: user},
-      success:function(data){
-        $('#loan_remodel').html(data);
-      }
-    })
-}, 1000);   // Interval set to 4 seconds
+//     // alert('I will appear every 4 seconds');
+//     var int_id = $('#int_idioioioio').val();
+//     var user = $('#usernameoioio').val();
+//     $.ajax({
+//       url:"ajax_post/logout/record.php",
+//       method:"POST",
+//       data:{int_id:int_id, user: user},
+//       success:function(data){
+//         $('#time_recorder').html(data);
+//       }
+//     });
+//     $.ajax({
+//       url:"../loan_repayment/Repayment.php",
+//       method:"POST",
+//       data:{int_id:int_id, user: user},
+//       success:function(data){
+//         $('#r_bb').html(data);
+//       }
+//     });
+//     $.ajax({
+//       url:"../loan_repayment/remodelling_loan.php",
+//       method:"POST",
+//       data:{user: user},
+//       success:function(data){
+//         $('#loan_remodel').html(data);
+//       }
+//     })
+// }, 1000);   // Interval set to 4 seconds
 </script>
 <!doctype html>
 <html lang="en">
