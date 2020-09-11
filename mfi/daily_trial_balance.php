@@ -69,9 +69,9 @@ include('header.php');
                   <h4 class="card-title">Trial Balance Report</h4>
                 </div>
                 <div class="card-body">
-                  <table class="table">
+                  <table class="rtable display nowrap" style="width:100%">
                     <thead>
-                    <thead>
+                      <th>sn</th>
                       <th style="font-weight:bold;">GL Codes</th>
                       <th style="font-weight:bold;">Name</th>
                       <th style="font-weight:bold;">Office</th>
@@ -80,9 +80,9 @@ include('header.php');
                       <th style="text-align: center; font-weight:bold;">Credit <br> &#x20A6</th>
                       <th style="text-align: center; font-weight:bold;">Closing Balance <br> &#x20A6</th>
                     </thead>
-                    </thead>
                     <tbody>
                       <tr>
+                        <td></td>
                         <td></td>
                         <td><b>Cash Balances</b></td>
                         <td><b>Head Office</b></td>
@@ -93,6 +93,7 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
+                        <td></td>
                         <td>Main Vault</td>
                         <td></td>
                         <td style="text-align: center">4,436,527</td>
@@ -101,6 +102,7 @@ include('header.php');
                         <td style="text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
                         <td></td>
                         <td>Teller Funds</td>
                         <td></td>
@@ -111,6 +113,7 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
+                        <td></td>
                         <td>Petty Cash/Deposit</td>
                         <td></td>
                         <td style="text-align: center">4,436,527</td>
@@ -119,6 +122,7 @@ include('header.php');
                         <td style="text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
                         <td></td>
                         <td>Loan Disbursement</td>
                         <td></td>
@@ -138,6 +142,7 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
+                        <td></td>
                         <td><b>Due from Banks</b></td>
                         <td><b>Head Office</b></td>
                         <td style="font-weight:bold; text-align: center">4,436,527</td>
@@ -146,6 +151,7 @@ include('header.php');
                         <td style="font-weight:bold; text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
                         <td></td>
                         <td>Wema Bank</td>
                         <td></td>
@@ -156,6 +162,7 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
+                        <td></td>
                         <td>UBA</td>
                         <td></td>
                         <td style="text-align: center">4,436,527</td>
@@ -164,6 +171,7 @@ include('header.php');
                         <td style="text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
                         <td></td>
                         <td>Heritage Bank</td>
                         <td></td>
@@ -183,6 +191,7 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
+                        <td></td>
                         <td>First Bank</td>
                         <td></td>
                         <td style="text-align: center">4,436,527</td>
@@ -191,6 +200,7 @@ include('header.php');
                         <td style="text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
                         <td></td>
                         <td><b>Prepayment</b></td>
                         <td><b>Head Office</b></td>
@@ -201,6 +211,7 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
+                        <td></td>
                         <td>Rent-(Prepaid)</td>
                         <td></td>
                         <td style="text-align: center">4,436,527</td>
@@ -209,6 +220,7 @@ include('header.php');
                         <td style="text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
                         <td></td>
                         <td>Risk Premium</td>
                         <td></td>
@@ -219,6 +231,7 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
+                        <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
                         <td style="text-align: center">4,436,527</td>
@@ -227,6 +240,7 @@ include('header.php');
                         <td style="text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
                         <td></td>
                         <td><b>Short term Investment</b></td>
                         <td><b>Head Office</b></td>
@@ -237,14 +251,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -255,14 +261,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -273,6 +271,7 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
+                        <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
                         <td style="text-align: center">4,436,527</td>
@@ -281,6 +280,27 @@ include('header.php');
                         <td style="text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
                         <td></td>
                         <td><b>Total Loan Portfolio</b></td>
                         <td><b>Head Office</b></td>
@@ -291,14 +311,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -309,22 +321,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr><tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -334,6 +330,37 @@ include('header.php');
                         <td style="text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
                         <td></td>
                         <td><b>Non-Current Asset</b></td>
                         <td><b>Head Office</b></td>
@@ -344,14 +371,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -362,14 +381,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -380,14 +391,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -397,6 +400,37 @@ include('header.php');
                         <td style="text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
                         <td></td>
                         <td><b>Current Liability</b></td>
                         <td><b>Head Office</b></td>
@@ -407,14 +441,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -434,6 +460,7 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
+                        <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
                         <td style="text-align: center">4,436,527</td>
@@ -442,6 +469,17 @@ include('header.php');
                         <td style="text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
                         <td></td>
                         <td><b>Non-Current Liability</b></td>
                         <td><b>Head Office</b></td>
@@ -452,14 +490,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -470,14 +500,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -488,6 +510,7 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
+                        <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
                         <td style="text-align: center">4,436,527</td>
@@ -496,6 +519,27 @@ include('header.php');
                         <td style="text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
                         <td></td>
                         <td><b>Accumulated Deprecation</b></td>
                         <td><b>Head Office</b></td>
@@ -506,6 +550,17 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
                         <td style="text-align: center">4,436,527</td>
@@ -524,14 +579,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -541,6 +588,7 @@ include('header.php');
                         <td style="text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
                         <td></td>
                         <td><b>Equity</b></td>
                         <td><b>Head Office</b></td>
@@ -551,14 +599,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -569,14 +609,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -587,14 +619,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -604,6 +628,37 @@ include('header.php');
                         <td style="text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
                         <td></td>
                         <td><b>Operating Income</b></td>
                         <td><b>Head Office</b></td>
@@ -614,14 +669,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -632,14 +679,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -650,14 +689,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -668,6 +699,7 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
+                        <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
                         <td style="text-align: center">4,436,527</td>
@@ -676,6 +708,37 @@ include('header.php');
                         <td style="text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
                         <td></td>
                         <td><b>Other Non-Operating Income</b></td>
                         <td><b>Head Office</b></td>
@@ -686,14 +749,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -704,14 +759,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -721,6 +768,27 @@ include('header.php');
                         <td style="text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
                         <td></td>
                         <td><b>Operating Expense</b></td>
                         <td><b>Head Office</b></td>
@@ -731,14 +799,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -749,14 +809,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -767,14 +819,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -785,14 +829,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -803,14 +839,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -821,14 +849,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -839,14 +859,6 @@ include('header.php');
                       </tr>
                       <tr>
                         <td></td>
-                        <td>Software Prepaid</td>
-                        <td></td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                        <td style="text-align: center">4,436,527</td>
-                      </tr>
-                      <tr>
                         <td></td>
                         <td>Software Prepaid</td>
                         <td></td>
@@ -856,6 +868,77 @@ include('header.php');
                         <td style="text-align: center">4,436,527</td>
                       </tr>
                       <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Software Prepaid</td>
+                        <td></td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                        <td style="text-align: center">4,436,527</td>
+                      </tr>
+                      <tr>
+                        <td></td>
                         <td><b>Total Asset</b></td>
                         <td></td>
                         <td></td>

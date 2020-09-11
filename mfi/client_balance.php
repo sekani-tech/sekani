@@ -114,6 +114,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                 <div class="table-responsive">
                     <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
+                        <th>sn</th>
                       <?php
                         $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
                         $result = mysqli_query($connection, $query);
@@ -141,6 +142,7 @@ $_SESSION["lack_of_intfund_$key"] = 0;
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
+                          <th></th>
                         <?php $row["id"]; 
                         $idd = $row["id"];?>
                           <th><?php echo $row["firstname"]; ?></th>

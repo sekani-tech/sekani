@@ -37,6 +37,7 @@
              <table class="rtable display nowrap" style="width:100%">
              <thead>
              <tr>
+                 <th>sn</th>
                <th>Name</th>
                 <th>Start Date</th>
                 <th>End Date</th>
@@ -50,6 +51,7 @@
                      {
                      ?>
              <tr>
+                 <td></td>
             <th><?php echo $pox["name"]; ?></th>
             <th><?php echo $pox["start_date"]; ?></th>
             <th><?php echo $pox["end_date"]; ?></th>

@@ -124,9 +124,7 @@ if ($per_con == 1 || $per_con == "1") {
                         $query = "SELECT * FROM branch WHERE int_id ='$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <!-- <th>
-                          ID
-                        </th> -->
+                        <th>sn</th>
                         <th>Name</th>
                         <th>
                           Phone
@@ -149,6 +147,7 @@ if ($per_con == 1 || $per_con == "1") {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
+                          <th></th>
                           <th><?php echo $row["name"]; ?></th>
                           <th><?php echo $row["phone"]; ?></th>
                           <?php 

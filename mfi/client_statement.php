@@ -142,6 +142,7 @@ $sessint_id = $_SESSION['int_id'];
                         // $v = 0;
                       ?>
                         <tr class="table100-head">
+                            <th>sn</th>
                             <th class="column1">Transaction-Date</th>
                             <th class="column2">Value Date</th>
                             <th class="column3">Reference</th>
@@ -156,6 +157,7 @@ $sessint_id = $_SESSION['int_id'];
                           $nxtbal = $row["running_balance_derived"];
                           ?>
                         <tr>
+                          <td></td>
                           <td class="column1"><?php echo $row["transaction_date"]; ?></td>
                           <td class="column2"><?php echo $row["created_date"]; ?></td>
                           <?php

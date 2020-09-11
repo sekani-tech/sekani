@@ -96,6 +96,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
                   <div class="table-responsive">
                     <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
+                        <th>sn</th>
                         <th>
                           Name
                         </th>
@@ -116,32 +117,36 @@ $_SESSION["lack_of_intfund_$key"] = null;
                       </thead>
                       <tbody>
                         <tr>
+                          <td></td>
                           <td>Account Re-creation</td>
                           <td>Savings</td>
                           <td>1</td>
                           <td>Specified Due</td>
                           <td>500 Flat</td>
-                          <td><a onclick="showDialog()" class="btn btn-info" ><i style="color:#ffffff;" class="material-icons">create</i></a></td>
+                          <td><a onclick="showDialog()" class="btn btn-info" ><i style="color:#ffffff;" class="material-icons" style="margin:auto;">create</i></a></td>
                         </tr>
                         <tr>
+                          <td></td>
                           <td>Cash Handing Charge</td>
                           <td>Savings</td>
                           <td>1</td>
                           <td>Disbursement Date</td>
                           <td>500 Flat</td>
-                          <td><a onclick="showDialog()" class="btn btn-info" ><i style="color:#ffffff;" class="material-icons">create</i></a></td>
+                          <td><a onclick="showDialog()" class="btn btn-info" ><i style="color:#ffffff;" class="material-icons" style="margin:auto;">create</i></a></td>
 
                         </tr>
                         <tr>
+                          <td></td>
                           <td>Commision on Stamp</td>
                           <td>Savings</td>
                           <td>1</td>
                           <td>Specified Due</td>
                           <td>500 Flat</td>
-                          <td><a onclick="showDialog()" class="btn btn-info" ><i style="color:#ffffff;" class="material-icons">create</i></a></td>
+                          <td><a onclick="showDialog()" class="btn btn-info" ><i style="color:#ffffff;" class="material-icons" style="margin:auto;">create</i></a></td>
 
                         </tr>
                         <tr>
+                          <td></td>
                           <td>Commision on Daily Savings</td>
                           <td>Savings</td>
                           <td>1</td>
@@ -150,12 +155,13 @@ $_SESSION["lack_of_intfund_$key"] = null;
                           <td><a onclick="showDialog()" class="btn btn-info" ><i style="color:#ffffff;" class="material-icons">create</i></a></td>
                         </tr>
                         <tr>
+                          <td></td>
                           <td>Account Re-creation</td>
                           <td>Savings</td>
                           <td>1</td>
                           <td>Disbursement Date</td>
                           <td>500 Flat</td>
-                          <td><a onclick="showDialog()" class="btn btn-info" ><i style="color:#ffffff;" class="material-icons">create</i></a></td>
+                          <td><a onclick="showDialog()" class="btn btn-info" ><i style="color:#ffffff;" class="material-icons" style="margin:auto;">create</i></a></td>
                         </tr>
                       </tbody>
                       <!-- <tbody>

@@ -586,9 +586,7 @@ if ($per_bills == 1 || $per_bills == "1") {
                         $query = "SELECT * FROM `sekani_wallet_transaction` WHERE int_id ='$sessint_id' AND branch_id = '$bch_id' AND transaction_type = 'bill_disco' ORDER BY id DESC";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <!-- <th>
-                          ID
-                        </th> -->
+                        <th></th>
                         <th>Type</th>
                         <th></th>
                         <th>
@@ -609,11 +607,12 @@ if ($per_bills == 1 || $per_bills == "1") {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $row["id"]; ?>
-                        <th><?php echo $row["description"]; ?></th>
+                          <th></th>
+                          <th><?php echo $row["description"]; ?></th>
                         <?php
                         $harsh = $hash = password_hash($row["id"], PASSWORD_DEFAULT);
                         ?>
-                        <th></th>
+                          <th></th>
                           <th><?php echo number_format($row["amount"], 2); ?></th>
                           <th><?php echo number_format($row["wallet_balance_derived"], 2); ?></th>
                           <td><?php echo $row["created_date"];?></td>
@@ -819,9 +818,7 @@ if ($per_bills == 1 || $per_bills == "1") {
                         $query = "SELECT * FROM `sekani_wallet_transaction` WHERE int_id ='$sessint_id' AND branch_id = '$bch_id' AND transaction_type = 'bill_cable' ORDER BY id DESC";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <!-- <th>
-                          ID
-                        </th> -->
+                        <th>sn</th>
                         <th>Type</th>
                         <th></th>
                         <th>
@@ -838,6 +835,7 @@ if ($per_bills == 1 || $per_bills == "1") {
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
+                          <th></th>
                         <?php $row["id"]; ?>
                         <th><?php echo $row["description"]; ?></th>
                         <th></th>
