@@ -288,7 +288,7 @@ if($fdpoijf){
 }
         // Personnel expense
         $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
-        ('$intid', 1, '$br_id', 'PERSONNEL EXPENSE', 0, NULL, '50100', 0, 0, 2, 2, NULL, '', 0, 0.00, NULL)";
+        ('$intid', 1, '$br_id', 'PERSONNEL EXPENSE', 0, NULL, '50100', 0, 0, 2, 5, NULL, '', 0, 0.00, NULL)";
     $balf = mysqli_query($connection, $cash);
     if($balf){
         $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$intid' AND name = 'PERSONNEL EXPENSE'");
@@ -318,7 +318,7 @@ if($fdpoijf){
     }
         // Administrative expense
         $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
-            ('$intid', 2, '$br_id', 'ADMINISTRATIVE EXPENSE', 0, NULL, '50200', 0, 0, 2, 2, NULL, '', 0, 0.00, NULL)";
+            ('$intid', 2, '$br_id', 'ADMINISTRATIVE EXPENSE', 0, NULL, '50200', 0, 0, 2, 5, NULL, '', 0, 0.00, NULL)";
         $balf = mysqli_query($connection, $cash);
         if($balf){
             $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$intid' AND name = 'ADMINISTRATIVE EXPENSE'");
@@ -326,7 +326,7 @@ if($fdpoijf){
             $pid = $as['id'];
             $fdop = mysqli_query($connection, 
             "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
-                ('$intid', 0, '$br_id', 'oFFICE RENT', '$pid', NULL, '50201', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+                ('$intid', 0, '$br_id', 'OFFICE RENT', '$pid', NULL, '50201', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
                 ('$intid', 0, '$br_id', 'POSTAGE', '$pid', NULL, '50204', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
                 ('$intid', 0, '$br_id', 'FUELING AND LUBRICANT', '$pid', NULL, '50208', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
                 ('$intid', 0, '$br_id', 'Internet Subscription', '$pid', NULL, '50228', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
@@ -335,7 +335,7 @@ if($fdpoijf){
                 ('$intid', 0, '$br_id', 'VEHICLE REPAIRS', '$pid', NULL, '50203', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
                 ('$intid', 0, '$br_id', 'LEGAL FEE', '$pid', NULL, '50217', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
                 ('$intid', 0, '$br_id', 'OFFICE ENTERTAINMENT', '$pid', NULL, '50202', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-                ('$intid', 0, '$br_id', 'Pre-incorporation & post-incorporation', '$pid', NULL, '50425', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+                ('$intid', 0, '$br_id', 'Pre-incorporation & post-incorporation', '$pid', NULL, '50225', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
                 ('$intid', 0, '$br_id', 'DEPRECIATION OF FIXED ASSETS', '$pid', NULL, '50224', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
                 ('$intid', 0, '$br_id', 'Software and Hosting Exp', '$pid', NULL, '50221', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
                 ('$intid', 0, '$br_id', 'Commission', '$pid', NULL, '50225', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
@@ -346,7 +346,7 @@ if($fdpoijf){
                 ('$intid', 0, '$br_id', 'Director Expenses', '$pid', NULL, '50210', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
                 ('$intid', 0, '$br_id', 'Bad debt witten off', '$pid', NULL, '50211', 0, 0, 1, 5, NULL, '', 0, 0.00, NULL),
                 ('$intid', 0, '$br_id', 'Local Transportation	', '$pid', NULL, '50212', 0, 0, 1, 5, NULL, '', 0, 0.00, NULL),
-                ('$intid', 0, '$br_id', 'Local Travels', '$pid', NULL, '502'$intid'', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+                ('$intid', 0, '$br_id', 'Local Travels', '$pid', NULL, '50213', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
                 ('$intid', 0, '$br_id', 'International Travels', '$pid', NULL, '50214', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
                 ('$intid', 0, '$br_id', 'CREDIT BUREAU', '$pid', NULL, '50227', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
                 ('$intid', 0, '$br_id', 'Other Administrative Expenses', '$pid', NULL, '50215', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
@@ -356,7 +356,7 @@ if($fdpoijf){
 
                 // Financial expense
                 $cash = "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
-                ('$intid', 3, '$br_id', 'FINANCIAL EXPENSE', 0, NULL, '50300', 0, 0, 2, 2, NULL, '', 0, 0.00, NULL)";
+                ('$intid', 3, '$br_id', 'FINANCIAL EXPENSE', 0, NULL, '50300', 0, 0, 2, 5, NULL, '', 0, 0.00, NULL)";
             $balf = mysqli_query($connection, $cash);
             if($balf){
                 $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$intid' AND name = 'FINANCIAL EXPENSE'");

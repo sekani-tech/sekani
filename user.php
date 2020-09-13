@@ -64,7 +64,7 @@ VALUES ('{$inst_id}', '{$username}', '{$branch_id}', '{$display_name}', '{$hash}
 $result = mysqli_query($connection, $queryuser);
 
 if ($result) {
-$qrys = "SELECT id FROM users WHERE fullname = '$display_name'";
+$qrys = "SELECT id FROM users WHERE int_id = '$inst_id' AND fullname = '$display_name'";
 $res = mysqli_query($connection, $qrys);
 $row = mysqli_fetch_array($res);
 $ui = $row["id"];

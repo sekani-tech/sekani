@@ -23,7 +23,6 @@ $destination = "../index.php";
                   <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                         <tr>
-                          <th>sn</th>
                           <th></th>
                           <th></th>
                           <th></th>
@@ -31,37 +30,31 @@ $destination = "../index.php";
                       </thead>
                       <tbody>
                         <tr>
-                          <th></th>
                           <th>Chart of Account</th>
                           <th>View, add and edit all the gl account for the institution</th>
                           <td><a href="chart_account.php" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
                         </tr>
                         <tr>
-                          <th></th>
                           <th>Inventory Posting</th>
                           <th>Manage and Add records of the inventory items in the institution</th>
                           <td><a href="inventory.php" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
                         </tr>
                         <tr>
-                          <th></th>
                           <th>Assets Registration</th>
                           <th>To register assets belonging to the institution</th>
                           <td><a href="asset_register.php" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
                         </tr>
                         <tr>
-                          <th></th>
                           <th>Bank Reconciliation</th>
                           <th>Reconciliation of Bank</th>
                           <td><a href="#" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
                         </tr>
                         <tr>
-                          <th></th>
                           <th>Budget Template</th>
                           <th>Create and review Budgets and other planning activities</th>
                           <td><a href="#" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
                         </tr>
                         <tr>
-                          <th></th>
                           <th>End of Day</th>
                           <th>Closing of the Business Day</th>
                           <td><a href="#" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
@@ -79,5 +72,5 @@ $destination = "../index.php";
 <?php
 
     include("footer.php");
-
+    
 ?>
