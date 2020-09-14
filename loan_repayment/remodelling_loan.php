@@ -23,7 +23,7 @@ while($a = mysqli_fetch_array($queryexec1)) {
     $amount_paid = $a['amount_paid' ];
     $status = $a['status'];
     $loan_status = $a['status'];
-    $outstanding = $principal_amount - $amount_paid;
+    $outstanding = ($principal_amount + (($interest_rate/100) * $principal_amount)) - $amount_paid;
     $today = date('Y-m-d');
 
     $query2 = "INSERT INTO `loan` (`id`, `int_id`, `account_no`, `client_id`, `product_id`, `fund_id`, `col_id`, `col_name`, `col_description`, 
@@ -51,7 +51,7 @@ while($a = mysqli_fetch_array($queryexec1)) {
     NULL, NULL, NULL, NULL, '1', '0', '1', '2', '$repay_every', NULL, '$no_of_repayments', NULL, NULL, NULL, NULL, NULL, '$today', NULL, '$today', NULL, NULL, NULL, NULL, 
     '$disbursement_date', NULL, NULL, '$maturedon_date', NULL, NULL, NULL, '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', 
     '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '$outstanding', NULL, NULL, NULL, NULL, NULL, NULL, 
-    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', NULL, NULL, NULL, '1', '1', '0', NULL, NULL, '1', NULL, NULL, '$loan_status', '1', '1', NULL, NULL, '0.00')";
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', NULL, NULL, NULL, '1', '1', '0', NULL, NULL, '1', NULL, '$loan_status', '', '1', '1', NULL, NULL, '0.00')";
     $queryexec2 = mysqli_query($connection, $query2);
 
     if($queryexec2){
