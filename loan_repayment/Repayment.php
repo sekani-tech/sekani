@@ -985,7 +985,7 @@ if (mysqli_num_rows($get_back_model) >= 1) {
                 if ($client_account_no != "") {
                     // check the amount paid
                     if ($m_amount_paid >= $repayment_amount) {
-                        // cehck
+                        // check
                         $new_repayment_balance = $m_amount_paid - $repayment_amount;
                         // query the new
                         $query_remodel = mysqli_query($connection, "UPDATE `loan_remodeling` SET `amount_paid` = '$new_repayment_balance' WHERE id = '$m_id' AND client_id = '$m_client_id'");
