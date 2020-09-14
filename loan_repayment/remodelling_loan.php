@@ -22,7 +22,7 @@ while($a = mysqli_fetch_array($queryexec1)) {
     $no_of_repayments = $a['no_of_repayments'];
     $amount_paid = $a['amount_paid' ];
     $status = $a['status'];
-    $loan_status = $a['status'];
+    $loan_status = $a['loan_status'];
     $outstanding = ($principal_amount + (($interest_rate/100) * $principal_amount)) - $amount_paid;
     $today = date('Y-m-d');
 

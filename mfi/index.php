@@ -97,8 +97,8 @@
                   <p class="card-category">PAR</p>
                   <?php if ($pfar > 0){
                     ?>
-                  <h4 class="card-title">30 days - <?php echo number_format($pfar);?>%</h4>
-                  <h4 class="card-title">60 days -<?php echo number_format($pfar);?>%</h4>
+                  <h4 class="card-title">30 days - <?php echo number_format($pfar, 2);?>%</h4>
+                  <h4 class="card-title">60 days - <?php echo number_format($pfar, 2);?>%</h4>
                    <?php 
                   }
                   else{
