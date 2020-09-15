@@ -215,7 +215,7 @@ setInterval(function() {
                 <div class="card-body">
                   <h4 class="card-title">Daily Loan Collection</h4>
                   <p class="card-category">
-                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in loan collections</p>
+                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> 59% </span> increase in loan collections</p>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
