@@ -51,7 +51,7 @@ while($a = mysqli_fetch_array($queryexec1)) {
     '$loan_puporse', 'NGN', '2', '$principal_amount', '$principal_amount', '$loan_term', '$interest_rate', '$principal_amount', '$repayment_date', NULL, '0', '0.00', 
     NULL, NULL, NULL, NULL, '1', '0', '1', '2', '$repay_every', NULL, '$no_of_repayments', NULL, NULL, NULL, NULL, NULL, '$today', NULL, '$today', NULL, NULL, NULL, NULL, 
     '$disbursement_date', NULL, NULL, '$maturedon_date', NULL, NULL, NULL, '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', 
-    '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '$outstanding', NULL, NULL, NULL, NULL, NULL, NULL, 
+    '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '$arrear_amount', NULL, NULL, NULL, NULL, NULL, NULL, 
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', NULL, NULL, NULL, '1', '1', '0', NULL, NULL, '1', NULL, '$loan_status', '', '1', '1', NULL, NULL, '0.00')";
     $queryexec2 = mysqli_query($connection, $query2);
 
