@@ -174,6 +174,7 @@ setInterval(function() {
                   <p class="card-category">Outstanding Loan Balance</p>
                   <!-- Populate with the total value of outstanding loans -->
                   <?php
+                  if($sessint_id != 13){
                     $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
                     $sdoi = mysqli_query($connection, $dd);
                     $e = mysqli_fetch_array($sdoi);
@@ -199,6 +200,14 @@ setInterval(function() {
 
                     $outstandingtwo = $printwo + $interesttwo;
                     $ttout = $outstanding + $outstandingtwo;
+                    }
+                    else if($sessint_id == 13){
+                      $sdospd = "SELECT SUM(total_outstanding_derived) AS total_outstanding_derived FROM loan WHERE int_id = '$sessint_id'";
+                      $sodi = mysqli_query($connection, $sdospd);
+                      $s = mysqli_fetch_array($sodi);
+                      $ttout = $s['total_outstanding_derived'];
+                    }
+
                   ?>
                   <h3 class="card-title">NGN - <?php echo number_format(round($ttout), 2); ?></h3>
                 </div>

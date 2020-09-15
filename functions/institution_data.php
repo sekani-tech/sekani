@@ -183,7 +183,7 @@ if($fdpoijf){
     ('$intid', 0, '$br_id', 'FURNITURE AND FITTINGS', '$pid', NULL, '10603', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
     ('$intid', 0, '$br_id', 'MOTOR VEHICLE', '$pid', NULL, '10604', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
     ('$intid', 0, '$br_id', 'OFFICE EQUIPMENT', '$pid', NULL, '10605', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
-    ('$intid', 0, '$br_id', 'PLANT AND MaCHINeRY', '$pid', NULL, '10606', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
+    ('$intid', 0, '$br_id', 'PLANT AND MACHINERY', '$pid', NULL, '10606', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
     ('$intid', 0, '$br_id', 'accumulated depreciation', '$pid', NULL, '10607', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
     ('$intid', 0, '$br_id', 'Account recievable', '$pid', NULL, '10608', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
     ('$intid', 0, '$br_id', 'Accrued interest recievable', '$pid', NULL, '10609', 0, 1, 1, 1, NULL, '', 0, 0.00, NULL),
