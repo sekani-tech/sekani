@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 // START
 // echo "HERE I AM";
 include("../functions/connect.php");
@@ -1074,10 +1074,10 @@ if (mysqli_num_rows($get_back_model) >= 1) {
     echo "NO ACTIVE REMODEL";
 }
 // END AUTO BACK REPAYMENT
-?> -->
+?>
 <?php
 /////////////////////// AUTO CODE TO CALCULATE THE DEPRECIATION OF ALL ASSETS IN AN INSTITUTION ///////////////////////
-echo 'DEPRECIATION CALCULATION</br>';
+echo '</br></br>Depreciation Calculation code right here:</br>';
 // Pull all assets
 $ifdo = mysqli_query($connection, "SELECT * FROM assets");
 while($pd = mysqli_fetch_array($ifdo)){
