@@ -81,12 +81,20 @@
                 $outstandingtwo = $printwo + $interesttwo;
                 $ttout = $outstanding + $outstandingtwo;
 
-                $dewe = "SELECT SUM(bank_provision) AS bank_provision FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1'";
+                  //  30 days in arrears
+                $dewe = "SELECT SUM(bank_provision) AS bank_provision FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1' AND counter < '30'";
                 $sdd = mysqli_query($connection, $dewe);
                 $sdt = mysqli_fetch_array($sdd);
-                $bnk_prov = $sdt['bank_provision'];
+                $bnk_provsix = $sdt['bank_provision'];
 
-                $pfar = ($bnk_prov/$ttout) * 100;
+                // 60 days in arrears
+                $dewe = "SELECT SUM(bank_provision) AS bank_provision FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1' AND counter < '60' AND counter > 30";
+                $sdd = mysqli_query($connection, $dewe);
+                $sdt = mysqli_fetch_array($sdd);
+                $bnk_provthree = $sdt['bank_provision'];
+
+                $pfarthree = ($bnk_provthree/$ttout) * 100;
+                $pfarsix = ($bnk_provsix/$ttout) * 100;
             ?>
             <div class="col-lg-3 col-md-6 col-sm-6">
               <div class="card card-stats">
@@ -95,10 +103,10 @@
                   <i class="material-icons">info_outline</i>
                   </div>
                   <p class="card-category">PAR</p>
-                  <?php if ($pfar > 0){
+                  <?php if ($bnk_provthree > 0 || $bnk_provsix > 0){
                     ?>
-                  <h4 class="card-title">30 days - <?php echo number_format($pfar, 2);?>%</h4>
-                  <h4 class="card-title">60 days - <?php echo number_format($pfar, 2);?>%</h4>
+                  <h4 class="card-title">30 days - <?php echo number_format($pfarthree, 2);?>%</h4>
+                  <h4 class="card-title">60 days - <?php echo number_format($pfarsix, 2);?>%</h4>
                    <?php 
                   }
                   else{
@@ -215,7 +223,7 @@ setInterval(function() {
                 <div class="card-body">
                   <h4 class="card-title">Daily Loan Collection</h4>
                   <p class="card-category">
-                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> 59% </span> increase in loan collections</p>
+                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> 54% </span> increase in loan collections</p>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
