@@ -1024,7 +1024,7 @@ if (mysqli_num_rows($get_back_model) >= 1) {
                         if ($query_update_repayment) {
                             // add the remaining amount to the arrear table
                                 $check_arrear = mysqli_query($connection, "INSERT INTO `loan_arrear` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, `counter`, `principal_amount`, `principal_completed_derived`, `principal_writtenoff_derived`, `interest_amount`, `interest_completed_derived`, `interest_writtenoff_derived`, `total_paid_late_derived`, `completed_derived`, `obligations_met_on_date`, `createdby_id`, `created_date`, `lastmodified_date`) 
-                            VALUES ('{$m_int_id}', '{$m_loan_id}', '{$m_client_id}', '{$r_from_date}', '{$r_due_date}', '1', '1', '{$new_principal}', '{$new_principal}', '0', '{$new_interest}', '{$new_interest}', '0', '0', '0', NULL, '{$loan_off}', '{$today_date}', '{$today_date}')");
+                            VALUES ('{$m_int_id}', '{$m_loan_id}', '{$m_client_id}', '{$r_from_date}', '{$r_due_date}', '0', '1', '{$new_principal}', '{$new_principal}', '0', '{$new_interest}', '{$new_interest}', '0', '0', '0', NULL, '{$loan_off}', '{$today_date}', '{$today_date}')");
                             if ($check_arrear) {
                                 echo "REPAYMENT HAS BEEN POSTED TO ARREARS";
                             } else {
