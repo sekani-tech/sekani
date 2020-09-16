@@ -201,15 +201,16 @@ setInterval(function() {
                     $outstandingtwo = $printwo + $interesttwo;
                     $ttout = $outstanding + $outstandingtwo;
                     }
-                    else if($sessint_id == 13){
-                      $sdospd = "SELECT SUM(total_outstanding_derived) AS total_outstanding_derived FROM loan WHERE int_id = '$sessint_id'";
+                    else if($sessint_id == 13 || $sessint_id == 12){
+                      
+                    }
+                    $sdospd = "SELECT SUM(total_outstanding_derived) AS total_outstanding_derived FROM loan WHERE int_id = '$sessint_id'";
                       $sodi = mysqli_query($connection, $sdospd);
                       $s = mysqli_fetch_array($sodi);
-                      $ttout = $s['total_outstanding_derived'];
-                    }
+                      $fde = $s['total_outstanding_derived'];
 
                   ?>
-                  <h3 class="card-title">NGN - <?php echo number_format(round($ttout), 2); ?></h3>
+                  <h3 class="card-title">NGN - <?php echo number_format(round($fde), 2); ?></h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">

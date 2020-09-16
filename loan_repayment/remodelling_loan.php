@@ -80,8 +80,23 @@ if ($connection->error) {
             $query4 = "UPDATE loan_remodeling SET status = '1' WHERE id = '$id'";
             $queryexec4 = mysqli_query($connection, $query4);
             if($queryexec4){
-                echo 'Client no: '.$client_id.' updated in loan_remodeling</br></br>';
+                echo 'Client no: '.$client_id.' updated in loan_remodeling</br>';
+                $query5 = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$client_id' AND account_no = '$account_no'");
+                if($query5){
+                    $do = mysqli_fetch_array($query5);
+                    $account = $do['account_balance_derived'];
+                    $new_account = $account + $amount_paid;
+                    $query6 = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$new_account' WHERE client_id = '$client_id' AND account_no = '$account_no'");
+                    if($query6){
+                        echo 'Client no: '.$client_id.' updated arrear amount to balance</br></br>';
+                    }
+                }
+                else{
+                    echo "ERROR finding matching account</br></br>";
+
+                }
             } else {
+
                 echo "EOOR";
             }
         }
