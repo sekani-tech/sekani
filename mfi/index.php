@@ -174,41 +174,55 @@ setInterval(function() {
                   <p class="card-category">Outstanding Loan Balance</p>
                   <!-- Populate with the total value of outstanding loans -->
                   <?php
-                  if($sessint_id != 13){
-                    $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
-                    $sdoi = mysqli_query($connection, $dd);
-                    $e = mysqli_fetch_array($sdoi);
-                    $interest = $e['interest_amount'];
+                  // if($sessint_id != 13){
+                  //   $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
+                  //   $sdoi = mysqli_query($connection, $dd);
+                  //   $e = mysqli_fetch_array($sdoi);
+                  //   $interest = $e['interest_amount'];
 
-                    $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
-                    $sdswe = mysqli_query($connection, $dfdf);
-                    $u = mysqli_fetch_array($sdswe);
-                    $prin = $u['principal_amount'];
+                  //   $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
+                  //   $sdswe = mysqli_query($connection, $dfdf);
+                  //   $u = mysqli_fetch_array($sdswe);
+                  //   $prin = $u['principal_amount'];
 
-                    $outstanding = $prin + $interest;
+                  //   $outstanding = $prin + $interest;
 
-                    // Arrears
-                    $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id'";
-                    $fosdi = mysqli_query($connection, $ldfkl);
-                    $l = mysqli_fetch_array($fosdi);
-                    $interesttwo = $l['interest_amount'];
+                  //   // Arrears
+                  //   $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id'";
+                  //   $fosdi = mysqli_query($connection, $ldfkl);
+                  //   $l = mysqli_fetch_array($fosdi);
+                  //   $interesttwo = $l['interest_amount'];
 
-                    $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id'";
-                    $sodi = mysqli_query($connection, $sdospd);
-                    $s = mysqli_fetch_array($sodi);
-                    $printwo = $s['principal_amount'];
+                  //   $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id'";
+                  //   $sodi = mysqli_query($connection, $sdospd);
+                  //   $s = mysqli_fetch_array($sodi);
+                  //   $printwo = $s['principal_amount'];
 
-                    $outstandingtwo = $printwo + $interesttwo;
-                    $ttout = $outstanding + $outstandingtwo;
-                    }
-                    else if($sessint_id == 13 || $sessint_id == 12){
+                  //   $outstandingtwo = $printwo + $interesttwo;
+                  //   $ttout = $outstanding + $outstandingtwo;
+                  //   }
+                  //   else if($sessint_id == 13 || $sessint_id == 12){
                       
-                    }
-                    $sdospd = "SELECT SUM(total_outstanding_derived) AS total_outstanding_derived FROM loan WHERE int_id = '$sessint_id'";
-                      $sodi = mysqli_query($connection, $sdospd);
-                      $s = mysqli_fetch_array($sodi);
-                      $fde = $s['total_outstanding_derived'];
-
+                  //   }
+                    $prin_query = "SELECT SUM(principal_amount) AS total_out_prin FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND installment >= 1";
+                    $int_query = "SELECT SUM(interest_amount) AS total_int_prin FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND installment >= 1";
+                    // LOAN ARREARS
+                    $arr_query1 = mysqli_query($connection, "SELECT SUM(principal_amount) AS arr_out_prin FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= 1");
+                    $arr_query2 = mysqli_query($connection, "SELECT SUM(interest_amount) AS arr_out_int FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= 1");
+                    // check the arrears
+                    $ar = mysqli_fetch_array($arr_query1);
+                    $arx = mysqli_fetch_array($arr_query2);
+                    $arr_p = $ar["arr_out_prin"];
+                    $arr_i = $arx["arr_out_int"];
+                      $pq = mysqli_query($connection, $prin_query);
+                      $iq = mysqli_query($connection, $int_query);
+                      $pqx = mysqli_fetch_array($pq);
+                      $iqx = mysqli_fetch_array($iq);
+                      // check feedback
+                      $print = $pqx['total_out_prin'];
+                      $intet = $iqx['total_int_prin'];
+                      $fde = ($print + $intet) + ($arr_p + $arr_i);
+                      // DGMFB
                   ?>
                   <h3 class="card-title">NGN - <?php echo number_format(round($fde), 2); ?></h3>
                 </div>
