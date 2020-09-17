@@ -242,10 +242,55 @@ setInterval(function() {
             <div class="col-md-4">
               <div class="card card-chart">
                 <div class="card-header card-header-success">
-                  <div class="ct-chart" id=""></div>
+                <canvas id="myChart" width="600" height="400"></canvas>
+                <?php
+                // finish
+                $current_date = date('Y-m-d');
+                $qtr_date = date('Y-m-d', strtotime("-1 months", strtotime($current_date)));
+                // repayment
+                $get_qtr = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND ((duedate >= '$qtr_date') AND (duedate <= '$current_date')) AND installment = '0' ORDER BY id DESC LIMIT 6");
+                while($row = mysqli_fetch_array($get_qtr))
+                  {
+                    $total_amount = $row["principal_amount"] + $row["interest_amount"];
+                    $getall[] = array($total_amount);
+                  }
+                  $remodel = str_replace("".'"'."","", json_encode($getall)); 
+                  $final_l = str_replace("[","", $remodel); 
+                  $final_r = str_replace("]","", $final_l); 
+                ?>
+                <script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['1st', '2nd', '3rd', '4th', '5th', '6th'],
+        datasets: [{
+            label: 'Loan Collection',
+            data: [<?php echo $final_r ?>],
+            backgroundColor: [
+                'rgba(255, 255, 251, 0.2)',
+                'rgba(255, 255, 251, 0.2)',
+                'rgba(255, 255, 251, 0.2)',
+                'rgba(255, 255, 251, 0.2)',
+                'rgba(255, 255, 251, 0.2)',
+                'rgba(255, 255, 251, 0.2)',
+                'rgba(255, 255, 251, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 255, 255, 1)',
+                'rgba(255, 255, 255, 1)',
+                'rgba(255, 255, 255, 1)',
+                'rgba(255, 255, 255, 1)',
+                'rgba(255, 255, 255, 1)'
+            ],
+            borderWidth: 1
+        }]
+    }
+});
+</script>
                 </div>
                 <div class="card-body">
-                  <h4 class="card-title">Daily Loan Collection</h4>
+                  <h4 class="card-title">Monthly Loan Collection</h4>
                   <p class="card-category">
                     <span class="text-success"><i class="fa fa-long-arrow-up"></i> 54% </span> increase in loan collections</p>
                 </div>
