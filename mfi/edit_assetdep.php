@@ -64,6 +64,19 @@ $destination = "branch.php";
   $s = mysqli_fetch_array($df);
   $pname = $s['name'];
 }
+
+function fill_in($connection)
+  {
+    $sint_id = $_SESSION["int_id"];
+    $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' AND parent_id !='0' AND name LIKE '%depreciation%' AND classification_enum = '1' AND disabled = '0' ORDER BY name ASC";
+    $res = mysqli_query($connection, $org);
+    $output = '';
+    while ($row = mysqli_fetch_array($res))
+    {
+      $output .= '<option value = "'.$row["gl_code"].'"> '.$row["name"].' </option>';
+    }
+    return $output;
+  }
 ?>
 <!-- Content added here -->
     <div class="content">
@@ -90,6 +103,14 @@ $destination = "branch.php";
                         <div class="form-group">
                           <label class="bmd-label-floating">Depreciation Value(%)</label>
                           <input type="text" value="<?php echo $depval;?>" class="form-control" name="dep">
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Depreciation GL</label>
+                          <select type="text" class="form-control" name="gl_code">
+                          <?php echo fill_in($connection);?>
+                          </select>
                         </div>
                       </div>
                       </div>

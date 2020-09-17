@@ -10,7 +10,7 @@ $today = date('Y-m-d');
 $year = date('Y');
 $sdoins =$year."-01-01";
 $endtime = strtotime($sdoins);
-$startdate = date("Y-m-d", strtotime("-1 day", $endtime));
+$startdate = date("Y-m-d", strtotime($sdoins));
 ?>
 <!-- Content added here -->
 <!-- print content -->

@@ -70,8 +70,8 @@ if (isset($_POST["id"]))
                           <td><?php echo $chg2; ?></td>
                           <td><?php echo $amt."".$amt2; ?></td>
                           <td><?php echo $xs; ?></td>
-                          <td><div class="media-body media-right">
-                            <span onclick="delete_charge(<?php echo $edd;?>)" class="btn btn-danger">Delete</span>
+                          <td><div class="test" data-id='<?= $edd; ?>'>
+                            <span  class="btn btn-danger">Delete</span>
                           </div></td>
                         </tr>
                         <?php
@@ -83,31 +83,42 @@ if (isset($_POST["id"]))
                             // echo "0 Document";
                           }
                           ?>  
-                          <script>
-                             function delete_charge(I) {
-                              // delete methodology
-                                var id_to_be_deleted = I;
-                                var formData = new FormData();
-                                var p_id = $('#mrome').val();
-                                formData.append("id_to_be_deleted", id_to_be_deleted);
-                                $.ajax({
-                                    method: "POST",
-                                    url: "ajax_post/ajax_delete/delete_charges_loandis.php",
-                                    contentType: false,
-                                    processData: false,
-                                    //contentType: "application/json; charset=utf-8",
-                                    // dataType: "json",
-                                    data : formData,
-                                    success:function(data){
-                                      $('#lend_charge').html(data);
-                                      // document.getElementById("off_me").setAttribute("hidden", "");
-                                      // alert('success' + data);
-                                    }
-                                    });
-                                  }
-                            </script>
                           </tbody>
                         </table>
     <?php
 }
 ?>
+<script>
+  $(document).ready(function(){
+
+// Delete 
+$('.test').click(function(){
+    var el = this;
+
+    // Delete id
+    var id = $(this).data('id');
+    
+    var confirmalert = confirm("Delete this charge?");
+    if (confirmalert == true) {
+        // AJAX Request
+        $.ajax({
+            url: 'ajax_post/ajax_delete/delete_charge.php',
+            type: 'POST',
+            data: { id:id },
+            success: function(response){
+
+                if(response == 1){
+                    // Remove row from HTML Table
+                    $(el).closest('tr').css('background','tomato');
+                    $(el).closest('tr').fadeOut(700,function(){
+                        $(this).remove();
+                    });
+                }else{
+                    alert('Invalid ID.');
+                }
+            }
+        });
+    }
+});
+});
+</script>

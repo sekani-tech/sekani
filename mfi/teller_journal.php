@@ -196,8 +196,8 @@ else if (isset($_GET["message5"])) {
 if ($valut == 1 || $valut == "1") {
 ?> 
 <?php
-session_start();
 $bch_id = $_SESSION['branch_id'];
+$sint_id = $_SESSION['int_id'];
 // output the branch name
   $bch_name =  mysqli_query($connection, "SELECT * FROM branch WHERE id = '$bch_id' && int_id = '$sessint_id'");
   $grn = mysqli_fetch_array($bch_name);
@@ -253,12 +253,27 @@ $transaction_id = str_pad(rand(0, pow(10, 7)-1), 7, '0', STR_PAD_LEFT);
                         {  
                             $br_id = $_SESSION["branch_id"];
                             $sint_id = $_SESSION["int_id"];
-                            $fod = "SELECT * FROM branch WHERE int_id = '$sint_id' AND id = '$br_id'";
-                            $dof = mysqli_query($connection, $fod);
                             $out = '';
-                            while ($row = mysqli_fetch_array($dof))
-                            {
-                            $out .= '<option value="'.$row["id"].'">' .$row["name"]. '</option>';
+
+                            $sdf = "SELECT * FROM branch WHERE int_id = '$sint_id' AND id = '$br_id'";
+                            $dsse = mysqli_query($connection, $sdf);
+                            $fkdl = mysqli_fetch_array($connection, $dsse);
+                            $pid = $fkdl['parent_id'];
+                            if($pid == 0){
+                              $fod = "SELECT * FROM branch WHERE int_id = '$sint_id'";
+                              $dof = mysqli_query($connection, $fod);
+                              while ($row = mysqli_fetch_array($dof))
+                              {
+                              $out .= '<option value="'.$row["id"].'">' .$row["name"]. '</option>';
+                              }
+                            }
+                            else{
+                              $fod = "SELECT * FROM branch WHERE int_id = '$sint_id' AND id = '$br_id'";
+                              $dof = mysqli_query($connection, $fod);
+                              while ($row = mysqli_fetch_array($dof))
+                              {
+                              $out .= '<option value="'.$row["id"].'">' .$row["name"]. '</option>';
+                              }
                             }
                             return $out;
                         }
@@ -266,7 +281,7 @@ $transaction_id = str_pad(rand(0, pow(10, 7)-1), 7, '0', STR_PAD_LEFT);
                      <div class="col-md-4">
                         <div class="form-group">
                             <label class="">Branch:</label>
-                            <select class="form-control" name="branch_id">
+                            <select class="form-control" id ="bid" name="branch_id">
                             <?php echo branch_option($connection);?>
                             </select>
                         </div>
@@ -285,6 +300,22 @@ $transaction_id = str_pad(rand(0, pow(10, 7)-1), 7, '0', STR_PAD_LEFT);
                                   })
                                 });
                               })
+
+                              $(document).ready(function() {
+                                $('#bid').change(function(){
+                                  var id = $(this).val();
+                                  var int = $('#intt').val();
+
+                                  $.ajax({
+                                    url:"ajax_post/vault_balance.php",
+                                    method:"POST",
+                                    data:{id:id, int:int},
+                                    success:function(data){
+                                      $('#show_branch_balance').html(data);
+                                    }
+                                  })
+                                });
+                              })
                             </script>
                       <div class="col-md-4" id ="sw">
                         
@@ -293,11 +324,12 @@ $transaction_id = str_pad(rand(0, pow(10, 7)-1), 7, '0', STR_PAD_LEFT);
                         <div class="form-group">
                           <label class="bmd-label-floating">Amount</label>
                           <input type="number" name="amount" id="" class="form-control">
+                          <input type="text" hidden name="int" id="intt" value="<?php echo $sint_id; ?>" class="form-control">
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div id="show_branch_balance" class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Current Balance</label>
+                          <label class="bmd-label-floating">Vault Balance</label>
                           <!-- populate available balance -->
                           <input type="text" value="<?php echo $g_i_t_b; ?>" name="balance" id="" class="form-control" readonly>
                         </div>

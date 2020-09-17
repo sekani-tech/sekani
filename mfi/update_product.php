@@ -421,7 +421,8 @@ $destination = "config.php";
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                           <?php
-                          $charge_id = $row['charge_id'];
+                            $did = $row['id'];
+                            $charge_id = $row['charge_id'];
                             $fid = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id ='$charge_id'";
                             $dfdf = mysqli_query($connection, $fid);
                             $d = mysqli_fetch_array($dfdf);
@@ -457,8 +458,8 @@ $destination = "config.php";
                           <th><?php echo $name; ?></th>
                           <th><?php echo $chg; ?></th>
                           <th><?php echo $xs; ?></th>
-                          <td><a class="btn btn-danger">Delete</a></td>
-                        </tr>
+                          <td><div  data-id='<?= $did; ?>' class ="test"><a class="btn btn-danger">Delete</a></div></td>
+                         </tr>
                         <?php }
                           }
                           else {
@@ -1186,3 +1187,37 @@ function fixStepIndicator(n) {
     include("footer.php");
 
 ?>
+<script>
+  $(document).ready(function(){
+
+// Delete 
+$('.test').click(function(){
+    var el = this;
+
+    // Delete id
+    var id = $(this).data('id');
+    
+    var confirmalert = confirm("Delete this charge?");
+    if (confirmalert == true) {
+        // AJAX Request
+        $.ajax({
+            url: 'ajax_post/ajax_delete/delete_charge.php',
+            type: 'POST',
+            data: { id:id },
+            success: function(response){
+
+                if(response == 1){
+                    // Remove row from HTML Table
+                    $(el).closest('tr').css('background','tomato');
+                    $(el).closest('tr').fadeOut(700,function(){
+                        $(this).remove();
+                    });
+                }else{
+                    alert('Invalid ID.');
+                }
+            }
+        });
+    }
+});
+});
+</script>

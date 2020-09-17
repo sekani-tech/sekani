@@ -674,7 +674,32 @@ if(isset($_POST['id'])){
             var phone = $('#phone').val();
             var int_id = $('#int_id').val();
             var branch_id = $('#branch_id').val();
-            $.ajax({
+            // loader
+            Swal({
+  title: 'Processing!',
+  html: 'Please Wait! <b></b> .',
+  timer: 2000,
+  timerProgressBar: true,
+  onBeforeOpen: () => {
+    Swal.showLoading()
+    timerInterval = setInterval(() => {
+      const content = Swal.getContent()
+      if (content) {
+        const b = content.querySelector('b')
+        if (b) {
+          b.textContent = Swal.getTimerLeft()
+        }
+      }
+    }, 100)
+  },
+  onClose: () => {
+    clearInterval(timerInterval)
+  }
+}).then((result) => {
+  /* Read more about handling dismissals below */
+  if (result.dismiss === Swal.DismissReason.timer) {
+    console.log('I was closed by the timer')
+    $.ajax({
                 url:"ajax_post/BVN/bvn_checking.php",
                 method:"POST",
             data:{bvn:bvn, dob: dob, first:first, last:last, phone:phone, int_id:int_id, branch_id:branch_id},
@@ -682,6 +707,11 @@ if(isset($_POST['id'])){
             $('#bvn_result').html(data);
             }
         })
+  }
+//   document.getElementById("dman_sub").submit();
+})
+
+            // END
     });
 });
 </script>

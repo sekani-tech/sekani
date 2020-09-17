@@ -21,9 +21,10 @@ while($a = mysqli_fetch_array($queryexec1)) {
     $maturedon_date = $a['maturedon_date'];
     $no_of_repayments = $a['no_of_repayments'];
     $amount_paid = $a['amount_paid' ];
+    $arrear_amount = $a['arrear_amount'];
     $status = $a['status'];
-    $loan_status = $a['status'];
-    $outstanding = $principal_amount - $amount_paid;
+    $loan_status = $a['loan_status'];
+    $outstanding = ($principal_amount + (($interest_rate/100) * $principal_amount) * $loan_term);
     $today = date('Y-m-d');
 
     $query2 = "INSERT INTO `loan` (`id`, `int_id`, `account_no`, `client_id`, `product_id`, `fund_id`, `col_id`, `col_name`, `col_description`, 
@@ -50,8 +51,8 @@ while($a = mysqli_fetch_array($queryexec1)) {
     '$loan_puporse', 'NGN', '2', '$principal_amount', '$principal_amount', '$loan_term', '$interest_rate', '$principal_amount', '$repayment_date', NULL, '0', '0.00', 
     NULL, NULL, NULL, NULL, '1', '0', '1', '2', '$repay_every', NULL, '$no_of_repayments', NULL, NULL, NULL, NULL, NULL, '$today', NULL, '$today', NULL, NULL, NULL, NULL, 
     '$disbursement_date', NULL, NULL, '$maturedon_date', NULL, NULL, NULL, '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', 
-    '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '$outstanding', NULL, NULL, NULL, NULL, NULL, NULL, 
-    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', NULL, NULL, NULL, '1', '1', '0', NULL, NULL, '1', NULL, NULL, '$loan_status', '1', '1', NULL, NULL, '0.00')";
+    '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '$arrear_amount', NULL, NULL, NULL, NULL, NULL, NULL, 
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', NULL, NULL, NULL, '1', '1', '0', NULL, NULL, '1', NULL, '$loan_status', '', '1', '1', NULL, NULL, '0.00')";
     $queryexec2 = mysqli_query($connection, $query2);
 
     if($queryexec2){
@@ -79,8 +80,23 @@ if ($connection->error) {
             $query4 = "UPDATE loan_remodeling SET status = '1' WHERE id = '$id'";
             $queryexec4 = mysqli_query($connection, $query4);
             if($queryexec4){
-                echo 'Client no: '.$client_id.' updated in loan_remodeling</br></br>';
+                echo 'Client no: '.$client_id.' updated in loan_remodeling</br>';
+                $query5 = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$client_id' AND account_no = '$account_no'");
+                if($query5){
+                    $do = mysqli_fetch_array($query5);
+                    $account = $do['account_balance_derived'];
+                    $new_account = $account + $amount_paid;
+                    $query6 = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$new_account' WHERE client_id = '$client_id' AND account_no = '$account_no'");
+                    if($query6){
+                        echo 'Client no: '.$client_id.' updated arrear amount to balance</br></br>';
+                    }
+                }
+                else{
+                    echo "ERROR finding matching account</br></br>";
+
+                }
             } else {
+
                 echo "EOOR";
             }
         }

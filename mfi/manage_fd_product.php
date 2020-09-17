@@ -240,6 +240,8 @@ $dos = mysqli_query($connection, $fd);
                                   var start = $('#start').val();
                                   var end = $('#end').val();
                                   var intrate = $('#intrate').val();
+                                  var minintrate = $('#minintrate').val();
+                                  var maxintrate = $('#maxintrate').val();
                                   var desc = $('#desc').val();
                                   var term = $('#term').val();
                                   var amount = $('#amount').val();
@@ -311,9 +313,25 @@ $dos = mysqli_query($connection, $fd);
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <div class="form-group">
+                      <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
                         <label class = "bmd-label-floating" for="">Interest Rate:</label>
-                        <input type="number" name="col_value" id="intrate" class="form-control">
+                        <input type="number" step=".01" name="col_value" id="intrate" class="form-control">
+                      </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="form-group">
+                        <label class = "bmd-label-floating" for="">Min Interest Rate:</label>
+                        <input type="number" step=".01" name="col_value" id="minintrate" class="form-control">
+                      </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="form-group">
+                        <label class = "bmd-label-floating" for="">Max Interest Rate:</label>
+                        <input type="number" step=".01" name="col_value" id="maxintrate" class="form-control">
+                      </div>
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-12">

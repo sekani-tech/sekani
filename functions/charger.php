@@ -50,6 +50,7 @@ if($client == "0"){
     $reor = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code='$pay_type'");
     $ron = mysqli_fetch_array($reor);
     $glbalance = $ron['organization_running_balance_derived'];
+    $parent_id = $ron['parent_id'];
 
     if($calc_time == "7"){
       $amt = $s['amount'];
@@ -87,9 +88,9 @@ if($client == "0"){
   $dbgl = mysqli_query($connection, $upglacct);
         if($dbgl){
           $deiption = "credit";
-          $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
+          $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
           transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
-            created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$pay_type}', '{$transid}', '{$descrip}', '{$deiption}', '{$staff_id}',
+            created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$pay_type}', '{$parent_id}', '{$transid}', '{$descrip}', '{$deiption}', '{$staff_id}',
              '{$date}', '{$glsmi}', '{$sddd}', '{$glsmi}', '{$date}', '{$glsmi}')";
              $res4 = mysqli_query($connection, $gl_acc);
              if ($res4) {
@@ -120,6 +121,7 @@ else{
   $reor = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code='$pay_type'");
   $ron = mysqli_fetch_array($reor);
   $glbalance = $ron['organization_running_balance_derived'];
+  $parent_id = $ron['parent_id'];
   
   if($calc_time == "7"){
     $amt = $s['amount'];
@@ -154,9 +156,9 @@ else{
           $dbgl = mysqli_query($connection, $upglacct);
                 if($dbgl){
                   $deiption = "credit";
-                  $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
+                  $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
                   transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
-                    created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$pay_type}', '{$transid}', '{$descrip}', '{$deiption}', '{$staff_id}',
+                    created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$pay_type}', '{$parent_id}', '{$transid}', '{$descrip}', '{$deiption}', '{$staff_id}',
                      '{$date}', '{$amount}', '{$newglball}', '{$amount}', '{$date}', '{$amount}')";
                      $res4 = mysqli_query($connection, $gl_acc);
                      if ($res4) {

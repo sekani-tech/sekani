@@ -49,6 +49,7 @@ $gl_man = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code 
 $gl = mysqli_fetch_array($gl_man);
 $gl_name = $gl["name"];
 $l_acct_bal = $gl["organization_running_balance_derived"];
+$parent_id = $gl["parent_id"];
 $new_gl_bal = $l_acct_bal + $gl_amt;
 // remeber the institution account
 $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
@@ -77,9 +78,9 @@ if ($is_del == "0" && $is_del != NULL) {
             $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_codex'";
             $dbgl = mysqli_query($connection, $upglacct);
             if ($dbgl) {
-                $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
+                $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
                 transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
-                  created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$gl_codex}', '{$trans_id}', '{$desc}', 'Credit', '{$staff_id}',
+                  created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$gl_codex}', '{$parent_id}', '{$trans_id}', '{$desc}', 'Credit', '{$staff_id}',
                    '{$gen_date}', '{$gl_amt}', '{$new_gl_bal}', '{$gl_amt}', '{$gen_date}', '{$gl_amt}')";
                    $res4 = mysqli_query($connection, $gl_acc);
                 if($res4){

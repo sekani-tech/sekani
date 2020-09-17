@@ -377,9 +377,9 @@ else {
                           ?>
                           <th><?php echo $class; ?></th>
                           <th><?php if ($row["organization_running_balance_derived"] < 0) {
-                            echo '<div style="color: red;">'.$row["organization_running_balance_derived"].'</div>';
+                            echo '<div style="color: red;">'.number_format($row["organization_running_balance_derived"]).'</div>';
                           } else {
-                            echo $row["organization_running_balance_derived"];
+                            echo number_format($row["organization_running_balance_derived"]);
                           } ?></th>
                           <?php
                           $cash = $row["organization_running_balance_derived"];

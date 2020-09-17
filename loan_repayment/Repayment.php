@@ -985,7 +985,7 @@ if (mysqli_num_rows($get_back_model) >= 1) {
                 if ($client_account_no != "") {
                     // check the amount paid
                     if ($m_amount_paid >= $repayment_amount) {
-                        // cehck
+                        // check
                         $new_repayment_balance = $m_amount_paid - $repayment_amount;
                         // query the new
                         $query_remodel = mysqli_query($connection, "UPDATE `loan_remodeling` SET `amount_paid` = '$new_repayment_balance' WHERE id = '$m_id' AND client_id = '$m_client_id'");
@@ -1024,7 +1024,7 @@ if (mysqli_num_rows($get_back_model) >= 1) {
                         if ($query_update_repayment) {
                             // add the remaining amount to the arrear table
                                 $check_arrear = mysqli_query($connection, "INSERT INTO `loan_arrear` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, `counter`, `principal_amount`, `principal_completed_derived`, `principal_writtenoff_derived`, `interest_amount`, `interest_completed_derived`, `interest_writtenoff_derived`, `total_paid_late_derived`, `completed_derived`, `obligations_met_on_date`, `createdby_id`, `created_date`, `lastmodified_date`) 
-                            VALUES ('{$m_int_id}', '{$m_loan_id}', '{$m_client_id}', '{$r_from_date}', '{$r_due_date}', '1', '1', '{$new_principal}', '{$new_principal}', '0', '{$new_interest}', '{$new_interest}', '0', '0', '0', NULL, '{$loan_off}', '{$today_date}', '{$today_date}')");
+                            VALUES ('{$m_int_id}', '{$m_loan_id}', '{$m_client_id}', '{$r_from_date}', '{$r_due_date}', '0', '1', '{$new_principal}', '{$new_principal}', '0', '{$new_interest}', '{$new_interest}', '0', '0', '0', NULL, '{$loan_off}', '{$today_date}', '{$today_date}')");
                             if ($check_arrear) {
                                 echo "REPAYMENT HAS BEEN POSTED TO ARREARS";
                             } else {
@@ -1074,4 +1074,56 @@ if (mysqli_num_rows($get_back_model) >= 1) {
     echo "NO ACTIVE REMODEL";
 }
 // END AUTO BACK REPAYMENT
+?>
+<?php
+/////////////////////// AUTO CODE TO CALCULATE THE DEPRECIATION OF ALL ASSETS IN AN INSTITUTION ///////////////////////
+echo '</br></br>Depreciation Calculation code right here:</br>';
+// Pull all assets
+$ifdo = mysqli_query($connection, "SELECT * FROM assets");
+while($pd = mysqli_fetch_array($ifdo)){
+    $aorp = $pd['id'];
+    $int_id = $pd['int_id'];
+    $asset_name = $pd['asset_name'];
+    $asset_type_id = $pd['asset_type_id'];
+    $type = $pd['type'];
+    $qty = $pd['qty'];
+    $unit_price = $pd['unit_price'];
+    $amount = $pd['amount'];
+    $asset_no = $pd['asset_no'];
+    $location = $pd['location'];
+    $date = $pd['date'];
+    $dep = $pd['depreciation_value'];
+    $current_year = $pd['current_year_depreciation'];
+    $current_month = $pd['current_month_depreciation'];
+    $curr_year = date('Y-m-d');
+    $curr_month = date('m');
+
+    // to get difference in years
+    $purdate = strtotime($date);
+    $currentdate = strtotime($curr_year);
+    $datediff = $currentdate - $purdate;
+    $datt = round($datediff / (60 * 60 * 24 * 365));
+
+    // to get percentage
+    $dom = ($dep/100) * $unit_price;
+    // to get current year depreciation
+    $currentyear = $unit_price - ($dom * $datt);
+
+    // to get current month depreciation
+    $curr_mon = $dom / 12;
+    // last year plus number of months spent = this month depreciation
+    $lasty = $unit_price - ($dom * ($datt - 1));
+    if($currentyear != $unit_price){
+    $current_month = $lasty + ($curr_mon * $curr_month);
+    }
+    else{
+       $current_month =  $unit_price -($curr_mon * $curr_month);
+    }
+
+    $idof = "UPDATE assets SET current_year_depreciation = '$currentyear', current_month_depreciation = '$current_month' WHERE int_id = '$int_id' AND id = '$aorp'";
+    $dos = mysqli_query($connection, $idof);
+        if($dos){
+            echo 'Depreciation Value for '.$asset_name.' with int_id '.$int_id.' was calculated</br>';
+        }
+}
 ?>

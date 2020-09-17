@@ -126,6 +126,7 @@ $destination = "transaction.php";
 if ($loan_appv == 1 || $loan_appv == "1") {
 ?> 
           <!-- your content here -->
+          <script src='jquery-3.0.0.js' type='text/javascript'></script>
         <div class="row">
           <div class="col-md-12">
             <div class="card">

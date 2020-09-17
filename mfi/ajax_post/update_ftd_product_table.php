@@ -36,6 +36,7 @@ $derifv = mysqli_query($connection, $fdfg);
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                           <?php
+                          $did = $row['id'];
                           $charge_id = $row['charge_id'];
                             $fid = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id ='$charge_id'";
                             $dfdf = mysqli_query($connection, $fid);
@@ -72,7 +73,7 @@ $derifv = mysqli_query($connection, $fdfg);
                           <th><?php echo $name; ?></th>
                           <th><?php echo $chg; ?></th>
                           <th><?php echo $xs; ?></th>
-                          <td><a href="" class="btn btn-danger">Delete</a></td>
+                          <td><div data-id='<?= $did; ?>' class ="test"><a class="btn btn-danger">Delete</a></div></td>
                         </tr>
                         <?php }
                           }
@@ -82,3 +83,37 @@ $derifv = mysqli_query($connection, $fdfg);
                           ?>
                       </tbody>
                     </table>
+                    <script>
+  $(document).ready(function(){
+
+// Delete 
+$('.test').click(function(){
+    var el = this;
+
+    // Delete id
+    var id = $(this).data('id');
+    
+    var confirmalert = confirm("Delete this charge?");
+    if (confirmalert == true) {
+        // AJAX Request
+        $.ajax({
+            url: 'ajax_post/ajax_delete/delete_ftd_charge.php',
+            type: 'POST',
+            data: { id:id },
+            success: function(response){
+
+                if(response == 1){
+                    // Remove row from HTML Table
+                    $(el).closest('tr').css('background','tomato');
+                    $(el).closest('tr').fadeOut(700,function(){
+                        $(this).remove();
+                    });
+                }else{
+                    alert('Invalid ID.');
+                }
+            }
+        });
+    }
+});
+});
+</script>

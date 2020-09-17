@@ -59,6 +59,11 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
     $itb = mysqli_fetch_array($vault);
     $vault_limit = $itb['movable_amount'];
     $int_gl = $itb['gl_code'];
+
+    // vault gl
+    $vau = mysqli_query($connection,"SELECT * FROM acc_gl_account WHERE int_id = '$sint_id' AND gl_code = '$int_gl'");
+    $ese = mysqli_fetch_array($vau);
+    $parent_id = $ese['parent_id'];
   // If transaction is a vault in execute this code
   if($tid || $bank_type){
     if($type == "vault_in"){
@@ -90,9 +95,9 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         created_date, appuser_id, debit) VALUES ('{$sint_id}','{$branchid}', '{$transact_id}','{$description}',
                         '{$type}', '{$tid}', '1', '0', '{$transdate}', '{$amount}', '{$new_tellbalance}','{$amount}', '{$crdate}',
                         '{$tid}', '{$amount}')";
-                        $reffcord ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
+                        $reffcord ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
                         transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
-                          created_date, credit) VALUES ( '{$sint_id}', '{$branchid}', '10011000', '{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
+                          created_date, credit) VALUES ( '{$sint_id}', '{$branchid}', '{$int_gl}', '{$parent_id}','{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
                            '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$amount}')";
                             $risn = mysqli_query($connection, $reffcord);
 
@@ -319,9 +324,9 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                         '{$tid}', '{$amount}')";
                         $rin = mysqli_query($connection, $recorrrd);
 
-                        $record ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
+                        $record ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
                         transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
-                          created_date, debit) VALUES ( '{$sint_id}', '{$branchid}', '10011000', '{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
+                          created_date, debit) VALUES ( '{$sint_id}', '{$branchid}', '{$int_gl}', '{$parent_id}', '{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
                            '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$amount}')";
                             $riln = mysqli_query($connection, $record);
 
@@ -535,15 +540,15 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                 $vaultinquery2 = "UPDATE int_vault SET balance = '$new_vaultbalance', last_withdrawal = '$amount' WHERE int_id = '$sint_id' AND branch_id = '$branchid'";
                 $on = mysqli_query($connection, $vaultinquery2);
                 if($on){
-                    $resscord ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
+                    $resscord ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
                 transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
-                  created_date, credit) VALUES ( '{$sint_id}', '{$branchid}', '{$bank_type}', '{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
+                  created_date, credit) VALUES ( '{$sint_id}', '{$branchid}', '{$bank_type}', '{$parent_id}', '{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
                    '{$new_glbalance}', '{$amount}', '{$crdate}', '{$amount}')";
                     $rin = mysqli_query($connection, $resscord);
 
-                    $recrd ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
+                    $recrd ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
                         transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
-                          created_date, debit) VALUES ( '{$sint_id}', '{$branchid}', '10011000', '{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
+                          created_date, debit) VALUES ( '{$sint_id}', '{$branchid}', '{$int_gl}', '{$parent_id}', '{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
                            '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$amount}')";
                             $rind = mysqli_query($connection, $recrd);
 
@@ -756,9 +761,9 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                  '{$new_glbalance}', '{$amount}', '{$crdate}', '{$amount}')";
                $rin = mysqli_query($connection, $record);
 
-               $record ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
+               $record ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
                         transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
-                          created_date, credit) VALUES ( '{$sint_id}', '{$branchid}', '10011000', '{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
+                          created_date, credit) VALUES ( '{$sint_id}', '{$branchid}', '{$int_gl}', '{$parent_id}', '{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
                            '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$amount}')";
                             $rin = mysqli_query($connection, $record);
 
