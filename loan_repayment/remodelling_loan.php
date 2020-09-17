@@ -24,7 +24,7 @@ while($a = mysqli_fetch_array($queryexec1)) {
     $arrear_amount = $a['arrear_amount'];
     $status = $a['status'];
     $loan_status = $a['loan_status'];
-    $outstanding = ($principal_amount + (($interest_rate/100) * $principal_amount)) - $amount_paid;
+    $outstanding = ($principal_amount + (($interest_rate/100) * $principal_amount) * $loan_term);
     $today = date('Y-m-d');
 
     $query2 = "INSERT INTO `loan` (`id`, `int_id`, `account_no`, `client_id`, `product_id`, `fund_id`, `col_id`, `col_name`, `col_description`, 
