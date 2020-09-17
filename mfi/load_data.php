@@ -96,13 +96,11 @@ if(isset($_POST["id"]))
         <th><?php echo $row["charge"] ?></th>
         <th> <?php echo $row["collected_on"] ?></th>
         <input type="text" value="<?php $row["id"] ?>" hidden>
-        <th> <button id="del" type="button" name="delete" class="btn btn-info">delete</button> </th>
+        <?php
+        $edd = $row["id"];
+        ?>
+        <td><div class="test" data-id='<?= $edd; ?>'><span class="btn btn-danger">Delete</span></div></td>
       </tr>
-      <script>
-     $(document).ready(function () {
-      $('#del').click();
-     });
-     </script>
       <?php
       }
     } else {
@@ -115,19 +113,37 @@ if(isset($_POST["id"]))
     echo $output;
 }
 ?>
-<?php
-if ($_GET) {
-  if(isset($_GET['delete'])){
-    $id = $row["id"];
-      delete($connection, $id);
-  }//elseif(isset($_GET['select'])){
-      //select();
-  //}
-}
-function delete($connection, $id)
-    {
-    	$delete1 = mysqli_query($connection, "DELETE FROM `charges_cache` WHERE id = '$id'");
-        
-	echo "record deleted";
+<script>
+  $(document).ready(function(){
+
+// Delete 
+$('.test').click(function(){
+    var el = this;
+
+    // Delete id
+    var id = $(this).data('id');
+    
+    var confirmalert = confirm("Delete this charge?");
+    if (confirmalert == true) {
+        // AJAX Request
+        $.ajax({
+            url: 'ajax_post/ajax_delete/delete_cache.php',
+            type: 'POST',
+            data: { id:id },
+            success: function(response){
+
+                if(response == 1){
+                    // Remove row from HTML Table
+                    $(el).closest('tr').css('background','tomato');
+                    $(el).closest('tr').fadeOut(700,function(){
+                        $(this).remove();
+                    });
+                }else{
+                    alert('Invalid ID.');
+                }
+            }
+        });
     }
-?>
+});
+});
+</script>
