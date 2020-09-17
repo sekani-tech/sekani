@@ -202,16 +202,17 @@ $res = mysqli_query($connection, $query);
                 $select_bvn_gl = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$income_bvn' AND int_id = '$int_id'");
                 $tty = mysqli_fetch_array($select_bvn_gl);
                 $bvn_gl_bal = $tty["organization_running_balance_derived"] + 10;
+                $parent_id = $tty["parent_id"];
 
                 $make_bvn_update = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived =  '$bvn_gl_bal' WHERE int_id = '$int_id' AND gl_code = '$income_bvn'");
                 // alright
                 if ($make_bvn_update) {
                   // echo out
-                  $insert_gl_trans = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
+                  $insert_gl_trans = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `parent_id`, `transaction_id`,
               `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,
               `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`,
               `manually_adjusted_or_reversed`, `credit`, `debit`) 
-              VALUES ('{$int_id}', '{$branch_id}', '{$income_bvn}', '{$transid}',
+              VALUES ('{$int_id}', '{$branch_id}', '{$income_bvn}', '{$parent_id}', '{$transid}',
               'BVN INCOME', 'bvn', '{$client_id}', '0', '{$gen_date}', '10.00', '{$bvn_gl_bal}',
               '{$bvn_gl_bal}', '{$gen_date}', '0', '{$new_gl_run_bal}', '{$gen_date}',
               '0', '10.00', '0.00')");
