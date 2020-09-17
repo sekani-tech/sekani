@@ -708,7 +708,7 @@ if(isset($_POST['id'])){
             }
         })
   }
-  document.getElementById("dman_sub").submit();
+//   document.getElementById("dman_sub").submit();
 })
 
             // END
