@@ -35,6 +35,18 @@ $display_name = strtoupper($_POST['display_name']);
 $digit = 4;
 $randms = str_pad(rand(0, pow(10, $digit)-1), 7, '0', STR_PAD_LEFT);
 $account_no = $inttest."".$randms;
+$length = strlen($account_no);
+if ($length == 10) {
+  $account_no = $account_no;
+} else if ($length > 10) {
+  $di = 6;
+  $randms = str_pad(rand(0, pow(10, $di)-1), $di, '0', STR_PAD_LEFT);
+  $account_no = "0200".$randms;
+} else {
+  $di = 6;
+  $randms = str_pad(rand(0, pow(10, $di)-1), $di, '0', STR_PAD_LEFT);
+  $account_no = "0200".$randms;
+}
 // auto calculation for the account number generation
 $first_name = strtoupper($_POST['firstname']);
 $last_name = strtoupper($_POST['lastname']);
