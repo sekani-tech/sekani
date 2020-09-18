@@ -151,10 +151,10 @@ $res = mysqli_query($connection, $query);
         $account_balance_derived = 0;
 
         $accountins = "INSERT INTO account (int_id, branch_id, account_no, account_type,
-        type_id, product_id, client_id, field_officer_id, submittedon_date, submittedon_userid,
+        type_id, product_id, client_id, field_officer_id, submittedon_date, updatedon_date, submittedon_userid,
         currency_code, activatedon_date, activatedon_userid,
         account_balance_derived) VALUES ('{$int_id}', '{$branch_id}', '{$account_no}',
-        '{$accttname}', '{$type_id}', '{$account_type}', '{$client_id}', '{$field_officer_id}', '{$submittedon_date}',
+        '{$accttname}', '{$type_id}', '{$account_type}', '{$client_id}', '{$field_officer_id}', '{$submittedon_date}', '{$submittedon_date}',
         '{$submittedon_userid}', '{$currency_code}', '{$activation_date}', '{$activation_userid}',
         '{$account_balance_derived}')";
 
