@@ -219,7 +219,7 @@ if (isset($_GET["edit"])) {
                           <label class="bmd-label-floating">UserType</label>
                           <select name="usertype" id="" class="form-control">
                           <option hidden value="<?php echo $usertype; ?>"><?php echo $type; ?></option>
-                          <option value="super_admin">Super Admin</option>
+                          <!-- <option value="super_admin">Super Admin</option> -->
                             <option value="admin">Admin</option>
                             <option value="staff">Staff</option>
                           </select>
