@@ -400,61 +400,107 @@ include('functions/config.php');
 
 ?>
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Sekani Systems - Login</title>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <!--     Fonts and icons     -->
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-  <!-- test -->
-  <!-- Material Kit CSS -->
-  <link href="assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+	<title>Sekani Systems Login</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="login/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="login/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="login/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="login/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="login/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="login/css/util.css">
+	<link rel="stylesheet" type="text/css" href="login/css/main.css">
+<!--===============================================================================================-->
 </head>
 <body>
-    <div class="wrapper">
-        <div class="content justify-content-between">
-            <div class="container">
-                <!-- Login form -->
-                <!-- <div class="row"> -->
-                    <div class="col-md-7" style="margin-left:auto; margin-right:auto;">
-                    <div class="card">
-                        <div class="card-header card-header-primary">
-                        <h4 class="card-title">Login</h4>
-                        <h4 class="card-title"><?php echo $err;?></h4>
-                        <p class="card-category">Sign in</p>
-                        </div>
-                        <div class="card-body">
-                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
-                                    <label class="bmd-label-floating">Username</label>
-                                    <input type="text" value="<?php echo $username; ?>" class="form-control" name="username">
-                                    <span class="help-block"><?php echo $username_err; ?></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-                                    <label class="bmd-label-floating">Password</label>
-                                    <input type="password" name="password" class="form-control" id="">
-                                    <span class="help-block"><?php echo $password_err; ?></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary pull-right">Login</button>
-                            <button type="reset" class="btn btn-danger ">Reset</button>
-                            <div class="clearfix"></div>
-                        </form>
-                        </div>
-                    </div>
-                    </div>
-                <!-- </div> -->
-            </div>
-        </div>
-    </div>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-pic js-tilt" data-tilt>
+					<img src="login/images/img-01.png" alt="IMG">
+				</div>
+
+				<form class="login100-form validate-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+					<span class="login100-form-title">
+						Login
+          </span>
+          
+					<div class="wrap-input100 validate-input" data-validate = "Valid username is required">
+
+						<input class="input100" type="text" name="username" placeholder="Username">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</span>
+          </div>
+          <span class="help-block" style="color:red;"><?php echo $username_err; ?></span>
+
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+
+						<input class="input100" type="password" name="password" placeholder="Password">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+          </div>
+          <span class="help-block" style="color:red;"><?php echo $password_err; ?></span>
+					<div class="container-login100-form-btn">
+						<button type="submit" class="login100-form-btn">
+							Login
+						</button>
+					</div>
+
+					<div class="text-center p-t-12">
+						<span class="txt1">
+							Forgot
+						</span>
+						<a class="txt2" href="login_reset.php">
+							Password?
+						</a>
+					</div>
+
+					<div class="text-center p-t-136">
+						<a class="txt2" href="https://www.sekanisystems.com.ng">
+							All right reserved SekaniSystems
+							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+
+	
+<!--===============================================================================================-->	
+	<script src="login/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="login/vendor/bootstrap/js/popper.js"></script>
+	<script src="login/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="login/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="login/vendor/tilt/tilt.jquery.min.js"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="login/js/main.js"></script>
+
 </body>
 </html>
