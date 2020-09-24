@@ -17,6 +17,19 @@ include("header.php");
               
                   <!-- Insert number users institutions -->
                 </div>
+                <!-- end -->
+                <div class="card card-profile ml-auto mr-auto" style="max-width: 360px; max-height: 360px">
+    <div class="card-body ">
+        <h4 class="card-title">Alec Thompson</h4>
+        <h6 class="card-category text-gray">0242412689</h6>
+    </div>
+    <div class="card-footer justify-content-center">
+        <a href="#pablo" class="btn btn-just-icon btn-twitter btn-round">
+            <i class="fa fa-twitter"></i>
+        </a>
+    </div>
+</div>
+                <!-- end new card profile -->
                 <?php
                 $query_loan = mysqli_query($connection, "SELECT * FROM `loan` WHERE int_id = '$sessint_id' AND total_outstanding_derived > 0");
                 ?>
