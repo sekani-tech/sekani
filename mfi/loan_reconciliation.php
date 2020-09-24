@@ -54,15 +54,16 @@ include("header.php");
                       </tbody>
                     </table>
                     <!-- popup -->
-                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-    <div class="card card-signup card-plain">
-                <div class="modal-header">
-                 Repay Loan Manually
-                  </div>
-    </div>
-    <div class="modal-body">
+                       <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="card card-signup card-plain">
+                                          <div class="modal-header">
+                                          Repay Loan Manually
+                                            </div>
+                              </div>
+
+               <div class="modal-body">
                    
                     <form class="form" method="" action="">
                        
