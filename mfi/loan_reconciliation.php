@@ -58,7 +58,7 @@ include("header.php");
                             </button>
                                     <div class="dropdown-menu">
                                       <a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg">Pay Loan</a>
-                                      <a class="dropdown-item" href="#">Edit Loan Repayment</a>
+                                      <a class="dropdown-item" href="loan_repayment_view.php?id=<?php echo $row["id"]; ?>">Edit Loan Repayment</a>
                                     </div>
                                   </div> 
                           </td>                         
