@@ -111,32 +111,40 @@ include("header.php");
                         <div class="card-body">
 
                             <div class="form-group bmd-form-group">
+                            <label for="">Account Name</label>
                                 <div class="input-group">
                                   <div class="input-group-prepend">
-                                   
                                   </div>
-                                  <input type="text" class="form-control" placeholder="Amount">
+                                  <input type="text" class="form-control" placeholder="OLUWASEUN" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group bmd-form-group">
+                            <label for="">Account Number</label>
+                                <div class="input-group">
+                                  <div class="input-group-prepend">
+                                  </div>
+                                  <input type="text" class="form-control" placeholder="0242412689" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group bmd-form-group">
+                            <label for="">Payment Date</label>
                                 <div class="input-group">
                                   <div class="input-group-prepend">
-                                    
                                   </div>
                                   <input type="date" class="form-control" placeholder="yyyy-mm-dd">
                                 </div>
                             </div>
                             <div class="form-group bmd-form-group">
+                            <label for="">Payment Type</label>
                                 <div class="input-group">
                                   <div class="input-group-prepend">
-                                    
                                   </div>
                                   <select name="" class="form-control">
                                     <option value="">Select Type</option>
                                     <option value="">Principal Amount</option>
                                     <option value="">Interest Amount </option>
-                                    <option value="">Principal Interest</option>
+                                    <option value="">Principal + Interest</option>
                                   </select>
                                 </div>
                             </div>
@@ -144,7 +152,7 @@ include("header.php");
                     </form>
                     
                 <div class="modal-footer justify-content-center">
-                    <a href="#pablo" class="btn btn-primary btn-link btn-wd btn-lg">Pay</a>
+                    <button href="#pablo" class="btn btn-primary btn-link btn-wd btn-lg">Pay</button>
                 </div>
                     
                 </div>
