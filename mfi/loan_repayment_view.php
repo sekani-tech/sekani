@@ -67,7 +67,7 @@ include("header.php");
                           <td><?php echo "₦ ".number_format($row["total_outstanding_derived"], 2); ?></td>
                           <td>
                           <div class="btn-group">
-                            <button type="button" class="btn btn-secondary">Edit</button>
+                            <a href="loan_single_repayment.php?id=<?php echo $row["id"]; ?>" class="btn btn-secondary">Edit</a>
                             <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="sr-only">Toggle Dropdown</span>
                             </button>
