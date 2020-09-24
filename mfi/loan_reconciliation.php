@@ -56,11 +56,11 @@ include("header.php");
                             <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="sr-only">Toggle Dropdown</span>
                             </button>
-                            <div class="dropdown-menu">
-                               <a class="dropdown-item" href="#">Pay Loan</a>
-                               <a class="dropdown-item" href="#">Edit Loan Repayment</a>
-                            </div>
-                           </div> 
+                                    <div class="dropdown-menu">
+                                      <a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg">Pay Loan</a>
+                                      <a class="dropdown-item" href="#">Edit Loan Repayment</a>
+                                    </div>
+                                  </div> 
                           </td>                         
                         </tr>
                         <tr>
@@ -94,6 +94,65 @@ include("header.php");
                         ?>
                       </tbody>
                     </table>
+                    <!-- popup -->
+                       <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="card card-signup card-plain">
+                                          <div class="modal-header">
+                                          Repay Loan Manually
+                                            </div>
+                              </div>
+
+               <div class="modal-body">
+                   
+                    <form class="form" method="" action="">
+                       
+                        <div class="card-body">
+
+                            <div class="form-group bmd-form-group">
+                                <div class="input-group">
+                                  <div class="input-group-prepend">
+                                   
+                                  </div>
+                                  <input type="text" class="form-control" placeholder="Amount">
+                                </div>
+                            </div>
+
+                            <div class="form-group bmd-form-group">
+                                <div class="input-group">
+                                  <div class="input-group-prepend">
+                                    
+                                  </div>
+                                  <input type="date" class="form-control" placeholder="yyyy-mm-dd">
+                                </div>
+                            </div>
+                            <div class="form-group bmd-form-group">
+                                <div class="input-group">
+                                  <div class="input-group-prepend">
+                                    
+                                  </div>
+                                  <select name="" class="form-control">
+                                    <option value="">Select Type</option>
+                                    <option value="">Principal Amount</option>
+                                    <option value="">Interest Amount </option>
+                                    <option value="">Principal Interest</option>
+                                  </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    
+                <div class="modal-footer justify-content-center">
+                    <a href="#pablo" class="btn btn-primary btn-link btn-wd btn-lg">Pay</a>
+                </div>
+                    
+                </div>
+  </div>
+  <!-- body -->
+
+</div>
+                    <!-- end -->
                   </div>
                 </div>
               </div>
