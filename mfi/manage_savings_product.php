@@ -482,7 +482,7 @@ $dos = mysqli_query($connection, $fd);
                             <label for="charge" class="form-align ">Savings Portfolio</label>
                             <select class="form-control form-control-sm" name="asst_loan_port">
                               <option value="">--</option>
-                              <?php echo fill_asset($connection) ?>
+                              <?php echo fill_lia($connection) ?>
                             </select>
                             </div>
                           </div>
