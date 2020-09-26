@@ -80,26 +80,27 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
            }
         //    $general_payment = $pincpal_amount + ((($interest_rate / 100) * $pincpal_amount) * $loan_term);
         //    echo "GENERAL PAYMENT".$general_payment;
+        // REPAYMENT COMMENT
         //    WE DO A NEXT STUFF
-        $insert_into_repsch = mysqli_query($connection, "INSERT INTO `loan_repayment_schedule` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, 
-            `principal_amount`, `principal_completed_derived`, `principal_writtenoff_derived`, `interest_amount`, `interest_completed_derived`, `interest_writtenoff_derived`, 
-            `interest_waived_derived`, `accrual_interest_derived`, `suspended_interest_derived`, `fee_charges_amount`, `fee_charges_completed_derived`, `fee_charges_writtenoff_derived`, 
-            `fee_charges_waived_derived`, `accrual_fee_charges_derived`, `suspended_fee_charges_derived`, `penalty_charges_amount`, `penalty_charges_completed_derived`, 
-            `penalty_charges_writtenoff_derived`, `penalty_charges_waived_derived`, `accrual_penalty_charges_derived`, `suspended_penalty_charges_derived`, 
-            `total_paid_in_advance_derived`, `total_paid_late_derived`, `completed_derived`, `obligations_met_on_date`, `createdby_id`, `created_date`, `lastmodified_date`, 
-            `lastmodifiedby_id`, `recalculated_interest_component`)
-            VALUES ('{$int_id}', '{$loan_id}', '{$rep_client_id}', '{$offical_repayment}', '{$rep_fromdate}', '{$rep_install}', 
-            '{$rep_comp_derived}', '{$rep_comp_derived}', '0', '{$rep_int_amt}', '{$rep_int_amt}', '0',
-            NULL, '0', '0', '0', '0', '0',
-            NULL, '0', '0', '0', '{0}',
-            '0', '0', '0', '0', 
-            '0', '0', '0', NULL, '{$approved_by}', '{$sch_date}', '{$sch_date}',
-            '{$approved_by}', '0')");
-            if ($insert_into_repsch) {
-                echo "WE GOOD";
-            } else {
-                echo "WE BAD";
-            }
+        // $insert_into_repsch = mysqli_query($connection, "INSERT INTO `loan_repayment_schedule` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, 
+        //     `principal_amount`, `principal_completed_derived`, `principal_writtenoff_derived`, `interest_amount`, `interest_completed_derived`, `interest_writtenoff_derived`, 
+        //     `interest_waived_derived`, `accrual_interest_derived`, `suspended_interest_derived`, `fee_charges_amount`, `fee_charges_completed_derived`, `fee_charges_writtenoff_derived`, 
+        //     `fee_charges_waived_derived`, `accrual_fee_charges_derived`, `suspended_fee_charges_derived`, `penalty_charges_amount`, `penalty_charges_completed_derived`, 
+        //     `penalty_charges_writtenoff_derived`, `penalty_charges_waived_derived`, `accrual_penalty_charges_derived`, `suspended_penalty_charges_derived`, 
+        //     `total_paid_in_advance_derived`, `total_paid_late_derived`, `completed_derived`, `obligations_met_on_date`, `createdby_id`, `created_date`, `lastmodified_date`, 
+        //     `lastmodifiedby_id`, `recalculated_interest_component`)
+        //     VALUES ('{$int_id}', '{$loan_id}', '{$rep_client_id}', '{$offical_repayment}', '{$rep_fromdate}', '{$rep_install}', 
+        //     '{$rep_comp_derived}', '{$rep_comp_derived}', '0', '{$rep_int_amt}', '{$rep_int_amt}', '0',
+        //     NULL, '0', '0', '0', '0', '0',
+        //     NULL, '0', '0', '0', '{0}',
+        //     '0', '0', '0', '0', 
+        //     '0', '0', '0', NULL, '{$approved_by}', '{$sch_date}', '{$sch_date}',
+        //     '{$approved_by}', '0')");
+        //     if ($insert_into_repsch) {
+        //         echo "WE GOOD";
+        //     } else {
+        //         echo "WE BAD";
+        //     }
         // END OF WE DO A NEXT STUFF
         $repayment_start = date ("Y-m-d", strtotime("+1 ".$rep_every, strtotime($repayment_start)));
         }

@@ -27,6 +27,7 @@ $destination = "../index.php";
                           <th></th>
                           <th></th>
                           <th></th>
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -70,6 +71,12 @@ $destination = "../index.php";
                           <th> <b> SEKANI WALLET </b></th>
                           <th>Fund Institution Sekani Wallet, Keep Activity Up to Date</th>
                           <td><a href="sekani_wallet.php" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
+                        </tr>
+                        <tr>
+                          
+                          <th> <b> Loan Reconciliation </b></th>
+                          <th>Edit and make sure the loan balances match at the end of a particular accounting period.</th>
+                          <td><a href="loan_reconciliation.php" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
                         </tr>
                         <tr>
                           

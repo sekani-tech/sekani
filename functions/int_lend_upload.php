@@ -90,7 +90,7 @@ $branch_id = $_SESSION["branch_id"];
                     $cdn = $yxx['display_name'];
                 }
         if ($fund_id == 0) {
-            if ($lsff == "Not Active" || $lsff == "") {
+            if ($lsff != "Active") {
                 $stt = "Pending";
                 $query = "INSERT INTO loan_disbursement_cache (int_id, account_no, client_id,
                     display_name, product_id, fund_id, col_id, col_name, col_description,
