@@ -312,7 +312,7 @@ if($fdpoijf){
         ('$int_id', 0, '$br_id', 'loan WRITe OFF', '$pid', NULL, '50114', 0, 0, 1, 5, NULL, '', 0, 0.00, NULL),
         ('$int_id', 0, '$br_id', 'Productivity Bonus', '$pid', NULL, '50115', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
         ('$int_id', 0, '$br_id', '13th month', '$pid', NULL, '50116', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
-        ('$int_id', 0, '$br_id', ' Staff Welfare', '$pid', NULL, '50117', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+        ('$int_id', 0, '$br_id', 'Staff Welfare', '$pid', NULL, '50117', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
         ('$int_id', 0, '$br_id', 'staff Medicals', '$pid', NULL, '50118', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL)
         ");
     }
@@ -326,7 +326,8 @@ if($fdpoijf){
             $pid = $as['id'];
             $fdop = mysqli_query($connection, 
             "INSERT INTO `acc_gl_account` (`int_id`, `int_id_no`, `branch_id`, `name`, `parent_id`, `hierarchy`, `gl_code`, `disabled`, `manual_journal_entries_allowed`, `account_usage`, `classification_enum`, `tag_id`, `description`, `reconciliation_enabled`, `organization_running_balance_derived`, `last_entry_id_derived`) VALUES
-                ('$intid', 0, '$br_id', 'OFFICE RENT', '$pid', NULL, '50201', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
+                ('$intid', 0, '$br_id', 'OFFICE RENT', '$pid', NULL, '50201', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL) 
+                ,
                 ('$intid', 0, '$br_id', 'POSTAGE', '$pid', NULL, '50204', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
                 ('$intid', 0, '$br_id', 'FUELING AND LUBRICANT', '$pid', NULL, '50203', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),
                 ('$intid', 0, '$br_id', 'Internet Subscription', '$pid', NULL, '50204', 0, 1, 1, 5, NULL, '', 0, 0.00, NULL),

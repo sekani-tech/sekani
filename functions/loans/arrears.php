@@ -190,6 +190,6 @@ while ($iq = mysqli_fetch_array($select_arrears)) {
     }
     // now are done here!
     echo "DIFFERENCE BETWEEN DATE IS".$days_between;
-}
+} 
 // count out
 ?>

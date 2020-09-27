@@ -767,7 +767,7 @@ $destination = "config.php";
                             </select>
                             </div>
                           </div>
-                        <div class="form-group">
+                        <div hidden class="form-group">
                         <div class="col-md-8">
                             <label for="charge" class="form-align ">Overpayments</label>
                             <select class="form-control form-control-sm" name="li_overpayment">
