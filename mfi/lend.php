@@ -191,12 +191,16 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                                 }
                                 return $out;
                               }
+                              $digit = 6;
+                              $rando = str_pad(rand(0, pow(10, $digit)-1), $digit, '0', STR_PAD_LEFT);
                             ?>
+                            <input hidden type="text" id="random" value="<?php echo $rando;?>"/>
                             <script>
                               $(document).ready(function() {
                                 $('#charges').change(function(){
                                   var id = $(this).val();
                                   var client_id = $('#client_name').val();
+                                  var rand = $('#random').val();
                                   $.ajax({
                                     url:"load_data_lend.php",
                                     method:"POST",
@@ -208,7 +212,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
                                   $.ajax({
                                     url:"ajax_post/lend_charge.php",
                                     method:"POST",
-                                    data:{id:id},
+                                    data:{id:id, rand:rand, client_id:client_id},
                                     success:function(data){
                                       $('#lend_charge').html(data);
                                     }

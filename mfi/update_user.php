@@ -279,7 +279,7 @@ if (isset($_GET["edit"])) {
                 </div>
                 <!-- Get session data and populate user profile -->
                 <div class="card-body">
-                  <h6 class="card-category text-gray">CEO / Co-Founder</h6>
+                  <h6 class="card-category text-gray"><?php echo $rolename;?></h6>
                   <h4 class="card-title"><?php echo $display_name; ?></h4>
                   <p class="card-description">
                   <?php

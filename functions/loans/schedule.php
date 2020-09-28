@@ -112,7 +112,6 @@
             $client_id = $qu['client_id'];
             $fromdate = $qu['fromdate'];
             $duedate = $qu['duedate'];
-            $installment = $qu['installment'];
             $principal_amount = $qu['principal_amount'];
             $interest_amount = $qu['interest_amount'];
             $created_date = $qu['created_date'];
@@ -121,7 +120,7 @@
 
             $query3 = mysqli_query($connection, "INSERT INTO `loan_arrear` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, 
             `principal_amount`, `interest_amount`, `created_date`, `amount_collected`, `lastmodified_date`) VALUES('$int_id', '$loan_id', '$client_id',
-            '$fromdate', '$duedate', '$installment', '$principal_amount', '$interest_amount', '$created_date', '$amount_collected', '$lastmodified_date')");
+            '$fromdate', '$duedate', '1', '$principal_amount', '$interest_amount', '$created_date', '$amount_collected', '$lastmodified_date')");
             if($query3){
                 echo 'Loan payment moved to arrears</br>';
                 $doi = mysqli_query($connection, "UPDATE loan_repayment_schedule SET installment = '0' WHERE id = '$id'");

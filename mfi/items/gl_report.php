@@ -33,20 +33,20 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
       //  Always Check the vault
       if (count([$branchquery]) == 1) {
         // here we will some data
-        $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE branch_id = '$branch_id' AND gl_code = '$glcode' AND int_id ='$int_id' AND transaction_date BETWEEN '$std' AND '$endx'  ORDER BY transaction_date ASC");
+        $genb1 = mysqli_query($connection, "SELECT SUM(credit) AS credit FROM gl_account_transaction WHERE gl_code = '$glcode' AND int_id ='$int_id' AND transaction_date BETWEEN '$std' AND '$endx'  ORDER BY transaction_date ASC");
         // then we will be fixing
-        $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM gl_account_transaction WHERE branch_id = '$branch_id' AND gl_code = '$glcode' AND int_id ='$int_id' AND transaction_date BETWEEN '$std' AND '$endx' ORDER BY transaction_date ASC");
+        $genb = mysqli_query($connection, "SELECT SUM(debit) AS debit FROM gl_account_transaction WHERE gl_code = '$glcode' AND int_id ='$int_id' AND transaction_date BETWEEN '$std' AND '$endx' ORDER BY transaction_date ASC");
         $m1 = mysqli_fetch_array($genb1);
         $m = mysqli_fetch_array($genb);
         // qwerty
         $tcp = $m1["credit"];
         $tdp = $m["debit"];
 
-        $quetoget = mysqli_query($connection, "SELECT * FROM gl_account_transaction WHERE branch_id = '$branch_id' AND gl_code = '$glcode' AND int_id ='$int_id' AND transaction_date BETWEEN '$std' AND '$endx' ORDER BY transaction_date DESC");
+        $quetoget = mysqli_query($connection, "SELECT * FROM gl_account_transaction WHERE gl_code = '$glcode' AND int_id ='$int_id' AND transaction_date BETWEEN '$std' AND '$endx' ORDER BY transaction_date DESC");
           $r = mysqli_fetch_array($quetoget);
           $fom = $r['gl_account_balance_derived'];
 
-          $fdfgfg = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE branch_id = '$branch_id' AND gl_code = '$glcode' AND int_id ='$int_id'");
+          $fdfgfg = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$glcode' AND int_id ='$int_id'");
           $ff = mysqli_fetch_array($fdfgfg);
           $gl_account = $ff['organization_running_balance_derived'];
         // summing
@@ -55,7 +55,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
             $out = '';
           // import
         //   $glcode = $_POST['glcode'];
-          $querytoget = mysqli_query($connection, "SELECT * FROM gl_account_transaction WHERE branch_id = '$branch_id' AND gl_code = '$glcode' AND int_id ='$int_id' AND transaction_date BETWEEN '$std' AND '$endx' ORDER BY transaction_date, id ASC");
+          $querytoget = mysqli_query($connection, "SELECT * FROM gl_account_transaction WHERE gl_code = '$glcode' AND int_id ='$int_id' AND transaction_date BETWEEN '$std' AND '$endx' ORDER BY transaction_date, id ASC");
           while ($q = mysqli_fetch_array($querytoget, MYSQLI_ASSOC))
           {
 
