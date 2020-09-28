@@ -268,7 +268,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           <td><?php echo "₦ ".number_format($row["total_outstanding_derived"], 2); ?></td>
                           <td>
                           <div class="btn-group">
-                            <button type="button" class="btn btn-success">View</button>
+                            <button type="button" onclick="location.href='loan_report_view.php?edit=<?php echo $row['id'] ?>'" class="btn btn-success">View</button>
                             <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="sr-only">Toggle Dropdown</span>
                             </button>
