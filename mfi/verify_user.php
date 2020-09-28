@@ -9,17 +9,24 @@ if(isset($_POST["usern"]))
         $sql = "SELECT * FROM users WHERE username = '".$_POST["usern"]."'";
     }
     $result = mysqli_query($connection, $sql);
-
-    while ($row = mysqli_fetch_array($result))
-    {
-        $newu = $row["username"];
-        $testq = $_POST["usern"];
-        if ($newu == $testq) {
-            $output = '<b style="color: red">This Username is Already Taken</b>';
-        }  else {
-            $output = '';
-        }
+    if (mysqli_num_rows($result) > 0) {
+        $output = '<b style="color: red">This Username is Already Taken</b>';
+            echo '<script type="text/javascript">
+            $(document).ready(function(){
+                $(":input[type=submit]").prop("disabled", true);
+            });
+            </script>
+            ';
+    } else {
+        $output = '';
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            $(":input[type=submit]").prop("disabled", false);
+        });
+        </script>
+        ';
     }
+        
     echo $output;
 }
 ?>

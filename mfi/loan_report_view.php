@@ -115,12 +115,6 @@ $overdue = $w['total_waived_derived'];
                     <div class="nav-tabs-wrapper">
                       <!-- <span class="nav-tabs-title">Configuration:</span> -->
                       <ul class="nav nav-tabs" data-tabs="tabs">
-                        <!-- <li class="nav-item">
-                          <a class="nav-link active" href="#profile" data-toggle="tab">
-                            <i class="material-icons">bug_report</i> Password Settings
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li> -->
                         <li class="nav-item">
                           <a class="nav-link active" href="#summary" data-toggle="tab">
                           <!-- visibility -->
@@ -135,23 +129,22 @@ $overdue = $w['total_waived_derived'];
                           </a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" id="uxu" href="#repoay" data-toggle="tab">
-                            <i class="material-icons">table_view</i>Repayment Schedule
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#transact" data-toggle="tab">
-                            <i class="material-icons">account_balance_wallet</i> Transactions
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
                           <a class="nav-link" href="#secure" data-toggle="tab">
                             <i class="material-icons">security</i> Security
                             <div class="ripple-container"></div>
                           </a>
                         </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="uxu" href="#repoay" data-toggle="tab">
+                            <i class="material-icons">table_view</i>Repayment Schedule
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <i class="material-icons">account_balance_wallet</i> Transactions
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li> -->
                       </ul>
                     </div>
                   </div>
@@ -363,7 +356,6 @@ $overdue = $w['total_waived_derived'];
                           <td><?php echo $row["account_no"]; ?></td>
                           <td><?php echo $row["principal_amount"]; ?></td>
                           <td><?php echo $row["repayment_date"];?></td>
-                          <!-- <td><?php echo $row["payment_mode"]; ?></td> -->
                           <td><?php echo $row["fee_charges_outstanding_derived"]; ?></td>
                           <td><?php echo $row["penalty_charges_outstanding_derived"];?></td>
                          </tr>
@@ -376,73 +368,11 @@ $overdue = $w['total_waived_derived'];
                       </tbody>
                       </table> -->
                     </div>
-                    <div class="tab-pane" id="repoay">
-                    <div class="form-group">
-                      <script>
-                             $(document).ready(function() {
-                            $('#uxu').on("change keyup paste click", function(){
-                            var id = $(this).val();
-                            var ist = $('#int_id').val();
-                            var prina = $('#principal_amount').val();
-                            var loant = $('#loan_term').val();
-                            var intr = $('#interest_rate').val();
-                            var repay = $('#repay').val();
-                            var repay_start = $('#repay_start').val();
-                            var disbd = $('#disb_date').val();
-                            $.ajax({
-                                url:"loan_calculation_table.php",
-                                method:"POST",
-                                data:{id:id, ist: ist,prina:prina,loant:loant,intr:intr,repay:repay,repay_start:repay_start,disbd:disbd},
-                                success:function(data){
-                                $('#accname').html(data);
-                                }
-                            })
-                            });
-                        });
-                     </script>
-                            <table id = "accname" class="table table-bordered">
-
-                            </table>
-                      </div>
-                    </div>
-                    <div class="tab-pane" id="transact">
+                    <!-- <div class="tab-pane" id="transact">
                     <table class="table table-bordered">
-                        <thead>
-                        <!-- <?php
-                        $query = "SELECT * FROM loan_transaction WHERE loan_id = '$id' AND int_id = '$sessint_id'";
-                        $result = mysqli_query($connection, $query);
-                      ?> -->
-                            <tr>
-                                <th>Date</th>
-                                <th>Submitted On</th>
-                                <th>Transaction Type</th>
-                                <th>Transaction ID</th>
-                                <th>Amount</th>
-                                <th>Balance</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                      <?php if (mysqli_num_rows($result) > 0) {
-                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
-                        <tr>
-                        <?php $row["id"]; ?>
-                        <td><?php echo $row["transaction_date"]; ?></td>
-                          <td><?php echo $row["submitted_on_date"]; ?></td>
-
-                          <td><?php echo $row["transaction_type"]; ?></td>
-                          <td><?php echo $row["transaction_id"];?></td>
-                          <td><?php echo $row["amount"];?></td>
-                          <td><?php echo $row["outstanding_loan_balance_derived"];?></td>
-                         </tr>
-                        <?php }
-                          }
-                          else {
-                            // echo "0 Document";
-                          }
-                          ?>
                       </tbody>
                       </table>
-                    </div>
+                    </div> -->
                     <div class="tab-pane" id="secure">
                     <h5><b>Guarantors</b></h5>
                     <table class="table table-bordered">
@@ -517,6 +447,167 @@ $overdue = $w['total_waived_derived'];
 
                       </tbody>
                       </table>
+                    </div>
+                    <div class="tab-pane" id="repoay">
+                    <h5>Repayment Schedule</h5>
+                    <?php
+if (isset($_GET["edit"]) AND $_GET["edit"] != "") {
+    $loan_id = $_GET["edit"];
+    $query_loan = mysqli_query($connection, "SELECT * FROM `loan` WHERE int_id = '$sessint_id' AND id = '$loan_id'");
+    $x = mysqli_fetch_array($query_loan);
+    $client_id = $x["client_id"];
+    $query_client = mysqli_query($connection, "SELECT * FROM client WHERE id ='$client_id' AND int_id = '$sessint_id'");
+    $cm = mysqli_fetch_array($query_client);
+    $firstname = strtoupper($cm["firstname"]." ".$cm["lastname"]);
+    $account_no = $x["account_no"];
+    $outstanding = number_format($x["total_outstanding_derived"], 2);
+?>
+ <?php
+                          $sum_tot = mysqli_query($connection, "SELECT SUM(principal_amount) AS prin_sum FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND loan_id = '$loan_id'");
+                          $sum_tott = mysqli_query($connection, "SELECT SUM(interest_amount) AS int_sum FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND loan_id = '$loan_id'");
+                          $st = mysqli_fetch_array($sum_tot);
+                          $stt = mysqli_fetch_array($sum_tott);
+                          $outp = $st["prin_sum"];
+                          $outt = $stt["int_sum"];
+                          $duebalance = $outp + $outt;
+                          ?>
+<!-- do your front end -->
+<div class="content">
+        <div class="container-fluid">
+          <!-- your content here -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <!-- end -->
+                <div class="card card-profile ml-auto mr-auto" style="max-width: 360px; max-height: 360px">
+    <div class="card-body ">
+        <h4 class="card-title"><?php echo $firstname; ?></h4>
+        <h6 class="card-category text-gray">Account Number: <?php echo $account_no; ?></h6>
+    </div>
+    <div class="card-footer justify-content-center">
+        <b>  Loan Outstanding Balance: NGN <?php echo $outstanding; ?> </b>
+    </div>
+</div>
+                <!-- end new card profile -->
+                <?php
+                $query_loan = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$loan_id' ORDER BY duedate ASC");
+                ?>
+                <div class="card-body">
+                  <div class="table-responsive">
+                  <table class="rtable display nowrap" style="width:100%">
+                      <thead class=" text-primary">
+                        <!-- <tr> -->
+                          <th>Disbursement Date</th>
+                          <th>Due Date</th>
+                          <th>Principal Amount</th>
+                          <th>Interest Amount</th>
+                          <th>Payment Status</th>
+                          <th>Total Due</th>
+                          <th>Action</th>
+                        <!-- </tr> -->
+                      </thead>
+                      <tbody>
+                      <?php
+                      if (mysqli_num_rows($query_loan) > 0){
+                          while ($row = mysqli_fetch_array($query_loan)) {
+                      ?>
+                        <tr>
+                          <td><?php echo $row["fromdate"] ?></td>
+                          <td> <b> <?php echo $row["duedate"] ?> </b></td>
+                          <td><?php echo "₦ ".number_format($row["principal_amount"], 2); ?></td>
+                          <td><?php echo "₦ ".number_format($row["interest_amount"], 2); ?></td>
+                          <?php
+                          $inst = $row["installment"];
+                          $current_date = date('Y-m-d');
+                          if ($inst <= 0) {
+                              $inst = "<span style='color:green'>Paid</span>";
+                          } else if ($inst > 0 && $row["duedate"] < $current_date) {
+                            $inst = "<span style='color:red'>Not Paid</span>";
+                          } else {
+                            $inst = "<span style='color:orange'>Pending</span>";
+                          }
+                          ?>
+                          <td><?php echo $inst; ?></td>
+                          <td><?php echo "₦ ".number_format($duebalance, 2); ?></td>
+                          <td>
+                          <div class="btn-group">
+                              <?php
+                              $current_date = date('Y-m-d');
+                              if ($row["installment"] <= 0) {
+                                  $option = "disabled";
+                              } else {
+                                  $option = "";
+                              }
+                              ?>
+                            <button <?php echo $option; ?> onclick="location.href='loan_single_repayment.php?id=<?php echo $row['id'] ?>'" class="btn btn-secondary">Edit</button>
+                            <button type="button" <?php echo $option; ?> class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                                    <div class="dropdown-menu">
+                                      <a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg">Delete</a>
+                                    </div>
+                                  </div> 
+                          </td>                         
+                        </tr>
+                        <tr>
+                        <?php
+                          }
+                      } else {
+                          ?>
+                          <tr>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td> 
+                          <td>
+                          <div class="btn-group" disabled>
+                            <button type="button" disabled class="btn btn-success">View</button>
+                            <button type="button" disabled class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu">
+                               <a class="dropdown-item" disabled href="#">Pay Loan</a>
+                               <a class="dropdown-item" disabled href="#">Edit Loan Repayment</a>
+                            </div>
+                           </div> 
+                          </td>                         
+                        </tr>
+                        <tr>
+                          <?php
+                      }
+                        ?>
+                      </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- end your front end -->
+<?php
+} else {
+    // run script
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+     swal({
+      type: "error",
+      title: "Sorry No User Repayment Found",
+      text: "Check the Reconciliation Table",
+     showConfirmButton: false,
+      timer: 2000
+      }).then(
+      function (result) {
+        history.go(-1);
+      }
+      )
+      });
+     </script>
+    ';
+}
+?>
                     </div>
                     
                     <!-- /maturity profile -->
