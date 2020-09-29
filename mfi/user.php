@@ -260,8 +260,6 @@ $destination = "users.php";
                               </label>
                             </div>
                       </div>
-
-
                       <div class="col-md-3" >
                         <div class="form-group">
                           <label class="bmd-label-floating">Start Time</label>
@@ -274,7 +272,6 @@ $destination = "users.php";
                           <input type="time" class="form-control" name="address">
                         </div>
                       </div>
-
                     </div>
                     <!-- end new row -->
                     <button type="submit" class="btn btn-primary pull-right">Create Profile</button>

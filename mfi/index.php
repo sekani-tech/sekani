@@ -24,7 +24,7 @@
 <!-- Content added here -->
 <?php
   if($view_dashboard == 1 || $view_dashboard == "1"){
-    echo 'can view dashboard';
+    echo '';
 ?>
 
     <div class="content">
