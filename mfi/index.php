@@ -24,7 +24,11 @@
 <!-- Content added here -->
 <?php
   if($view_dashboard == 1 || $view_dashboard == "1"){
+<<<<<<< HEAD
     echo '';
+=======
+    // echo 'can view dashboard';
+>>>>>>> af6ebeba18cee61be8b4998f19d5bfa858813e25
 ?>
 
     <div class="content">

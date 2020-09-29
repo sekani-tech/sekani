@@ -1528,12 +1528,17 @@ else{
             '{$tot_int}', '0.000000', '0.000000', '0.000000',
             '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000',
             '{$prin_due}', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000',
-            '{$loan_amount}', '0.000000',
+            '{$prin_due}', '0.000000',
             '1', NULL, '{$loan_sector}',
             '0', '1', '1', NULL, NULL, '0.00')";
             $loan_disb = mysqli_query($connection, $l_d_m);
             if($loan_disb) {
               $update_loan_cache = mysqli_query($connection, "UPDATE loan_disbursement_cache SET status = 'Approved' WHERE id = '$appod' AND int_id = '$sessint_id'");
+
+              $dfofi = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND account_no = '$acct_no' AND client_id = '$client_id'");
+              $fdo = mysqli_fetch_array($dfofi);
+              $loan_id = $fdo['id'];
+              $dfei = mysqli_query($connection,"UPDATE loan_charge SET loan_id = '$loan_id', loan_cache_id = '0' WHERE client_id = '$client_id'");
               if ($update_loan_cache) {
                 echo '<script type="text/javascript">
                 $(document).ready(function(){

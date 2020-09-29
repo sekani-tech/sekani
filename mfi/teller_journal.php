@@ -241,8 +241,8 @@ $transaction_id = str_pad(rand(0, pow(10, 7)-1), 7, '0', STR_PAD_LEFT);
                           <label class="bmd-label-floating"> Transaction Type</label>
                           <select name="type" id="selctttype" class="form-control">
                             <option value="0">select a transaction type in/out</option>
-                            <option value="vault_in">DEPOSIT INTO VAULT</option>
-                            <option value="vault_out">WITHDRAW FROM VAULT</option>
+                            <option value="vault_in">SELL INTO VAULT</option>
+                            <option value="vault_out">BUY FROM VAULT</option>
                             <option value="from_bank">FROM BANK TO VAULT</option>
                             <option value="to_bank">FROM VAULT TO BANK</option>
                           </select>

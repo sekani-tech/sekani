@@ -552,7 +552,7 @@ $transid2 = $randms2;
         </div>
         <div class="col-md-4">
         <div class="form-group">
-          <label for="">Amount Recieved:</label>
+          <label for="">Amount:</label>
           <input type="number" step="any" name="amount" id="" value="" class="form-control">
           <span class="help-block" style="color: red;"><?php echo $exp_error;?></span>
         </div>
