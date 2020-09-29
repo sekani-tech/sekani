@@ -264,6 +264,86 @@ if (isset($_GET["edit"])) {
                         </div>
                       </div>
                     </div>
+                    <div class="row"  style="margin-top: 20px; margin-bottom: 20px;">
+                      STAFF RESTRICTION SETTINGS
+                    </div>
+                    <div class="row">
+                       <div class="col-md-6">
+                               
+                            <div class="form-check form-check-inline">
+                              <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Monday" checked> Monday
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                              </label>
+                            </div>
+                            <div class="form-check form-check-inline disabled">
+                              <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Tuesday" checked> Tuesday
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                              </label>
+                            </div>
+                            <div class="form-check form-check-inline disabled">
+                              <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Wednesday" checked> Wednesday
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                              </label>
+                            </div>
+                            <div class="form-check form-check-inline disabled">
+                              <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Thursday" checked> Thursday
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                              </label>
+                            </div>
+                            <div class="form-check form-check-inline disabled">
+                              <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Friday" checked> Friday
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                              </label>
+                            </div>
+                            <div class="form-check form-check-inline disabled">
+                              <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Saturday"> Saturday
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                              </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Sunday"> Sunday
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                              </label>
+                            </div>
+                      </div>
+
+
+                      <div class="col-md-3" >
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Start Time</label>
+                          <input type="time" class="form-control" name="address">
+                        </div>
+                      </div>
+                      <div class="col-md-3" >
+                        <div class="form-group">
+                          <label class="bmd-label-floating">End Time</label>
+                          <input type="time" class="form-control" name="address">
+                        </div>
+                      </div>
+
+                    </div>
+                    <!-- end new row -->
                     <button value="staff" type="submit" class="btn btn-primary pull-right">Update Profile</button>
                     <div class="clearfix"></div>
                   </form>
