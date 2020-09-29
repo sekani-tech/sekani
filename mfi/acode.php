@@ -34,16 +34,21 @@ $dio = "SELECT * FROM gl_account_transaction";
 $iod = mysqli_query($connection, $dio);
 while($ids = mysqli_fetch_array($iod)){
     $id = $ids['id'];
-    $gl_code = $ids['gl_code'];
     $int_id = $ids['int_id'];
+    $parent_id = $ids['parent_id'];
 
-    $fis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$gl_code' AND int_id = '$int_id'");
+    $fis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE id = '$parent_id' AND int_id = '$int_id'");
+    if($fis){
     $iwr = mysqli_fetch_array($fis);
-    $pid = $iwr['parent_id'];
+    $gl_code = $iwr['gl_code'];
     
-    $spf = mysqli_query($connection, "UPDATE gl_account_transaction SET parent_id = '$pid' WHERE gl_code = '$gl_code' AND int_id = '$int_id' AND id = '$id'");
+    $spf = mysqli_query($connection, "UPDATE gl_account_transaction SET gl_code = '$gl_code' WHERE parent_id = '$parent_id' AND int_id = '$int_id' AND id = '$id'");
     if($spf){
         echo 'id = '.$id.', gl_code =  '.$gl_code.', DONE</br>';
     }
+}
+else{
+    echo 'Appropriate Head gl not Found!</br>';
+}
 }
 ?>

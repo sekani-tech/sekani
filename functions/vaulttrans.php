@@ -755,9 +755,9 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
             $vaultinquery2 = "UPDATE int_vault SET balance = '$new_vaultbalance', last_deposit = '$amount' WHERE int_id = '$sint_id' AND branch_id = '$branchid'";
             $on = mysqli_query($connection, $vaultinquery2);
             if($on){
-              $record ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
+              $record ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
               transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
-                created_date, debit) VALUES ( '{$sint_id}', '{$branchid}', '{$bank_type}', '{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
+                created_date, debit) VALUES ( '{$sint_id}', '{$branchid}', '{$bank_type}', '{$parent_id}', '{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
                  '{$new_glbalance}', '{$amount}', '{$crdate}', '{$amount}')";
                $rin = mysqli_query($connection, $record);
 

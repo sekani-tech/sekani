@@ -22,6 +22,11 @@
 ?>
 <!-- making a new push -->
 <!-- Content added here -->
+<?php
+  if($view_dashboard == 1 || $view_dashboard == "1"){
+    echo 'can view dashboard';
+?>
+
     <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
@@ -319,4 +324,7 @@ var myChart = new Chart(ctx, {
 
     include("footer.php");
 
+?>
+<?php
+  }
 ?>

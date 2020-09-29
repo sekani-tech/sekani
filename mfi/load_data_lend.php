@@ -220,6 +220,12 @@ if(isset($_POST["id"]))
       <div id = "sekat"class="form-group">
         </div>
         </div>
+        <div class="col-md-4">
+      <div class="form-group">
+        <label>Grace on Payment:</label>
+        <input type="text" value="'.$row["grace_on_principal_amount"].'" name="" readonly class="form-control" id="lop">
+      </div>
+      </div>
         </div>
       </div>
       ';
