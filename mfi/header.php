@@ -217,7 +217,7 @@ input[type=number] {
 
       Tip 2: you can also add an image using data-image tag
   -->
-      <div class="logo">
+      <div class="logo" style="background-color: white;">
         <div class="col-xs-2">
           <div class="card-profile">
             <div class="card-avatar">
@@ -228,7 +228,7 @@ input[type=number] {
           </div>
         </div>
       </div>
-      <div class="sidebar-wrapper">
+      <div class="sidebar-wrapper" style="background-color: white;">
         <ul class="nav">
           <li class="nav-item">
             <a class="nav-link" href="index.php">
@@ -395,13 +395,14 @@ input[type=number] {
               }else{            ?>
 
               <a class="btn btn-primary" href="javascript:history.go(-1)"><i class="fa fa-caret-left"></i> Back</a>
+              <!-- here -->
               
               <?php
                 }
               ?>
-<?php
-  $br_id = $_SESSION["branch_id"];
-?>
+                      <?php
+                        $br_id = $_SESSION["branch_id"];
+                      ?>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
