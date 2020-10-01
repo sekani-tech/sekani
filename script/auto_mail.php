@@ -3,12 +3,12 @@ include("../functions/connect.php");
 require_once "../bat/phpmailer/PHPMailerAutoload.php";
 ?>
 <?php 
-$getall = "SELECT * FROM staff ORDER BY id ASC";
+$getall = "SELECT * FROM `client` ORDER BY id ASC";
 $getmail = mysqli_query($connection, $getall);
 
 
 while ($res = mysqli_fetch_assoc($getmail)) {
-    $usermail = $res["email"]; 
+    $usermail = $res["email_address"]; 
     $int_id = $res["int_id"];
     // MAKE ME MOVE
     $query_institution = mysqli_query($connection, "SELECT * FROM `institutions` WHERE int_id = '$int_id'");
