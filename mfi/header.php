@@ -514,7 +514,7 @@ input[type=number] {
                 $fomd = $dfn + $dn + $approvd + $trans + $client + $loan + $charge + $group + $ftd;
                 ?>
                 <a class="d-inline" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="material-icons" style="color: black; margin-right: 10px;">notifications</i>
+                  <i class="material-icons" style="color: black;">notifications</i>
                   <?php if($fomd > 0){?>
                   <span class="badge badge-danger"><?php echo $fomd;?></span>
                   <?php }?>
@@ -558,7 +558,7 @@ input[type=number] {
               </li>
               <!-- user setup -->
               <li class="d-inline dropdown">
-                <a class="d-inline" style="color: black; margin-right: 10px;" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="d-inline" style="color: black;" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">person</i>
                   <!-- Insert user display name here -->
                   <!-- <p class="d-lg-none d-md-block"> -->
@@ -583,64 +583,5 @@ input[type=number] {
               <!-- your navbar here -->
             </ul>
           </div>
-          <!-- START THE GEO-LOCATION API -->
-          <div id="geo_locate"></div>
-            <input type="text" value="" placeholder="LAT" id="lat" hidden>
-            <input type="text" value="" placeholder="LNG" id="lng" hidden>
-          <!-- END THE GEO-LOCATION API  -->
-          <script>
-           var x = document.getElementById("lng");
-           var y = document.getElementById("lat");
-          //  if ($("#lat").val() == 0 || $("#lng").val() == 0) {
-          //   swal({
-          //     type: "error",
-          //     title: "Geolocation not found",
-          //     text: "Please activate or allow geolocation on your browser!",
-          //     showConfirmButton: false,
-          //     timer: 2000
-          //     })
-          //     // .then(
-          //     //   function (result) {
-          //     //     window.location="../functions/logout.php";
-          //     //  }
-          //     // );
-          //  }
-           if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } else { 
-             $("#lat").val("0");
-            //  THIS MEANS BROWSER DOESN'T SUPPORT THE GEO LOCATION.
-             $("#lng").val("0");
-            //  output a message
-             swal({
-              type: "error",
-              title: "Geolocation not found",
-              text: "Please activate or allow geolocation on your browser!",
-              showConfirmButton: false,
-              timer: 3000
-              });
-          }
-        function showPosition(position) {
-          $("#lat").val(position.coords.latitude);
-          $("#lng").val(position.coords.longitude);
-          // MAKE A PUSH
-        }
-        // KILL
-        setInterval(function() {
-          var lat = $("#lat").val();
-          var lng = $("#lng").val();
-          if (lat != "0" && lng != "0") {
-            $.ajax({
-                url:"ajax_post/geolocation/auto_logout.php",
-                method:"POST",
-            data:{lat:lat, lng:lng},
-            success:function(data){
-            $('#geo_locate').html(data)
-            }
-        });
-          }
-        }, 5000);   // Interval set to 4 seconds
-        </script>
-          <!-- END SCRIPT -->
         </div>
       </nav>
