@@ -367,6 +367,14 @@ input[type=number] {
               Configuration
             </a>
           </li>
+          <!-- Notification and Profile Begins !-->
+
+        
+          
+
+          <!-- Notification and Profile ends !-->
+
+
           <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               <i class="material-icons">settings</i>
@@ -410,6 +418,9 @@ input[type=number] {
 </svg> Back
 </a>
 
+
+
+
               <!-- here -->
               
               <?php
@@ -419,15 +430,16 @@ input[type=number] {
                         $br_id = $_SESSION["branch_id"];
                       ?>
           </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="navbar-toggler-icon icon-bar"></span>
-            <span class="navbar-toggler-icon icon-bar"></span>
-            <span class="navbar-toggler-icon icon-bar"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end">
-            <ul class="navbar-nav">
-            <li class="nav-item dropdown">
+          <div class="d-inline">
+         
+         
+         
+            <ul class="list-inline">
+
+            
+
+
+            <li class="d-inline">
               <!-- Notification for matured loans -->
             <?php
                 $today = date('Y-m-d');
@@ -501,8 +513,8 @@ input[type=number] {
                 <?php
                 $fomd = $dfn + $dn + $approvd + $trans + $client + $loan + $charge + $group + $ftd;
                 ?>
-                <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="material-icons">notifications</i>
+                <a class="d-inline" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="material-icons" style="color: black; margin-right: 10px;">notifications</i>
                   <?php if($fomd > 0){?>
                   <span class="badge badge-danger"><?php echo $fomd;?></span>
                   <?php }?>
@@ -545,21 +557,29 @@ input[type=number] {
                 <?php }?>
               </li>
               <!-- user setup -->
-              <li class="nav-item dropdown">
-                <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <li class="d-inline dropdown">
+                <a class="d-inline" style="color: black; margin-right: 10px;" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">person</i>
                   <!-- Insert user display name here -->
                   <!-- <p class="d-lg-none d-md-block"> -->
                     <?php echo $_SESSION["username"]; ?>
                   <!-- </p> -->
                 </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+                <div class="dropdown-menu dropdown-menu-right" style="background-color: #777; height:auto;"  aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown-item" href="profile.php">Profile</a>
                   <a class="dropdown-item" href="settings.php">Settings</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="../functions/logout.php">Log out</a>
                 </div>
               </li>
+
+              <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+          </button>
+             
               <!-- your navbar here -->
             </ul>
           </div>
