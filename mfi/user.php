@@ -202,10 +202,10 @@ $destination = "users.php";
                     </div>
                     <div class="row">
                        <div class="col-md-6">
-                               
+                       <span>Check Restricted Days - </span>
                             <div class="form-check form-check-inline">
                               <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Monday" checked> Monday
+                                <input class="form-check-input" type="checkbox" name="mon" id="inlineCheckbox2" value="0"> Monday
                                 <span class="form-check-sign">
                                     <span class="check"></span>
                                 </span>
@@ -213,7 +213,7 @@ $destination = "users.php";
                             </div>
                             <div class="form-check form-check-inline disabled">
                               <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Tuesday" checked> Tuesday
+                                <input class="form-check-input" type="checkbox" name="tue" id="inlineCheckbox3" value="0"> Tuesday
                                 <span class="form-check-sign">
                                     <span class="check"></span>
                                 </span>
@@ -221,7 +221,7 @@ $destination = "users.php";
                             </div>
                             <div class="form-check form-check-inline disabled">
                               <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Wednesday" checked> Wednesday
+                                <input class="form-check-input" type="checkbox" name="wed" id="inlineCheckbox3" value="0"> Wednesday
                                 <span class="form-check-sign">
                                     <span class="check"></span>
                                 </span>
@@ -229,7 +229,7 @@ $destination = "users.php";
                             </div>
                             <div class="form-check form-check-inline disabled">
                               <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Thursday" checked> Thursday
+                                <input class="form-check-input" type="checkbox" name="thur" id="inlineCheckbox3" value="0"> Thursday
                                 <span class="form-check-sign">
                                     <span class="check"></span>
                                 </span>
@@ -237,7 +237,7 @@ $destination = "users.php";
                             </div>
                             <div class="form-check form-check-inline disabled">
                               <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Friday" checked> Friday
+                                <input class="form-check-input" type="checkbox" name="fri" id="inlineCheckbox3" value="0"> Friday
                                 <span class="form-check-sign">
                                     <span class="check"></span>
                                 </span>
@@ -245,15 +245,7 @@ $destination = "users.php";
                             </div>
                             <div class="form-check form-check-inline disabled">
                               <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Saturday"> Saturday
-                                <span class="form-check-sign">
-                                    <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Sunday"> Sunday
+                                <input class="form-check-input" type="checkbox" name="sat" id="inlineCheckbox3" value="0" checked> Saturday
                                 <span class="form-check-sign">
                                     <span class="check"></span>
                                 </span>
@@ -262,14 +254,14 @@ $destination = "users.php";
                       </div>
                       <div class="col-md-3" >
                         <div class="form-group">
-                          <label class="bmd-label-floating">Start Time</label>
-                          <input type="time" class="form-control" name="address">
+                          <label class="bmd-label-floating">Start Time(AM)</label>
+                          <input type="time" class="form-control" name="start_time">
                         </div>
                       </div>
                       <div class="col-md-3" >
                         <div class="form-group">
-                          <label class="bmd-label-floating">End Time</label>
-                          <input type="time" class="form-control" name="address">
+                          <label class="bmd-label-floating">End Time(PM)</label>
+                          <input type="time" class="form-control" name="end_time">
                         </div>
                       </div>
                     </div>

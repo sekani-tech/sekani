@@ -367,14 +367,6 @@ input[type=number] {
               Configuration
             </a>
           </li>
-          <!-- Notification and Profile Begins !-->
-
-        
-          
-
-          <!-- Notification and Profile ends !-->
-
-
           <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               <i class="material-icons">settings</i>
@@ -418,9 +410,6 @@ input[type=number] {
 </svg> Back
 </a>
 
-
-
-
               <!-- here -->
               
               <?php
@@ -430,16 +419,15 @@ input[type=number] {
                         $br_id = $_SESSION["branch_id"];
                       ?>
           </div>
-          <div class="d-inline">
-         
-         
-         
-            <ul class="list-inline">
-
-            
-
-
-            <li class="d-inline">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+            <li class="nav-item dropdown">
               <!-- Notification for matured loans -->
             <?php
                 $today = date('Y-m-d');
@@ -513,8 +501,8 @@ input[type=number] {
                 <?php
                 $fomd = $dfn + $dn + $approvd + $trans + $client + $loan + $charge + $group + $ftd;
                 ?>
-                <a class="d-inline" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="material-icons" style="color: black;">notifications</i>
+                <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="material-icons">notifications</i>
                   <?php if($fomd > 0){?>
                   <span class="badge badge-danger"><?php echo $fomd;?></span>
                   <?php }?>
@@ -557,31 +545,201 @@ input[type=number] {
                 <?php }?>
               </li>
               <!-- user setup -->
-              <li class="d-inline dropdown">
-                <a class="d-inline" style="color: black;" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">person</i>
                   <!-- Insert user display name here -->
                   <!-- <p class="d-lg-none d-md-block"> -->
                     <?php echo $_SESSION["username"]; ?>
                   <!-- </p> -->
                 </a>
-                <div class="dropdown-menu dropdown-menu-right" style="background-color: #777; height:auto;"  aria-labelledby="navbarDropdownProfile">
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown-item" href="profile.php">Profile</a>
                   <a class="dropdown-item" href="settings.php">Settings</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="../functions/logout.php">Log out</a>
                 </div>
               </li>
-
-              <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="navbar-toggler-icon icon-bar"></span>
-            <span class="navbar-toggler-icon icon-bar"></span>
-            <span class="navbar-toggler-icon icon-bar"></span>
-          </button>
-             
               <!-- your navbar here -->
             </ul>
           </div>
+          <!-- START THE GEO-LOCATION API -->
+          <div id="geo_locate"></div>
+            <input type="text" value="" placeholder="LAT" id="lat" hidden>
+            <input type="text" value="" placeholder="LNG" id="lng" hidden>
+            <?php
+          // check for the DAYS OF THE WEEK AND TIME
+          $res_user_id = $_SESSION["user_id"];
+          $mysqli_restrict = mysqli_query($connection, "SELECT * FROM `staff_restriction` WHERE staff_id = '$res_user_id'");
+          if (mysqli_num_rows($mysqli_restrict) > 0) {
+            $rx = mysqli_fetch_array($mysqli_restrict);
+            $start_time = $rx["start_time"];
+            $end_time = $rx["end_time"];
+            $mon = $rx["mon"];
+            $tue = $rx["tue"];
+            $wed = $rx["wed"];
+            $thurs = $rx["thurs"];
+            $fri = $rx["fri"];
+            $sat = $rx["sat"];
+            if ($mon == "1") {
+              $mon = "Mon";
+            } else {
+              $mon = "";
+            }
+            if ($tue == "1") {
+              $tue = "Tue";
+            } else {
+              $tue = "";
+            }
+            if ($wed == "1") {
+              $wed = "Wed";
+            } else {
+              $wed = "";
+            }
+            if ($thurs == "1") {
+              $thurs = "Thu";
+            } else {
+              $thurs = "";
+            }
+            if ($fri == "1") {
+              $fri = "Fri";
+            } else {
+              $fri = "";
+            }
+            if ($sat == "1") {
+              $sat = "Sat";
+            } else {
+              $sat = "";
+            }
+            $current_day = date('D');
+            // get
+            $count = 0;
+            if ($mon == $current_day) {
+              $time = date('H:i:s');
+              $count = $count + 1;
+            } 
+            if ($tue == $current_day && $mon != $current_day) {
+              $time = date('H:i:s');
+              $count = $count + 1;
+            }
+            if ($wed == $current_day && $mon != $current_day && $tue != $current_day) {
+              $time = date('H:i:s');
+              $count = $count + 1;
+            } 
+            if ($thurs == $current_day && $mon != $current_day && $tue != $current_day && $wed != $current_day) {
+              $time = date('H:i:s');
+              $count = $count + 1;
+            } 
+            if ($fri == $current_day && $mon != $current_day && $tue != $current_day && $wed != $current_day && $thurs != $current_day) {
+              $time = date('H:i:s');
+              $count = $count + 1;
+            } 
+             if ($sat == $current_day && $mon != $current_day && $tue != $current_day && $wed != $current_day && $thurs != $current_day && $fri != $current_day) {
+              $time = date('H:i:s');
+              $count = $count + 1;
+            }
+            // check
+            if ($count == 1) {
+              // make update
+              if ($time >= $start_time && $time < $end_time) {
+                // done
+                echo " ";
+              } else {
+                ?>
+              <script>
+              swal({
+              type: "error",
+              title: "You Have Reached Closing Hours",
+              text: "Please Wait for The Proper Hours of Work",
+              showConfirmButton: false,
+              timer: 2000
+              })
+              .then(
+                function (result) {
+                  window.location="../functions/logout.php";
+               }
+              );
+              </script>
+              <?php
+              }
+            } else {
+              ?>
+              <script>
+              swal({
+              type: "error",
+              title: "USER IS RESTRICTED TODAY",
+              text: "You have been restricted from working today",
+              showConfirmButton: false,
+              timer: 2000
+              })
+              .then(
+                function (result) {
+                  window.location="../functions/logout.php";
+               }
+              );
+              </script>
+              <?php
+            }
+            // TYPE = Mon, Tue, Wed, Thu, Fri, Sat
+          } else {
+            // create one for the staff
+            $query_restric = mysqli_query($connection, "INSERT INTO `staff_restriction` (`int_id`, `staff_id`, `start_time`, `end_time`, `mon`, `tue`, `wed`, `thurs`, `fri`, `sat`) VALUES ('{$sessint_id}', '{$res_user_id}', '08:00:00', '04:00:00', '1', '1', '1', '1', '1', '0')");
+          }
+          ?>
+          <!-- END THE GEO-LOCATION API  -->
+          <script>
+           var x = document.getElementById("lng");
+           var y = document.getElementById("lat");
+          //  if ($("#lat").val() == 0 || $("#lng").val() == 0) {
+          //   swal({
+          //     type: "error",
+          //     title: "Geolocation not found",
+          //     text: "Please activate or allow geolocation on your browser!",
+          //     showConfirmButton: false,
+          //     timer: 2000
+          //     })
+          //     // .then(
+          //     //   function (result) {
+          //     //     window.location="../functions/logout.php";
+          //     //  }
+          //     // );
+          //  }
+           if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else { 
+             $("#lat").val("0");
+            //  THIS MEANS BROWSER DOESN'T SUPPORT THE GEO LOCATION.
+             $("#lng").val("0");
+            //  output a message
+             swal({
+              type: "error",
+              title: "Geolocation not found",
+              text: "Please activate or allow geolocation on your browser!",
+              showConfirmButton: false,
+              timer: 3000
+              });
+          }
+        function showPosition(position) {
+          $("#lat").val(position.coords.latitude);
+          $("#lng").val(position.coords.longitude);
+          // MAKE A PUSH
+        }
+        // KILL
+        // setInterval(function() {
+        //   var lat = $("#lat").val();
+        //   var lng = $("#lng").val();
+        //   if (lat != "0" && lng != "0") {
+        //     $.ajax({
+        //         url:"ajax_post/geolocation/auto_logout.php",
+        //         method:"POST",
+        //     data:{lat:lat, lng:lng},
+        //     success:function(data){
+        //     $('#geo_locate').html(data)
+        //     }
+        // });
+        //   }
+        // }, 5000);   // Interval set to 4 seconds
+        </script>
+          <!-- END SCRIPT -->
         </div>
       </nav>

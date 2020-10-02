@@ -51,6 +51,48 @@ if (isset($_GET["edit"])) {
   else if($usertype == 'super_admin'){
     $type = 'Super Admin';
   }
+  // making move
+  $query_restriction = mysqli_query($connection, "SELECT * FROM `staff_restriction` WHERE staff_id = '$us_id'");
+  $xr = mysqli_fetch_array($query_restriction);
+  $mon = $xr["mon"];
+  $tue = $xr["tue"];
+  $wed = $xr["wed"];
+  $thur = $xr["thurs"];
+  $fri = $xr["fri"];
+  $sat = $xr["sat"];
+  // making move
+  if ($mon == "1") {
+    $check_bal1 = "checked";
+  } else {
+    $check_bal1 = "";
+  }
+  if ($tue == "1") {
+    $check_bal2 = "checked";
+  } else {
+    $check_bal2 = "";
+  }
+  if ($wed == "1") {
+    $check_bal3 = "checked";
+  } else {
+    $check_bal3 = "";
+  }
+  if ($thur == "1") {
+    $check_bal4 = "checked";
+  } else {
+    $check_bal4 = "";
+  }
+  if ($fri == "1") {
+    $check_bal5 = "checked";
+  } else {
+    $check_bal5 = "";
+  }
+  if ($sat == "1") {
+    $check_bal6 = "checked";
+  } else {
+    $check_bal6 = "";
+  }
+  $start_time = $xr["start_time"];
+  $end_time = $xr["end_time"];
 }
 ?>
 <!-- Content added here -->
@@ -265,80 +307,72 @@ if (isset($_GET["edit"])) {
                       </div>
                     </div>
                     <div class="row"  style="margin-top: 20px; margin-bottom: 20px;">
-                      STAFF RESTRICTION SETTINGS
+                      UPDATE STAFF RESTRICTION SETTINGS
                     </div>
                     <div class="row">
-                       <div class="col-md-6">
-                               
-                            <div class="form-check form-check-inline">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Monday" checked> Monday
-                                <span class="form-check-sign">
-                                    <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                            <div class="form-check form-check-inline disabled">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Tuesday" checked> Tuesday
-                                <span class="form-check-sign">
-                                    <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                            <div class="form-check form-check-inline disabled">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Wednesday" checked> Wednesday
-                                <span class="form-check-sign">
-                                    <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                            <div class="form-check form-check-inline disabled">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Thursday" checked> Thursday
-                                <span class="form-check-sign">
-                                    <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                            <div class="form-check form-check-inline disabled">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Friday" checked> Friday
-                                <span class="form-check-sign">
-                                    <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                            <div class="form-check form-check-inline disabled">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Saturday"> Saturday
-                                <span class="form-check-sign">
-                                    <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Sunday"> Sunday
-                                <span class="form-check-sign">
-                                    <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                      </div>
+                    <div class="col-md-6">
+                               <span>Check Restricted Days - </span>
+                               <div class="form-check form-check-inline">
+                                 <label class="form-check-label">
+                                   <input class="form-check-input" type="checkbox" name="mon" id="inlineCheckbox2" value="0" <?php echo $check_bal1 ?>> Monday
+                                   <span class="form-check-sign">
+                                       <span class="check"></span>
+                                   </span>
+                                 </label>
+                               </div>
+                               <div class="form-check form-check-inline disabled">
+                                 <label class="form-check-label">
+                                   <input class="form-check-input" type="checkbox" name="tue" id="inlineCheckbox3" value="0" <?php echo $check_bal2 ?>> Tuesday
+                                   <span class="form-check-sign">
+                                       <span class="check"></span>
+                                   </span>
+                                 </label>
+                               </div>
+                               <div class="form-check form-check-inline disabled">
+                                 <label class="form-check-label">
+                                   <input class="form-check-input" type="checkbox" name="wed" id="inlineCheckbox3" value="0" <?php echo $check_bal3 ?>> Wednesday
+                                   <span class="form-check-sign">
+                                       <span class="check"></span>
+                                   </span>
+                                 </label>
+                               </div>
+                               <div class="form-check form-check-inline disabled">
+                                 <label class="form-check-label">
+                                   <input class="form-check-input" type="checkbox" name="thur" id="inlineCheckbox3" value="0" <?php echo $check_bal4 ?>> Thursday
+                                   <span class="form-check-sign">
+                                       <span class="check"></span>
+                                   </span>
+                                 </label>
+                               </div>
+                               <div class="form-check form-check-inline disabled">
+                                 <label class="form-check-label">
+                                   <input class="form-check-input" type="checkbox" name="fri" id="inlineCheckbox3" value="0" <?php echo $check_bal5 ?>> Friday
+                                   <span class="form-check-sign">
+                                       <span class="check"></span>
+                                   </span>
+                                 </label>
+                               </div>
+                               <div class="form-check form-check-inline disabled">
+                                 <label class="form-check-label">
+                                   <input class="form-check-input" type="checkbox" name="sat" id="inlineCheckbox3" value="0" <?php echo $check_bal6 ?>> Saturday
+                                   <span class="form-check-sign">
+                                       <span class="check"></span>
+                                   </span>
+                                 </label>
+                               </div>
+                         </div>
 
 
-                      <div class="col-md-3" >
+                         <div class="col-md-3" >
                         <div class="form-group">
-                          <label class="bmd-label-floating">Start Time</label>
-                          <input type="time" class="form-control" name="address">
+                          <label class="bmd-label-floating">Start Time(AM)</label>
+                          <input type="time" value="<?php echo $start_time; ?>" class="form-control" name="start_time">
                         </div>
                       </div>
                       <div class="col-md-3" >
                         <div class="form-group">
-                          <label class="bmd-label-floating">End Time</label>
-                          <input type="time" class="form-control" name="address">
+                          <label class="bmd-label-floating">End Time(PM)</label>
+                          <input type="time" value="<?php echo $end_time; ?>" class="form-control" name="end_time">
                         </div>
                       </div>
 

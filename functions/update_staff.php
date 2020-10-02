@@ -42,8 +42,57 @@ if($_FILES['imagefile']['name']) {
         org_role = '$org_role', img = '$img' WHERE id = '$staff_id'";
         $res = mysqli_query($connection, $sec);
         if ($res) {
-          $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
+          // mamkemove
+          if (isset($_POST["mon"])) {
+            $mon = "1";
+          } else {
+            $mon = "0";
+          }
+          if (isset($_POST["tue"])) {
+            $tue = "1";
+          } else {
+            $tue = "0";
+          }
+          if (isset($_POST["wed"])) {
+            $wed = "1";
+          } else {
+            $wed = "0";
+          }
+          if (isset($_POST["thur"])) {
+            $thur = "1";
+          } else {
+            $thur = "0";
+          }
+          if (isset($_POST["fri"])) {
+            $fri = "1";
+          } else {
+            $fri = "0";
+          }
+          if (isset($_POST["sat"])) {
+            $sat = "1";
+          } else {
+            $sat = "0";
+          }
+          if (isset($_POST["sun"])) {
+            $sun = "1";
+          } else {
+            $sun = "0";
+          }
+        
+          $start_time = $_POST["start_time"];
+          $end_time = $_POST["end_time"];
+          // done
+          $query_restric = mysqli_query($connection, "UPDATE `staff_restriction` SET `start_time` = '$start_time', `end_time` = '$end_time', `mon` = '$mon', `tue` = '$tue', `wed` = '$wed', `thurs` = '$thur', `fri` = '$fri', `sat` = '$sat' WHERE staff_id = '$user_id'");
+          // END DATE
+          if ($query_restric) {
+            $_SESSION["Lack_of_intfund_$randms"] = " <php echo = $display_name?> was updated successfully!";
           echo header ("Location: ../mfi/staff_mgmt.php?message3=$randms");
+          } else {
+            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+            echo "error";
+           echo header ("Location: ../mfi/staff_mgmt.php?message4=$randms");
+             // echo header("location: ../mfi/client.php");
+          }
         } else {
            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
            echo "error";

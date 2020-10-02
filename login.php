@@ -94,6 +94,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             // quick one for institution general data
                             // $_SESSION["lastname"] = $lastname;
                             $compsec = mysqli_query($link, "SELECT * FROM `institutions` WHERE int_id ='$int_id'");
+                            // select top institutoion which is sekani
                             $altemail = mysqli_query($link, "SELECT * FROM `institutions` WHERE int_id ='1'");
                             if (count([$compsec]) == 1) {
                             $res = mysqli_fetch_array($compsec);
@@ -105,6 +106,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $int_address = $res["office_address"];
                             $int_full = $res["int_full"];
                             $sender_id = $res["sender_id"];
+                            $int_lat = $res["lat"];
+                            $int_lng = $res["lng"];
 
                             $_SESSION["int_name"] = $intname;
                             $_SESSION["int_email"] = $intemail;
@@ -114,6 +117,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["int_address"] = $int_address;
                             $_SESSION["int_full"] = $int_full;
                             $_SESSION["sender_id"] = $sender_id;
+                            $_SESSION["int_lat"] = $int_lat;
+                            $_SESSION["int_lng"] = $int_lng;
 
 
                             $br_id = $_SESSION["branch_id"];
