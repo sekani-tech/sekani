@@ -438,7 +438,6 @@ input[type=number] {
 
             
 
-
             <li class="d-inline">
               <!-- Notification for matured loans -->
             <?php
@@ -557,9 +556,12 @@ input[type=number] {
                 <?php }?>
               </li>
               <!-- user setup -->
+              
               <li class="d-inline dropdown">
                 <a class="d-inline" style="color: black;" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="material-icons">person</i>
+                
+              
+                <i class="material-icons">person</i>
                   <!-- Insert user display name here -->
                   <!-- <p class="d-lg-none d-md-block"> -->
                     <?php echo $_SESSION["username"]; ?>
