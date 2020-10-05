@@ -30,25 +30,44 @@ $output = '';
 // }
 
 // CODE TO ADD PARENT ID TO GL TRANSACTIONS
-$dio = "SELECT * FROM gl_account_transaction";
+$dio = "SELECT * FROM post";
 $iod = mysqli_query($connection, $dio);
 while($ids = mysqli_fetch_array($iod)){
-    $id = $ids['id'];
-    $int_id = $ids['int_id'];
-    $parent_id = $ids['parent_id'];
+    $first = $ids['first_name'];
+    $last = $ids['last_name'];
+    $d = $ids['id'];
+    $old = '-'.$ids['amount'];
 
-    $fis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE id = '$parent_id' AND int_id = '$int_id'");
+    $fis = mysqli_query($connection, "SELECT * FROM client WHERE firstname LIKE '%$first%' AND lastname LIKE '%$last%' AND int_id = '10'");
     if($fis){
     $iwr = mysqli_fetch_array($fis);
-    $gl_code = $iwr['gl_code'];
-    
-    $spf = mysqli_query($connection, "UPDATE gl_account_transaction SET gl_code = '$gl_code' WHERE parent_id = '$parent_id' AND int_id = '$int_id' AND id = '$id'");
-    if($spf){
-        echo 'id = '.$id.', gl_code =  '.$gl_code.', DONE</br>';
-    }
+    $firsst = $iwr['firstname'];
+    $lasst = $iwr['lastname'];
+    $client_id = $iwr['id'];
+
+    echo 'Client found for '.$d.', '.$first.'. Client name is '.$firsst.' '.$lasst.' with id '.$client_id.'!</br>';
+
+    $see = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$client_id'");
+        if($see){
+            $abc = mysqli_fetch_array($see);
+            $account = $abc['account_balance_derived'];
+            $id = $abc['id'];
+            $last = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$old' WHERE id = '$id'");
+            if($last){
+            echo 'account Updated</br>';
+            }
+        }
+        else{
+            echo 'but couldnt find account</br>';
+        }
+
+    // $spf = mysqli_query($connection, "UPDATE gl_account_transaction SET gl_code = '$gl_code' WHERE parent_id = '$parent_id' AND int_id = '$int_id' AND id = '$id'");
+    // if($spf){
+    //     echo 'id = '.$id.', gl_code =  '.$gl_code.', DONE</br>';
+    // }
 }
 else{
-    echo 'Appropriate Head gl not Found!</br>';
+    echo 'Client with '.$d.', '.$first.'. not found</br>';
 }
 }
 ?>

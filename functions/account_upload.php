@@ -45,10 +45,10 @@ $type_id = $res['accounting_type'];
 $accountins = "INSERT INTO account (int_id, branch_id, account_no, account_type,
 type_id, product_id, client_id, field_officer_id, submittedon_date, submittedon_userid,
 currency_code, activatedon_date, activatedon_userid,
-account_balance_derived) VALUES ('{$int_id}', '{$branch_id}', '{$account_no}',
+account_balance_derived, updatedon_date) VALUES ('{$int_id}', '{$branch_id}', '{$account_no}',
 '{$accttname}', '{$type_id}', '{$acct_type}', '{$client_id}', '{$field_officer_id}', '{$submittedon_date}',
 '{$submittedon_userid}', '{$currency_code}', '{$activation_date}', '{$activation_userid}',
-'{$account_balance_derived}')";
+'{$account_balance_derived}', '{$submittedon_date}')";
 
 $go = mysqli_query($connection, $accountins);
 if ($go) {

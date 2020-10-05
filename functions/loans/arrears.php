@@ -1,6 +1,6 @@
 <?php
  include("../connect.php");
-
+    $date = date('Y-m-d');
     $query1 = mysqli_query($connection, "SELECT * FROM loan_arrear WHERE installment >= '1'");
     if($query1){
         while($ion = mysqli_fetch_array($query1)){
@@ -34,7 +34,7 @@
                         $total_out = $exe['total_outstanding_derived'];
                         $newouts = $total_out - $tatbp;
                         $newacc = $account_balance -  $tatbp;
-                        $account = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$newacc' WHERE client_id = '$client' AND id = '$account_id'");
+                        $account = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$newacc', updateon_date = '$date' WHERE client_id = '$client' AND id = '$account_id'");
                         $loan = mysqli_query($connection, "UPDATE loan SET total_outstanding_derived = '$newouts' WHERE id = '$loan_id'");
                         // Update oustanding loan balance and account balance
                     }
@@ -50,7 +50,7 @@
                          $exe = mysqli_fetch_array($query2);
                          $total_out = $exe['total_outstanding_derived'];
                          $newouts = $total_out - $account_balance;
-                         $account = mysqli_query($connection, "UPDATE account SET account_balance_derived = '0' WHERE client_id = '$client' AND id = '$account_id'");
+                         $account = mysqli_query($connection, "UPDATE account SET account_balance_derived = '0', updateon_date = '$date' WHERE client_id = '$client' AND id = '$account_id'");
                          $loan = mysqli_query($connection, "UPDATE loan SET total_outstanding_derived = '$newouts' WHERE id = '$loan_id'");
                          if($account && $loan){
                             echo 'Amount not enough, stored in arrears</br>';
