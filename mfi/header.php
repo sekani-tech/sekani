@@ -641,7 +641,7 @@ input[type=number] {
             // check
             if ($count == 1) {
               // make update
-              if ($time >= $start_time && $time < $end_time) {
+              if ($time >= $start_time) {
                 // done
                 echo " ";
               } else {
