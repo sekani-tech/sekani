@@ -55,6 +55,7 @@ $dos = mysqli_query($connection, $fd);
                           <select class="form-control" name="product_type" >
                            <option value="1">Current</option>
                             <option value="2">Savings</option>
+                            <option value="3">Dollar</option>
                           </select>
                         </div>
                       </div>
@@ -81,6 +82,7 @@ $dos = mysqli_query($connection, $fd);
                           <label for="installmentAmount" >Currency</label>
                           <select class="form-control" name="currency" >
                            <option value="NGN">Nigerian Naira(NGN)</option>
+                           <option value="USD">US Dollar($)</option>
                           </select>
                         </div>
                       </div>
