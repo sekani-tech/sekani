@@ -438,7 +438,7 @@ input[type=number] {
 
             
 
-            <li class="d-inline">
+            <li class="d-inline dropdown">
               <!-- Notification for matured loans -->
             <?php
                 $today = date('Y-m-d');
@@ -519,7 +519,7 @@ input[type=number] {
                   <?php }?>
                 </a>
                 <?php if($fomd > 0){?>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+                <div class="dropdown-menu dropdown-menu-right"  aria-labelledby="navbarDropdownProfile">
                 <?php 
                   if($dfn){?>
                   <a class="dropdown-item" href="report_loan_view.php?view39b=<?php echo $tomorrow; ?>"><?php echo $dfn;?> Loan(s) due tommorow</a>
