@@ -46,7 +46,7 @@
                         <tr>
                           
                           <th>General Lender Data</th>
-                          <th>Upload Institution GL data</th>
+                          <th>Upload Institution General Lender data</th>
                           <td><a href="bulk_general_lender_data.php" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
                         </tr>
                         <tr>
