@@ -61,11 +61,6 @@
                           <th>Upload Institution Loan data</th>
                           <td><a href="bulk_loan_data.php" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
                         </tr>
-                        <!-- <tr>
-                          <th>General Ledger Template</th>
-                          <th>Assign General Ledgers to system posting activities</th>
-                          <td><a href="gl_template.php" class="btn btn-info"><i class="material-icons">description</i></a></td>
-                        </tr> -->
                         <tr>
                           
                           <th>Products Data</th>
