@@ -567,7 +567,7 @@ input[type=number] {
                     <?php echo $_SESSION["username"]; ?>
                   <!-- </p> -->
                 </a>
-                <div class="dropdown-menu dropdown-menu-right rgba-red-strong" style="background-color: grey;   height:auto;"  aria-labelledby="navbarDropdownProfile">
+                <div class="dropdown-menu dropdown-menu-right rgba-red-strong" style="background-color: grey; width:min-content;   height:auto;"  aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown-item" style="color: white;" href="profile.php">Profile</a>
                   <a class="dropdown-item" style="color: white;" href="settings.php">Settings</a>
                   <div class="dropdown-divider"></div>

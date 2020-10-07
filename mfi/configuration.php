@@ -84,6 +84,12 @@ $destination = "../index.php";
                           <th>Keep track of all Accounts that have not been in use</th>
                           <td><a href="trk_dormant.php" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
                         </tr>
+                        <tr>
+                          
+                          <th> <b> Bulk Update </b></th>
+                          <th>Upload Bulk data from institution database</th>
+                          <td><a href="bulk_update.php" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
