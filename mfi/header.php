@@ -558,7 +558,7 @@ input[type=number] {
               <!-- user setup -->
               
               <li class="d-inline dropdown">
-                <a class="d-inline" style="color: black; margin-right: 50px" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="d-inline" style="color: black; margin-right: 10px" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 
               
                 <i class="material-icons">person</i>
