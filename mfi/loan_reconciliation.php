@@ -239,6 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                         <!-- <tr> -->
+                       
                           <th>Account Name</th>
                           <th>Account Number</th>
                           <th>Loan Term</th>
@@ -294,7 +295,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                   </div> 
                           </td>                         
                         </tr>
-                        <tr>
+                        <!-- <tr> -->
                         <?php
                           }
                       } else {
