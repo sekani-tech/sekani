@@ -438,7 +438,7 @@ input[type=number] {
 
             
 
-            <li class="d-inline dropdown">
+            <li class="d-inline dropdown" style="margin-right: 20px;">
               <!-- Notification for matured loans -->
             <?php
                 $today = date('Y-m-d');
@@ -558,7 +558,7 @@ input[type=number] {
               <!-- user setup -->
               
               <li class="d-inline dropdown">
-                <a class="d-inline" style="color: black; margin-right: 10px" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="d-inline" style="color: black; margin-right: 25px" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 
               
                 <i class="material-icons">person</i>
