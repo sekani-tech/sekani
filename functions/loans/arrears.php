@@ -13,6 +13,7 @@
             if($acct){
                 $abc = mysqli_fetch_array($acct);
             $account_balance = $abc['account_balance_derived'];
+           
             if($account_balance == '0.00'){
                 // IF NULL, SEND MESSAGE
                 echo 'No money in account</br>';
