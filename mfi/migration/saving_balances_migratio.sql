@@ -30,8 +30,9 @@ bbbbb
 --
 -- Indexes for table `saving_balances_migration`
 --
-ALTER TABLE `saving_balances_migration`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `saving_balances_migration` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `saving_balances_migration` ADD PRIMARY KEY(`id`);
+ALTER TABLE `saving_balances_migration` DROP `Name`;
 
 --
 -- AUTO_INCREMENT for dumped tables

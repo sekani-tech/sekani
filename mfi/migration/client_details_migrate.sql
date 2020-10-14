@@ -57,3 +57,5 @@ CREATE TABLE `client_details_migrate` (
   `client_identifiers_description` varchar(200) DEFAULT NULL,
   `client_identifiers_Validation_policy_id` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `client_details_migrate` ADD PRIMARY KEY(`id`);
