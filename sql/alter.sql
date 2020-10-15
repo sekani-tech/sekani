@@ -1,0 +1,10 @@
+CREATE TABLE client_details_migrate (
+id INT NOT NULL AUTO_INCREMENT, branch_name VARCHAR(100),	loan_officer_name VARCHAR(200),	group_name VARCHAR(200),	group_id VARCHAR(200),	client_name VARCHAR(200),	client_Id VARCHAR(200),	date_Of_birth DATE,	gender VARCHAR(8),	phone_number VARCHAR(15),	staff_name VARCHAR(200),	account_no VARCHAR(200),	external_id VARCHAR(50),	status VARCHAR(40),	
+activation_date DATE,	office_id VARCHAR(40),	default_savings_product VARCHAR(200), default_savings_account VARCHAR(200),	Client_Type VARCHAR(200),	Client_Classification VARCHAR(200),	Email_Address VARCHAR(200),	Mobile_No_2 VARCHAR(200), Business_Details_Business_Name VARCHAR(200),	Business_Details_Business_Type VARCHAR(200),	Business_Details_Business_Start_Date VARCHAR(200),	Business_Details_Address TEXT,	Business_Details_State VARCHAR(200),	
+Business_Details_LGA VARCHAR(200),	Business_Details_City VARCHAR(200),	Business_Details_Nigeria VARCHAR(200),	Business_Details_Geographical_Region VARCHAR(200),	Business_Details_Nearest_Bus_Stop VARCHAR(200),	Business_Details_Submitted_On_Date VARCHAR(200),	
+Client_Details_BVN VARCHAR(200),	Client_Details_Address VARCHAR(200),	Client_Details_State_Of_Origin VARCHAR(200),	Client_Details_LGA VARCHAR(200),	Client_Details_City VARCHAR(200),	Client_Details_Marital_Status VARCHAR(10),	Client_Details_Occupation VARCHAR(200),	
+Client_Details_No_Of_Household VARCHAR(200),	Client_Details_Disability VARCHAR(200),	Client_Details_Submitted_On_Date VARCHAR(200),	Next_Of_Kin_Name VARCHAR(200),	Next_Of_Kin_Address VARCHAR(200), Next_Of_Kin_City VARCHAR(200),	Next_Of_Kin_Phone_Number VARCHAR(200),	
+Next_Of_Kin_Relation_To_Client VARCHAR(200),	Next_Of_Kin_State VARCHAR(200), Next_Of_Kin_Submitted_On_Date DATE,	Client_Identifiers_Id_Client_Name VARCHAR(200),	Client_Identifiers_Document_Type_Id VARCHAR(200),	
+Client_Identifiers_Document_key VARCHAR(200),	client_identifiers_description VARCHAR(200),	client_identifiers_Validation_policy_id VARCHAR(200),
+PRIMARY KEY (id)
+);
