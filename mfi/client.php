@@ -156,7 +156,7 @@ else if (isset($_GET["message5"])) {
                         $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && (client.branch_id ='$br_id' $branches) && client.status = 'Approved'";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <th>sn</th>
+                        <th></th>
                         <th>
                           First Name
                         </th>
@@ -171,18 +171,6 @@ else if (isset($_GET["message5"])) {
                         </th>
                         <th>
                           Account Number
-                        </th>
-                        <th>
-                         Date of Birth
-                        </th>
-                        <th>
-                          Gender
-                        </th>
-                        <th>
-                          Phone
-                        </th>
-                        <th>
-                          BVN
                         </th>
                         <th>View</th>
                         <th>Close</th>
@@ -253,10 +241,6 @@ else if (isset($_GET["message5"])) {
                           }
                           ?>
                           <th><?php echo $acc; ?></th>
-                          <th><?php echo $row["date_of_birth"]; ?></th>
-                          <th><?php echo $row["gender"]; ?></th>
-                          <th><?php echo $row["mobile_no"]; ?></th>
-                          <th><?php echo $row["BVN"]; ?></th>
                           <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                           <td><a href="../functions/close_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Close</a></td>
                         </tr>

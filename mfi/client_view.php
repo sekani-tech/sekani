@@ -255,6 +255,12 @@ if(isset($_GET["edit"])) {
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $tdd; ?>" readonly>
                         </div>
                       </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Avaliable Balance:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $abd; ?>" readonly>
+                        </div>
+                      </div>
                        <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Last Withdrawal:</label>

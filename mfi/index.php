@@ -42,11 +42,11 @@
                   <p class="card-category">Client</p>
                   <!-- Populate with number of existing clients -->
                   <h3 class="card-title"><?php
-                        $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && (client.branch_id ='$br_id'$branches) && client.status = 'Approved'";
+                        $query = "SELECT COUNT(firstname) FROM client WHERE int_id = '$sessint_id' AND status = 'Approved'";
                         $result = mysqli_query($connection, $query);
                    if ($result) {
-                     $inr = mysqli_num_rows($result);
-                     echo $inr;
+                     $inr = mysqli_fetch_array($result);
+                     echo $inr['COUNT(firstname)'];
                    }?></h3>
                 </div>
                 <div class="card-footer">
