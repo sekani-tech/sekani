@@ -1,6 +1,6 @@
 CREATE TABLE group_details_migrate (
 id INT(11) NOT NULL AUTO_INCREMENT, Branch_Name VARCHAR(100), Group_Name VARCHAR(100), Group_Id VARCHAR(100), Client_Name VARCHAR(100),	Client_Id INT, 
-Date_Of_Birth DATE, Gender VARCHAR(10), Phone_Number VARCHAR(20), Staff_Name VARCHAR(20), Id VARCHAR(10), Status VARCHAR(15), Activation_Date DATE, 
+Date_Of_Birth DATE, Gender VARCHAR(10), Phone_Number VARCHAR(20), Staff_Name VARCHAR(20), Status VARCHAR(15), Activation_Date DATE, 
 Office_Id VARCHAR(20), Display_Name VARCHAR(20), Hierarchy INT, Activated_By_User VARCHAR(100),	Submitted_On_Date DATE, 
 Submitted_By_User VARCHAR(100), Closed_By_User VARCHAR(100), Account_No VARCHAR(100), Group_Details_Registration VARCHAR(100), 
 Group_Details_Meeting_Day VARCHAR(100), Group_Details_Meeting_Frequency INT, Group_Details_Meeting_Location VARCHAR(100), 
