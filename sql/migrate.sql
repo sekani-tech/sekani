@@ -34,7 +34,7 @@ CREATE TABLE loan_transactions_migrate (
 id INT(11) NOT NULL AUTO_INCREMENT, Branch_Name VARCHAR(100), Loan_Officer_Name VARCHAR(100), Group_Name VARCHAR(100), Group_Id VARCHAR(100), Client_Name VARCHAR(100), Client_Id VARCHAR(100), Date_Of_Birth VARCHAR(100), 
 Gender VARCHAR(10), Phone_Number VARCHAR(30), Staff_Name VARCHAR(100), Created_By VARCHAR(100), Interest_Accrued_Transfer DECIMAL(19,2), 
 Total_Repaid DECIMAL(19,2), Product_Short_Name VARCHAR(10), Product_Name VARCHAR(100), Product_Id VARCHAR(100), 
-Account_Number VARCHAR(100), Payment_Channel VARCHAR(100), Reference VARCHAR(100),  Total_Repaid DECIMAL(19,2), 
+Account_Number VARCHAR(100), Payment_Channel VARCHAR(100), Reference VARCHAR(100), 
 Principal_Repaid DECIMAL(19,2), Interest_Repaid DECIMAL(19,2), Fees_Repaid DECIMAL(19,2), Penalties_Repaid DECIMAL(19,2), 
 Overpayment_Repaid DECIMAL(19,2), Total_Recovered DECIMAL(19,2), Product_Group VARCHAR(100),	
 Parent_Product_Group VARCHAR(100), Transaction_Id VARCHAR(100), Effective_Date DATE, Submitted_On_Date DATE, migration_status INT DEFAULT '0',
