@@ -1,5 +1,5 @@
 CREATE TABLE group_details_migrate (
-id INT NOT NULL AUTO_INCREMENT, Branch_Name VARCHAR(100), Group_Name VARCHAR(100), Group_Id VARCHAR(100), Client_Name VARCHAR(100),	Client_Id INT, 
+id INT(11) NOT NULL AUTO_INCREMENT, Branch_Name VARCHAR(100), Group_Name VARCHAR(100), Group_Id VARCHAR(100), Client_Name VARCHAR(100),	Client_Id INT, 
 Date_Of_Birth DATE, Gender VARCHAR(10), Phone_Number VARCHAR(20), Staff_Name VARCHAR(20), Id VARCHAR(10), Status VARCHAR(15), Activation_Date DATE, 
 Office_Id VARCHAR(20), Display_Name VARCHAR(20), Hierarchy INT, Activated_By_User VARCHAR(100),	Submitted_On_Date DATE, 
 Submitted_By_User VARCHAR(100), Closed_By_User VARCHAR(100), Account_No VARCHAR(100), Group_Details_Registration VARCHAR(100), 
@@ -9,7 +9,7 @@ PRIMARY KEY (id)
 );
 
 CREATE TABLE loan_balances_migrate (
-id INT NOT NULL AUTO_INCREMENT, Branch_Name VARCHAR(100), Loan_Officer_Name VARCHAR(100),	Group_Name VARCHAR(100), 
+id INT(11) NOT NULL AUTO_INCREMENT, Branch_Name VARCHAR(100), Loan_Officer_Name VARCHAR(100),	Group_Name VARCHAR(100), 
 Group_Id VARCHAR(100), Client_Name VARCHAR(100), Client_Id VARCHAR(100), Gender VARCHAR(10), Arrears_Date DATE, Arrears_Days INT, 
 Arrears_Amount DECIMAL(19,2), Product_Group VARCHAR(100), Parent_Product_Group VARCHAR(100), Product_Name VARCHAR(100), Linked_Top_Up_Loan_Id VARCHAR(100), 
 Account_No VARCHAR(100), Loan_Officer_Id VARCHAR(100), Loan_Purpose VARCHAR(100), Loan_Status_Id VARCHAR(100), 
@@ -31,7 +31,7 @@ PRIMARY KEY (id)
 );
 
 CREATE TABLE loan_transactions_migrate (
-id INT NOT NULL AUTO_INCREMENT, Branch_Name VARCHAR(100), Loan_Officer_Name VARCHAR(100), Group_Name VARCHAR(100), Group_Id VARCHAR(100), Client_Name VARCHAR(100), Client_Id VARCHAR(100), Date_Of_Birth VARCHAR(100), 
+id INT(11) NOT NULL AUTO_INCREMENT, Branch_Name VARCHAR(100), Loan_Officer_Name VARCHAR(100), Group_Name VARCHAR(100), Group_Id VARCHAR(100), Client_Name VARCHAR(100), Client_Id VARCHAR(100), Date_Of_Birth VARCHAR(100), 
 Gender VARCHAR(10), Phone_Number VARCHAR(30), Staff_Name VARCHAR(100), Created_By VARCHAR(100), Interest_Accrued_Transfer DECIMAL(19,2), 
 Total_Repaid DECIMAL(19,2), Product_Short_Name VARCHAR(10), Product_Name VARCHAR(100), Product_Id VARCHAR(100), 
 Account_Number VARCHAR(100), Payment_Channel VARCHAR(100), Reference VARCHAR(100),  Total_Repaid DECIMAL(19,2), 
@@ -164,7 +164,7 @@ COMMIT;
 
 
 CREATE TABLE savings_transactions_migrate (
-id INT NOT NULL AUTO_INCREMENT, Branch_Name VARCHAR(100), Loan_Officer_Name VARCHAR(100),	Group_Name VARCHAR(100), Group_Id VARCHAR(100), 
+id INT(11) NOT NULL AUTO_INCREMENT, Branch_Name VARCHAR(100), Loan_Officer_Name VARCHAR(100),	Group_Name VARCHAR(100), Group_Id VARCHAR(100), 
 Client_Name VARCHAR(100), Client_Id VARCHAR(100), Created_By VARCHAR(100), Deposit DECIMAL(19,2), Withdrawal DECIMAL(19,2), 
 Interest_Posting DECIMAL(19,2), Charges_Applied DECIMAL(19), Charges_Waived DECIMAL(19,2), Transfer_Amount DECIMAL(19,2), Product_Short_Name VARCHAR(10), 
 Product_Name VARCHAR(100), Product_Id VARCHAR(100), Account_Number VARCHAR(100), Payment_Channel VARCHAR(100), 
