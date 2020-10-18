@@ -4,7 +4,7 @@ Date_Of_Birth DATE, Gender VARCHAR(10), Phone_Number VARCHAR(20), Staff_Name VAR
 Office_Id VARCHAR(20), Display_Name VARCHAR(20), Hierarchy INT, Activated_By_User VARCHAR(100),	Submitted_On_Date DATE, 
 Submitted_By_User VARCHAR(100), Closed_By_User VARCHAR(100), Account_No VARCHAR(100), Group_Details_Registration VARCHAR(100), 
 Group_Details_Meeting_Day VARCHAR(100), Group_Details_Meeting_Frequency INT, Group_Details_Meeting_Location VARCHAR(100), 
-Group_Details_Meeting_Time INT, Group_Details_Geographical_Region VARCHAR(100), Group_Details_Submitted_On_Date DATE, migration_status INT DEFAULT'0',
+Group_Details_Meeting_Time INT, Group_Details_Geographical_Region VARCHAR(100), Group_Details_Submitted_On_Date DATE, migration_status INT DEFAULT '0',
 PRIMARY KEY (id)
 );
 
@@ -26,7 +26,7 @@ Loan_Guarantors_Dob DATE, Loan_Guarantors_Address_Line_1 TEXT, Loan_Guarantors_C
 Loan_Guarantors_House_Phone_Number VARCHAR(100), Loan_Guarantors_Submitted_By_User VARCHAR(100), 
 Loan_Guarantors_Submitted_On_Date DATE, Loan_Guarantors_Relationship_Wi18 VARCHAR(100),	Loan_Collateral_Id VARCHAR(100),	
 Loan_Collateral_Type VARCHAR(100), Loan_Collateral_Value DECIMAL(19,2), Loan_Collateral_Description TEXT, 
-Loan_Collateral_Submitted_By_User VARCHAR(100), Loan_Collateral_Submitted_On_Date DATE,	Loan_Collateral_Descrition_Of_Asset5 VARCHAR(100), Loan_Collateral_Approximate_Cos6 VARCHAR(100), migration_status INT DEFAULT'0',
+Loan_Collateral_Submitted_By_User VARCHAR(100), Loan_Collateral_Submitted_On_Date DATE,	Loan_Collateral_Descrition_Of_Asset5 VARCHAR(100), Loan_Collateral_Approximate_Cos6 VARCHAR(100), migration_status INT DEFAULT '0',
 PRIMARY KEY (id)
 );
 
@@ -37,7 +37,7 @@ Total_Repaid DECIMAL(19,2), Product_Short_Name VARCHAR(10), Product_Name VARCHAR
 Account_Number VARCHAR(100), Payment_Channel VARCHAR(100), Reference VARCHAR(100),  Total_Repaid DECIMAL(19,2), 
 Principal_Repaid DECIMAL(19,2), Interest_Repaid DECIMAL(19,2), Fees_Repaid DECIMAL(19,2), Penalties_Repaid DECIMAL(19,2), 
 Overpayment_Repaid DECIMAL(19,2), Total_Recovered DECIMAL(19,2), Product_Group VARCHAR(100),	
-Parent_Product_Group VARCHAR(100), Transaction_Id VARCHAR(100), Effective_Date DATE, Submitted_On_Date DATE, migration_status INT DEFAULT'0',
+Parent_Product_Group VARCHAR(100), Transaction_Id VARCHAR(100), Effective_Date DATE, Submitted_On_Date DATE, migration_status INT DEFAULT '0',
 PRIMARY KEY(id)
 );
 
@@ -99,7 +99,7 @@ CREATE TABLE `client_details_migrate` (
   `Client_Identifiers_Document_key` varchar(200) DEFAULT NULL,
   `client_identifiers_description` varchar(200) DEFAULT NULL,
   `client_identifiers_Validation_policy_id` varchar(200) DEFAULT NULL,
-  `migration_status` INT DEFAULT'0'
+  `migration_status` INT DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `client_details_migrate`
@@ -138,7 +138,7 @@ CREATE TABLE `saving_balances_migration` (
   `Total_Fees_Charge_Derived` varchar(200) NOT NULL,
   `Account_Balance_Derived` varchar(200) NOT NULL,
   `Last_Activity_Date` date NOT NULL,
-  `migration_status` INT DEFAULT'0'
+  `migration_status` INT DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -170,6 +170,6 @@ Interest_Posting DECIMAL(19,2), Charges_Applied DECIMAL(19), Charges_Waived DECI
 Product_Name VARCHAR(100), Product_Id VARCHAR(100), Account_Number VARCHAR(100), Payment_Channel VARCHAR(100), 
 Reference VARCHAR(100), Product_Group VARCHAR(100), Parent_Product_Group VARCHAR(100), 
 Transaction_Type VARCHAR(100), Transaction_Id VARCHAR(100), Office_Id VARCHAR(100), Payment_Detail_Id VARCHAR(100), Effective_Date DATE, Is_Account_Transfer VARCHAR(10),
-migration_status INT DEFAULT'0',
+migration_status INT DEFAULT '0',
 PRIMARY KEY (id)
 );
