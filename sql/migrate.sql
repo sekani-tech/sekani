@@ -1,6 +1,6 @@
 CREATE TABLE group_details_migrate (
 id INT NOT NULL AUTO_INCREMENT, Branch_Name VARCHAR(100), Group_Name VARCHAR(100), Group_Id VARCHAR(100), Client_Name VARCHAR(100),	Client_Id INT, 
-Date_Of_Birth DATE, Gender VARCHAR(10), Phone_Number VARCHAR(20), Staff_Name VARCHAR(20), Id, Status VARCHAR(15), Activation_Date DATE, 
+Date_Of_Birth DATE, Gender VARCHAR(10), Phone_Number VARCHAR(20), Staff_Name VARCHAR(20), Id VARCHAR(10), Status VARCHAR(15), Activation_Date DATE, 
 Office_Id VARCHAR(20), Display_Name VARCHAR(20), Hierarchy INT, Activated_By_User VARCHAR(100),	Submitted_On_Date DATE, 
 Submitted_By_User VARCHAR(100), Closed_By_User VARCHAR(100), Account_No VARCHAR(100), Group_Details_Registration VARCHAR(100), 
 Group_Details_Meeting_Day VARCHAR(100), Group_Details_Meeting_Frequency INT, Group_Details_Meeting_Location VARCHAR(100), 
@@ -38,7 +38,7 @@ Account_Number VARCHAR(100), Payment_Channel VARCHAR(100), Reference VARCHAR(100
 Principal_Repaid DECIMAL(19,2), Interest_Repaid DECIMAL(19,2), Fees_Repaid DECIMAL(19,2), Penalties_Repaid DECIMAL(19,2), 
 Overpayment_Repaid DECIMAL(19,2), Total_Recovered DECIMAL(19,2), Product_Group VARCHAR(100),	
 Parent_Product_Group VARCHAR(100), Transaction_Id VARCHAR(100), Effective_Date DATE, Submitted_On_Date DATE, migration_status INT DEFAULT'0',
-PRIMARY KEY (id)
+PRIMARY KEY(id)
 );
 
 
@@ -137,7 +137,7 @@ CREATE TABLE `saving_balances_migration` (
   `Total_Withdrawals_Derived` varchar(200) NOT NULL,
   `Total_Fees_Charge_Derived` varchar(200) NOT NULL,
   `Account_Balance_Derived` varchar(200) NOT NULL,
-  `Last_Activity_Date` date NOT NULL
+  `Last_Activity_Date` date NOT NULL,
   `migration_status` INT DEFAULT'0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -165,11 +165,11 @@ COMMIT;
 
 CREATE TABLE savings_transactions_migrate (
 id INT NOT NULL AUTO_INCREMENT, Branch_Name VARCHAR(100), Loan_Officer_Name VARCHAR(100),	Group_Name VARCHAR(100), Group_Id VARCHAR(100), 
-Client_Name VARCHAR(100), Client_Id VARCHAR(100), Created_By VARCHAR(100), Deposit DECIMAL(19,2), Withdrawal (19,2), 
-Interest_Posting (19,2), Charges_Applied DECIMAL(19), Charges_Waived , Transfer_Amount DECIMAL(19,2), Product_Short_Name VARCHAR(10), 
+Client_Name VARCHAR(100), Client_Id VARCHAR(100), Created_By VARCHAR(100), Deposit DECIMAL(19,2), Withdrawal DECIMAL(19,2), 
+Interest_Posting DECIMAL(19,2), Charges_Applied DECIMAL(19), Charges_Waived DECIMAL(19,2), Transfer_Amount DECIMAL(19,2), Product_Short_Name VARCHAR(10), 
 Product_Name VARCHAR(100), Product_Id VARCHAR(100), Account_Number VARCHAR(100), Payment_Channel VARCHAR(100), 
 Reference VARCHAR(100), Product_Group VARCHAR(100), Parent_Product_Group VARCHAR(100), 
-Transaction_Type VARCHAR(100), Transaction_Id VARCHAR(100), Office_Id VARCHAR(100), Payment_Detail_Id VARCHAR(100), Effective_Date DATE, Is_Account_Transfer,
+Transaction_Type VARCHAR(100), Transaction_Id VARCHAR(100), Office_Id VARCHAR(100), Payment_Detail_Id VARCHAR(100), Effective_Date DATE, Is_Account_Transfer VARCHAR(10),
 migration_status INT DEFAULT'0',
 PRIMARY KEY (id)
 );
