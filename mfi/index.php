@@ -29,6 +29,31 @@
 ?>
 
     <div class="content">
+                          <div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">System Maintenance</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                            <p>We are currently undergoing heavy maintenance and all issues
+                               you are experiencing with</p>
+                                          <ul>
+                                          <li>Loan Collection/repayment</li>
+                                          <li>Client creation and  BVN check</li>
+                                          <li>Loan reports</li>
+                                          </ul>
+                                          <p>Would be dealt with shortly, sorry for the inconvenience.</p>
+                                          <p>Thank you.</p>
+                                          <p><em>IT Support<em></p>
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div>
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
@@ -238,6 +263,10 @@ setInterval(function() {
                   $final_r = str_replace("]","", $final_l); 
                 ?>
                 <script>
+
+$(document).ready(function(){
+        $("#info").modal('show');
+    });
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
