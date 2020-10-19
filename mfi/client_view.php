@@ -168,9 +168,19 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Account No:</label>
+                            <?php
+                              if(fill_account($connection) == ""){
+                            ?>
+                            <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo $migrate['Account_No']; ?>" readonly name="display_name">
+                            <?php
+                              }else{
+                            ?>
                             <select id="account" class="form-control">
                               <?php echo fill_account($connection);?>
                             </select>
+                            <?php
+                              }
+                            ?>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -422,9 +432,19 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Account No:</label>
-                            <select id="account" name="accno" class="form-control">
-                              <?php echo fill_accounting($connection);?>
+                          <?php
+                              if(fill_account($connection) == ""){
+                            ?>
+                            <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo $migrate['Account_No']; ?>" readonly name="display_name">
+                            <?php
+                              }else{
+                            ?>
+                            <select id="account" class="form-control">
+                              <?php echo fill_account($connection);?>
                             </select>
+                            <?php
+                              }
+                            ?>
                         </div>
                       </div>
                     </div>
