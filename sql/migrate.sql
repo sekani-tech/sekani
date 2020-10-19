@@ -181,8 +181,8 @@ CREATE TABLE outstanding_report_migrate (
 id INT(11) NOT NULL AUTO_INCREMENT, int_id INT, client_id VARCHAR(100), client_name VARCHAR(100), dob DATE, 
 gender VARCHAR(10), account VARCHAR(20), branch VARCHAR(10), product VARCHAR(20), interest_at_disbursement DECIMAL(19,2), 
 eir DECIMAL(19,2), loan_principal DECIMAL(19,2), outstanding_principal DECIMAL(19,2), interest DECIMAL(19,2),	fees DECIMAL (19,2), 
-total DECIMAL(19,2),	loan_officer VARCHAR(100), disbursed DATE, installments int, loan_frequency int, periods VARCHAR(10) 
-status varchar(10), trp DECIMAL(2.1), group varchar(100), bussiness_type VARCHAR(100), loan_purpose VARCHAR(100), 
+total DECIMAL(19,2),	loan_officer VARCHAR(100), disbursed DATE, installments int, loan_frequency int, periods VARCHAR(10), 
+status varchar(10), trp DECIMAL(2.1), groupn varchar(100), bussiness_type VARCHAR(100), loan_purpose VARCHAR(100), 
 payment_type VARCHAR(100), final_payment_date DATE, maturity_date DATE, arrear_amount DECIMAL(19,2),	days_in_arrears int,
 migration_status int,
 PRIMARY KEY (id)
