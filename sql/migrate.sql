@@ -126,8 +126,7 @@ CREATE TABLE `saving_balances_migration` (
   `Client_Name` varchar(200) NOT NULL,
   `Client_Id` varchar(200) NOT NULL,
   `Product_Id` varchar(200) NOT NULL,
-  `Loan_Officer` varchar(200) NOT NULL,
-  `Name` varchar(200) NOT NULL,
+  `Loan_Officer_Name` varchar(200) NOT NULL,
   `Submitted_On_Date` date NOT NULL,
   `Approved_On_Date` date NOT NULL,
   `Activated_On_Date` date NOT NULL,
@@ -173,3 +172,7 @@ Transaction_Type VARCHAR(100), Transaction_Id VARCHAR(100), Office_Id VARCHAR(10
 migration_status INT DEFAULT '0',
 PRIMARY KEY (id)
 );
+
+-- ignore this for now
+-- UPDATE accounts inner join client.display_name = saving_balances_migration.client_name
+-- SET 
