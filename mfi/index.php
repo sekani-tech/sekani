@@ -29,6 +29,31 @@
 ?>
 
     <div class="content">
+                          <!-- <div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">System Maintenance</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                            <p>We are currently undergoing heavy maintenance and all issues
+                               you are experiencing with</p>
+                                          <ul>
+                                          <li>Loan Collection/repayment</li>
+                                          <li>Client creation and  BVN check</li>
+                                          <li>Loan reports</li>
+                                          </ul>
+                                          <p>Would be dealt with shortly, sorry for the inconvenience.</p>
+                                          <p>Thank you.</p>
+                                          <p><em>IT Support<em></p>
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div> -->
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
@@ -179,37 +204,9 @@ setInterval(function() {
                   </div>
                   <p class="card-category">Outstanding Loan Balance</p>
                   <!-- Populate with the total value of outstanding loans -->
+                  
                   <?php
-                  // if($sessint_id != 13){
-                  //   $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
-                  //   $sdoi = mysqli_query($connection, $dd);
-                  //   $e = mysqli_fetch_array($sdoi);
-                  //   $interest = $e['interest_amount'];
-
-                  //   $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
-                  //   $sdswe = mysqli_query($connection, $dfdf);
-                  //   $u = mysqli_fetch_array($sdswe);
-                  //   $prin = $u['principal_amount'];
-
-                  //   $outstanding = $prin + $interest;
-
-                  //   // Arrears
-                  //   $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id'";
-                  //   $fosdi = mysqli_query($connection, $ldfkl);
-                  //   $l = mysqli_fetch_array($fosdi);
-                  //   $interesttwo = $l['interest_amount'];
-
-                  //   $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id'";
-                  //   $sodi = mysqli_query($connection, $sdospd);
-                  //   $s = mysqli_fetch_array($sodi);
-                  //   $printwo = $s['principal_amount'];
-
-                  //   $outstandingtwo = $printwo + $interesttwo;
-                  //   $ttout = $outstanding + $outstandingtwo;
-                  //   }
-                  //   else if($sessint_id == 13 || $sessint_id == 12){
-                      
-                  //   }
+                     
                     $prin_query = "SELECT SUM(principal_amount) AS total_out_prin FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND installment >= 1";
                     $int_query = "SELECT SUM(interest_amount) AS total_int_prin FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND installment >= 1";
                     // LOAN ARREARS
@@ -231,6 +228,7 @@ setInterval(function() {
                       // DGMFB
                   ?>
                   <h3 class="card-title">NGN - <?php echo number_format(round($fde), 2); ?></h3>
+                  
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -265,6 +263,10 @@ setInterval(function() {
                   $final_r = str_replace("]","", $final_l); 
                 ?>
                 <script>
+
+$(document).ready(function(){
+        $("#info").modal('show');
+    });
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',

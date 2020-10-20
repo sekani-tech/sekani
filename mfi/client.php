@@ -203,7 +203,15 @@ else if (isset($_GET["message5"])) {
                             }
                            
                             ?>
-                          <th><?php echo $savingp; ?></th>
+                          <th>
+                            <?php
+                            if($_SESSION['int_id']){
+                              echo $row['account_type'];
+                            }else{ 
+                              echo $savingp; 
+                            }
+                            ?>
+                          </th>
                           <?php
                           $soc = $row["account_no"];
                           $length = strlen($soc);

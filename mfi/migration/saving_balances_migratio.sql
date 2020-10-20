@@ -22,7 +22,7 @@ CREATE TABLE `saving_balances_migration` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-bbbbb
+
 --
 -- Indexes for dumped tables
 --
