@@ -462,7 +462,7 @@ if(isset($_POST['id'])){
     }
     // Data for Joint Account
     elseif($_POST['id'] == 'Joint'){
-        
+        // MAKING 
     }
     // Data for Individual Account
     elseif($_POST['id'] == 'Individual' || $_POST['id'] == 'Group'){
