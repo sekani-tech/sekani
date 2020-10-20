@@ -1,44 +1,44 @@
 CREATE TABLE group_details_migrate (
-id INT(11) NOT NULL AUTO_INCREMENT, int_id INT NOT NULL, Branch_Name VARCHAR(100), Group_Name VARCHAR(100), Group_Id VARCHAR(100), Client_Name VARCHAR(100),	Client_Id INT, 
-Date_Of_Birth DATE, Gender VARCHAR(10), Phone_Number VARCHAR(20), Staff_Name VARCHAR(20), Status VARCHAR(15), Activation_Date DATE, 
-Office_Id VARCHAR(20), Display_Name VARCHAR(20), Hierarchy INT, Activated_By_User VARCHAR(100),	Submitted_On_Date DATE, 
-Submitted_By_User VARCHAR(100), Closed_By_User VARCHAR(100), Account_No VARCHAR(100), Group_Details_Registration VARCHAR(100), 
-Group_Details_Meeting_Day VARCHAR(100), Group_Details_Meeting_Frequency INT, Group_Details_Meeting_Location VARCHAR(100), 
-Group_Details_Meeting_Time INT, Group_Details_Geographical_Region VARCHAR(100), Group_Details_Submitted_On_Date DATE, migration_status INT DEFAULT '0',
-PRIMARY KEY (id)
+  id INT(11) NOT NULL AUTO_INCREMENT, int_id INT NOT NULL, Branch_Name VARCHAR(100), Group_Name VARCHAR(100), Group_Id VARCHAR(100), Client_Name VARCHAR(100),	Client_Id INT, 
+  Date_Of_Birth DATE, Gender VARCHAR(10), Phone_Number VARCHAR(20), Staff_Name VARCHAR(20), Status VARCHAR(15), Activation_Date DATE, 
+  Office_Id VARCHAR(20), Display_Name VARCHAR(20), Hierarchy INT, Activated_By_User VARCHAR(100),	Submitted_On_Date DATE, 
+  Submitted_By_User VARCHAR(100), Closed_By_User VARCHAR(100), Account_No VARCHAR(100), Group_Details_Registration VARCHAR(100), 
+  Group_Details_Meeting_Day VARCHAR(100), Group_Details_Meeting_Frequency INT, Group_Details_Meeting_Location VARCHAR(100), 
+  Group_Details_Meeting_Time INT, Group_Details_Geographical_Region VARCHAR(100), Group_Details_Submitted_On_Date DATE, migration_status INT DEFAULT '0',
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE loan_balances_migrate (
-id INT(11) NOT NULL AUTO_INCREMENT, int_id INT NOT NULL, Branch_Name VARCHAR(100), Loan_Officer_Name VARCHAR(100),	Group_Name VARCHAR(100), 
-Group_Id VARCHAR(100), Client_Name VARCHAR(100), Client_Id VARCHAR(100), Gender VARCHAR(10), Arrears_Date DATE, Arrears_Days INT, 
-Arrears_Amount DECIMAL(19,2), Product_Group VARCHAR(100), Parent_Product_Group VARCHAR(100), Product_Name VARCHAR(100), Linked_Top_Up_Loan_Id VARCHAR(100), 
-Account_No VARCHAR(100), Loan_Officer_Id VARCHAR(100), Loan_Purpose VARCHAR(100), Loan_Status_Id VARCHAR(100), 
-Loan_Type VARCHAR(100), Principal_Amount DECIMAL(19,2),	Nominal_Interest_Rate_Per_Period INT, Annual_Nominal_Interest_Rate INT,	
-Interest_Method VARCHAR(100), Interest_Calculated_In_Period INT, Term_Frequency INT,	Repay_Every INT, 
-Repayment_Period_Frequency INT, Number_Of_Repayments INT, Grace_On_Principal_Periods INT, Submitted_On_Date DATE, Submitted_By_User VARCHAR(100), 
-Approved_On_Date DATE, Disbursed_On_Date DATE, Matured_On_Date DATE, Principal_Disbursed_Derived DECIMAL(19,2),	
-Principal_Repaid_Derived DECIMAL(19,2), Principal_Outstanding_Derived DECIMAL(19,2), 
-Total_Expected_Repayment DECIMAL(19,2), Derived_Total_Repayment DECIMAL(19,2), Derived_Total_Outstanding_Derived DECIMAL(19,2), 
-Loan_Product_Counter VARCHAR(100), Loan_Details_Loan_Sector VARCHAR(100), Loan_Details_Submitted_On_Date DATE,	
-Loan_Guarantors_Id VARCHAR(100),	Loan_Guarantors_Client_Reln VARCHAR(100), Loan_Guarantors_Type VARCHAR(100), 
-Loan_Guarantors_Client_Id VARCHAR(100), Loan_Guarantors_Firstname VARCHAR(100), Loan_Guarantors_Lastname VARCHAR(100), 
-Loan_Guarantors_Dob DATE, Loan_Guarantors_Address_Line_1 TEXT, Loan_Guarantors_City VARCHAR(100), Loan_Guarantors_Country VARCHAR(100), 
-Loan_Guarantors_House_Phone_Number VARCHAR(100), Loan_Guarantors_Submitted_By_User VARCHAR(100), 
-Loan_Guarantors_Submitted_On_Date DATE, Loan_Guarantors_Relationship_Wi18 VARCHAR(100),	Loan_Collateral_Id VARCHAR(100),	
-Loan_Collateral_Type VARCHAR(100), Loan_Collateral_Value DECIMAL(19,2), Loan_Collateral_Description TEXT, 
-Loan_Collateral_Submitted_By_User VARCHAR(100), Loan_Collateral_Submitted_On_Date DATE,	Loan_Collateral_Descrition_Of_Asset5 VARCHAR(100), Loan_Collateral_Approximate_Cos6 VARCHAR(100), migration_status INT DEFAULT '0',
-PRIMARY KEY (id)
+  id INT(11) NOT NULL AUTO_INCREMENT, int_id INT NOT NULL, Branch_Name VARCHAR(100), Loan_Officer_Name VARCHAR(100),	Group_Name VARCHAR(100), 
+  Group_Id VARCHAR(100), Client_Name VARCHAR(100), Client_Id VARCHAR(100), Gender VARCHAR(10), Arrears_Date DATE, Arrears_Days INT, 
+  Arrears_Amount DECIMAL(19,2), Product_Group VARCHAR(100), Parent_Product_Group VARCHAR(100), Product_Name VARCHAR(100), Linked_Top_Up_Loan_Id VARCHAR(100), 
+  Account_No VARCHAR(100), Loan_Officer_Id VARCHAR(100), Loan_Purpose VARCHAR(100), Loan_Status_Id VARCHAR(100), 
+  Loan_Type VARCHAR(100), Principal_Amount DECIMAL(19,2),	Nominal_Interest_Rate_Per_Period INT, Annual_Nominal_Interest_Rate INT,	
+  Interest_Method VARCHAR(100), Interest_Calculated_In_Period INT, Term_Frequency INT,	Repay_Every INT, 
+  Repayment_Period_Frequency INT, Number_Of_Repayments INT, Grace_On_Principal_Periods INT, Submitted_On_Date DATE, Submitted_By_User VARCHAR(100), 
+  Approved_On_Date DATE, Disbursed_On_Date DATE, Matured_On_Date DATE, Principal_Disbursed_Derived DECIMAL(19,2),	
+  Principal_Repaid_Derived DECIMAL(19,2), Principal_Outstanding_Derived DECIMAL(19,2), 
+  Total_Expected_Repayment DECIMAL(19,2), Derived_Total_Repayment DECIMAL(19,2), Derived_Total_Outstanding_Derived DECIMAL(19,2), 
+  Loan_Product_Counter VARCHAR(100), Loan_Details_Loan_Sector VARCHAR(100), Loan_Details_Submitted_On_Date DATE,	
+  Loan_Guarantors_Id VARCHAR(100),	Loan_Guarantors_Client_Reln VARCHAR(100), Loan_Guarantors_Type VARCHAR(100), 
+  Loan_Guarantors_Client_Id VARCHAR(100), Loan_Guarantors_Firstname VARCHAR(100), Loan_Guarantors_Lastname VARCHAR(100), 
+  Loan_Guarantors_Dob DATE, Loan_Guarantors_Address_Line_1 TEXT, Loan_Guarantors_City VARCHAR(100), Loan_Guarantors_Country VARCHAR(100), 
+  Loan_Guarantors_House_Phone_Number VARCHAR(100), Loan_Guarantors_Submitted_By_User VARCHAR(100), 
+  Loan_Guarantors_Submitted_On_Date DATE, Loan_Guarantors_Relationship_Wi18 VARCHAR(100),	Loan_Collateral_Id VARCHAR(100),	
+  Loan_Collateral_Type VARCHAR(100), Loan_Collateral_Value DECIMAL(19,2), Loan_Collateral_Description TEXT, 
+  Loan_Collateral_Submitted_By_User VARCHAR(100), Loan_Collateral_Submitted_On_Date DATE,	Loan_Collateral_Descrition_Of_Asset5 VARCHAR(100), Loan_Collateral_Approximate_Cos6 VARCHAR(100), migration_status INT DEFAULT '0',
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE loan_transactions_migrate (
-id INT(11) NOT NULL AUTO_INCREMENT, int_id INT NOT NULL, Branch_Name VARCHAR(100), Loan_Officer_Name VARCHAR(100), Group_Name VARCHAR(100), Group_Id VARCHAR(100), Client_Name VARCHAR(100), Client_Id VARCHAR(100), Date_Of_Birth VARCHAR(100), 
-Gender VARCHAR(10), Phone_Number VARCHAR(30), Staff_Name VARCHAR(100), Created_By VARCHAR(100), Interest_Accrued DECIMAL(19,2), 
-Transfer_Total_Repaid DECIMAL(19,2), Product_Short_Name VARCHAR(10), Product_Name VARCHAR(100), Product_Id VARCHAR(100), 
-Account_Number VARCHAR(100), Payment_Channel VARCHAR(100), Reference VARCHAR(100), Total_Repaid DECIMAL(19,2),
-Principal_Repaid DECIMAL(19,2), Interest_Repaid DECIMAL(19,2), Fees_Repaid DECIMAL(19,2), Penalties_Repaid DECIMAL(19,2), 
-Overpayment_Repaid DECIMAL(19,2), Total_Recovered DECIMAL(19,2), Product_Group VARCHAR(100),	
-Parent_Product_Group VARCHAR(100), Transaction_Id VARCHAR(100), Effective_Date DATE, Submitted_On_Date DATE, migration_status INT DEFAULT '0',
-PRIMARY KEY(id)
+  id INT(11) NOT NULL AUTO_INCREMENT, int_id INT NOT NULL, Branch_Name VARCHAR(100), Loan_Officer_Name VARCHAR(100), Group_Name VARCHAR(100), Group_Id VARCHAR(100), Client_Name VARCHAR(100), Client_Id VARCHAR(100), Date_Of_Birth VARCHAR(100), 
+  Gender VARCHAR(10), Phone_Number VARCHAR(30), Staff_Name VARCHAR(100), Created_By VARCHAR(100), Interest_Accrued DECIMAL(19,2), 
+  Transfer_Total_Repaid DECIMAL(19,2), Product_Short_Name VARCHAR(10), Product_Name VARCHAR(100), Product_Id VARCHAR(100), 
+  Account_Number VARCHAR(100), Payment_Channel VARCHAR(100), Reference VARCHAR(100), Total_Repaid DECIMAL(19,2),
+  Principal_Repaid DECIMAL(19,2), Interest_Repaid DECIMAL(19,2), Fees_Repaid DECIMAL(19,2), Penalties_Repaid DECIMAL(19,2), 
+  Overpayment_Repaid DECIMAL(19,2), Total_Recovered DECIMAL(19,2), Product_Group VARCHAR(100),	
+  Parent_Product_Group VARCHAR(100), Transaction_Id VARCHAR(100), Effective_Date DATE, Submitted_On_Date DATE, migration_status INT DEFAULT '0',
+  PRIMARY KEY(id)
 );
 
 

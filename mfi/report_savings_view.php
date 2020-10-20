@@ -24,19 +24,112 @@ $destination = "report_savings.php";
 ?>
 <?php
  if (isset($_GET["view10"])) {
-?>
-<?php
-    $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' && (client.branch_id ='$br_id' $branches)";
-    $result = mysqli_query($connection, $query);
-    while($d = mysqli_fetch_array($result)){
-      $clid = $d['id'];
-      $don = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$clid'");
-      $ew = mysqli_fetch_array($don);
-      $accountb = $ew['account_balance_derived'];
-      $ttlacc +=$accountb;
-    }
-    
-?>
+
+   if ($_SESSION["int_id"] == 13) {
+
+      $tableJoinSavings = "
+            SELECT * FROM saving_balances_migration
+            INNER JOIN 
+              clients_branch_migrate 
+            ON saving_balances_migration.Client_Name=clients_branch_migrate.name
+          ";
+          $savingsResult = mysqli_query($connection, $tableJoinSavings);
+          while ($resultRow = mysqli_fetch_array($savingsResult))
+          {
+        ?>
+              <div class="content">
+                <div class="container-fluid">
+                  <!-- your content here -->
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card">
+                          <div class="card-header card-header-primary">
+                            <h4 class="card-title ">Savings Accounts</h4>
+                          </div>
+                        <div class="card-body">
+                          <div class="form-group">
+                            <form method = "POST" action = "../composer/savings_account.php">
+                              <div class="col-md-6">
+                                  <input hidden name ="acc_bal" type="text" value="<?php echo $ttlacc;?>"/>
+                                <div class="form-group">
+                                  <label class="bmd-label-floating">Total Account Balances</label>
+                                  <input type="text" readonly class="form-control" value="<?php echo number_format($ttlacc, 2); ?>" name="">
+                                </div>
+                              </div>
+                            <button type="submit" id="clientlist" class="btn btn-primary pull-left">Download PDF</button>
+                            <script>
+                            $(document).ready(function () {
+                            $('#clientlist').on("click", function () {
+                              swal({
+                                  type: "success",
+                                  title: "SAVINGS ACCOUNT REPORT",
+                                  text: "Printing Successful",
+                                  showConfirmButton: false,
+                                  timer: 5000
+                                        
+                                })
+                            });
+                          });
+                      </script>
+                    </form>
+                        </div>
+                          <div class="table-responsive">
+                            <table class="rtable display nowrap" style="width:100%">
+                              <thead class=" text-primary">
+                                <th>
+                                  Client Name
+                                </th>
+                                <th>
+                                  Client Type
+                                </th>
+                                <th>
+                                  Account Type
+                                </th>
+                                <th>
+                                  Account Number
+                                </th>
+                                <th>
+                                  Account Balances
+                                </th>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <td><?php echo $resultRow['Client_Name'];?></td>
+                                      <td>INDIVIDUAL</td>
+                                      <td>SAVINGS</td>
+                                      <td><?php echo $resultRow['Account_No'];?></td>
+                                      <td><?php echo $resultRow['available_balance'];?></td>
+                                  </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        <?php 
+
+          }//END OF WHILE LOOP
+
+   ?>
+   <?php 
+   }else {  
+    ?>
+    <?php
+      $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' && (client.branch_id ='$br_id' $branches)";
+      $result = mysqli_query($connection, $query);
+      while($d = mysqli_fetch_array($result)){
+        $clid = $d['id'];
+        $don = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$clid'");
+        $ew = mysqli_fetch_array($don);
+        $accountb = $ew['account_balance_derived'];
+        @$ttlacc +=$accountb;
+      }
+      
+  ?>
+
 <!-- Content added here -->
 <div class="content">
         <div class="container-fluid">
@@ -44,6 +137,23 @@ $destination = "report_savings.php";
           <div class="row">
             <div class="col-md-12">
               <div class="card">
+              <?php 
+  // $savingBalance = "
+  //   SELECT * FROM saving_balances_migration
+  //   // INNER JOIN 
+  //   //   clients_branch_migrate 
+  //   // ON saving_balances_migration.Client_Name=clients_branch_migrate.name
+  // ";
+
+  // $quert2 = "
+  //       SELECT outstanding_report_migrate.account, outstanding_report_migrate.loan_principal, outstanding_report_migrate.outstanding_principal,
+  //       outstanding_report_migrate.interest, outstanding_report_migrate.fees, outstanding_report_migrate.total, clients_branch_migrate.repaid,
+  //        clients_branch_migrate.overdue, clients_branch_migrate.group_name
+  //     FROM outstanding_report_migrate
+  //     LEFT JOIN clients_branch_migrate ON outstanding_report_migrate.client_name = clients_branch_migrate.name;
+  // ";
+
+?>
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Savings Accounts</h4>
                   
@@ -196,6 +306,11 @@ $destination = "report_savings.php";
           </div>
         </div>
       </div>
+
+    <?php 
+     
+   }
+?>
 
 <?php
 }
@@ -357,5 +472,7 @@ $destination = "report_savings.php";
       </div>
 
 <?php
+ } else {
+
  }
  ?>
