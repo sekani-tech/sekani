@@ -93,7 +93,7 @@ $destination = "report_savings.php";
                                           ON saving_balances_migration.Client_Name=clients_branch_migrate.name
                                         ";
                                         $savingsResult = mysqli_query($connection, $tableJoinSavings);
-                                   while ($resultRow = mysqli_fetch_array($savingsResult))
+                                   while ($resultRow = mysqli_fetch_array($savingsResult, MYSQLI_ASSOC))
                                    {
                                 ?>
                                   <tr>
@@ -126,24 +126,7 @@ $destination = "report_savings.php";
                                                   <div class="row">
                                                     <div class="col-md-12">
                                                       <div class="card">
-                                                      <?php 
-                                          // $savingBalance = "
-                                          //   SELECT * FROM saving_balances_migration
-                                          //   // INNER JOIN 
-                                          //   //   clients_branch_migrate 
-                                          //   // ON saving_balances_migration.Client_Name=clients_branch_migrate.name
-                                          // ";
-
-                                          // $quert2 = "
-                                          //       SELECT outstanding_report_migrate.account, outstanding_report_migrate.loan_principal, outstanding_report_migrate.outstanding_principal,
-                                          //       outstanding_report_migrate.interest, outstanding_report_migrate.fees, outstanding_report_migrate.total, clients_branch_migrate.repaid,
-                                          //        clients_branch_migrate.overdue, clients_branch_migrate.group_name
-                                          //     FROM outstanding_report_migrate
-                                          //     LEFT JOIN clients_branch_migrate ON outstanding_report_migrate.client_name = clients_branch_migrate.name;
-                                          // ";
-
-                                        ?>
-                                                        <div class="card-header card-header-primary">
+                                                       <div class="card-header card-header-primary">
                                                           <h4 class="card-title ">Savings Accounts</h4>
                                                           
                                                           <!-- Insert number users institutions -->

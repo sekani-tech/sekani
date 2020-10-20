@@ -6,127 +6,9 @@ $destination = "report_loan.php";
 ?>
 <?php
  if (isset($_GET["view15"])) {
-
-  if ($_SESSION["int_id"] == 13) {
-        $tableJoinOutstanding = "
-            SELECT *
-            FROM outstanding_report_migrate
-            LEFT JOIN clients_branch_migrate ON outstanding_report_migrate.client_name = clients_branch_migrate.name;
-      ";
-      $outstandingResult = mysqli_query($connection, $tableJoinOutstanding);
-      while ($resultRow = mysqli_fetch_array($outstandingResult))
-      {
         
     ?>
 
-    <div class="content">
-        <div class="container-fluid">
-          <!-- your content here -->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Disbursed Loans Accounts - Total Outstanding NGN  <?php echo number_format(round($fde), 2); ?></h4>
-                  
-                  <!-- Insert number users institutions -->
-                  <p class="card-category">
-                      <?php
-                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
-                        // $query = "SELECT * FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
-                        $result = mysqli_query($connection, $query);
-                      if ($result) {
-                     $inr = mysqli_num_rows($result);
-                     echo $inr;
-                     $date = date("F");
-                   }?> Disbursed Loans</p>
-                </div>
-                <div class="card-body">
-                <div class="form-group">
-                </div>
-                  <div class="table-responsive">
-                    <table class="rtable display nowrap" style="width:100%">
-                      <thead class="text-primary">
-  
-                        <th style="width:50px;">
-                          Client Name
-                        </th>
-                        <th>
-                          Principal Amount
-                        </th>
-                        <th>
-                          Loan Term
-                        </th>
-                        <th>
-                          Disbursement Date
-                        </th>
-                        <th>
-                          Date of Maturity
-                        </th>
-                        <th>
-                          Interest Rate
-                        </th>
-                        <th>
-                          Outstanding Loan Balance
-                        </th>
-                        <th>
-                          Loan Officer
-                        </th>
-                      </thead>
-                      <tbody>
-                            <tr>
-                                <td><?php echo $resultRow['client_name'];?> </td>
-                                <td><?php echo $resultRow['loan_principal'];?> </td>
-                                <td><?php echo "Loan Term ";?> </td>
-                                <td><?php echo $resultRow['disbursed'];?> </td>
-                                <td><?php echo $resultRow['maturity_date'];?> </td>
-                                <td><?php echo $resultRow['interest'];?> </td>
-                                <td><?php echo $resultRow['outstanding_principal'];?> </td>
-                                <td><?php echo $resultRow['loan_officer'];?> </td>
-                            </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <form method="POST" action="../composer/disbursedloan.php">
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Start Date</label>
-                          <input type="date" value="" name="start" class="form-control" id="start">
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">End Date</label>
-                          <input type="date" value="" name="end" class="form-control" id="end">
-                          <input type="text" id="int_id" hidden name="" value="<?php echo $sessint_id;?>" class="form-control" readonly>
-                        </div>
-                      </div>
-                    </div>
-                    <button type="reset" class="btn btn-danger pull-right">Reset</button>
-                  <button type="submit" id="runi" class="btn btn-primary pull-right">Print PDF</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    <?php 
-
-      }//END OF WHILE LOOP
-
-    ?>
-    <?php
-
-  }else {
-
-  ?>
-
-      <!-- Data for clients registered this month -->
-<!-- Content added here -->
 <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
@@ -178,6 +60,7 @@ $destination = "report_loan.php";
                         $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' ORDER BY maturedon_date ASC";
                         $result = mysqli_query($connection, $query);
                       ?>
+            
                         <th style="width:50px;">
                           Client Name
                         </th>
@@ -200,11 +83,36 @@ $destination = "report_loan.php";
                           Outstanding Loan Balance
                         </th>
                         <th>
-                          Account Officer
+                          Loan Officer
                         </th>
                       </thead>
                       <tbody>
-                      <?php if (mysqli_num_rows($result) > 0) {
+                          <?php 
+                              if ($_SESSION["int_id"] == 13) {
+                                $tableJoinOutstanding = "
+                                    SELECT *
+                                    FROM outstanding_report_migrate
+                                    LEFT JOIN clients_branch_migrate ON outstanding_report_migrate.client_name = clients_branch_migrate.name;
+                              ";
+                              $outstandingResult = mysqli_query($connection, $tableJoinOutstanding);
+                              while ($resultRow = mysqli_fetch_array($outstandingResult, MYSQLI_ASSOC))
+                              {
+                          ?>
+                            <tr>
+                                <td><?php echo $resultRow['client_name'];?> </td>
+                                <td><?php echo $resultRow['loan_principal'];?> </td>
+                                <td><?php echo "Loan Term ";?> </td>
+                                <td><?php echo $resultRow['disbursed'];?> </td>
+                                <td><?php echo $resultRow['maturity_date'];?> </td>
+                                <td><?php echo $resultRow['interest'];?> </td>
+                                <td><?php echo $resultRow['outstanding_principal'];?> </td>
+                                <td><?php echo $resultRow['loan_officer'];?> </td>
+                            </tr>
+                            <?php 
+
+                            } } else {
+                              ?>
+                                   <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $lo_id = $row["id"]; ?>
@@ -300,6 +208,9 @@ $destination = "report_loan.php";
                             
                           </tr> -->
                           <!-- <th></th> -->
+                              <?php
+                            }
+                            ?>
                       </tbody>
                     </table>
                   </div>
@@ -331,16 +242,132 @@ $destination = "report_loan.php";
         </div>
       </div>
 
+    <?php
+
+  // }else {
+
+  ?>
+
+      <!-- Data for clients registered this month
+<!-- Content added here -->
+<!-- <div class="content">
+        <div class="container-fluid">
+          <!-- your content here -->
+          <!-- <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <?php
+                  //  $prin_query = "SELECT SUM(principal_amount) AS total_out_prin FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND installment >= 1";
+                  //  $int_query = "SELECT SUM(interest_amount) AS total_int_prin FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND installment >= 1";
+                  //  // LOAN ARREARS
+                  //  $arr_query1 = mysqli_query($connection, "SELECT SUM(principal_amount) AS arr_out_prin FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= 1");
+                  //  $arr_query2 = mysqli_query($connection, "SELECT SUM(interest_amount) AS arr_out_int FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= 1");
+                  //  // check the arrears
+                  //  $ar = mysqli_fetch_array($arr_query1);
+                  //  $arx = mysqli_fetch_array($arr_query2);
+                  //  $arr_p = $ar["arr_out_prin"];
+                  //  $arr_i = $arx["arr_out_int"];
+                  //    $pq = mysqli_query($connection, $prin_query);
+                  //    $iq = mysqli_query($connection, $int_query);
+                  //    $pqx = mysqli_fetch_array($pq);
+                  //    $iqx = mysqli_fetch_array($iq);
+                  //    // check feedback
+                  //    $print = $pqx['total_out_prin'];
+                  //    $intet = $iqx['total_int_prin'];
+                  //    $fde = ($print + $intet) + ($arr_p + $arr_i);
+                  ?>
+                  <h4 class="card-title ">Disbursed Loans Accounts - Total Outstanding NGN  <?php echo number_format(round($fde), 2); ?></h4>
+                  
+                  <!-- Insert number users institutions -->
+                  <!-- <p class="card-category">
+                   //   <?php
+                        // $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
+                        // // $query = "SELECT * FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
+                        // $result = mysqli_query($connection, $query);
+                  //  if ($result) {
+                  //    $inr = mysqli_num_rows($result); -->
+                  //    echo $inr;
+                  //    $date = date("F");
+                  //  }?> Disbursed Loans</p>
+                </div>
+                <div class="card-body">
+                <div class="form-group">
+                </div>
+                  <div class="table-responsive">
+                    <table class="rtable display nowrap" style="width:100%">
+                      <thead class="text-primary">
+                      <?php
+                        // $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' ORDER BY maturedon_date ASC";
+                        // $result = mysqli_query($connection, $query);
+                      ?>
+                        <th style="width:50px;">
+                          Client Name
+                        </th>
+                        <th>
+                          Principal Amount
+                        </th>
+                        <th>
+                          Loan Term
+                        </th>
+                        <th>
+                          Disbursement Date
+                        </th>
+                        <th>
+                          Date of Maturity
+                        </th>
+                        <th>
+                          Interest Rate
+                        </th>
+                        <th>
+                          Outstanding Loan Balance
+                        </th>
+                        <th>
+                          Account Officer
+                        </th>
+                      </thead>
+                      <tbody>
+                     
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <form method="POST" action="../composer/disbursedloan.php">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Start Date</label>
+                          <input type="date" value="" name="start" class="form-control" id="start">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">End Date</label>
+                          <input type="date" value="" name="end" class="form-control" id="end">
+                          <input type="text" id="int_id" hidden name="" value="<?php echo //$sessint_id;?>" class="form-control" readonly>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="reset" class="btn btn-danger pull-right">Reset</button>
+                  <button type="submit" id="runi" class="btn btn-primary pull-right">Print PDF</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>  -->
+
 
   <?php
 
-  }
+  // }
 
 ?>
 
 <?php
- }
- else if(isset($_GET["view16"])){
+ } else if(isset($_GET["view16"])){
 ?>
 <!-- Content added here -->
 <div class="content">
