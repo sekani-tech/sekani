@@ -6,8 +6,126 @@ $destination = "report_loan.php";
 ?>
 <?php
  if (isset($_GET["view15"])) {
-?>
-<!-- Data for clients registered this month -->
+
+  if ($_SESSION["int_id"] == 13) {
+        $tableJoinOutstanding = "
+            SELECT *
+            FROM outstanding_report_migrate
+            LEFT JOIN clients_branch_migrate ON outstanding_report_migrate.client_name = clients_branch_migrate.name;
+      ";
+      $outstandingResult = mysqli_query($connection, $tableJoinOutstanding);
+      while ($resultRow = mysqli_fetch_array($outstandingResult))
+      {
+        
+    ?>
+
+    <div class="content">
+        <div class="container-fluid">
+          <!-- your content here -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Disbursed Loans Accounts - Total Outstanding NGN  <?php echo number_format(round($fde), 2); ?></h4>
+                  
+                  <!-- Insert number users institutions -->
+                  <p class="card-category">
+                      <?php
+                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
+                        // $query = "SELECT * FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
+                        $result = mysqli_query($connection, $query);
+                      if ($result) {
+                     $inr = mysqli_num_rows($result);
+                     echo $inr;
+                     $date = date("F");
+                   }?> Disbursed Loans</p>
+                </div>
+                <div class="card-body">
+                <div class="form-group">
+                </div>
+                  <div class="table-responsive">
+                    <table class="rtable display nowrap" style="width:100%">
+                      <thead class="text-primary">
+  
+                        <th style="width:50px;">
+                          Client Name
+                        </th>
+                        <th>
+                          Principal Amount
+                        </th>
+                        <th>
+                          Loan Term
+                        </th>
+                        <th>
+                          Disbursement Date
+                        </th>
+                        <th>
+                          Date of Maturity
+                        </th>
+                        <th>
+                          Interest Rate
+                        </th>
+                        <th>
+                          Outstanding Loan Balance
+                        </th>
+                        <th>
+                          Loan Officer
+                        </th>
+                      </thead>
+                      <tbody>
+                            <tr>
+                                <td><?php echo $resultRow['client_name'];?> </td>
+                                <td><?php echo $resultRow['loan_principal'];?> </td>
+                                <td><?php echo "Loan Term ";?> </td>
+                                <td><?php echo $resultRow['disbursed'];?> </td>
+                                <td><?php echo $resultRow['maturity_date'];?> </td>
+                                <td><?php echo $resultRow['interest'];?> </td>
+                                <td><?php echo $resultRow['outstanding_principal'];?> </td>
+                                <td><?php echo $resultRow['loan_officer'];?> </td>
+                            </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <form method="POST" action="../composer/disbursedloan.php">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Start Date</label>
+                          <input type="date" value="" name="start" class="form-control" id="start">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">End Date</label>
+                          <input type="date" value="" name="end" class="form-control" id="end">
+                          <input type="text" id="int_id" hidden name="" value="<?php echo $sessint_id;?>" class="form-control" readonly>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="reset" class="btn btn-danger pull-right">Reset</button>
+                  <button type="submit" id="runi" class="btn btn-primary pull-right">Print PDF</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <?php 
+
+      }//END OF WHILE LOOP
+
+    ?>
+    <?php
+
+  }else {
+
+  ?>
+
+      <!-- Data for clients registered this month -->
 <!-- Content added here -->
 <div class="content">
         <div class="container-fluid">
@@ -118,12 +236,12 @@ $destination = "report_loan.php";
                           <?php
                             $loant = $row["loan_term"];
                             $total = $loant * $final;
-                            $totalint +=$total;
+                            @$totalint +=$total;
                           ?>
                           <?php
                           $fee = $row["fee_charges_charged_derived"];
                           $income = $fee + $total;
-                          $ttlinc += $income;
+                          @$ttlinc += $income;
                           ?>
                             <?php
                             // repaymeny
@@ -212,6 +330,13 @@ $destination = "report_loan.php";
           </div>
         </div>
       </div>
+
+
+  <?php
+
+  }
+
+?>
 
 <?php
  }

@@ -150,6 +150,13 @@ if(isset($_GET["edit"])) {
                 <?php
                 if($ctype == 'INDIVIDUAL' || $ctype == 'GROUP')
                 {
+                  $search = mysqli_query($connection, "SELECT saving_balances_migration.Submitted_On_Date, saving_balances_migration.Approved_On_Date,
+                  saving_balances_migration.Activated_On_Date, saving_balances_migration.Loan_Officer_Name,
+                  clients_branch_migrate.last_depost, clients_branch_migrate.available_balance,
+                  clients_branch_migrate.name, saving_balances_migration.Account_No, clients_branch_migrate.outstanding_loan_balance
+                  FROM saving_balances_migration
+                  INNER JOIN clients_branch_migrate ON saving_balances_migration.Client_Name = clients_branch_migrate.name WHERE clients_branch_migrate.name = '$display_name' LIMIT 1");
+                  $migrate = mysqli_fetch_array($search)
                   ?>
                 <div class="card-body">
                   <form action="">
@@ -161,9 +168,19 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Account No:</label>
+                            <?php
+                              if(fill_account($connection) == ""){
+                            ?>
+                            <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo $migrate['Account_No']; ?>" readonly name="display_name">
+                            <?php
+                              }else{
+                            ?>
                             <select id="account" class="form-control">
                               <?php echo fill_account($connection);?>
                             </select>
+                            <?php
+                              }
+                            ?>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -178,12 +195,27 @@ if(isset($_GET["edit"])) {
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $ctype; ?>" readonly>
                         </div>
                       </div>
+                      <?php
+                        if($_SESSION['int_id'] == 13){
+                      ?>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Total Outstanding Loan Balance:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $migrate['outstanding_loan_balance']; ?>" readonly>
+                        </div>
+                      </div>
+                      <?php
+                        }else{
+                      ?>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Loan Status:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $loan_status; ?>" readonly>
                         </div>
                       </div>
+                        <?php 
+                          }
+                        ?>
                       <script>
                     $(document).ready(function () {
                       $('#account').on("change", function () {
@@ -199,42 +231,12 @@ if(isset($_GET["edit"])) {
                       });
                     });
                   </script>
-                      <!-- <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Gender:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $gender; ?>" readonly>
-                        </div>
-                      </div> -->
-                      <!-- <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Address:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $address; ?>" readonly>
-                        </div>
-                      </div> -->
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Mobile Number:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $phone; ?>" readonly>
                         </div>
                       </div>
-                      <!-- <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Email Address:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $email; ?>" readonly>
-                        </div>
-                      </div> -->
-                      <!-- <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">State:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $state; ?>" readonly>
-                        </div>
-                      </div> -->
-                      <!-- <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">LGA:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $lga; ?>" readonly>
-                        </div>
-                      </div> -->
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">BVN:</label>
@@ -246,19 +248,19 @@ if(isset($_GET["edit"])) {
                      <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Account Balance:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $abd; ?>" readonly>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php if($abd == ""){echo $migrate['available_balance'];}else{echo $abd;} ?>" readonly>
                         </div>
                       </div> 
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Last Deposit:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $tdd; ?>" readonly>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php if($tdd == ""){echo $migrate['last_depost'];}else{echo $tdd;} ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Avaliable Balance:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $abd; ?>" readonly>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php if($abd == ""){echo $migrate['available_balance'];}else{echo $abd;} ?>" readonly>
                         </div>
                       </div>
                        <div class="col-md-6">
@@ -421,52 +423,11 @@ if(isset($_GET["edit"])) {
                 }?>
                 
               </div>
-              <!-- <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title">Account Summary</h4>
-                </div>
-                <div class="card-body">
-                <form action="">
-                    <div class="form-group">
-                      <label for="">Current Balance:</label>
-                      <input type="text" name="" id="" class="form-control" value="<?php echo $abd; ?>" readonly>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Last Deposit:</label>
-                          <input type="text" name="" placeholder="0.000" id="" class="form-control" value="<?php echo $tdd; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Last Withdrawal:</label>
-                          <input type="text" placeholder="0.000" name="" id="" class="form-control" value="<?php echo $twd; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Total Outstanding Loan balance:</label>
-                          <input type="text" placeholder="0.000" name="" id="" class="form-control" value="<?php echo $sum; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Total Loan Amount payed:</label>
-                          <input type="text" placeholder="0.000" name="" id="" class="form-control" value="<?php echo $prd; ?>" readonly>
-                        </div>
-                      </div>
-                    </div>
-                    <a href="lend.php" class="btn btn-primary">Disburse Loan</a>
-                    <a href="update_client.php?edit=<?php echo $id;?>" class="btn btn-primary">Edit CLient</a>
-                    <a href="client.php" class="btn btn-primary pull-right">Back</a>
-                  </form>
-                </div>
-              </div> -->
+              
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Generate Account Report</h4>
-                </div>
+                </div> 
                 <div class="card-body">
                 <form method = "POST" action="client_statement.php">
                     <div class="row">
@@ -486,9 +447,19 @@ if(isset($_GET["edit"])) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Account No:</label>
-                            <select id="account" name="accno" class="form-control">
-                              <?php echo fill_accounting($connection);?>
+                          <?php
+                              if(fill_account($connection) == ""){
+                            ?>
+                            <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo $migrate['Account_No']; ?>" readonly name="display_name">
+                            <?php
+                              }else{
+                            ?>
+                            <select id="account" class="form-control">
+                              <?php echo fill_account($connection);?>
                             </select>
+                            <?php
+                              }
+                            ?>
                         </div>
                       </div>
                     </div>
