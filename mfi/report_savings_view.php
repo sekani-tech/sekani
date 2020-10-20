@@ -27,15 +27,6 @@ $destination = "report_savings.php";
 
    if ($_SESSION["int_id"] == 13) {
 
-      $tableJoinSavings = "
-            SELECT * FROM saving_balances_migration
-            INNER JOIN 
-              clients_branch_migrate 
-            ON saving_balances_migration.Client_Name=clients_branch_migrate.name
-          ";
-          $savingsResult = mysqli_query($connection, $tableJoinSavings);
-          while ($resultRow = mysqli_fetch_array($savingsResult))
-          {
         ?>
               <div class="content">
                 <div class="container-fluid">
@@ -93,6 +84,17 @@ $destination = "report_savings.php";
                                 </th>
                               </thead>
                               <tbody>
+                                <?php
+                                  $tableJoinSavings = "
+                                  SELECT * FROM saving_balances_migration
+                                  INNER JOIN 
+                                    clients_branch_migrate 
+                                  ON saving_balances_migration.Client_Name=clients_branch_migrate.name
+                                ";
+                                $savingsResult = mysqli_query($connection, $tableJoinSavings);
+                                while ($resultRow = mysqli_fetch_array($savingsResult, MYSQLI_ASSOC))
+                                {
+                                ?>
                                   <tr>
                                       <td><?php echo $resultRow['Client_Name'];?></td>
                                       <td>INDIVIDUAL</td>
@@ -100,6 +102,11 @@ $destination = "report_savings.php";
                                       <td><?php echo $resultRow['Account_No'];?></td>
                                       <td><?php echo $resultRow['available_balance'];?></td>
                                   </tr>
+                                  <?php 
+
+          }//END OF WHILE LOOP
+
+   ?>
                               </tbody>
                             </table>
                           </div>
@@ -109,11 +116,7 @@ $destination = "report_savings.php";
                   </div>
                 </div>
               </div>
-        <?php 
-
-          }//END OF WHILE LOOP
-
-   ?>
+        
    <?php 
    }else {  
     ?>
