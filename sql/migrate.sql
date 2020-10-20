@@ -176,3 +176,39 @@ PRIMARY KEY (id)
 -- ignore this for now
 -- UPDATE accounts inner join client.display_name = saving_balances_migration.client_name
 -- SET 
+
+CREATE TABLE outstanding_report_migrate (
+id INT(11) NOT NULL AUTO_INCREMENT, int_id INT, client_id VARCHAR(100), client_name VARCHAR(100), dob DATE, 
+gender VARCHAR(10), account VARCHAR(20), branch VARCHAR(10), product VARCHAR(20), interest_at_disbursement DECIMAL(19,2), 
+eir DECIMAL(19,2), loan_principal DECIMAL(19,2), outstanding_principal DECIMAL(19,2), interest DECIMAL(19,2),	fees DECIMAL (19,2), 
+total DECIMAL(19,2),	loan_officer VARCHAR(100), disbursed DATE, installments int, loan_frequency int, periods VARCHAR(10), 
+status varchar(10), trp DECIMAL(2.1), groupn varchar(100), bussiness_type VARCHAR(100), loan_purpose VARCHAR(100), 
+payment_type VARCHAR(100), final_payment_date DATE, maturity_date DATE, arrear_amount DECIMAL(19,2),	days_in_arrears int,
+migration_status int,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE clients_branch_migrate (
+id INT NOT NULL AUTO_INCREMENT, int_id INT, client_id VARCHAR(100),	name VARCHAR(100), group_name VARCHAR(100), 
+product VARCHAR(10), amount DECIMAL(19,2), outstanding_principal DECIMAL(19,2), outstanding_interest DECIMAL(19,2), 
+fees DECIMAL(19,2), repaid DECIMAL (19,2), outstanding_loan_balance DECIMAL (19,2), expected_payment_date DECIMAL(19,2), 
+expected_payment DECIMAL(19,2), next_payment DATE, overdue DECIMAL(19,2), avaliable_balance DECIMAL(19,2), 
+last_depost DECIMAL(19,2),	available_balance DECIMAL(19,2),	last_balance DECIMAL(19,2), migration_status INT DEFAULT '0',
+PRIMARY KEY (id)
+);
+
+-- to display account details
+SELECT saving_balances_migration.Submitted_On_Date, saving_balances_migration.Approved_On_Date,
+saving_balances_migration.Activated_On_Date, saving_balances_migration.Loan_Officer_Name,
+clients_branch_migrate.last_depost, clients_branch_migrate.available_balance,
+clients_branch_migrate.name, saving_balances_migration.Account_No
+FROM saving_balances_migration
+INNER JOIN clients_branch_migrate ON saving_balances_migration.Client_Name=clients_branch_migrate.name;
+
+
+-- to display loan details
+SELECT outstanding_report_migrate.account, outstanding_report_migrate.loan_principal, outstanding_report_migrate.outstanding_principal,
+outstanding_report_migrate.interest, outstanding_report_migrate.fees, outstanding_report_migrate.total, clients_branch_migrate.repaid,
+clients_branch_migrate.overdue, clients_branch_migrate.group_name
+FROM outstanding_report_migrate
+LEFT JOIN clients_branch_migrate ON outstanding_report_migrate.client_name = clients_branch_migrate.name;
