@@ -1,7 +1,7 @@
 <?php
 
-$page_title = "View Client";
-$destination = "client.php";
+$page_title = "View Group";
+$destination = "groups.php";
 include('header.php');
 
 ?>
