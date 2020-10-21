@@ -13,7 +13,7 @@ include('header.php');
 
           <div class="row">
 
-          <div class="col-md-8">
+          <div class="col-md-12">
           
           <div class="card">
           <div class="card-header card-header-primary">
@@ -70,9 +70,69 @@ include('header.php');
                         </div>
                       </div>
 
+                      <div class="col-md-12">
+                      <div class="card">
+          <div class="card-header text-center">
+                  <h4 class="card-title">Group Members</h4>
+
+
+                </div>
+
+                <div class="card-body">
+                <div class="table-responsive">
+                    <table class="rtable display nowrap" style="width:100%">
+                      <thead class=" text-primary">
+                      
+                        <th></th>
+                        <th>
+                          First Name
+                        </th>
+                        <th>
+                          Last Name
+                        </th>
+                       
+                        <th>
+                          Account Type
+                        </th>
+                        <th>
+                          Account Number
+                        </th>
+                        <th>View</th>
+                       
+                        <!-- <th>Phone</th> -->
+                      </thead>
+                      <tbody>
+                     
+                        <tr>
+                        
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          
+                          
+                          
+                          <th></th>
+                          <td><a href="" class="btn btn-info">View</a></td>
+                         
+                        </tr>
+                          <!-- <th></th> -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+
+                      </div>
+
+                    
+
+
+                      </div>
+
                       <div class="col-md-6">
-                      <a href="update_client.php?edit=<?php echo $id;?>" class="btn btn-primary">Edit Group</a>
-                    <a href="add_account.php?edit=<?php echo $id;?>" class="btn btn-primary">Add Member to Group</a>
+                      <a href="" class="btn btn-primary">Edit Group</a>
+                    <a href="" class="btn btn-primary">Add Member to Group</a>
                       </div>
                </div>
 
@@ -83,102 +143,7 @@ include('header.php');
 
 
 
-          <div class="col-md-4">
-              <!-- Dialog box for signature -->
-              <div id="sig" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"></h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                        <img  src=""/>
-                      </div>
-                    </div>
-                  </div>      
-                </div>
-                <!-- dialog ends -->
-                <!-- Dialog box for passport -->
-              <div id="pas" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"></h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                       
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- dialog ends -->
-                <!-- Dialog box for id img -->
-              <div id="id" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"></h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                        <img  src=""/>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- dialog ends -->
-                <div class="card card-profile">
-                <div class="card-avatar">
-                  <a data-toggle="modal" data-target="#pas">
-                    <img class="img" src="" />
-                  </a>
-                </div>
-                <!-- Get client data -->
-                <div class="card-body">
-                  <h6 class="card-category text-gray">Group Image</h6>
-                  <h4 class="card-title"></h4>
-                  <p class="card-description">
-           
-                  </p>
-                  <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
-                </div>
-              </div>
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a data-toggle="modal" data-target="#id">
-                    <img class="img" src="" />
-                  </a>
-                </div>
-                <!-- Get session data and populate user profile -->
-                <div class="card-body">
-                  <h6 class="card-category text-gray">ID Card</h6>
-                  <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
-                </div>
-              </div>
-                <!-- /id card -->
-                <div class="card card-profile">
-                <div class="card-avatar">
-                  <a data-toggle="modal" data-target="#sig">
-                    <img class="img" src="" />
-                  </a>
-                </div>
-                <!-- Get session data and populate user profile -->
-                <div class="card-body">
-                  <h6 class="card-category text-gray">Signature</h6>
-                  <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
-                </div>
-              </div>
-                <!-- signature -->
-            </div>
-
+         
           </div>
 
 
