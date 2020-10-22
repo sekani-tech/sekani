@@ -1,5 +1,6 @@
 <?php
     session_start();
+    include "path.php";
     if(!$_SESSION["usertype"] == "super_admin"){
       header("location: login.php");
       exit;
@@ -11,22 +12,23 @@
     header("location: mfi/index.php");
     exit;
   }
-?>
 
-<?php
   // get connections for all pages
-  include("functions/connect.php");
-?>
-<?php
+  include(ROOT_PATH."/functions/DbModel/db.php");
+
 //active user
 $activecode = "Active";
 // working on the time stamp right now
 $ts = date('Y-m-d H:i:s');
 $acuser = $_SESSION["username"];
-$activeq = "UPDATE users SET users.status ='$activecode', users.last_logged = '$ts' WHERE users.username ='$acuser'";
-$rezz = mysqli_query($connection, $activeq);
-?>
-<?php
+$tableName = "users";
+$condtions = ['status' => $activecode,
+    'last_logged' => $ts,
+    ];
+$rezz = update("users", $acuser, "username", $condtions);
+////$activeq = "UPDATE users SET users.status ='$activecode', users.last_logged = '$ts' WHERE users.username ='$acuser'";
+// = mysqli_query($connection, $activeq);
+
 // checking if IP has been Blocked
 function getIPAddress() {  
   //whether ip is from the share internet  
@@ -45,9 +47,9 @@ function getIPAddress() {
 } 
 $ip = getIPAddress();
 $getip = mysqli_query($connection, "SELECT * FROM ip_blacklist WHERE ip_add = '$ip'");
-if (mysqli_num_rows($getip) == 1) {
+if (mysqli_num_rows($getip) === 1) {
   $gtp = mysqli_query($connection, "SELECT * FROM ip_blacklist WHERE ip_add = '$ip'");
-            if (count([$gtp]) == 1) {
+            if (count([$gtp]) === 1) {
             $x = mysqli_fetch_array($gtp);
             $vm = $x['trial'];
             }

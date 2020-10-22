@@ -1,9 +1,9 @@
 <?php
-
+include ('../path.php');
 $page_title = "Customer Service";
 $destination = "../index.php";
     include("header.php");
-    // include("../../functions/connect.php");
+//     include("../../functions/connect.php");
 
 ?>
 <!-- Content added here -->
@@ -48,8 +48,8 @@ $destination = "../index.php";
                         <tr>
                           <th></th>
                           <th>View Groups List</th>
-                          <th>View the list of all the approved clients in the institution</th>
-                          <td><a href="groups.php" class="btn btn-info"><i class="material-icons" style="margin:auto">description</i></a></td>
+                          <th>View the list of all the approved Groups in the institution</th>
+                          <td><a href="groups.php?id=<?php echo $_SESSION['int_id']; ?>" class="btn btn-info"><i class="material-icons" style="margin:auto">description</i></a></td>
                         </tr>
                         <!-- <tr>
                           <th>Vault Posting</th>
