@@ -27,7 +27,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
 }
  
 // Include config file
-require_once "functions/config.php";
+require_once "functions/connect.php";
 require_once "bat/phpmailer/PHPMailerAutoload.php";
 // Define variables and initialize with empty values
 $username = $password = "";
@@ -53,15 +53,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT users.id, staff.user_id, staff.id, users.int_id, users.branch_id, staff.email, users.username, users.fullname, users.usertype, staff.employee_status, users.password, staff.org_role, display_name FROM staff JOIN users ON users.id = staff.user_id WHERE users.username = ?";
+        $sql = "SELECT users.id, 
+                        staff.user_id, 
+                        staff.id, 
+                        users.int_id, 
+                        users.branch_id, 
+                        staff.email, 
+                        users.username, 
+                        users.fullname, 
+                        users.usertype, 
+                        staff.employee_status, 
+                        users.password, 
+                        staff.org_role, 
+                        display_name 
+                        FROM staff JOIN users 
+                        ON users.id = staff.user_id 
+                        WHERE users.username = ?";
         // $sqlj = "SELECT users.id, users.int_id, users.username, users.fullname, users.usertype, users.password, org_role, display_name FROM staff JOIN users ON users.id = staff.user_id WHERE users.username = "sam"";
         
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
-            
+        if($stmt = mysqli_prepare($connection, $sql)){
             // Set parameters
             $param_username = $username;
+
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_username);
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -71,7 +86,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Check if username exists, if yes then verify password
                 if(mysqli_stmt_num_rows($stmt) == 1){                    
                     // Bind result variables
-                    mysqli_stmt_bind_result($stmt, $id, $user_id, $staff_id, $int_id, $branch_id, $email, $username, $fullname, $usertype, $employee_status, $hashed_password, $org_role, $display_name);
+                    mysqli_stmt_bind_result($stmt, $id,
+                        $user_id, $staff_id, $int_id, $branch_id, $email, $username, $fullname, $usertype, $employee_status, $hashed_password, $org_role, $display_name);
                     if(mysqli_stmt_fetch($stmt)){
                         if(password_verify($password, $hashed_password)){
                             // Password is correct, so start a new session
@@ -93,9 +109,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["branch_id"] = $branch_id;
                             // quick one for institution general data
                             // $_SESSION["lastname"] = $lastname;
-                            $compsec = mysqli_query($link, "SELECT * FROM `institutions` WHERE int_id ='$int_id'");
+                            $compsec = mysqli_query($connection, "SELECT * FROM `institutions` WHERE int_id ='$int_id'");
                             // select top institutoion which is sekani
-                            $altemail = mysqli_query($link, "SELECT * FROM `institutions` WHERE int_id ='1'");
+                            $altemail = mysqli_query($connection, "SELECT * FROM `institutions` WHERE int_id ='1'");
                             if (count([$compsec]) == 1) {
                             $res = mysqli_fetch_array($compsec);
                             $intname = $res["int_name"];
@@ -139,7 +155,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             // $fdf = $_SESSION["branch_id"];
                             // $_SESSION['branch_option'] = 'branch_id = '.$fdf.$branches;
                             // mr favor
-                            $altemail = mysqli_query($link, "SELECT * FROM `institutions` WHERE int_id ='1'");
+                            $altemail = mysqli_query($connection, "SELECT * FROM `institutions` WHERE int_id ='1'");
                             if (count([$altemail]) == 1) {
                             $alt = mysqli_fetch_array($altemail);
                             $ekaniname = $alt["int_name"];
@@ -398,10 +414,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Close connection
-    mysqli_close($link);
+    mysqli_close($connection);
 }
 
-include('functions/config.php');
+//include('functions/connect.php');
 
 ?>
 

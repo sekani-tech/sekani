@@ -454,7 +454,7 @@ if(isset($_GET["edit"])) {
                             <?php
                               }else{
                             ?>
-                            <select id="account" class="form-control">
+                            <select id="account" name="account_id" class="form-control">
                               <?php echo fill_account($connection);?>
                             </select>
                             <?php
