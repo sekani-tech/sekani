@@ -205,7 +205,7 @@ else if (isset($_GET["message5"])) {
                             ?>
                           <th>
                             <?php
-                            if($_SESSION['int_id']){
+                            if($row['account_type'] == ""){
                               echo $row['account_type'];
                             }else{ 
                               echo $savingp; 
