@@ -68,7 +68,11 @@ if(isset($_POST["client_id"]))
                             $re = mysqli_fetch_array($gffd);
                             $client_name = $re['firstname']." ".$re['lastname'];
                         ?>
-                          <th style="width: 60px;"><?php echo $client_name; ?></th>
+                          <th style="width: 60px;"><?php echo $client_name; ?> 
+                          <button style="margin-right: 100px;" class="btn btn-primary btn-fab btn-fab-mini btn-round">
+                            <i class="material-icons">close</i>
+                          </button>
+                        </th>
                         </tr>
                         <?php }
                           }
