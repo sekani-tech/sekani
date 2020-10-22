@@ -153,7 +153,7 @@ if(isset($_GET["edit"])) {
                   $search = mysqli_query($connection, "SELECT saving_balances_migration.Submitted_On_Date, saving_balances_migration.Approved_On_Date,
                   saving_balances_migration.Activated_On_Date, saving_balances_migration.Loan_Officer_Name,
                   clients_branch_migrate.last_depost, clients_branch_migrate.available_balance,
-                  clients_branch_migrate.name, saving_balances_migration.Account_No
+                  clients_branch_migrate.name, saving_balances_migration.Account_No, clients_branch_migrate.outstanding_loan_balance
                   FROM saving_balances_migration
                   INNER JOIN clients_branch_migrate ON saving_balances_migration.Client_Name = clients_branch_migrate.name WHERE clients_branch_migrate.name = '$display_name' LIMIT 1");
                   $migrate = mysqli_fetch_array($search, MYSQLI_ASSOC)
@@ -195,12 +195,27 @@ if(isset($_GET["edit"])) {
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $ctype; ?>" readonly>
                         </div>
                       </div>
+                      <?php
+                        if($_SESSION['int_id'] == 13){
+                      ?>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Total Outstanding Loan Balance:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $migrate['outstanding_loan_balance']; ?>" readonly>
+                        </div>
+                      </div>
+                      <?php
+                        }else{
+                      ?>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Loan Status:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $loan_status; ?>" readonly>
                         </div>
                       </div>
+                        <?php 
+                          }
+                        ?>
                       <script>
                     $(document).ready(function () {
                       $('#account').on("change", function () {
@@ -412,7 +427,7 @@ if(isset($_GET["edit"])) {
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Generate Account Report</h4>
-                </div>
+                </div> 
                 <div class="card-body">
                 <form method = "POST" action="client_statement.php">
                     <div class="row">
