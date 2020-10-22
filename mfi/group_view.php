@@ -29,6 +29,23 @@ include('header.php');
                <div class="row">
 
                <div class="col-md-6">
+
+
+
+                        <div class="form-group">
+                          <label for="">Account Number:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="" readonly>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="">Account Officer:</label>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="" readonly>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Account Type:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="" readonly>
@@ -37,42 +54,42 @@ include('header.php');
 
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="">Loan Officer:</label>
+                          <label for="">Outstanding Loan:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="" readonly>
                         </div>
                       </div>
 
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="">Branch:</label>
+                          <label for="">Account Balance</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="" readonly>
                         </div>
                       </div>
 
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="">Registration Date</label>
+                          <label for="">Avaliable Balance:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="" readonly>
                         </div>
                       </div>
 
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="">Registration Type</label>
+                          <label for="">Last Deposit:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="" readonly>
                         </div>
                       </div>
 
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="">Meeting Day:</label>
+                          <label for="">Last Withdrawal:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="" readonly>
                         </div>
                       </div>
 
                       <div class="col-md-12">
                       <div class="card">
-          <div class="card-header text-center">
+          <div class="card-header">
                   <h4 class="card-title">Group Members</h4>
 
 
