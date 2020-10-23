@@ -863,7 +863,7 @@ abstract class BlockTag extends Tag
 					$currblk['padding_left'] = $autopadding;
 				}
 			} else {
-				// Initial default value is set by $this->mpdf->list_indent_default in config.php; this value is applied to left or right according
+				// Initial default value is set by $this->mpdf->list_indent_default in connect.php; this value is applied to left or right according
 				// to dir of block. Once a CSS value is set for padding it overrides this default value.
 				if (isset($properties['PADDING-RIGHT']) && $properties['PADDING-RIGHT'] === 'auto'
 					&& isset($currblk['direction']) && $currblk['direction'] === 'rtl') {

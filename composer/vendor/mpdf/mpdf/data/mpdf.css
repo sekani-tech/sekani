@@ -1,7 +1,7 @@
 /* LISTS */
 
 /*
-A default margin-top/bottom for lists is NOT set in config.php - (standard browsers give outermost list a top and bottom margin).
+A default margin-top/bottom for lists is NOT set in connect.php - (standard browsers give outermost list a top and bottom margin).
 [mPDF default CSS set in configuration only works on basic elements, cannot do selectors such as "ol ol"]
 Need to add the following to do this, but also prevent margins in nested lists as per default HTML in most browsers:
 */
