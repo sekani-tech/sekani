@@ -201,14 +201,13 @@ else if (isset($_GET["message5"])) {
                              $savingp = $d["name"];}
                            }
                             }
-                           
                             ?>
                           <th>
                             <?php
-                            if($row['account_type'] == ""){
+                            if($row['account_type'] == "") {
                               echo $row['account_type'];
-                            }else{ 
-                              echo $savingp; 
+                            }else{
+                              echo $savingp;
                             }
                             ?>
                           </th>
@@ -270,7 +269,5 @@ else if (isset($_GET["message5"])) {
       </div>
 
 <?php
-
     include("footer.php");
-
 ?>
