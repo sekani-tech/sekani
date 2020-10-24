@@ -8,6 +8,7 @@ if (mysqli_num_rows($query_migrate) > 0) {
         $id = $qm["id"];
         $int_id = $qm["int_id"];
         $old_client_id = $qm["client_id"];
+        $loan_repaid = $qm["repaid"];
         $old_product = $qm["product"];
         // we query product by short name
         $query_loan_product = mysqli_query($connection, "SELECT * FROM `product` WHERE int_id = '13' AND short_name = '$old_product' ORDER BY id ASC LIMIT 1");
@@ -29,22 +30,15 @@ if (mysqli_num_rows($query_migrate) > 0) {
                 $lid = $qlbm["id"];
                 $loan_principal = $qlbm["loan_principal"];
                 $loan_interest = $qlbm["interest_at_disbursement"];
-                $interest_percentage = (($loan_interest/$loan_principal) * 100);
                 $disbursed_date = $qlbm["disbursed"];
                 $loan_term = $qlbm["installments"];
                 $repay_every = $qlbm["periods"];
-                // if its weekly divide loan by 4
-                if ($repay_every == 'week' || $repay_every == 'weekly') {
-                    $total_outstanding = (($loan_interest / 4) + ($loan_principal / $loan_term)) * $loan_term;
-                    $loan_repaid = $total_outstanding - $outstanding_loan_balance;
-                } else if ($repay_every == 'month' || $repay_every == 'monthly')
-                {
-                    $total_outstanding = (($loan_interest / 1) + ($loan_principal / $loan_term)) * $loan_term;
-                    $loan_repaid = $total_outstanding - $outstanding_loan_balance;
-                } else if ($repay_every == 'day' || $repay_every == 'daily') {
-                    $total_outstanding = (($loan_interest / 28) + ($loan_principal / $loan_term)) * $loan_term;
-                    $loan_repaid = $total_outstanding - $outstanding_loan_balance;
-                }
+                $matching_account_number = $qlbm["account"];
+                // we query the `loan_balances_migrate` table to get the client loan interest from Nominal_Interest_Rate_Per_Period column
+                $query_x_loan_balances_migrate = mysqli_query($connection, "SELECT * FROM `loan_balances_migrate` WHERE Account_No = '$matching_account_number' ORDER BY id ASC LIMIT 1");
+                $anm = mysqli_fetch_array($query_x_loan_balances_migrate);
+                $interest_percentage = $anm["Nominal_Interest_Rate_Per_Period"];
+             
                 $maturity_date = $qlbm["maturity_date"];
                 $arrear_amount = $qlbm["arrear_amount"];
                 // next
