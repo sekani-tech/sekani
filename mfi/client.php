@@ -160,8 +160,7 @@ else if (isset($_GET["message5"])) {
                                         staff.last_name 
                                         FROM client JOIN staff ON 
                                         client.loan_officer_id = staff.id 
-                                        WHERE client.int_id = '$sessint_id' 
-                                        && (client.branch_id ='$br_id' $branches) 
+                                        WHERE client.int_id = '$sessint_id'
                                         && client.status = 'Approved'";
                         $result = mysqli_query($connection, $query);
                       ?>
@@ -221,7 +220,14 @@ else if (isset($_GET["message5"])) {
                             ?>
                           </th>
                           <?php
-                          $soc = $row["account_no"];
+                          $get_one_account = mysqli_query($connection, "SELECT * FROM `account` WHERE client_id = '$cid' ORDER BY id ASC LIMIT 1");
+                          if (mysqli_num_rows($get_one_account) == 1) {
+                            $rowa = mysqli_fetch_array($get_one_account);
+                            $soc = $rowa["account_no"];
+                          } else {
+                            $soc = "No Account";
+                          }
+
                           $length = strlen($soc);
                           if ($length == 1) {
                             $acc ="000000000" . $soc;
@@ -251,9 +257,9 @@ else if (isset($_GET["message5"])) {
                             $acc ="0" . $soc;
                           }
                           elseif ($length == 10) {
-                            $acc = $row["account_no"];
+                            $acc = $rowa["account_no"];
                           }else{
-                            $acc = $row["account_no"];
+                            $acc = $rowa["account_no"];
                           }
                           ?>
                           <th><?php echo $acc; ?></th>
