@@ -268,7 +268,6 @@ else if (isset($_GET["message5"])) {
                         </tr>
                         <?php }
                           }
-
                           ?>
                           <!-- <th></th> -->
                       </tbody>

@@ -7,7 +7,7 @@ $sint = $_SESSION['int_id'];
 if(isset($_POST['id'])){
   $dsd = $_POST['id'];
 
-    $sdf = "SELECT * FROM account WHERE int_id = '$sint' AND id ='$dsd'";
+    $sdf = "SELECT * FROM account WHERE int_id = '$sint' AND account_no ='$dsd'";
     $odmw = mysqli_query($connection, $sdf);
     $d = mysqli_fetch_array($odmw);
     $account_balance = $d['account_balance_derived'];
