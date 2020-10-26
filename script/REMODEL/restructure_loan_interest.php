@@ -17,18 +17,18 @@ if (mysqli_num_rows($query_the_realaid) > 0) {
                 $d_c_id = $yu["client_id"];
                 $query_delete_loanremodel = mysqli_query($connection, "DELETE FROM `loan_remodeling_reform` WHERE client_id = '$d_c_id'");
                 if ($query_delete_loanremodel) {
-                    $query_the_repaymenttable = mysqli_query($connection, "UPDATE `loan_remodeling_reform` SET interest_rate = '$interest_rate', repayment_date = '$repayment_date' WHERE int_id = '13' AND client_id = '$client_id'");
-                        if ($query_the_repaymenttable) {
-                          echo "Good";
-                        } else {
-                          echo "Bad";
-                        }
+                    echo "DONE WITH DELETE";
                 } else {
                     echo "ERROR ON DELETE";
                 }
             }
         } else {
-            echo "REAL AID LOAN";
+            $query_the_repaymenttable = mysqli_query($connection, "UPDATE `loan_remodeling_reform` SET interest_rate = '$interest_rate', repayment_date = '$repayment_date' WHERE int_id = '13' AND client_id = '$client_id'");
+                        if ($query_the_repaymenttable) {
+                          echo "Good";
+                        } else {
+                          echo "Bad";
+                        }
         }
         // end
     }
