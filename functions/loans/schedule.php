@@ -11,7 +11,7 @@
             $client_id = $ex["client_id"];
             $product_id = $ex["product_id"];
             $int_id = $ex["int_id"];
-
+            // i dont need
             $query2 = mysqli_query($connection, "SELECT * FROM loan WHERE client_id = '$client_id' AND product_id = '$product_id' AND int_id = '$int_id'");
             if($query2){
                 $y = mysqli_fetch_array($query2);
@@ -104,27 +104,27 @@
 <?php
     $today = date('Y-m-d');
     $seir = mysqli_query($connection,"SELECT * FROM loan_repayment_schedule WHERE duedate < '$today' AND installment >= '1'");
-    if($seir){
-        while($qu = mysqli_fetch_array($seir)){
-            $id = $qu['id'];
-            $int_id = $qu['int_id'];
-            $loan_id = $qu['loan_id'];
-            $client_id = $qu['client_id'];
-            $fromdate = $qu['fromdate'];
-            $duedate = $qu['duedate'];
-            $principal_amount = $qu['principal_amount'];
-            $interest_amount = $qu['interest_amount'];
-            $created_date = $qu['created_date'];
-            $amount_collected = $qu['amount_collected'];
-            $lastmodified_date = $qu['lastmodified_date'];
+    // if($seir){
+    //     while($qu = mysqli_fetch_array($seir)){
+    //         $id = $qu['id'];
+    //         $int_id = $qu['int_id'];
+    //         $loan_id = $qu['loan_id'];
+    //         $client_id = $qu['client_id'];
+    //         $fromdate = $qu['fromdate'];
+    //         $duedate = $qu['duedate'];
+    //         $principal_amount = $qu['principal_amount'];
+    //         $interest_amount = $qu['interest_amount'];
+    //         $created_date = $qu['created_date'];
+    //         $amount_collected = $qu['amount_collected'];
+    //         $lastmodified_date = $qu['lastmodified_date'];
 
-            $query3 = mysqli_query($connection, "INSERT INTO `loan_arrear` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, 
-            `principal_amount`, `interest_amount`, `created_date`, `amount_collected`, `lastmodified_date`) VALUES('$int_id', '$loan_id', '$client_id',
-            '$fromdate', '$duedate', '1', '$principal_amount', '$interest_amount', '$created_date', '$amount_collected', '$lastmodified_date')");
-            if($query3){
-                echo 'Loan payment moved to arrears</br>';
-                $doi = mysqli_query($connection, "UPDATE loan_repayment_schedule SET installment = '0' WHERE id = '$id'");
-            }
-        }
-    }
+    //         $query3 = mysqli_query($connection, "INSERT INTO `loan_arrear` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, 
+    //         `principal_amount`, `interest_amount`, `created_date`, `amount_collected`, `lastmodified_date`) VALUES('$int_id', '$loan_id', '$client_id',
+    //         '$fromdate', '$duedate', '1', '$principal_amount', '$interest_amount', '$created_date', '$amount_collected', '$lastmodified_date')");
+    //         if($query3){
+    //             echo 'Loan payment moved to arrears</br>';
+    //             $doi = mysqli_query($connection, "UPDATE loan_repayment_schedule SET installment = '0' WHERE id = '$id'");
+    //         }
+    //     }
+    // }
 ?>
