@@ -1,10 +1,11 @@
 <?php
 include("../../functions/connect.php");
 // START -- REALAID
-$query_the_realaid = mysqli_query($connection, "SELECT * FROM `realaid_loan_interest_remodel`");
+$query_the_realaid = mysqli_query($connection, "SELECT * FROM `realaid_loan_interest_remodel` WHERE status = '0'");
 
 if (mysqli_num_rows($query_the_realaid) > 0) {
     while($q = mysqli_fetch_array($query_the_realaid)) {
+        $qid = $q["id"];
         $client_id = $q["client_id"];
         $account_no = $q["account_no"];
         $interest_rate = $q["interest_rate"];
@@ -23,9 +24,10 @@ if (mysqli_num_rows($query_the_realaid) > 0) {
                 }
             }
         } else {
-            $query_the_repaymenttable = mysqli_query($connection, "UPDATE `loan_remodeling_reform` SET interest_rate = '$interest_rate', repayment_date = '$repayment_date' WHERE int_id = '13' AND client_id = '$client_id'");
+            $query_the_repaymenttable = mysqli_query($connection, "UPDATE `loan_remodeling_reform` SET interest_rate = '$interest_rate', repayment_date = '$repayment_date', status = '1' WHERE int_id = '13' AND client_id = '$client_id'");
                         if ($query_the_repaymenttable) {
                           echo "Good";
+                          $query_update_realaid = mysqli_query($connection, "UPDATE `realaid_loan_interest_remodel` SET status = '1' WHERE id = '$qid'");
                         } else {
                           echo "Bad";
                         }
