@@ -195,27 +195,38 @@ if(isset($_GET["edit"])) {
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $ctype; ?>" readonly>
                         </div>
                       </div>
-                      <?php
-                        if($_SESSION['int_id'] == 13){
-                      ?>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Total Outstanding Loan Balance:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $migrate['outstanding_loan_balance']; ?>" readonly>
+                          <?php
+                            $prin_query = "SELECT SUM(principal_amount) AS total_out_prin FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND installment >= 1 AND client_id = '$id'";
+                            $int_query = "SELECT SUM(interest_amount) AS total_int_prin FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND installment >= 1";
+                            // LOAN ARREARS
+                            $arr_query1 = mysqli_query($connection, "SELECT SUM(principal_amount) AS arr_out_prin FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= 1 AND client_id = '$id'");
+                            $arr_query2 = mysqli_query($connection, "SELECT SUM(interest_amount) AS arr_out_int FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= 1 AND client_id = '$id'");
+                            // check the arrears
+                            $ar = mysqli_fetch_array($arr_query1);
+                            $arx = mysqli_fetch_array($arr_query2);
+                            $arr_p = $ar["arr_out_prin"];
+                            $arr_i = $arx["arr_out_int"];
+                              $pq = mysqli_query($connection, $prin_query);
+                              $iq = mysqli_query($connection, $int_query);
+                              $pqx = mysqli_fetch_array($pq);
+                              $iqx = mysqli_fetch_array($iq);
+                              // check feedback
+                              $print = $pqx['total_out_prin'];
+                              $intet = $iqx['total_int_prin'];
+                              $fde = ($print + $intet) + ($arr_p + $arr_i);
+                          ?>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="NGN - <?php echo number_format(round($fde), 2);?>" readonly>
                         </div>
                       </div>
-                      <?php
-                        }else{
-                      ?>
-                      <div class="col-md-6">
+                      <!-- <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Loan Status:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $loan_status; ?>" readonly>
                         </div>
-                      </div>
-                        <?php 
-                          }
-                        ?>
+                      </div> -->
                       <script>
                     $(document).ready(function () {
                       $('#account').on("change", function () {
