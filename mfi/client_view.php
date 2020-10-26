@@ -156,7 +156,7 @@ if(isset($_GET["edit"])) {
                   clients_branch_migrate.name, saving_balances_migration.Account_No, clients_branch_migrate.outstanding_loan_balance
                   FROM saving_balances_migration
                   INNER JOIN clients_branch_migrate ON saving_balances_migration.Client_Name = clients_branch_migrate.name WHERE clients_branch_migrate.name = '$display_name' LIMIT 1");
-                  $migrate = mysqli_fetch_array($search)
+                  $migrate = mysqli_fetch_array($search, MYSQLI_ASSOC)
                   ?>
                 <div class="card-body">
                   <form action="">
