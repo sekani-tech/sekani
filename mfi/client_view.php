@@ -199,11 +199,11 @@ if(isset($_GET["edit"])) {
                         <div class="form-group">
                           <label for="">Total Outstanding Loan Balance:</label>
                           <?php
-                            $prin_query = "SELECT SUM(principal_amount) AS total_out_prin FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND installment >= 1 AND client_id = '$id'";
-                            $int_query = "SELECT SUM(interest_amount) AS total_int_prin FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND installment >= 1";
+                            $prin_query = "SELECT SUM(principal_amount) AS total_out_prin FROM loan_repayment_schedule WHERE (int_id = '$sessint_id' AND installment >= 1) AND client_id = '$id'";
+                            $int_query = "SELECT SUM(interest_amount) AS total_int_prin FROM loan_repayment_schedule WHERE (int_id = '$sessint_id' AND installment >= 1) AND client_id = '$id'";
                             // LOAN ARREARS
-                            $arr_query1 = mysqli_query($connection, "SELECT SUM(principal_amount) AS arr_out_prin FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= 1 AND client_id = '$id'");
-                            $arr_query2 = mysqli_query($connection, "SELECT SUM(interest_amount) AS arr_out_int FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= 1 AND client_id = '$id'");
+                            $arr_query1 = mysqli_query($connection, "SELECT SUM(principal_amount) AS arr_out_prin FROM loan_arrear WHERE (int_id = '$sessint_id' AND installment >= 1 )AND client_id = '$id'");
+                            $arr_query2 = mysqli_query($connection, "SELECT SUM(interest_amount) AS arr_out_int FROM loan_arrear WHERE (int_id = '$sessint_id' AND installment >= 1) AND client_id = '$id'");
                             // check the arrears
                             $ar = mysqli_fetch_array($arr_query1);
                             $arx = mysqli_fetch_array($arr_query2);
