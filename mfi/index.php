@@ -263,10 +263,6 @@ setInterval(function() {
                   $final_r = str_replace("]","", $final_l); 
                 ?>
                 <script>
-
-$(document).ready(function(){
-        $("#info").modal('show');
-    });
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',

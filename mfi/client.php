@@ -121,7 +121,6 @@ else if (isset($_GET["message5"])) {
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Clients</h4>
-
                   <p class="card-category"><?php
                         $query = "SELECT client.id, 
                                     client.BVN, 
@@ -136,8 +135,7 @@ else if (isset($_GET["message5"])) {
                                     staff.last_name 
                                     FROM client 
                                     JOIN staff ON client.loan_officer_id = staff.id 
-                                    WHERE client.int_id = '$sessint_id' 
-                                    && (client.branch_id ='$br_id' $branches) 
+                                    WHERE client.int_id = '$sessint_id'
                                     && client.status = 'Approved'";
                         $result = mysqli_query($connection, $query);
                      $inr = mysqli_num_rows($result);
