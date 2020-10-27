@@ -1,7 +1,7 @@
 <?php
 include("../../functions/connect.php");
 
-$query_basic_m = mysqli_query($connection, "SELECT * FROM `savings_transactions_migrate` WHERE migration_status = '0' ORDER BY Client_Id ASC");
+$query_basic_m = mysqli_query($connection, "SELECT * FROM `savings_transactions_migrate` WHERE migration_status = '0'");
 if (mysqli_num_rows($query_basic_m) > 0) {
     while ($m = mysqli_fetch_array($query_basic_m)) {
         $int_id = '13';
