@@ -242,7 +242,7 @@ input[type=number] {
         <ul class="nav">
           <li class="nav-item">
             <a class="nav-link" href="index.php">
-              <i class="material-icons">dashboard</i>
+              <i class="material-icons" style="color:#7f3f98">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
@@ -258,7 +258,7 @@ input[type=number] {
           <!-- </li> -->
           <li class="nav-item dropdown">
             <a class="nav-link" href="customer_service.php">
-              <i class="material-icons">supervised_user_circle</i>
+              <i class="material-icons" style="color:#7f3f98">supervised_user_circle</i>
               Customer Service
             </a>
           </li>
@@ -274,7 +274,7 @@ input[type=number] {
           <!-- </li> -->
           <li class="nav-item dropdown">
             <a class="nav-link" href="transaction.php">
-              <i class="material-icons">account_balance_wallet</i>
+              <i class="material-icons" style="color:#7f3f98">account_balance_wallet</i>
               Transaction
             </a>
           </li>
@@ -293,7 +293,7 @@ input[type=number] {
           </li> -->
           <li class="nav-item dropdown">
             <a class="nav-link" href="approval.php">
-              <i class="material-icons">library_books</i>
+              <i class="material-icons" style="color:#7f3f98">library_books</i>
               Approval
             </a>
           </li>
@@ -312,7 +312,7 @@ input[type=number] {
           <!-- accounting is here -->
           <li class="nav-item dropdown">
             <a class="nav-link" href="accounting.php">
-              <i class="material-icons">menu_book</i>
+              <i class="material-icons" style="color:#7f3f98">menu_book</i>
               Accounting
             </a>
           </li>
@@ -350,20 +350,20 @@ input[type=number] {
           <!-- report is here now -->
           <li class="nav-item dropdown">
             <a class="nav-link" href="reports.php">
-              <i class="material-icons">content_paste</i>
+              <i class="material-icons" style="color:#7f3f98">content_paste</i>
               Reports
             </a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link" href="bill_airtime.php">
-              <i class="material-icons">description</i>
+              <i class="material-icons" style="color:#7f3f98">description</i>
               Bills & Airtime
             </a>
           </li>
           <!-- end of report -->
           <li class="nav-item dropdown">
             <a class="nav-link" href="configuration.php">
-              <i class="material-icons">settings</i>
+              <i class="material-icons" style="color:#7f3f98">settings</i>
               Configuration
             </a>
           </li>

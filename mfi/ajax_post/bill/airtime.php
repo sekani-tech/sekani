@@ -105,8 +105,8 @@ if ($pass != "") {
             $(document).ready(function(){
                 swal({
                     type: "success",
-                    title: "Sent - '.$msg.'",
-                    text: "API Looks Good!",
+                    title: "'.$msg.'",
+                    text: "AIRTIME SUCCESSFUL!",
                     showConfirmButton: false,
                     timer: 3000
                 });

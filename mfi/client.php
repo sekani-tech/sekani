@@ -121,42 +121,50 @@ else if (isset($_GET["message5"])) {
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Clients</h4>
-                  
-                  <!-- Insert number users institutions -->
-                  <?php
-                        function branch_opt($connection)
-                        {  
-                            $br_id = $_SESSION["branch_id"];
-                            $sint_id = $_SESSION["int_id"];
-                            $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
-                            $dof = mysqli_query($connection, $dff);
-                            $out = '';
-                            while ($row = mysqli_fetch_array($dof))
-                            {
-                              $do = $row['id'];
-                            $out .= " OR client.branch_id ='$do'";
-                            }
-                            return $out;
-                        }
-                        $branches = branch_opt($connection);
-                        ?>
                   <p class="card-category"><?php
-                        $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && (client.branch_id ='$br_id' $branches) && client.status = 'Approved'";
+                        $query = "SELECT client.id, 
+                                    client.BVN, 
+                                    client.date_of_birth, 
+                                    client.gender, 
+                                    client.account_type, 
+                                    client.account_no, 
+                                    client.mobile_no, 
+                                    client.firstname, 
+                                    client.lastname,  
+                                    staff.first_name, 
+                                    staff.last_name 
+                                    FROM client 
+                                    JOIN staff ON client.loan_officer_id = staff.id 
+                                    WHERE client.int_id = '$sessint_id'
+                                    && client.status = 'Approved'";
                         $result = mysqli_query($connection, $query);
-                   if ($result) {
                      $inr = mysqli_num_rows($result);
                      echo $inr;
-                   }?> registered clients || <a style = "color: white;" href="manage_client.php">Create New client</a></p>
+                   ?> registered clients || <a style = "color: white;" href="manage_client.php">Create New client</a></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT client.id, client.BVN, client.date_of_birth, client.gender, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && (client.branch_id ='$br_id' $branches) && client.status = 'Approved'";
+                        $query = "SELECT client.id, 
+                                        client.BVN, 
+                                        client.date_of_birth, 
+                                        client.gender, 
+                                        client.account_type, 
+                                        client.account_no, 
+                                        client.mobile_no, 
+                                        client.firstname, 
+                                        client.lastname,  
+                                        staff.first_name, 
+                                        staff.last_name 
+                                        FROM client JOIN staff ON 
+                                        client.loan_officer_id = staff.id 
+                                        WHERE client.int_id = '$sessint_id'
+                                        && client.status = 'Approved'";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <th>sn</th>
+                        <th></th>
                         <th>
                           First Name
                         </th>
@@ -171,18 +179,6 @@ else if (isset($_GET["message5"])) {
                         </th>
                         <th>
                           Account Number
-                        </th>
-                        <th>
-                         Date of Birth
-                        </th>
-                        <th>
-                          Gender
-                        </th>
-                        <th>
-                          Phone
-                        </th>
-                        <th>
-                          BVN
                         </th>
                         <th>View</th>
                         <th>Close</th>
@@ -213,11 +209,25 @@ else if (isset($_GET["message5"])) {
                              $savingp = $d["name"];}
                            }
                             }
-                           
                             ?>
-                          <th><?php echo $savingp; ?></th>
+                          <th>
+                            <?php
+                            if($row['account_type'] == "") {
+                              echo $row['account_type'];
+                            }else{
+                              echo $savingp;
+                            }
+                            ?>
+                          </th>
                           <?php
-                          $soc = $row["account_no"];
+                          $get_one_account = mysqli_query($connection, "SELECT * FROM `account` WHERE client_id = '$cid' ORDER BY id ASC LIMIT 1");
+                          if (mysqli_num_rows($get_one_account) == 1) {
+                            $rowa = mysqli_fetch_array($get_one_account);
+                            $soc = $rowa["account_no"];
+                          } else {
+                            $soc = "No Account";
+                          }
+
                           $length = strlen($soc);
                           if ($length == 1) {
                             $acc ="000000000" . $soc;
@@ -247,23 +257,16 @@ else if (isset($_GET["message5"])) {
                             $acc ="0" . $soc;
                           }
                           elseif ($length == 10) {
-                            $acc = $row["account_no"];
+                            $acc = $rowa["account_no"];
                           }else{
-                            $acc = $row["account_no"];
+                            $acc = $rowa["account_no"];
                           }
                           ?>
                           <th><?php echo $acc; ?></th>
-                          <th><?php echo $row["date_of_birth"]; ?></th>
-                          <th><?php echo $row["gender"]; ?></th>
-                          <th><?php echo $row["mobile_no"]; ?></th>
-                          <th><?php echo $row["BVN"]; ?></th>
                           <td><a href="client_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
                           <td><a href="../functions/close_client.php?edit=<?php echo $row["id"];?>" class="btn btn-info">Close</a></td>
                         </tr>
                         <?php }
-                          }
-                          else {
-                            // echo "0 Document";
                           }
                           ?>
                           <!-- <th></th> -->
@@ -278,7 +281,5 @@ else if (isset($_GET["message5"])) {
       </div>
 
 <?php
-
     include("footer.php");
-
 ?>

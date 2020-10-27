@@ -5,10 +5,15 @@ $destination = "client.php";
 include('header.php');
 
 $sessint_id = $_SESSION['int_id'];
+if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"])) {
   $id = $_POST["id"];
 
   $std = $_POST["start"];
-  $acc_no = $_POST["accno"];
+
+  $acc_id = $_POST["account_id"];
+  $query_account_number = mysqli_query($connection, "SELECT * FROM account WHERE id ='$acc_id' && int_id = '$sessint_id'");
+  $acx = mysqli_fetch_array($query_account_number);
+  $acc_no = $acx["account_no"];
       //  echo $std;
        $endx = $_POST["end"];
 
@@ -137,7 +142,7 @@ $sessint_id = $_SESSION['int_id'];
                         // $resultmm = mysqli_query($connection, "SELECT * FROM account_transaction WHERE ((account_id = '$acc_id' && int_id = $sessint_id) && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
                         // $kx = mysqli_fetch_array($resultmm);
                         // $querytoget = "SELECT * FROM account_transaction WHERE account_id = '65' && int_id = '5' && branch_id = '1' && transaction_date BETWEEN '2019-01-01' AND '2020-03-03' ORDER BY transaction_date ASC";
-                        $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
+                        $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
                         // $result = mysqli_query($connection, $querytoget);
                         // $v = 0;
                       ?>
@@ -339,7 +344,24 @@ table td.grand {
 
 </style>
 <?php
-
+} else {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+   swal({
+    type: "error",
+    title: "Client Statement Cant Read Form",
+    text: "Please Verfiy Account Properly",
+   showConfirmButton: false,
+    timer: 2000
+    }).then(
+    function (result) {
+      history.go(-1);
+    }
+    )
+    });
+   </script>
+  ';
+}
 include('footer.php');
 
 ?>

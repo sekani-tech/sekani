@@ -109,7 +109,7 @@ if ($status == "200" && $status != "") {
         swal({
             type: "success",
             title: "Sent - '.$msg.'",
-            text: "API Looks Good!",
+            text: "DATA PAYMENT SUCCESSFUL!",
             showConfirmButton: false,
             timer: 3000
         });

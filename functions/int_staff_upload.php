@@ -123,7 +123,7 @@ $mail->addReplyTo($intemail, "Reply");
 // Send HTML or Plain Text Email
 $mail->isHTML(true);
 $mail->Subject = "CONGRATULATIONS THANK YOU FOR JOINING $int_name";
-$mail->Body = '';
+$mail->Body = '-';
 $mail->AltBody = "This is the plain text version of the email content";
 // mail system
 if(!$mail->send()) 

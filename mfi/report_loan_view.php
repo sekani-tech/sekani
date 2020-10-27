@@ -6,9 +6,9 @@ $destination = "report_loan.php";
 ?>
 <?php
  if (isset($_GET["view15"])) {
-?>
-<!-- Data for clients registered this month -->
-<!-- Content added here -->
+        
+    ?>
+
 <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
@@ -82,11 +82,35 @@ $destination = "report_loan.php";
                           Outstanding Loan Balance
                         </th>
                         <th>
-                          Account Officer
+                          Loan Officer
                         </th>
                       </thead>
                       <tbody>
-                      <?php if (mysqli_num_rows($result) > 0) {
+                          <?php 
+                               if ($_SESSION["int_id"] == 13) {
+                                $tableJoinOutstanding = "
+                                    SELECT *
+                                    FROM outstanding_report_migrate
+                                    LEFT JOIN clients_branch_migrate ON outstanding_report_migrate.client_name = clients_branch_migrate.name;
+                              ";
+                              $outstandingResult = mysqli_query($connection, $tableJoinOutstanding);
+                              while ($resultRow = mysqli_fetch_array($outstandingResult, MYSQLI_ASSOC))
+                              {
+                          ?>
+                            <tr>
+                                <td><?php echo $resultRow['client_name'];?> </td>
+                                <td><?php echo $resultRow['loan_principal'];?> </td>
+                                <td><?php echo "Loan Term ";?> </td>
+                                <td><?php echo $resultRow['disbursed'];?> </td>
+                                <td><?php echo $resultRow['maturity_date'];?> </td>
+                                <td><?php echo $resultRow['interest'];?> </td>
+                                <td><?php echo $resultRow['outstanding_principal'];?> </td>
+                                <td><?php echo $resultRow['loan_officer'];?> </td>
+                            </tr>
+                              <?php }} else {
+
+                              ?>
+                                        <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
                         <?php $lo_id = $row["id"]; ?>
@@ -118,12 +142,12 @@ $destination = "report_loan.php";
                           <?php
                             $loant = $row["loan_term"];
                             $total = $loant * $final;
-                            $totalint +=$total;
+                            @$totalint +=$total;
                           ?>
                           <?php
                           $fee = $row["fee_charges_charged_derived"];
                           $income = $fee + $total;
-                          $ttlinc += $income;
+                          @$ttlinc += $income;
                           ?>
                             <?php
                             // repaymeny
@@ -167,14 +191,7 @@ $destination = "report_loan.php";
                             // echo "0 Document";
                           }
                           ?>
-                          <!-- <tr>
-                            <th>Total</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th>
+                      
                               <?php
                                echo number_format($ttloutbalance);
                             ?></th>
@@ -182,6 +199,9 @@ $destination = "report_loan.php";
                             
                           </tr> -->
                           <!-- <th></th> -->
+
+                              <?php
+                              } ?>
                       </tbody>
                     </table>
                   </div>
@@ -211,7 +231,7 @@ $destination = "report_loan.php";
             </div>
           </div>
         </div>
-      </div>
+                            </div>
 
 <?php
  }

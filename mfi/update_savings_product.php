@@ -1,7 +1,7 @@
 <?php
 
 $page_title = "Edit Product";
-$destination = "config.php";
+$destination = "connect.php";
     include("header.php");
 
 ?>
