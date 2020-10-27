@@ -28,7 +28,7 @@ if (mysqli_num_rows($query_migrate) > 0) {
         if (mysqli_num_rows($query_loan_balance_migrate) > 0) {
             while ($qlbm = mysqli_fetch_array($query_loan_balance_migrate)) {
                 $lid = $qlbm["id"];
-                $loan_principal = $qlbm["loan_principal"];
+                $loan_principal = $qlbm["outstanding_principal"];
                 $loan_interest = $qlbm["interest_at_disbursement"];
                 $disbursed_date = $qlbm["disbursed"];
                 $loan_term = $qlbm["installments"];
