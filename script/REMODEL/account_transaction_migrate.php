@@ -18,7 +18,7 @@ if (mysqli_num_rows($query_basic_m) > 0) {
         $transaction_date = $m["Effective_Date"];
         // make move
         $query_account_table = mysqli_query($connection, "SELECT * FROM `account` WHERE account_no = '$account_no' AND int_id = '13'");
-        if (mysqli_num_rows($query_account_table)) {
+        if (mysqli_num_rows($query_account_table) > 0) {
             $ac = mysqli_fetch_array($query_account_table);
 
             $branch_id = $ac["branch_id"];
