@@ -112,14 +112,14 @@ $destination = "branch.php";
                     <table id="tabledat" class="table" cellspacing="0" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM group_clients WHERE group_id = '$user_id' AND int_id = '$sessint_id'";
+                        $query = "SELECT * FROM group_clients WHERE group_name = '$name'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
                          Members
                         </th>
                         <th>
-                          Branch
+                          Account Number
                         </th>
                         <th width="20px">Delete</th>
                         <!-- <th>Phone</th> -->
@@ -130,14 +130,7 @@ $destination = "branch.php";
                         <tr>
                         <?php $row["id"]; ?>
                           <th><?php echo $row["client_name"]; ?></th>
-                          <?php
-                          $ds= $row["branch_id"];
-                           $query = "SELECT * FROM branch WHERE int_id = '$sessint_id' && id = '$ds'";
-                           $erre = mysqli_query($connection, $query);
-                           $ds = mysqli_fetch_array($erre);
-                           $dfd = $ds['name'];
-                          ?>
-                          <th><?php echo $dfd; ?></th>
+                          <th><?php echo $row[""]; ?></th>
                           <td><a href="../functions/delete_group_client.php?edit=<?php echo $row["id"];?>" class="btn btn-danger">Remove</a></td>
                         </tr>
                         <?php }
@@ -151,7 +144,7 @@ $destination = "branch.php";
                   </div>
                       </div>
                       </div>
-                    <button type="submit" class="btn btn-primary pull-right">Update Branch</button>
+                    <button type="submit" class="btn btn-primary pull-right">Update Group</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>
