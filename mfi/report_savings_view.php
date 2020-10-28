@@ -25,7 +25,7 @@ $destination = "report_savings.php";
 <?php
  if (isset($_GET["view10"])) {
 
-   if ($_SESSION["int_id"] == 13) {
+   if ($_SESSION["int_id"] == 0) {
 
         ?>
               <div class="content">
