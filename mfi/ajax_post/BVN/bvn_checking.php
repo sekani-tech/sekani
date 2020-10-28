@@ -32,7 +32,7 @@ if ($bvn_length == 11) {
     if (mysqli_num_rows($sql_check) <= 0) {
         // next code 
         // check if there is fund in the acoint
-        $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
+        $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id'");
         $qw = mysqli_fetch_array($sql_fund);
         $balance = $qw["running_balance"];
         $total_with = $qw["total_withdrawal"];

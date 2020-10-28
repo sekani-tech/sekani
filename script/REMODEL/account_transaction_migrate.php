@@ -44,7 +44,12 @@ if (mysqli_num_rows($query_basic_m) > 0) {
         echo "Error Inserting";
     }
         }   else {
-            echo "Cant Find Account";
+            $update_account_migrate = mysqli_query($connection, "UPDATE `savings_transactions_migrate` SET migration_status = '4' WHERE int_id = '13' AND Account_Number = '$account_no' AND id = '$uid'");
+        if ($update_account_migrate) {
+            echo "CHANGED MIGRATION";
+        } else {
+            echo "....e";
+        }
         }    
     }
 } else {

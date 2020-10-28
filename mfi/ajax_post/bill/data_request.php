@@ -14,7 +14,7 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 // end
 if ($network != "" && $phone != "" && $int_id != "" && $branch_id != "") {
     // finnin
-    $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
+    $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id'");
         $qw = mysqli_fetch_array($sql_fund);
         $balance = $qw["running_balance"];
         $total_with = $qw["total_withdrawal"];
