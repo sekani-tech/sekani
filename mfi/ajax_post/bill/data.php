@@ -25,7 +25,7 @@ if ($pass != "") {
         // damn
         if ($network != "" && $phone != "" && $amount != "" && $int_id != "" && $branch_id != "" && $bundle != "" && $package != "") {
     // finnin
-    $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
+    $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id'");
         $qw = mysqli_fetch_array($sql_fund);
         $balance = $qw["running_balance"];
         $total_with = $qw["total_withdrawal"];

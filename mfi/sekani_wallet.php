@@ -18,7 +18,7 @@ $destination = "index.php";
           <?php
           $int_id = $_SESSION["int_id"];
           $branch_id = $_SESSION["branch_id"];
-          $sql_on = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
+          $sql_on = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id'");
           $xm = mysqli_num_rows($sql_on);
           if ($xm >= 1) {
           ?>
@@ -99,7 +99,7 @@ $destination = "index.php";
             <div class="col-md-4">
             <?php
             // GET THE CURRENT BALANCE OF THE INSTITUTION
-            $get_id = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
+            $get_id = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id'");
             $sw = mysqli_fetch_array($get_id);
             $wallet_bal = $sw["running_balance"];
             $total_spent = $sw["total_withdrawal"];
