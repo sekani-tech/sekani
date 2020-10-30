@@ -2,7 +2,7 @@
 include("../../functions/connect.php");
 $int_id = '13';
 
-$query_loan_migrate = mysqli_query($connection, "SELECT * FROM `outstanding_report_migrate` WHERE migration_status = '3'");
+$query_loan_migrate = mysqli_query($connection, "SELECT * FROM `outstanding_report_migrate` WHERE migration_status = '2'");
 if (mysqli_num_rows($query_loan_migrate)) {
     while($qlm = mysqli_fetch_array($query_loan_migrate)) {
         // no principal loan
@@ -29,7 +29,7 @@ if (mysqli_num_rows($query_loan_migrate)) {
                 $new_interest = $interest / $get_com_inst;
                 $update_loan_repayment = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET installment = '1', principal_amount = '$new_principal', interest_amount = '$new_interest' WHERE loan_id = '$loan_id' AND int_id = '$int_id'");
                 if ($update_loan_repayment) {
-                    $update_migrate = mysqli_query($connection, "UPDATE `outstanding_report_migrate` SET  migration_status = '2' WHERE id = '$mid'");
+                    $update_migrate = mysqli_query($connection, "UPDATE `outstanding_report_migrate` SET  migration_status = '3' WHERE id = '$mid'");
                     if ($update_migrate) {
                         echo "...";
                         $sum_tot = mysqli_query($connection, "SELECT SUM(principal_amount) AS prin_sum FROM loan_repayment_schedule WHERE int_id = '$int_id' AND loan_id = '$loan_id'");
