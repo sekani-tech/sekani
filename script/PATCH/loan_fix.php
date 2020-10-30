@@ -32,16 +32,16 @@ if (mysqli_num_rows($query_loan_migrate)) {
                     $update_migrate = mysqli_query($connection, "UPDATE `outstanding_report_migrate` SET  migration_status = '2' WHERE id = '$mid'");
                     if ($update_migrate) {
                         echo "...";
-                $query_get_PM = mysqli_query($connection, "SELECT SUM(principal_amount) AS p_m FROM `loan_repayment_schedule` WHERE loan_id = '$loan_id' AND int_id = '$int_id' AND installment = '1'");
-                $query_get_IM = mysqli_query($connection, "SELECT SUM(interest_amount) AS a_m FROM `loan_repayment_schedule` WHERE loan_id = '$loan_id' AND int_id = '$int_id' AND installment = '1'");
-                $poi = mysqli_fetch_array($query_get_PM);
-                $poi2 = mysqli_fetch_array($query_get_IM);
-                $out_p = $poi["p_m"];
-                $out_i = $poi2["i_m"];
-                $out_loan_bal = $out_p + $out_i;
-                        $update_loan_balance = mysqli_query($connection, "UPDATE `loan` SET total_outstanding_derived = '$out_loan_bal' WHERE id = '$loan_id' AND int_id = '$int_id'");
+                        $sum_tot = mysqli_query($connection, "SELECT SUM(principal_amount) AS prin_sum FROM loan_repayment_schedule WHERE int_id = '$int_id' AND loan_id = '$loan_id'");
+                          $sum_tott = mysqli_query($connection, "SELECT SUM(interest_amount) AS int_sum FROM loan_repayment_schedule WHERE int_id = '$int_id' AND loan_id = '$loan_id'");
+                          $st = mysqli_fetch_array($sum_tot);
+                          $stt = mysqli_fetch_array($sum_tott);
+                          $outp = $st["prin_sum"];
+                          $outt = $stt["int_sum"];
+                          $duebalance = $outp + $outt;
+                        $update_loan_balance = mysqli_query($connection, "UPDATE `loan` SET total_outstanding_derived = '$duebalance' WHERE id = '$loan_id'");
                         if ($update_loan_balance) {
-                            echo 'bal'.$out_loan_bal;
+                            echo 'bal'.$duebalance;
                         } else {
                             echo "90";
                         }
