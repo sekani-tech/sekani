@@ -121,19 +121,36 @@ $b_id = $_SESSION['branch_id'];
                     <div class="tab">
                       <h3> Collect Payments:</h3>
                         <div>
-                          <table class="table table-bordered">
+                          <table class="table table-bordered hover">
                               <thead>
+                                  <tr>
+                                      <td colspan="5">Total </td>
+                                      <td > <input type = "number" readonly name="total" class="grand_total" > </td>
+                                  </tr>
                                 <tr>
-                                  <th>sn</th>
+                                  <th>S/N</th>
                                   <th>Client Name</th>
                                   <th>Balance Derived</th>
                                   <th>Total due</th>
                                   <th>Total Expected Repayment</th>
+                                  <th>Total Deposit</th>
                                 </tr>
                               </thead>
                               <tbody id ="grlist">
 <!-- insert td in list -->
                               </tbody>
+                              <script>
+                                $(document).ready(function() {
+                                    $("body").on("keyup", "input", function(event){
+                                    $(this).closest(".line").find(".total_price").val( $(this).closest(".line").val()*1-$(this).closest(".line").val() );
+                                    var sum = 0;
+                                    $('.total_price').each(function() {
+                                        sum += Number($(this).val());
+                                    });
+                                    $(".grand_total").val(sum);
+                                    });
+                                });
+                            </script>
                           </table>
                         </div>
                     </div>
