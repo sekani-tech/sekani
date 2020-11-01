@@ -200,7 +200,7 @@ if (isset($_GET['edit'])) {
                                         <i class="material-icons">person</i>
                                         </span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter New Member Account Number">
+                                        <input type="text" class="form-control" placeholder="Enter New Member">
                                     </div>
                                
                                 </div>
