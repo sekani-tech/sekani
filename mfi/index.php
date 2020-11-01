@@ -56,26 +56,88 @@
                       </div> -->
         <div class="container-fluid">
           <!-- your content here -->
+
+
+
+        <div class="row">
+
+        
+        <div class="card">
+                <div class="card-header card-header-primary">
+                  <h2 class="card-title text-center">Dashboard</h2>
+                  <p class="card-category text-center"></p>
+                </div>
+    </div>
+
+<!-- loan balance -->
+<div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="card card-stats">
+                <div class="card-header card-header-primary card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">account_balance_wallet</i>
+                  </div>
+                  <p class="card-category"><b>Outstanding Loan Balance</b></p>
+                  <!-- Populate with the total value of outstanding loans -->
+                  
+                  <?php
+                     
+                    $prin_query = "SELECT SUM(principal_amount) AS total_out_prin FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND installment >= 1";
+                    $int_query = "SELECT SUM(interest_amount) AS total_int_prin FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND installment >= 1";
+                    // LOAN ARREARS
+                    $arr_query1 = mysqli_query($connection, "SELECT SUM(principal_amount) AS arr_out_prin FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= 1");
+                    $arr_query2 = mysqli_query($connection, "SELECT SUM(interest_amount) AS arr_out_int FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= 1");
+                    // check the arrears
+                    $ar = mysqli_fetch_array($arr_query1);
+                    $arx = mysqli_fetch_array($arr_query2);
+                    $arr_p = $ar["arr_out_prin"];
+                    $arr_i = $arx["arr_out_int"];
+                      $pq = mysqli_query($connection, $prin_query);
+                      $iq = mysqli_query($connection, $int_query);
+                      $pqx = mysqli_fetch_array($pq);
+                      $iqx = mysqli_fetch_array($iq);
+                      // check feedback
+                      $print = $pqx['total_out_prin'];
+                      $intet = $iqx['total_int_prin'];
+                      $fde = ($print + $intet) + ($arr_p + $arr_i);
+                      // DGMFB
+                  ?>
+                  <h3 class="card-title">₦<?php echo number_format(round($fde), 2); ?></h3>
+                  
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <!-- Get current update time and display -->
+                    <!-- new noe -->
+                    <i class="material-icons text-primary">alarm</i> Last 24 Hours
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+
+
           <div class="row">
             <!-- Card displays clients -->
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-4 col-md-6 col-sm-6">
               <div class="card card-stats">
-                <div class="card-header card-header-info card-header-icon">
+                <div class="card-header card-header-primary card-header-icon">
                   <div class="card-icon">
                     <i class="material-icons">people</i>
                   </div>
-                  <p class="card-category">Client</p>
+                  <p class="card-category"><b>Clients</b></p>
                   <!-- Populate with number of existing clients -->
-                  <h3 class="card-title"><?php
+                  <h2 class="card-title"><?php
                         $query = "SELECT COUNT(firstname) FROM client WHERE int_id = '$sessint_id' AND status = 'Approved'";
                         $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_fetch_array($result);
                      echo $inr['COUNT(firstname)'];
-                   }?></h3>
+                   }?></h2>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
+                  <i class="material-icons text-primary">alarm</i> Last 24 Hours
                     <!-- Get current update time and display -->
                     <!-- <i class="material-icons">update</i> Just Updated -->
                   </div>
@@ -127,13 +189,13 @@
                 $pfarthree = ($bnk_provthree/$ttout) * 100;
                 $pfarsix = ($bnk_provsix/$ttout) * 100;
             ?>
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-4 col-md-6 col-sm-6">
               <div class="card card-stats">
-                <div class="card-header card-header-danger card-header-icon">
+                <div class="card-header card-header-primary card-header-icon">
                   <div class="card-icon">
                   <i class="material-icons">info_outline</i>
                   </div>
-                  <p class="card-category">PAR</p>
+                  <p class="card-category"><b>PAR</b></p>
                   <?php if ($bnk_provthree > 0 || $bnk_provsix > 0){
                     ?>
                   <h4 class="card-title">30 days - <?php echo number_format($pfarthree, 2);?>%</h4>
@@ -150,6 +212,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="stats">
+                  <i class="material-icons text-primary">alarm</i> Last 24 Hours
                     <!-- <i class="material-icons">warning</i> Just Updated -->
                   </div>
                 </div>
@@ -157,13 +220,13 @@
             </div>
             <!-- /par -->
             <!-- logged in users -->
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-4 col-md-6 col-sm-6">
               <div class="card card-stats">
-                <div class="card-header card-header-success card-header-icon">
+                <div class="card-header card-header-primary card-header-icon">
                   <div class="card-icon">
                     <i class="material-icons">person</i>
                   </div>
-                  <p class="card-category">Logged in Staff</p>
+                  <p class="card-category"><b>Logged in Staff</b></p>
                   <!-- Populate with number of logged in staff -->
                   <script>
 setInterval(function() {
@@ -182,12 +245,13 @@ setInterval(function() {
     });
 }, 1000);   // Interval set to 4 seconds
 </script>
-                  <h3 class="card-title">
+                  <h2 class="card-title">
                     <div id="logged_staff">0</div>
-                   </h3>
+                   </h2>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
+                  <i class="material-icons text-primary">alarm</i> Last 24 Hours
                     <!-- Get current update time and display -->
                     <!-- <i class="material-icons">update</i> Just Updated -->
                   </div>
@@ -195,58 +259,16 @@ setInterval(function() {
               </div>
             </div>
             <!-- /users -->
-            <!-- loan balance -->
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">account_balance_wallet</i>
-                  </div>
-                  <p class="card-category">Outstanding Loan Balance</p>
-                  <!-- Populate with the total value of outstanding loans -->
-                  
-                  <?php
-                     
-                    $prin_query = "SELECT SUM(principal_amount) AS total_out_prin FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND installment >= 1";
-                    $int_query = "SELECT SUM(interest_amount) AS total_int_prin FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND installment >= 1";
-                    // LOAN ARREARS
-                    $arr_query1 = mysqli_query($connection, "SELECT SUM(principal_amount) AS arr_out_prin FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= 1");
-                    $arr_query2 = mysqli_query($connection, "SELECT SUM(interest_amount) AS arr_out_int FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= 1");
-                    // check the arrears
-                    $ar = mysqli_fetch_array($arr_query1);
-                    $arx = mysqli_fetch_array($arr_query2);
-                    $arr_p = $ar["arr_out_prin"];
-                    $arr_i = $arx["arr_out_int"];
-                      $pq = mysqli_query($connection, $prin_query);
-                      $iq = mysqli_query($connection, $int_query);
-                      $pqx = mysqli_fetch_array($pq);
-                      $iqx = mysqli_fetch_array($iq);
-                      // check feedback
-                      $print = $pqx['total_out_prin'];
-                      $intet = $iqx['total_int_prin'];
-                      $fde = ($print + $intet) + ($arr_p + $arr_i);
-                      // DGMFB
-                  ?>
-                  <h3 class="card-title">NGN - <?php echo number_format(round($fde), 2); ?></h3>
-                  
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <!-- Get current update time and display -->
-                    <!-- new noe -->
-                  </div>
-                </div>
-              </div>
-            </div>
+            
             <!-- /lb -->
           </div>
           <!-- /row -->
           <div class="row">
             <!-- populate with frequency of loan disbursement -->
-            <div class="col-md-4">
+            <div class="col-md-12">
               <div class="card card-chart">
-                <div class="card-header card-header-success">
-                <canvas id="myChart" width="600" height="400"></canvas>
+                <div class="card-header card-header-primary">
+                <canvas id="myChart" width="600" height="150"></canvas>
                 <?php
                 // finish
                 $current_date = date('Y-m-d');
@@ -316,6 +338,11 @@ var myChart = new Chart(ctx, {
             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" alt="" srcset="" height="400px" width="400px"> -->
           </div>
           <!-- /row -->
+        
+        
+        
+        
+        
         </div>
       </div>
 
