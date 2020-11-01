@@ -52,7 +52,7 @@ if (isset($_GET['edit'])) {
 
                                 <label for="">Group Name:</label>
                                 <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control"
-                                       value="<?php echo $output['g_name'] ?>" readonly name="display_name">
+                                       value="" readonly name="display_name">
                             </div>
                             <div class="row">
 
@@ -62,7 +62,7 @@ if (isset($_GET['edit'])) {
                                     <div class="form-group">
                                         <label for="">Account Number:</label>
                                         <input type="text" name="" style="text-transform: uppercase;" id=""
-                                               class="form-control" value="<?php echo $output['account_no'] ?>"
+                                               class="form-control" value=""
                                                readonly>
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@ if (isset($_GET['edit'])) {
                                     <div class="form-group">
                                         <label for="">Account Officer:</label>
                                         <input type="text" name="" style="text-transform: uppercase;" id=""
-                                               class="form-control" value="<?php echo $output['loan_officer'] ?>"
+                                               class="form-control" value=""
                                                readonly>
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@ if (isset($_GET['edit'])) {
                                     <div class="form-group">
                                         <label for="">Account Type:</label>
                                         <input type="text" name="" style="text-transform: uppercase;" id=""
-                                               class="form-control" value="<?php echo $output['account_type'] ?>"
+                                               class="form-control" value=""
                                                readonly>
                                     </div>
                                 </div>
@@ -89,16 +89,7 @@ if (isset($_GET['edit'])) {
                                     <div class="form-group">
                                         <label for="">Outstanding Loan:</label>
                                         <input type="text" name="" style="text-transform: uppercase;" id=""
-                                               class="form-control" value="<?php
-                                                        foreach ($groupMembers as $key => $lonaval) {
-                                                                $customersID = $lonaval['client_id'];
-                                                                $loanCond = ['client_id' => $customersID]; 
-                                                                $loansCheck = selectAll($loans, $loanCond);
-                                                                foreach ($loansCheck as $loan) {
-                                                                    // echo $loan['principal_amount'];
-                                                                }
-                                                        }
-                                               ?>" readonly>
+                                               class="form-control" value="" readonly>
                                     </div>
                                 </div>
 
@@ -106,7 +97,7 @@ if (isset($_GET['edit'])) {
                                     <div class="form-group">
                                         <label for="">Group puce Balance</label>
                                         <input type="text" name="" style="text-transform: uppercase;" id=""
-                                               class="form-control" value="<?php echo  $groupBalanceQuery['account_balance_derived']; ?>" readonly>
+                                               class="form-control" value="" readonly>
                                     </div>
                                 </div>
 
@@ -114,7 +105,7 @@ if (isset($_GET['edit'])) {
                                     <div class="form-group">
                                         <label for="">Avaliable Balance:</label>
                                         <input type="text" name="" style="text-transform: uppercase;" id=""
-                                               class="form-control" value="<?php echo $groupBalanceQuery['account_balance_derived']; ?>" readonly>
+                                               class="form-control" value="" readonly>
                                     </div>
                                 </div>
 
@@ -122,11 +113,7 @@ if (isset($_GET['edit'])) {
                                     <div class="form-group">
                                         <label for="">Last Deposit:</label>
                                         <input type="text" name="" style="text-transform: uppercase;" id=""
-                                               class="form-control" value="<?php 
-                                                    if ($groupTransactQuery['transaction_type'] == 'deposit') {
-                                                        echo $groupBalanceQuery['transaction_date'];
-                                                    }
-                                               ?>" readonly>
+                                               class="form-control" value="" readonly>
                                     </div>
                                 </div>
 
@@ -134,13 +121,12 @@ if (isset($_GET['edit'])) {
                                     <div class="form-group">
                                         <label for="">Last Withdrawal:</label>
                                         <input type="text" name="" style="text-transform: uppercase;" id=""
-                                               class="form-control" value="<?php 
-                                                            if ($groupTransactQuery['transaction_type'] == 'withdrawal') {
-                                                                echo $groupBalanceQuery['transaction_date'];
-                                                            }
-                                                ?>" readonly>
+                                               class="form-control" value="" readonly>
                                     </div>
                                 </div>
+
+                             <div class="row">
+
 
                                 <div class="col-md-12">
                                     <div class="card">
@@ -169,17 +155,17 @@ if (isset($_GET['edit'])) {
                                                     <!-- <th>Phone</th> -->
                                                     </thead>
                                                     <tbody>
-                                                    <?php foreach ($groupMembers as $key => $groupMember) { ?>
+                                                    
                                                         <tr>
 
-                                                            <th class="text-center"><?php echo $key+1 ?></th>
-                                                            <th><?php echo $groupMember['client_name'] ?></th>
-                                                            <th><?php // echo $groupMember[''] ?></th>
-                                                            <th><?php echo $groupMember['account_no'] ?></th>
+                                                            <th class="text-center"></th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th></th>
                                                             <td><a href="" class="btn btn-info">View</a></td>
 
                                                         </tr>
-                                                    <?php } ?>
+                                                     
                                                     <!-- <th></th> -->
                                                     </tbody>
                                                 </table>
@@ -192,9 +178,71 @@ if (isset($_GET['edit'])) {
 
                                 </div>
 
+
                                 <div class="col-md-6">
-                                    <a href="update_group.php?edit=<?php echo $id;?>" class="btn btn-primary">Edit Group</a>
-                                    <a href="" class="btn btn-primary">Add Member to Group</a>
+                                    <a href="update_group.php?edit=<?php echo $id;?>" class="btn btn-primary">Edit Group Details</a>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                                            Add New Member
+                                            </button>
+
+                                </div>
+
+                                                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                   
+                                    <div class="col-md-12">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                        <i class="material-icons">person</i>
+                                        </span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Enter New Member Account Number">
+                                    </div>
+                               
+                                </div>
+                                    </div>
+                                    <div class="modal-body">
+                                     
+                                <div class="row">
+                                <table class="table">
+                                <thead>
+
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th>Full Name</th>
+                                        <th>Account Number</th>
+                                        <th class="text-center">Remove</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                    <td class="text-center">1</td>
+                                        <td>Andrew Mike</td>
+                                        <td>123456789</td>
+                                        <td class="text-center"><button class="btn btn-primary btn-fab btn-fab-mini btn-round">
+                                        <i class="material-icons">close</i>
+                                        </button></td>
+                                    </tr>
+                                
+                                </tbody>
+                            </table>
+                                </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Add Member</button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <!--End of Modal -->
+
                                 </div>
                             </div>
 
