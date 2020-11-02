@@ -12,9 +12,9 @@
             $product_id = $ex["product_id"];
             $int_id = $ex["int_id"];
             // i dont need
-            $query2 = mysqli_query($connection, "SELECT * FROM loan WHERE client_id = '$client_id' AND product_id = '$product_id' AND int_id = '$int_id'");
+            $query2 = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '13'");
             if($query2){
-                $y = mysqli_fetch_array($query2);
+               while( $y = mysqli_fetch_array($query2)){
                 $loan_id = $y["id"];
                 $acct_no = $y["account_no"];
                 $client_id = $y["client_id"];
@@ -97,6 +97,7 @@
                         }
                     }
                  }
+                }
             }
         }
     }
