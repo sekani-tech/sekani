@@ -384,7 +384,6 @@ var myChart = new Chart(ctx, {
         
         </div>
       </div>
-
 <?php
 
     include("footer.php");
