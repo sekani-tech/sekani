@@ -19,15 +19,15 @@ if (isset($_GET['edit'])) {
     $groupID  =  $output['id'];
 
     //group balnce 
-    $groupBalanceCond = ['group_id' => $groupID];
-    $groupBalanceQuery = selectAll($groupBalance, $groupBalanceCond);
-    dd($groupBalanceQuery);
+    // $groupBalanceCond = ['group_id' => $groupID];
+    // $groupBalanceQuery = selectAll($groupBalance, $groupBalanceCond);
+    // dd($groupBalanceQuery);
 
-    //group transaction 
-    $groupTransactionCond = ['group_id' => $groupID];
-    // $Withdrawal = ['transaction_type' => 'withdrawal'];
-    // $deposit = ['transaction_type' => 'deposit'];
-    $groupTransactQuery = selectAll($groupBalance, $groupTransactionCond);
+    // //group transaction 
+    // $groupTransactionCond = ['group_id' => $groupID];
+    // // $Withdrawal = ['transaction_type' => 'withdrawal'];
+    // // $deposit = ['transaction_type' => 'deposit'];
+    // $groupTransactQuery = selectAll($groupBalance, $groupTransactionCond);
 
     $groupName = $output['g_name'];
     $clientCondition = ['group_name' => $groupName];
@@ -209,7 +209,7 @@ if (isset($_GET['edit'])) {
                                                                 </span>
                                                             </div>
                                                             <input type="text" class="form-control" placeholder="Enter New Member">
-                                                            <button type="submit" name="add-member" class="btn btn-primary">Add Member</button>
+                                                            <button type="submit" name="add-member" class="btn btn-primary p-2">Add Member</button>
                                                         </div>
                                                     </form>
                                                 </div>

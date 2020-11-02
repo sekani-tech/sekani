@@ -397,13 +397,13 @@ if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
 if ($trans_post == 1 || $trans_post == "1") {
 ?>
 <?php
-$digits = 6;
-$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-$randms1= str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-$randms2 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-$transid = $randms;
-$transid1 = $randms1;
-$transid2 = $randms2;
+  $digits = 6;
+  $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+  $randms1= str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+  $randms2 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+  $transid = $randms;
+  $transid1 = $randms1;
+  $transid2 = $randms2;
 ?>
 <!-- Content added here -->
 <div class="content">
