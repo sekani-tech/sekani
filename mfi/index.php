@@ -274,7 +274,7 @@ setInterval(function() {
                 $current_date = date('Y-m-d');
                 $qtr_date = date('Y-m-d', strtotime("-1 months", strtotime($current_date)));
                 // repayment
-                $get_qtr = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND ((duedate >= '$qtr_date') AND (duedate <= '$current_date')) AND installment = '0' ORDER BY id DESC LIMIT 6");
+                $get_qtr = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND ((duedate >= '$qtr_date') AND (duedate <= '$current_date')) AND installment = '0' ORDER BY id DESC LIMIT 20");
                 while($row = mysqli_fetch_array($get_qtr))
                   {
                     $total_amount = $row["principal_amount"] + $row["interest_amount"];
@@ -289,7 +289,7 @@ var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: ['1st', '2nd', '3rd', '4th', '5th', '6th'],
+        labels: ['1st', '2nd', '3rd', '4th', '5th', '6th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th'],
         datasets: [{
             label: 'Loan Collection',
             data: [<?php echo $final_r ?>],
