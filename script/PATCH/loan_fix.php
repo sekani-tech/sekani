@@ -58,8 +58,6 @@ if (mysqli_num_rows($query_loan_migrate)) {
         } else {
             echo "BAD CLIENT QUERY";
         }
-       
-        
     }
 } else {
     echo "NO MIGRATION";

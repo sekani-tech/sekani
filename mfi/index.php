@@ -108,7 +108,7 @@
                   <div class="stats">
                     <!-- Get current update time and display -->
                     <!-- new noe -->
-                    <i class="material-icons text-primary">alarm</i> Last 24 Hours
+                    <i class="material-icons text-primary">alarm</i> Currently
                   </div>
                 </div>
               </div>
@@ -251,7 +251,7 @@ setInterval(function() {
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                  <i class="material-icons text-primary">alarm</i> Last 24 Hours
+                  <i class="material-icons text-primary">alarm</i> Last 5 Minutes
                     <!-- Get current update time and display -->
                     <!-- <i class="material-icons">update</i> Just Updated -->
                   </div>
