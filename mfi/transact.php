@@ -436,6 +436,23 @@ $transid2 = $randms2;
                   });
                 });
               </script>
+
+              <script>
+                $(document).ready(function() {
+                  $('#actName').on("change keyup paste click", function(){
+                    var name = $(this).val();
+                    var ist = $('#int_id').val();
+                    $.ajax({
+                      url:"acct_acctName.php",
+                      method:"POST",
+                      data:{name:name, ist: ist},
+                      success:function(data){
+                        $('#accname').html(data);
+                      }
+                    })
+                  });
+                });
+              </script>
             <div class="form-group">
                 <label for="">Type</label>
                 <select class="form-control" name="test">
@@ -451,6 +468,14 @@ $transid2 = $randms2;
             <div class="form-group">
                <label class="bmd-label-floating">Account Number</label>
                <input type="text" class="form-control" name="account_no" id="act">
+               <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id;?>" id="int_id">
+            </div>
+            <div id="accname"></div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+               <label class="bmd-label-floating">Account Name</label>
+               <input type="text" class="form-control" name="account_no" id="actName">
                <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id;?>" id="int_id">
             </div>
             <div id="accname"></div>
