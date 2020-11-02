@@ -38,7 +38,7 @@
                 $period_loan = $princpal_amount / $loan_term;
                 $amount_collected = $period_loan + $interest_amount;
 
-                $select_repayment_sch = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE loan_id = '$loan_id' AND client_id = '$client_id' AND int_id = '$int_id'");
+                $select_repayment_sch = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE loan_id = '$loan_id' AND int_id = '$int_id'");
                 $dm = mysqli_fetch_array($select_repayment_sch);
                  if($dm <= 0 && $int_id != "0"){
                     if($rep_every == 'week'){
