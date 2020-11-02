@@ -1,9 +1,5 @@
 <?php
     include('../connect.php');
-    $hello = "SELECT * FROM loan_disbursement_cache WHERE status = 'Approved'";
-    $query1 = mysqli_query($connection, $hello);
-    
-    if(mysqli_num_rows($query1) > 0){
         // if code ok
         // while($ex = mysqli_fetch_array($query1, MYSQLI_ASSOC)){
             // $ex = mysqli_fetch_array($query1);
@@ -100,7 +96,6 @@
                 }
             }
         // }
-    }
 ?>
 <?php
     $today = date('Y-m-d');
