@@ -48,7 +48,13 @@ $sint_id = $_SESSION['int_id'];
         <td>'.$bal.'</td>
         <td></td>
         <td></td>
-        <td><input type="text" name="" id="" style="text-transform: uppercase;" class="form-control total_price" value=""></td>
+        <td>
+            <form action="" method="post">
+                <input type="hidden" id="name" name="name[]" value="echo $c_name;">
+                <input type="hidden" id="id" name="id[]" value="echo  $cl_id;">
+                <input type="text" name="cash[]" id="" style="text-transform: uppercase;" class="form-control total_price" value="">
+            </form>
+        </td>
         </tr>
         ';
         $i++;
@@ -56,3 +62,4 @@ $sint_id = $_SESSION['int_id'];
     }
 }
 ?>
+
