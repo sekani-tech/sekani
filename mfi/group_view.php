@@ -7,20 +7,34 @@ include(ROOT_PATH . "/functions/DbModel/db.php");
 include('header.php');
 //$int_id = $_SESSION['int_id'];
 $tableName = 'groups';
+$groupBalance = "group_balance";
+$groupTransactionTable = "group_transactions";
 $clientTableName = 'group_clients';
+$loans = "loan";
 if (isset($_GET['edit'])) {
     $id = $_GET['edit'];
 
     $condition = ["id" => $id];
     $output = selectOne($tableName, $condition);
+    $groupID  =  $output['id'];
+   
+    //group balnce 
+    $groupBalanceCond = ['group_id' => $groupID];
+    $groupBalanceQuery = selectAll($groupBalance,$groupBalanceCond);
+
+    //group transaction 
+    $groupTransactionCond = ['group_id' => $groupID];
+    // $Withdrawal = ['transaction_type' => 'withdrawal'];
+    // $deposit = ['transaction_type' => 'deposit'];
+    $groupTransactQuery = selectAll($groupBalance,$groupTransactionCond);
+
     $groupName = $output['g_name'];
     $clientCondition = ['group_name' => $groupName];
     $groupMembers = selectAll($clientTableName, $clientCondition);
-//    dd($groupMembers);
+   // dd($output);
 }
 ?>
-
-
+  
     <div class="content">
         <div class="container-fluid">
             <!-- your content here -->
@@ -76,7 +90,16 @@ if (isset($_GET['edit'])) {
                                     <div class="form-group">
                                         <label for="">Outstanding Loan:</label>
                                         <input type="text" name="" style="text-transform: uppercase;" id=""
-                                               class="form-control" value="<?php //echo $output[''] ?>" readonly>
+                                               class="form-control" value="<?php
+                                                        foreach ($groupMembers as $key => $lonaval) {
+                                                                $customersID = $lonaval['client_id'];
+                                                                $loanCond = ['client_id' => $customersID]; 
+                                                                $loansCheck = selectAll($loans, $loanCond);
+                                                                foreach ($loansCheck as $loan) {
+                                                                    echo $loan['principal_amount'];
+                                                                }
+                                                        }
+                                               ?>" readonly>
                                     </div>
                                 </div>
 
@@ -84,7 +107,7 @@ if (isset($_GET['edit'])) {
                                     <div class="form-group">
                                         <label for="">Group puce Balance</label>
                                         <input type="text" name="" style="text-transform: uppercase;" id=""
-                                               class="form-control" value="<?php //echo $output[''] ?>" readonly>
+                                               class="form-control" value="<?php echo  $groupBalanceQuery['account_balance_derived']; ?>" readonly>
                                     </div>
                                 </div>
 
@@ -92,7 +115,7 @@ if (isset($_GET['edit'])) {
                                     <div class="form-group">
                                         <label for="">Avaliable Balance:</label>
                                         <input type="text" name="" style="text-transform: uppercase;" id=""
-                                               class="form-control" value="<?php //echo $output[''] ?>" readonly>
+                                               class="form-control" value="<?php echo $groupBalanceQuery['account_balance_derived']; ?>" readonly>
                                     </div>
                                 </div>
 
@@ -100,7 +123,11 @@ if (isset($_GET['edit'])) {
                                     <div class="form-group">
                                         <label for="">Last Deposit:</label>
                                         <input type="text" name="" style="text-transform: uppercase;" id=""
-                                               class="form-control" value="<?php //echo $output[''] ?>" readonly>
+                                               class="form-control" value="<?php 
+                                                    if ($groupTransactQuery['transaction_type'] == 'deposit') {
+                                                        echo $groupBalanceQuery['transaction_date'];
+                                                    }
+                                               ?>" readonly>
                                     </div>
                                 </div>
 
@@ -108,7 +135,11 @@ if (isset($_GET['edit'])) {
                                     <div class="form-group">
                                         <label for="">Last Withdrawal:</label>
                                         <input type="text" name="" style="text-transform: uppercase;" id=""
-                                               class="form-control" value="<?php //echo $output[''] ?>" readonly>
+                                               class="form-control" value="<?php 
+                                                            if ($groupTransactQuery['transaction_type'] == 'withdrawal') {
+                                                                echo $groupBalanceQuery['transaction_date'];
+                                                            }
+                                                ?>" readonly>
                                     </div>
                                 </div>
 
@@ -181,7 +212,7 @@ if (isset($_GET['edit'])) {
 
 
     </div>
-
+  
 
 <?php
 
