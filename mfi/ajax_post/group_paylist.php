@@ -38,22 +38,20 @@ $sint_id = $_SESSION['int_id'];
     $groupClients = selectAll($groupClientTable, $condition);
     // dd($groupClients);
     $i = 1;
-    foreach($groupClients as $kay => $groupClient){
+    foreach($groupClients as $kay => $groupClient) {
         $c_name = $groupClient['client_name'];
         $cl_id = $groupClient['client_id'];
         $out = '
         <tr>
         <td>'.$i.'</td>
         <td>'.$c_name.'</td>
-        <td>'.$bal.'</td>
+        <td></td>
         <td></td>
         <td></td>
         <td>
-            <form action="" method="post">
-                <input type="hidden" id="name" name="name[]" value="echo $c_name;">
-                <input type="hidden" id="id" name="id[]" value="echo  $cl_id;">
-                <input type="text" name="cash[]" id="" style="text-transform: uppercase;" class="form-control total_price" value="">
-            </form>
+            <input type ="text" name="customerID[]" value="'.$cl_id.'" class="grand_total" >
+            <input type ="text"  name="customerName[]" value="'.$c_name.'" class="grand_total" >
+            <input type="text" name="prize[]" id="" style="text-transform: uppercase;" class="form-control total_price" value="">
         </td>
         </tr>
         ';
