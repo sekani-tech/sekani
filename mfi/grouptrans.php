@@ -1,9 +1,9 @@
 <?php
 
-$page_title = "Group Posting";
-$destination = "index.php";
-    include("header.php");
-$b_id = $_SESSION['branch_id'];
+  $page_title = "Group Posting";
+  $destination = "index.php";
+      include("header.php");
+  $b_id = $_SESSION['branch_id'];
 ?>
 <?php
     function branch_option($connection)
