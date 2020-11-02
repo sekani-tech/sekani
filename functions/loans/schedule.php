@@ -1,16 +1,20 @@
 <?php
     include('../connect.php');
+    $hello = "SELECT * FROM loan_disbursement_cache WHERE status = 'Approved'";
+    $query1 = mysqli_query($connection, $hello);
+    
+    if(mysqli_num_rows($query1) > 0){
         // if code ok
-        // while($ex = mysqli_fetch_array($query1, MYSQLI_ASSOC)){
+        while($ex = mysqli_fetch_array($query1, MYSQLI_ASSOC)){
             // $ex = mysqli_fetch_array($query1);
             // var_dump($ex);
             $client_id = $ex["client_id"];
             $product_id = $ex["product_id"];
             $int_id = $ex["int_id"];
             // i dont need
-            $query2 = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '13'");
+            $query2 = mysqli_query($connection, "SELECT * FROM loan WHERE client_id = '$client_id' AND product_id = '$product_id' AND int_id = '$int_id'");
             if($query2){
-               while( $y = mysqli_fetch_array($query2)){
+                $y = mysqli_fetch_array($query2);
                 $loan_id = $y["id"];
                 $acct_no = $y["account_no"];
                 $client_id = $y["client_id"];
@@ -93,9 +97,9 @@
                         }
                     }
                  }
-                }
             }
-        // }
+        }
+    }
 ?>
 <?php
     $today = date('Y-m-d');
