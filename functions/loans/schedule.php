@@ -5,7 +5,7 @@
     
     if(mysqli_num_rows($query1) > 0){
         // if code ok
-        while($ex = mysqli_fetch_array($query1, MYSQLI_ASSOC)){
+        // while($ex = mysqli_fetch_array($query1, MYSQLI_ASSOC)){
             // $ex = mysqli_fetch_array($query1);
             // var_dump($ex);
             $client_id = $ex["client_id"];
@@ -99,7 +99,7 @@
                  }
                 }
             }
-        }
+        // }
     }
 ?>
 <?php
