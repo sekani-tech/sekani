@@ -124,7 +124,7 @@ $b_id = $_SESSION['branch_id'];
                           <table class="table table-bordered hover">
                               <thead>
                                   <tr>
-                                      <td colspan="5">Total </td>
+                                      <td colspan="5">Total</td>
                                       <td > <input type = "number" readonly name="total" class="grand_total" > </td>
                                   </tr>
                                 <tr>
