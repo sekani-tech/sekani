@@ -87,7 +87,7 @@ $destination = "report_loan.php";
                       </thead>
                       <tbody>
                           <?php 
-                               if ($_SESSION["int_id"] == 13) {
+                               if ($_SESSION["int_id"] == 'NULL') {
                                 $tableJoinOutstanding = "
                                     SELECT *
                                     FROM outstanding_report_migrate

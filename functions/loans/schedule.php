@@ -13,8 +13,9 @@
             $int_id = $ex["int_id"];
             // i dont need
             $query2 = mysqli_query($connection, "SELECT * FROM loan WHERE client_id = '$client_id' AND product_id = '$product_id' AND int_id = '$int_id'");
-            if($query2){
-                $y = mysqli_fetch_array($query2);
+            // here hthere is a problemn,  but it is fixed
+            if(mysqli_num_rows($query2) > 0){
+                while ($y = mysqli_fetch_array($query2)) {
                 $loan_id = $y["id"];
                 $acct_no = $y["account_no"];
                 $client_id = $y["client_id"];
@@ -38,7 +39,7 @@
                 $period_loan = $princpal_amount / $loan_term;
                 $amount_collected = $period_loan + $interest_amount;
 
-                $select_repayment_sch = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE loan_id = '$loan_id' AND client_id = '$client_id' AND int_id = '$int_id'");
+                $select_repayment_sch = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE loan_id = '$loan_id' AND int_id = '$int_id'");
                 $dm = mysqli_fetch_array($select_repayment_sch);
                  if($dm <= 0 && $int_id != "0"){
                     if($rep_every == 'week'){
@@ -97,6 +98,7 @@
                         }
                     }
                  }
+                }
             }
         }
     }
