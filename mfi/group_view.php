@@ -10,7 +10,7 @@ $groupTransactionTable = "group_transactions";
 $clientTableName = 'group_clients';
 $loans = "loan";
 
-
+// 
 function fill_client($connection)
 {
     $sint_id = $_SESSION["int_id"];
