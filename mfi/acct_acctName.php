@@ -40,7 +40,7 @@ if(isset($_POST["name"]))
   $br_id = $_SESSION['branch_id'];
     if($_POST["name"] !='')
     {
-        $sql = "SELECT client.id, client.account_ FROM client JOIN account ON account.client_id = client.id WHERE (client.branch_id ='$br_id' $branches) && client.int_id = '".$_POST["ist"]."' && client.display_name = '".$_POST["name"]."' AND client.status = 'Approved'";
+        $sql = "SELECT client.id, account.account_no FROM client JOIN account ON account.client_id = client.id WHERE (client.branch_id ='$br_id' $branches) && client.int_id = '".$_POST["ist"]."' && client.display_name = '".$_POST["name"]."' AND client.status = 'Approved'";
         $result = mysqli_query($connection, $sql);
         while ($row = mysqli_fetch_array($result))
     {
