@@ -160,6 +160,77 @@ $rezz = mysqli_query($connection, $activeq);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+    <!-- autocomplete -->
+    <script src="../functions/autocomplete/autocomplete.js"></script>
+    <link href="../functions/autocomplete/autocomplete.css" rel="stylesheet">
+    <script>
+        window.addEventListener("load", function(){
+            suggest.attach({
+            target : "actName",
+            url : "../functions/autocomplete/autosearch.php",
+            // delay : 200,
+            min : 1
+            });
+            suggest.attach({
+            target : "inputB",
+            url : "../functions/autocomplete/autosearch.php"
+            
+            });
+            });
+    </script>
+    <style>
+    /* custom css */
+    .ac_results {
+        padding: 0px;
+        border: 1px solid #84a10b;
+        background-color: #84a10b;
+        overflow: hidden;
+        }
+
+        .ac_results ul {
+            width: 100%;
+            list-style-position: outside;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .ac_results li {
+            margin: 0px;
+            padding: 2px 5px;
+            cursor: default;
+            display: block;
+            color: #fff;
+            font-family:verdana;
+            /* 
+            if width will be 100% horizontal scrollbar will apear 
+            when scroll mode will be used
+            */
+            /*width: 100%;*/
+            font-size: 12px;
+            /* 
+            it is very important, if line-height not setted or setted 
+            in relative units scroll will be broken in firefox
+            */
+            line-height: 16px;
+            overflow: hidden;
+
+        }
+
+        .ac_loading {
+            background: white url('../images/indicator.gif') right center no-repeat;
+        }
+
+        .ac_odd {
+            background-color: #84a10b;
+            color: #ffffff;
+        }
+
+        .ac_over {
+            background-color: #5a6b13;
+            color: #ffffff;
+        }
+    </style>
     <!-- CHAT BOT -->
     <script type="text/javascript">
         (function (w, d, v3) {

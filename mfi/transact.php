@@ -475,7 +475,15 @@ if ($trans_post == 1 || $trans_post == "1") {
         <div class="col-md-4">
             <div class="form-group">
                <label class="bmd-label-floating">Account Name</label>
-               <input type="text" class="form-control" name="account_no" id="actName">
+               <div id="acWrapXXX" class="acWrap">
+                <input type="text" class="form-control" name="account_no" id="actName">
+                <div id="acBoxXXX" class="acBox">
+                  <!-- SUGGESTIONS ARE PUT HERE DYNAMICALLY VIA AJAX -->
+                  <div>Option A</div>
+                  <div>Option B</div>
+                  <div>Option C</div>
+                </div>
+               </div>
                <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id;?>" id="int_id">
             </div>
             <div id="accname"></div>
