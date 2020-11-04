@@ -32,7 +32,8 @@
                 <p class="card-category">Fill in all important data</p>
               </div>
               <div class="card-body">
-              <form id="form" action="../functions/group_upload.php" method="POST">
+              <form id="form" action="../functions/group_tran.php" method="POST" >
+           
                   <div class = "row">
                     <div class = "col-md-12">
                       <div class = "form-group">
@@ -51,6 +52,7 @@
                                     <input type="radio" id="perfwith" name="acc" value="b" class="custom-control-input">
                                     <label class="custom-control-label" for="perfwith">Perform Withdrawal</label>
                                 </div>
+                                <input type="hidden" value="<?php echo  $_SESSION["int_id"];?>" name="intID">
                             </div>
                         </div>
                           </div>
@@ -101,17 +103,17 @@
                             <p></p>
                         </div>
                            <div class="col-md-6">
-    <div class="custom-radio custom-control">
-        <input type="radio" id="fetcpostloanoff"  name="fech_post" class="custom-control-input">
-        <label class="custom-control-label" for="fetcpostloanoff">Fetch Posting by loan officer</label>
-    </div>
-    </div>
-    <div class="col-md-6">
-        <div class="custom-radio custom-control">
-            <input type="radio" id="fetcpostgroup" name="fech_post" class="custom-control-input">
-            <label class="custom-control-label" for="fetcpostgroup">Fetch posting by group</label>
-        </div>
-    </div>
+                            <div class="custom-radio custom-control">
+                                <input type="radio" id="fetcpostloanoff"  name="fech_post" class="custom-control-input">
+                                <label class="custom-control-label" for="fetcpostloanoff">Fetch Posting by loan officer</label>
+                            </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="custom-radio custom-control">
+                                    <input type="radio" id="fetcpostgroup" name="fech_post" class="custom-control-input">
+                                    <label class="custom-control-label" for="fetcpostgroup">Fetch posting by group</label>
+                                </div>
+                            </div>
                           <div id="post" class="col-md-12">
                           
                           </div>
@@ -137,7 +139,7 @@
                                 </tr>
                               </thead>
                               <tbody id ="grlist">
-<!-- insert td in list -->
+<!-- insert td in list -->        
                               </tbody>
                               <script>
                                 $(document).ready(function() {

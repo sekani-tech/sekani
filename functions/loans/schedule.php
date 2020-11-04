@@ -13,8 +13,9 @@
             $int_id = $ex["int_id"];
             // i dont need
             $query2 = mysqli_query($connection, "SELECT * FROM loan WHERE client_id = '$client_id' AND product_id = '$product_id' AND int_id = '$int_id'");
-            if($query2){
-                $y = mysqli_fetch_array($query2);
+            // here hthere is a problemn,  but it is fixed
+            if(mysqli_num_rows($query2) > 0){
+                while ($y = mysqli_fetch_array($query2)) {
                 $loan_id = $y["id"];
                 $acct_no = $y["account_no"];
                 $client_id = $y["client_id"];
@@ -97,6 +98,7 @@
                         }
                     }
                  }
+                }
             }
         }
     }
