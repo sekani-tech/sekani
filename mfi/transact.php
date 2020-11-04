@@ -422,7 +422,7 @@ if ($trans_post == 1 || $trans_post == "1") {
         <div class="col-md-4">
             <script>
                 $(document).ready(function() {
-                  $('#act').on("change keyup paste click", function(){
+                  $('#act').on("change keyup paste", function(){
                     var id = $(this).val();
                     var ist = $('#int_id').val();
                     $.ajax({
@@ -439,7 +439,7 @@ if ($trans_post == 1 || $trans_post == "1") {
 
               <script>
                 $(document).ready(function() {
-                  $('#actName').on("change keyup paste click", function(){
+                  $('#actName').on("change keyup paste", function(){
                     var name = $(this).val();
                     var ist = $('#int_id').val();
                     $.ajax({
@@ -555,7 +555,7 @@ if ($trans_post == 1 || $trans_post == "1") {
         <div class="col-md-4">
         <script>
               $(document).ready(function() {
-                  $('#acct').on("change keyup paste click", function(){
+                  $('#acct').on("change keyup paste", function(){
                     var id = $(this).val();
                     var ist = $('#int_id').val();
                     $.ajax({
