@@ -499,7 +499,9 @@ $rezz = mysqli_query($connection, $activeq);
                             $ghgd = brii($connection);
                             ?>
                             <?php
-                            $query = "SELECT * FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' AND client.status = 'Not Approved' AND (client.branch_id ='$br_id'$ghgd)";
+                            $query = "SELECT * FROM client JOIN staff ON client.loan_officer_id = staff.id 
+                                        WHERE client.int_id = '$sessint_id' 
+                                        AND client.status = 'Not Approved' AND (client.branch_id ='$br_id'$ghgd)";
                             $result = mysqli_query($connection, $query);
                             $approvd = mysqli_num_rows($result);
                             ?>
