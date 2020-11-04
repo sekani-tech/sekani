@@ -307,7 +307,7 @@ var myChart = new Chart(ctx, {
                 'black',
                 'black',
                 'black',
-                'black',
+                'black', 
                 'black',
                 'black',
                 'black',
