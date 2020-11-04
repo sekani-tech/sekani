@@ -49,8 +49,8 @@ $sint_id = $_SESSION['int_id'];
         <td></td>
         <td></td>
         <td>
-            <input type ="text" name="customerID[]" value="'.$cl_id.'" class="grand_total" >
-            <input type ="text"  name="customerName[]" value="'.$c_name.'" class="grand_total" >
+            <input type ="text" hidden name="customerID[]" value="'.$cl_id.'"  >
+            <input type ="text" hidden  name="customerName[]" value="'.$c_name.'"  >
             <input type="text" name="prize[]" id="" style="text-transform: uppercase;" class="form-control total_price" value="">
         </td>
         </tr>
