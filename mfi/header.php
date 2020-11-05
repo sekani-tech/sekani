@@ -166,15 +166,15 @@ $rezz = mysqli_query($connection, $activeq);
     <script>
         window.addEventListener("load", function(){
             suggest.attach({
-            target : "actName",
-            url : "../functions/autocomplete/autosearch.php",
-            // delay : 200,
-            min : 1
+                target : "actName",
+                url : "../functions/autocomplete/autosearch.php",
+                // delay : 200,
+                min : 1
             });
             suggest.attach({
-            target : "inputB",
-            url : "../functions/autocomplete/autosearch.php"
-            
+                target : "inputB",
+                url : "../functions/autocomplete/autosearch.php"
+                
             });
             });
     </script>

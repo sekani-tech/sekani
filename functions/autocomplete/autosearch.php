@@ -13,12 +13,15 @@ $pdo = new PDO(
 	]
 );
 
+session_start();
+$int_id = $_SESSION['int_id'];
+$branch_id = $_SESSION["branch_id"];
 // SEARCH AND OUTPUT RESULTS
-$stmt = $pdo->prepare("SELECT * FROM client WHERE firstname LIKE ?");
+$stmt = $pdo->prepare("SELECT * FROM client WHERE int_id = '$int_id' AND status = 'Approved' AND (firstname LIKE ?  OR  middlename LIKE ? or lastname LIKE ? or display_name LIKE ?)");
 $stmt->execute(["%" . $_GET['term'] . "%"]);
 $data = [];
 while ($row = $stmt->fetch(PDO::FETCH_NAMED)) {
-	$data[] = $row['firstname'];
+	$data[] = $row['display_name'];
 }
 $pdo = null;
 echo json_encode($data);
