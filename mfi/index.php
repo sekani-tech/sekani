@@ -70,7 +70,7 @@
     </div>
 
 <!-- loan balance -->
-<div class="col-lg-12 col-md-12 col-sm-12">
+<div class="col-lg-6 col-md-12 col-sm-12">
               <div class="card card-stats">
                 <div class="card-header card-header-primary card-header-icon">
                   <div class="card-icon">
@@ -101,7 +101,7 @@
                       $fde = ($print + $intet) + ($arr_p + $arr_i);
                       // DGMFB
                   ?>
-                  <h3 class="card-title">₦<?php echo number_format(round($fde), 2); ?></h3>
+                  <h2 class="card-title">₦<?php echo number_format(round($fde), 2); ?></h2>
                   
                 </div>
                 <div class="card-footer">
@@ -113,39 +113,8 @@
                 </div>
               </div>
             </div>
-        </div>
 
-
-
-          <div class="row">
-            <!-- Card displays clients -->
-            <div class="col-lg-4 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-primary card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">people</i>
-                  </div>
-                  <p class="card-category"><b>Clients</b></p>
-                  <!-- Populate with number of existing clients -->
-                  <h2 class="card-title"><?php
-                        $query = "SELECT COUNT(firstname) FROM client WHERE int_id = '$sessint_id' AND status = 'Approved'";
-                        $result = mysqli_query($connection, $query);
-                   if ($result) {
-                     $inr = mysqli_fetch_array($result);
-                     echo $inr['COUNT(firstname)'];
-                   }?></h2>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                  <i class="material-icons text-primary">alarm</i> Last 24 Hours
-                    <!-- Get current update time and display -->
-                    <!-- <i class="material-icons">update</i> Just Updated -->
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /clients -->
-            <!-- Portfolio at risk -->
+             <!-- Portfolio at risk -->
             <!-- not in use yet -->
             <?php
                 $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
@@ -189,7 +158,7 @@
                 $pfarthree = ($bnk_provthree/$ttout) * 100;
                 $pfarsix = ($bnk_provsix/$ttout) * 100;
             ?>
-            <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="col-lg-6 col-md-6 col-sm-6">
               <div class="card card-stats">
                 <div class="card-header card-header-primary card-header-icon">
                   <div class="card-icon">
@@ -219,8 +188,43 @@
               </div>
             </div>
             <!-- /par -->
+        </div>
+
+
+
+          <div class="row">
+            <!-- Card displays clients -->
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-primary card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">people</i>
+                  </div>
+                  <p class="card-category"><b>Clients</b></p>
+                  <!-- Populate with number of existing clients -->
+                  <h2 class="card-title"><?php
+                        $query = "SELECT COUNT(firstname) FROM client WHERE int_id = '$sessint_id' AND status = 'Approved'";
+                        $result = mysqli_query($connection, $query);
+                   if ($result) {
+                     $inr = mysqli_fetch_array($result);
+                     echo $inr['COUNT(firstname)'];
+                   }?></h2>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                  <i class="material-icons text-primary">alarm</i> Last 24 Hours
+                    <!-- Get current update time and display -->
+                    <!-- <i class="material-icons">update</i> Just Updated -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- /clients -->
+           
             <!-- logged in users -->
-            <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="col-lg-6 col-md-6 col-sm-6">
               <div class="card card-stats">
                 <div class="card-header card-header-primary card-header-icon">
                   <div class="card-icon">
@@ -265,10 +269,10 @@ setInterval(function() {
           <!-- /row -->
           <div class="row">
             <!-- populate with frequency of loan disbursement -->
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="card card-chart">
-                <div class="card-header card-header-primary">
-                <canvas id="myChart" width="600" height="150"></canvas>
+                <div class="card-header card-header">
+                <canvas id="myChart" width="600" height="400"></canvas>
                 <?php
                 // finish
                 $current_date = date('Y-m-d');
@@ -287,66 +291,69 @@ setInterval(function() {
                 <script>
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
-    type: 'line',
+    type: 'bar',
     data: {
         labels: ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th'],
         datasets: [{
             label: 'Loan Collection',
             data: [<?php echo $final_r ?>],
             backgroundColor: [
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)',
-                'rgba(255, 255, 251, 0.2)'
+              'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black', 
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black'
             ],
             borderColor: [
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)'
+              'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black',
+                'black'
             ],
             borderWidth: 1
         }]
