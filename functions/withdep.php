@@ -49,7 +49,7 @@ $fdi = "SELECT * FROM account WHERE account_no = '$account' AND int_id = '$sessi
 $dfo = mysqli_query($connection, $fdi);
 $fodp = mysqli_fetch_array($dfo);
 $ds = $fodp['status'];
-if($ds){
+if($ds == 'Active' || $ds == 'Inactive'){
 $getacct = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' && int_id = '$sessint_id'");
 if (count([$getacct]) == 1) {
 $y = mysqli_fetch_array($getacct);

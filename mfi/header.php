@@ -1,6 +1,7 @@
 <?php
 //  BEFOR THE SESSION START
 session_set_cookie_params(0);
+ob_start();
 session_start();
 $autologout = 1000;
 $lastactive = $_SESSION['timestamp'] ?? 0;

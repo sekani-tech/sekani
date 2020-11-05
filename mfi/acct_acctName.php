@@ -34,22 +34,25 @@ if (isset($_POST["name"])) {
         return $out;
     }
 
-    $branche = branch_opt($connection);
+    $branch = branch_opt($connection);
     $branches = branch_option($connection);
     $br_id = $_SESSION['branch_id'];
-    if ($_POST["name"] != '') {
-        $sql = "SELECT client.id, account.account_no FROM client JOIN account ON account.client_id = client.id WHERE (client.branch_id ='$br_id' $branches) && client.int_id = '" . $_POST["ist"] . "' && client.display_name = '" . $_POST["name"] . "' AND client.status = 'Approved'";
-        $result = mysqli_query($connection, $sql);
-        while ($row = mysqli_fetch_array($result)) {
+
+//    for depositing
+    if ($_POST["name"]) {
+
+        $sql = "SELECT client.id, account.account_no FROM client JOIN account ON account.client_id = client.id WHERE client.int_id = '" . $_POST["ist"] . "' AND client.display_name = '" . $_POST["name"] . "' AND client.status = 'Approved'";
+        $results = mysqli_query($connection, $sql);
+        foreach ($results As $key => $result){
             $output = '<div class="form-group">
         <label>Account Number:</label>
-        <input type="text" value=" ' . strtoupper($row["account_no"]) . '" name="principal_amoun" class="form-control" readonly required id="principal_amount">
+        <input type="text" value=" ' . dd($_POST). '" name="principal_amoun" class="form-control" readonly required id="principal_amount">
       </div>
       ';
         }
     }
-    if ($_POST["name"] != '') {
-        $ans = "SELECT * FROM account WHERE account_no = '" . $_POST["name"] . "' && (branch_id ='$br_id' $branche) && int_id = '" . $_POST["ist"] . "'";
+    if ($_POST["name"]) {
+        $ans = "SELECT * FROM account WHERE account_no = '" . $_POST["name"] . "' AND branch_id ='$br_id'  AND int_id = '" . $_POST["ist"] . "'";
         $result = mysqli_query($connection, $ans);
 
         while ($row = mysqli_fetch_array($result)) {
@@ -63,7 +66,3 @@ if (isset($_POST["name"])) {
     echo $output;
     echo $output2;
 }
-// session_start();
-//    $_SESSION['load_term'] = "batman";
-//    $_SESSION['interest_rate'] = "batman";
-//    $_SESSION['disbursment_date'] = "batman";

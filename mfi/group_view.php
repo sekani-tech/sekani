@@ -51,7 +51,7 @@ if (isset($_GET['edit'])) {
     $Withdrawal = ['transaction_type' => 'withdrawal'];
     $deposit = ['transaction_type' => 'deposit'];
     $groupTransactQuery = selectAll($groupTransactionTable, $groupTransactionCond);
-    if (!$groupTransactQuery){
+    if (!$groupTransactQuery) {
         $groupTransactDep = '0000-00-00';
         $groupTransactWit = '0000-00-00';
     }
@@ -102,9 +102,9 @@ if (isset($_POST['add-member'])) {
         'group_name' => $data['group_name']
     ];
     $existingUser = selectOne('group_clients', $existingUserCon);
-
     if (!$existingUser) {
         $result = create('group_clients', $data);
+        header("refresh: 2");
     } else {
         echo "User Already exist in this Group";
     }
@@ -191,21 +191,21 @@ if (isset($_POST['add-member'])) {
                                     </div>
                                 </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="">Last Deposit:</label>
-                                            <input type="text" name="" style="text-transform: uppercase;" id=""
-                                                   class="form-control"
-                                                   value="<?php echo $groupTransactDep?>"
-                                                   readonly>
-                                        </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Last Deposit:</label>
+                                        <input type="text" name="" style="text-transform: uppercase;" id=""
+                                               class="form-control"
+                                               value="<?php echo $groupTransactDep ?>"
+                                               readonly>
                                     </div>
+                                </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="">Last Withdrawal:</label>
                                         <input type="text" name="" style="text-transform: uppercase;" id=""
-                                               class="form-control" value="<?php echo $groupTransactWit?>" readonly>
+                                               class="form-control" value="<?php echo $groupTransactWit ?>" readonly>
                                     </div>
                                 </div>
 
