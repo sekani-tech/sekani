@@ -21,7 +21,7 @@ if (count([$getacct1]) == 1) {
     $uw = mysqli_fetch_array($getacct1);
     $staff_id = $uw["id"];
     $staff_email = $uw["email"];
-    echo $staff_id;
+    echo $staff_id."STAFF";
 }
 $staff_name  = strtoupper($_SESSION["username"]);
 ?>
@@ -78,13 +78,15 @@ $pint = date('Y-m-d H:i:s');
 $gends = date('Y-m-d h:i:sa');
 // we will call the institution account
 $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
-    if (count([$damn]) == 1) {
+    if (mysqli_num_rows($damn) > 0) {
         $x = mysqli_fetch_array($damn);
         $int_acct_bal = $x['account_balance_derived'];
         $tbdx = $x['total_deposits_derived'] + $amt;
         $tbd2x = $x['total_withdrawals_derived'] + $amt2;
         $new_int_bal = $amt + $int_acct_bal;
         $new_int_bal2 = $int_acct_bal - $amt2;
+    } else {
+      echo "No Account Found";
     }
 
 $dbclient = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' && int_id = '$sessint_id'");
@@ -99,14 +101,14 @@ if (count([$dbclient]) == 1) {
 }
 }
 
-if ($client_id != "") {
+if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
 
 // we will write a query to check if this person posting is a teller and has not been restricted
 // a condition to post the amount if it less or equal to the post - limit of the teller.
 
 $taketeller = "SELECT * FROM tellers WHERE name = '$staff_id' && int_id = '$sessint_id'";
 $check_me_men = mysqli_query($connection, $taketeller);
-if ($check_me_men) {
+if (mysqli_num_rows($check_me_men) > 0) {
     $ex = mysqli_fetch_array($check_me_men);
 $is_del = $ex["is_deleted"];
 $till = $ex["till"];
