@@ -203,6 +203,7 @@ $rezz = mysqli_query($connection, $activeq);
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css">
     <!-- DataTables scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!-- DATATABLE CODE -->
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
