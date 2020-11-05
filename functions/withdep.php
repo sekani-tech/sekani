@@ -49,11 +49,12 @@ $fdi = "SELECT * FROM account WHERE account_no = '$account' AND int_id = '$sessi
 $dfo = mysqli_query($connection, $fdi);
 $fodp = mysqli_fetch_array($dfo);
 $ds = $fodp['status'];
+
 // move
 $getacct = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' && int_id = '$sessint_id'");
 if (count([$getacct]) == 1) {
 $y = mysqli_fetch_array($getacct);
-$branch_id = $y['branch_id'];
+$branch_id = $_SESSION["branch_id"];
 $acct_no = $y['account_no'];
 $tryacc = $y['account_no'];
 // get the savings product id
@@ -97,6 +98,8 @@ if (count([$dbclient]) == 1) {
     $client_sms = $a["SMS_ACTIVE"];
 }
 }
+
+if ($client_id != "") {
 
 // we will write a query to check if this person posting is a teller and has not been restricted
 // a condition to post the amount if it less or equal to the post - limit of the teller.
@@ -896,12 +899,11 @@ $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
 echo header ("Location: ../mfi/transact.php?messagex2=$randms");
 // remeber to fix account transaction for approval
 }
-
-// else{
-//   // To Check if Account is Dormant 
-// $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
-// echo header ("Location: ../mfi/transact.php?message123=$randms");
-// }
+} else{
+  // To Check if CLIENT EXIST
+$_SESSION["Lack_of_intfund_$randms"] = "TELLER";
+echo header ("Location: ../mfi/transact.php?message123=$randms");
+}
 ?>
 <?php
 // qwerty

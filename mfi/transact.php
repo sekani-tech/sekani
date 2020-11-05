@@ -376,8 +376,8 @@ if (isset($_GET["message"])) {
   $(document).ready(function(){
       swal({
           type: "info",
-          title: "Notice",
-          text: "This account is Dormant",
+          title: "Notice Report to the Technical Department",
+          text: "This Client is not Available",
           showConfirmButton: false,
           timer: 3000
       })
@@ -478,7 +478,6 @@ if ($trans_post == 1 || $trans_post == "1") {
                                                 <input type="text" class="form-control" name="account_no" id="actName">
                                                 <div id="acBoxXXX" class="acBox">
                                                     <!-- SUGGESTIONS ARE PUT HERE DYNAMICALLY VIA AJAX -->
-
                                                 </div>
                                             </div>
                                             <input type="text" class="form-control" hidden name=""
