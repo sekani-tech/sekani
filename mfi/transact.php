@@ -475,9 +475,8 @@ if ($trans_post == 1 || $trans_post == "1") {
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Account Name</label>
                                             <div id="acWrapXXX" class="acWrap">
-                                                <input type="text" class="form-control" name="account_no" id="actName">
+                                                <input type="text" class="form-control" id="actName">
                                                 <div id="acBoxXXX" class="acBox">
-                                                    <!-- SUGGESTIONS ARE PUT HERE DYNAMICALLY VIA AJAX -->
                                                 </div>
                                             </div>
                                             <input type="text" class="form-control" hidden name=""
