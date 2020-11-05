@@ -9,12 +9,12 @@ define('DB_NAME', 'sekanisy_admin');
 // connect to the database with the defined values
 $connection = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 // if there's an error
-if(!$connection){
-	echo "Failed to connect database" . die(mysqli_error($connection));;
+if (!$connection) {
+    echo "Failed to connect database" . die(mysqli_error($connection));;
 }
 $dbselect = mysqli_select_db($connection, DB_NAME);
-if(!$dbselect){
-	echo "Failed to Select database" . die(mysqli_error($connection));
+if (!$dbselect) {
+    echo "Failed to Select database" . die(mysqli_error($connection));
 }
 
 //session_start();
@@ -137,7 +137,6 @@ function delete($table, $id)
     return $stmt->affected_rows;
 }
 
-
 function countRecords($table)
 {
     global $connection;
@@ -146,3 +145,27 @@ function countRecords($table)
     $result = $stmt->get_result()->fetch_assoc();
     return $result['count'];
 }
+
+function searchClient($table1, $int_id, $branch_id, $term)
+{
+    $match = '%' . $term . '%';
+    global $connection;
+    $sql = "SELECT c.* 
+            FROM $table1 AS c 
+            WHERE c.int_id=?
+            AND c.branch_id=? AND c.firstname LIKE ? OR c.lastname LIKE ? OR c.display_name LIKE ?";
+
+//    dd($sql);
+    $stmt = executeQuery($sql, [
+        'int_id' => $int_id,
+        'branch_id' => $branch_id,
+        'firstname' => $match,
+        'lastname' => $match,
+        'display_name' => $match
+    ]);
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+}
+
+//$details = searchClient('client', 13, 28, 'Moses');
+
+//dd($details);

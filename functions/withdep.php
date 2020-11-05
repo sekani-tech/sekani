@@ -21,7 +21,7 @@ if (count([$getacct1]) == 1) {
     $uw = mysqli_fetch_array($getacct1);
     $staff_id = $uw["id"];
     $staff_email = $uw["email"];
-    echo $staff_id;
+    echo $staff_id."STAFF";
 }
 $staff_name  = strtoupper($_SESSION["username"]);
 ?>
@@ -49,11 +49,12 @@ $fdi = "SELECT * FROM account WHERE account_no = '$account' AND int_id = '$sessi
 $dfo = mysqli_query($connection, $fdi);
 $fodp = mysqli_fetch_array($dfo);
 $ds = $fodp['status'];
-if($ds == 'Active' || $ds == 'Inactive'){
+
+// move
 $getacct = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' && int_id = '$sessint_id'");
 if (count([$getacct]) == 1) {
 $y = mysqli_fetch_array($getacct);
-$branch_id = $y['branch_id'];
+$branch_id = $_SESSION["branch_id"];
 $acct_no = $y['account_no'];
 $tryacc = $y['account_no'];
 // get the savings product id
@@ -77,13 +78,15 @@ $pint = date('Y-m-d H:i:s');
 $gends = date('Y-m-d h:i:sa');
 // we will call the institution account
 $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
-    if (count([$damn]) == 1) {
+    if (mysqli_num_rows($damn) > 0) {
         $x = mysqli_fetch_array($damn);
         $int_acct_bal = $x['account_balance_derived'];
         $tbdx = $x['total_deposits_derived'] + $amt;
         $tbd2x = $x['total_withdrawals_derived'] + $amt2;
         $new_int_bal = $amt + $int_acct_bal;
         $new_int_bal2 = $int_acct_bal - $amt2;
+    } else {
+      echo "No Account Found";
     }
 
 $dbclient = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' && int_id = '$sessint_id'");
@@ -98,12 +101,14 @@ if (count([$dbclient]) == 1) {
 }
 }
 
+if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
+
 // we will write a query to check if this person posting is a teller and has not been restricted
 // a condition to post the amount if it less or equal to the post - limit of the teller.
 
 $taketeller = "SELECT * FROM tellers WHERE name = '$staff_id' && int_id = '$sessint_id'";
 $check_me_men = mysqli_query($connection, $taketeller);
-if ($check_me_men) {
+if (mysqli_num_rows($check_me_men) > 0) {
     $ex = mysqli_fetch_array($check_me_men);
 $is_del = $ex["is_deleted"];
 $till = $ex["till"];
@@ -896,9 +901,8 @@ $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
 echo header ("Location: ../mfi/transact.php?messagex2=$randms");
 // remeber to fix account transaction for approval
 }
-}
-else{
-  // To Check if Account is Dormant 
+} else{
+  // To Check if CLIENT EXIST
 $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
 echo header ("Location: ../mfi/transact.php?message123=$randms");
 }

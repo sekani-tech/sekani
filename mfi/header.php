@@ -1,6 +1,7 @@
 <?php
 //  BEFOR THE SESSION START
 session_set_cookie_params(0);
+ob_start();
 session_start();
 $autologout = 1000;
 $lastactive = $_SESSION['timestamp'] ?? 0;
@@ -171,11 +172,22 @@ $rezz = mysqli_query($connection, $activeq);
                 // delay : 200,
                 min : 1
             });
-            suggest.attach({
-                target : "inputB",
-                url : "../functions/autocomplete/autosearch.php"
-                
-            });
+            if(suggest.close){
+                $(document).ready(function () {
+                                                $('#actName').on("change click paste", function () {
+                                                    var name = $(this).val();
+                                                    var ist = $('#int_id').val();
+                                                    $.ajax({
+                                                        url: "acct_acctName.php",
+                                                        method: "POST",
+                                                        data: {name: name, ist: ist},
+                                                        success: function (data) {
+                                                            $('#accname').html(data);
+                                                        }
+                                                    })
+                                                });
+                                            });
+            }
             });
     </script>
     <style>
@@ -274,6 +286,7 @@ $rezz = mysqli_query($connection, $activeq);
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css">
     <!-- DataTables scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!-- DATATABLE CODE -->
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>

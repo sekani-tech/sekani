@@ -15,7 +15,8 @@
         "intervention/imagecache": "^2.5",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
-        "tcg/voyager": "^1.4"
+        "tcg/voyager": "^1.4",
+      "ext-json": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
