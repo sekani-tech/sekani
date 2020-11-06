@@ -128,6 +128,7 @@ function airtime(){
     // MAKE FINAL ECHO
     if($query_table){
         echo json_encode(array("message" => "Wallet Transaction Successful, Please Contact Sekani", "transaction_id" => "$trans", "status" => "success"));
+        return true;
     } else {
         echo json_encode(array("message" => "Error at Inserting Wallet Transaction, Please Contact Sekani"));
     }
