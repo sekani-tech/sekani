@@ -132,24 +132,28 @@ function airtime(){
         sekani_charge=:sekani_charge, merchant_charge=:merchant_charge";
 
         // prepare query
+        $name = "bill_airtime";
+        $zero = 0;
+
+
     $stmtt = $this->conn->prepare($insert_query);
     $stmtt->bindParam(":int_id", $int_id);
     $stmtt->bindParam(":branch_id", $branch_id);
     $stmtt->bindParam(":transaction_id", $trans);
     $stmtt->bindParam(":description", $generate);
-    $stmtt->bindParam(":transaction_type", 'airtime');
-    $stmtt->bindParam(":teller_id", 'airtime');
-    $stmtt->bindParam(":is_reversed", '0');
+    $stmtt->bindParam(":transaction_type", $name);
+    $stmtt->bindParam(":teller_id", $zero);
+    $stmtt->bindParam(":is_reversed", $zero);
     $stmtt->bindParam(":transaction_date", $date);
     $stmtt->bindParam(":amount", $amount);
     $stmtt->bindParam(":wallet_balance_derived", $cal_bal);
     $stmtt->bindParam(":overdraft_amount_derived=:overdraft_amount_derived", $cal_bal);
     $stmtt->bindParam(":balance_end_date_derived", $date);
-    $stmtt->bindParam(":balance_number_of_days_derived", '0');
-    $stmtt->bindParam(":cumulative_balance_derived", '0');
+    $stmtt->bindParam(":balance_number_of_days_derived", $zero);
+    $stmtt->bindParam(":cumulative_balance_derived", $zero);
     $stmtt->bindParam(":created_date", $date2);
-    $stmtt->bindParam(":manually_adjusted_or_reversed", '0');
-    $stmtt->bindParam(":credit", '0');
+    $stmtt->bindParam(":manually_adjusted_or_reversed", $zero);
+    $stmtt->bindParam(":credit", $zero);
     $stmtt->bindParam(":debit", $amount);
     $stmtt->bindParam(":int_profit", $cal_int_prof);
     $stmtt->bindParam(":sekani_charge", $cal_sek);
