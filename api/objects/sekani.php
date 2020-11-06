@@ -133,7 +133,7 @@ function airtime(){
 
         // prepare query
         $name = "bill_airtime";
-        $zero = 0;
+        $zero = 1;
 
 
     $stmtt = $this->conn->prepare($insert_query);
