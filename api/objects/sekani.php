@@ -165,7 +165,7 @@ function airtime(){
         echo json_encode(array("message" => "Error at Updating Wallet, Please Contact Sekani"));
     }
             } else {
-                echo json_encode(array("message" => "Unable to Recharge Airtime. Please Contact Sekani!", "status" => "failed"));
+                echo $response;
             }
         }
     } else {
