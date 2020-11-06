@@ -115,7 +115,7 @@ function airtime(){
     $stmtu->bindParam(':id', $id);
 
     if($stmtu->execute()){
-        $connection = $this->conn;
+        include("../../functions/connect.php");
         $query_table = mysqli_query($connection, "INSERT INTO `sekani_wallet_transaction` (`int_id`, `branch_id`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `wallet_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, 
         `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`,
         `int_profit`, `sekani_charge`, `merchant_charge`)
@@ -125,29 +125,6 @@ function airtime(){
          '{$cal_bal}', {$date}, 
          NULL, NULL, '{$date2}', '0', '0.00', '{$amount}', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
 
-
-    // $stmtt = $this->conn->prepare($insert_query);
-    // $stmtt->bindValue(":int_id", $int_id);
-    // $stmtt->bindValue(":branch_id", $branch_id);
-    // $stmtt->bindValue(":transaction_id", $trans);
-    // $stmtt->bindValue(":description", $generate);
-    // $stmtt->bindValue(":transaction_type", $name);
-    // $stmtt->bindValue(":teller_id", $zero);
-    // $stmtt->bindValue(":is_reversed", $zero);
-    // $stmtt->bindValue(":transaction_date", $date);
-    // $stmtt->bindValue(":amount", $amount);
-    // $stmtt->bindValue(":wallet_balance_derived", $cal_bal);
-    // $stmtt->bindValue(":overdraft_amount_derived=:overdraft_amount_derived", $cal_bal);
-    // $stmtt->bindValue(":balance_end_date_derived", $date);
-    // $stmtt->bindValue(":balance_number_of_days_derived", $zero);
-    // $stmtt->bindValue(":cumulative_balance_derived", $zero);
-    // $stmtt->bindValue(":created_date", $date2);
-    // $stmtt->bindValue(":manually_adjusted_or_reversed", $zero);
-    // $stmtt->bindValue(":credit", $zero);
-    // $stmtt->bindValue(":debit", $amount);
-    // $stmtt->bindValue(":int_profit", $cal_int_prof);
-    // $stmtt->bindValue(":sekani_charge", $cal_sek);
-    // $stmtt->bindValue(":merchant", $cal_mch);
     // MAKE FINAL ECHO
     if($query_table){
         return true;
