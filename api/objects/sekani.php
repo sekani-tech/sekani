@@ -115,51 +115,41 @@ function airtime(){
     $stmtu->bindParam(':id', $id);
 
     if($stmtu->execute()){
-        $insert_query = "INSERT INTO
-        sekani_wallet_transaction
-    SET
-        int_id=:int_id, branch_id=:branch_id, 
-        transaction_id=:transaction_id,
-        description=:description, transaction_type=:transaction_type,
-        teller_id=:teller_id, is_reversed=:is_reversed,
-        transaction_date=:transaction_date, amount=:amount,
-        wallet_balance_derived=:wallet_balance_derived, overdraft_amount_derived=:overdraft_amount_derived,
-        balance_end_date_derived=:balance_end_date_derived,
-        balance_number_of_days_derived=:balance_number_of_days_derived,
-        cumulative_balance_derived=:cumulative_balance_derived, created_date=:created_date,
-        manually_adjusted_or_reversed=:manually_adjusted_or_reversed,
-        credit:credit, debit=:debit, int_profit=:int_profit,
-        sekani_charge=:sekani_charge, merchant_charge=:merchant_charge";
-
-        // prepare query
-        $name = "bill_airtime";
-        $zero = 1;
+        $connection = $this->conn;
+        $query_table = mysqli_query($connection, "INSERT INTO `sekani_wallet_transaction` (`int_id`, `branch_id`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `wallet_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, 
+        `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`,
+        `int_profit`, `sekani_charge`, `merchant_charge`)
+         VALUES ('{$int_id}', '{$branch_id}', '{$trans}',
+         '{$generate}', 'bill_airtime', 
+         NULL, '0', '{$date}', '{$amount}', '{$cal_bal}',
+         '{$cal_bal}', {$date}, 
+         NULL, NULL, '{$date2}', '0', '0.00', '{$amount}', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
 
 
-    $stmtt = $this->conn->prepare($insert_query);
-    $stmtt->bindValue(":int_id", $int_id, PDO::PARAM_STR);
-    $stmtt->bindValue(":branch_id", $branch_id, PDO::PARAM_STR);
-    $stmtt->bindValue(":transaction_id", $trans, PDO::PARAM_STR);
-    $stmtt->bindValue(":description", $generate, PDO::PARAM_STR);
-    $stmtt->bindValue(":transaction_type", $name, PDO::PARAM_STR);
-    $stmtt->bindValue(":teller_id", $zero, PDO::PARAM_STR);
-    $stmtt->bindValue(":is_reversed", $zero, PDO::PARAM_STR);
-    $stmtt->bindValue(":transaction_date", $date, PDO::PARAM_STR);
-    $stmtt->bindValue(":amount", $amount, PDO::PARAM_STR);
-    $stmtt->bindValue(":wallet_balance_derived", $cal_bal, PDO::PARAM_STR);
-    $stmtt->bindValue(":overdraft_amount_derived=:overdraft_amount_derived", $cal_bal, PDO::PARAM_STR);
-    $stmtt->bindValue(":balance_end_date_derived", $date, PDO::PARAM_STR);
-    $stmtt->bindValue(":balance_number_of_days_derived", $zero, PDO::PARAM_STR);
-    $stmtt->bindValue(":cumulative_balance_derived", $zero, PDO::PARAM_STR);
-    $stmtt->bindValue(":created_date", $date2, PDO::PARAM_STR);
-    $stmtt->bindValue(":manually_adjusted_or_reversed", $zero, PDO::PARAM_STR);
-    $stmtt->bindValue(":credit", $zero, PDO::PARAM_STR);
-    $stmtt->bindValue(":debit", $amount, PDO::PARAM_STR);
-    $stmtt->bindValue(":int_profit", $cal_int_prof, PDO::PARAM_STR);
-    $stmtt->bindValue(":sekani_charge", $cal_sek, PDO::PARAM_STR);
-    $stmtt->bindValue(":merchant", $cal_mch, PDO::PARAM_STR);
+    // $stmtt = $this->conn->prepare($insert_query);
+    // $stmtt->bindValue(":int_id", $int_id);
+    // $stmtt->bindValue(":branch_id", $branch_id);
+    // $stmtt->bindValue(":transaction_id", $trans);
+    // $stmtt->bindValue(":description", $generate);
+    // $stmtt->bindValue(":transaction_type", $name);
+    // $stmtt->bindValue(":teller_id", $zero);
+    // $stmtt->bindValue(":is_reversed", $zero);
+    // $stmtt->bindValue(":transaction_date", $date);
+    // $stmtt->bindValue(":amount", $amount);
+    // $stmtt->bindValue(":wallet_balance_derived", $cal_bal);
+    // $stmtt->bindValue(":overdraft_amount_derived=:overdraft_amount_derived", $cal_bal);
+    // $stmtt->bindValue(":balance_end_date_derived", $date);
+    // $stmtt->bindValue(":balance_number_of_days_derived", $zero);
+    // $stmtt->bindValue(":cumulative_balance_derived", $zero);
+    // $stmtt->bindValue(":created_date", $date2);
+    // $stmtt->bindValue(":manually_adjusted_or_reversed", $zero);
+    // $stmtt->bindValue(":credit", $zero);
+    // $stmtt->bindValue(":debit", $amount);
+    // $stmtt->bindValue(":int_profit", $cal_int_prof);
+    // $stmtt->bindValue(":sekani_charge", $cal_sek);
+    // $stmtt->bindValue(":merchant", $cal_mch);
     // MAKE FINAL ECHO
-    if($stmtt->execute()){
+    if($query_table){
         return true;
         echo json_encode(array("message" => "Error at Inserting Wallet Transaction, Please Contact Sekani", "transaction_id" => "$trans", "status" => "success"));
     } else {
