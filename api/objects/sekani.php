@@ -115,7 +115,7 @@ function airtime(){
     $stmtu->bindParam(':id', $id);
 
     if($stmtu->execute()){
-        $insert_query = $query = "INSERT INTO
+        $insert_query = "INSERT INTO
         sekani_wallet_transaction
     SET
         int_id=:int_id, branch_id=:branch_id, 
