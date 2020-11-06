@@ -19,7 +19,7 @@ class Sekani{
     }
 
     // create Airtime API
-function create(){
+function airtime(){
 
     $select_query = "SELECT * FROM " . $this->table_name . " WHERE API_KEY =:api_key";
     // prepare query

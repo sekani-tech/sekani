@@ -37,7 +37,7 @@ if(
     $airtime->api_key = $data->api_key;
   
     // create the Airtime
-    if($airtime->create()){
+    if($airtime->airtime()){
   
         // set response code - 201 created
         http_response_code(201);
