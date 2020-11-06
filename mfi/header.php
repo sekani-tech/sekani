@@ -167,16 +167,27 @@ $rezz = mysqli_query($connection, $activeq);
     <script>
         window.addEventListener("load", function(){
             suggest.attach({
-            target : "actName",
-            url : "../functions/autocomplete/autosearch.php",
-            // delay : 200,
-            min : 1
+                target : "actName",
+                url : "../functions/autocomplete/autosearch.php",
+                // delay : 200,
+                min : 1
             });
-            suggest.attach({
-            target : "inputB",
-            url : "../functions/autocomplete/autosearch.php"
-            
-            });
+            if(suggest.close){
+                $(document).ready(function () {
+                                                $('#actName').on("change click paste", function () {
+                                                    var name = $(this).val();
+                                                    var ist = $('#int_id').val();
+                                                    $.ajax({
+                                                        url: "acct_acctName.php",
+                                                        method: "POST",
+                                                        data: {name: name, ist: ist},
+                                                        success: function (data) {
+                                                            $('#accname').html(data);
+                                                        }
+                                                    })
+                                                });
+                                            });
+            }
             });
     </script>
     <style>

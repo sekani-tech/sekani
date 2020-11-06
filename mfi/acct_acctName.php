@@ -40,12 +40,12 @@ if (isset($_POST["name"])) {
 
 //    for depositing
     if ($_POST["name"] != '') {
-        $sql = "SELECT client.id, account.account_no FROM client JOIN account ON account.client_id = client.id WHERE (client.branch_id ='$br_id' $branches) && client.int_id = '" . $_POST["ist"] . "' && client.display_name = '" . $_POST["name"] . "' AND client.status = 'Approved'";
+        $sql = "SELECT client.id, account.account_no FROM client JOIN account ON account.client_id = client.id WHERE (client.branch_id ='$br_id') && client.int_id = '" . $_POST["ist"] . "' && client.display_name = '" . $_POST["name"] . "' AND client.status = 'Approved'";
         $result = mysqli_query($connection, $sql);
         while ($row = mysqli_fetch_array($result)) {
             $output = '<div class="form-group">
         <label>Account Number:</label>
-        <input type="text" value=" ' . strtoupper($row["account_no"]) . '" name="principal_amoun" class="form-control" readonly required id="principal_amount">
+        <input type="text" value=" ' . $row["account_no"] . '" name="principal_amoun" class="form-control" readonly required id="principal_amount">
       </div>
       ';
         }

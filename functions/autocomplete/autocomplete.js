@@ -87,7 +87,7 @@ var suggest = {
         document.removeEventListener("click", suggest.close);
     },
 
-    close: function (evt, force) {
+    close: function (event, force) {
         // suggest.close() : close the autocomplete box if the user clicks away from the input field
         // evt : click event
         // force : force close

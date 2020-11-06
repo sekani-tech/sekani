@@ -435,11 +435,11 @@ if ($trans_post == 1 || $trans_post == "1") {
                                             });
                                         </script>
 
-                                        <script>
+                                        <!-- <script>
                                             $(document).ready(function () {
                                                 $('#actName').on("change keyup paste", function () {
-                                                    let name = $(this).val();
-                                                    let ist = $('#int_id').val();
+                                                    var name = $(this).val();
+                                                    var ist = $('#int_id').val();
                                                     $.ajax({
                                                         url: "acct_acctName.php",
                                                         method: "POST",
@@ -450,7 +450,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                                                     })
                                                 });
                                             });
-                                        </script>
+                                        </script> -->
                                         <div class="form-group">
                                             <label for="">Type</label>
                                             <select class="form-control" name="test">
@@ -475,14 +475,14 @@ if ($trans_post == 1 || $trans_post == "1") {
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Account Name</label>
                                             <div id="acWrapXXX" class="acWrap">
-                                                <input type="text" class="form-control" id="actName">
+                                                <input type="text" class="form-control inputA" id="actName">
+                                                <input type="text" class="form-control" hidden name=""
+                                                   value="<?php echo $sessint_id; ?>" id="int_id">
+                                                <input type="text" class="form-control" hidden id="branch_id"
+                                                   value="<?php echo $branch_id ?>">
                                                 <div id="acBoxXXX" class="acBox">
                                                 </div>
                                             </div>
-                                            <input type="text" class="form-control" hidden name=""
-                                                   value="<?php echo $sessint_id; ?>" id="int_id">
-                                            <input type="text" class="form-control" hidden id="branch_id"
-                                                   value="<?php echo $branch_id ?>">
                                         </div>
                                         <div id="accname"></div>
                                     </div>
