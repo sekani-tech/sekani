@@ -137,27 +137,27 @@ function airtime(){
 
 
     $stmtt = $this->conn->prepare($insert_query);
-    $stmtt->bindParam(":int_id", $int_id);
-    $stmtt->bindParam(":branch_id", $branch_id);
-    $stmtt->bindParam(":transaction_id", $trans);
-    $stmtt->bindParam(":description", $generate);
-    $stmtt->bindParam(":transaction_type", $name);
-    $stmtt->bindParam(":teller_id", $zero);
-    $stmtt->bindParam(":is_reversed", $zero);
-    $stmtt->bindParam(":transaction_date", $date);
-    $stmtt->bindParam(":amount", $amount);
-    $stmtt->bindParam(":wallet_balance_derived", $cal_bal);
-    $stmtt->bindParam(":overdraft_amount_derived=:overdraft_amount_derived", $cal_bal);
-    $stmtt->bindParam(":balance_end_date_derived", $date);
-    $stmtt->bindParam(":balance_number_of_days_derived", $zero);
-    $stmtt->bindParam(":cumulative_balance_derived", $zero);
-    $stmtt->bindParam(":created_date", $date2);
-    $stmtt->bindParam(":manually_adjusted_or_reversed", $zero);
-    $stmtt->bindParam(":credit", $zero);
-    $stmtt->bindParam(":debit", $amount);
-    $stmtt->bindParam(":int_profit", $cal_int_prof);
-    $stmtt->bindParam(":sekani_charge", $cal_sek);
-    $stmtt->bindParam(":merchant", $cal_mch);
+    $stmtt->bindValue(":int_id", $int_id, PDO::PARAM_STR);
+    $stmtt->bindValue(":branch_id", $branch_id, PDO::PARAM_STR);
+    $stmtt->bindValue(":transaction_id", $trans, PDO::PARAM_STR);
+    $stmtt->bindValue(":description", $generate, PDO::PARAM_STR);
+    $stmtt->bindValue(":transaction_type", $name, PDO::PARAM_STR);
+    $stmtt->bindValue(":teller_id", $zero, PDO::PARAM_STR);
+    $stmtt->bindValue(":is_reversed", $zero, PDO::PARAM_STR);
+    $stmtt->bindValue(":transaction_date", $date, PDO::PARAM_STR);
+    $stmtt->bindValue(":amount", $amount, PDO::PARAM_STR);
+    $stmtt->bindValue(":wallet_balance_derived", $cal_bal, PDO::PARAM_STR);
+    $stmtt->bindValue(":overdraft_amount_derived=:overdraft_amount_derived", $cal_bal, PDO::PARAM_STR);
+    $stmtt->bindValue(":balance_end_date_derived", $date, PDO::PARAM_STR);
+    $stmtt->bindValue(":balance_number_of_days_derived", $zero, PDO::PARAM_STR);
+    $stmtt->bindValue(":cumulative_balance_derived", $zero, PDO::PARAM_STR);
+    $stmtt->bindValue(":created_date", $date2, PDO::PARAM_STR);
+    $stmtt->bindValue(":manually_adjusted_or_reversed", $zero, PDO::PARAM_STR);
+    $stmtt->bindValue(":credit", $zero, PDO::PARAM_STR);
+    $stmtt->bindValue(":debit", $amount, PDO::PARAM_STR);
+    $stmtt->bindValue(":int_profit", $cal_int_prof, PDO::PARAM_STR);
+    $stmtt->bindValue(":sekani_charge", $cal_sek, PDO::PARAM_STR);
+    $stmtt->bindValue(":merchant", $cal_mch, PDO::PARAM_STR);
     // MAKE FINAL ECHO
     if($stmtt->execute()){
         return true;
