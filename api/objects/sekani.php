@@ -155,7 +155,7 @@ function airtime(){
     $stmtt->bindParam(":sekani_charge", $cal_sek);
     $stmtt->bindParam(":merchant", $cal_mch);
     // MAKE FINAL ECHO
-    if($stmtu->execute()){
+    if($stmtt->execute()){
         return true;
         echo json_encode(array("message" => "Error at Inserting Wallet Transaction, Please Contact Sekani", "transaction_id" => "$trans", "status" => "success"));
     } else {
@@ -165,7 +165,7 @@ function airtime(){
         echo json_encode(array("message" => "Error at Updating Wallet, Please Contact Sekani"));
     }
             } else {
-                echo $response;
+                echo json_encode(array("message" => "Unable to Recharge Airtime. Please Check Request id for duplicate", "status" => "failed"));
             }
         }
     } else {
