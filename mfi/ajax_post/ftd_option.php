@@ -5,6 +5,7 @@ $int_id = $_SESSION['int_id'];
 $int_name = $_SESSION['int_name'];
 
 if (isset($_POST['id'])) {
+//    Collect the info from post
     $id = $_POST['id'];
     $sav_id = $_POST['sav_id'];
 
@@ -43,10 +44,17 @@ if (isset($_POST['id'])) {
     $today = date('Y-m-d');
     $ftd_no = 'FTD/' . $int_name . '/' . $ft_no . '/' . $date;
 
+    /**
+     * select officers belonging to a particular institute
+     * display the individual id in value and show the name
+     * @param $connection
+     * @return string
+     */
     function fill_officer($connection)
     {
         $sint_id = $_SESSION["int_id"];
-        $org = "SELECT * FROM staff WHERE int_id = '$sint_id' AND employee_status = 'Employed' ORDER BY staff.display_name ASC";
+        $org = "SELECT * FROM staff WHERE int_id = '$sint_id' AND
+                    employee_status = 'Employed' ORDER BY staff.display_name ASC";
         $res = mysqli_query($connection, $org);
         $out = '';
         while ($row = mysqli_fetch_array($res)) {
@@ -55,17 +63,26 @@ if (isset($_POST['id'])) {
         return $out;
     }
 
+    /**
+     * calculate tenure
+     * pass result in option tag
+     * @param $in_mul_trm
+     * @param $in_mul_trm_time
+     * @param $min_dep_term
+     * @param $max_dep_term
+     * @return string
+     */
     function fill_tenure($in_mul_trm, $in_mul_trm_time, $min_dep_term, $max_dep_term)
     {
         $out = '';
         $i = $min_dep_term;
         while ($i <= $max_dep_term) {
             $fio = $i * $in_mul_trm;
-            if ($in_mul_trm_time == 1) {
+            if ($in_mul_trm_time === 1) {
                 $inmul_term = $fio * 1;
-            } else if ($in_mul_trm_time == 3) {
+            } else if ($in_mul_trm_time === 3) {
                 $inmul_term = $fio * 30;
-            } else if ($in_mul_trm_time == 4) {
+            } else if ($in_mul_trm_time === 4) {
                 $inmul_term = $fio * 365;
             }
             $out .= '<option value="' . $inmul_term . '">' . $fio . '</option>';
@@ -74,6 +91,16 @@ if (isset($_POST['id'])) {
         return $out;
     }
 
+    /**
+     * gets product id from client table
+     * pass the product id gotten into savings_product table
+     * display the account number and account type in an option tag
+     * pass id from client table in value
+     * @param $connection
+     * @param $id
+     * @param $int_id
+     * @return string
+     */
     function fill_account($connection, $id, $int_id)
     {
         $id = $_POST["id"];
@@ -83,7 +110,8 @@ if (isset($_POST['id'])) {
         $out = '';
         while ($row = mysqli_fetch_array($res)) {
             $product_type = $row["product_id"];
-            $get_product = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$product_type' AND int_id = '$int_id'");
+            $get_product = mysqli_query($connection, "SELECT * FROM savings_product WHERE
+                                                            id = '$product_type' AND int_id = '$int_id'");
             while ($mer = mysqli_fetch_array($get_product)) {
                 $p_n = $mer["name"];
                 $out .= '<option value="' . $row["id"] . '">' . $row["account_no"] . ' - ' . $p_n . '</option>';
@@ -92,6 +120,7 @@ if (isset($_POST['id'])) {
         return $out;
     }
 
+//    this load the information on FTD booking
     $fd = '
         <div class="col-md-4">
         <div class="form-group">
@@ -178,6 +207,8 @@ if (isset($_POST['id'])) {
 }
 ?>
 <script>
+//    script for actual date
+//    successful result is passed to the div with matdate as id
     $(document).ready(function () {
         $('#lterm').on("change keyup paste click", function () {
             var term = $(this).val();
