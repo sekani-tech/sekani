@@ -1,5 +1,4 @@
 <?php
-
     include("../connect.php");
     $date = date('Y-m-d');
     $query1 = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule");

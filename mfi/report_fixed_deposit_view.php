@@ -3,8 +3,7 @@
 $page_title = "Fixed Deposits";
 $destination = "report_current.php";
     include("header.php");
-?>
-<?php
+
   function branch_opt($connection)
   {  
       $br_id = $_SESSION["branch_id"];
@@ -21,8 +20,7 @@ $destination = "report_current.php";
   }
   $br_id = $_SESSION["branch_id"];
   $branches = branch_opt($connection);
-?>
-<?php
+
  if (isset($_GET["view31"])) {
 ?>
 <!-- Content added here -->
@@ -37,7 +35,7 @@ $destination = "report_current.php";
                   
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '3' && (client.branch_id ='$br_id' $branches)";
+                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '3' AND (client.branch_id ='$br_id' $branches)";
                           $result = mysqli_query($connection, $querys);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -70,7 +68,7 @@ $destination = "report_current.php";
                     <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                          $query = "SELECT client.id, client.client_type, account.product_id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '3' && (client.branch_id ='$br_id' $branches) ORDER BY firstname ASC";
+                          $query = "SELECT client.id, client.client_type, account.product_id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '3' AND (client.branch_id ='$br_id' $branches) ORDER BY firstname ASC";
                           $result = mysqli_query($connection, $query);
                       ?>
                         <th>
@@ -96,7 +94,7 @@ $destination = "report_current.php";
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
-                        <?php $row["id"]; 
+                        <?php  
                         $idd = $row["id"];?>
                           <th><?php echo $row["firstname"]; ?></th>
                           <th><?php echo $row["lastname"]; ?></th>
@@ -152,7 +150,7 @@ $destination = "report_current.php";
                           ?>
                           <th><?php echo $acc; ?></th>
                           <?php
-                          $don = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$idd'");
+                          $don = mysqli_query($connection, "SELECT * FROM account_transaction WHERE client_id = '$idd'");
                           $ew = mysqli_fetch_array($don);
                           $accountb = $ew['account_balance_derived'];
                           ?>

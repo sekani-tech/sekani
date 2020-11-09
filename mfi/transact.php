@@ -376,8 +376,8 @@ if (isset($_GET["message"])) {
   $(document).ready(function(){
       swal({
           type: "info",
-          title: "Notice Report to the Technical Department",
-          text: "This Client is not Available",
+          title: "Notice",
+          text: "This account is Dormant",
           showConfirmButton: false,
           timer: 3000
       })
@@ -418,6 +418,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                             <form action="../functions/withdep.php" method="post" autocomplete="off">
                                 <div class="row">
                                     <div class="col-md-4">
+<!--                                        Account number script-->
                                         <script>
                                             $(document).ready(function () {
                                                 $('#act').on("change keyup paste", function () {
@@ -435,11 +436,12 @@ if ($trans_post == 1 || $trans_post == "1") {
                                             });
                                         </script>
 
-                                        <!-- <script>
+<!--                                        Account name script-->
+                                        <script>
                                             $(document).ready(function () {
-                                                $('#actName').on("change keyup paste", function () {
-                                                    var name = $(this).val();
-                                                    var ist = $('#int_id').val();
+                                                $('#accountName').on("change keyup paste", function () {
+                                                    let name = $(this).val();
+                                                    let ist = $('#int_id').val();
                                                     $.ajax({
                                                         url: "acct_acctName.php",
                                                         method: "POST",
@@ -450,7 +452,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                                                     })
                                                 });
                                             });
-                                        </script> -->
+                                        </script>
                                         <div class="form-group">
                                             <label for="">Type</label>
                                             <select class="form-control" name="test">
@@ -465,7 +467,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Account Number</label>
-                                            <input type="text" class="form-control" name="account_no" id="act">
+                                            <input type="text" class="form-control" name="account_no" id="accountNumber">
                                             <input type="text" class="form-control" hidden name=""
                                                    value="<?php echo $sessint_id; ?>" id="int_id">
                                         </div>
@@ -475,16 +477,16 @@ if ($trans_post == 1 || $trans_post == "1") {
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Account Name</label>
                                             <div id="acWrapXXX" class="acWrap">
-                                                <input type="text" class="form-control inputA" id="actName">
-                                                <input type="text" class="form-control" hidden name=""
-                                                   value="<?php echo $sessint_id; ?>" id="int_id">
-                                                <input type="text" class="form-control" hidden id="branch_id"
-                                                   value="<?php echo $branch_id ?>">
+                                                <input type="text" class="form-control" name="account_name" onscroll="" id="accountName">
                                                 <div id="acBoxXXX" class="acBox">
+                                                    <!-- SUGGESTIONS ARE PUT HERE DYNAMICALLY VIA AJAX -->
+
                                                 </div>
                                             </div>
+                                            <input type="text" class="form-control" hidden name=""
+                                                   value="<?php echo $sessint_id; ?>" id="int_id">
                                         </div>
-                                        <div id="accname"></div>
+                                        <div id="accno"></div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">

@@ -290,7 +290,23 @@ $destination = "connect.php";
                             </div>
                           </div>
                         </div>
-                      </div>               
+                      </div>    
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="interestRate" >Interest </label>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <input type="text" value=""class="form-control" name="deposita" value="" placeholder="Default" required>
+                            </div>
+                            <div class="col-md-4">
+                              <input type="text" value=""class="form-control" name="deposita_min" value="" placeholder="Min" required>
+                            </div>
+                            <div class="col-md-4">
+                              <input type="text" value=""class="form-control" name="deposita_max" value="" placeholder="Max" required>
+                            </div>
+                          </div>
+                        </div>
+                      </div>           
                         <div class="col-md-6">
                         <div class="form-group">
                           <label for="interestRateApplied" >Interest Posting period Type</label>
