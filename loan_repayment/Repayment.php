@@ -102,7 +102,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
         //         echo "WE BAD";
         //     }
         // END OF WE DO A NEXT STUFF
-        $repayment_start = date ("Y-m-d", strtotime("+1 ".$rep_every, strtotime($repayment_start)));
+        // $repayment_start = date ("Y-m-d", strtotime("+1 ".$rep_every, strtotime($repayment_start)));
         }
 
         } else {
@@ -204,6 +204,11 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                                $uodate_rep_status = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET installment = '$post_installment' WHERE int_id = '$int_id' AND id = '$collection_id'");
                                if ($update_rep_status) {
                                    echo "SUCCESS AT LAST";
+
+
+
+
+
                                 //    UPDATE THE GL OF THE REPAYMENT
                                 $open_acct_rule = mysqli_query($connection, "SELECT * FROM acct_rule WHERE int_id = '$int_id' AND loan_product_id = '$product_id'");
                                 $ty = mysqli_fetch_array($open_acct_rule);
@@ -220,6 +225,7 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                                     $newbalport = $gdb["organization_running_balance_derived"];
                                     $updated_loan_port = $newbalport - $collection_principal;
                                     $intloan_port = $intbalport + $collection_interest;
+                                    
                                     $update_the_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$updated_loan_port' WHERE int_id ='$int_id' AND gl_code = '$loan_port'");
                                     if ($update_the_loan) {
                                         // damn with
@@ -256,6 +262,13 @@ while($x = mysqli_fetch_array($select_all_disbursment_cache)) {
                                } else {
                                    echo "ERROR AT LAST";
                                }
+
+
+
+
+
+
+
                               // FROM THE LOAN
                             } else {
                                 echo "ERROR at Repayment Status";
@@ -600,6 +613,7 @@ while ($iq = mysqli_fetch_array($select_arrears)) {
 // count out
 ?>
 <?php
+//  OFF
 echo '</br></br></br>FTD Booking Auto Code right here:</br>';
 // THIS PROCESS ID FOR THE PAYMENT OF FIXED DEPOSIT INTEREST TO THEIR ACCOUNTS
 $ftd_booking_account = mysqli_query($connection, "SELECT * FROM ftd_booking_account WHERE status = 'Approved' AND is_paid = '0' AND is_deleted = '0'");
@@ -771,6 +785,8 @@ while($a = mysqli_fetch_array($ftd_booking_account)){
 }
 
 ?>
+
+
 <?php
 // CODE TO TRACK DORMANCY IN THE SYSTEM
 echo '</br></br></br>Track Dormancy Code right here:</br>';
