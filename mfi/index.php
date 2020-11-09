@@ -23,7 +23,7 @@ $branches = branch_opt($connection);
     <!-- making a new push -->
     <!-- Content added here -->
 <?php
-if ($view_dashboard === 1) {
+if ($view_dashboard == 1) {
     // echo 'can view dashboard';
 
     ?>
