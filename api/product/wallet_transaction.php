@@ -8,7 +8,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
   
 // get database connection
 include_once '../config/database.php';
-  
+
 // instantiate wallet object
 include_once '../objects/wallet_transaction.php';
   
