@@ -127,13 +127,13 @@ function airtime(){
 
     // MAKE FINAL ECHO
     if($query_table){
-        echo json_encode(array("message" => "Wallet Transaction Successful, Please Contact Sekani", "transaction_id" => "$trans", "status" => "success"));
+        echo json_encode(array("message" => "Wallet Transaction Successful", "transaction_id" => "$trans", "status" => "success"));
         return true;
     } else {
-        echo json_encode(array("message" => "Error at Inserting Wallet Transaction, Please Contact Sekani"));
+        echo json_encode(array("message" => "Error at Inserting Wallet Transaction, Please Contact Sekani", "status" => "failed"));
     }
     } else {
-        echo json_encode(array("message" => "Error at Updating Wallet, Please Contact Sekani"));
+        echo json_encode(array("message" => "Error at Updating Wallet, Please Contact Sekani", "status" => "failed"));
     }
             } else {
                 echo json_encode(array("message" => "Unable to Recharge Airtime. Please Check Request id for duplicate", "status" => "failed"));
@@ -141,10 +141,10 @@ function airtime(){
         }
     } else {
         // Balance not Up to
-        echo json_encode(array("message" => "Insufficient Fund, Please Fund your Sekani Wallet!"));
+        echo json_encode(array("message" => "Insufficient Fund, Please Fund your Sekani Wallet!", "status" => "failed"));
     }
 } else {
-    echo json_encode(array("message" => "No Institution Found"));
+    echo json_encode(array("message" => "No Institution Found", "status" => "failed"));
 }
     
 }
