@@ -65,8 +65,8 @@ function wallet(){
                 "date_time" => $created_date
             );
             array_push($transaction["wallet_transaction"], $transaction_item);
-            echo json_encode($transaction);
         }
+        echo json_encode($transaction);
     return true;
 } else {
     echo json_encode(array("message" => "No Institution or Transaction Found", "status" => "failed"));
