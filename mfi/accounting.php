@@ -7,6 +7,16 @@ $destination = "../index.php";
 
 ?>
 
+<style>
+.card .card-body {
+    padding: 0.9375rem 20px;
+    position: relative;
+    height: 200px;
+  }
+
+</style>
+
+
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -26,7 +36,7 @@ $destination = "../index.php";
                   <p class="card-description">
                   View, add and edit all the gl account for the institution
                   </p>
-                  <a href="chart_account.php" class="btn btn-white btn-round" style="margin-top: 30px;">View</a>
+                  <a href="chart_account.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
             </div>
@@ -53,7 +63,7 @@ $destination = "../index.php";
                   <p class="card-description">
                   To register assets belonging to the institution
                   </p>
-                  <a href="asset_register.php" class="btn btn-white btn-round" style="margin-top: 30px;">View</a>
+                  <a href="asset_register.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
             </div>   

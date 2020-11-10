@@ -6,7 +6,17 @@ $destination = "../index.php";
     // include("../../functions/connect.php");
 
 ?>
+<style>
 
+
+  .card .card-body {
+    padding: 0.9375rem 20px;
+    position: relative;
+    height: 200px;
+  }
+
+
+</style>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -26,7 +36,7 @@ $destination = "../index.php";
                   <p class="card-description">
                   Disburse loans to client registered client
                   </p>
-                  <a href="lend.php" class="btn btn-white btn-round" style="margin-top: 30px;">View</a>
+                  <a href="lend.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
             </div>
@@ -52,7 +62,7 @@ $destination = "../index.php";
                   <p class="card-description">
                   Make deposits or withdrawal for group accounts
                   </p>
-                  <a href="grouptrans.php" class="btn btn-white btn-round" style="margin-top: 30px;">View</a>
+                  <a href="grouptrans.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
             </div>   

@@ -8,6 +8,16 @@ $destination = "../index.php";
 ?>
 
 <!-- Content added here -->
+
+<style>
+  .card .card-body {
+    padding: 0.9375rem 20px;
+    position: relative;
+    height: 200px;
+  }
+
+
+</style>
     <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
@@ -20,7 +30,7 @@ $destination = "../index.php";
 
           <div class="row">
           <div class="col-md-4 ml-auto mr-auto">
-              <div class="card card-pricing bg-primary"><div class="card-body ">
+              <div class="card card-pricing bg-primary" style="height: auto;"><div class="card-body ">
                   
                   <h4 class="card-title">Asset Depreciation</h4>
                   <p class="card-description">
@@ -33,14 +43,14 @@ $destination = "../index.php";
             
 
             <div class="col-md-4 ml-auto mr-auto">
-            <div class="card card-pricing bg-primary" ><div class="card-body ">
+            <div class="card card-pricing bg-primary"><div class="card-body ">
                   
                   <h4 class="card-title">Products</h4>
                   <p class="card-description">
                   Add, edit and update the Loan products of the instution
                   </p>
                   
-                  <a href="products_config.php" class="btn btn-white btn-round" style="margin-top: 30px;">View</a>
+                  <a href="products_config.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
             </div>   
@@ -53,7 +63,7 @@ $destination = "../index.php";
                   <p class="card-description">
                   Manage all the staff activities and their status
                   </p>
-                  <a href="staff_mgmt.php" class="btn btn-white btn-round" style="margin-top: 30px;">View</a>
+                  <a href="staff_mgmt.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
             </div>   
@@ -127,7 +137,7 @@ $destination = "../index.php";
                   <p class="card-description">
                   Keep track of all Accounts that have not been in use
                   </p>
-                  <a href="trk_dormant.php" class="btn btn-white btn-round" style="margin-top: 30px;">View</a>
+                  <a href="trk_dormant.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
             </div>   
@@ -140,7 +150,7 @@ $destination = "../index.php";
                   <p class="card-description">
                   Upload Bulk data from institution database
                   </p>
-                  <a href="bulk_update.php" class="btn btn-white btn-round" style="margin-top: 30px;">View</a>
+                  <a href="bulk_update.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
             </div>   

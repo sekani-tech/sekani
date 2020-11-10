@@ -6,7 +6,17 @@ $destination = "../index.php";
     // include("../../functions/connect.php");
 
 ?>
+<style>
 
+
+.card .card-body {
+  padding: 0.9375rem 20px;
+  position: relative;
+  height: 200px;
+}
+
+
+</style>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -102,7 +112,7 @@ $destination = "../index.php";
                   <p class="card-description">
                   View and manage all reports concerning the fixed deposit accounts
                   </p>
-                  <a href="report_fixed_deposit.php" class="btn btn-white btn-round" style="margin-top: 30px;">View</a>
+                  <a href="report_fixed_deposit.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
             </div>   

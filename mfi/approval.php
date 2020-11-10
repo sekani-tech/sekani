@@ -7,6 +7,19 @@ $destination = "../index.php";
 
 ?>
 <!-- Content added here -->
+<style>
+
+
+  .card .card-body {
+    padding: 0.9375rem 20px;
+    position: relative;
+    height: 200px;
+  }
+
+
+</style>
+
+
     <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
@@ -18,7 +31,7 @@ $destination = "../index.php";
     </div>
 
           <div class="row">
-          <div class="col-md-3 ml-auto mr-auto">
+          <div class="col-md-6 ml-auto mr-auto">
               <div class="card card-pricing bg-primary"><div class="card-body ">
                   
                   <h4 class="card-title">Account Opening</h4>
@@ -31,7 +44,7 @@ $destination = "../index.php";
             </div>
             
 
-            <div class="col-md-3 ml-auto mr-auto">
+            <div class="col-md-6 ml-auto mr-auto">
             <div class="card card-pricing bg-primary" ><div class="card-body ">
                   
                   <h4 class="card-title">Approve Group</h4>
@@ -39,12 +52,16 @@ $destination = "../index.php";
                   View and approve all the Groups
                   </p>
                   
-                  <a href="approve_group.php" class="btn btn-white btn-round" style="margin-top: 30px;">View</a>
+                  <a href="approve_group.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
             </div>   
 
-            <div class="col-md-3 ml-auto mr-auto">
+            </div> 
+
+            <div class="row">
+            
+        <div class="col-md-6 ml-auto mr-auto">
 
             <div class="card card-pricing bg-primary"><div class="card-body ">
                   
@@ -57,7 +74,7 @@ $destination = "../index.php";
               </div>
             </div>   
 
-            <div class="col-md-3 ml-auto mr-auto">
+            <div class="col-md-6 ml-auto mr-auto">
 
             <div class="card card-pricing bg-primary"><div class="card-body ">
                   
@@ -68,12 +85,16 @@ $destination = "../index.php";
                   <a href="transact_approval.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
-            </div> 
+            </div>             
 
-        </div>         
+            </div>
+
+            
+
+                
 
         <div class="row">
-          <div class="col-md-3 ml-auto mr-auto">
+          <div class="col-md-6 ml-auto mr-auto">
               <div class="card card-pricing bg-primary"><div class="card-body ">
                   
                   <h4 class="card-title">Client Cash Tranfer</h4>
@@ -86,7 +107,7 @@ $destination = "../index.php";
             </div>
             
 
-            <div class="col-md-3 ml-auto mr-auto">
+            <div class="col-md-6 ml-auto mr-auto">
             <div class="card card-pricing bg-primary"><div class="card-body ">
                   
                   <h4 class="card-title">Fixed Deposit Accounts</h4>
@@ -98,7 +119,10 @@ $destination = "../index.php";
               </div>
             </div>   
 
-            <div class="col-md-3 ml-auto mr-auto">
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 ml-auto mr-auto">
 
             <div class="card card-pricing bg-primary"><div class="card-body ">
                   
@@ -111,7 +135,7 @@ $destination = "../index.php";
               </div>
             </div>   
 
-            <div class="col-md-3 ml-auto mr-auto">
+            <div class="col-md-6 ml-auto mr-auto">
 
             <div class="card card-pricing bg-primary"><div class="card-body ">
                   
