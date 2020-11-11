@@ -482,7 +482,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                                                    value="<?php echo $branch_id ?>">
                                                 <div id="acBoxXXX" class="acBox">
                                                 </div>
-                                            <
+                                            </div>
                                         </div>
                                         <div id="accname"></div>
                                     </div>
