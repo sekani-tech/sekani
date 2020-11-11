@@ -128,9 +128,9 @@ $rezz = mysqli_query($connection, $activeq);
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> -->
     <!-- accordion -->
     <!-- JAVASCRIPT CHART.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+    <script src="../assets/js/charts/chart.min.js"></script>
+    <script src="../assets/js/charts/chart.bundle.js"></script>
+    <script src="../assets/js/charts/chart.bundle.min.js"></script>
     <!-- autocomplete -->
     <script src="../functions/autocomplete/autocomplete.js"></script>
     <link href="../functions/autocomplete/autocomplete.css" rel="stylesheet">
@@ -240,9 +240,9 @@ $rezz = mysqli_query($connection, $activeq);
         })(window, document);
     </script>
     <!-- END CHAT BOT -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+    <script src="../assets/js/charts/chart.js"></script>
+    <link rel="stylesheet" href="../assets/css/charts/chart.css">
+    <link rel="stylesheet" href="../assets/css/charts/chart.min.css">
     <!-- END CHART.JS -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> -->
     <script src="../datatable/sweetalert.min.js"></script>
@@ -251,15 +251,15 @@ $rezz = mysqli_query($connection, $activeq);
     <script src="../datatable/jquery-3.3.1.min.js"></script>
     <script src="../datatable/jquery-3.3.2.js"></script>
     <!-- DataTables -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="../datatable/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="../datatable/rowReorder.dataTables.min.css">
+    <link rel="stylesheet" href="../datatable/responsive.dataTables.min.css">
     <!-- DataTables scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <!-- DATATABLE CODE -->
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+    <script src="../datatable/jquery.dataTables.min.js"></script>
+    <script src="../datatable/dataTables.rowReorder.min.js"></script>
+    <script src="../datatable/dataTables.responsive.min.js"></script>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/materia/bootstrap.min.css"> -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
     <!-- Global site tag (gtag.js) - Google Analytics -->
