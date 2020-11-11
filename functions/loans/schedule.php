@@ -41,7 +41,7 @@
 
                 $select_repayment_sch = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE loan_id = '$loan_id' AND int_id = '$int_id'");
                 $dm = mysqli_fetch_array($select_repayment_sch);
-                 if($dm <= 0 && $int_id != "0"){
+                 if($dm <= 0 && $int_id !== "0"){
                     if($rep_every == 'week'){
                         $i = 1;
                         while($i <= $loan_term){

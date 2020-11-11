@@ -397,7 +397,7 @@ else {
                           }
                           if($cash == 0 && $gltype !='0' && $dsd == 0)
                           {?>
-                          <td><a href="delete_chart_account.php?edit=<?php echo $row["id"];?>" class="btn btn-danger sm" ><i style="color:#ffffff;" class="material-icons">close</i></a></td>
+                          <td><a href="delete_chart_account.php?edit=<?php echo $row["id"];?>" class="btn btn-danger btn-fab btn-fab-mini btn-round" ><i style="color:#ffffff;" class="material-icons">close</i></a></td>
                           <?php
                           }
                           else{
@@ -406,7 +406,7 @@ else {
                           <?php
                           }
                           ?>
-                          <td><a href="edit_chart_account.php?edit=<?php echo $row["id"];?>" class="btn btn-info sm" ><i style="color:#ffffff;" class="material-icons">create</i></a></td>
+                          <td><a href="edit_chart_account.php?edit=<?php echo $row["id"];?>" class="btn btn-info btn-fab btn-fab-mini btn-round" ><i style="color:#ffffff;" class="material-icons">create</i></a></td>
                         </tr>
                         <?php }
                           }
