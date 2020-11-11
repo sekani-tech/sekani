@@ -468,7 +468,6 @@ $rezz = mysqli_query($connection, $activeq);
                             $institution = $_SESSION["int_id"];
                             $fom = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$institution' AND duedate = '$today'");
                             $dn = mysqli_num_rows($fom);
-                            var_dump($dn);
 
                             $tomorrow = date('Y-m-d', strtotime($today . ' + 1 days'));
                             $fodm = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$institution' AND duedate = '$tomorrow'");
