@@ -72,7 +72,7 @@ function mobile_data(){
             $product = $obj['product'];
             // status
             if ($status == "200" && $status != "") {
-        echo $product;
+        echo $response;
         return true;
             } else {
                 echo json_encode(array("message" => "Unable to Subscribe Data. Please Check Request id for duplicate", "status" => "failed"));
