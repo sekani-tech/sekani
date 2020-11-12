@@ -19,7 +19,7 @@ class Sekani{
     }
 
     // create Airtime API
-function airtime(){
+function load_data(){
 
     $select_query = "SELECT * FROM " . $this->table_name . " WHERE API_KEY =:api_key";
     // prepare query
@@ -51,26 +51,28 @@ function airtime(){
         // get all the vaule to Shago
         $phone = $this->phone;
         $amount = $this->amount;
+        $bundle = $this->bundle;
+        $package = $this->package;
         $network = $this->network;
         $generate = $this->request_id;
         // start integration
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => "",
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => "POST",
-          CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"QAB\",\r\n\"phone\" : \"$phone\",\r\n\"amount\": \"$amount\",\r\n\"vend_type\" : \"VTU \",\r\n\"network\": \"$network\",\r\n\"request_id\": \"$generate\"\r\n}",
-          CURLOPT_HTTPHEADER => array(
-            "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
-            "Content-Type: application/json"
-          ),
-        ));
+            CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"BDA\",\r\n\"phone\" : \"$phone\",\r\n\"amount\": \"$amount\",\r\n\"bundle\" : \"$bundle\",\r\n\"network\": \"$network\",\r\n\"package\" : \"$package\",\r\n\"request_id\": \"$generate\"\r\n}",
+            CURLOPT_HTTPHEADER => array(
+              "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
+              "Content-Type: application/json"
+            ),
+          ));
         // return true;
         $response = curl_exec($curl);      
         $err = curl_close($curl);
@@ -120,14 +122,14 @@ function airtime(){
         `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`,
         `int_profit`, `sekani_charge`, `merchant_charge`)
          VALUES ('{$int_id}', '{$branch_id}', '{$trans}',
-         '{$generate}', 'bill_airtime', 
+         '{$generate}', 'bill_data', 
          NULL, '0', '{$date}', '{$amount}', '{$cal_bal}',
          '{$cal_bal}', {$date}, 
          NULL, NULL, '{$date2}', '0', '0.00', '{$amount}', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
 
     // MAKE FINAL ECHO
     if($query_table){
-        echo json_encode(array("message" => "Wallet Transaction Successful", "transaction_id" => "$trans", "status" => "success"));
+        echo json_encode(array("message" => "Data Transaction Successful", "transaction_id" => "$trans", "status" => "success"));
         return true;
     } else {
         echo json_encode(array("message" => "Error at Inserting Wallet Transaction, Please Contact Sekani", "status" => "failed"));
