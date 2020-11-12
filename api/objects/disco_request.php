@@ -70,6 +70,7 @@ function disco_request(){
             $obj = json_decode($response, TRUE);
             $status = $obj['status'];
             $msg = $obj['message'];
+            echo $response;
             // status
             if ($status == "200" && $status != "") {
         echo $response;
