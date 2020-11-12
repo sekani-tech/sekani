@@ -57,6 +57,7 @@ function load_disco(){
         $name = $this->name;
         $address = $this->address;
         $generate = $this->request_id;
+        $serv_code = "AOB";
         // start integration
         $curl = curl_init();
 
@@ -69,7 +70,7 @@ function load_disco(){
               CURLOPT_FOLLOWLOCATION => true,
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "POST",
-              CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"AOB\",\r\n\"disco\" : \"$disco\",\r\n\"meterNo\": \"$meter\",\r\n\"type\" : \"$type\",\r\n\"amount\": \"$amount\",\r\n\"phonenumber\": \"$phonenumber\",\r\n\"name\": \"$name\",\r\n\"address\":\"$address\",\r\n\"request_id\" : \"$generate\n}",
+              CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"$serv_code\",\r\n\"disco\" : \"$disco\",\r\n\"meterNo\": \"$meter\",\r\n\"type\" : \"$type\",\r\n\"amount\": \"$amount\",\r\n\"phonenumber\": \"$phonenumber\",\r\n\"name\": \"$name\",\r\n\"address\":\"$address\",\r\n\"request_id\" : \"$generate\n}",
               CURLOPT_HTTPHEADER => array(
                 "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
                 "Content-Type: application/json"
