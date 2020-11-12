@@ -22,4 +22,5 @@ while($d = mysqli_fetch_array($sdf)){
         echo "DONE!!".$id."</br>";
     }
 }
+//SELECT first_name, last_name, email, COUNT(*) FROM staff WHERE int_id = 13 GROUP BY first_name, last_name HAVING COUNT(*) > 1
 ?>

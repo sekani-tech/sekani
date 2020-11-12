@@ -55,7 +55,7 @@ if (isset($_GET["message"])) {
             type: "error",
             title: "Error",
             text: "Transaction Error",
-            showConfirmButton: false,
+            showConfirmButton: true,
             timer: 2000
         })
     });
@@ -389,8 +389,32 @@ if (isset($_GET["message"])) {
 } else {
     echo "";
 }
-?>
-<?php
+
+function fill_charges($connection)
+{
+    $sint_id = $_SESSION["int_id"];
+    $org = "SELECT * FROM charge WHERE int_id = '$sint_id'";
+    $res = mysqli_query($connection, $org);
+    $out = '';
+    while ($row = mysqli_fetch_array($res)) {
+        $out .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
+    }
+    return $out;
+}
+
+function fill_client($connection)
+{
+    $sint_id = $_SESSION["int_id"];
+    $branc = $_SESSION["branch_id"];
+    $org = "SELECT client.id, client.firstname, client.lastname, client.middlename FROM client JOIN branch ON client.branch_id = branch.id WHERE client.int_id = '$sint_id' AND (branch.id = '$branc' OR branch.parent_id = '$branc') AND status = 'Approved' ORDER BY firstname ASC";
+    $res = mysqli_query($connection, $org);
+    $out = '';
+    while ($row = mysqli_fetch_array($res)) {
+        $out .= '<option value="' . $row["id"] . '">' . $row["firstname"] . ' ' . $row["lastname"] . '</option>';
+    }
+    return $out;
+}
+
 
 if ($trans_post == 1 || $trans_post == "1") {
     ?>
@@ -418,7 +442,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                             <form action="../functions/withdep.php" method="post" autocomplete="off">
                                 <div class="row">
                                     <div class="col-md-4">
-<!--                                        Account number script-->
+                                        <!--                                        Account number script-->
                                         <script>
                                             $(document).ready(function () {
                                                 $('#act').on("change keyup paste", function () {
@@ -436,7 +460,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                                             });
                                         </script>
 
-<!--                                        Account name script-->
+                                        <!--                                        Account name script-->
                                         <script>
                                             $(document).ready(function () {
                                                 $('#accountName').on("change keyup paste", function () {
@@ -467,7 +491,8 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Account Number</label>
-                                            <input type="text" class="form-control" name="account_no" id="accountNumber">
+                                            <input type="text" class="form-control" name="account_no"
+                                                   id="accountNumber">
                                             <input type="text" class="form-control" hidden name=""
                                                    value="<?php echo $sessint_id; ?>" id="int_id">
                                         </div>
@@ -477,7 +502,8 @@ if ($trans_post == 1 || $trans_post == "1") {
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Account Name</label>
                                             <div id="acWrapXXX" class="acWrap">
-                                                <input type="text" class="form-control" name="account_name" onscroll="" id="accountName">
+                                                <input type="text" class="form-control" name="account_name" onscroll=""
+                                                       id="accountName">
                                                 <div id="acBoxXXX" class="acBox">
                                                     <!-- SUGGESTIONS ARE PUT HERE DYNAMICALLY VIA AJAX -->
 
@@ -650,33 +676,7 @@ if ($trans_post == 1 || $trans_post == "1") {
 
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <?php
-                                        function fill_charges($connection)
-                                        {
-                                            $sint_id = $_SESSION["int_id"];
-                                            $org = "SELECT * FROM charge WHERE int_id = '$sint_id'";
-                                            $res = mysqli_query($connection, $org);
-                                            $out = '';
-                                            while ($row = mysqli_fetch_array($res)) {
-                                                $out .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
-                                            }
-                                            return $out;
-                                        }
 
-                                        function fill_client($connection)
-                                        {
-                                            $sint_id = $_SESSION["int_id"];
-                                            $branc = $_SESSION["branch_id"];
-                                            $org = "SELECT client.id, client.firstname, client.lastname, client.middlename FROM client JOIN branch ON client.branch_id = branch.id WHERE client.int_id = '$sint_id' AND (branch.id = '$branc' OR branch.parent_id = '$branc') AND status = 'Approved' ORDER BY firstname ASC";
-                                            $res = mysqli_query($connection, $org);
-                                            $out = '';
-                                            while ($row = mysqli_fetch_array($res)) {
-                                                $out .= '<option value="' . $row["id"] . '">' . $row["firstname"] . ' ' . $row["lastname"] . '</option>';
-                                            }
-                                            return $out;
-                                        }
-
-                                        ?>
                                         <div class="form-group">
                                             <label for="">Charges</label>
                                             <select name="charge" class="form-control">
