@@ -45,10 +45,10 @@ $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 // 1234567890
 // fetch the clients account
 $account = $_POST['account_no'];
-$fdi = "SELECT * FROM account WHERE account_no = '$account' AND int_id = '$sessint_id'";
-$dfo = mysqli_query($connection, $fdi);
-$fodp = mysqli_fetch_array($dfo);
-$ds = $fodp['status'];
+// $fdi = "SELECT * FROM account WHERE account_no = '$account' AND int_id = '$sessint_id'";
+// $dfo = mysqli_query($connection, $fdi);
+// $fodp = mysqli_fetch_array($dfo);
+// $ds = $fodp['status'];
 
 // move
 $getacct = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' && int_id = '$sessint_id'");

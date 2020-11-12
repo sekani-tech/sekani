@@ -7,17 +7,32 @@ $val = $_POST['id'];
   if ($val == 'vault_in' || $val == 'vault_out') {
     $name = $_POST['id'];
 
-    function fill_teller($connection) {
-      $bch_id = $_SESSION["branch_id"];
-      $sint_id = $_SESSION["int_id"];
-      $org = "SELECT * FROM tellers WHERE int_id = '$sint_id' && branch_id = '$bch_id'";
-      $res = mysqli_query($connection, $org);
-      $out = '';
-      while ($row = mysqli_fetch_array($res))
-      {
-        $out .= '<option value="'.$row["name"].'">'.$row["description"].'</option>';
+    if($_SESSION["int_id"] = 13){
+      function fill_teller($connection) {
+        $bch_id = $_SESSION["branch_id"];
+        $sint_id = $_SESSION["int_id"];
+        $org = "SELECT * FROM tellers WHERE int_id = '$sint_id";
+        $res = mysqli_query($connection, $org);
+        $out = '';
+        while ($row = mysqli_fetch_array($res))
+        {
+          $out .= '<option value="'.$row["name"].'">'.$row["description"].'</option>';
+        }
+        return $out;
       }
-      return $out;
+    }else{
+      function fill_teller($connection) {
+        $bch_id = $_SESSION["branch_id"];
+        $sint_id = $_SESSION["int_id"];
+        $org = "SELECT * FROM tellers WHERE int_id = '$sint_id' && branch_id = '$bch_id'";
+        $res = mysqli_query($connection, $org);
+        $out = '';
+        while ($row = mysqli_fetch_array($res))
+        {
+          $out .= '<option value="'.$row["name"].'">'.$row["description"].'</option>';
+        }
+        return $out;
+      }
     }
 $output='
 <div class="row">
