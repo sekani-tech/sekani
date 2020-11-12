@@ -1,5 +1,4 @@
 <?php
-
 $page_title = "Clients";
 $destination = "index.php";
     include("header.php");
@@ -113,6 +112,8 @@ else if (isset($_GET["message5"])) {
   }
 ?>
 <!-- Content added here -->
+<link href='datatable/DataTables/datatables.min.css' rel='stylesheet' type='text/css'>
+<script src="datatable/DataTables/datatables.min.js"></script>
     <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
@@ -121,7 +122,8 @@ else if (isset($_GET["message5"])) {
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Clients</h4>
-                  <p class="card-category"><?php
+                  <p class="card-category">
+                  <?php
                         $query = "SELECT client.id, 
                                     client.BVN, 
                                     client.date_of_birth, 
@@ -144,33 +146,55 @@ else if (isset($_GET["message5"])) {
                   
                 </div>
                 <div class="card-body">
-                <?php include("datatable/table_start.php") ?>
-                  <script>
-                $(document).ready(function() {
-                    var def = 0;
-                    $.ajax({
-                      url:"datatable/client_query.php",
-                      method:"POST",
-                      data:{def:def},
-                      success:function(data){
-                        $('#display_client').html(data);
-                      }
-                    });
-                    $('#general_search').on("change keyup paste", function(){
-                    var search_data = $(this).val();
-                    $.ajax({
-                      url:"datatable/client_query.php",
-                      method:"POST",
-                      data:{search_data:search_data},
-                      success:function(data){
-                        $('#display_client').html(data);
-                      }
-                    })
-                  });
-                });
-                  </script>
                   <!-- end search -->
-                  <div id="display_client"></div>
+                  <div class="table-responsive">
+<table id="empTable" class="display nowrap dataTable" style="width:100%">
+                      <thead class="text-primary">
+                        <th>
+                          First Name
+                        </th>
+                        <th>
+                          Last Name
+                        </th>
+                        <th>
+                          Account officer
+                        </th>
+                        <th>
+                          Account Type
+                        </th>
+                        <th>
+                          Account Number
+                        </th>
+                        <th>View</th>
+                        <th>Close</th>
+                        <!-- <th>Phone</th> -->
+                      </thead>
+                      <!-- refresh
+                      end refresh -->
+</table>
+
+                    </div>
+                    <script>
+        $(document).ready(function(){
+            $('#empTable').DataTable({
+                'processing': true,
+                'serverSide': true,
+                'serverMethod': 'post',
+                'ajax': {
+                    'url':'datatable/ajaxfile.php'
+                },
+                'columns': [
+                    { data: 'firstname' },
+                    { data: 'lastname' },
+                    { data: 'account_officer' },
+                    { data: 'account_type' },
+                    { data: 'account_no' },
+                    { data: 'view' },
+                    { data: 'close' },
+                ]
+            });
+        });
+        </script>
                 </div>
               </div>
             </div>

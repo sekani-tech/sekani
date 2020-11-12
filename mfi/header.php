@@ -106,37 +106,7 @@ $rezz = mysqli_query($connection, $activeq);
 ?>
 <input type="text" value="<?php echo $acuser; ?>" id="usernameoioio" hidden>
 <input type="text" value="<?php echo $sessint_id; ?>" id="int_idioioioio" hidden>
-<script>
-    // setInterval(function() {
-    //     // alert('I will appear every 4 seconds');
-    //     var int_id = $('#int_idioioioio').val();
-    //     var user = $('#usernameoioio').val();
-    //     $.ajax({
-    //       url:"ajax_post/logout/record.php",
-    //       method:"POST",
-    //       data:{int_id:int_id, user: user},
-    //       success:function(data){
-    //         $('#time_recorder').html(data);
-    //       }
-    //     });
-    //     $.ajax({
-    //       url:"../loan_repayment/Repayment.php",
-    //       method:"POST",
-    //       data:{int_id:int_id, user: user},
-    //       success:function(data){
-    //         $('#r_bb').html(data);
-    //       }
-    //     });
-    //     $.ajax({
-    //       url:"../loan_repayment/remodelling_loan.php",
-    //       method:"POST",
-    //       data:{user: user},
-    //       success:function(data){
-    //         $('#loan_remodel').html(data);
-    //       }
-    //     })
-    // }, 1000);   // Interval set to 4 seconds
-</script>
+
 <!doctype html>
 <html lang="en">
 
@@ -158,9 +128,9 @@ $rezz = mysqli_query($connection, $activeq);
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> -->
     <!-- accordion -->
     <!-- JAVASCRIPT CHART.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+    <script src="../assets/js/charts/chart.min.js"></script>
+    <script src="../assets/js/charts/chart.bundle.js"></script>
+    <script src="../assets/js/charts/chart.bundle.min.js"></script>
     <!-- autocomplete -->
     <script src="../functions/autocomplete/autocomplete.js"></script>
     <link href="../functions/autocomplete/autocomplete.css" rel="stylesheet">
@@ -172,22 +142,22 @@ $rezz = mysqli_query($connection, $activeq);
                 // delay : 200,
                 min : 1
             });
-            if(suggest.close){
+            // if(suggest.close){
                 $(document).ready(function () {
-                                                $('#actName').on("change click paste", function () {
-                                                    var name = $(this).val();
-                                                    var ist = $('#int_id').val();
-                                                    $.ajax({
-                                                        url: "acct_acctName.php",
-                                                        method: "POST",
-                                                        data: {name: name, ist: ist},
-                                                        success: function (data) {
-                                                            $('#accname').html(data);
-                                                        }
-                                                    })
-                                                });
-                                            });
-            }
+                    $('.actName').change( function () {
+                       var name = $(this).val();
+                       var ist = $('#int_id').val();
+                       $.ajax({
+                           url: "acct_acctName.php",
+                           method: "POST",
+                           data: {name: name, ist: ist},
+                           success: function (data) {
+                             $('#accname').html(data);
+                           }
+                        })
+                    });
+                });
+            // }
             });
     </script>
     <style>
@@ -270,9 +240,9 @@ $rezz = mysqli_query($connection, $activeq);
         })(window, document);
     </script>
     <!-- END CHAT BOT -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+    <script src="../assets/js/charts/chart.js"></script>
+    <link rel="stylesheet" href="../assets/css/charts/chart.css">
+    <link rel="stylesheet" href="../assets/css/charts/chart.min.css">
     <!-- END CHART.JS -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> -->
     <script src="../datatable/sweetalert.min.js"></script>
@@ -281,15 +251,15 @@ $rezz = mysqli_query($connection, $activeq);
     <script src="../datatable/jquery-3.3.1.min.js"></script>
     <script src="../datatable/jquery-3.3.2.js"></script>
     <!-- DataTables -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="../datatable/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="../datatable/rowReorder.dataTables.min.css">
+    <link rel="stylesheet" href="../datatable/responsive.dataTables.min.css">
     <!-- DataTables scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <!-- DATATABLE CODE -->
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+    <script src="../datatable/jquery.dataTables.min.js"></script>
+    <script src="../datatable/dataTables.rowReorder.min.js"></script>
+    <script src="../datatable/dataTables.responsive.min.js"></script>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/materia/bootstrap.min.css"> -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -415,18 +385,6 @@ $rezz = mysqli_query($connection, $activeq);
                         Approval
                     </a>
                 </li>
-                <!-- <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="false" aria-expanded="fasle">
-                    <i class="material-icons">library_books</i>
-                    Approval
-                  </a>
-                  <div class="dropdown-menu">
-                    <a href="client_approval.php" class="dropdown-item">Account Opening</a>
-                    <a href="transact_approval.php" class="dropdown-item">Transactions</a>
-                    <a href="#" class="dropdown-item">CHQ/Pass Book</a>
-                    <a href="disbursement_approval.php" class="dropdown-item">Loan disbursement</a>
-                  </div>
-                </li> -->
                 <!-- accounting is here -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="accounting.php">
@@ -434,37 +392,6 @@ $rezz = mysqli_query($connection, $activeq);
                         Accounting
                     </a>
                 </li>
-                <!-- <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <i class="material-icons">menu_book</i>
-                    Accounting
-                  </a>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="chart_account.php">Chart Of Accounts</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="inventory.php" class="dropdown-item">Inventory Posting</a>
-                    <a class="dropdown-item" href="#">Asset Register</a>
-                    <a class="dropdown-item" href="#">Reconciliation</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Accounting Export</a>
-                    <a class="dropdown-item" href="#">Periodic Accural</a>
-                    <a class="dropdown-item" href="#">Close Periods</a>
-                  </div>
-                </li> -->
-                <!-- ending of accounting -->
-                <!-- <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-                    <i class="material-icons">bubble_chart</i>
-                    Products Summary
-                  </a>
-                  <div class="dropdown-menu">
-                    <a href="#" class="dropdown-item">Savings Account</a>
-                    <a href="#" class="dropdown-item">Current Account</a>
-                    <a href="#" class="dropdown-item">Fixed Desposit</a>
-                    <a href="#" class="dropdown-item">Shares</a>
-                    <a href="loans.php" class="dropdown-item">Loans</a>
-                  </div>
-                </li> -->
                 <!-- report is here now -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="reports.php">
@@ -490,25 +417,6 @@ $rezz = mysqli_query($connection, $activeq);
 
                 <!-- Notification and Profile ends !-->
 
-
-                <!-- <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <i class="material-icons">settings</i>
-                    Configuration
-                  </a>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="products_config.php">Products</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="staff_mgmt.php">Staff Mgt.</a>
-                    <a class="dropdown-item" href="branch.php">Branch</a>
-                    <a class="dropdown-item" href="#">Alerts</a>
-                  </div>
-                </li> -->
-                <!-- another -->
-                <!-- <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-
-                </li> -->
                 <!-- your sidebar here -->
             </ul>
         </div>
@@ -557,11 +465,12 @@ $rezz = mysqli_query($connection, $activeq);
                             <!-- Notification for matured loans -->
                             <?php
                             $today = date('Y-m-d');
-                            $fom = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$today'");
+                            $institution = $_SESSION["int_id"];
+                            $fom = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$institution' AND duedate = '$today'");
                             $dn = mysqli_num_rows($fom);
 
                             $tomorrow = date('Y-m-d', strtotime($today . ' + 1 days'));
-                            $fodm = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$tomorrow'");
+                            $fodm = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$institution' AND duedate = '$tomorrow'");
                             $dfn = mysqli_num_rows($fodm);
                             ?>
                             <!-- Notification for client approval -->
@@ -639,51 +548,51 @@ $rezz = mysqli_query($connection, $activeq);
                             <?php if ($fomd > 0) { ?>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                                     <?php
-                                    if ($dfn) {
+                                    if ($dfn > 0) {
                                         ?>
                                         <a class="dropdown-item"
                                            href="report_loan_view.php?view39b=<?php echo $tomorrow; ?>"><?php echo $dfn; ?>
                                             Loan(s) due tommorow</a>
                                     <?php }
-                                    if ($dn) {
+                                    if ($dn > 0) {
                                         ?>
                                         <a class="dropdown-item"
                                            href="report_loan_view.php?view39=<?php echo $today; ?>"><?php echo $dn; ?>
                                             Loan(s) matured today</a>
                                     <?php }
-                                    if ($approvd) {
+                                    if ($approvd > 0) {
                                         ?>
                                         <a class="dropdown-item" href="client_approval.php"><?php echo $approvd; ?>
                                             client(s) in need of approval</a>
                                     <?php }
-                                    if ($trans) {
+                                    if ($trans > 0) {
                                         ?>
                                         <a class="dropdown-item" href="transact_approval.php"><?php echo $trans; ?>
                                             transaction(s) in need of approval</a>
                                     <?php }
-                                    if ($client) {
+                                    if ($client > 0) {
                                         ?>
                                         <a class="dropdown-item" href="transfer_approval.php"><?php echo $client; ?>
                                             client transfer(s) in need of approval</a>
                                     <?php }
-                                    if ($loan) {
+                                    if ($loan > 0) {
                                         ?>
                                         <a class="dropdown-item" href="disbursement_approval.php"><?php echo $loan; ?>
                                             Loans disbursement(s) in need of approval</a>
                                     <?php }
-                                    if ($charge) {
+                                    if ($charge > 0) {
                                         ?>
                                         <a class="dropdown-item" href="charge_approval.php"><?php echo $charge; ?>
                                             charge(s) in need of approval</a>
                                         <?php
                                     }
-                                    if ($group) {
+                                    if ($group > 0) {
                                         ?>
                                         <a class="dropdown-item" href="approve_group.php"><?php echo $group; ?> Group(s)
                                             in need of approval</a>
                                         <?php
                                     }
-                                    if ($ftd) {
+                                    if ($ftd > 0) {
                                         ?>
                                         <a class="dropdown-item" href="ftd_approval.php"><?php echo $ftd; ?> FTD
                                             Accounts in need of approval</a>

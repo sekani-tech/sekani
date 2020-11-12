@@ -171,7 +171,7 @@ function searchClient($table1, $int_id, $branch_id, $term)
     $sql = "SELECT c.* 
             FROM $table1 AS c 
             WHERE c.int_id=?
-            AND c.branch_id=? AND c.firstname LIKE ? OR c.lastname LIKE ? OR c.display_name LIKE ?";
+            AND c.branch_id=? AND (c.firstname LIKE ? OR c.lastname LIKE ? OR c.display_name LIKE ?)";
 
 //    dd($sql);
     $stmt = executeQuery($sql, [
