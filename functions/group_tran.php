@@ -352,10 +352,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             }
                         }
 
-                        if ($glAccDetails){
-//                            $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
-                                echo header("Location: ../mfi/transaction.php");
-                        }
+                        
 //                        Send SMS
 //                        if ($glAccDetails) {
 //                            if ($client_sms == "1") {
@@ -571,7 +568,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
         }
-
+if ($glAccDetails){
+//                            $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
+                                echo header("Location: ../mfi/transaction.php");
+                        }
     } elseif
     ($_POST['acc'] == 'withdraw') {
         echo 'not working yet';
