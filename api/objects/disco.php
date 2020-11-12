@@ -85,6 +85,7 @@ function load_disco(){
             $status = $obj['status'];
             $msg = $obj['message'];
             // status
+            echo $response;
             $token = $obj['token'];
             if ($status == "200" && $status != "") {
                 $cal_bal = $running_balance - $amount;
