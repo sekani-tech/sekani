@@ -110,7 +110,7 @@ $destination = "../index.php";
         </div>
 
         <div class="row">
-            <div class="col-md-4 ml-auto mr-auto">
+            <div class="col-md-6 ml-auto mr-auto">
               <div class="card card-pricing bg-primary"><div class="card-body ">
                   
                   <h4 class="card-title">Funds transfer</h4>
@@ -118,6 +118,18 @@ $destination = "../index.php";
                   Transfer Cash Between Accounts in the institution
                   </p>
                   <a href="bank_transfer.php" class="btn btn-white btn-round">View</a>
+                  </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 ml-auto mr-auto">
+              <div class="card card-pricing bg-primary"><div class="card-body ">
+                  
+                  <h4 class="card-title">Bulk Deposit</h4>
+                  <p class="card-description">
+                  Make Bulk Deposit in different Branches 
+                  </p>
+                  <a href="bulk_deposit.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
             </div>
