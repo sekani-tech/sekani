@@ -143,8 +143,8 @@ include("header.php");
                                             </div>
                                             <div class="card-body">
                                             <ul>
-                                        <li>Files must be in <b>.csv</b></li>
-                                        <li>CSV files should contain all the columns as stated on the Data Sample</li>
+                                        <li>Files must be in <b>Excel Format</b></li>
+                                        <li>Excel files should contain all the columns as stated on the Data Sample</li>
                                         <li>The order of the columns should be the same as stated on the Data Sample with the first rows as header</li>
                                         <li>You can upload a maximum of 4,000 rows in 1 file. If you have more rows, please split them into multiple files.</li>
                                         </ul>
@@ -166,7 +166,7 @@ include("header.php");
                     <div class="col-md-12">
                             <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Upload CSV File(.csv)</h4>
+                                <h4 class="card-title">Upload Excel File</h4>
                                 <p class="category"></p>
                             </div>
                             <div class="card-body">
