@@ -84,6 +84,26 @@ function selectOne($table, $conditions)
     return $stmt->get_result()->fetch_assoc();
 }
 
+function checkLoanArrears($table, $conditions)
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $i++;
+    }
+
+    $sql = $sql . " AND installment >= '1' ORDER BY id ASC LIMIT 1";
+    $stmt = executeQuery($sql, $conditions);
+    return $stmt->get_result()->fetch_assoc();
+}
+
 function create($table, $data)
 {
     global $connection;
@@ -120,9 +140,7 @@ function update($table, $id, $conName, $data)
     }
 
     $sql = $sql . " WHERE " . $conName . "=?";
-
     $data[$conName] = $id;
-    dd($data);
     $stmt = executeQuery($sql, $data);
     return $stmt->affected_rows;
 }

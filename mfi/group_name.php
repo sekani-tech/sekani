@@ -26,11 +26,7 @@ if(isset($_POST["id"]))
     <div class="col-md-12">
         <p></p>
     </div>
-    
-        <div class="col-md-12">
-        <p><h3>Group Posting Setup:</h3></p>
-    </div>
-    <div class="col-md-4">
+            <div class="form-group">
             <div class="form-group">
               <?php
                   function fill_payment($connection)
@@ -67,13 +63,13 @@ if(isset($_POST["id"]))
         <div class="col-md-8">
             <div class="form-group">
               <label>description</label>
-               <input type="text" name="" class="form-control"/>
+               <input type="text" name="description" class="form-control"/>
             </div>
         </div>
 </div>
 <script>
     $(document).ready(function() {
-    $('#group').on("change keyup paste click", function(){
+    $('#group').on("change keyup paste", function(){
         var id = $(this).val();
         $.ajax({
         url:"ajax_post/group_paylist.php",

@@ -19,7 +19,7 @@ class Sekani{
     }
 
     // create Airtime API
-function airtime(){
+function load_disco(){
 
     $select_query = "SELECT * FROM " . $this->table_name . " WHERE API_KEY =:api_key";
     // prepare query
@@ -49,28 +49,32 @@ function airtime(){
         $total_sekani_charge = $row["sekani_charge"];
     if ($running_balance >= $this->amount) {
         // get all the vaule to Shago
-        $phone = $this->phone;
+        $disco = $this->disco;
+        $meter = $this->meterNo;
+        $type = $this->type;
         $amount = $this->amount;
-        $network = $this->network;
+        $phonenumber = $this->phonenumber;
+        $name = $this->name;
+        $address = $this->address;
         $generate = $this->request_id;
         // start integration
         $curl = curl_init();
-        
+
         curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => "",
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => "POST",
-          CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"QAB\",\r\n\"phone\" : \"$phone\",\r\n\"amount\": \"$amount\",\r\n\"vend_type\" : \"VTU \",\r\n\"network\": \"$network\",\r\n\"request_id\": \"$generate\"\r\n}",
-          CURLOPT_HTTPHEADER => array(
-            "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
-            "Content-Type: application/json"
-          ),
-        ));
+            CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"AOB\",\r\n\"disco\" : \"$disco\",\r\n\"meterNo\": \"$meter\",\r\n\"type\" : \"$type\",\r\n\"amount\": \"$amount\",\r\n\"phonenumber\": \"$phonenumber\",\r\n\"name\": \"$name\",\r\n\"address\":\"$address\",\r\n\"request_id\" : \"$generate\n}",
+              CURLOPT_HTTPHEADER => array(
+                "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
+                "Content-Type: application/json"
+              ),
+            ));
         // return true;
         $response = curl_exec($curl);      
         $err = curl_close($curl);
@@ -81,6 +85,8 @@ function airtime(){
             $status = $obj['status'];
             $msg = $obj['message'];
             // status
+            echo $response;
+            $token = $obj['token'];
             if ($status == "200" && $status != "") {
                 $cal_bal = $running_balance - $amount;
                 $cal_with = $total_withdrawal + $amount;
@@ -120,14 +126,14 @@ function airtime(){
         `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`,
         `int_profit`, `sekani_charge`, `merchant_charge`)
          VALUES ('{$int_id}', '{$branch_id}', '{$trans}',
-         '{$generate}', 'bill_airtime', 
+         '{$generate}', 'bill_disco', 
          NULL, '0', '{$date}', '{$amount}', '{$cal_bal}',
          '{$cal_bal}', {$date}, 
          NULL, NULL, '{$date2}', '0', '0.00', '{$amount}', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
 
     // MAKE FINAL ECHO
     if($query_table){
-        echo json_encode(array("message" => "Wallet Transaction Successful", "transaction_id" => "$trans", "status" => "success"));
+        echo $response;
         return true;
     } else {
         echo json_encode(array("message" => "Error at Inserting Wallet Transaction, Please Contact Sekani", "status" => "failed"));
@@ -136,7 +142,7 @@ function airtime(){
         echo json_encode(array("message" => "Error at Updating Wallet, Please Contact Sekani", "status" => "failed"));
     }
             } else {
-                echo json_encode(array("message" => "Unable to Recharge Airtime. Please Check Request id for duplicate", "status" => "failed"));
+                echo json_encode(array("message" => "Unable to Pay Disco. Please Check Request id for duplicate", "status" => "failed"));
             }
         }
     } else {
