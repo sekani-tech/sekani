@@ -110,7 +110,7 @@ function branch_option($connection)
                             <p class="card-category">Fill in all important data</p>
                         </div>
                         <div class="card-body">
-                            <form id="form" action="../functions/group_tran.php" method="POST">
+                            <form id="form" action="../functions/group_tran.php" method="POST" autocomplete="off">
 
                                 <div class="row">
                                     <div class="col-md-12">

@@ -136,7 +136,7 @@ else if (isset($_GET["message5"])) {
                 <div class="card-body">
                   <!-- end search -->
                   <div class="table-responsive">
-<table id="empTable" class="display nowrap dataTable" style="width:100%">
+                    <table id="empTable" class="display nowrap dataTable" style="width:100%">
                       <thead class="text-primary">
                         <th>
                           First Name

@@ -30,21 +30,9 @@ $records = mysqli_fetch_assoc($sel);
 $totalRecordwithFilter = $records['allcount'];
 
 ## Fetch records
-$empQuery = "SELECT client.id, 
-client.BVN, 
-client.date_of_birth, 
-client.gender, 
-client.account_type, 
-client.account_no, 
-client.mobile_no, 
-client.firstname, 
-client.lastname,  
-staff.first_name, 
-staff.last_name 
-FROM client JOIN staff ON 
-client.loan_officer_id = staff.id 
-WHERE client.int_id = '$sessint_id'
-&& client.status = 'Approved' ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage;
+$empQuery = "SELECT *
+FROM client 
+WHERE client.int_id = '$sessint_id' AND status = 'Approved' ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage;
 $empRecords = mysqli_query($con, $empQuery);
 $data = array();
 
@@ -70,7 +58,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
     $data[] = array(
     		"firstname"=>$row['firstname'],
     		"lastname"=>$row['lastname'],
-    		"account_officer"=>$row['first_name']." ".$row['last_name'],
+    		"account_officer"=>$row['loan_officer_id'],
     		"account_type"=>"$savingp",
     		"account_no"=>"$soc",
     		"view"=>"<a href='client_view.php?edit=".$row["id"]."' class='btn btn-info'>View</a>",

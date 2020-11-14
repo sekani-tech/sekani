@@ -29,7 +29,7 @@ $staff_id = $_SESSION["staff_id"];
 // get connections for all pages
 include("../functions/connect.php");
 $sessint_id = $_SESSION["int_id"];
-echo $sessint_id;
+
 $branch_id = $_SESSION["branch_id"];
 $inq = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$sessint_id'");
 if (count([$inq]) == 1) {
