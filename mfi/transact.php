@@ -545,6 +545,12 @@ if ($trans_post == 1 || $trans_post == "1") {
                                             <input type="text" value="" name="description" class="form-control" id="ti">
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Repayment Date</label>
+                                            <input type="date" name="transDate" class="form-control" required/>
+                                        </div>
+                                    </div>
                                 </div>
                                 <button type="reset" class="btn btn-danger">Reset</button>
                                 <button type="submit" class="btn btn-primary pull-right">Submit</button>
@@ -619,6 +625,12 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     </div>
                                     <div class="col-md-4">
                                         <div id="accrep"></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Repayment Date</label>
+                                            <input type="date" name="transDate" class="form-control" required/>
+                                        </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
@@ -740,6 +752,12 @@ if ($trans_post == 1 || $trans_post == "1") {
                                         <div class="form-group">
                                             <label for="">Account No</label>
                                             <div id="showacc"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Repayment Date</label>
+                                            <input type="date" name="transDate" class="form-control" required/>
                                         </div>
                                     </div>
                                 </div>

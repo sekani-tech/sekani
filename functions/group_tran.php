@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         foreach ($collections as $key => $collection) {
 //        get users Account Details
             $clientAmount = $collection['client_amount'];
-
+            $clientAccountNumber = $collection['client_account'];
 //            Generating a transaction Id
             for ($len = 20, $transId = ''; strlen($transId) < $len; $transId .= chr(!mt_rand(0, 2) ? mt_rand(48, 57) : (!mt_rand(0, 1) ? mt_rand(65, 90) : mt_rand(97, 122)))) ;
 
@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 //            check if the account number have 00 and add when necessary
-            if (strlen($clientDetails['account_no']) < 10) {
+            if (strlen($clientAccountNumber) < 10) {
                 $clientAccountNumber = '00' . $clientDetails['account_no'];
             } else {
                 $clientAccountNumber = $clientDetails['account_no'];

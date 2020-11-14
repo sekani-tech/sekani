@@ -2,6 +2,7 @@
 include("../../functions/connect.php");
 session_start();
 $sint_id = $_SESSION['int_id'];
+
 if (isset($_POST["id"])) {
 
     // get group clients
@@ -16,19 +17,29 @@ if (isset($_POST["id"])) {
         $c_name = $groupClient['client_name'];
         $cl_id = $groupClient['client_id'];
 //        selecting from account with clients Account Number
-        $accountBalCont = "00" . $groupClient['account_no'];
-        $accountBal = selectOne('account', ['account_no' => $accountBalCont]);
 
-//        Selecting from arrears table with client id
-//        $totalDue = selectOne('loan_arrear', ['client_id' => $cl_id]);
-////        dd($totalDue);
-//        $totalDueComplete = array_sum($totalDue['principal_amount']) + array_sum($totalDue['interest_amount']);
+        $accountBalCont = "00".$groupClient['account_no'];
+        $accountBal = selectOne('account', ['account_no' => $accountBalCont]);
+        $product_type = $accountBal["product_id"];
+
+//        get user account details
+        $savingProductCon = ['id' => $product_type];
+        $savingProduct = selectOne('savings_product', $savingProductCon);
+//        dd($savingProduct);
+        $accountNumb_name = $savingProduct['name'];
+//        $accountNumb_id = $accountBalCont['id'];
+
+
         $out = '
         <tr>
-        <td>' . $i . '</td>
+        <td class="text-center">' . $i . '</td>
         <td>' . $c_name . '</td>
         <td>' . $accountBal['account_balance_derived'] . '</td>
-        <td></td>
+        <td>
+        <select id="account" name="account[]" class="form-control" required>
+        <option value="">Select An Account</option>
+        <option value="'.$accountBalCont.'">' . $accountBalCont . ' - ' . $accountNumb_name . '</option>
+</select></td>
         <td></td>
         <td>
             <input type ="text" hidden name="customerID[]" value="' . $cl_id . '"  >
