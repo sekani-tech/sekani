@@ -124,6 +124,14 @@ $rezz = mysqli_query($connection, $activeq);
     <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
     <!-- Material Kit CSS -->
     <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet"/>
+    <!-- <script>
+        $.noConflict();
+        jQuery(document).ready(function(){
+            jQuery("button").click(function(){
+                jQuery("p").text("jQuery is still working!");
+            });
+        });
+    </script> -->
     <!-- Search Query -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> -->
@@ -135,43 +143,58 @@ $rezz = mysqli_query($connection, $activeq);
     <!-- autocomplete -->
     <script src="../functions/autocomplete/autocomplete.js"></script>
     <link href="../functions/autocomplete/autocomplete.css" rel="stylesheet">
+    <?php
+    
+    if($page_title == "Deposit/ Withdrawal"){
+
+    ?>
     <script>
         window.addEventListener("load", function(){
             suggest.attach({
-                // method: "POST",
                 target : "actName",
                 url : "../functions/autocomplete/autosearch.php",
                 data : { type: "name" },
                 // delay : 200,
                 min : 1
             });
+            
+            });
+            $(document).ready(function () {
+                    $('.actName').on("change keyup paste", function () {
+                       var name = $(this).val();
+                       var ist = $('#int_id').val();
+                       $.ajax({
+                           url: "acct_acctName.php",
+                           method: "POST",
+                           data: {name: name, ist: ist},
+                           success: function (data) {
+                             $('#accname').html(data);
+                           }
+                        })
+                    });
+                });
+    </script>
+    <?php
+    }else{
+    ?>
+    <script>
+        var $j = jQuery.noConflict();
+        window.addEventListener("load", function(){
             suggest.attach({
-                // method: "POST",
-                target : "groups",
-                url : "../functions/autocomplete/autosearch.php",
+                method: "POST",
+                target : "group",
+                url : "../functions/autocomplete/autosearch2.php",
                 data : { type: "groups" },
                 // delay : 200,
                 min : 1
             });
-            // if(suggest.close){
-                
-            // }
+            
             });
-            // $(document).ready(function () {
-            //         $('.actName').change( function () {
-            //            var name = $(this).val();
-            //            var ist = $('#int_id').val();
-            //            $.ajax({
-            //                url: "acct_acctName.php",
-            //                method: "POST",
-            //                data: {name: name, ist: ist},
-            //                success: function (data) {
-            //                  $('#accname').html(data);
-            //                }
-            //             })
-            //         });
-            //     });
+            
     </script>
+    <?php
+    }
+    ?>
     <style>
     /* custom css */
     .ac_results {
@@ -268,6 +291,9 @@ $rezz = mysqli_query($connection, $activeq);
     <link rel="stylesheet" href="../datatable/responsive.dataTables.min.css">
     <!-- DataTables scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script>
+        var $j = $.noConflict(true);
+    </script>
     <!-- DATATABLE CODE -->
     <script src="../datatable/jquery.dataTables.min.js"></script>
     <script src="../datatable/dataTables.rowReorder.min.js"></script>
