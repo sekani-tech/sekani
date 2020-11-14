@@ -2,12 +2,24 @@
 include("../../functions/connect.php");
 session_start();
 $output = '';
-$val = $_POST['id'];
+$val = "vault_in";
   // we are gonna post to get the name of the button
   if ($val == 'vault_in' || $val == 'vault_out') {
     $name = $_POST['id'];
+    
+    $sint_id = $_SESSION["int_id"];
+    $bch_id = $_SESSION["branch_id"];
+    $head_find = "SELECT parent_id FROM branch WHERE int_id = '$sint_id' and id = '$bch_id'";
+    $branch_result = mysqli_query($connection, $head_find);
+    if($branch_result){
+      $id = mysqli_fetch_array($branch_result);
+      $parent_id = $id['parent_id'];
+      // var_dump($parent_id);
+      echo $parent_id;
+      
+    }
 
-    if($_SESSION["int_id"] = 13){
+    if($parent_id == 0){
       function fill_teller($connection) {
         $bch_id = $_SESSION["branch_id"];
         $sint_id = $_SESSION["int_id"];

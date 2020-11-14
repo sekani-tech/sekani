@@ -566,14 +566,6 @@ if(isset($_POST['id'])){
             </div>
             </div>
             <div class="col-md-4">
-            <label for="">BVN:</label>
-            <input type="text" required style="text-transform: uppercase;" name="bvn" class="form-control" id="bvn_check">
-            <a id="bvn_on_meet" class="btn btn-primary pull-right" style="color: white">check</a>
-            <span id="cbvn" style="color: green;" hidden>BVN MATCHED RECORD</span>
-            <span id="wbvn" style="color: red;" hidden>WRONG BVN MATCH</span>
-            <div id="bvn_result"></div>
-            </div>
-            <div class="col-md-4">
             <p><label for="">Active Alerts:</label></p>
             <div class="form-check form-check-inline">
             <label class="form-check-label">
@@ -664,7 +656,7 @@ if(isset($_POST['id'])){
 <!-- BVN RECOROD -->
 <!-- YOU WILL BE DATING DOB -->
 <!-- FIRST NAME, LAST NAME, MOBLIE, BVN -->
-<script>
+<!-- <script>
     $(document).ready(function() {
         $('#bvn_on_meet').on("click", function(){
             var bvn = $('#bvn_check').val();
@@ -708,13 +700,13 @@ if(isset($_POST['id'])){
             }
         })
   }
-//   document.getElementById("dman_sub").submit();
+
 })
 
             // END
     });
 });
-</script>
+</script> -->
 <!-- END BVN CHECK -->
 <script>
     $(document).ready(function() {

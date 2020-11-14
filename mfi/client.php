@@ -124,24 +124,12 @@ else if (isset($_GET["message5"])) {
                   <h4 class="card-title ">Clients</h4>
                   <p class="card-category">
                   <?php
-                        $query = "SELECT client.id, 
-                                    client.BVN, 
-                                    client.date_of_birth, 
-                                    client.gender, 
-                                    client.account_type, 
-                                    client.account_no, 
-                                    client.mobile_no, 
-                                    client.firstname, 
-                                    client.lastname,  
-                                    staff.first_name, 
-                                    staff.last_name
-                                    FROM client 
-                                    JOIN staff ON client.loan_officer_id = staff.id 
-                                    WHERE client.int_id = '$sessint_id'
-                                    AND client.status = 'Approved'";
+                        $query = "SELECT COUNT(firstname) FROM client WHERE int_id = '$sessint_id' AND status = 'Approved'";
                         $result = mysqli_query($connection, $query);
-                     $inr = mysqli_num_rows($result);
-                     echo $inr;
+                        if ($result) {
+                            $inr = mysqli_fetch_array($result);
+                            echo $inr['COUNT(firstname)'];
+                        }
                    ?> registered clients || <a style = "color: white;" href="manage_client.php">Create New client</a></p>
                   
                 </div>

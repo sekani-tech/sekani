@@ -481,6 +481,9 @@ if ($trans_post == 1 || $trans_post == "1") {
                                                 <input type="text" class="form-control" hidden id="branch_id"
                                                    value="<?php echo $branch_id ?>">
                                                 <div id="acBoxXXX" class="acBox">
+                                                    <div>Option A</div>
+                                                    <div>Option B</div>
+                                                    <div>Option C</div>
                                                 </div>
                                             </div>
                                         </div>

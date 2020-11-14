@@ -32,7 +32,7 @@
                 <p class="card-category">Fill in all important data</p>
               </div>
               <div class="card-body">
-              <form id="form" action="../functions/group_tran.php" method="POST" >
+              <form id="form" action="../functions/group_tran.php" method="POST" autocomplete="off">
            
                   <div class = "row">
                     <div class = "col-md-12">
@@ -40,6 +40,20 @@
                         <!-- Group info _ Tab1 -->
                     <div class="tab"><h3>Choose Type of Group Posting:</h3>
                     <div class="row">
+                      <div class="col-md-4">
+                              <div class="form-group">
+                                <label>Select Group</label>
+                                <div id="acWrapXXX" class="acWrap">
+                                      <input type="text" class="form-control groups" id="groups" name="pay_type" placeholder="<?php echo $_SESSION['int_id'] ?>">
+                                      <div id="acBoxXXX" class="acBox">
+                                        <!-- SUGGESTIONS ARE PUT HERE DYNAMICALLY VIA AJAX -->
+                                        <div>Option A</div>
+                                        <div>Option B</div>
+                                        <div>Option C</div>
+                                      </div>
+                                </div>
+                              </div>
+                          </div>
                     <div class="col-md-12">
                       <h5 class="card-title">Accounting Rules</h5>
                         <div class="position-relative form-group ">
@@ -114,6 +128,7 @@
                                     <label class="custom-control-label" for="fetcpostgroup">Fetch posting by group</label>
                                 </div>
                             </div>
+                           
                           <div id="post" class="col-md-12">
                           
                           </div>

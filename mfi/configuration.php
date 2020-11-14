@@ -153,9 +153,42 @@ $destination = "../index.php";
                   <a href="bulk_update.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
-            </div>   
+            </div>
 
+               <!-- create accounts without bvn -->
+               <?php
+              //  function to check likes
+              function like($str, $searchTerm) {
+                $searchTerm = strtolower($searchTerm);
+                $str = strtolower($_SESSION['username']);
+                $pos = strpos($str, $searchTerm);
+                if ($pos === false)
+                    return false;
+                else
+                    return true;
+              }
+              $found = like('it-support', 'it-su'); //returns true
+              $notFound = like('Apple', 'lep'); //returns false
             
+               if($found){
+               ?>
+
+              <div class="col-md-4 ml-auto mr-auto">
+
+              <div class="card card-pricing bg-primary"><div class="card-body ">
+                    
+                    <h4 class="card-title">Create client</h4>
+                    <p class="card-description">
+                    Create client with BVN
+                    </p>
+                    <a href="client_create.php" class="btn btn-white btn-round">View</a>
+                    </div>
+                </div>
+              </div>
+
+            <?php
+            }
+            ?>
 
         </div>
         </div>

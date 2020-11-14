@@ -166,6 +166,22 @@ function searchClient($table1, $int_id, $branch_id, $term)
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
+function searchGroup($table1, $int_id, $term)
+{
+    $match = '%' . $term . '%';
+    global $connection;
+    $sql = "SELECT g.* 
+            FROM $table1 AS g 
+            WHERE g.int_id=? AND g.g_name LIKE ?";
+
+//    dd($sql);
+    $stmt = executeQuery($sql, [
+        'int_id' => $int_id,
+        'g_name' => $match
+    ]);
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+}
+
 //$details = searchClient('client', 13, 28, 'Moses');
 
 //dd($details);

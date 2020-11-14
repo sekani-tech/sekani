@@ -29,6 +29,7 @@ $staff_id = $_SESSION["staff_id"];
 // get connections for all pages
 include("../functions/connect.php");
 $sessint_id = $_SESSION["int_id"];
+echo $sessint_id;
 $branch_id = $_SESSION["branch_id"];
 $inq = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$sessint_id'");
 if (count([$inq]) == 1) {
@@ -137,28 +138,39 @@ $rezz = mysqli_query($connection, $activeq);
     <script>
         window.addEventListener("load", function(){
             suggest.attach({
+                // method: "POST",
                 target : "actName",
                 url : "../functions/autocomplete/autosearch.php",
+                data : { type: "name" },
+                // delay : 200,
+                min : 1
+            });
+            suggest.attach({
+                // method: "POST",
+                target : "groups",
+                url : "../functions/autocomplete/autosearch.php",
+                data : { type: "groups" },
                 // delay : 200,
                 min : 1
             });
             // if(suggest.close){
-                $(document).ready(function () {
-                    $('.actName').change( function () {
-                       var name = $(this).val();
-                       var ist = $('#int_id').val();
-                       $.ajax({
-                           url: "acct_acctName.php",
-                           method: "POST",
-                           data: {name: name, ist: ist},
-                           success: function (data) {
-                             $('#accname').html(data);
-                           }
-                        })
-                    });
-                });
+                
             // }
             });
+            // $(document).ready(function () {
+            //         $('.actName').change( function () {
+            //            var name = $(this).val();
+            //            var ist = $('#int_id').val();
+            //            $.ajax({
+            //                url: "acct_acctName.php",
+            //                method: "POST",
+            //                data: {name: name, ist: ist},
+            //                success: function (data) {
+            //                  $('#accname').html(data);
+            //                }
+            //             })
+            //         });
+            //     });
     </script>
     <style>
     /* custom css */

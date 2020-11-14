@@ -66,26 +66,26 @@
   <!-- end  -->
   
   <script>
-    var options = {
-          mode: 'wizard',
-          autoButtonsNextClass: 'btn btn-primary float-right',
-          autoButtonsPrevClass: 'btn btn-light',
-          stepNumberClass: 'badge badge-pill badge-primary mr-1',
-          onSubmit: function() {
-            alert('Form submitted!');
-            return true;
-          }
-        }
+    // var options = {
+    //       mode: 'wizard',
+    //       autoButtonsNextClass: 'btn btn-primary float-right',
+    //       autoButtonsPrevClass: 'btn btn-light',
+    //       stepNumberClass: 'badge badge-pill badge-primary mr-1',
+    //       onSubmit: function() {
+    //         alert('Form submitted!');
+    //         return true;
+    //       }
+    //     }
 
-        $( function() {
+    //     $( function() {
 
-          $( "#form" ).accWizard(options);
+    //       $( "#form" ).accWizard(options);
 
-        });
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-36251023-1']);
-        _gaq.push(['_setDomainName', 'jqueryscript.net']);
-        _gaq.push(['_trackPageview']);
+    //     });
+    //     var _gaq = _gaq || [];
+    //     _gaq.push(['_setAccount', 'UA-36251023-1']);
+    //     _gaq.push(['_setDomainName', 'jqueryscript.net']);
+    //     _gaq.push(['_trackPageview']);
 
         (function() {
           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;

@@ -3,8 +3,6 @@
 include "../connect.php";
 session_start();
 
-echo $_POST['type'];
-$data = [];
 switch ($_POST['type']){
 
     default:
@@ -16,7 +14,7 @@ switch ($_POST['type']){
         $term = $_GET['term'];
         $rows = searchGroup('groups', $int_id, $term);
         // loading of display name that looks like the search term into data array
-        
+        $data = [];
         foreach ($rows as $key => $row){
             $data[] = $row['g_name'];
         }
@@ -31,7 +29,7 @@ switch ($_POST['type']){
         $term = $_GET['term'];
         $rows = searchClient('client', $int_id, $branch_id, $term);
         // loading of display name that looks like the search term into data array
-        
+        $data = [];
         foreach ($rows as $key => $row){
             $data[] = $row['display_name'];
         }
