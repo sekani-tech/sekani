@@ -178,11 +178,11 @@ $rezz = mysqli_query($connection, $activeq);
     }else{
     ?>
     <script>
-        var $j = jQuery.noConflict();
+        // var $j = jQuery.noConflict();
         window.addEventListener("load", function(){
             suggest.attach({
                 method: "POST",
-                target : "group",
+                target : "groups",
                 url : "../functions/autocomplete/autosearch2.php",
                 data : { type: "groups" },
                 // delay : 200,
