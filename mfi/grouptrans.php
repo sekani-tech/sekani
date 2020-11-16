@@ -140,7 +140,7 @@ function branch_option($connection)
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12">
+                                                    <!-- <div class="col-md-12">
                                                         <label for="">Select Group</label>
                                                         <div id="acWrapXXX" class="acWrap">
                                                             <input type="text" name="pay_type" class="form-control groups" id="groups">
@@ -150,7 +150,7 @@ function branch_option($connection)
                                                                 <div>Option C</div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <script>
                                                         $(document).ready(function () {
                                                             $('#collct').on("change keyup paste", function () {

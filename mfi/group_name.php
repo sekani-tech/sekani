@@ -28,8 +28,25 @@ if(isset($_POST["id"]))
     </div>
     <div class="col-md-4">
             <div class="form-group">
-             
-              <input type="text" hidden id="group" name="group" value="">
+              <?php
+                  function fill_group($connection)
+                  {
+                  $sint_id = $_SESSION["int_id"];
+                  $org = "SELECT * FROM groups WHERE int_id = '$sint_id' ORDER BY g_name ASC";
+                  $res = mysqli_query($connection, $org);
+                  $out = '';
+                  while ($row = mysqli_fetch_array($res))
+                  {
+                    $out .= '<option value="'.$row["id"].'">'.$row["g_name"].'</option>';
+                  }
+                  return $out;
+                  }
+                  ?>
+              <label>Select Group</label>
+               <select class="form-control" name="pay_type" id="group">
+                   <option value="">Select a group</option>
+                  <?php echo fill_group($connection)?>
+               </select>
             </div>
         </div>
         <div class="col-md-12">

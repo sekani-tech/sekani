@@ -291,9 +291,9 @@ $rezz = mysqli_query($connection, $activeq);
     <link rel="stylesheet" href="../datatable/responsive.dataTables.min.css">
     <!-- DataTables scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script>
+    <!-- <script>
         var $j = $.noConflict(true);
-    </script>
+    </script> -->
     <!-- DATATABLE CODE -->
     <script src="../datatable/jquery.dataTables.min.js"></script>
     <script src="../datatable/dataTables.rowReorder.min.js"></script>
