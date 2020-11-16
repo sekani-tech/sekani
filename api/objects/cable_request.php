@@ -58,10 +58,10 @@ function cable_request(){
               CURLOPT_CUSTOMREQUEST => "POST",
               CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"GDS\",\r\n\"smartCardNo\" : \"$smart\",\r\n\"type\" : \"$cable\"\r\n}",
               CURLOPT_HTTPHEADER => array(
-                "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
-                "Content-Type: application/json"
-                // "email: test@shagopayments.com",
-                // "password: test123"
+                // "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
+                "Content-Type: application/json",
+                "email: test@shagopayments.com",
+                "password: test123"
               ),
             ));
         // return true;
