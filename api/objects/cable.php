@@ -19,7 +19,7 @@ class Sekani{
     }
 
     // create Airtime API
-function load_data(){
+function load_cable(){
 
     $select_query = "SELECT * FROM " . $this->table_name . " WHERE API_KEY =:api_key";
     // prepare query
@@ -49,30 +49,36 @@ function load_data(){
         $total_sekani_charge = $row["sekani_charge"];
     if ($running_balance >= $this->amount) {
         // get all the vaule to Shago
-        $phone = $this->phone;
+        $smart = $this->smartCardNo;
+        $customerName = $this->customerName;
+        $type = $this->type;
         $amount = $this->amount;
-        $bundle = $this->bundle;
-        $package = $this->package;
-        $network = $this->network;
+        $packagename = $this->packagename;
+        $productsCode = $this->productsCode;
+        $period = $this->period;
+        $hasAddon = $this->hasAddon;
         $generate = $this->request_id;
         // start integration
         $curl = curl_init();
-        
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"BDA\",\r\n\"phone\" : \"$phone\",\r\n\"amount\": \"$amount\",\r\n\"bundle\" : \"$bundle\",\r\n\"network\": \"$network\",\r\n\"package\" : \"$package\",\r\n\"request_id\": \"$generate\"\r\n}",
-            CURLOPT_HTTPHEADER => array(
-              "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
-              "Content-Type: application/json"
-            ),
-          ));
+        // soon
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "http://34.68.51.255/shago/public/api/test/b2b",
+// CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
+CURLOPT_RETURNTRANSFER => true,
+CURLOPT_ENCODING => "",
+CURLOPT_MAXREDIRS => 10,
+CURLOPT_TIMEOUT => 0,
+CURLOPT_FOLLOWLOCATION => true,
+CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+CURLOPT_CUSTOMREQUEST => "POST",
+CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"GDB\",\r\n\"smartCardNo\" : \"$smart\",\r\n\"customerName\": \"$customerName\",\r\n\"type\" : \"$type\",\r\n\"amount\": \"$amount\",\r\n\"packagename\" : \"$packagename\",\r\n\"productsCode\": \"$productsCode\",\r\n\"period\": \"$period\",\r\n\"hasAddon\" : \"0\",\r\n\"request_id\": \"$generate\"\r\n}",
+CURLOPT_HTTPHEADER => array(
+// "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
+"Content-Type: application/json",
+"email: test@shagopayments.com",
+"password: test123"
+),
+));
         // return true;
         $response = curl_exec($curl);      
         $err = curl_close($curl);
@@ -91,7 +97,7 @@ function load_data(){
                 $cal_int_prof = $total_int_profit + 0;
                 $digits = 9;
                 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-                $trans = "SKWAL".$randms."DATA".$int_id;
+                $trans = "SKWAL".$randms."CABLE".$int_id;
                 $date = date("Y-m-d");
                 $date2 = date('Y-m-d H:i:s');
 
@@ -122,14 +128,14 @@ function load_data(){
         `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`,
         `int_profit`, `sekani_charge`, `merchant_charge`)
          VALUES ('{$int_id}', '{$branch_id}', '{$trans}',
-         '{$generate}', 'bill_data', 
+         '{$generate}', 'bill_cable', 
          NULL, '0', '{$date}', '{$amount}', '{$cal_bal}',
          '{$cal_bal}', {$date}, 
          NULL, NULL, '{$date2}', '0', '0.00', '{$amount}', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
 
     // MAKE FINAL ECHO
     if($query_table){
-        echo json_encode(array("message" => "Data Transaction Successful", "transaction_id" => "$trans", "status" => "success"));
+        echo $response;
         return true;
     } else {
         echo json_encode(array("message" => "Error at Inserting Wallet Transaction, Please Contact Sekani", "status" => "failed"));
@@ -138,7 +144,7 @@ function load_data(){
         echo json_encode(array("message" => "Error at Updating Wallet, Please Contact Sekani", "status" => "failed"));
     }
             } else {
-                echo json_encode(array("message" => "Unable to Recharge Airtime. Please Check Request id for duplicate", "status" => "failed"));
+                echo json_encode(array("message" => "Unable to Process Purchase. Please Check Request id for duplicate", "status" => "failed"));
             }
         }
     } else {

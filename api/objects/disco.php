@@ -85,7 +85,7 @@ function load_disco(){
             $status = $obj['status'];
             $msg = $obj['message'];
             // status
-            echo $response;
+            // echo $response;
             $token = $obj['token'];
             if ($status == "200" && $status != "") {
                 $cal_bal = $running_balance - $amount;
@@ -95,7 +95,7 @@ function load_disco(){
                 $cal_int_prof = $total_int_profit + 0;
                 $digits = 9;
                 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-                $trans = "SKWAL".$randms."AIRTIME".$int_id;
+                $trans = "SKWAL".$randms."DISCO".$int_id;
                 $date = date("Y-m-d");
                 $date2 = date('Y-m-d H:i:s');
 

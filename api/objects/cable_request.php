@@ -47,8 +47,8 @@ function cable_request(){
         $curl = curl_init();
 
             curl_setopt_array($curl, array(
-            //   CURLOPT_URL => "http://34.68.51.255/shago/public/api/test/b2b",
-              CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
+              CURLOPT_URL => "http://34.68.51.255/shago/public/api/test/b2b",
+            //   CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -59,7 +59,7 @@ function cable_request(){
               CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"GDS\",\r\n\"smartCardNo\" : \"$smart\",\r\n\"type\" : \"$cable\"\r\n}",
               CURLOPT_HTTPHEADER => array(
                 "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
-                "Content-Type: application/json",
+                "Content-Type: application/json"
                 // "email: test@shagopayments.com",
                 // "password: test123"
               ),
