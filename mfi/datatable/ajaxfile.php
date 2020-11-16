@@ -39,6 +39,12 @@ $data = array();
 while ($row = mysqli_fetch_assoc($empRecords)) {
     // get account
     $cid = $row["id"];
+    $staff_id = $row['loan_officer_id'];
+    $query_staff = mysqli_query($con, "SELECT * FROM `staff` WHERE id = '$staff_id' AND int_id = '$sessint_id'");
+    if (mysqli_num_rows($query_staff) > 0) {
+      $ms = mysqli_fetch_array($query_staff);
+      $staff_fullname = $ms["display_name"];
+    }
     $get_one_account = mysqli_query($con, "SELECT * FROM `account` WHERE client_id = '$cid' AND int_id = '$sessint_id' ORDER BY id ASC LIMIT 1");
     if (mysqli_num_rows($get_one_account) == 1) {
                             $rowa = mysqli_fetch_array($get_one_account);
@@ -58,7 +64,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
     $data[] = array(
     		"firstname"=>$row['firstname'],
     		"lastname"=>$row['lastname'],
-    		"account_officer"=>$row['loan_officer_id'],
+    		"account_officer"=>$staff_fullname,
     		"account_type"=>"$savingp",
     		"account_no"=>"$soc",
     		"view"=>"<a href='client_view.php?edit=".$row["id"]."' class='btn btn-info'>View</a>",
