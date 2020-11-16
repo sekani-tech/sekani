@@ -43,7 +43,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
     $query_staff = mysqli_query($con, "SELECT * FROM `staff` WHERE id = '$staff_id' AND int_id = '$sessint_id'");
     if (mysqli_num_rows($query_staff) > 0) {
       $ms = mysqli_fetch_array($query_staff);
-      $staff_fullname = $ms["display_name"];
+      $staff_fullname = strtoupper($ms["display_name"]);
     }
     $get_one_account = mysqli_query($con, "SELECT * FROM `account` WHERE client_id = '$cid' AND int_id = '$sessint_id' ORDER BY id ASC LIMIT 1");
     if (mysqli_num_rows($get_one_account) == 1) {
