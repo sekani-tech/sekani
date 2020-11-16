@@ -29,7 +29,6 @@ if(
     !empty($data->packagename) &&
     !empty($data->productsCode) &&
     !empty($data->period) &&
-    !empty($data->hasAddon) &&
     !empty($data->request_id) &&
     !empty($data->api_key)
 ){
@@ -42,7 +41,6 @@ if(
     $cable->packagename= $data->packagename;
     $cable->productsCode = $data->productsCode;
     $cable->period = $data->period;
-    $cable->hasAddon = $data->hasAddon;
     $cable->request_id= $data->request_id;
     $cable->api_key = $data->api_key;
   
