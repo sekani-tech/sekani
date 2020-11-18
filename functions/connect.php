@@ -203,3 +203,4 @@ function searchGroup($table1, $int_id, $term)
 //$details = searchClient('client', 13, 28, 'Moses');
 
 //dd($details);
+

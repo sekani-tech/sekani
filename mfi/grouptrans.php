@@ -242,8 +242,8 @@ function branch_option($connection)
                                                         <tr>
                                                             <th>S/N</th>
                                                             <th>Client Name</th>
-                                                            <th>Balance Derived</th>
                                                             <th>Choose Account</th>
+                                                            <th>Balance Derived</th>
                                                             <th>Total Expected Repayment</th>
                                                             <th>Total Deposit</th>
                                                         </tr>

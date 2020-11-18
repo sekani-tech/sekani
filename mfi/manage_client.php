@@ -5,8 +5,19 @@ $page_title = "New Client";
 $destination = "client.php";
 include("header.php");
 
-?>
-<?php
+
+function fill_savings($connection)
+{
+    $sint_id = $_SESSION["int_id"];
+    $orgCon = ['int_id' =>$sint_id];
+    $orgs = selectAll('savings_product', $orgCon);
+    $out = '';
+    foreach ($orgs as $org) {
+        $out .= '<option value="' . $org["id"] . '">' . $org["name"] . '</option>';
+    }
+    return $orgs;
+}
+
 if ($acc_op == 1 || $acc_op == "1") {
 ?>
 <!-- Content added here -->
@@ -26,20 +37,6 @@ if ($acc_op == 1 || $acc_op == "1") {
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Account Type</label>
-                      <?php
-                  function fill_savings($connection)
-                  {
-                  $sint_id = $_SESSION["int_id"];
-                  $org = "SELECT * FROM savings_product WHERE int_id = '$sint_id'";
-                  $res = mysqli_query($connection, $org);
-                  $out = '';
-                  while ($row = mysqli_fetch_array($res))
-                  {
-                    $out .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
-                  }
-                  return $out;
-                  }
-                  ?>
                         <select required name="acct_type" class="form-control" data-style="btn btn-link" id="collat">
                           <option value="">select a Account Type</option>
                           <?php echo fill_savings($connection); ?>
