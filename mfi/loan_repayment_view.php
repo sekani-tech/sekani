@@ -79,13 +79,25 @@ if (isset($_GET["id"]) AND $_GET["id"] != "") {
                           <?php
                           $inst = $row["installment"];
                           $current_date = date('Y-m-d');
-                          if ($inst <= 0) {
+                          $due_d = $row["duedate"];
+                          
+                          $query_arrears = mysqli_query($connection, "SELECT * FROM `loan_arrear` WHERE ((loan_id = '$loan_id' AND duedate = '$due_d') AND installment > 0) ORDER BY id DESC LIMIT 1");
+                          if (mysqli_num_rows($query_arrears) > 0) {
+                            $mxv = mysqli_fetch_array($query_arrears);
+                            $pina = $mxv["principal_amount"];
+                            $inam = $mxv["interest_amount"];
+                            $vbdt = number_format(($pina + $inam), 2);
+                            $inst = "<span style='color:red'>₦ $vbdt in Arrears</span>";
+                          } else {
+                            if ($inst <= 0) {
                               $inst = "<span style='color:green'>Paid</span>";
                           } else if ($inst > 0 && $row["duedate"] < $current_date) {
                             $inst = "<span style='color:red'>Not Paid</span>";
                           } else {
                             $inst = "<span style='color:orange'>Pending</span>";
                           }
+                          }
+                          
                           ?>
                           <td><?php echo $inst; ?></td>
                           <td><?php echo "₦ ".number_format($duebalance, 2); ?></td>
