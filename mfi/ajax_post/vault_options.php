@@ -15,20 +15,19 @@ $val = "vault_in";
       $id = mysqli_fetch_array($branch_result);
       $parent_id = $id['parent_id'];
       // var_dump($parent_id);
-      echo $parent_id;
+      // echo $parent_id;
       
     }
-
-    if($parent_id == 0){
+    
+    if($parent_id == '0'){
       function fill_teller($connection) {
-        $bch_id = $_SESSION["branch_id"];
         $sint_id = $_SESSION["int_id"];
-        $org = "SELECT * FROM tellers WHERE int_id = '$sint_id";
-        $res = mysqli_query($connection, $org);
+        $orgs = selectAll('tellers', ['int_id'=>$sint_id]);
+        
         $out = '';
-        while ($row = mysqli_fetch_array($res))
+        foreach ($orgs as $org)
         {
-          $out .= '<option value="'.$row["name"].'">'.$row["description"].'</option>';
+          $out .= '<option value="'.$org["name"].'">'.$org["description"].'</option>';
         }
         return $out;
       }
@@ -36,7 +35,7 @@ $val = "vault_in";
       function fill_teller($connection) {
         $bch_id = $_SESSION["branch_id"];
         $sint_id = $_SESSION["int_id"];
-        $org = "SELECT * FROM tellers WHERE int_id = '$sint_id' && branch_id = '$bch_id'";
+        $org = "SELECT * FROM tellers WHERE int_id = '$sint_id' AND branch_id = '$bch_id'";
         $res = mysqli_query($connection, $org);
         $out = '';
         while ($row = mysqli_fetch_array($res))
@@ -46,7 +45,7 @@ $val = "vault_in";
         return $out;
       }
     }
-$output='
+?>
 <div class="row">
   <div class="col-md-6">
     <div class="form-group">
@@ -54,13 +53,12 @@ $output='
     <input type="text" hidden name ="cash" value =""/>
     <select name="teller_id" id="tell" class="form-control">
       <option value="0">SELECT A TELLER</option>
-        '.fill_teller($connection).'
+        <?php echo fill_teller($connection) ?>
     </select>
     </div>
 </div>
 <div id = "tell_acc"></div>
-</div>';
-    echo $output;
+</div><?php
   }
     else if($val == 'from_bank' || $val == 'to_bank'){
 
