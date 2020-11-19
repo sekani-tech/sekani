@@ -275,21 +275,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </button>
                                     <div class="dropdown-menu">
                                       <a class="dropdown-item" id="l_check_<?php echo $row["id"];?>" data-loan-id="<?php echo $row["id"]?>" data-toggle="modal" data-target=".bd-example-modal-lg">Pay Loan</a>
-                                      <script>
- $(document).ready(function() {
-    $('#l_check_<?php echo $row["id"] ?>').on("click", function(){
-        var id = $(this).data("loan-id");
-        $.ajax({
-           url:"ajax_post/loan_rec_check.php",
-           method:"POST",
-           data:{id:id},
-           success:function(data){
-             $('#done_loan').html(data);
-           }
-      });
-    });
- });
-</script>
+                                      
                                       <a class="dropdown-item" href="loan_repayment_view.php?id=<?php echo $row["id"]; ?>">Edit Loan Repayment</a>
                                     </div>
                                   </div> 
@@ -360,6 +346,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
       </div>
 <!-- end your front end -->
+<script>
+ $(document).ready(function() {
+    $('#l_check_<?php echo $row["id"] ?>').on("click", function(){
+        var id = $(this).data("loan-id");
+        $.ajax({
+           url:"ajax_post/loan_rec_check.php",
+           method:"POST",
+           data:{id:id},
+           success:function(data){
+             $('#done_loan').html(data);
+           }
+      });
+    });
+ });
+</script>
 <?php
 include("footer.php");
 ?>
