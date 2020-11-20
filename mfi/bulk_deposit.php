@@ -106,12 +106,72 @@ $branchs = selectAll('branch', ['int_id' => $_SESSION['int_id']]);
                             </div>
                             <!-- REQUIREMENTS SAMPLE COLUMN BEGINS -->
                         </div>
+
+                             <!-- SELECT TELLER TABLE BEGINS -->                                 
+                        <div class="row">
+        <div class="card card-info">
+        <div class="card-header">
+                                        <h4 class="card-title text-center">Select Teller </h4>
+
+                                    </div>
+                                     
+
+        <div class="card-body">
+        <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          ID
+                        </th>
+                        <th>
+                         Teller Number
+                        </th>
+                        <th>
+                         Teller ID
+                        </th>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            1
+                          </td>
+                          <td>
+                            Dakota Rice
+                          </td>
+                          <td>
+                            Niger
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            2
+                          </td>
+                          <td>
+                            Minerva Hooper
+                          </td>
+                          <td>
+                            Curaçao
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>  
+        </div>
+
+        </div>
+
+        </div>
+         <!-- SELECT TELLER TABLE ENDS -->   
                     </div>
+                    
+                   
                 </div>
 
 
             </div>
         </div>
+
+        
 
     </div>
 
