@@ -95,6 +95,66 @@ $fee_out = $w['fee_charges_outstanding_derived'];
 $penal_out = $w['penalty_charges_outstanding_derived'];
 $overdue = $w['total_waived_derived'];
 
+// contract
+$query_sum_principal = mysqli_query($connection, "SELECT SUM(principal_amount) AS contract_principal FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id'");
+$qpo = mysqli_fetch_array($query_sum_principal);
+$contract_principal = number_format($qpo["contract_principal"], 2);
+// for interest
+$query_sum_interest =  mysqli_query($connection, "SELECT SUM(interest_amount) AS contract_interest FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id'");
+$qpox = mysqli_fetch_array($query_sum_interest);
+$contract_interest = number_format($qpox["contract_interest"], 2);
+
+
+// paid
+$query_principal_paid = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id' AND installment = 0");
+if (mysqli_num_rows($query_principal_paid) > 0) {
+  while ($qps = mysqli_fetch_array($query_principal_paid)) {
+    // make an arrears search
+  $pd_loan_id = $qps["id"];
+  $query_arrears_loan  = mysqli_query($connection, "SELECT * FROM `loan_arrear` WHERE loan_id = '$pd_loan_id' AND int_id = '$sessint_id'");
+
+  if (mysqli_num_rows($query_arrears_loan) > 0) {
+    echo "x";
+  } else {
+    $query_paid_principal = mysqli_query($connection, "SELECT SUM(principal_amount) AS paid_principal FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id' AND installment = 0");
+    $mmx = mysqli_fetch_array($query_paid_principal);
+    $paid_principal = number_format($mmx["paid_principal"], 2);
+
+    // move
+    $query_paid_interest = mysqli_query($connection, "SELECT SUM(interest_amount) AS paid_interest FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id' AND installment = 0");
+    $mmxx = mysqli_fetch_array($query_paid_interest);
+    $paid_interest = number_format($mmxx["paid_interest"], 2);
+  }
+  }
+} else {
+  $paid_principal = "0.00";
+  $paid_interest = "0.00";
+}
+
+$paid_principal = $paid_principal;
+$paid_interest = $paid_interest;
+
+// for interest
+
+// outstanding
+$date_new = date('Y-m-d');
+$query_principal_outstanding = mysqli_query($connection, "SELECT SUM(principal_amount) AS outstanding_principal FROM `loan_repayment_schedule` WHERE (int_id = '$sessint_id' AND loan_id = '$id') AND installment = 1");
+$desx = mysqli_fetch_array($query_principal_outstanding);
+$outstanding_principal_x = number_format($desx["outstanding_principal"], 2);
+// interest
+$query_interest_outstanding = mysqli_query($connection, "SELECT SUM(interest_amount) AS outstanding_interest FROM `loan_repayment_schedule` WHERE (int_id = '$sessint_id' AND loan_id = '$id') AND installment = 1");
+$desxxx = mysqli_fetch_array($query_interest_outstanding);
+$outstanding_interest_x = number_format($desxxx["outstanding_interest"], 2);
+
+
+// over due query
+$query_overdue_principal = mysqli_query($connection, "SELECT SUM(principal_amount) AS overdue_principal FROM `loan_arrear` WHERE (int_id = '$sessint_id' AND loan_id = '$id') AND installment = 1");
+$wty = mysqli_fetch_array($query_overdue_principal);
+$overdue_principal = number_format($wty["overdue_principal"], 2);
+// $query_overdue_interest = mysqli_query($connection, "");
+$query_overdue_interest = mysqli_query($connection, "SELECT SUM(interest_amount) AS overdue_interest FROM `loan_arrear` WHERE (int_id = '$sessint_id' AND loan_id = '$id') AND installment = 1");
+$wtyx = mysqli_fetch_array($query_overdue_interest);
+$overdue_interest = number_format($wtyx["overdue_principal"], 2);
 
 ?>
 <input type="text" hidden id = "principal_amount" value="<?php echo $principal;?>" name=""/>
@@ -122,12 +182,12 @@ $overdue = $w['total_waived_derived'];
                             <div class="ripple-container"></div>
                           </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                           <a class="nav-link" href="#details" data-toggle="tab">
                             <i class="material-icons">toc</i> Details
                             <div class="ripple-container"></div>
                           </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                           <a class="nav-link" href="#secure" data-toggle="tab">
                             <i class="material-icons">security</i> Security
@@ -174,7 +234,7 @@ $overdue = $w['total_waived_derived'];
                           <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Last Payment</h4></b></div>
                           <div class="col-md-3"></div>
                           <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Amount in Arrears</h4></b></div>
-                          <div class="col-md-3"></div>
+                          <div class="col-md-3"><?php echo $overdue_principal + $overdue_interest; ?></div>
                           <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Next Payment</h4></b></div>
                           <div class="col-md-3"></div>
                           <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Days in Arrears</h4></b></div>
@@ -196,178 +256,36 @@ $overdue = $w['total_waived_derived'];
                         <tbody>
                         <tr>
                                 <th>Principal</th>
-                                <th><?php echo $principal;?></th>
-                                <th><?php echo $princi_repaid;?></th>
-                                <th><?php echo $principal_out;?></th>
-                                <th><?php echo $overdue;?></th></th>
+                                <th>NGN <?php echo $contract_principal;?></th>
+                                <th>NGN <?php echo $paid_principal;?></th>
+                                <th>NGN <?php echo $outstanding_principal_x;?></th>
+                                <th>NGN <?php echo $overdue_principal;?></th></th>
                             </tr>
                         <tr>
                                 <th>Interest</th>
-                                <th><?php echo $intamt;?></th>
-                                <th><?php echo $int_repaid;?></th>
-                                <th><?php echo $int_out;?></th>
-                                <th><?php echo $overdue;?></th></th>
+                                <th>NGN <?php echo $contract_interest;?></th>
+                                <th>NGN <?php echo $paid_interest;?></th>
+                                <th>NGN <?php echo $outstanding_interest_x;?></th>
+                                <th>NGN <?php echo $overdue_interest;?></th></th>
                             </tr>
                             <tr>
                                 <th>Fees</th>
-                                <th><?php echo $fee_charges;?></th>
-                                <th><?php echo $fee_out;?></th>
-                                <th><?php echo $princi_repaid;?></th>
-                                <th><?php echo $overdue;?></th></th>
+                                <th>NGN <?php echo $fee_charges;?></th>
+                                <th>NGN <?php echo $fee_out;?></th>
+                                <th>NGN <?php echo $princi_repaid;?></th>
+                                <th>NGN <?php echo $overdue;?></th></th>
                             </tr>
                             <tr>
                                 <th>Penalties</th>
-                                <th><?php echo $penalty_charges;?></th>
-                                <th><?php echo $penal_repaid;?></th>
-                                <th><?php echo $penal_out;?></th>
-                                <th><?php echo $overdue;?></th></th>
+                                <th>NGN <?php echo $penalty_charges;?></th>
+                                <th>NGN <?php echo $penal_repaid;?></th>
+                                <th>NGN <?php echo $penal_out;?></th>
+                                <th>NGN <?php echo $overdue;?></th></th>
                             </tr>
                       </tbody>
                       </table>
                     </div>
                     <!-- /items report-->
-                    <div class="tab-pane" id="details">
-                    <div class="col-md-12">
-                    <div class="row">
-                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Loan Product</h4></b></div>
-                          <div class="col-md-3"><?php echo $loanprod; ?></div>
-                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Loan Amount</h4></b></div>
-                          <div class="col-md-3"><?php echo $disburse;?></div>
-                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Business Expansion</h4></b></div>
-                          <div class="col-md-3"></div>
-                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Interest Rate</h4></b></div>
-                          <div class="col-md-3"><?php echo $interest;?></div>
-                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">APR</h4></b></div>
-                          <div class="col-md-3"></div>
-                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Loan Term</h4></b></div>
-                          <div class="col-md-3"><?php echo $loanterm;?></div>
-                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">EIR</h4></b></div>
-                          <div class="col-md-3"></div>
-                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Repayment Every</h4></b></div>
-                          <div class="col-md-3"><?php echo $repay_no." ".$repayever;?></div>
-                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Loan Sector</h4></b></div>
-                          <div class="col-md-3"><?php echo $loan_sec;?></div>
-                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Linked Account</h4></b></div>
-                          <div class="col-md-3"><?php echo $account;?></div>
-                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">No of Gaurantors</h4></b></div>
-                          <div class="col-md-3"><?php echo $gau;?></div>
-                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Repayment Date</h4></b></div>
-                          <div class="col-md-3"><?php echo $repayment;?></div>
-                          <div class="col-md-3"><b><h4 style="text-align:right;" class="card-title">Collateral Value</h4></b></div>
-                          <div class="col-md-3"><?php echo $colvalue;?></div>
-                      </div>
-                      </div>
-                      <table class="table table-bordered">
-                    <?php
-                    $p_id = $_GET["edit"];
-                   $query = "SELECT * FROM product_loan_charge WHERE product_loan_id = '$p_id' && int_id = '$sessint_id'";
-                   $result = mysqli_query($connection, $query);
-                   ?>
-                          <thead>
-                            <tr>
-                              <th>Name</th>
-                              <th>Charge</th>
-                              <th>Amount</th>
-                              <th>Collected On</th>
-                              <!-- <th>Date</th> -->
-                            </tr>
-                          </thead>
-                          <tbody> 
-                          <?php if (mysqli_num_rows($result) > 0) {
-                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
-                        <tr>
-                            <?php
-                            $c_id = $row["charge_id"];
-                            $select_chg = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' && int_id = '$sessint_id'");
-                            while ($xm = mysqli_fetch_array($select_chg)) {
-                                $values = $xm["charge_time_enum"];
-                             $nameofc = $xm["name"];
-                             $amt = '';
-                             $amt2 = '';
-                            $forp = $xm["charge_calculation_enum"];
-                            $rmt = $principal;
-                            $amt_2 = $xm["amount"];
-                            if ($forp == 1) {
-                                $amt = number_format($xm["amount"], 2);
-                                $chg2 = $amt." Flat";
-                              } else {
-                                $chg2 = $amt_2. "% of Loan Principal";
-                                $calc = ($amt_2 / 100) * $rmt;
-                                $amt2 = number_format($calc, 2);
-                              }
-                              if ($values == 1) {
-                                  $xs = "Disbursement";
-                                } else if ($values == 2) {
-                                  $xs = "Manual Charge";
-                                } else if ($values == 3) {
-                                  $xs = "Savings Activiation";
-                                } else if ($values == 5) {
-                                  $xs = "Deposit Fee";
-                                } else if ($values == 6) {
-                                  $xs = "Annual Fee";
-                                } else if ($values == 8) {
-                                  $xs = "Installment Fees";
-                                } else if ($values == 9) {
-                                  $xs = "Overdue Installment Fee";
-                                } else if ($values == 12) {
-                                  $xs = "Disbursement - Paid With Repayment";
-                                } else if ($values == 13) {
-                                  $xs = "Loan Rescheduling Fee";
-                                } 
-                            ?>
-                          <td><?php echo $nameofc; ?></td>
-                          <td><?php echo $chg2; ?></td>
-                          <td><?php echo $amt."".$amt2; ?></td>
-                          <td><?php echo $xs; ?></td>
-                        </tr>
-                        <?php
-                        }
-                        ?>
-                        <?php }
-                          }
-                          else {
-                            // echo "0 Document";
-                          }
-                          ?>   
-                          </tbody>
-                        </table>
-                      <!-- <table class="table table-bordered">
-                        <thead>
-                        <?php
-                        $query = "SELECT * FROM prod_acct_cache WHERE id = '$id' AND int_id = '$sessint_id'";
-                        $result = mysqli_query($connection, $query);
-                      ?>
-                            <tr>
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th>Amount</th>
-                                <th>Collected On</th>
-                                <th>Payment Mode</th>
-                                <th>Charge Type</th>
-                                <th>Waive Penalty</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                      <?php if (mysqli_num_rows($result) > 0) {
-                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
-                        <tr>
-                        <?php $row["id"]; ?>
-                          <td><?php echo $nae; ?></td>
-                          <td><?php echo $row["account_no"]; ?></td>
-                          <td><?php echo $row["principal_amount"]; ?></td>
-                          <td><?php echo $row["repayment_date"];?></td>
-                          <td><?php echo $row["fee_charges_outstanding_derived"]; ?></td>
-                          <td><?php echo $row["penalty_charges_outstanding_derived"];?></td>
-                         </tr>
-                        <?php }
-                          }
-                          else {
-                            // echo "0 Document";
-                          }
-                          ?>
-                      </tbody>
-                      </table> -->
-                    </div>
                     <!-- <div class="tab-pane" id="transact">
                     <table class="table table-bordered">
                       </tbody>
@@ -416,7 +334,7 @@ $overdue = $w['total_waived_derived'];
                           ?>
                       </tbody>
                       </table>
-                      <h5>Collateral</h5>
+                      <h5> <b> Collateral</b></h5>
                       <table class="table table-bordered">
                         <thead>
                         <!-- <?php
