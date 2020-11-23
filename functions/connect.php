@@ -25,6 +25,11 @@ function dd($value)
     die();
 }
 
+function ddA($value)
+{ // to be deleted
+    echo "<pre>", print_r($value, true), "</pre>";
+}
+
 function executeQuery($sql, $data = [])
 {
     global $connection;

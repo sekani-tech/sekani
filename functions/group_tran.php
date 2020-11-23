@@ -5,7 +5,12 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $collections = [];
     foreach ($_POST['customerID'] as $key => $value) {
-        $collections[] = array('client_id' => $value, 'client_amount' => $_POST['amount'][$key], 'client_name' => $_POST['customerName'][$key]);
+        $collections[] = array(
+            'client_id' => $value,
+            'client_amount' => $_POST['amount'][$key],
+            'client_name' => $_POST['customerName'][$key],
+            'client_account' => $_POST['account'][$key]);
+
     }
 
 
@@ -36,7 +41,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $staffEmail = $staffDetails['email'];
     $staffId = $staffDetails['user_id'];
+    $digits = 9;
+    $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
 
+//    dd($collections);
     if ($_POST['acc'] == 'deposit') {
         foreach ($collections as $key => $collection) {
 //        get users Account Details
@@ -161,8 +169,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     'created_date' => $gen_date, 'appuser_id' => $m_id, 'credit' => $clientAmount
                                 ];
                                 $updateClientTrans = create('account_transaction', $updateClientTransCon);
+                                // get the loan in arrears
                                 if ($updateClientTrans) {
-                                    // get the loan in arrears
                                     $checkClientLoanCon = ['int_id' => $sessint_id, 'client_id' => $client_id];
                                     $checkClientLoanDetails = checkLoanArrears('loan_arrear', $checkClientLoanCon);
 
@@ -339,8 +347,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $instConstantName = 'teller_id';
                             $updateInstCon = ['account_balance_derived' => $new_inst_acct_bal, 'total_deposits_derived' => $new_inst_total_bal_der];
                             $updateInstDetails = update('institution_account', $staff_id, $instConstantName, $updateGlCon);
-                            if ($updateInstDetails) {
 //                                insert into gl_account_transaction
+                            if ($updateInstDetails) {
                                 $instAccCondition = ['int_id' => $sessint_id, 'branch_id' => $branch_id, 'client_id' => $client_id,
                                     'transaction_id' => $transId, 'description' => $description, 'transaction_type' => $trans_type,
                                     'teller_id' => $staffId, 'is_reversed' => 0, 'transaction_date' => $gen_date,
@@ -352,71 +360,71 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             }
                         }
 
-                        
+
 //                        Send SMS
 //                        if ($glAccDetails) {
 //                            if ($client_sms == "1") {
 //                                ?>
-<!--                                <input type="text" id="s_int_id" value="--><?php //echo $sessint_id; ?><!--" hidden>-->
-<!--                                <input type="text" id="s_acct_nox" value="--><?php //echo $clientAccountNumber; ?><!--" hidden>-->
-<!--                                <input type="text" id="s_branch_id" value="--><?php //echo $branch_id; ?><!--" hidden>-->
-<!--                                <input type="text" id="s_sender_id" value="--><?php //echo $sender_id; ?><!--" hidden>-->
-<!--                                <input type="text" id="s_phone" value="--><?php //echo $client_phone; ?><!--" hidden>-->
-<!--                                <input type="text" id="s_client_id" value="--><?php //echo $client_id; ?><!--" hidden>-->
-<!--                                <input type="text" id="s_acct_no" value="--><?php //echo $account_display; ?><!--" hidden>-->
-<!--                                <input type="text" id="s_int_name" value="--><?php //echo $int_name; ?><!--" hidden>-->
-<!--                                <input type="text" id="s_amount"-->
-<!--                                       value="--><?php //echo number_format($clientAmount, 2); ?><!--" hidden>-->
-<!--                                <input type="text" id="s_desc" value="--><?php //echo $description; ?><!--" hidden>-->
-<!--                                <input type="text" id="s_date" value="--><?php //echo $pint; ?><!--" hidden>-->
-<!--                                <input type="text" id="s_balance"-->
-<!--                                       value="--><?php //echo number_format($new_client_acct_bal, 2); ?><!--" hidden>-->
-<!--                                <div id="make_display"></div>-->
-<!--                                <script>-->
-<!--                                    //                                                function that sends a message and is done in mfi/ajax_post/sms/sms.php-->
-<!--                                    $(document).ready(function () {-->
-<!--                                        var int_id = $('#s_int_id').val();-->
-<!--                                        var branch_id = $('#s_branch_id').val();-->
-<!--                                        var sender_id = $('#s_sender_id').val();-->
-<!--                                        var phone = $('#s_phone').val();-->
-<!--                                        var client_id = $('#s_client_id').val();-->
-<!--                                        var account_no = $('#s_acct_nox').val();-->
-<!--                                        // function-->
-<!--                                        var amount = $('#s_amount').val();-->
-<!--                                        var trans_type = "Credit";-->
-<!--                                        var acct_no = $('#s_acct_no').val();-->
-<!--                                        var int_name = $('#s_int_name').val();-->
-<!--                                        var desc = $('#s_desc').val();-->
-<!--                                        var date = $('#s_date').val();-->
-<!--                                        var balance = $('#s_balance').val();-->
-<!--                                        // now we work on the body.-->
-<!--                                        var msg = int_name + " "-->
-<!--                                            + trans_type + " \n"-->
-<!--                                            + "Amt: NGN " + amount-->
-<!--                                            + " \n Acct: " + acct_no-->
-<!--                                            + "\nDesc: " + desc-->
-<!--                                            + " \nBal: " + balance-->
-<!--                                            + " \nAvail: " + balance-->
-<!--                                            + "\nDate: " + date + "\nThanks!";-->
-<!--                                        $.ajax({-->
-<!--                                            url: "../mfi/ajax_post/sms/sms.php",-->
-<!--                                            method: "POST",-->
-<!--                                            data: {-->
-<!--                                                int_id: int_id,-->
-<!--                                                branch_id: branch_id,-->
-<!--                                                sender_id: sender_id,-->
-<!--                                                phone: phone,-->
-<!--                                                msg: msg,-->
-<!--                                                client_id: client_id,-->
-<!--                                                account_no: account_no-->
-<!--                                            },-->
-<!--                                            success: function (data) {-->
-<!--                                                $('#make_display').html(data);-->
-<!--                                            }-->
-<!--                                        });-->
-<!--                                    });-->
-<!--                                </script>-->
-<!--                                --><?php
+                        <!--                                <input type="text" id="s_int_id" value="--><?php //echo $sessint_id; ?><!--" hidden>-->
+                        <!--                                <input type="text" id="s_acct_nox" value="--><?php //echo $clientAccountNumber; ?><!--" hidden>-->
+                        <!--                                <input type="text" id="s_branch_id" value="--><?php //echo $branch_id; ?><!--" hidden>-->
+                        <!--                                <input type="text" id="s_sender_id" value="--><?php //echo $sender_id; ?><!--" hidden>-->
+                        <!--                                <input type="text" id="s_phone" value="--><?php //echo $client_phone; ?><!--" hidden>-->
+                        <!--                                <input type="text" id="s_client_id" value="--><?php //echo $client_id; ?><!--" hidden>-->
+                        <!--                                <input type="text" id="s_acct_no" value="--><?php //echo $account_display; ?><!--" hidden>-->
+                        <!--                                <input type="text" id="s_int_name" value="--><?php //echo $int_name; ?><!--" hidden>-->
+                        <!--                                <input type="text" id="s_amount"-->
+                        <!--                                       value="--><?php //echo number_format($clientAmount, 2); ?><!--" hidden>-->
+                        <!--                                <input type="text" id="s_desc" value="--><?php //echo $description; ?><!--" hidden>-->
+                        <!--                                <input type="text" id="s_date" value="--><?php //echo $pint; ?><!--" hidden>-->
+                        <!--                                <input type="text" id="s_balance"-->
+                        <!--                                       value="--><?php //echo number_format($new_client_acct_bal, 2); ?><!--" hidden>-->
+                        <!--                                <div id="make_display"></div>-->
+                        <!--                                <script>-->
+                        <!--                                    //                                                function that sends a message and is done in mfi/ajax_post/sms/sms.php-->
+                        <!--                                    $(document).ready(function () {-->
+                        <!--                                        var int_id = $('#s_int_id').val();-->
+                        <!--                                        var branch_id = $('#s_branch_id').val();-->
+                        <!--                                        var sender_id = $('#s_sender_id').val();-->
+                        <!--                                        var phone = $('#s_phone').val();-->
+                        <!--                                        var client_id = $('#s_client_id').val();-->
+                        <!--                                        var account_no = $('#s_acct_nox').val();-->
+                        <!--                                        // function-->
+                        <!--                                        var amount = $('#s_amount').val();-->
+                        <!--                                        var trans_type = "Credit";-->
+                        <!--                                        var acct_no = $('#s_acct_no').val();-->
+                        <!--                                        var int_name = $('#s_int_name').val();-->
+                        <!--                                        var desc = $('#s_desc').val();-->
+                        <!--                                        var date = $('#s_date').val();-->
+                        <!--                                        var balance = $('#s_balance').val();-->
+                        <!--                                        // now we work on the body.-->
+                        <!--                                        var msg = int_name + " "-->
+                        <!--                                            + trans_type + " \n"-->
+                        <!--                                            + "Amt: NGN " + amount-->
+                        <!--                                            + " \n Acct: " + acct_no-->
+                        <!--                                            + "\nDesc: " + desc-->
+                        <!--                                            + " \nBal: " + balance-->
+                        <!--                                            + " \nAvail: " + balance-->
+                        <!--                                            + "\nDate: " + date + "\nThanks!";-->
+                        <!--                                        $.ajax({-->
+                        <!--                                            url: "../mfi/ajax_post/sms/sms.php",-->
+                        <!--                                            method: "POST",-->
+                        <!--                                            data: {-->
+                        <!--                                                int_id: int_id,-->
+                        <!--                                                branch_id: branch_id,-->
+                        <!--                                                sender_id: sender_id,-->
+                        <!--                                                phone: phone,-->
+                        <!--                                                msg: msg,-->
+                        <!--                                                client_id: client_id,-->
+                        <!--                                                account_no: account_no-->
+                        <!--                                            },-->
+                        <!--                                            success: function (data) {-->
+                        <!--                                                $('#make_display').html(data);-->
+                        <!--                                            }-->
+                        <!--                                        });-->
+                        <!--                                    });-->
+                        <!--                                </script>-->
+                        <!--                                --><?php
 //                            }
 //                            // Send Email using PHP Mailer Library
 //                            $mail = new PHPMailer;
@@ -560,18 +568,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo header("Location: ../mfi/transact.php?legalq=$randms");
                 }
 
-            }
-            else {
+            } else {
 //                // you're not authorized not a teller
 //                $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
 //                echo header("Location: ../mfi/transact.php?messagex2=$randms");
             }
 
         }
-if ($glAccDetails){
-//                            $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
-                                echo header("Location: ../mfi/transaction.php");
-                        }
+        if ($glAccDetails) {
+            $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
+            echo header("Location: ../mfi/transaction.php");
+        }
     } elseif
     ($_POST['acc'] == 'withdraw') {
         echo 'not working yet';
