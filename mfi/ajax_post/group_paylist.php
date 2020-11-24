@@ -46,15 +46,15 @@ if (isset($_POST["id"])) {
 ////        dd($savingProduct);
                         $accountNumb_name = $savingProduct['name'];
                         ?>
-                        <option value=""><?php echo $value['account_no'] . ' - ' . $accountNumb_name ?></option>
+                        <option value="<?php echo $value['account_no'] ?>"><?php echo $value['account_no'] . ' - ' . $accountNumb_name ?></option>
                     <?php } ?>
                 </select>
             </td>
             <td></td>
             <td></td>
             <td>
-                <input type="text" hidden name="customerID[]" value="' . $cl_id . '">
-                <input type="text" hidden name="customerName[]" value="' . $c_name . '">
+                <input type="text" hidden name="customerID[]" value="<?php echo $cl_id ?>">
+                <input type="text" hidden name="customerName[]" value="<?php echo $c_name ?>">
                 <input type="text" name="amount[]" id="" style="text-transform: uppercase;"
                        class="form-control total_price"
                        value="">

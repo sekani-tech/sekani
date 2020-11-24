@@ -224,16 +224,9 @@ if (isset($_POST['add-member'])) {
                                                         <thead class=" text-primary">
 
                                                         <th>SN</th>
-                                                        <th>
-                                                            First Name
-                                                        </th>
-
-                                                        <th>
-                                                            Account Type
-                                                        </th>
-                                                        <th>
-                                                            Account Number
-                                                        </th>
+                                                        <th>First Name</th>
+                                                        <th>Account Type</th>
+                                                        <th>Account Number</th>
                                                         <th>View</th>
 
                                                         <!-- <th>Phone</th> -->
@@ -241,13 +234,11 @@ if (isset($_POST['add-member'])) {
                                                         <tbody>
                                                         <?php foreach ($groupMembers as $key => $groupMember) { ?>
                                                             <tr>
-
                                                                 <th><?php echo $key + 1 ?></th>
                                                                 <th><?php echo $groupMember['client_name'] ?></th>
                                                                 <th></th>
                                                                 <th><?php echo "00" . $groupMember['account_no'] ?></th>
                                                                 <td><a href="" class="btn btn-info">View</a></td>
-
                                                             </tr>
                                                         <?php } ?>
                                                         <!-- <th></th> -->
@@ -267,8 +258,7 @@ if (isset($_POST['add-member'])) {
                                         <a href="update_group.php?edit=<?php echo $id; ?>" class="btn btn-primary">Edit
                                             Group Details</a>
                                         <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                data-target="#exampleModalLong">
-                                            Add New Member
+                                                data-target="#exampleModalLong"
                                         </button>
 
                                     </div>
