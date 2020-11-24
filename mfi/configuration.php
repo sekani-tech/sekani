@@ -5,6 +5,106 @@ $destination = "../index.php";
     include("header.php");
     // include("../../functions/connect.php");
 
+    // If it is successfull, It will show this message
+if (isset($_GET["message1"])) {
+  $key = $_GET["message1"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+      // $out = $_SESSION["lack_of_intfund_$key"];
+      echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Registration Successful",
+          text: "Awaiting Approval of New client",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+      $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+} // If it is not successfull, It will show this message
+else if (isset($_GET["message2"])) {
+  $key = $_GET["message2"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+      // $out = $_SESSION["lack_of_intfund_$key"];
+      echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "error",
+        title: "Error",
+        text: "Error during Registration",
+        showConfirmButton: false,
+        timer: 2000
+    })
+});
+</script>
+';
+      $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+}
+if (isset($_GET["message3"])) {
+  $key = $_GET["message3"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+      echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "success",
+        title: "Success",
+        text: "Client was Updated successfully!",
+        showConfirmButton: false,
+        timer: 2000
+    })
+});
+</script>
+';
+      $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+} else if (isset($_GET["message4"])) {
+  $key = $_GET["message4"];
+// $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+      echo '<script type="text/javascript">
+$(document).ready(function(){
+  swal({
+      type: "error",
+      title: "Error",
+      text: "Error updating client!",
+      showConfirmButton: false,
+      timer: 2000
+  })
+});
+</script>
+';
+      $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+} else if (isset($_GET["message5"])) {
+  $key = $_GET["message5"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+      echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "success",
+        title: "Success",
+        text: "Client Closed!",
+        showConfirmButton: false,
+        timer: 2000
+    })
+});
+</script>
+';
+      $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+}
+
 ?>
 
 <!-- Content added here -->

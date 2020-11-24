@@ -63,7 +63,7 @@ if ($acc_op == 1 || $acc_op == "1") {
                       $('#tom').on("change", function(){
                         var id = $(this).val();
                         $.ajax({
-                          url:"ajax_post/client_type.php",
+                          url:"ajax_post/client_type2.php",
                           method:"POST",
                           data:{id:id},
                           success:function(data){
