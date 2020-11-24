@@ -3,7 +3,6 @@
 $page_title = "Configuration";
 $destination = "../index.php";
     include("header.php");
-    // include("../../functions/connect.php");
 
     // If it is successfull, It will show this message
 if (isset($_GET["message1"])) {
@@ -25,7 +24,8 @@ if (isset($_GET["message1"])) {
   ';
       $_SESSION["lack_of_intfund_$key"] = 0;
   }
-} // If it is not successfull, It will show this message
+}
+// If it is not successfull, It will show this message
 else if (isset($_GET["message2"])) {
   $key = $_GET["message2"];
   $tt = 0;
