@@ -3,6 +3,7 @@
 session_set_cookie_params(0);
 ob_start();
 session_start();
+include("../functions/connect.php");
 $autologout = 1000;
 $lastactive = $_SESSION['timestamp'] ?? 0;
 if ((time() - $lastactive) > $autologout) {
@@ -27,7 +28,7 @@ $staff_id = $_SESSION["staff_id"];
 ?>
 <?php
 // get connections for all pages
-include("../functions/connect.php");
+
 $sessint_id = $_SESSION["int_id"];
 
 $branch_id = $_SESSION["branch_id"];
@@ -37,8 +38,6 @@ if (count([$inq]) == 1) {
     $int_name = $n['int_name'];
     $img = $n['img'];
 }
-?>
-<?php
 // this section is for permissions
 $org_role = $_SESSION['org_role'];
 $getpermission = mysqli_query($connection, "SELECT * FROM `permission` WHERE role_id = '$org_role' && int_id = '$sessint_id'");

@@ -4,9 +4,97 @@ $page_title = "Charge data";
 $destination = "bulk_update";
 include("header.php");
 //session_start();
+//$digit = 4;
+//$randms = str_pad(rand(0, pow(10, $digit) - 1), 7, '0', STR_PAD_LEFT);
 // select branch for display
 $branchs = selectAll('branch', ['int_id' => $_SESSION['int_id']]);
-//dd($branchs);
+
+// If it is successfull, It will show this message
+if (isset($_GET["message1"])) {
+    $key = $_GET["message1"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        // $out = $_SESSION["lack_of_intfund_$key"];
+        echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Transaction Successful",
+          text: "Transaction Successful",
+          showConfirmButton: false,
+          timer: 60000
+      })
+  });
+  </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+}
+// if not successful due to missing database check
+else if (isset($_GET["message2"])) {
+    $key = $_GET["message2"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        // $out = $_SESSION["lack_of_intfund_$key"];
+        echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "error",
+        title: "Error",
+        text: "Contact the Support Team With Error Code Bulk_001",
+        showConfirmButton: false,
+        timer: 60000
+    })
+});
+</script>
+';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+}
+
+// if not successful due to file input
+else if (isset($_GET["message3"])) {
+    $key = $_GET["message3"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        // $out = $_SESSION["lack_of_intfund_$key"];
+        echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "error",
+        title: "Error",
+        text: "Sorry Only Excel file with .xls .csv or .xlsx file allowed",
+        showConfirmButton: false,
+        timer: 60000
+    })
+});
+</script>
+';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+}
+
+// Sent for Approval
+else if (isset($_GET["message4"])) {
+    $key = $_GET["message4"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        // $out = $_SESSION["lack_of_intfund_$key"];
+        echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "success",
+        title: "Sent For Approval",
+        text: "Some Transactions have been Sent for Approval",
+        showConfirmButton: false,
+        timer: 60000
+    })
+});
+</script>
+';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+}
 ?>
 
 
