@@ -2,7 +2,7 @@
 include 'vendor/autoload.php';
 
 if (isset($_POST['getFile'])){
-    $name = "bulkdeposit.xlsx";
+    $name = "download.xlsx";
     header('Content-Description: File Transfer');
     header('Content-Type: application/force-download');
     header("Content-Disposition: attachment; filename=\"" . basename($name) . "\";");

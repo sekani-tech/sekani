@@ -8,6 +8,8 @@ include("header.php");
 //$randms = str_pad(rand(0, pow(10, $digit) - 1), 7, '0', STR_PAD_LEFT);
 // select branch for display
 $branchs = selectAll('branch', ['int_id' => $_SESSION['int_id']]);
+$tellersCondition = ['int_id' => $_SESSION['int_id']];
+$tellers = selectAll("tellers", $tellersCondition);
 
 // If it is successfull, It will show this message
 if (isset($_GET["message1"])) {
@@ -29,8 +31,7 @@ if (isset($_GET["message1"])) {
   ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-}
-// if not successful due to missing database check
+} // if not successful due to missing database check
 else if (isset($_GET["message2"])) {
     $key = $_GET["message2"];
     $tt = 0;
@@ -50,9 +51,7 @@ $(document).ready(function(){
 ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-}
-
-// if not successful due to file input
+} // if not successful due to file input
 else if (isset($_GET["message3"])) {
     $key = $_GET["message3"];
     $tt = 0;
@@ -72,9 +71,7 @@ $(document).ready(function(){
 ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-}
-
-// Sent for Approval
+} // Sent for Approval
 else if (isset($_GET["message4"])) {
     $key = $_GET["message4"];
     $tt = 0;
@@ -115,27 +112,45 @@ $(document).ready(function(){
                     <div class="card-body">
 
                         <div class="row">
+                            <!-- SELECT TELLER TABLE BEGINS -->
+                                <div class="card card-info">
+                                    <div class="card-header">
+                                        <h4 class="card-title text-center">Select Teller </h4>
+
+                                    </div>
+
+
+                                    <div class="card-body" id="tellerInfo">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class=" text-primary">
+                                                <th>ID</th>
+                                                <th>Teller Branch</th>
+                                                <th>Teller Description</th>
+                                                <th>Teller ID</th>
+                                                </thead>
+                                                <tbody>
+                                                <?php foreach ($tellers as $key => $teller) { ?>
+                                                    <tr>
+                                                        <td><?php echo $key + 1 ?></td>
+                                                        <?php
+                                                        $branchName = selectOne('branch', ['id' => $teller['branch_id']])
+                                                        ?>
+                                                        <td><?php echo $branchName['name'] ?></td>
+                                                        <td><?php echo $teller['description'] ?></td>
+                                                        <td><?php echo $teller['id'] ?></td>
+                                                    </tr>
+                                                <?php } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            <!-- SELECT TELLER TABLE ENDS -->
                             <div class="col-md-6">
                                 <form action="./bulkWork/deposit.php" method="post" enctype="multipart/form-data">
 
-                                    <!--                                    script to populate tellers-->
-                                    <script type="text/javascript">
-                                        $(document).ready(function () {
-                                            $('#branchID').on("change keyup paste", function () {
-                                                let id = $(this).val();
-                                                $.ajax({
-                                                    url: "bulkWork/tellerTable.php",
-                                                    method: "POST",
-                                                    data: {
-                                                        id: id,
-                                                    },
-                                                    success: function (data) {
-                                                        $('#tellerInfo').html(data);
-                                                    }
-                                                })
-                                            });
-                                        });
-                                    </script>
                                     <!-- SELECT BRANCH CARD BEGINS -->
                                     <div class="card">
                                         <div class="card-body">
@@ -204,6 +219,13 @@ $(document).ready(function(){
                                             <li>You can upload a maximum of 120 rows in 1 file. If you have more rows,
                                                 please split them into multiple files.
                                             </li>
+                                            <li>
+                                                <STRONG style="color: red">
+                                                    IMPORTANT: Before upLoading your excel file please always remember
+                                                    to remove
+                                                    the default table header (i.e row 1) completely.
+                                                </STRONG>
+                                            </li>
                                         </ul>
                                         <form action="./bulkWork/getFile.php" method="post">
                                             <div class="card-body text-center">
@@ -218,40 +240,6 @@ $(document).ready(function(){
                             </div>
                             <!-- REQUIREMENTS SAMPLE COLUMN BEGINS -->
                         </div>
-
-                        <!-- SELECT TELLER TABLE BEGINS -->
-                        <div class="row">
-                            <div class="card card-info">
-                                <div class="card-header">
-                                    <h4 class="card-title text-center">Select Teller </h4>
-
-                                </div>
-
-
-                                <div class="card-body" id="tellerInfo">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead class=" text-primary">
-                                            <th>ID</th>
-                                            <th>Teller Number</th>
-                                            <th>Teller ID</th>
-                                            </thead>
-                                            <tbody >
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>Niger</td>
-                                            </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <!-- SELECT TELLER TABLE ENDS -->
                     </div>
 
 

@@ -230,11 +230,8 @@ if (isset($_POST['submit'])) {
                             'created_date' => $fullDate,
                             'debit' => $amount
                         ];
-//                        $gl_accountDetails = create('gl_account_transaction', $gl_accountCon);
-
+                        $gl_accountDetails = create('gl_account_transaction', $gl_accountCon);
                     }
-
-
                 } else {
                     echo $message = '<div class="alert alert-danger">Sorry this Teller Can not Preform this Action</div>';
                     exit();
