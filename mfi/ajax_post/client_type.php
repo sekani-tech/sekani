@@ -115,7 +115,7 @@ if (isset($_POST['id'])) {
             <div class="col-md-4">
                 <div class="col-md-12">
                     <div class="form-group">
-                    <label >Name of Signatries NO.1</label>
+                    <label>Name of Signatries NO.1</label>
                     <input  type="text" style="text-transform: uppercase;" class="form-control" name="sig_one">
                     </div>
                 </div>
@@ -602,36 +602,82 @@ if (isset($_POST['id'])) {
             </div>
             </div>
             <style>
-                input[type="file"]{
-                    display: none;
-                }
-                .custom-file-upload{
-                    border: 1px solid #ccc;
-                    display: inline-block;
-                    padding: 6px 12px;
-                    cursor: pointer;
-                }
-                </style>
+
+            .fileinput .thumbnail {
+                display: inline-block;
+                margin-bottom: 10px;
+                overflow: hidden;
+                text-align: center;
+                vertical-align: middle;
+                max-width: 250px;
+                box-shadow: 0 10px 30px -12px rgba(0,0,0,.42), 0 4px 25px 0 rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
+            }
+            .thumbnail {
+                border: 0 none;
+                border-radius: 4px;
+                padding: 0;
+            }
+            .btn {
+                  padding: 5px 5px;
+            }
+            .fileinput .thumbnail>img {
+                max-height: 100%;
+                width: 100%;
+            }
+            html * {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            img {
+                vertical-align: middle;
+                border-style: none;
+            }
+
+            </style>
                 
                 <div class="col-md-4">
-            <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
-            <input id ="file-upload" name="passport" type="file" class="inputFileHidden"/>
-            <label id="upload"> Select Passport</label>
-            <div id="upload"></div>
+                                <label id="upload-a"> Upload Passport</label>
+                                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+
+                <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                <div>
+                <button class="btn btn-primary btn-round">
+                <input type="file" name="..." />
+                </button>
+                
+                <a href="#pablo" class="btn btn-danger btn-fab btn-fab-mini btn-round fileinput-exists" data-dismiss="fileinput"> <i class="material-icons">clear</i></a>
+                </div>
+                </div>
                 </div>
             
             <div class="col-md-4">
-            <label for="file-insert" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
-            <input id ="file-insert" name="signature" type="file" class="inputFileHidden"/>
-            <label id="iup"> Select Signature</label>
-            <div id="iup"></div>
+            <label id="upload-a"> Upload Signature</label>
+                                            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                          
+                          <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                          <div>
+                          <button class="btn btn-primary btn-round">
+                          <input type="file" name="..." />
+                          </button>
+                              
+                          <a href="#pablo" class="btn btn-danger btn-fab btn-fab-mini btn-round fileinput-exists" data-dismiss="fileinput"> <i class="material-icons">clear</i></a>
+                          </div>
+                      </div>
             </div>
             
             <div class="col-md-4">
-            <label for="file-enter" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
-            <input id ="file-enter" type="file" name="id_img_url" class="inputFileHidden"/>
-            <label id="rated"> Select ID</label>
-            <div id="rated"></div>
+            <label id="upload-a"> Upload Signature</label>
+                                            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                          
+                          <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                          <div>
+                          <button class="btn btn-primary btn-round">
+                          <input type="file" name="..." />
+                          </button>
+                              
+                          <a href="#pablo" class="btn btn-danger btn-fab btn-fab-mini btn-round fileinput-exists" data-dismiss="fileinput"> <i class="material-icons">clear</i></a>
+                          </div>
+                      </div>
             
             </div>
             <div class="col-md-4">
