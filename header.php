@@ -14,7 +14,7 @@
   }
 
   // get connections for all pages
-  include(ROOT_PATH."/functions/DbModel/db.php");
+  include(ROOT_PATH."/functions/connect.php");
 
 //active user
 $activecode = "Active";
@@ -25,9 +25,9 @@ $tableName = "users";
 $condtions = ['status' => $activecode,
     'last_logged' => $ts,
     ];
-$rezz = update("users", $acuser, "username", $condtions);
-////$activeq = "UPDATE users SET users.status ='$activecode', users.last_logged = '$ts' WHERE users.username ='$acuser'";
-// = mysqli_query($connection, $activeq);
+// $rezz = update("users", $acuser, "username", $condtions);
+$activeq = "UPDATE users SET users.status ='$activecode', users.last_logged = '$ts' WHERE users.username ='$acuser'";
+$rezz = mysqli_query($connection, $activeq);
 
 // checking if IP has been Blocked
 function getIPAddress() {  

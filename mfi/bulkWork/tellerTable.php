@@ -1,4 +1,5 @@
 <?php
+include("../../functions/connect.php");
 
 if (isset($_POST['id'])) {
     $tellersCondition = ['branch_id' => $_POST['id']];
