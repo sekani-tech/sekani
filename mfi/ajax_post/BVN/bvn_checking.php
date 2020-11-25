@@ -97,7 +97,7 @@ if ($bvn_length == 11) {
            $bvn_image = $obj['ResponseBVNImage'];
            }
         //    echo $bvn_fn."firstname".$bvn_ln."Lastname".$dob."DATE OF BIRTH";
-        if ($bvn_fn == $first && $bvn_ln == $last && $bvn_dob == $check_DOB && $bvn_phone == $phone) {
+        if ($bvn_dob == $check_DOB && $bvn_phone == $phone) {
             // BVN VERIFIED
     // UPDATE THE WITHDRAWAL
     // CALCULATION
