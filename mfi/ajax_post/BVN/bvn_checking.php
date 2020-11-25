@@ -370,19 +370,6 @@ width: 770px;
         ';
     }
     ?>
-    <div class="card card-nav-tabs" style="width: 20rem;">
-  <div class="card-header card-header-success">
-    Verifiy The Data
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Firstname: <?php echo $bvn_fn;?></li>
-    <li class="list-group-item">Lastname:<?php echo $bvn_ln;?></li>
-    <li class="list-group-item">Phone: <?php echo $bvn_phone;?></li>
-    <li class="list-group-item">DOB: <?php echo $bvn_dob;?></li>
-    <input type="text" id="f_n_com" value="<?php echo $bvn_fn ?>" hidden>
-    <input type="text" id="l_n_com" value="<?php echo $bvn_ln ?>" hidden>
-    <input type="text" id="phone_com" value="<?php echo $bvn_phone ?>" hidden>
-  </ul>
   <script>
               $(document).ready(function() {
                   var fn_con = $("#f_n_com").val();
@@ -404,7 +391,6 @@ width: 770px;
                   }
               });
             </script>
-</div>
     <?php
          } else {
             //  echo wrong
