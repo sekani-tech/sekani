@@ -227,14 +227,10 @@ $(document).ready(function(){
                                                 </STRONG>
                                             </li>
                                         </ul>
-                                        <form action="./bulkWork/getFile.php" method="post">
-                                            <div class="card-body text-center">
-                                                <input type="hidden" name="file_content" id="file_content"/>
-                                                <button class="btn btn-primary btn-lg" type="submit" name="getFile">
-                                                    Download Data Sample
-                                                </button>
-                                            </div>
-                                        </form>
+                                        <div class="card-body text-center">
+                                            <a href='bulkWork/getFile.php?name=bulk_deposit&loc=1'
+                                               class="btn btn-primary btn-lg">Download Data Sample</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

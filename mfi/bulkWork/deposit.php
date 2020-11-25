@@ -7,9 +7,9 @@ include('../vendor/autoload.php');
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-if (isset($_POST['submit'])) {
     $digit = 4;
     $randms = str_pad(rand(0, pow(10, $digit) - 1), 7, '0', STR_PAD_LEFT);
+if (isset($_POST['submit'])) {
 //    chosen branch upon upload
     $chosenBranch = $_POST['branch'];
     $inst_id = $_SESSION['int_id'];
