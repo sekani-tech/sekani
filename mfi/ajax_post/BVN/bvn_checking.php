@@ -29,7 +29,7 @@ $bvn_length = strlen($bvn);
 if ($bvn_length == 11) {
     // check if it exsit
     $sql_check = mysqli_query($connection, "SELECT * FROM client WHERE BVN = '$bvn' AND int_id = '$int_id'");
-    if (mysqli_num_rows($sql_check) <= 0) {
+    if (mysqli_num_rows($sql_check) <= 0 && $bvn != "") {
         // next code 
         // check if there is fund in the acoint
         $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id'");
