@@ -114,23 +114,27 @@ $rezz = mysqli_query($connection, $activeq);
     <title><?php echo "$int_name - $page_title" ?></title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta http-equiv="refresh" content="1000;url=../functions/logout.php"/>
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta http-equiv="refresh" content="1000;url=../functions/logout.php" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css"
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
     <!-- Material Kit CSS -->
-    <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet"/>
-    <!-- <script>
-        $.noConflict();
-        jQuery(document).ready(function(){
-            jQuery("button").click(function(){
-                jQuery("p").text("jQuery is still working!");
+    <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+    <script>
+        function makeRequest() {
+            $.ajax({
+                url: "functions_test/email.php",
+                complete: function(data) {
+                    setTimeout(function() {
+                        makeRequest();
+                    }, 60 * 60 * 1000); // Minutes * Seconds * MS
+                }
             });
-        });
-    </script> -->
+        }
+        makeRequest();
+    </script>
     <!-- Search Query -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> -->
@@ -143,64 +147,70 @@ $rezz = mysqli_query($connection, $activeq);
     <script src="../functions/autocomplete/autocomplete.js"></script>
     <link href="../functions/autocomplete/autocomplete.css" rel="stylesheet">
     <?php
-    
-    if($page_title == "Deposit/ Withdrawal"){
+
+    if ($page_title == "Deposit/ Withdrawal") {
 
     ?>
-    <script>
-        window.addEventListener("load", function(){
-            suggest.attach({
-                target : "actName",
-                url : "../functions/autocomplete/autosearch.php",
-                data : { type: "name" },
-                // delay : 200,
-                min : 1
-            });
-            
-            });
-            $(document).ready(function () {
-                    $('.actName').on("change keyup paste", function () {
-                       var name = $(this).val();
-                       var ist = $('#int_id').val();
-                       $.ajax({
-                           url: "acct_acctName.php",
-                           method: "POST",
-                           data: {name: name, ist: ist},
-                           success: function (data) {
-                             $('#accname').html(data);
-                           }
-                        })
-                    });
+        <script>
+            window.addEventListener("load", function() {
+                suggest.attach({
+                    target: "actName",
+                    url: "../functions/autocomplete/autosearch.php",
+                    data: {
+                        type: "name"
+                    },
+                    // delay : 200,
+                    min: 1
                 });
-    </script>
+
+            });
+            $(document).ready(function() {
+                $('.actName').on("change keyup paste", function() {
+                    var name = $(this).val();
+                    var ist = $('#int_id').val();
+                    $.ajax({
+                        url: "acct_acctName.php",
+                        method: "POST",
+                        data: {
+                            name: name,
+                            ist: ist
+                        },
+                        success: function(data) {
+                            $('#accname').html(data);
+                        }
+                    })
+                });
+            });
+        </script>
     <?php
-    }else{
+    } else {
     ?>
-    <script>
-        // var $j = jQuery.noConflict();
-        window.addEventListener("load", function(){
-            suggest.attach({
-                method: "POST",
-                target : "groups",
-                url : "../functions/autocomplete/autosearch2.php",
-                data : { type: "groups" },
-                // delay : 200,
-                min : 1
+        <script>
+            // var $j = jQuery.noConflict();
+            window.addEventListener("load", function() {
+                suggest.attach({
+                    method: "POST",
+                    target: "groups",
+                    url: "../functions/autocomplete/autosearch2.php",
+                    data: {
+                        type: "groups"
+                    },
+                    // delay : 200,
+                    min: 1
+                });
+
             });
-            
-            });
-            
-    </script>
+        </script>
     <?php
     }
     ?>
     <style>
-    /* custom css */
-    .ac_results {
-        padding: 0px;
-        border: 1px solid #84a10b;
-        background-color: #84a10b;
-        overflow: hidden;
+        /* custom css */
+        .ac_results {
+            padding: 0px;
+            border: 1px solid #84a10b;
+            background-color: #84a10b;
+            overflow: hidden;
         }
 
         .ac_results ul {
@@ -217,7 +227,7 @@ $rezz = mysqli_query($connection, $activeq);
             cursor: default;
             display: block;
             color: #fff;
-            font-family:verdana;
+            font-family: verdana;
             /* 
             if width will be 100% horizontal scrollbar will apear 
             when scroll mode will be used
@@ -249,7 +259,7 @@ $rezz = mysqli_query($connection, $activeq);
     </style>
     <!-- CHAT BOT -->
     <script type="text/javascript">
-        (function (w, d, v3) {
+        (function(w, d, v3) {
             w.chaportConfig = {
                 appId: '5f733d1696c6b40369151056'
             };
@@ -258,10 +268,10 @@ $rezz = mysqli_query($connection, $activeq);
             v3 = w.chaport = {};
             v3._q = [];
             v3._l = {};
-            v3.q = function () {
+            v3.q = function() {
                 v3._q.push(arguments)
             };
-            v3.on = function (e, fn) {
+            v3.on = function(e, fn) {
                 if (!v3._l[e]) v3._l[e] = [];
                 v3._l[e].push(fn)
             };
@@ -345,65 +355,65 @@ $rezz = mysqli_query($connection, $activeq);
 </head>
 
 <body>
-<div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white">
-        <!--
+    <div class="wrapper ">
+        <div class="sidebar" data-color="purple" data-background-color="white">
+            <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
         Tip 2: you can also add an image using data-image tag
     -->
-        <div class="logo" style="background-color: white;">
-            <div class="col-xs-2">
-                <div class="card-profile">
-                    <div class="card-avatar">
-                        <a href="#picasso">
-                            <img class="img" src="<?php echo $img; ?>" max-width="200px" width="100%"/>
-                        </a>
+            <div class="logo" style="background-color: white;">
+                <div class="col-xs-2">
+                    <div class="card-profile">
+                        <div class="card-avatar">
+                            <a href="#picasso">
+                                <img class="img" src="<?php echo $img; ?>" max-width="200px" width="100%" />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="sidebar-wrapper" style="background-color: white;">
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php">
-                        <i class="material-icons" style="color:#7f3f98">dashboard</i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <!-- <li class="nav-item dropdown">
+            <div class="sidebar-wrapper" style="background-color: white;">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php">
+                            <i class="material-icons" style="color:#7f3f98">dashboard</i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item dropdown">
                   <a class="nav-link" href="manage_client.php">
                     <i class="material-icons">person</i>
                     Register Client
                   </a> -->
-                <!-- <div class="dropdown-menu">
+                    <!-- <div class="dropdown-menu">
                   <a class="dropdown-item" href="client.php">Client List</a>
                   <a href="manage_client.php" class="dropdown-item">Register Client</a>
                 </div> -->
-                <!-- </li> -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="customer_service.php">
-                        <i class="material-icons" style="color:#7f3f98">supervised_user_circle</i>
-                        Customer Service
-                    </a>
-                </li>
-                <!-- <li class="nav-item dropdown">
+                    <!-- </li> -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="customer_service.php">
+                            <i class="material-icons" style="color:#7f3f98">supervised_user_circle</i>
+                            Customer Service
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item dropdown">
                   <a class="nav-link" href="#">
                     <i class="material-icons">people</i>
                     Register Group
                   </a> -->
-                <!-- <div class="dropdown-menu">
+                    <!-- <div class="dropdown-menu">
                   <a class="dropdown-item" href="#">Group List</a>
                   <a href="#" class="dropdown-item">Register Group</a>
                 </div> -->
-                <!-- </li> -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="transaction.php">
-                        <i class="material-icons" style="color:#7f3f98">account_balance_wallet</i>
-                        Transaction
-                    </a>
-                </li>
-                <!-- <li class="nav-item dropdown">
+                    <!-- </li> -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="transaction.php">
+                            <i class="material-icons" style="color:#7f3f98">account_balance_wallet</i>
+                            Transaction
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="false" aria-expanded="fasle">
                     <i class="material-icons">account_balance_wallet</i>
                     Transaction
@@ -416,264 +426,254 @@ $rezz = mysqli_query($connection, $activeq);
                     <a href="teller_journal.php" class="dropdown-item">Vault Posting</a>
                   </div>
                 </li> -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="approval.php">
-                        <i class="material-icons" style="color:#7f3f98">library_books</i>
-                        Approval
-                    </a>
-                </li>
-                <!-- accounting is here -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="accounting.php">
-                        <i class="material-icons" style="color:#7f3f98">menu_book</i>
-                        Accounting
-                    </a>
-                </li>
-                <!-- report is here now -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="reports.php">
-                        <i class="material-icons" style="color:#7f3f98">content_paste</i>
-                        Reports
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="bill_airtime.php">
-                        <i class="material-icons" style="color:#7f3f98">description</i>
-                        Bills & Airtime
-                    </a>
-                </li>
-                <!-- end of report -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="configuration.php">
-                        <i class="material-icons" style="color:#7f3f98">settings</i>
-                        Configuration
-                    </a>
-                </li>
-                <!-- Notification and Profile Begins !-->
-
-
-                <!-- Notification and Profile ends !-->
-
-                <!-- your sidebar here -->
-            </ul>
-        </div>
-    </div>
-    <div class="main-panel">
-        <div id="time_recorder"></div>
-        <div id="r_bb" hidden></div>
-        <div id="loan_remodel" hidden></div>
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
-            <div class="container-fluid">
-                <div class="navbar-wrapper">
-                    <?php
-                    if ($page_title == "Dashboard") {
-                        ?>
-                        <!-- <a class="btn btn-primary" href="#pablo"><i class="fa fa-caret-left"></i> Back</a> -->
-                        <?php
-                    } else { ?>
-
-                        <a class="btn btn-primary" href="javascript:history.go(-1)">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-circle-fill"
-                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                      d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5.5a.5.5 0 0 0 0-1H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5z"/>
-                            </svg>
-                            Back
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="approval.php">
+                            <i class="material-icons" style="color:#7f3f98">library_books</i>
+                            Approval
                         </a>
+                    </li>
+                    <!-- accounting is here -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="accounting.php">
+                            <i class="material-icons" style="color:#7f3f98">menu_book</i>
+                            Accounting
+                        </a>
+                    </li>
+                    <!-- report is here now -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="reports.php">
+                            <i class="material-icons" style="color:#7f3f98">content_paste</i>
+                            Reports
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="bill_airtime.php">
+                            <i class="material-icons" style="color:#7f3f98">description</i>
+                            Bills & Airtime
+                        </a>
+                    </li>
+                    <!-- end of report -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="configuration.php">
+                            <i class="material-icons" style="color:#7f3f98">settings</i>
+                            Configuration
+                        </a>
+                    </li>
+                    <!-- Notification and Profile Begins !-->
 
 
-                        <!-- here -->
+                    <!-- Notification and Profile ends !-->
+
+                    <!-- your sidebar here -->
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <div id="time_recorder"></div>
+            <div id="r_bb" hidden></div>
+            <div id="loan_remodel" hidden></div>
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+                        <?php
+                        if ($page_title == "Dashboard") {
+                        ?>
+                            <!-- <a class="btn btn-primary" href="#pablo"><i class="fa fa-caret-left"></i> Back</a> -->
+                        <?php
+                        } else { ?>
+
+                            <a class="btn btn-primary" href="javascript:history.go(-1)">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5.5a.5.5 0 0 0 0-1H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5z" />
+                                </svg>
+                                Back
+                            </a>
+
+
+                            <!-- here -->
 
                         <?php
-                    }
-                    ?>
-                    <?php
-                    $br_id = $_SESSION["branch_id"];
-                    ?>
-                </div>
-                <div class="d-inline">
+                        }
+                        ?>
+                        <?php
+                        $br_id = $_SESSION["branch_id"];
+                        ?>
+                    </div>
+                    <div class="d-inline">
 
 
-                    <ul class="list-inline">
+                        <ul class="list-inline">
 
 
-                        <li class="d-inline dropdown" style="margin-right: 20px;">
-                            <!-- Notification for matured loans -->
-                            <?php
-                            $today = date('Y-m-d');
-                            $institution = $_SESSION["int_id"];
-                            $fom = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$institution' AND duedate = '$today'");
-                            $dn = mysqli_num_rows($fom);
+                            <li class="d-inline dropdown" style="margin-right: 20px;">
+                                <!-- Notification for matured loans -->
+                                <?php
+                                $today = date('Y-m-d');
+                                $institution = $_SESSION["int_id"];
+                                $fom = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$institution' AND duedate = '$today'");
+                                $dn = mysqli_num_rows($fom);
 
-                            $tomorrow = date('Y-m-d', strtotime($today . ' + 1 days'));
-                            $fodm = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$institution' AND duedate = '$tomorrow'");
-                            $dfn = mysqli_num_rows($fodm);
-                            ?>
-                            <!-- Notification for client approval -->
-                            <?php
-                            function brii($connection)
-                            {
-                                $br_id = $_SESSION["branch_id"];
-                                $sint_id = $_SESSION["int_id"];
-                                $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
-                                $dof = mysqli_query($connection, $dff);
-                                $out = '';
-                                while ($row = mysqli_fetch_array($dof)) {
-                                    $do = $row['id'];
-                                    $out .= " OR client.branch_id ='$do'";
+                                $tomorrow = date('Y-m-d', strtotime($today . ' + 1 days'));
+                                $fodm = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$institution' AND duedate = '$tomorrow'");
+                                $dfn = mysqli_num_rows($fodm);
+                                ?>
+                                <!-- Notification for client approval -->
+                                <?php
+                                function brii($connection)
+                                {
+                                    $br_id = $_SESSION["branch_id"];
+                                    $sint_id = $_SESSION["int_id"];
+                                    $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+                                    $dof = mysqli_query($connection, $dff);
+                                    $out = '';
+                                    while ($row = mysqli_fetch_array($dof)) {
+                                        $do = $row['id'];
+                                        $out .= " OR client.branch_id ='$do'";
+                                    }
+                                    return $out;
                                 }
-                                return $out;
-                            }
 
-                            $ghgd = brii($connection);
-                            ?>
-                            <?php
-                            $query = "SELECT * FROM client JOIN staff ON client.loan_officer_id = staff.id 
+                                $ghgd = brii($connection);
+                                ?>
+                                <?php
+                                $query = "SELECT * FROM client JOIN staff ON client.loan_officer_id = staff.id 
                                         WHERE client.int_id = '$sessint_id' 
                                         AND client.status = 'Not Approved' AND (client.branch_id ='$br_id'$ghgd)";
-                            $result = mysqli_query($connection, $query);
-                            $approvd = mysqli_num_rows($result);
-                            ?>
-                            <!-- Notification for institution transactions -->
-                            <?php
-                            $sfsf = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' AND status = 'Pending' AND branch_id = '$br_id'";
-                            $sdwr = mysqli_query($connection, $sfsf);
-                            $trans = mysqli_num_rows($sdwr);
-                            ?>
-                            <!-- notification for client fund transfer -->
-                            <?php
-                            $sdf = "SELECT * FROM transfer_cache WHERE int_id = '$sessint_id' AND status = 'Pending' AND branch_id = '$br_id'";
-                            $wyj = mysqli_query($connection, $sdf);
-                            $client = mysqli_num_rows($wyj);
-                            ?>
-                            <!-- Notification for disbursed loans -->
-                            <?php
-                            $ruyj = "SELECT * FROM loan_disbursement_cache WHERE int_id = '$sessint_id' AND status = 'Pending'";
-                            $eroi = mysqli_query($connection, $ruyj);
-                            $loan = mysqli_num_rows($eroi);
-                            ?>
-                            <!-- Notificaion for charges -->
-                            <?php
-                            $fdef = "SELECT * FROM client_charge WHERE int_id = '$sessint_id' AND (branch_id ='$br_id')";
-                            $sdf = mysqli_query($connection, $fdef);
-                            $charge = mysqli_num_rows($sdf);
-                            ?>
-                            <!-- Notification for Groups -->
-                            <?php
-                            $ifdofi = "SELECT * FROM groups WHERE int_id = '$sessint_id' AND (branch_id ='$br_id') AND status = 'Pending'";
-                            $fdio = mysqli_query($connection, $ifdofi);
-                            $group = mysqli_num_rows($fdio);
-                            ?>
-                            <!-- Notification for FTD -->
-                            <?php
-                            $dsod = "SELECT * FROM ftd_booking_account WHERE int_id = '$sessint_id' AND (branch_id ='$br_id') AND status = 'Pending'";
-                            $dsoe = mysqli_query($connection, $dsod);
-                            $ftd = mysqli_num_rows($dsoe);
-                            ?>
-                            <!-- Notification for banner -->
-                            <?php
-                            $fomd = $dfn + $dn + $approvd + $trans + $client + $loan + $charge + $group + $ftd;
-                            ?>
-                            <a class="d-inline" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false">
-                                <i class="material-icons" style="color: black;">notifications</i>
+                                $result = mysqli_query($connection, $query);
+                                $approvd = mysqli_num_rows($result);
+                                ?>
+                                <!-- Notification for institution transactions -->
+                                <?php
+                                $sfsf = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' AND status = 'Pending' AND branch_id = '$br_id'";
+                                $sdwr = mysqli_query($connection, $sfsf);
+                                $trans = mysqli_num_rows($sdwr);
+                                ?>
+                                <!-- notification for client fund transfer -->
+                                <?php
+                                $sdf = "SELECT * FROM transfer_cache WHERE int_id = '$sessint_id' AND status = 'Pending' AND branch_id = '$br_id'";
+                                $wyj = mysqli_query($connection, $sdf);
+                                $client = mysqli_num_rows($wyj);
+                                ?>
+                                <!-- Notification for disbursed loans -->
+                                <?php
+                                $ruyj = "SELECT * FROM loan_disbursement_cache WHERE int_id = '$sessint_id' AND status = 'Pending'";
+                                $eroi = mysqli_query($connection, $ruyj);
+                                $loan = mysqli_num_rows($eroi);
+                                ?>
+                                <!-- Notificaion for charges -->
+                                <?php
+                                $fdef = "SELECT * FROM client_charge WHERE int_id = '$sessint_id' AND (branch_id ='$br_id')";
+                                $sdf = mysqli_query($connection, $fdef);
+                                $charge = mysqli_num_rows($sdf);
+                                ?>
+                                <!-- Notification for Groups -->
+                                <?php
+                                $ifdofi = "SELECT * FROM groups WHERE int_id = '$sessint_id' AND (branch_id ='$br_id') AND status = 'Pending'";
+                                $fdio = mysqli_query($connection, $ifdofi);
+                                $group = mysqli_num_rows($fdio);
+                                ?>
+                                <!-- Notification for FTD -->
+                                <?php
+                                $dsod = "SELECT * FROM ftd_booking_account WHERE int_id = '$sessint_id' AND (branch_id ='$br_id') AND status = 'Pending'";
+                                $dsoe = mysqli_query($connection, $dsod);
+                                $ftd = mysqli_num_rows($dsoe);
+                                ?>
+                                <!-- Notification for banner -->
+                                <?php
+                                $fomd = $dfn + $dn + $approvd + $trans + $client + $loan + $charge + $group + $ftd;
+                                ?>
+                                <a class="d-inline" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons" style="color: black;">notifications</i>
+                                    <?php if ($fomd > 0) { ?>
+                                        <span class="badge badge-danger"><?php echo $fomd; ?></span>
+                                    <?php } ?>
+                                </a>
                                 <?php if ($fomd > 0) { ?>
-                                    <span class="badge badge-danger"><?php echo $fomd; ?></span>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+                                        <?php
+                                        if ($dfn > 0) {
+                                        ?>
+                                            <a class="dropdown-item" href="report_loan_view.php?view39b=<?php echo $tomorrow; ?>"><?php echo $dfn; ?>
+                                                Loan(s) due tommorow</a>
+                                        <?php }
+                                        if ($dn > 0) {
+                                        ?>
+                                            <a class="dropdown-item" href="report_loan_view.php?view39=<?php echo $today; ?>"><?php echo $dn; ?>
+                                                Loan(s) matured today</a>
+                                        <?php }
+                                        if ($approvd > 0) {
+                                        ?>
+                                            <a class="dropdown-item" href="client_approval.php"><?php echo $approvd; ?>
+                                                client(s) in need of approval</a>
+                                        <?php }
+                                        if ($trans > 0) {
+                                        ?>
+                                            <a class="dropdown-item" href="transact_approval.php"><?php echo $trans; ?>
+                                                transaction(s) in need of approval</a>
+                                        <?php }
+                                        if ($client > 0) {
+                                        ?>
+                                            <a class="dropdown-item" href="transfer_approval.php"><?php echo $client; ?>
+                                                client transfer(s) in need of approval</a>
+                                        <?php }
+                                        if ($loan > 0) {
+                                        ?>
+                                            <a class="dropdown-item" href="disbursement_approval.php"><?php echo $loan; ?>
+                                                Loans disbursement(s) in need of approval</a>
+                                        <?php }
+                                        if ($charge > 0) {
+                                        ?>
+                                            <a class="dropdown-item" href="charge_approval.php"><?php echo $charge; ?>
+                                                charge(s) in need of approval</a>
+                                        <?php
+                                        }
+                                        if ($group > 0) {
+                                        ?>
+                                            <a class="dropdown-item" href="approve_group.php"><?php echo $group; ?> Group(s)
+                                                in need of approval</a>
+                                        <?php
+                                        }
+                                        if ($ftd > 0) {
+                                        ?>
+                                            <a class="dropdown-item" href="ftd_approval.php"><?php echo $ftd; ?> FTD
+                                                Accounts in need of approval</a>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
                                 <?php } ?>
-                            </a>
-                            <?php if ($fomd > 0) { ?>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                                    <?php
-                                    if ($dfn > 0) {
-                                        ?>
-                                        <a class="dropdown-item"
-                                           href="report_loan_view.php?view39b=<?php echo $tomorrow; ?>"><?php echo $dfn; ?>
-                                            Loan(s) due tommorow</a>
-                                    <?php }
-                                    if ($dn > 0) {
-                                        ?>
-                                        <a class="dropdown-item"
-                                           href="report_loan_view.php?view39=<?php echo $today; ?>"><?php echo $dn; ?>
-                                            Loan(s) matured today</a>
-                                    <?php }
-                                    if ($approvd > 0) {
-                                        ?>
-                                        <a class="dropdown-item" href="client_approval.php"><?php echo $approvd; ?>
-                                            client(s) in need of approval</a>
-                                    <?php }
-                                    if ($trans > 0) {
-                                        ?>
-                                        <a class="dropdown-item" href="transact_approval.php"><?php echo $trans; ?>
-                                            transaction(s) in need of approval</a>
-                                    <?php }
-                                    if ($client > 0) {
-                                        ?>
-                                        <a class="dropdown-item" href="transfer_approval.php"><?php echo $client; ?>
-                                            client transfer(s) in need of approval</a>
-                                    <?php }
-                                    if ($loan > 0) {
-                                        ?>
-                                        <a class="dropdown-item" href="disbursement_approval.php"><?php echo $loan; ?>
-                                            Loans disbursement(s) in need of approval</a>
-                                    <?php }
-                                    if ($charge > 0) {
-                                        ?>
-                                        <a class="dropdown-item" href="charge_approval.php"><?php echo $charge; ?>
-                                            charge(s) in need of approval</a>
-                                        <?php
-                                    }
-                                    if ($group > 0) {
-                                        ?>
-                                        <a class="dropdown-item" href="approve_group.php"><?php echo $group; ?> Group(s)
-                                            in need of approval</a>
-                                        <?php
-                                    }
-                                    if ($ftd > 0) {
-                                        ?>
-                                        <a class="dropdown-item" href="ftd_approval.php"><?php echo $ftd; ?> FTD
-                                            Accounts in need of approval</a>
-                                        <?php
-                                    }
-                                    ?>
+                            </li>
+                            <!-- user setup -->
+
+                            <li class="d-inline dropdown">
+                                <a class="d-inline" style="color: black; margin-right: 25px" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+
+                                    <i class="material-icons">person</i>
+                                    <!-- Insert user display name here -->
+                                    <!-- <p class="d-lg-none d-md-block"> -->
+                                    <?php echo $_SESSION["username"]; ?>
+                                    <!-- </p> -->
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right rgba-red-strong" style="background-color: grey; width:min-content;   height:auto;" aria-labelledby="navbarDropdownProfile">
+                                    <a class="dropdown-item" style="color: white;" href="profile.php">Profile</a>
+                                    <a class="dropdown-item" style="color: white;" href="settings.php">Settings</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" style="color: white;" href="../functions/logout.php">Log
+                                        out</a>
                                 </div>
-                            <?php } ?>
-                        </li>
-                        <!-- user setup -->
+                            </li>
 
-                        <li class="d-inline dropdown">
-                            <a class="d-inline" style="color: black; margin-right: 25px" href="#pablo"
-                               id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="false">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="navbar-toggler-icon icon-bar"></span>
+                                <span class="navbar-toggler-icon icon-bar"></span>
+                                <span class="navbar-toggler-icon icon-bar"></span>
+                            </button>
 
-
-                                <i class="material-icons">person</i>
-                                <!-- Insert user display name here -->
-                                <!-- <p class="d-lg-none d-md-block"> -->
-                                <?php echo $_SESSION["username"]; ?>
-                                <!-- </p> -->
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right rgba-red-strong"
-                                 style="background-color: grey; width:min-content;   height:auto;"
-                                 aria-labelledby="navbarDropdownProfile">
-                                <a class="dropdown-item" style="color: white;" href="profile.php">Profile</a>
-                                <a class="dropdown-item" style="color: white;" href="settings.php">Settings</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" style="color: white;" href="../functions/logout.php">Log
-                                    out</a>
-                            </div>
-                        </li>
-
-                        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="navbar-toggler-icon icon-bar"></span>
-                            <span class="navbar-toggler-icon icon-bar"></span>
-                            <span class="navbar-toggler-icon icon-bar"></span>
-                        </button>
-
-                        <!-- your navbar here -->
-                    </ul>
+                            <!-- your navbar here -->
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
