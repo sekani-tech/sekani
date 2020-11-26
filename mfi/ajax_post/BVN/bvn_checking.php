@@ -44,19 +44,17 @@ if ($bvn_length == 11) {
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
-              CURLOPT_URL => "https://confirmme.com/api/BVNImage",
+              CURLOPT_URL => 'https://confirmme.com/api/verifybvn?bvn='.$bvn.'',
               CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_ENCODING => "",
+              CURLOPT_ENCODING => '',
               CURLOPT_MAXREDIRS => 10,
               CURLOPT_TIMEOUT => 0,
               CURLOPT_FOLLOWLOCATION => true,
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-              CURLOPT_CUSTOMREQUEST => "GET",
-              CURLOPT_POSTFIELDS =>"{\r\n  \"bvn\": \"$bvn\"\r\n}\r\n",
+              CURLOPT_CUSTOMREQUEST => 'GET',
               CURLOPT_HTTPHEADER => array(
-                "CLIENTID: 1531",
-                "HASHTOKEN: $token_hash",
-                "Content-Type: application/json"
+                'CLIENTID: 1531',
+                'HASHTOKEN: '.$token_hash.''
               ),
             ));
             
@@ -88,13 +86,13 @@ if ($bvn_length == 11) {
            $status = $obj['ResponseCode'];
            $bvn_fn = "";
            if ($status == "00") {
-           $bvn_fn = $obj['ResponseBVNDetails']['FirstName'];
-           $bvn_ln = $obj['ResponseBVNDetails']['LastName'];
-           $bvn_dob = $obj['ResponseBVNDetails']['DateOfBirth'];
-           $bvn_phone = $obj['ResponseBVNDetails']['PhoneNumber'];
-           $bvn_bvn = $obj['ResponseBVNDetails']['BVN'];
-           $bvn_gend = $obj['ResponseBVNDetails']['Gender'];
-           $bvn_image = $obj['ResponseBVNImage'];
+           $bvn_fn = $obj['Data']['FirstName'];
+           $bvn_ln = $obj['Data']['LastName'];
+           $bvn_dob = $obj['Data']['DateOfBirth'];
+           $bvn_phone = $obj['Data']['PhoneNumber'];
+           $bvn_bvn = $obj['Data']['BVN'];
+           $bvn_gend = $obj['Data']['Gender'];
+           $bvn_image = $obj['Data']['ImageBase64'];
            }
         //    echo $bvn_fn."firstname".$bvn_ln."Lastname".$dob."DATE OF BIRTH";
         if ($bvn_dob == $check_DOB && $bvn_phone == $phone) {
