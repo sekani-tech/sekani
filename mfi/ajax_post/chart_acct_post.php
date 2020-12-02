@@ -5,7 +5,7 @@ session_start();
 if (isset($_POST["gl"]) && isset($_POST["ch"]))
 {
   if($_POST["gl"] == '1'){
-    $int_id = $_SESSION['int_id'];
+    $int_id = $_POST["id"];
     if($_POST["gl"] != '' && $_POST["ch"] != '')
     {
         
