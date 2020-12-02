@@ -88,6 +88,7 @@ $(document).ready(function(){
  * @param $connection
  * @return string
  */
+
 function fill_branch($connection)
 {
     $sint_id = $_SESSION["int_id"];
@@ -116,6 +117,11 @@ function fill_in($connection)
     return $output;
 }
 
+/**
+ *
+ * @param $connection
+ * @return string
+ */
 function fill_state($connection)
 {
     $org = "SELECT * FROM states";

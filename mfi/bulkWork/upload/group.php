@@ -76,7 +76,7 @@ if (isset($_POST['submitGroupClient'])) {
             if ($sendData) {
                 echo $message = '<div class="alert alert-success">Data Imported Successfully</div>';
             }
-            dd($ourDataTables);
+//            dd($ourDataTables);
         }
     }
 }

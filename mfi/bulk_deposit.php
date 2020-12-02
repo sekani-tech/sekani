@@ -8,8 +8,14 @@ include("header.php");
 //$randms = str_pad(rand(0, pow(10, $digit) - 1), 7, '0', STR_PAD_LEFT);
 // select branch for display
 $branchs = selectAll('branch', ['int_id' => $_SESSION['int_id']]);
+
+// tellers information
 $tellersCondition = ['int_id' => $_SESSION['int_id']];
 $tellers = selectAll("tellers", $tellersCondition);
+
+// tellers information
+$paymentsCondition = ['int_id' => $_SESSION['int_id']];
+$paymentsType = selectAll("payment_type", $paymentsCondition);
 
 // If it is successfull, It will show this message
 if (isset($_GET["message1"])) {
@@ -92,6 +98,48 @@ $(document).ready(function(){
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
 }
+// Teller Can not Preform this Action
+else if (isset($_GET["message5"])) {
+    $key = $_GET["message5"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        // $out = $_SESSION["lack_of_intfund_$key"];
+        echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "success",
+        title: "Wrong Teller Information",
+        text: "Sorry this Teller Can not Preform this Action",
+        showConfirmButton: false,
+        timer: 60000
+    })
+});
+</script>
+';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+}
+// failed to remove header from a file
+else if (isset($_GET["message6"])) {
+    $key = $_GET["message6"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        // $out = $_SESSION["lack_of_intfund_$key"];
+        echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "success",
+        title: "Failed To remove header",
+        text: "Sorry Please remove the header from this file",
+        showConfirmButton: false,
+        timer: 60000
+    })
+});
+</script>
+';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+}
 ?>
 
 
@@ -113,6 +161,7 @@ $(document).ready(function(){
 
                         <div class="row">
                             <!-- SELECT TELLER TABLE BEGINS -->
+                            <div class="col-md-6">
                                 <div class="card card-info">
                                     <div class="card-header">
                                         <h4 class="card-title text-center">Select Teller </h4>
@@ -147,6 +196,37 @@ $(document).ready(function(){
                                     </div>
 
                                 </div>
+                            </div>
+                            <!-- SELECT Payment type TABLE BEGINS -->
+                            <div class="col-md-6">
+                                <div class="card card-info">
+                                    <div class="card-header">
+                                        <h4 class="card-title text-center">Select Payment Type</h4>
+
+                                    </div>
+                                    <div class="card-body" id="tellerInfo">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class=" text-primary">
+                                                <th>ID</th>
+                                                <th>Payment Description</th>
+                                                <th>Payment ID</th>
+                                                </thead>
+                                                <tbody>
+                                                <?php foreach ($paymentsType as $key => $type) { ?>
+                                                    <tr>
+                                                        <td><?php echo $key + 1 ?></td>
+                                                        <td><?php echo $type['value'] ?></td>
+                                                        <td><?php echo $type['id'] ?></td>
+                                                    </tr>
+                                                <?php } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                             <!-- SELECT TELLER TABLE ENDS -->
                             <div class="col-md-6">
                                 <form action="./bulkWork/deposit.php" method="post" enctype="multipart/form-data">

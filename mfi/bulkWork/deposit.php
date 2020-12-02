@@ -50,6 +50,7 @@ if (isset($_POST['submit'])) {
                     'amount' => $row['5'],
                     'deposit_slip_number' => $row['6'],
                     'teller_id' => $row['7'],
+                    'payment_type_id' => $row['8']
                 );
             }
 
@@ -57,20 +58,27 @@ if (isset($_POST['submit'])) {
             foreach ($ourDataTables as $key => $ourDataTable) {
 //                Variable Name
                 $accountClientName = $ourDataTable['Account_Name'];
+                $paymentType = $ourDataTable['payment_type_id'];
                 $amount = $ourDataTable['amount'];
                 $tellerId = $ourDataTable['teller_id'];
                 $convertDate = strtotime($ourDataTable['date']);
                 $date = date('Y-m-d', $convertDate);
                 $fullDate = $date . ' ' . date('H:i:s');
                 $transactionNumber = $ourDataTable['deposit_slip_number'];
-
+                
 
 //                    check account number given
                 if (strlen($ourDataTable['Account_Number']) < 10) {
-                    $accountNumber = '00' . $ourDataTable['Account_Number'];
+                    $accountNumber = '0' . $ourDataTable['Account_Number'];
                 } else $accountNumber = $ourDataTable['Account_Number'];
 
 //                getting tellers info to check for post limit
+//                check if the header was remove
+                if($tellerId === "teller id" || empty($tellerId)){
+                    $_SESSION["Lack_of_intfund_$randms"] = "Sorry Please remove the header from this file";
+                    header ("Location: ../bulk_deposit.php?message6=$randms");
+                    exit();
+                }
                 $tellersCondition = ['id' => $tellerId];
                 $tellerDetails = selectOne('tellers', $tellersCondition);
 //                branch and teller id for check
@@ -81,14 +89,14 @@ if (isset($_POST['submit'])) {
 
 //                  get account information using account number
                     $accountDetails = selectOne('account', ['account_no' => $accountNumber]);
-
-//                  account information for other table
+                    
+                    //                  account information for other table
                     $accountProductId = $accountDetails['product_id'];
                     $accountId = $accountDetails['id'];
                     $accountClientId = $accountDetails['client_id'];
-
+                    
                     if ($amount > $tellerPostLimit) {
-//                      get information and update transact_cache
+                        //                      get information and update transact_cache
                         $transactionCacheCon = [
                             'int_id' => $inst_id,
                             'branch_id' => $chosenBranch,
@@ -105,14 +113,14 @@ if (isset($_POST['submit'])) {
                             'status' => 'Pending',
                             'date' => $fullDate,
                         ];
-//                        fix gl_code when you meet boss
+                        //                        fix gl_code when you meet boss
                         $transactionCacheApproval = create('transact_cache', $transactionCacheCon);
                     } else {
-//                        set all total derived
+                        //                        set all total derived
                         $totalDeposit = $accountDetails['total_deposits_derived'] + $amount;
                         $accountBal = $accountDetails['account_balance_derived'] + $amount;
-
-//                        prepare information for database
+                        
+                        //                        prepare information for database
                         $accountConstantName = 'id';
                         $accountData = [
                             'total_deposits_derived' => $totalDeposit,
@@ -120,10 +128,10 @@ if (isset($_POST['submit'])) {
                             'last_deposit' => $amount,
                             'last_activity_date' => date("Y-m-d"),
                         ];
-//                        update account table
+                        //                        update account table
                         $updateLastDeposit = update('account', $accountId, $accountConstantName, $accountData);
-
-//                        send record to account_transaction details and update the necessary information
+                        
+                        //                        send record to account_transaction details and update the necessary information
                         $accountTransData = [
                             'int_id' => $inst_id,
                             'branch_id' => $chosenBranch,
@@ -144,15 +152,16 @@ if (isset($_POST['submit'])) {
                             'debit' => $amount,
                         ];
                         $accountTransDetails = create('account_transaction', $accountTransData);
-
-                        $getGlCode = selectOne('acct_rule', ['loan_product_id' => $accountProductId]);
-                        $glCode = $getGlCode['asst_loan_port'];
-//                        get information form gl_account and update it
-                        $acc_gl_accountData = ['gl_code' => $glCode];
+                        
+                        $getGlCode = selectOne('payment_type', ['id' => $paymentType]);
+                        $glCode = $getGlCode['gl_code'];
+                        //                        get information form gl_account and update it
+                        $acc_gl_accountData = ['gl_code' => $glCode, 'int_id'=> $inst_id];
                         $glAccountDetails = selectOne('acc_gl_account', $acc_gl_accountData);
+                        // dd($glAccountDetails);
                         $newOrgRunningBal = $glAccountDetails['organization_running_balance_derived'] + $amount;
-
-//                        update the acc_gl_account
+                        
+                        //                        update the acc_gl_account
                         $update_glAccount = update('acc_gl_account', $glAccountDetails['id'], 'id', ['organization_running_balance_derived' => $newOrgRunningBal]);
 
 //                      get insit information and add new amount to old balance
@@ -232,8 +241,10 @@ if (isset($_POST['submit'])) {
                         ];
                         $gl_accountDetails = create('gl_account_transaction', $gl_accountCon);
                     }
-                } else {
-                    echo $message = '<div class="alert alert-danger">Sorry this Teller Can not Preform this Action</div>';
+                }
+                else {
+                    $_SESSION["Lack_of_intfund_$randms"] = "Sorry this Teller Can not Preform this Action";
+                    header ("Location: ../bulk_deposit.php?message5=$randms");
                     exit();
                 }
 
@@ -247,13 +258,15 @@ if (isset($_POST['submit'])) {
                     header ("Location: ../bulk_deposit.php?message1=$randms");
                     exit();
                 }
+                // check for approval 
             } elseif (!empty($gl_accountDetails) && !empty($transactionCache) && !empty($institution_account)
                 && !empty($tellerDetails) && !empty($accountDetails) && !empty($instDetails)
                 && !empty($glAccountDetails) && !empty($accountTransDetails)) {
                 $_SESSION["Lack_of_intfund_$randms"] = "Sent for Approval!";
                 header ("Location: ../bulk_deposit.php?message4=$randms");
                 exit();
-            } else {
+            } 
+            else {
                 $_SESSION["Lack_of_intfund_$randms"] = "Transaction not Successful!";
                 header ("Location: ../bulk_deposit.php?message2=$randms");
                 exit();
