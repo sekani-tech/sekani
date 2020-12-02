@@ -606,8 +606,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                                         <input class="form-check-input" name="man_ent"
                                                                                type="checkbox" value="1">
                                                                         <span class="form-check-sign">
-                            <span class="check"></span>
-                          </span>
+                                                                        <span class="check"></span>
+                                                                    </span>
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -620,8 +620,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                                         <input class="form-check-input" name="bank_rec"
                                                                                type="checkbox" value="1">
                                                                         <span class="form-check-sign">
-                            <span class="check"></span>
-                          </span>
+                                                                            <span class="check"></span>
+                                                                        </span>
                                                                     </label>
                                                                 </div>
                                                             </div>
