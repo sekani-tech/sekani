@@ -376,9 +376,6 @@ if ($per_con == 1 || $per_con == "1") {
                           Username
                         </th>
                         <th>
-                          Insitution
-                        </th>
-                        <th>
                           E-mail
                         </th>
                         <th>Active</th>
@@ -393,7 +390,6 @@ if ($per_con == 1 || $per_con == "1") {
                         <?php $row["id"]; ?>
                           <th><?php echo $row["display_name"]; ?></th>
                           <th><?php echo $row["username"]; ?></th>
-                          <th><?php echo $row["int_name"]; ?></th>
                           <th><?php echo $row["email"]; ?></th>
                           <th><?php echo $row["status"]; ?></th>
                           <th><?php echo $row["employee_status"]; ?></th>
