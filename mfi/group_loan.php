@@ -274,7 +274,7 @@ include("header.php");
                                     <td>MICHEAL OLALERE </td>
                                     <td>0012345678</td>
                                     <td>FATIMA BINTA</td>
-                                    <td><b>N3,000.00</b></td>
+                                    <td><input type="number" class="form-control" placeholder="Enter Amount"></td>
                                 </tr>
 
 
