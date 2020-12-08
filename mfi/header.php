@@ -144,7 +144,7 @@ $rezz = mysqli_query($connection, $activeq);
     <script src="../assets/js/charts/chart.bundle.js"></script>
     <script src="../assets/js/charts/chart.bundle.min.js"></script>
     <?php
-        if($yes = "true"){
+        if($yes == "true"){
             include("items/scripts/complete_call.php");
         }
     ?>
