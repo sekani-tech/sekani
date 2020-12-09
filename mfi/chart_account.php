@@ -149,6 +149,7 @@ $(document).ready(function(){
     <!-- POST INTO -->
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $sessint_id = $_SESSION['int_id'];
     $efd = $_POST['submit'];
     // on her i will be posting data
     if ($efd == "gl_accounto") {
