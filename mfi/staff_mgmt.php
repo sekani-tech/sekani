@@ -88,12 +88,12 @@ $destination = "index.php";
                       $role = $_POST['submit'];
 
                       if ($role == 'role') {
-                        $r_n = $_POST["role_name"];
-                        $r_d = $_POST["descript"];
+                        $r_n = htmlspecialchars(strip_tags($_POST["role_name"]));
+                        $r_d = htmlspecialchars(strip_tags($_POST["descript"]));
                         // check if this role exists
                         $selectrole = mysqli_query($connection, "SELECT * FROM org_role WHERE int_id = '$sessint_id' && role = '$r_n'");
                         $cs = mysqli_num_rows($selectrole);
-                        if ($cs == 0 || $cs == "0") {
+                        if ($cs == 0 || $cs == "0" && $r_n != "" AND $r_d != "") {
                           $getrole = "INSERT INTO org_role (int_id, role, description, permission) VALUES ('{$sessint_id}', '{$r_n}', '{$r_d}', '0')";
                         $MIB = mysqli_query($connection, $getrole);
                         if ($MIB) {
@@ -117,7 +117,7 @@ $destination = "index.php";
                          swal({
                              type: "error",
                              title: "Error During Creation",
-                             text: "Couldnt Create",
+                             text: "Please Check Value",
                              showConfirmButton: false,
                              timer: 2000
                          })
