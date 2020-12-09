@@ -1,9 +1,7 @@
 <?php
-
 $page_title = "View Client";
 $destination = "client.php";
 include('header.php');
-
 ?>
 <?php
 if(isset($_GET["edit"])) {

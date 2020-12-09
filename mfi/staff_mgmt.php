@@ -7,7 +7,7 @@ $destination = "index.php";
 ?>
 <?php
   function branch_opt($connection)
-  {  
+  { 
       $br_id = $_SESSION["branch_id"];
       $sint_id = $_SESSION["int_id"];
       $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
@@ -772,7 +772,7 @@ if ($per_con == 1 || $per_con == "1") {
   $brahes = branch_opondt($connection);
 ?>
                       <?php
-                        $query = "SELECT * FROM tellers WHERE int_id ='$sessint_id' && (branch_id ='$br_id' $brahes)";
+                        $query = "SELECT * FROM tellers WHERE int_id ='$sessint_id'";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <th>
