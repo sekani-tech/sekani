@@ -258,8 +258,9 @@ if (isset($_POST['add-member'])) {
                                         <a href="update_group.php?edit=<?php echo $id; ?>" class="btn btn-primary">Edit
                                             Group Details</a>
                                         <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                data-target="#exampleModalLong"
+                                                data-target="#exampleModalLong"> Add Member
                                         </button>
+                                        <a href="manage_client.php" class="btn btn-primary">Create Member</a>
 
                                     </div>
 
