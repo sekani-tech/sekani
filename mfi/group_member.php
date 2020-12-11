@@ -541,13 +541,13 @@ include("header.php");
                                         </div>
 
                                         <div class="col">
-                                        <label class="">BVN</label>
+                                            <label class="">BVN</label>
                                             <input type="number" class="form-control" placeholder="">
                                         </div>
                                     </div>
                                 </div>
 
-                                
+
 
                                 <div class="row" style="margin-top: 30px;">
                                     <div class="col-md-4">
