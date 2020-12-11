@@ -1,23 +1,40 @@
 <?php
 include("../../functions/connect.php");
 
-if(isset($_POST['id'])){
-    $state = $_POST['id'];
-    $int = $_POST['int'];
-            $stateg = "SELECT * FROM int_vault WHERE branch_id = '$state' AND int_id = '$int'";
-            $state1 = mysqli_query($connection, $stateg);
-            $bal = mysqli_fetch_array($state1);
-            $balance = $bal['balance'];
-            $out = '';
-            $out .= '
+if (isset($_POST['type'])) {
+
+//    getting vault balance and displaying
+    if ($_POST['type'] === 'vault') {
+        $state = $_POST['id'];
+        $int = $_POST['int'];
+        $stateg = selectOne('int_vault', ['int_id' => $int, 'branch_id' => $state]);
+        $balance = $stateg['balance'];
+        if ($balance) { ?>
             <div class="form-group">
-            <label class="bmd-label-floating">Current Balance</label>
-            <!-- populate available balance -->
-            <input type="text" value="'.$balance.'" name="balance" id="" class="form-control" readonly>
-            </div>';
-            echo $out;
+                <label class="bmd-label-floating">Current Balance</label>
+                <!-- populate available balance -->
+                <input type="text" value="<?php echo $balance ?>" name="balance" class="form-control" readonly>
+            </div>
+            <?php
+        }
     }
-    else {
-        echo 'ID not posted';
+//    getting bank balance and displaying
+    else if ($_POST['type'] === 'bank') {
+        $state = $_POST['id'];
+        $int = $_POST['int'];
+        $stateg = selectOne('int_vault', ['int_id' => $int, 'branch_id' => $state]);
+        $balance = $stateg['balance'];
+        if ($balance) { ?>
+            <div class="form-group">
+                <label class="bmd-label-floating">Current Balance</label>
+                <!-- populate available balance -->
+                <input type="text" value="<?php echo $balance ?>" name="balance" class="form-control" readonly>
+            </div>
+            <?php
+        }
     }
+
+} else {
+    echo 'ID not posted';
+}
 ?>

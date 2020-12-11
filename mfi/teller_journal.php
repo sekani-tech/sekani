@@ -186,24 +186,29 @@ $(document).ready(function(){
 // right now we will program
 // first step - check if this person is authorized
 if ($valut == 1 || $valut == "1") {
-    ?>
-    <?php
     $bch_id = $_SESSION['branch_id'];
     $sint_id = $_SESSION['int_id'];
 // output the branch name
-    $bch_name = mysqli_query($connection, "SELECT * FROM branch WHERE id = '$bch_id' && int_id = '$sessint_id'");
-    $grn = mysqli_fetch_array($bch_name);
-    $get_b_r_n = $grn['id'];
-    $bname = $grn['name'];
+    $bch_name = selectOne('branch', ['id' => $bch_id, 'int_id' => $sint_id]);
+    $get_b_r_n = $bch_name['id'];
+    $bname = $bch_name['name'];
 // Ending branch_name
 
 // check the current balance
-    $int_balance = mysqli_query($connection, "SELECT * FROM int_vault WHERE branch_id = '$bch_id' && int_id = '$sessint_id'");
-    $itb = mysqli_fetch_array($int_balance);
-    $g_i_t_b = $itb['balance'];
-    $vault_limit = $itb['movable_amount'];
-    $vault_last_with = $itb['last_withdrawal'];
-    $vault_last_dep = $itb['last_deposit'];
+    $int_balance = selectOne('int_vault', ['branch_id' => $bch_id, 'int_id' => $sessint_id]);
+    $g_i_t_b = $int_balance['balance'];
+    $vault_limit = $int_balance['movable_amount'];
+    $vault_last_with = $int_balance['last_withdrawal'];
+    $vault_last_dep = $int_balance['last_deposit'];
+
+
+    function branch_option($connection)
+    {
+        $sint_id = $_SESSION["int_id"];
+        $fods = selectAll('branch', ['int_id' => $sint_id]);
+        return $fods;
+    }
+
 
 // For the Transaction ID auto generated
     $digits = 10;
@@ -235,78 +240,23 @@ if ($valut == 1 || $valut == "1") {
                                                 <option value="0">select a transaction type in/out</option>
                                                 <option value="vault_in">SELL INTO VAULT</option>
                                                 <option value="vault_out">BUY FROM VAULT</option>
-                                                <option value="from_bank">FROM BANK TO VAULT</option>
-                                                <option value="to_bank">FROM VAULT TO BANK</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <?php
-                                    function branch_option($connection)
-                                    {
-                                        $br_id = $_SESSION["branch_id"];
-                                        $sint_id = $_SESSION["int_id"];
-                                        $out = '';
 
-                                        $sdf = "SELECT * FROM branch WHERE int_id = '$sint_id' AND id = '$br_id'";
-                                        $dsse = mysqli_query($connection, $sdf);
-                                        $fkdl = mysqli_fetch_array($connection, $dsse);
-                                        $pid = $fkdl['parent_id'];
-                                        if ($pid == 0) {
-                                            $fod = "SELECT * FROM branch WHERE int_id = '$sint_id'";
-                                            $dof = mysqli_query($connection, $fod);
-                                            while ($row = mysqli_fetch_array($dof)) {
-                                                $out .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
-                                            }
-                                        } else {
-                                            $fod = "SELECT * FROM branch WHERE int_id = '$sint_id' AND id = '$br_id'";
-                                            $dof = mysqli_query($connection, $fod);
-                                            while ($row = mysqli_fetch_array($dof)) {
-                                                $out .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
-                                            }
-                                        }
-                                        return $out;
-                                    }
-
-                                    ?>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="">Branch:</label>
                                             <select class="form-control" id="bid" name="branch_id">
-                                                <?php echo branch_option($connection); ?>
+                                                <?php $branchResults = branch_option($connection);
+                                                foreach ($branchResults as $branchResult) {
+                                                    ?>
+                                                    <option value="<?php echo $branchResult['id'] ?>"><?php echo $branchResult['name'] ?>
+                                                    </option>
+                                                <?php } ?>
                                             </select>
                                         </div>
                                     </div>
-                                    <script>
-                                        $(document).ready(function () {
-                                            $('#selctttype').change(function () {
-                                                var id = $(this).val();
-                                                $.ajax({
-                                                    url: "ajax_post/vault_options.php",
-                                                    method: "POST",
-                                                    data: {id: id},
-                                                    success: function (data) {
-                                                        $('#sw').html(data);
-                                                    }
-                                                })
-                                            });
-                                        })
-
-                                        $(document).ready(function () {
-                                            $('#bid').change(function () {
-                                                var id = $(this).val();
-                                                var int = $('#intt').val();
-
-                                                $.ajax({
-                                                    url: "ajax_post/vault_balance.php",
-                                                    method: "POST",
-                                                    data: {id: id, int: int},
-                                                    success: function (data) {
-                                                        $('#show_branch_balance').html(data);
-                                                    }
-                                                })
-                                            });
-                                        })
-                                    </script>
                                     <div class="col-md-4" id="sw">
 
                                     </div>
@@ -319,11 +269,76 @@ if ($valut == 1 || $valut == "1") {
                                         </div>
                                     </div>
                                     <div id="show_branch_balance" class="col-md-4">
+
+                                    </div>
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="bmd-label-floating">Vault Balance</label>
+                                            <label class="bmd-label-floating">Transaction id</label>
                                             <!-- populate available balance -->
-                                            <input type="text" value="<?php echo $g_i_t_b; ?>" name="balance" id=""
-                                                   class="form-control" readonly>
+                                            <input type="text" value="<?php echo $transaction_id; ?>" name="transact_id"
+                                                   id="" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="reset" class="btn btn-danger pull-left">Reset</button>
+                                <button type="submit" name="vaultTransaction" class="btn btn-primary pull-right">submit</button>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /content -->
+
+            <!-- your sell to bank begin -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Bank To Vault Transaction (In & Out)</h4>
+                            <!-- <p class="card-category">Fill in all important data</p> -->
+                        </div>
+                        <div class="card-body">
+                            <form action="../functions/vaulttrans.php" method="POST">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <!-- populate from db -->
+                                            <label class="bmd-label-floating"> Transaction Type</label>
+                                            <select name="type" id="selctttypeBank" class="form-control">
+                                                <option value="0">select a transaction type in/out</option>
+                                                <option value="to_bank">SELL TO BANK</option>
+                                                <option value="from_bank">BUY FROM BANK</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="">Branch:</label>
+                                            <select class="form-control" id="bankBalance" name="branch_id">
+                                                <?php $branchResults = branch_option($connection);
+                                                foreach ($branchResults as $branchResult) {
+                                                    ?>
+                                                    <option value="<?php echo $branchResult['id'] ?>"><?php echo $branchResult['name'] ?>
+                                                    </option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" id="bankResult">
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Amount</label>
+                                            <input type="number" name="amount" id="" class="form-control">
+                                            <input type="text" hidden name="int" id="intt"
+                                                   value="<?php echo $sint_id; ?>" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div id="show_bank_balance" class="col-md-4">
+                                        <div class="form-group">
+
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -336,20 +351,85 @@ if ($valut == 1 || $valut == "1") {
                                     </div>
                                 </div>
                                 <button type="reset" class="btn btn-danger pull-left">Reset</button>
-                                <button type="submit" class="btn btn-primary pull-right">submit</button>
+                                <button type="submit" name="bankTransaction" class="btn btn-primary pull-right">submit
+                                </button>
                                 <div class="clearfix"></div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- /content -->
+            <!-- end of sell to bank -->
         </div>
     </div>
+    <script>
+        // display list of tellers
+        $(document).ready(function () {
+            $('#selctttype').change(function () {
+                var id = $(this).val();
+                $.ajax({
+                    url: "ajax_post/vault_options.php",
+                    method: "POST",
+                    data: {id: id},
+                    success: function (data) {
+                        $('#sw').html(data);
+                    }
+                })
+            });
+        })
+
+        // display list of bancks
+        $(document).ready(function () {
+            $('#selctttypeBank').change(function () {
+                var id = $(this).val();
+                $.ajax({
+                    url: "ajax_post/vault_options.php",
+                    method: "POST",
+                    data: {id: id},
+                    success: function (data) {
+                        $('#bankResult').html(data);
+                    }
+                })
+            });
+        })
+
+        // show branch balance
+        $(document).ready(function () {
+            $('#bid').change(function () {
+                var name = 'vault';
+                var id = $(this).val();
+                var int = $('#intt').val();
+
+                $.ajax({
+                    url: "ajax_post/vault_balance.php",
+                    method: "POST",
+                    data: {type: name, id: id, int: int},
+                    success: function (data) {
+                        $('#show_branch_balance').html(data);
+                    }
+                })
+            });
+        })
+        // show bank balance
+        $(document).ready(function () {
+            $('#bankBalance').change(function () {
+                var name = 'bank';
+                var id = $(this).val();
+                var int = $('#intt').val();
+
+                $.ajax({
+                    url: "ajax_post/vault_balance.php",
+                    method: "POST",
+                    data: {type: name, id: id, int: int},
+                    success: function (data) {
+                        $('#show_bank_balance').html(data);
+                    }
+                })
+            });
+        })
+    </script>
     <?php
     include("footer.php");
-    ?>
-    <?php
 } else {
     echo '<script type="text/javascript">
   $(document).ready(function(){

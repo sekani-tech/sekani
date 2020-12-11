@@ -1,9 +1,7 @@
 <?php
-//include('../path.php');
 $page_title = "View Group";
 $destination = "groups.php";
 include('header.php');
-//$int_id = $_SESSION['int_id'];
 $tableName = 'groups';
 $groupBalance = "group_balance";
 $groupTransactionTable = "group_transactions";
@@ -122,13 +120,13 @@ if (isset($_POST['add-member'])) {
 
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Group Account Deatils</h4>
+                            <h4 class="card-title">Group Account Details</h4>
                         </div>
 
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="">Group Name:</label>
-                                <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control"
+                                <input type="text" id="" style="text-transform: uppercase;" class="form-control"
                                        value="<?php echo $output['g_name'] ?>" readonly name="display_name">
                             </div>
                             <div class="row">
@@ -153,15 +151,6 @@ if (isset($_POST['add-member'])) {
                                                readonly>
                                     </div>
                                 </div>
-
-                                <!--                                <div class="col-md-6">-->
-                                <!--                                    <div class="form-group">-->
-                                <!--                                        <label for="">Account Type:</label>-->
-                                <!--                                        <input type="text" name="" style="text-transform: uppercase;" id=""-->
-                                <!--                                               class="form-control" value="" readonly>-->
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
-
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="">Outstanding Loan:</label>
@@ -238,7 +227,9 @@ if (isset($_POST['add-member'])) {
                                                                 <th><?php echo $groupMember['client_name'] ?></th>
                                                                 <th></th>
                                                                 <th><?php echo "00" . $groupMember['account_no'] ?></th>
-                                                                <td><a href="" class="btn btn-info">View</a></td>
+                                                                <td>
+                                                                    <a href="client_view.php?edit=<?php echo $groupMember['client_id']; ?>"
+                                                                       class="btn btn-info">View</a></td>
                                                             </tr>
                                                         <?php } ?>
                                                         <!-- <th></th> -->

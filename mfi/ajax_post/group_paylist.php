@@ -37,7 +37,7 @@ if (isset($_POST["id"])) {
             <td>
                 <select id="account" name="account[]" class="form-control" required>
                     <option value="">Select An Account</option>
-                    <?php foreach ($accountBal as $key => $value) {
+                    <?php foreach ($accountBal as $value) {
                         $product_type = $value["product_id"];
 //            dd($product_type);
 //            //        get user account details

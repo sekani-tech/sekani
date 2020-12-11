@@ -16,59 +16,52 @@ $int_address = $_SESSION["int_address"];
 $sessint_id = $_SESSION["int_id"];
 $nm = $_SESSION["username"];
 $digits = 6;
-$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+$randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
 $sint_id = $_SESSION['int_id'];
 
 // If data is sent to this page
-if (isset($_POST['transact_id']) && isset($_POST['type'])) {
-    // Declaring variables
-    $randms = str_pad(rand(0, pow(10, 8)-1), 10, '0', STR_PAD_LEFT);
+if (isset($_POST['vaultTransaction'])) {
+
+// Declaring variables
+    $randms = str_pad(rand(0, pow(10, 8) - 1), 10, '0', STR_PAD_LEFT);
     $type = $_POST['type'];
     $branchid = $_POST['branch_id'];
     $tid = $_POST['teller_id'];
     $amount = $_POST['amount'];
-    $balance =$_POST['balance'];
+    $balance = $_POST['balance'];
     $transact_id = $_POST['transact_id'];
     $bank_type = $_POST['bank_type'];
     $glcode = $_POST['gl_code'];
-    
-    $gl = "SELECT * FROM acc_gl_account WHERE gl_code = '$bank_type'";
-    $gla = mysqli_query($connection, $gl);
-    $np = mysqli_fetch_array($gla);
-    $glbalance = $np['organization_running_balance_derived'];
-    $glname = $np['name'];
 
-    $que = "SELECT * FROM institution_account WHERE teller_id = '$tid'";
-    $rock = mysqli_query($connection, $que);
-    $yn = mysqli_fetch_array($rock);
-    $tellbalance = $yn['account_balance_derived'];
-    $tellgl = $yn['gl_code'];
+//    bank gl_code account balance
+    $gl = selectOne('acc_gl_account', ['gl_code' => $bank_type]);
+    $glbalance = $gl['organization_running_balance_derived'];
+    $glname = $gl['name'];
 
-    $fdd = "SELECT * FROM acc_gl_account WHERE int_id='$sessint_id' AND gl_code='$tellgl'";
-    $ssddd = mysqli_query($connection, $fdd);
-    $sd = mysqli_fetch_array($ssddd);
-    $tellglbalance = $sd['organization_running_balance_derived'];
+    $que = selectOne('institution_account', ['teller_id' => $tid]);
+    $tellbalance = $que['account_balance_derived'];
+    $tellgl = $que['gl_code'];
 
-    $quet = "SELECT * FROM tellers WHERE name = '$tid'";
-    $rocka = mysqli_query($connection, $quet);
-    $yy = mysqli_fetch_array($rocka);
-    $tellname = $yy['description'];
+//    teller gl_code account
+    $fdd = selectOne('acc_gl_account', ['int_id' => $sessint_id, 'gl_code' => $tellgl]);
+    $tellglbalance = $fdd['organization_running_balance_derived'];
+
+    $quet = selectOne('tellers', ['name' => $tid]);
+    $tellname = $quet['description'];
     $transdate = date('Y-m-d h:i:sa');
     $crdate = date('Y-m-d H:m:s');
-    $vault = mysqli_query($connection, "SELECT * FROM int_vault WHERE branch_id = '$branchid' && int_id = '$sint_id'");
-    $itb = mysqli_fetch_array($vault);
-    $vault_limit = $itb['movable_amount'];
-    $int_gl = $itb['gl_code'];
+    $vault = selectOne('int_vault', ['int_id' => $sint_id, 'branch_id' => $branchid]);
+    $vault_limit = $vault['movable_amount'];
+    $int_gl = $vault['gl_code'];
 
-    // vault gl
-    $vau = mysqli_query($connection,"SELECT * FROM acc_gl_account WHERE int_id = '$sint_id' AND gl_code = '$int_gl'");
-    $ese = mysqli_fetch_array($vau);
-    $parent_id = $ese['parent_id'];
-  // If transaction is a vault in execute this code
-  if($tid || $bank_type){
-    if($type == "vault_in"){
-      // if the teller balance is equal is bigger amount
-            if($tellbalance >= $amount){
+// vault gl
+    $vau = selectOne('acc_gl_account', ['int_id' => $sint_id, 'gl_code' => $int_gl]);
+    $parent_id = $vau['parent_id'];
+    // If transaction is a vault in execute this code
+    if ($tid || $bank_type) {
+        if ($type == "vault_in") {
+            // if the teller balance is equal is bigger amount
+            if ($tellbalance >= $amount) {
                 $new_tellbalance = $tellbalance - $amount;
                 $newtellgl = $tellglbalance - $amount;
                 $new_vaultbalance = $balance + $amount;
@@ -78,71 +71,70 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                 $vaultinquery = "UPDATE institution_account SET account_balance_derived = '$new_tellbalance' WHERE teller_id = '$tid' AND int_id = '$sessint_id' AND branch_id = '$brand'";
                 $ein = mysqli_query($connection, $vaultinquery);
                 $description = "Deposited into Vault";
-                if($ein){
+                if ($ein) {
 
-                  $ddffd = "UPDATE acc_gl_account SET organization_running_balance_derived = '$newtellgl' WHERE gl_code = '$tellgl' && int_id = '$sint_id' AND branch_id = '$branchid'";
-                  $onxzx = mysqli_query($connection, $ddffd);
-                  
+                    $ddffd = "UPDATE acc_gl_account SET organization_running_balance_derived = '$newtellgl' WHERE gl_code = '$tellgl' && int_id = '$sint_id' AND branch_id = '$branchid'";
+                    $onxzx = mysqli_query($connection, $ddffd);
+
                     $vaufinquery = "UPDATE int_vault SET balance = '$new_vaultbalance', last_deposit = '$amount'  WHERE int_id = '$sint_id' AND branch_id = '$branchid'";
                     $fon = mysqli_query($connection, $vaufinquery);
 
                     $vaultffinquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '$int_gl' && int_id = '$sint_id' AND branch_id = '$branchid'";
                     $on = mysqli_query($connection, $vaultffinquery);
-                    if($on){
-                        $record ="INSERT INTO institution_account_transaction (int_id, branch_id,
+                    if ($on) {
+                        $record = "INSERT INTO institution_account_transaction (int_id, branch_id,
                         transaction_id, description, transaction_type, teller_id,is_vault, is_reversed,
                         transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                         created_date, appuser_id, debit) VALUES ('{$sint_id}','{$branchid}', '{$transact_id}','{$description}',
                         '{$type}', '{$tid}', '1', '0', '{$transdate}', '{$amount}', '{$new_tellbalance}','{$amount}', '{$crdate}',
                         '{$tid}', '{$amount}')";
-                        $reffcord ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
+                        $reffcord = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
                         transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
                           created_date, credit) VALUES ( '{$sint_id}', '{$branchid}', '{$int_gl}', '{$parent_id}','{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
                            '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$amount}')";
-                            $risn = mysqli_query($connection, $reffcord);
+                        $risn = mysqli_query($connection, $reffcord);
 
-                       $rin = mysqli_query($connection, $record);
-                       $vable = "INSERT INTO institution_vault_transaction (int_id, branch_id, transaction_id, description, transaction_type,
+                        $rin = mysqli_query($connection, $record);
+                        $vable = "INSERT INTO institution_vault_transaction (int_id, branch_id, transaction_id, description, transaction_type,
                        teller_id, transaction_date, amount, vault_balance_derived, overdraft_amount_derived, created_date, appuser_id, credit)
                          VALUES ('{$sint_id}', '{$branchid}', '{$transact_id}', '{$description}', '{$type}', '{$tid}', '{$transdate}', '{$amount}',
                          '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$tid}', '{$amount}')";
                         $rlt = mysqli_query($connection, $vable);
 
-                    if($rlt){
-                      $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' AND employee_status = 'Employed'";
-                      $rult = mysqli_query($connection, $quy);
-                      if (mysqli_num_rows($rult) > 0) {
-                        while ($row = mysqli_fetch_array($rult))
-                            {
-                              $username = $row['username'];
-                              $remail = $row['email'];
-                              $roleid = $row['org_role'];
-                              $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
-                              $rlot = mysqli_query($connection, $quyd);
-                              $tolm = mysqli_fetch_array($rlot);
-                              $vaul = $tolm['vault_email'];
-                              
-                              if ($vaul == 1 || $vaul == "1") {
-         // mailin
-                            // begining of mail
-                            $mail = new PHPMailer;
-                            // from email addreess and name
-                            $mail->From = $int_email;
-                            $mail->FromName = $int_name;
-                            // to adress and name
-                            $mail->addAddress($remail, $username);
-                            // reply address
-                            //Address to which recipient will reply
-                            // progressive html images
-                            $mail->addReplyTo($int_email, "Reply");
-                            // CC and BCC
-                            //CC and BCC
-                            // $mail->addCC("cc@example.com");
-                            // $mail->addBCC("bcc@example.com");
-                            // Send HTML or Plain Text Email
-                            $mail->isHTML(true);
-                            $mail->Subject = "Vault Alert From ".$int_name;
-                              $mail->Body = "<!DOCTYPE html>
+                        if ($rlt) {
+                            $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' AND employee_status = 'Employed'";
+                            $rult = mysqli_query($connection, $quy);
+                            if (mysqli_num_rows($rult) > 0) {
+                                while ($row = mysqli_fetch_array($rult)) {
+                                    $username = $row['username'];
+                                    $remail = $row['email'];
+                                    $roleid = $row['org_role'];
+                                    $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
+                                    $rlot = mysqli_query($connection, $quyd);
+                                    $tolm = mysqli_fetch_array($rlot);
+                                    $vaul = $tolm['vault_email'];
+
+                                    if ($vaul == 1 || $vaul == "1") {
+                                        // mailin
+                                        // begining of mail
+                                        $mail = new PHPMailer;
+                                        // from email addreess and name
+                                        $mail->From = $int_email;
+                                        $mail->FromName = $int_name;
+                                        // to adress and name
+                                        $mail->addAddress($remail, $username);
+                                        // reply address
+                                        //Address to which recipient will reply
+                                        // progressive html images
+                                        $mail->addReplyTo($int_email, "Reply");
+                                        // CC and BCC
+                                        //CC and BCC
+                                        // $mail->addCC("cc@example.com");
+                                        // $mail->addBCC("bcc@example.com");
+                                        // Send HTML or Plain Text Email
+                                        $mail->isHTML(true);
+                                        $mail->Subject = "Vault Alert From " . $int_name;
+                                        $mail->Body = "<!DOCTYPE html>
                               <html>
                                   <head>
                                   <style>
@@ -250,127 +242,115 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                     </div>
                                   </body>
                               </html>";
-                              $mail->AltBody = "This is the plain text version of the email content";
-                            }
-                            }
-                                         // mail system
-                                         if(!$mail->send()) 
-                                         {
-                                           $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                                           echo "sent";
-                                          //  echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
-                                          $URL="../mfi/teller_journal.php?message6=$randms";
+                                        $mail->AltBody = "This is the plain text version of the email content";
+                                    }
+                                }
+                                // mail system
+                                if (!$mail->send()) {
+                                    $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+                                    echo "sent";
+                                    //  echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
+                                    $URL = "../mfi/teller_journal.php?message6=$randms";
 
-                           echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-                                         } else
-                                         {
-                                           $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                                           echo "error";
-                                          //  echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
-                                          $URL="../mfi/teller_journal.php?message1=$randms";
+                                    echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                                } else {
+                                    $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+                                    echo "error";
+                                    //  echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
+                                    $URL = "../mfi/teller_journal.php?message1=$randms";
 
-                           echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-                                         }
-                        } 
-                    }
-                    else{
-                        $_SESSION["Lack_of_intfund_$randms"] = "";
-                        echo "error";
-                        echo header ("Location: ../mfi/teller_journal.php?message5=$randms");
+                                    echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                                }
+                            }
+                        } else {
+                            $_SESSION["Lack_of_intfund_$randms"] = "";
+                            echo "error";
+                            header("Location: ../mfi/teller_journal.php?message5=$randms");
+                        }
                     }
                 }
+            } else if ($amount >= $tellbalance) {
+                $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+                echo "error";
+                header("Location: ../mfi/teller_journal.php?message2=$randms");
             }
-        }
-        else if($amount >= $tellbalance){
-            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-           echo "error";
-          echo header ("Location: ../mfi/teller_journal.php?message2=$randms");
-        }
-    }
-    else if($type == "vault_out"){
-        if($balance >= $amount){
-            if($amount >= $vault_limit){
-                $_SESSION["Lack_of_intfund_$randms"] = "";
-                   echo "error";
-                  echo header ("Location: ../mfi/teller_journal.php?message=$randms");
-            }
-            else{
-                $new_tellbalance = $tellbalance + $amount;
-                $newtellgl = $tellglbalance + $amount;
-                $new_vaultbalance = $balance - $amount;
-                $blnc = number_format($new_vaultbalance);
-                $amt = number_format($amount);
+        } else if ($type == "vault_out") {
+            if ($balance >= $amount) {
+                if ($amount >= $vault_limit) {
+                    $_SESSION["Lack_of_intfund_$randms"] = "";
+                    echo "error";
+                    header("Location: ../mfi/teller_journal.php?message=$randms");
+                } else {
+                    $new_tellbalance = $tellbalance + $amount;
+                    $newtellgl = $tellglbalance + $amount;
+                    $new_vaultbalance = $balance - $amount;
+                    $blnc = number_format($new_vaultbalance);
+                    $amt = number_format($amount);
 
-                $vaultinquery = "UPDATE institution_account SET account_balance_derived = '$new_tellbalance' WHERE teller_id = '$tid' && int_id = '$sint_id' AND int_id = '$sessint_id' AND branch_id = '$brand'";
-                $ein = mysqli_query($connection, $vaultinquery);
+                    $vaultinquery = update('institution_account', $tid, 'teller_id', ['account_balance_derived' => $new_tellbalance]);
+                    $ddffd = update('acc_gl_account', $tellgl, 'gl_code', ['organization_running_balance_derived' => $newtellgl]);
+                    $onxzx = mysqli_query($connection, $ddffd);
 
-                $ddffd = "UPDATE acc_gl_account SET organization_running_balance_derived = '$newtellgl' WHERE gl_code = '$tellgl' && int_id = '$sint_id' AND branch_id = '$branchid'";
-                  $onxzx = mysqli_query($connection, $ddffd);
+                    $description = "Withdrawn from vault";
+                    if ($vaultinquery) {
+                        $vaultgl = update('acc_gl_account', $int_gl, 'gl_code', ['organization_running_balance_derived' => $new_vaultbalance]);
+                        $vaultinquery2 = update('int_vault', $branchid, 'branch_id', ['balance' => $new_vaultbalance, 'last_withdrawal' => $amount]);
+                        // $glquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '' AND int_id = '$sint_id'";
+                        // $ond = mysqli_query($connection, $glquery);
+                        if ($vaultinquery2) {
+                            $recorrrdCondition = ['int_id' => $sint_id, 'branch_id' => $branchid,
+                                'transaction_id' => $transact_id, 'description' => $description, 'transaction_type' => $type, 'teller_id' => $tid,
+                                'is_vault' => 1, 'is_reversed' => 0,
+                                'transaction_date' => $transdate, 'amount' => $amount, 'running_balance_derived' => $new_tellbalance, 'overdraft_amount_derived' => $amount,
+                                'created_date' => $crdate, 'appuser_id' => $tid, 'credit' => $amount];
+                            $recorrrd = create('institution_account_transaction', $recorrrdCondition);
+                            $rin = mysqli_query($connection, $recorrrd);
 
-                $description = "Withdrawn from vault";
-                if($ein){
-                    $vaultgl = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '$int_gl' && int_id = '$sint_id' AND branch_id = '$branchid'";
-                    $ow = mysqli_query($connection, $vaultgl);
-                    $vaultinquery2 = "UPDATE int_vault SET balance = '$new_vaultbalance', last_withdrawal = '$amount' WHERE int_id = '$sint_id' AND branch_id = '$branchid'";
-                    $on = mysqli_query($connection, $vaultinquery2);
-                    // $glquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '' AND int_id = '$sint_id'";
-                    // $ond = mysqli_query($connection, $glquery);
-                    if($on){
-                        $recorrrd ="INSERT INTO institution_account_transaction (int_id, branch_id,
-                        transaction_id, description, transaction_type, teller_id, is_vault, is_reversed,
-                        transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-                        created_date, appuser_id, credit) VALUES ('{$sint_id}','{$branchid}', '{$transact_id}','{$description}',
-                        '{$type}', '{$tid}', '1', '0', '{$transdate}', '{$amount}', '{$new_tellbalance}','{$amount}', '{$crdate}',
-                        '{$tid}', '{$amount}')";
-                        $rin = mysqli_query($connection, $recorrrd);
-
-                        $record ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
-                        transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
-                          created_date, debit) VALUES ( '{$sint_id}', '{$branchid}', '{$int_gl}', '{$parent_id}', '{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
-                           '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$amount}')";
+                            $recordCondition = ['int_id' => $sint_id, 'branch_id' => $branchid, 'gl_code' => $int_gl, 'parent_id' => $parent_id, 'transaction_id' => $transact_id,
+                                'description' => $description, 'transaction_type' => $type, 'transaction_date' => $transdate, 'amount' => $amount, 'gl_account_balance_derived' => $new_vaultbalance,
+                                'overdraft_amount_derived' => $amount, 'created_date' => $crdate, 'debit' => $amount];
+                            $record = create('gl_account_transaction', $recordCondition);
                             $riln = mysqli_query($connection, $record);
 
-                        $vabl = "INSERT INTO institution_vault_transaction (int_id, branch_id, transaction_id, description, transaction_type,
-                        teller_id, transaction_date, amount, vault_balance_derived, overdraft_amount_derived, created_date, appuser_id, debit)
-                          VALUES ('{$sint_id}', '{$branchid}', '{$transact_id}', '{$description}', '{$type}', '{$tid}', '{$transdate}', '{$amount}',
-                          '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$tid}', '{$amount}')";
-                         $rlt = mysqli_query($connection, $vabl);
+                            $vablCondition = ['int_id' => $sint_id, 'branch_id' => $branchid, 'transaction_id' => $transact_id, 'description' => $description, 'transaction_type' => $type,
+                                'teller_id' => $tid, 'transaction_date' => $transdate, 'amount' => $amount, 'vault_balance_derived' => $new_vaultbalance, 'overdraft_amount_derived' => $amount,
+                                'created_date' => $crdate, 'appuser_id' => $tid, 'debit' => $amount];
+                            $vabl = create('institution_vault_transaction', $vablCondition);
+                            if ($vabl) {
 
-                         if($rlt){
-                          $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' AND employee_status = 'Employed'";
-                          $rult = mysqli_query($connection, $quy);
-                          if (mysqli_num_rows($rult) > 0) {
-                            while ($row = mysqli_fetch_array($rult))
-                                {
-                                  $username = $row['username'];
-                                  $remail = $row['email'];
-                                  $roleid = $row['org_role'];
-                                  $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
-                                  $rlot = mysqli_query($connection, $quyd);
-                                  $tolm = mysqli_fetch_array($rlot);
-                                  $vaul = $tolm['vault_email'];
-                                  
-                                  if ($vaul == 1 || $vaul == "1") {
-                                           // mailin
-                            // begining of mail
-                            $mail = new PHPMailer;
-                            // from email addreess and name
-                            $mail->From = $int_email;
-                            $mail->FromName = $int_name;
-                            // to adress and name
-                            $mail->addAddress($remail, $username);
-                            // reply address
-                            //Address to which recipient will reply
-                            // progressive html images
-                            $mail->addReplyTo($int_email, "Reply");
-                            // CC and BCC
-                            //CC and BCC
-                            // $mail->addCC("cc@example.com");
-                            // $mail->addBCC("bcc@example.com");
-                            // Send HTML or Plain Text Email
-                            $mail->isHTML(true);
-                            $mail->Subject = "Vault Alert From ".$int_name;
-                                  $mail->Body = "<!DOCTYPE html>
+                                $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' AND employee_status = 'Employed'";
+                                $rult = mysqli_query($connection, $quy);
+                                if (mysqli_num_rows($rult) > 0) {
+                                    while ($row = mysqli_fetch_array($rult)) {
+                                        $username = $row['username'];
+                                        $remail = $row['email'];
+                                        $roleid = $row['org_role'];
+                                        $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
+                                        $rlot = mysqli_query($connection, $quyd);
+                                        $tolm = mysqli_fetch_array($rlot);
+                                        $vaul = $tolm['vault_email'];
+
+                                        if ($vaul == 1 || $vaul == "1") {
+                                            // mailin
+                                            // begining of mail
+                                            $mail = new PHPMailer;
+                                            // from email addreess and name
+                                            $mail->From = $int_email;
+                                            $mail->FromName = $int_name;
+                                            // to adress and name
+                                            $mail->addAddress($remail, $username);
+                                            // reply address
+                                            //Address to which recipient will reply
+                                            // progressive html images
+                                            $mail->addReplyTo($int_email, "Reply");
+                                            // CC and BCC
+                                            //CC and BCC
+                                            // $mail->addCC("cc@example.com");
+                                            // $mail->addBCC("bcc@example.com");
+                                            // Send HTML or Plain Text Email
+                                            $mail->isHTML(true);
+                                            $mail->Subject = "Vault Alert From " . $int_name;
+                                            $mail->Body = "<!DOCTYPE html>
                                   <html>
                                       <head>
                                       <style>
@@ -478,121 +458,157 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                         </div>
                                       </body>
                                   </html>";
-                                  $mail->AltBody = "This is the plain text version of the email content";
+                                            $mail->AltBody = "This is the plain text version of the email content";
+                                        }
+                                    }
+                                    // mail system
+                                    if (!$mail->send()) {
+                                        $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+                                        echo "sent";
+                                        //  echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
+                                        $URL = "../mfi/teller_journal.php?message6=$randms";
+
+                                        echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                                    } else {
+                                        $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+                                        echo "error";
+                                        //  echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
+                                        $URL = "../mfi/teller_journal.php?message1=$randms";
+
+                                        echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                                    }
                                 }
-                                }
-                                             // mail system
-                                             if(!$mail->send()) 
-                                             {
-                                               $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                                               echo "sent";
-                                              //  echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
-                                              $URL="../mfi/teller_journal.php?message6=$randms";
-    
-                               echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-                                             } else
-                                             {
-                                               $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                                               echo "error";
-                                              //  echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
-                                              $URL="../mfi/teller_journal.php?message1=$randms";
-    
-                               echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-                                             }
-                            } 
+                            } else {
+                                $_SESSION["Lack_of_intfund_$randms"] = "";
+                                echo "error";
+                                echo header("Location: ../mfi/teller_journal.php?message5=$randms");
+                            }
                         }
-     
-                    else{
-                        $_SESSION["Lack_of_intfund_$randms"] = "";
-                        echo "error";
-                        echo header ("Location: ../mfi/teller_journal.php?message5=$randms");
                     }
                 }
-                }
-                }
-        }
-        elseif($amount >= $balance){
+            } elseif ($amount >= $balance) {
+                $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+                echo "error";
+                echo header("Location: ../mfi/teller_journal.php?message4=$randms");
+            }
+        } else {
             $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-           echo "error";
-          echo header ("Location: ../mfi/teller_journal.php?message4=$randms");
+//            echo "error";
+            header("Location: ../mfi/teller_journal.php?message5=$randms");
         }
+    } else {
+        $_SESSION["Lack_of_intfund_$randms"] = "";
+//        echo "error";
+        header("Location: ../mfi/teller_journal.php?message10=$randms");
     }
-    else if($type == "to_bank"){
-      if($balance >= $amount){
-        if($amount >= $vault_limit){
-            $_SESSION["Lack_of_intfund_$randms"] = "";
-               echo "error";
-              echo header ("Location: ../mfi/teller_journal.php?message=$randms");
-        }
-        else{
-            $new_glbalance = $glbalance + $amount;
-            $new_vaultbalance = $balance - $amount;
-            $blnc = number_format($new_vaultbalance);
-            $amt = number_format($amount);
-            $vaultinquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_glbalance' WHERE gl_code = '$bank_type' && int_id = '$sint_id'";
-            $ein = mysqli_query($connection, $vaultinquery);
+}
 
-            $glnquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '$int_gl' && int_id = '$sint_id' AND branch_id = '$branchid'";
-            $on = mysqli_query($connection, $glnquery);
+if (isset($_POST['bankTransaction'])) {
+// Declaring variables
+    $randms = str_pad(rand(0, pow(10, 8) - 1), 10, '0', STR_PAD_LEFT);
+    $type = $_POST['type'];
+    $branchid = $_POST['branch_id'];
+    $tid = $_POST['teller_id'];
+    $amount = $_POST['amount'];
+    $balance = $_POST['balance'];
+    $transact_id = $_POST['transact_id'];
+    $bank_type = $_POST['bank_type'];
+    $glcode = $_POST['gl_code'];
 
-            $description = "Deposited to $glname";
-            if($ein){
-                $vaultinquery2 = "UPDATE int_vault SET balance = '$new_vaultbalance', last_withdrawal = '$amount' WHERE int_id = '$sint_id' AND branch_id = '$branchid'";
-                $on = mysqli_query($connection, $vaultinquery2);
-                if($on){
-                    $resscord ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
+//    bank gl_code account balance
+    $gl = selectOne('acc_gl_account', ['gl_code' => $bank_type]);
+    $glbalance = $gl['organization_running_balance_derived'];
+    $glname = $gl['name'];
+
+    $que = selectOne('institution_account', ['teller_id' => $tid]);
+    $tellbalance = $que['account_balance_derived'];
+    $tellgl = $que['gl_code'];
+
+//    teller gl_code account
+    $fdd = selectOne('acc_gl_account', ['int_id' => $sessint_id, 'gl_code' => $tellgl]);
+    $tellglbalance = $fdd['organization_running_balance_derived'];
+
+    $quet = selectOne('tellers', ['name' => $tid]);
+    $tellname = $quet['description'];
+    $transdate = date('Y-m-d h:i:sa');
+    $crdate = date('Y-m-d H:m:s');
+    $vault = selectOne('int_vault', ['int_id' => $sint_id, 'branch_id' => $branchid]);
+    $vault_limit = $vault['movable_amount'];
+    $int_gl = $vault['gl_code'];
+
+// vault gl
+    $vau = selectOne('acc_gl_account', ['int_id' => $sint_id, 'gl_code' => $int_gl]);
+    $parent_id = $vau['parent_id'];
+    if ($type == "to_bank") {
+        if ($balance >= $amount) {
+            if ($amount >= $vault_limit) {
+                $_SESSION["Lack_of_intfund_$randms"] = "";
+//                    echo "error";
+                header("Location: ../mfi/teller_journal.php?message=$randms");
+            } else {
+                $new_glbalance = $glbalance + $amount;
+                $new_vaultbalance = $balance - $amount;
+                $blnc = number_format($new_vaultbalance);
+                $amt = number_format($amount);
+                $vaultinquery = update('acc_gl_account', $bank_type, 'gl_code', ['organization_running_balance_derived' => $new_glbalance]);
+                $glnquery = update('acc_gl_account', $int_gl, 'gl_code', ['organization_running_balance_derived' => $new_vaultbalance]);
+
+                $description = "Deposited to $glname";
+                if ($vaultinquery) {
+                    $vaultinquery2 = update('int_vault', $branchid, 'branch_id', ['balance' => $new_vaultbalance, 'last_withdrawal' => $amount]);
+                    if ($vaultinquery2) {
+                        $resscord = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
                 transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
                   created_date, credit) VALUES ( '{$sint_id}', '{$branchid}', '{$bank_type}', '{$parent_id}', '{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
                    '{$new_glbalance}', '{$amount}', '{$crdate}', '{$amount}')";
-                    $rin = mysqli_query($connection, $resscord);
+                        $rin = mysqli_query($connection, $resscord);
 
-                    $recrd ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
+                        $recrd = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
                         transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
                           created_date, debit) VALUES ( '{$sint_id}', '{$branchid}', '{$int_gl}', '{$parent_id}', '{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
                            '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$amount}')";
-                            $rind = mysqli_query($connection, $recrd);
+                        $rind = mysqli_query($connection, $recrd);
 
-                    $vabl = "INSERT INTO institution_vault_transaction (int_id, branch_id, transaction_id, description, transaction_type,
+                        $vabl = "INSERT INTO institution_vault_transaction (int_id, branch_id, transaction_id, description, transaction_type,
                     teller_id, transaction_date, amount, vault_balance_derived, overdraft_amount_derived, created_date, appuser_id, debit)
                       VALUES ('{$sint_id}', '{$branchid}', '{$transact_id}', '{$description}', '{$type}', '{$tid}', '{$transdate}', '{$amount}',
                       '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$tid}', '{$amount}')";
-                     $rlt = mysqli_query($connection, $vabl);
-                     if($rlt){
-                      $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' AND employee_status = 'Employed'";
-                      $rult = mysqli_query($connection, $quy);
-                      if (mysqli_num_rows($rult) > 0) {
-                        while ($row = mysqli_fetch_array($rult))
-                            {
-                              $username = $row['username'];
-                              $remail = $row['email'];
-                              $roleid = $row['org_role'];
-                              $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
-                              $rlot = mysqli_query($connection, $quyd);
-                              $tolm = mysqli_fetch_array($rlot);
-                              $vaul = $tolm['vault_email'];
-                              
-                              if ($vaul == 1 || $vaul == "1") {
-         // mailin
-                            // begining of mail
-                            $mail = new PHPMailer;
-                            // from email addreess and name
-                            $mail->From = $int_email;
-                            $mail->FromName = $int_name;
-                            // to adress and name
-                            $mail->addAddress($remail, $username);
-                            // reply address
-                            //Address to which recipient will reply
-                            // progressive html images
-                            $mail->addReplyTo($int_email, "Reply");
-                            // CC and BCC
-                            //CC and BCC
-                            // $mail->addCC("cc@example.com");
-                            // $mail->addBCC("bcc@example.com");
-                            // Send HTML or Plain Text Email
-                            $mail->isHTML(true);
-                            $mail->Subject = "Vault Alert From ".$int_name;
-                              $mail->Body = "<!DOCTYPE html>
-                              <html>
+                        $rlt = mysqli_query($connection, $vabl);
+                        if ($rlt) {
+                            $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' AND employee_status = 'Employed'";
+                            $rult = mysqli_query($connection, $quy);
+                            if (mysqli_num_rows($rult) > 0) {
+                                while ($row = mysqli_fetch_array($rult)) {
+                                    $username = $row['username'];
+                                    $remail = $row['email'];
+                                    $roleid = $row['org_role'];
+                                    $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
+                                    $rlot = mysqli_query($connection, $quyd);
+                                    $tolm = mysqli_fetch_array($rlot);
+                                    $vaul = $tolm['vault_email'];
+
+                                    if ($vaul == 1 || $vaul == "1") {
+                                        // mailin
+                                        // begining of mail
+                                        $mail = new PHPMailer;
+                                        // from email addreess and name
+                                        $mail->From = $int_email;
+                                        $mail->FromName = $int_name;
+                                        // to adress and name
+                                        $mail->addAddress($remail, $username);
+                                        // reply address
+                                        //Address to which recipient will reply
+                                        // progressive html images
+                                        $mail->addReplyTo($int_email, "Reply");
+                                        // CC and BCC
+                                        //CC and BCC
+                                        // $mail->addCC("cc@example.com");
+                                        // $mail->addBCC("bcc@example.com");
+                                        // Send HTML or Plain Text Email
+                                        $mail->isHTML(true);
+                                        $mail->Subject = "Vault Alert From " . $int_name;
+                                        $mail->Body = "<!DOCTYPE html>
+                                            <html>
                                   <head>
                                   <style>
                                   .lon{
@@ -699,114 +715,106 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                     </div>
                                   </body>
                               </html>";
-                              $mail->AltBody = "This is the plain text version of the email content";
-                            }
-                            }
-                                         // mail system
-                                         if(!$mail->send()) 
-                                         {
-                                           $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                                           echo "sent";
-                                          //  echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
-                                          $URL="../mfi/teller_journal.php?message6=$randms";
+                                        $mail->AltBody = "This is the plain text version of the email content";
+                                    }
+                                }
+                                // mail system
+                                if (!$mail->send()) {
+                                    $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+//                                        echo "sent";
+                                    //  echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
+                                    $URL = "../mfi/teller_journal.php?message6=$randms";
 
-                           echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-                                         } else
-                                         {
-                                           $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                                           echo "error";
-                                          //  echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
-                                          $URL="../mfi/teller_journal.php?message1=$randms";
+                                    echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                                } else {
+                                    $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+//                                        echo "error";
+                                    //  echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
+                                    $URL = "../mfi/teller_journal.php?message1=$randms";
 
-                           echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-                                         }
-                        } 
+                                    echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                                }
+                            }
+                        } else {
+                            $_SESSION["Lack_of_intfund_$randms"] = "";
+//                                echo "error";
+                            header("Location: ../mfi/teller_journal.php?message5=$randms");
+                        }
                     }
- 
-                else{
-                    $_SESSION["Lack_of_intfund_$randms"] = "";
-                    echo "error";
-                    echo header ("Location: ../mfi/teller_journal.php?message5=$randms");
                 }
             }
-            }
-            }
-    }
-    elseif($amount >= $balance){
-        $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-       echo "error";
-      echo header ("Location: ../mfi/teller_journal.php?message4=$randms");
-    }
-    }
-    else if($type == "from_bank"){
-      if($glbalance >= $amount){
-        $new_glbalance = $glbalance - $amount;
-        $new_vaultbalance = $balance + $amount;
-        $blnc = number_format($new_vaultbalance);
-        $amt = number_format($amount);
-        $vaultinquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_glbalance' WHERE gl_code = '$bank_type' && int_id = '$sint_id'";
-        $ein = mysqli_query($connection, $vaultinquery);
+        } elseif ($amount >= $balance) {
+            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+//                echo "error";
+            header("Location: ../mfi/teller_journal.php?message4=$randms");
+        } else if ($type == "from_bank") {
+            if ($glbalance >= $amount) {
+                $new_glbalance = $glbalance - $amount;
+                $new_vaultbalance = $balance + $amount;
+                $blnc = number_format($new_vaultbalance);
+                $amt = number_format($amount);
+                $vaultinquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_glbalance' WHERE gl_code = '$bank_type' && int_id = '$sint_id'";
+                $ein = mysqli_query($connection, $vaultinquery);
 
-        $vaultffinquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '$int_gl' && int_id = '$sint_id' AND branch_id = '$branchid'";
-                    $on = mysqli_query($connection, $vaultffinquery);
+                $vaultffinquery = "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_vaultbalance' WHERE gl_code = '$int_gl' && int_id = '$sint_id' AND branch_id = '$branchid'";
+                $on = mysqli_query($connection, $vaultffinquery);
 
-        $description = "Withdrawn from $glname";
-        if($ein){
-            $vaultinquery2 = "UPDATE int_vault SET balance = '$new_vaultbalance', last_deposit = '$amount' WHERE int_id = '$sint_id' AND branch_id = '$branchid'";
-            $on = mysqli_query($connection, $vaultinquery2);
-            if($on){
-              $record ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
+                $description = "Withdrawn from $glname";
+                if ($ein) {
+                    $vaultinquery2 = "UPDATE int_vault SET balance = '$new_vaultbalance', last_deposit = '$amount' WHERE int_id = '$sint_id' AND branch_id = '$branchid'";
+                    $on = mysqli_query($connection, $vaultinquery2);
+                    if ($on) {
+                        $record = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
               transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
                 created_date, debit) VALUES ( '{$sint_id}', '{$branchid}', '{$bank_type}', '{$parent_id}', '{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
                  '{$new_glbalance}', '{$amount}', '{$crdate}', '{$amount}')";
-               $rin = mysqli_query($connection, $record);
+                        $rin = mysqli_query($connection, $record);
 
-               $record ="INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
+                        $record = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
                         transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
                           created_date, credit) VALUES ( '{$sint_id}', '{$branchid}', '{$int_gl}', '{$parent_id}', '{$transact_id}', '{$description}', '{$type}', NULL, '{$transdate}', '{$amount}',
                            '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$amount}')";
-                            $rin = mysqli_query($connection, $record);
+                        $rin = mysqli_query($connection, $record);
 
-               $vable = "INSERT INTO institution_vault_transaction (int_id, branch_id, transaction_id, description, transaction_type,
+                        $vable = "INSERT INTO institution_vault_transaction (int_id, branch_id, transaction_id, description, transaction_type,
                teller_id, transaction_date, amount, vault_balance_derived, overdraft_amount_derived, created_date, appuser_id, credit)
                  VALUES ('{$sint_id}', '{$branchid}', '{$transact_id}', '{$description}', '{$type}', '{$tid}', '{$transdate}', '{$amount}',
                  '{$new_vaultbalance}', '{$amount}', '{$crdate}', '{$tid}', '{$amount}')";
-                $rlt = mysqli_query($connection, $vable);
-                if($rlt){
-                  $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' AND employee_status = 'Employed'";
-                  $rult = mysqli_query($connection, $quy);
-                  if (mysqli_num_rows($rult) > 0) {
-                    while ($row = mysqli_fetch_array($rult))
-                        {
-                          $username = $row['username'];
-                          $remail = $row['email'];
-                          $roleid = $row['org_role'];
-                          $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
-                          $rlot = mysqli_query($connection, $quyd);
-                          $tolm = mysqli_fetch_array($rlot);
-                          $vaul = $tolm['vault_email'];
-                          
-                          if ($vaul == 1 || $vaul == "1") {
-         // mailin
-                            // begining of mail
-                            $mail = new PHPMailer;
-                            // from email addreess and name
-                            $mail->From = $int_email;
-                            $mail->FromName = $int_name;
-                            // to adress and name
-                            $mail->addAddress($remail, $username);
-                            // reply address
-                            //Address to which recipient will reply
-                            // progressive html images
-                            $mail->addReplyTo($int_email, "Reply");
-                            // CC and BCC
-                            //CC and BCC
-                            // $mail->addCC("cc@example.com");
-                            // $mail->addBCC("bcc@example.com");
-                            // Send HTML or Plain Text Email
-                            $mail->isHTML(true);
-                            $mail->Subject = "Vault Alert From ".$int_name;
-                          $mail->Body = "<!DOCTYPE html>
+                        $rlt = mysqli_query($connection, $vable);
+                        if ($rlt) {
+                            $quy = "SELECT * FROM staff WHERE int_id = '$sessint_id' AND employee_status = 'Employed'";
+                            $rult = mysqli_query($connection, $quy);
+                            if (mysqli_num_rows($rult) > 0) {
+                                while ($row = mysqli_fetch_array($rult)) {
+                                    $username = $row['username'];
+                                    $remail = $row['email'];
+                                    $roleid = $row['org_role'];
+                                    $quyd = "SELECT * FROM permission WHERE role_id = '$roleid'";
+                                    $rlot = mysqli_query($connection, $quyd);
+                                    $tolm = mysqli_fetch_array($rlot);
+                                    $vaul = $tolm['vault_email'];
+
+                                    if ($vaul == 1 || $vaul == "1") {
+                                        // mailin
+                                        // begining of mail
+                                        $mail = new PHPMailer;
+                                        // from email addreess and name
+                                        $mail->From = $int_email;
+                                        $mail->FromName = $int_name;
+                                        // to adress and name
+                                        $mail->addAddress($remail, $username);
+                                        // reply address
+                                        //Address to which recipient will reply
+                                        // progressive html images
+                                        $mail->addReplyTo($int_email, "Reply");
+                                        // CC and BCC
+                                        //CC and BCC
+                                        // $mail->addCC("cc@example.com");
+                                        // $mail->addBCC("bcc@example.com");
+                                        // Send HTML or Plain Text Email
+                                        $mail->isHTML(true);
+                                        $mail->Subject = "Vault Alert From " . $int_name;
+                                        $mail->Body = "<!DOCTYPE html>
                           <html>
                               <head>
                               <style>
@@ -914,54 +922,39 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                 </div>
                               </body>
                           </html>";
-                          $mail->AltBody = "This is the plain text version of the email content";
-                        }
-                        }
-                                     // mail system
-                                     if(!$mail->send()) 
-                                     {
-                                       $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                                       echo "sent";
-                                      //  echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
-                                      $URL="../mfi/teller_journal.php?message6=$randms";
+                                        $mail->AltBody = "This is the plain text version of the email content";
+                                    }
+                                }
+                                // mail system
+                                if (!$mail->send()) {
+                                    $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+                                    echo "sent";
+                                    //  echo header ("Location: ../mfi/teller_journal.php?message6=$randms");
+                                    $URL = "../mfi/teller_journal.php?message6=$randms";
 
-                       echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-                                     } else
-                                     {
-                                       $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-                                       echo "error";
-                                      //  echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
-                                      $URL="../mfi/teller_journal.php?message1=$randms";
+                                    echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                                } else {
+                                    $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+                                    echo "error";
+                                    //  echo header ("Location: ../mfi/teller_journal.php?message1=$randms");
+                                    $URL = "../mfi/teller_journal.php?message1=$randms";
 
-                       echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-                                     }
-                    } 
+                                    echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                                }
+                            }
+                        } else {
+                            $_SESSION["Lack_of_intfund_$randms"] = "";
+                            echo "error";
+                            echo header("Location: ../mfi/teller_journal.php?message5=$randms");
+                        }
+                    }
                 }
-
-            else{
-                $_SESSION["Lack_of_intfund_$randms"] = "";
-                echo "error";
-                echo header ("Location: ../mfi/teller_journal.php?message5=$randms");
+            } else if ($amount >= $glbalance) {
+                $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
+//                echo "error";
+                header("Location: ../mfi/teller_journal.php?message11=$randms");
             }
         }
     }
-}
-else if($amount >= $glbalance){
-    $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-   echo "error";
-  echo header ("Location: ../mfi/teller_journal.php?message11=$randms");
-}
-    }
-    else{
-        $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
-           echo "error";
-          echo header ("Location: ../mfi/teller_journal.php?message5=$randms");
-    }
-  }
-  else{
-    $_SESSION["Lack_of_intfund_$randms"] = "";
-    echo "error";
-    echo header ("Location: ../mfi/teller_journal.php?message10=$randms");
-}
 }
 ?>

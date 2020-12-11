@@ -129,7 +129,6 @@ if (isset($_POST['submit'])) {
                         'status' => 'Pending',
                         'date' => $fullDate,
                     ];
-                    //                        fix gl_code when you meet boss
                     $transactionCacheApproval = create('transact_cache', $transactionCacheCon);
                 } else {
                     $_SESSION["Lack_of_intfund_$randms"] = "Sorry this Teller Can not Preform this Action";
