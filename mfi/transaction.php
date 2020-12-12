@@ -113,7 +113,7 @@ $destination = "../index.php";
             <div class="col-md-4 ml-auto mr-auto">
               <div class="card card-pricing bg-primary"><div class="card-body ">
                   
-                  <h4 class="card-title"> Disburse Group</h4>
+                  <h4 class="card-title"> Disburse Group Loan</h4>
                   <p class="card-description">
                   Disburse Loans to registered Groups
                   </p>
