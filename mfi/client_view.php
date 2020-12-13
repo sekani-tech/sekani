@@ -1,9 +1,7 @@
 <?php
-
 $page_title = "View Client";
 $destination = "client.php";
 include('header.php');
-
 ?>
 <?php
 if(isset($_GET["edit"])) {
@@ -114,7 +112,7 @@ if(isset($_GET["edit"])) {
         $get_product = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$product_type' AND int_id = '$int_id'");
        while ($mer = mysqli_fetch_array($get_product)) {
          $p_n = $mer["name"];
-         $out .= '<option value="'.$row["id"].'">'.$row["account_no"].' - '.$p_n.'</option>';
+         $out .= '<option value="'.$row["account_no"].'">'.$row["account_no"].' - '.$p_n.'</option>';
        }
       }
       return $out;
@@ -173,7 +171,7 @@ if(isset($_GET["edit"])) {
                             ?>
                             <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo $migrate['Account_No']; ?>" readonly name="display_name">
                             <?php
-                              }else{
+                              } else {
                             ?>
                             <select id="account" class="form-control">
                               <?php echo fill_account($connection);?>

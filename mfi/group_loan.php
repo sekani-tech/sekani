@@ -413,6 +413,7 @@ include("header.php");
                                             <th>Name/Type</th>
                                             <th>Value</th>
                                             <th>Description</th>
+                                            <th>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -422,6 +423,9 @@ include("header.php");
                                             <td>Loan Application Foam </td>
                                             <td><b>N3,000.00</b></td>
                                             <td>SIGNED FIDELITY BANK CHEQUE</td>
+                                            <td>  <div class="test" data-id="12076">
+                                            <span class="btn btn-danger">Delete</span>
+                                        </div></td>
                                         </tr>
 
 
@@ -538,6 +542,7 @@ include("header.php");
                                             <th>Name</th>
                                             <th>Guarantor Phone Number</th>
                                             <th>Email</th>
+                                            <th>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -547,6 +552,9 @@ include("header.php");
                                             <td>Godwin Edim </td>
                                             <td>08135991031</td>
                                             <td>godwin@gmail.com</td>
+                                            <td><div class="test" data-id="12076">
+                                            <span class="btn btn-danger">Delete</span>
+                                        </div></td>
                                         </tr>
 
 

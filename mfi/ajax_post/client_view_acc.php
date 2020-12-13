@@ -4,16 +4,16 @@ include('../../functions/connect.php');
 $sint = $_SESSION['int_id'];
 ?>
 <?php
-if(isset($_POST['id'])){
+if(isset($_POST['id']) AND $_POST['id'] != ""){
   $dsd = $_POST['id'];
-
+//   echo $dsd;
     $sdf = "SELECT * FROM account WHERE int_id = '$sint' AND account_no ='$dsd'";
     $odmw = mysqli_query($connection, $sdf);
     $d = mysqli_fetch_array($odmw);
     $account_balance = $d['account_balance_derived'];
     $last_dep = $d['last_deposit'];
     $last_wit = $d['last_withdrawal'];
-
+    
     $out = '
     <div class="col-md-6">
         <div class="form-group">
