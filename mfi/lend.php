@@ -324,7 +324,7 @@ function fill_charges($connection)
                                             $digit = 6;
                                             $rando = str_pad(rand(0, pow(10, $digit) - 1), $digit, '0', STR_PAD_LEFT);
                                             ?>
-                                            <input hidden type="text" id="random" value="<?php echo $rando; ?>"/>
+                                            <input hidden type="text" id="random" name="rand" value="<?php echo $rando; ?>"/>
                                             <script>
                                                 $(document).ready(function () {
                                                     $('#charges').change(function () {
@@ -392,7 +392,7 @@ function fill_charges($connection)
                         <label class = "bmd-label-floating" for="charge" class="form-align mr-3">Charges</label>
                           <select class="form-control" name="charge"> 
                             <option>select charge to add</option>                                               
-                          <?php echo fill_charges($connection); ?>
+                          <?php //echo fill_charges($connection); ?>
                           </select>
                           <button type="button" class="btn btn-primary" name="button" onclick="displayCharge()"> <i class="fa fa-plus"></i> Add To Product </button>
                       </div> -->

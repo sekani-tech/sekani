@@ -5,6 +5,8 @@ session_start();
 $sessint_id = $_SESSION["int_id"];
 $userid = $_SESSION["user_id"];
 $client_id = $_POST["client_id"];
+// remove cached charges from loan
+$fdo = mysqli_query($connection, "DELETE FROM loan_charge WHERE client_id = '$client_id'");
 $goacctn = mysqli_query($connection, "SELECT account_no FROM client WHERE id = '$client_id' ");
 if (count([$goacctn]) == 1) {
     $a = mysqli_fetch_array($goacctn);
@@ -174,4 +176,3 @@ $branch_id = $_SESSION["branch_id"];
 // }
 }
 }
-?>
