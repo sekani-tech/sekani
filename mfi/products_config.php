@@ -768,7 +768,8 @@ if ($per_con == 1 || $per_con == "1") {
                                                         <th><?php echo $isa; ?></th>
                                                         <td>
                                                             <a href="creditcheck_edit.php?edit=<?php echo $row["id"]; ?>"
-                                                               class="btn btn-info">Edit</a></td>
+                                                               class="btn btn-info">Edit</a>
+                                                        </td>
                                                     </tr>
                                                 <?php }
                                             } else {
