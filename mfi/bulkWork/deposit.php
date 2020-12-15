@@ -160,7 +160,7 @@ if (isset($_POST['submit'])) {
 
 //                  get account information using account number
                     $accountDetails = selectOne('account', ['account_no' => $accountNumber]);
-
+                    dd($accountDetails);
 //                  account information for other table
                     $accountProductId = $accountDetails['product_id'];
                     $accountId = $accountDetails['id'];
