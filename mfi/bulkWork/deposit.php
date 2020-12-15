@@ -136,6 +136,11 @@ if (isset($_POST['submit'])) {
                     exit();
                 }
             }
+            if($transactionCacheApproval){
+                $_SESSION["Lack_of_intfund_$randms"] = "Sent for Approval!";
+                header("Location: ../bulk_deposit.php?message4=$randms");
+                exit();
+            }
         }
         else {
 //            send information one by one
