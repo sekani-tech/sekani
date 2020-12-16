@@ -1,3 +1,4 @@
+  
 <?php
 include("../functions/connect.php");
 
@@ -32,7 +33,7 @@ if(isset($_POST["id"]))
         $get_product = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$product_type' AND int_id = '$int_id'");
        while ($mer = mysqli_fetch_array($get_product)) {
          $p_n = $mer["name"];
-         $out .= '<option value="'.$row["id"].'">'.$row["account_no"].' - '.$p_n.'</option>';
+         $out .= '<option value="'.$row["account_no"].'">'.$row["account_no"].' - '.$p_n.'</option>';
        }
       }
       return $out;
@@ -97,7 +98,6 @@ if(isset($_POST["id"]))
                 <input type="number"  value="" step=".01" name="principal_amount" class="form-control" required id="principal_amount">
               </div>
             </div>
-
       <div class="col-md-4">
         <div class="form-group">
           <div class="row">
@@ -136,7 +136,6 @@ if(isset($_POST["id"]))
           <input type="number" step= "1" value="'.$row["interest_rate"].'" name="interest_rate" class="form-control" id="interest_rate">
         </div>
       </div>
-
       <div class="col-md-4">
         <div class="form-group">
           <div class="row">
@@ -220,12 +219,6 @@ if(isset($_POST["id"]))
       <div id = "sekat"class="form-group">
         </div>
         </div>
-        <div class="col-md-4">
-      <div class="form-group">
-        <label>Grace on Payment:</label>
-        <input type="text" value="'.$row["grace_on_principal_amount"].'" name="" readonly class="form-control" id="lop">
-      </div>
-      </div>
         </div>
       </div>
       ';

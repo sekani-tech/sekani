@@ -128,12 +128,12 @@ function branch_option($connection)
                                                                     <label class="custom-control-label" for="collct">Collect
                                                                         Payment</label>
                                                                 </div>
-                                                                <div class="custom-radio custom-control">
-                                                                    <input type="radio" id="perfwith" name="acc"
-                                                                           value="withdraw" class="custom-control-input">
-                                                                    <label class="custom-control-label" for="perfwith">Perform
-                                                                        Withdrawal</label>
-                                                                </div>
+<!--                                                                <div class="custom-radio custom-control">-->
+<!--                                                                    <input type="radio" id="perfwith" name="acc"-->
+<!--                                                                           value="withdraw" class="custom-control-input">-->
+<!--                                                                    <label class="custom-control-label" for="perfwith">Perform-->
+<!--                                                                        Withdrawal</label>-->
+<!--                                                                </div>-->
                                                                 <input type="hidden"
                                                                        value="<?php echo $_SESSION["int_id"]; ?>"
                                                                        name="intID">
@@ -207,22 +207,22 @@ function branch_option($connection)
                                                     <div class="col-md-12">
                                                         <p></p>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="custom-radio custom-control">
-                                                            <input type="radio" id="fetcpostloanoff" name="fech_post"
-                                                                   class="custom-control-input">
-                                                            <label class="custom-control-label" for="fetcpostloanoff">Fetch
-                                                                Posting by loan officer</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="custom-radio custom-control">
-                                                            <input type="radio" id="fetcpostgroup" name="fech_post"
-                                                                   class="custom-control-input">
-                                                            <label class="custom-control-label" for="fetcpostgroup">Fetch
-                                                                posting by group</label>
-                                                        </div>
-                                                    </div>
+<!--                                                    <div class="col-md-6">-->
+<!--                                                        <div class="custom-radio custom-control">-->
+<!--                                                            <input type="radio" id="fetcpostloanoff" name="fech_post"-->
+<!--                                                                   class="custom-control-input">-->
+<!--                                                            <label class="custom-control-label" for="fetcpostloanoff">Fetch-->
+<!--                                                                Posting by loan officer</label>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="col-md-6">-->
+<!--                                                        <div class="custom-radio custom-control">-->
+<!--                                                            <input type="radio" id="fetcpostgroup" name="fech_post"-->
+<!--                                                                   class="custom-control-input">-->
+<!--                                                            <label class="custom-control-label" for="fetcpostgroup">Fetch-->
+<!--                                                                posting by group</label>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
                                                     <div id="post" class="col-md-12">
 
                                                     </div>

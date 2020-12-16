@@ -5,7 +5,7 @@ define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'sekanisy');
 define('DB_PASSWORD', '4r6WY#JP+rnl67');
 define('DB_CHARSET', 'utf8');
-define('DB_NAME', 'sekanisy_admin');
+define('DB_NAME', 'sekanisy_life_ehan');
 // connect to the database with the defined values
 $connection = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 // if there's an error
@@ -25,11 +25,19 @@ function dd($value)
     die();
 }
 
+/**
+ * @param $value
+ */
 function ddA($value)
 { // to be deleted
     echo "<pre>", print_r($value, true), "</pre>";
 }
 
+/**
+ * @param $sql
+ * @param array $data
+ * @return false|mysqli_stmt
+ */
 function executeQuery($sql, $data = [])
 {
     global $connection;
@@ -44,6 +52,11 @@ function executeQuery($sql, $data = [])
     return $stmt;
 }
 
+/**
+ * @param $table
+ * @param array $conditions
+ * @return mixed
+ */
 function selectAll($table, $conditions = [])
 {
     global $connection;
@@ -68,6 +81,11 @@ function selectAll($table, $conditions = [])
     }
 }
 
+/**
+ * @param $table
+ * @param $conditions
+ * @return array|null
+ */
 function selectOne($table, $conditions)
 {
     global $connection;
@@ -89,6 +107,55 @@ function selectOne($table, $conditions)
     return $stmt->get_result()->fetch_assoc();
 }
 
+/**
+ * @param $table
+ * @param $pickConditions
+ * @param array $conditions
+ * @return array|mixed|null
+ */
+function selectSpecificData($table, $pickConditions, $conditions = [])
+{
+    global $connection;
+    $sql = "SELECT";
+    $increamental = 0;
+    foreach ($pickConditions as $value) {
+        if ($increamental === 0) {
+            $sql = $sql . " $value";
+        } else {
+            $sql = $sql . ", $value";
+        }
+        $increamental++;
+    }
+    $sql = $sql . " FROM $table";
+
+    if (empty($conditions)) {
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $i = 0;
+        foreach ($conditions as $key => $value) {
+            if ($i === 0) {
+                $sql = $sql . " WHERE $key=?";
+            } else {
+                $sql = $sql . " AND $key=?";
+            }
+            $i++;
+        }
+    }
+
+
+    $sql = $sql . " LIMIT 1";
+
+    $stmt = executeQuery($sql, $conditions);
+    return $stmt->get_result()->fetch_assoc();
+}
+
+/**
+ * @param $table
+ * @param $conditions
+ * @return array|null
+ */
 function checkLoanArrears($table, $conditions)
 {
     global $connection;
@@ -109,6 +176,11 @@ function checkLoanArrears($table, $conditions)
     return $stmt->get_result()->fetch_assoc();
 }
 
+/**
+ * @param $table
+ * @param $data
+ * @return int
+ */
 function create($table, $data)
 {
     global $connection;
@@ -129,11 +201,16 @@ function create($table, $data)
     return $id;
 }
 
+/**
+ * @param $table
+ * @param $id
+ * @param $conName
+ * @param $data
+ * @return int
+ */
 function update($table, $id, $conName, $data)
 {
-    global $connection;
     $sql = "UPDATE $table SET ";
-
     $i = 0;
     foreach ($data as $key => $value) {
         if ($i === 0) {
@@ -150,6 +227,11 @@ function update($table, $id, $conName, $data)
     return $stmt->affected_rows;
 }
 
+/**
+ * @param $table
+ * @param $id
+ * @return int
+ */
 function delete($table, $id)
 {
     global $connection;
@@ -160,6 +242,10 @@ function delete($table, $id)
     return $stmt->affected_rows;
 }
 
+/**
+ * @param $table
+ * @return mixed
+ */
 function countRecords($table)
 {
     global $connection;
@@ -169,6 +255,13 @@ function countRecords($table)
     return $result['count'];
 }
 
+/**
+ * @param $table1
+ * @param $int_id
+ * @param $branch_id
+ * @param $term
+ * @return mixed
+ */
 function searchClient($table1, $int_id, $branch_id, $term)
 {
     $match = '%' . $term . '%';
@@ -189,6 +282,12 @@ function searchClient($table1, $int_id, $branch_id, $term)
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
+/**
+ * @param $table1
+ * @param $int_id
+ * @param $term
+ * @return mixed
+ */
 function searchGroup($table1, $int_id, $term)
 {
     $match = '%' . $term . '%';
@@ -204,8 +303,4 @@ function searchGroup($table1, $int_id, $term)
     ]);
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
-
-//$details = searchClient('client', 13, 28, 'Moses');
-
-//dd($details);
 

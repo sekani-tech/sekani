@@ -3,880 +3,761 @@
 $page_title = "Group Loan";
 $destination = "transaction.php";
 include("header.php");
+$groups = selectAll('groups');
+$products = selectAll('product');
+
+// Function for charges
+function fill_charges($connection)
+{
+    $sint_id = $_SESSION["int_id"];
+    return selectAll('charge', ['int_id' => $sint_id]);
+}
+
+$digit = 6;
+try {
+    $randomNumber = str_pad(random_int(0, (10 ** $digit) - 1), $digit, '0', STR_PAD_LEFT);
+} catch (Exception $e) {
+}
 ?>
-<div class="content">
-    <div class="container-fluid">
-        <!-- your content here -->
-        <div class="row">
-            <div class="col-md-12">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-                <!-- Disbure Loan Card Begins -->
-                <div class="card">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title">Disburse Group Loan</h4>
-                        <p class="card-category">Fill in all important data</p>
-                    </div>
+        body {
+            background-color: #f1f1f1;
+        }
 
-                    <div class="card-body">
+        /* #regForm {
+          background-color: #ffffff;
+          margin: 100px auto;
+          font-family: Raleway;
+          padding: 40px;
+          width: 70%;
+          min-width: 300px;
+        } */
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label class="bmd-label-floating">Group Names *:</label>
-                                <select name="client_id" class="form-control" id="">
-                                    <option value="">select an option</option>
+        h1 {
+            text-align: center;
+        }
 
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="bmd-label-floating">Product *:</label>
-                                <select name="product_id" class="form-control" id="">
-                                    <option value="">select an option</option>
+        input {
+            padding: 10px;
+            width: 100%;
+            font-size: 17px;
+            font-family: Raleway;
+            border: 1px solid #aaaaaa;
+        }
 
-                                </select>
-                            </div>
+        /* Mark input boxes that gets an error on validation: */
+        input.invalid {
+            background-color: #ffdddd;
+        }
+
+        #backg {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            background-color: black;
+            opacity: 0.7;
+            z-index: 9999;
+        }
+
+        #dlbox {
+            /*initially dialog box is hidden*/
+            display: none;
+            position: fixed;
+            width: 480px;
+            z-index: 9999;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+
+        /* Hide all steps by default: */
+        .tab {
+            display: none;
+        }
+
+        button {
+            background-color: #a13cb6;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 17px;
+            font-family: Raleway;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        #prevBtn {
+            background-color: #bbbbbb;
+        }
+
+        /* Make circles that indicate the steps of the form: */
+        .step {
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbbbbb;
+            border: none;
+            border-radius: 50%;
+            display: inline-block;
+            opacity: 0.5;
+        }
+
+        .step.active {
+            opacity: 1;
+        }
+
+        /* Mark the steps that are finished and valid: */
+        .step.finish {
+            background-color: #9e38b5;
+        }
+
+        #background {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            background-color: black;
+            opacity: 0.7;
+            z-index: 9999;
+        }
+
+        #diallbox {
+            /*initially dialog box is hidden*/
+            display: none;
+            position: fixed;
+            width: 480px;
+            z-index: 9999;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+    </style>
+    <div class="content">
+        <div class="container-fluid">
+            <!-- your content here -->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!-- Disbure Loan Card Begins -->
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Disburse Group Loan</h4>
+                            <p class="card-category">Fill in all important data</p>
                         </div>
 
-
-                        <div class="row">
-                            <div class="col-md-12">
-
-                                <div style="float:right;">
-                                    <button class="btn btn-primary pull-right" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-                                </div>
-
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination justify-content-center">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="javascript:;" tabindex="-1">Previous</a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="javascript:;">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="javascript:;">2 </a></li>
-                                        <li class="page-item"><a class="page-link" href="javascript:;">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="javascript:;">Next</a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-
-
-
-                    </div>
-
-                </div>
-                <!-- Disbure Loan Card Begins -->
-
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-md-12">
-                <!-- LOAN REQUEST FORM CARD BEGINS -->
-                <div class="card card-nav-tabs">
-                    <h4 class="card-header card-header-primary">Loan Request Form</h4>
-                    <div class="card-body">
-
-                        <div class="col-md-12" id="show_product">
-                            <div class="form-group">
-                                <div class="row">
-                                    <style>
-                                        label {
-                                            color: dimgrey;
-                                        }
-                                    </style>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label>Loan Size *:</label>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <label>(Min Loan Amt *: N500000.00)</label>
-                                                    <label>(Max Loan Amt *: N10000000.00)</label>
-                                                    <input type="number" hidden="" readonly="" value="10000000.00" name="max_principal_amount" class="form-control" required="" id="maximum_Lamount">
-                                                    <input type="number" hidden="" readonly="" value="500000.00" name="min_principal_amount" class="form-control" required="" id="minimum_Lamount">
-                                                </div>
+                        <div class="card-body">
+                            <form id="form" action="" method="post">
+                                <div class="form-group">
+                                    <!-- Loan term -->
+                                    <script>
+                                        // page scripts
+                                        $(document).ready(function () {
+                                            $('#charges').change(function () {
+                                                var id = $(this).val();
+                                                var group_id = $('#group_id').val();
+                                                var sint_id = $('#sint_id').val();
+                                                var rando = $('#random').val();
+                                                $.ajax({
+                                                    url: "load_data_lend.php",
+                                                    method: "POST",
+                                                    data: {id: id, group_id: group_id, sint_id: sint_id},
+                                                    success: function (data) {
+                                                        $('#show_product').html(data);
+                                                    }
+                                                })
+                                                $.ajax({
+                                                    url: "ajax_post/lend_charge.php",
+                                                    method: "POST",
+                                                    data: {id: id, rando: rando, group_id: group_id},
+                                                    success: function (data) {
+                                                        $('#lend_charge').html(data);
+                                                    }
+                                                })
+                                            });
+                                        })
+                                    </script>
+                                    <div class="tab">
+                                        <h3>Term:</h3>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="bmd-label-floating">Group Names *:</label>
+                                                <select name="group_id" class="form-control" id="group_id">
+                                                    <option value="">select an option</option>
+                                                    <?php foreach ($groups as $group) { ?>
+                                                        <option value="<?php echo $group['id'] ?>"><?php echo $group['g_name'] ?></option>
+                                                    <?php } ?>
+                                                </select>
                                             </div>
-                                            <div id="verifyl"></div>
-                                            <input type="number" value="" step=".01" name="principal_amount" class="form-control invalid" required="" id="principal_amount">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label>Loan Term *:</label>
-                                                    <input type="number" step=".01" value="1" name="loan_term" class="form-control" id="loan_term">
-                                                    <input type="text" hidden="" value="0" id="grace_prin">
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <label> </label>
-                                                    <select id="repay" name="repay_eve" class="form-control">
-                                                        <option hidden="" value="month">month</option>
-                                                        <option value="day">Days</option>
-                                                        <option value="week">Weeks</option>
-                                                        <option value="month">Months</option>
-                                                        <option value="year">Years</option>
-                                                    </select>
-                                                </div>
+                                            <div class="col-md-6">
+                                                <label class="bmd-label-floating">Product *:</label>
+                                                <select name="product_id" class="form-control" id="charges">
+                                                    <option value="">select an option</option>
+                                                    <?php foreach ($products as $product) { ?>
+                                                        <option value="<?php echo $product['id'] ?>"><?php echo $product['name'] ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                                <input hidden type="text" id="random"
+                                                       value="<?php echo $randomNumber; ?>"/>
+                                                <input hidden type="text" id="sint_id"
+                                                       value="<?php echo $_SESSION['int_id']; ?>"/>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label>Interest rate *:</label>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <label>Min Interest Allowed *: 5.00%</label>
-                                                    <label>Max Interest Allowed *: 10.00%</label>
-                                                    <input type="number" hidden="" readonly="" value="10.00" name="max_interest_rate" class="form-control" required="" id="maximum_intrate">
-                                                    <input type="number" hidden="" readonly="" value="5.00" name="min_interest_rate" class="form-control" required="" id="minimum_intrate">
-                                                </div>
-                                            </div>
-                                            <div id="verifyi"></div>
-                                            <input type="number" step="1" value="5.00" name="interest_rate" class="form-control" id="interest_rate">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <label>Repayment Every:</label>
-                                                    <input type="number" value="1" name="repay_every_no" class="form-control id=" rapno"="">
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <label> </label><br>
-                                                    <label> </label><br>
-                                                    <div id="change_term"><label>Time(s) Per Month</label></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Disbursement Date *:</label>
-                                            <input type="date" name="disbursement_date" class="form-control invalid" id="disb_date">
-                                        </div>
-                                    </div>
-                                    <div id="rep_start" class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Repayment Start Date:</label>
-                                            <input type="date" name="repay_start" class="form-control invalid" id="repay_start">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Account Officer:</label>
-                                            <select type="text" value="" name="loan_officer" class="form-control" id="lof">
-                                                <option value="2">Mosi Akande</option>
-                                                <option value="5">Favour Umogbai</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Loan Purpose:</label>
-                                            <input type="text" value="" name="loan_purpose" class="form-control invalid" id="lop">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Linked Savings account:</label>
-                                            <select name="linked_savings_acct" class="form-control" id="lsaa">
-                                                <option value="954">0010004976 - Current Account</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Loan Sector:</label>
-                                            <select name="loan_sector" class="form-control">
-                                                <option value="0">Select loan sector</option>
-                                                <option value="1">Agriculture, Mining &amp; Quarry</option>
-                                                <option value="2">Manufacturing</option>
-                                                <option value="3">Agricultural sector</option>
-                                                <option value="4">Banking</option>
-                                                <option value="5">Public Service</option>
-                                                <option value="6">Health</option>
-                                                <option value="7">Education</option>
-                                                <option value="8">Tourism</option>
-                                                <option value="9">Civil Service</option>
-                                                <option value="10">Trade &amp; Commerce</option>
-                                                <option value="11">Others</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4" hidden="">
-                                        <div class="form-group">
-                                            <label>Fund Source:</label>
-                                            <select name="fund_source" class="form-control">
-                                                <option value="1">Cash</option>
-                                                <option value="2">First Bank</option>
-                                                <option value="3">UBA</option>
-                                                <option value="4">Access Bank</option>
-                                                <option value="5">Fidelity Bank</option>
-                                                <option value="6">FCMB</option>
-                                                <option value="17">DG Wallet</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div id="sekat" class="form-group">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Grace on Payment:</label>
-                                            <input type="text" value="0" name="" readonly="" class="form-control" id="lop">
+                                            <div class="col-md-12" id="show_product"></div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                        </div>
+                                <!-- Members of the group tab -->
+                                <div class="tab">
+                                    <h3>Group Members:</h3>
+                                    <table class="table table-bordered">
 
-                    </div>
-                </div>
-                <!-- LOAN REQUEST FORM CARD ENDS -->
-            </div>
-        </div>
+                                        <thead>
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>Client Name</th>
+                                            <th>Account Number</th>
+                                            <th> Current Balance</th>
+                                            <th>Total Amount Disbursed = <input type="text" readonly name="total"
+                                                                                class="grand_total"/></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="showGroup">
 
-        <div class="row">
-            <div class="col-md-12">
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- members end here -->
 
-                <!-- GROUP MEMBERS CARD BEGINS -->
-                <div class="card card-nav-tabs">
-                    <h4 class="card-header card-header-primary">Group Members Section</h4>
-                    <div class="card-body">
+                                <!-- Charges -->
+                                <div class="tab">
+                                    <h3>Charges:</h3>
+                                    <div id="lend_charge"></div>
+                                </div>
 
-                        <table class="table table-bordered">
+                                <!-- Collateral -->
+                                <div class="tab">
+                                    <h3> Collateral:</h3>
+                                    <!-- Button trigger modal -->
+                                    <button style="margin-bottom: 20px;" type="button" class="btn btn-primary"
+                                            data-toggle="modal" data-target="#exampleModal">
+                                        Add
+                                    </button>
 
-                            <thead>
-                                <tr>
-                                    <th>Client Name</th>
-                                    <th>Account Number</th>
-                                    <th>Account Officer</th>
-                                    <th>Total Amount Disbursed = <b>N300, 000</b> </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
 
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLabel">Add Collateral</h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h3></h3>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="bmd-label-floating" for=""> Name:</label>
+                                                            <input type="text" name="col_name" id="colname"
+                                                                   class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="bmd-label-floating" for="">Value(₦):</label>
+                                                            <input type="number" name="col_value" id="col_val"
+                                                                   class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="bmd-label-floating"
+                                                                   for="">Description:</label>
+                                                            <input type="text" name="col_description" id="col_descr"
+                                                                   class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Close
+                                                    </button>
+                                                    <button type="button" class="btn btn-primary">Add</button>
 
-                                    <td>MICHEAL OLALERE </td>
-                                    <td>0012345678</td>
-                                    <td>FATIMA BINTA</td>
-                                    <td><input type="number" class="form-control" placeholder="Enter Amount"></td>
-                                </tr>
-
-
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-                <!-- GROUP MEMBERS CARD ENDS -->
-
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-
-                <!-- CHARGES CARD BEGINS  -->
-                <div class="card card-nav-tabs">
-                    <h4 class="card-header card-header-primary">Charges Section</h4>
-                    <div class="card-body">
-
-                        <table class="table table-bordered">
-
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Charge</th>
-                                    <th>Amount</th>
-                                    <th>Collected On</th>
-                                    <th>Delete</th>
-                                    <!-- <th>Date</th> -->
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-
-
-                                    <td>Credit Reference Search</td>
-                                    <td><b>N1,000.00 Flat</b></td>
-                                    <td><b>N1,000.00</b></td>
-                                    <td>Disbursement</td>
-                                    <td>
-                                        <div class="test" data-id="12076">
-                                            <span class="btn btn-danger">Delete</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </td>
-                                </tr>
 
-
-                                <td>Loan Application Foam </td>
-                                <td><b>3,000.00 Flat</b></td>
-                                <td><b>3,000.00 Flat</b></td>
-                                <td>Disbursement</td>
-                                <td>
-                                    <div class="test" data-id="12242">
-                                        <span class="btn btn-danger">Delete</span>
                                     </div>
-                                </td>
-                                </tr>
 
-                            </tbody>
-                        </table>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered">
 
-                    </div>
-                </div>
-                <!-- CHARGES CARD ENDS  -->
+                                                <thead>
+                                                <tr>
+                                                    <th>Name/Type</th>
+                                                    <th>Value</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
 
-            </div>
 
-        </div>
+                                                    <td>Loan Application Foam</td>
+                                                    <td><b>N3,000.00</b></td>
+                                                    <td>SIGNED FIDELITY BANK CHEQUE</td>
+                                                </tr>
 
 
-        <div class="row">
-            <div class="col-md-12">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
 
-                <!-- COLLATERAL CARD BEGINS -->
-                <div class="card card-nav-tabs">
-                    <h4 class="card-header card-header-primary">Collateral Section</h4>
-                    <div class="card-body">
+                                <!-- Collateral ends here -->
 
-                        <h3> Collateral:</h3>
-                        <!-- Button trigger modal -->
-                        <button style="margin-bottom: 20px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            Add
-                        </button>
+                                <!-- Guarantor begins -->
+                                <div class="tab">
+                                    <h3> Guarantors:</h3>
+                                    <!-- Button trigger modal -->
+                                    <button style="margin-bottom: 20px;" type="button" class="btn btn-primary"
+                                            data-toggle="modal" data-target="#exampleModal1">
+                                        Add
+                                    </button>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
 
-                                    <div class="modal-header">
-                                        <h3 class="modal-title" id="exampleModalLabel">Add Collateral</h3>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLabel">Add Guarantor</h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div id="dlbox" style="display: block; left: 528px; top: 150px;">
+
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for=""> First
+                                                                        Name:</label>
+                                                                    <input type="text" name="gau_first_name"
+                                                                           id="gau_first_name" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for=""> Last
+                                                                        Name:</label>
+                                                                    <input type="text" name="gau_last_name"
+                                                                           id="gau_last_name" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating"
+                                                                           for="">Phone:</label>
+                                                                    <input type="text" name="gau_phone" id="gau_phone"
+                                                                           class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">Phone
+                                                                        2:</label>
+                                                                    <input type="text" name="gau_phone2" id="gau_phone2"
+                                                                           class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">Home
+                                                                        Address:</label>
+                                                                    <input type="text" name="home_address"
+                                                                           id="home_address" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">Office
+                                                                        Address:</label>
+                                                                    <input type="text" name="office_address"
+                                                                           id="office_address" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating">Email:</label>
+                                                                    <input type="text" name="gau_email" id="gau_email"
+                                                                           class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <!-- Who the Guarantor is guaranting  -->
+                                                            <!-- should be a select option of all the members in the group -->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating">Guarantee:</label>
+                                                                    <input type="text" name="gau_pe" id="gau_pe"
+                                                                           class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Close
+                                                    </button>
+                                                    <button type="button" class="btn btn-primary">Add</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered">
+
+                                                <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Guarantor Phone Number</th>
+                                                    <th>Email</th>
+                                                    <th>Gaurantee</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+
+
+                                                    <td>Godwin Edim</td>
+                                                    <td>08135991031</td>
+                                                    <td>godwin@gmail.com</td>
+                                                    <td>Gaurantee</td>
+                                                </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- guarantor ends here -->
+
+                                <!-- Schedule Section -->
+                                <div class="tab">
+                                    <h3>Schedule:</h3>
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered">
+
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Date</th>
+                                                <th>Months</th>
+                                                <th>Paid By</th>
+                                                <th>Disbursement</th>
+                                                <th>Principal Due</th>
+                                                <th>Principal Balance</th>
+                                                <th>Interest Due</th>
+                                                <th>Fees</th>
+                                                <th>Penaties</th>
+                                                <th>Total Due</th>
+                                                <th>Total Paid</th>
+                                                <th>Total Outstanding</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tfoot>
+                                            <tr>
+                                                <td><b></b></td>
+                                                <td><b>Total</b></td>
+                                                <td><b></b></td>
+                                                <td><b></b></td>
+                                                <td><b></b></td>
+                                                <td><b></b></td>
+                                                <td><b></b></td>
+                                                <td><b></b></td>
+                                                <td><b></b></td>
+                                                <td><b></b></td>
+                                                <td><b></b></td>
+                                                <td><b></b></td>
+                                                <td><b></b></td>
+                                            </tr>
+                                            </tfoot>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- ends here -->
+
+                                <!-- overview -->
+                                <div class="tab">
+                                    <h3> Overview:</h3>
+                                    <div class="row">
+                                        <!-- <div class="my-3"> -->
+                                        <!-- replace values with loan data -->
+                                        <div class=" col-md-6 form-group">
+                                            <label class="bmd-label-floating">Loan size:</label>
+                                            <input type="number" readonly="" value="" name="principal_amount"
+                                                   class="form-control" required="" id="ls">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label class="bmd-label-floating">Loan Term:</label>
+                                            <input readonly="" type="number" id="lt" name="loan_term"
+                                                   class="form-control">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label class="bmd-label-floating">Interest Rate per:</label>
+                                            <input readonly="" type="text" value="" name="repay_every"
+                                                   class="form-control" id="irp">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label class="bmd-label-floating">Interest Rate:</label>
+                                            <input readonly="" type="text" name="interest_rate" class="form-control"
+                                                   id="ir">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label class="bmd-label-floating">Disbusrsement Date:</label>
+                                            <input readonly="" type="date" name="disbursement_date" class="form-control"
+                                                   id="db">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label class="bmd-label-floating">Loan Officer:</label>
+                                            <input readonly="" type="text" name="loan_officer" class="form-control"
+                                                   id="lo">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label class="bmd-label-floating">Loan Purpose:</label>
+                                            <input readonly="" type="text" name="loan_purpose" class="form-control"
+                                                   id="lp">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label class="bmd-label-floating">Linked Savings account:</label>
+                                            <input readonly="" type="text" name="linked_savings_acct"
+                                                   class="form-control" id="lsa">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label class="bmd-label-floating">Repayment Start Date:</label>
+                                            <input readonly="" type="date" name="repay" class="form-control" id="rsd">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Overview ends here -->
+
+
+                                <!-- Page Steppers -->
+                                <div style="overflow:auto;">
+                                    <div style="float:right;">
+                                        <button class="btn btn-primary pull-right" type="button" id="nextBtn"
+                                                onclick="nextPrev(1)">Next
+                                        </button>
+                                        <button class="btn btn-primary pull-right" type="button" id="prevBtn"
+                                                onclick="nextPrev(-1)">Previous
                                         </button>
                                     </div>
-                                    <div class="modal-body">
-                                        <h3></h3>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating" for=""> Name:</label>
-                                                <input type="text" name="col_name" id="colname" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating" for="">Value(₦):</label>
-                                                <input type="number" name="col_value" id="col_val" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating" for="">Description:</label>
-                                                <input type="text" name="col_description" id="col_descr" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Add</button>
-
-                                    </div>
                                 </div>
-                            </div>
-
+                                <!-- Steppers -->
+                                <!-- Circles which indicates the steps of the form: -->
+                                <div style="text-align:center;margin-top:40px;">
+                                    <span class="step"></span>
+                                    <span class="step"></span>
+                                    <!-- <span class="step"></span> -->
+                                    <span class="step"></span>
+                                    <span class="step"></span>
+                                    <span class="step"></span>
+                                    <span class="step"></span>
+                                    <span class="step"></span>
+                                </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered">
-
-                                    <thead>
-                                        <tr>
-                                            <th>Name/Type</th>
-                                            <th>Value</th>
-                                            <th>Description</th>
-                                            <th>Delete</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-
-
-                                            <td>Loan Application Foam </td>
-                                            <td><b>N3,000.00</b></td>
-                                            <td>SIGNED FIDELITY BANK CHEQUE</td>
-                                            <td>  <div class="test" data-id="12076">
-                                            <span class="btn btn-danger">Delete</span>
-                                        </div></td>
-                                        </tr>
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-
+                        </form>
                     </div>
 
                 </div>
-                <!-- COLLATERAL CARD ENDS -->
+                <!-- Disbure Loan Card Begins -->
 
-
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-
-                <!-- GUARANTORS CARD BEGINS -->
-                <div class="card card-nav-tabs">
-                    <h4 class="card-header card-header-primary">Guarantors Section</h4>
-                    <div class="card-body">
-
-                        <h3> Guarantors:</h3>
-                        <!-- Button trigger modal -->
-                        <button style="margin-bottom: 20px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1">
-                            Add
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-
-                                    <div class="modal-header">
-                                        <h3 class="modal-title" id="exampleModalLabel">Add Guarantor</h3>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div id="dlbox" style="display: block; left: 528px; top: 150px;">
-
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="bmd-label-floating" for=""> First
-                                                            Name:</label>
-                                                        <input type="text" name="gau_first_name" id="gau_first_name" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="bmd-label-floating" for=""> Last
-                                                            Name:</label>
-                                                        <input type="text" name="gau_last_name" id="gau_last_name" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="bmd-label-floating" for="">Phone:</label>
-                                                        <input type="text" name="gau_phone" id="gau_phone" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="bmd-label-floating" for="">Phone
-                                                            2:</label>
-                                                        <input type="text" name="gau_phone2" id="gau_phone2" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="bmd-label-floating" for="">Home
-                                                            Address:</label>
-                                                        <input type="text" name="home_address" id="home_address" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="bmd-label-floating" for="">Office
-                                                            Address:</label>
-                                                        <input type="text" name="office_address" id="office_address" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="bmd-label-floating">Email:</label>
-                                                        <input type="text" name="gau_email" id="gau_email" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Add</button>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered">
-
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Guarantor Phone Number</th>
-                                            <th>Email</th>
-                                            <th>Delete</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-
-
-                                            <td>Godwin Edim </td>
-                                            <td>08135991031</td>
-                                            <td>godwin@gmail.com</td>
-                                            <td><div class="test" data-id="12076">
-                                            <span class="btn btn-danger">Delete</span>
-                                        </div></td>
-                                        </tr>
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-                <!-- GUARANTORS CARD BEGINS -->
-
-            </div>
-        </div>
-
-
-        <div class="row">
-
-            <div class="col-md-12">
-
-                <!-- KYC CARD BEGINS -->
-                <div class="card card-nav-tabs">
-                    <h4 class="card-header card-header-primary">KYC Section</h4>
-                    <div class="card-body">
-
-                        <div class="tab" style="display: block;">
-                            <h3>KYC:</h3>
-                            <p>Personal Information</p>
-                            <br>
-                            <div class="row">
-                                <div class=" col-md-6 form-group">
-                                    <label class="bmd-label-floating">Marital Status:</label>
-                                    <select class="form-control" name="marital_status">
-                                        <option value="1">Single</option>
-                                        <option value="2">Married</option>
-                                    </select>
-                                </div>
-                                <div class=" col-md-6 form-group">
-                                    <label class="bmd-label-floating">Number of
-                                        Dependants/Children:</label>
-                                    <select class="form-control" name="no_of_dep">
-                                        <option value="0">Non</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7 or More</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <br>
-                            <p>Education and Employment</p>
-                            <br>
-                            <div class="row">
-                                <div class=" col-md-6 form-group">
-                                    <label class="bmd-label-floating">Level of Education</label>
-                                    <select class="form-control" name="ed_level">
-                                        <option value="Unknown">Non/ Unknown</option>
-                                        <option value="Secondary School">Secondary School</option>
-                                        <option value="College">College</option>
-                                        <option value="BSc">Bachelors (Bsc)</option>
-                                        <option value="Masters">Masters (Msc)</option>
-                                        <option value="PhD">Phd</option>
-                                    </select>
-                                </div>
-                                <div class=" col-md-6 form-group">
-                                    <label class="bmd-label-floating">Employment Status</label>
-                                    <select class="form-control" name="emp_stat">
-                                        <option value="1">Self-Employed</option>
-                                        <option value="2">Employed</option>
-                                        <option value="3">Not Working</option>
-                                    </select>
-                                </div>
-                                <div class=" col-md-6 form-group">
-                                    <label class="bmd-label-floating">Employment
-                                        Category/Instiution</label>
-                                    <select class="form-control" name="emp_category">
-                                        <option value="FEDERAL">FEDERAL</option>
-                                        <option value="STATE">STATE</option>
-                                        <option value="FINANCIAL INSTITUTION/INSURANCE">FINANCIAL
-                                            INSTITUTION/INSURANCE
-                                        </option>
-                                        <option value="GENERAL">GENERAL</option>
-                                        <option value="MANUFACTURING">MANUFACTURING</option>
-                                        <option value="INFORMATION AND COMMUNICATION">INFORMATION AND
-                                            COMMUNICATION
-                                        </option>
-                                        <option value="OIL AND GAS">OIL AND GAS</option>
-                                        <option value="OTHER">OTHER</option>
-                                    </select>
-                                </div>
-                                <div class=" col-md-6 form-group">
-                                    <label class="bmd-label-floating">Employer/Business name</label>
-                                    <input type="text" value="" name="emp_bus_name" class="form-control invalid">
-                                </div>
-                                <div class=" col-md-6 form-group">
-                                    <label class="bmd-label-floating">Monthly Income(₦):</label>
-                                    <input type="number" value="" name="income" class="form-control invalid" required="">
-                                </div>
-                                <!-- new -->
-                                <div class=" col-md-6 form-group">
-                                    <label class="bmd-label-floating">Years in current
-                                        Job/Business:</label>
-                                    <!-- <input type="number" value="" name="" class="form-control" required> -->
-                                    <select class="form-control" name="years_in_job">
-                                        <option value="1">1 - 2 years</option>
-                                        <option value="3">3 - 4 years</option>
-                                        <option value="5">4 - 5 years</option>
-                                        <option value="6">5 - 6 years</option>
-                                        <option value="7">6 - 7 years</option>
-                                        <option value="8">7 - 8 years</option>
-                                        <option value="9">8 - 9 years</option>
-                                        <option value="10">9 - 10 years</option>
-                                        <option value="12">11 - 12 years</option>
-                                        <option value="14">13 - 14 years</option>
-                                        <option value="15">14 - 15 years</option>
-                                        <option value="17">16 - 17 years</option>
-                                        <option value="19">18 - 19 years</option>
-                                        <option value="9">20 OR MORE</option>
-                                    </select>
-                                </div>
-                                <!-- new for years -->
-                            </div>
-                            <br>
-                            <p>Address Details</p>
-                            <br>
-                            <div class="row">
-                                <div class=" col-md-6 form-group">
-                                    <label class="bmd-label-floating">Residence Type:</label>
-                                    <!-- <input type="number" readonly value="" name="res_type" class="form-control" required> -->
-                                    <select class="form-control" name="res_type">
-                                        <option value="1">Rented</option>
-                                        <option value="2">Owner</option>
-                                    </select>
-                                </div>
-                                <!-- damn -->
-                                <!-- <div id="rent"> -->
-                                <div class=" col-md-6 form-group">
-                                    <label class="bmd-label-floating">Rent per Year (if rented):</label>
-                                    <input type="number" value="" name="rent_per_year" class="form-control invalid">
-                                </div>
-                                <!-- </div> -->
-                                <div class=" col-md-6 form-group">
-                                    <label class="bmd-label-floating">How long have you lived
-                                        there?:</label>
-                                    <!-- <input type="number" readonly value="" name="principal_amount" class="form-control" required> -->
-                                    <select class="form-control" name="years_in_res">
-                                        <option value="1">1 - 3 years</option>
-                                        <option value="2">3 - 5 years</option>
-                                        <option value="3">5 - 10 years</option>
-                                        <option value="4">10 - 20 years</option>
-                                        <option value="5">More than 20 years</option>
-                                    </select>
-                                </div>
-                                <!-- THE BANK -->
-                                <div class=" col-md-6 form-group">
-                                    <label class="bmd-label-floating">Other Bank</label>
-                                    <!-- <input type="number" readonly value="" name="principal_amount" class="form-control" required> -->
-                                    <select class="form-control" name="other_banks">
-                                        <option value="GUARANTY TRUST BANK">GUARANTY TRUST BANK</option>
-                                        <option value="FIRST CITY MONUMENT BANK">FIRST CITY MONUMENT
-                                            BANK
-                                        </option>
-                                        <option value="FIRST BANK">FIRST BANK</option>
-                                        <option value="UNION BANK">UNION BANK</option>
-                                        <option value="UNITED BANK FOR AFRICA">UNITED BANK FOR AFRICA
-                                        </option>
-                                        <option value="SKYE BANK">SKYE BANK</option>
-                                        <option value="STANBIC IBTC">STANBIC IBTC</option>
-                                        <option value="ACCESS BANK">ACCESS BANK</option>
-                                        <option value="ECOBANK">ECOBANK</option>
-                                        <option value="Other">OTHERs</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                    </div>
-                </div>
-                <!-- KYC CARD BEGINS -->
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <!-- REPAYMENT CARD BEGINS -->
-                <div class="card card-nav-tabs">
-                    <h4 class="card-header card-header-primary">Repayment Schedule Section</h4>
-                    <div class="card-body">
-
-                        <div class="col-md-12">
-                            <table class="table table-bordered">
-
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Date</th>
-                                        <th>Months</th>
-                                        <th>Paid By</th>
-                                        <th>Disbursement</th>
-                                        <th>Principal Due</th>
-                                        <th>Principal Balance</th>
-                                        <th>Interest Due</th>
-                                        <th>Fees</th>
-                                        <th>Penaties</th>
-                                        <th>Total Due</th>
-                                        <th>Total Paid</th>
-                                        <th>Total Outstanding</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-
-                                <tfoot>
-                                    <tr>
-                                        <td><b></b></td>
-                                        <td><b>Total</b></td>
-                                        <td><b></b></td>
-                                        <td><b></b></td>
-                                        <td><b></b></td>
-                                        <td><b></b></td>
-                                        <td><b></b></td>
-                                        <td><b></b></td>
-                                        <td><b></b></td>
-                                        <td><b></b></td>
-                                        <td><b></b></td>
-                                        <td><b></b></td>
-                                        <td><b></b></td>
-                                    </tr>
-                                </tfoot>
-                                </tbody>
-                            </table>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- REPAYMENT CARD ENDS -->
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-md-12">
-
-                <!-- LOAN OVERVIEW CARD BEGINS -->
-                <div class="card card-nav-tabs">
-                    <h4 class="card-header card-header-primary">Loan Overview Section</h4>
-                    <div class="card-body">
-                        <div class="tab" style="display: block;">
-                            <h3> Overview:</h3>
-                            <div class="row">
-                                <!-- <div class="my-3"> -->
-                                <!-- replace values with loan data -->
-                                <div class=" col-md-6 form-group">
-                                    <label class="bmd-label-floating">Loan size:</label>
-                                    <input type="number" readonly="" value="" name="principal_amount" class="form-control" required="" id="ls">
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label class="bmd-label-floating">Loan Term:</label>
-                                    <input readonly="" type="number" id="lt" name="loan_term" class="form-control">
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label class="bmd-label-floating">Interest Rate per:</label>
-                                    <input readonly="" type="text" value="" name="repay_every" class="form-control" id="irp">
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label class="bmd-label-floating">Interest Rate:</label>
-                                    <input readonly="" type="text" name="interest_rate" class="form-control" id="ir">
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label class="bmd-label-floating">Disbusrsement Date:</label>
-                                    <input readonly="" type="date" name="disbursement_date" class="form-control" id="db">
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label class="bmd-label-floating">Loan Officer:</label>
-                                    <input readonly="" type="text" name="loan_officer" class="form-control" id="lo">
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label class="bmd-label-floating">Loan Purpose:</label>
-                                    <input readonly="" type="text" name="loan_purpose" class="form-control" id="lp">
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label class="bmd-label-floating">Linked Savings account:</label>
-                                    <input readonly="" type="text" name="linked_savings_acct" class="form-control" id="lsa">
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label class="bmd-label-floating">Repayment Start Date:</label>
-                                    <input readonly="" type="date" name="repay" class="form-control" id="rsd">
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- LOAN OVERVIEW CARD BEGINS -->
             </div>
         </div>
 
     </div>
-</div>
+    </div>
 
-</div>
-</div>
+    </div>
+    </div>
+
+
+    <!-- steppers script -->
+    <script>
+        // page scripts
+        $(document).ready(function () {
+            $('#charges').change(function () {
+                var id = $(this).val();
+                var group_id = $('#group_id').val();
+                var sint_id = $('#sint_id').val();
+                var rando = $('#random').val();
+                $.ajax({
+                    url: "load_data_lend.php",
+                    method: "POST",
+                    data: {id: id, group_id: group_id, sint_id: sint_id, rando: rando},
+                    success: function (data) {
+                        $('#show_product').html(data);
+                    }
+                })
+                $.ajax({
+                    url: "ajax_post/lend_charge.php",
+                    method: "POST",
+                    data: {id: id, rando: rando, group_id: group_id},
+                    success: function (data) {
+                        $('#lend_charge').html(data);
+                    }
+                })
+            });
+        })
+
+        // Group list
+        $(document).ready(function () {
+            $('#group_id').on("change keyup paste", function () {
+                var id = $(this).val();
+                var groupDis = "groups";
+                $.ajax({
+                    url: "ajax_post/group_paylist.php",
+                    method: "POST",
+                    data: {id: id, groupDis: groupDis},
+                    success: function (data) {
+                        $('#showGroup').html(data);
+                    }
+                })
+            });
+        });
+
+
+        //  this function totals the input field as it's been added
+        $(document).ready(function () {
+            $("body").on("keyup", "input", function (event) {
+                $(this).closest(".line").find(".total_price").val($(this).closest(".line").val() * 1 - $(this).closest(".line").val());
+                var sum = 0;
+                $('.total_price').each(function () {
+                    sum += Number($(this).val());
+                });
+                $(".grand_total").val(sum);
+            });
+        });
+
+
+        var currentTab = 0; // Current tab is set to be the first tab (0)
+        showTab(currentTab); // Display the current tab
+
+        function showTab(n) {
+            // This function will display the specified tab of the form...
+            var x = document.getElementsByClassName("tab");
+            x[n].style.display = "block";
+            //... and fix the Previous/Next buttons:
+            if (n == 0) {
+                document.getElementById("prevBtn").style.display = "none";
+            } else {
+                document.getElementById("prevBtn").style.display = "inline";
+            }
+            if (n == (x.length - 1)) {
+                document.getElementById("nextBtn").innerHTML = "Submit";
+            } else {
+                document.getElementById("nextBtn").innerHTML = "Next";
+            }
+            //... and run a function that will display the correct step indicator:
+            fixStepIndicator(n)
+        }
+
+        function nextPrev(n) {
+            // This function will figure out which tab to display
+            var x = document.getElementsByClassName("tab");
+            // Exit the function if any field in the current tab is invalid:
+            if (n == 1 && !validateForm()) return false;
+            // Hide the current tab:
+            x[currentTab].style.display = "none";
+            // Increase or decrease the current tab by 1:
+            currentTab = currentTab + n;
+            // if you have reached the end of the form...
+            if (currentTab >= x.length) {
+                // ... the form gets submitted:
+                document.getElementById("form").submit();
+                return false;
+            }
+            // Otherwise, display the correct tab:
+            showTab(currentTab);
+        }
+
+        function validateForm() {
+            // This function deals with validation of the form fields
+            var x, y, i, valid = true;
+            x = document.getElementsByClassName("tab");
+            y = x[currentTab].getElementsByTagName("input");
+            // A loop that checks every input field in the current tab:
+            for (i = 0; i < y.length; i++) {
+                // If a field is empty...
+                if (y[i].value == "") {
+                    // add an "invalid" class to the field:
+                    y[i].className += " invalid";
+                    // and set the current valid status to false
+                    valid = true;
+                }
+            }
+            // If the valid status is true, mark the step as finished and valid:
+            if (valid) {
+                document.getElementsByClassName("step")[currentTab].className += " finish";
+            }
+            return valid; // return the valid status
+        }
+
+        function fixStepIndicator(n) {
+            // This function removes the "active" class of all steps...
+            var i, x = document.getElementsByClassName("step");
+            for (i = 0; i < x.length; i++) {
+                x[i].className = x[i].className.replace(" active", "");
+            }
+            //... and adds the "active" class on the current step:
+            x[n].className += " active";
+        }
+    </script>
 <?php
 
 include("footer.php");

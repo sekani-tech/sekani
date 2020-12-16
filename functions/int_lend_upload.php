@@ -7,11 +7,10 @@ $userid = $_SESSION["user_id"];
 $client_id = $_POST["client_id"];
 // remove cached charges from loan
 $fdo = mysqli_query($connection, "DELETE FROM loan_charge WHERE client_id = '$client_id'");
-$goacctn = mysqli_query($connection, "SELECT account_no FROM client WHERE id = '$client_id' ");
-if (count([$goacctn]) == 1) {
-    $a = mysqli_fetch_array($goacctn);
-    $acct_no = $a['account_no'];
-}
+// $goacctn = mysqli_query($connection, "SELECT account_no FROM client WHERE id = '$client_id' ");
+// if (count([$goacctn]) == 1) {
+//     $a = mysqli_fetch_array($goacctn);
+// }
 // Part for Product
 $product_id = $_POST['product_id'];
 $principal_amount = $_POST['principal_amount'];
@@ -26,6 +25,8 @@ $loan_officer = $_POST['loan_officer'];
 $loan_purpose = preg_replace('/[^\w]/', '', $_POST['loan_purpose']);
 $standing_instruction = $_POST['standing_instruction'];
 $linked_savings_acct = $_POST['linked_savings_acct'];
+$acct_no =$linked_savings_acct;
+
 $repay_start =  $_POST["repay_start"];
 if ($repay_start == NULL || $repay_start == "" && $disbursement_date == "" && $loan_term == "") {
     $_SESSION["Lack_of_intfund_$randms"] = "Please fill some field";

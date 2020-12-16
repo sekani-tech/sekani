@@ -41,22 +41,50 @@ if (isset($_POST['submit'])) {
 
 //            our data table for insertion
             $ourDataTables = [];
+        }
 
 //            Join data with content from the excel sheet
-            foreach ($data as $key => $row) {
-                $ourDataTables[] = array(
-                    'Branch_Name' => $row['0'],
-                    'Account_Name' => $row['1'],
-                    'Account_Number' => $row['2'],
-                    'Phone_Number' => $row['3'],
-                    'date' => $row['4'],
-                    'amount' => $row['5'],
-                    'deposit_slip_number' => $row['6'],
-                    'teller_id' => $row['7'],
-                    'payment_type_id' => $row['8']
-                );
+        foreach ($data as $key => $row) {
+            $ourDataTables[] = array(
+                'Branch_Name' => $row['0'],
+                'Account_Name' => $row['1'],
+                'Account_Number' => $row['2'],
+                'Phone_Number' => $row['3'],
+                'date' => $row['4'],
+                'amount' => $row['5'],
+                'deposit_slip_number' => $row['6'],
+                'teller_id' => $row['7'],
+                'payment_type_id' => $row['8']
+            );
+        }
+        $totalAmount = 0;
+        $tellerId = null;
+        foreach ($ourDataTables as $key => $ourData) {
+            //                check if the header was remove
+            if ($ourData['teller_id'] === "teller id" || empty($ourData['teller_id'])) {
+                $_SESSION["Lack_of_intfund_$randms"] = "Sorry Please remove the header from this file";
+                header("Location: ../bulk_deposit.php?message6=$randms");
+                exit();
             }
 
+            if ($ourData['payment_type_id'] === 'payment type id' || empty($ourData['payment_type_id'])) {
+                $_SESSION["Lack_of_intfund_$randms"] = "Sorry Please Add the payment type Id before upload";
+                header("Location: ../bulk_deposit.php?message7=$randms");
+                exit();
+            }
+            $totalAmount += $ourData['amount'];
+            $tellerId = $ourData['teller_id'];
+        }
+//                    dd($totalAmount);
+//                getting tellers info to check for post limit
+        $tellersCondition = ['id' => $tellerId];
+        $tellerDetails = selectOne('tellers', $tellersCondition);
+//                branch and teller id for check
+        $tellerNameId = $tellerDetails['name'];
+        $tellerBranch = $tellerDetails['branch_id'];
+        $tellerPostLimit = $tellerDetails['post_limit'];
+
+        if ($totalAmount > $tellerPostLimit) {
 //            send information one by one
             foreach ($ourDataTables as $key => $ourDataTable) {
 //                Variable Name
@@ -68,59 +96,82 @@ if (isset($_POST['submit'])) {
                 $date = date('Y-m-d', $convertDate);
                 $fullDate = $date . ' ' . date('H:i:s');
                 $transactionNumber = $ourDataTable['deposit_slip_number'];
-
-
 //                    check account number given
                 if (strlen($ourDataTable['Account_Number']) < 10) {
-                    $accountNumber = '0' . $ourDataTable['Account_Number'];
+                    $accountNumber = '00' . $ourDataTable['Account_Number'];
                 } else {
                     $accountNumber = $ourDataTable['Account_Number'];
                 }
 
-//                getting tellers info to check for post limit
-//                check if the header was remove
-                if ($tellerId === "teller id" || empty($tellerId)) {
-                    $_SESSION["Lack_of_intfund_$randms"] = "Sorry Please remove the header from this file";
-                    header("Location: ../bulk_deposit.php?message6=$randms");
-                    exit();
-                }
-                $tellersCondition = ['id' => $tellerId];
-                $tellerDetails = selectOne('tellers', $tellersCondition);
-//                branch and teller id for check
-                $tellerNameId = $tellerDetails['name'];
-                $tellerBranch = $tellerDetails['branch_id'];
-                $tellerPostLimit = $tellerDetails['post_limit'];
                 if ($chosenBranch == $tellerBranch) {
 
 //                  get account information using account number
                     $accountDetails = selectOne('account', ['account_no' => $accountNumber]);
 
-                    //                  account information for other table
+//                  account information for other table
+                    $accountProductId = $accountDetails['product_id'];
+                    $accountId = $accountDetails['id'];
+                    $accountClientId = $accountDetails['client_id'];
+                    //                      get information and update transact_cache
+                    $transactionCacheCon = [
+                        'int_id' => $inst_id,
+                        'branch_id' => $chosenBranch,
+                        'transact_id' => $transactionNumber,
+                        'description' => 'Bulk Deposit',
+                        'account_no' => $accountNumber,
+                        'client_id' => $accountClientId,
+                        'client_name' => $accountClientName,
+                        'staff_id' => $currentAppUser,
+                        'amount' => $amount,
+                        'pay_type' => 'Cash',
+                        'transact_type' => 'Deposit',
+                        'product_type' => $accountProductId,
+                        'status' => 'Pending',
+                        'date' => $fullDate,
+                    ];
+                    $transactionCacheApproval = create('transact_cache', $transactionCacheCon);
+                } else {
+                    $_SESSION["Lack_of_intfund_$randms"] = "Sorry this Teller Can not Preform this Action";
+                    header("Location: ../bulk_deposit.php?message5=$randms");
+                    exit();
+                }
+            }
+            if($transactionCacheApproval){
+                $_SESSION["Lack_of_intfund_$randms"] = "Sent for Approval!";
+                header("Location: ../bulk_deposit.php?message4=$randms");
+                exit();
+            }
+        }
+        else {
+//            send information one by one
+            foreach ($ourDataTables as $kay => $ourDataTable) {
+//                Variable Name
+                $accountClientName = $ourDataTable['Account_Name'];
+                $paymentType = $ourDataTable['payment_type_id'];
+                $amount = $ourDataTable['amount'];
+                $tellerId = $ourDataTable['teller_id'];
+                $convertDate = strtotime($ourDataTable['date']);
+                $date = date('Y-m-d', $convertDate);
+                $fullDate = $date . ' ' . date('H:i:s');
+                $transactionNumber = $ourDataTable['deposit_slip_number'];
+//                    check account number given
+                if (strlen($ourDataTable['Account_Number']) < 10) {
+                    $accountNumber = '00' . $ourDataTable['Account_Number'];
+                } else {
+                    $accountNumber = $ourDataTable['Account_Number'];
+                }
+
+                if ($chosenBranch == $tellerBranch) {
+
+//                  get account information using account number
+                    $accountDetails = selectOne('account', ['account_no' => $accountNumber]);
+                    dd($accountDetails);
+//                  account information for other table
                     $accountProductId = $accountDetails['product_id'];
                     $accountId = $accountDetails['id'];
                     $accountClientId = $accountDetails['client_id'];
 
-                    if ($amount > $tellerPostLimit) {
-                        //                      get information and update transact_cache
-                        $transactionCacheCon = [
-                            'int_id' => $inst_id,
-                            'branch_id' => $chosenBranch,
-                            'transact_id' => $transactionNumber,
-                            'description' => 'Bulk Deposit',
-                            'account_no' => $accountNumber,
-                            'client_id' => $accountClientId,
-                            'client_name' => $accountClientName,
-                            'staff_id' => $currentAppUser,
-                            'amount' => $amount,
-                            'pay_type' => 'Cash',
-                            'transact_type' => 'Deposit',
-                            'product_type' => $accountProductId,
-                            'status' => 'Pending',
-                            'date' => $fullDate,
-                        ];
-                        //                        fix gl_code when you meet boss
-                        $transactionCacheApproval = create('transact_cache', $transactionCacheCon);
-                    } else {
+
                         //                        set all total derived
                         $totalDeposit = $accountDetails['total_deposits_derived'] + $amount;
                         $accountBal = $accountDetails['account_balance_derived'] + $amount;
@@ -247,7 +298,7 @@ if (isset($_POST['submit'])) {
                         ];
                         $gl_accountDetails = create('gl_account_transaction', $gl_accountCon);
                     }
-                } else {
+                else {
                     $_SESSION["Lack_of_intfund_$randms"] = "Sorry this Teller Can not Preform this Action";
                     header("Location: ../bulk_deposit.php?message5=$randms");
                     exit();
@@ -263,7 +314,7 @@ if (isset($_POST['submit'])) {
                     header("Location: ../bulk_deposit.php?message1=$randms");
                     exit();
                 }
-                // check for approval 
+                // check for approval
             } elseif (!empty($transactionCache) && !empty($gl_accountDetails) && !empty($institution_account)
                 && !empty($tellerDetails) && !empty($accountDetails) && !empty($instDetails)
                 && !empty($glAccountDetails) && !empty($accountTransDetails)) {
