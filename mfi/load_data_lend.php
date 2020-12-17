@@ -155,14 +155,12 @@ if(isset($_POST["id"]))
       
       <div class="col-md-4">
       <div class="form-group">
-        <label>Disbursement Date *:</label>
+        <label>Disbursement Date (<i style="color: green;">Click Twice to Verify Date</i>) *:</label>
         <input type="date" name="disbursement_date" class="form-control" id="disb_date">
       </div>
       </div>
       <div id="rep_start"class="col-md-4">
       <div class="form-group">
-        <label>Repayment Start Date:</label>
-        <input type="date" name="repay_start" class="form-control" id="repay_start">
       </div>
       </div>
       <div class="col-md-4">
@@ -346,7 +344,22 @@ if(isset($_POST["id"]))
     });
   });
   $(document).ready(function() {
-    $('#disb_date').on("change keyup paste click", function(){
+    $('#disb_date').click( function(){
+      // MAKE ARRANGEMENT
+      // change keyup paste click
+      var disb = $(this).val();
+      var repay = $('#repay').val();
+      var repayno = $('#rapno').val();
+      var grace_prin = $('#grace_prin').val();
+      $.ajax({
+        url:"ajax_post/repayment_calc.php",
+        method:"POST",
+        data:{disb:disb, repay:repay, repayno:repayno, grace_prin:grace_prin},
+        success:function(data){
+          $('#rep_start').html(data);
+        }
+      })
+      // load something
       var id = $(this).val();
       var ist = $('#int_id').val();
       var prina = $('#principal_amount').val();
@@ -362,7 +375,7 @@ if(isset($_POST["id"]))
         success:function(data){
           $('#accname').html(data);
         }
-      })
+      });
     });
   });
 
@@ -504,40 +517,27 @@ if(isset($_POST["id"]))
       })
     });
   });
-  $(document).ready(function() {
-    $('#disb_date').on("change keyup paste click", function(){
-      var id = $(this).val();
-      var ist = $('#int_id').val();
-      var loant = $('#loan_term').val();
-      var repay = $('#repay').val();
-      var repay_start = $('#repay_start').val();
-      var disbd = $('#disb_date').val();
-      $.ajax({
-        url:"date_calculation.php",
-        method:"POST",
-        data:{id:id, ist: ist,loant:loant,repay:repay,repay_start:repay_start,disbd:disbd},
-        success:function(data){
-          $('#sekat').html(data);
-        }
-      })
-    });
-  });
-  $(document).ready(function() {
-    $('#disb_date').on("change keyup paste click", function(){
-      var disb = $(this).val();
-      var repay = $('#repay').val();
-      var repayno = $('#rapno').val();
-      var grace_prin = $('#grace_prin').val();
-      $.ajax({
-        url:"ajax_post/repayment_calc.php",
-        method:"POST",
-        data:{disb:disb, repay:repay, repayno:repayno, grace_prin:grace_prin},
-        success:function(data){
-          $('#rep_start').html(data);
-        }
-      })
-    });
-  });
+  // $(document).ready(function() {
+  //   $('#disb_date').on("change keyup paste click", function(){
+     
+  //   });
+  // });
+  // $(document).ready(function() {
+  //   $('#disb_date').on("change keyup paste click", function(){
+  //     var disb = $(this).val();
+  //     var repay = $('#repay').val();
+  //     var repayno = $('#rapno').val();
+  //     var grace_prin = $('#grace_prin').val();
+  //     $.ajax({
+  //       url:"ajax_post/repayment_calc.php",
+  //       method:"POST",
+  //       data:{disb:disb, repay:repay, repayno:repayno, grace_prin:grace_prin},
+  //       success:function(data){
+  //         $('#rep_start').html(data);
+  //       }
+  //     })
+  //   });
+  // });
 
   $(document).ready(function() {
     $('#repay').on("change keyup paste click", function(){
