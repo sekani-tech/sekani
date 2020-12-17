@@ -97,8 +97,7 @@ $(document).ready(function(){
 ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-}
-// Teller Can not Preform this Action
+} // Teller Can not Preform this Action
 else if (isset($_GET["message5"])) {
     $key = $_GET["message5"];
     $tt = 0;
@@ -118,8 +117,7 @@ $(document).ready(function(){
 ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-}
-// failed to remove header from a file
+} // failed to remove header from a file
 else if (isset($_GET["message6"])) {
     $key = $_GET["message6"];
     $tt = 0;
@@ -139,8 +137,7 @@ $(document).ready(function(){
 ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-}
-// failed to remove header from a file
+} // failed to remove header from a file
 else if (isset($_GET["message7"])) {
     $key = $_GET["message7"];
     $tt = 0;
@@ -161,7 +158,69 @@ $(document).ready(function(){
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
 }
-
+// transaction type not removed
+else if (isset($_GET["message8"])) {
+    $key = $_GET["message8"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        // $out = $_SESSION["lack_of_intfund_$key"];
+        echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "error",
+        title: "Failed To Add Transaction type",
+        text: "Sorry Please add transaction type id on the file",
+        showConfirmButton: false,
+        timer: 60000
+    })
+});
+</script>
+';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+}
+// transaction deposit error
+else if (isset($_GET["message9"])) {
+    $key = $_GET["message9"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        // $out = $_SESSION["lack_of_intfund_$key"];
+        echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "error",
+        title: "Wrong Transaction with file",
+        text: "Sorry Use only withdrawal file when transaction type is 2",
+        showConfirmButton: false,
+        timer: 60000
+    })
+});
+</script>
+';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+}
+// transaction deposit error
+else if (isset($_GET["message10"])) {
+    $key = $_GET["message10"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        // $out = $_SESSION["lack_of_intfund_$key"];
+        echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "error",
+        title: "Wrong Transaction with file",
+        text: "Sorry Use only deposit file when transaction type is 1",
+        showConfirmButton: false,
+        timer: 60000
+    })
+});
+</script>
+';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+}
 ?>
 
 
@@ -261,7 +320,7 @@ $(document).ready(function(){
                                                 <select class="form-control selectpicker" required name="branch"
                                                         data-style="btn btn-link"
                                                         id="branchId">
-                                                    <option>Select A Branch</option>
+                                                    <option value="">Select A Branch</option>
                                                     <?php foreach ($branchs as $branch) { ?>
                                                         <option value="<?php echo $branch['id'] ?>"
                                                         ><?php echo $branch['name'] ?></option>
@@ -270,8 +329,21 @@ $(document).ready(function(){
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- SELECT BRANCH CARD ENDS -->
+                                    <!-- Transaction Type-->
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="">Type</label>
+                                                <select class="form-control" name="transaction" required>
+                                                    <option value="">select an option</option>
+                                                    <option value="1">Deposit</option>
+                                                    <option value="2">Withdraw</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Transaction Type End-->
 
                                     <!-- UPLOAD SECTION BEGINS -->
                                     <div class="card">
@@ -323,6 +395,12 @@ $(document).ready(function(){
                                             </li>
                                             <li>
                                                 <STRONG style="color: red">
+                                                    IMPORTANT: FOR DEPOSIT TRANSACTION USE 1 AND FOR WITHDRAWAL USE 2
+                                                    ON THE FIELD CALL TRANSACTION TYPE
+                                                </STRONG>
+                                            </li>
+                                            <li>
+                                                <STRONG style="color: red">
                                                     IMPORTANT: Before upLoading your excel file please always remember
                                                     to remove
                                                     the default table header (i.e row 1) completely.
@@ -330,8 +408,10 @@ $(document).ready(function(){
                                             </li>
                                         </ul>
                                         <div class="card-body text-center">
-                                            <a href='bulkWork/getFile.php?name=bulk_deposit&loc=1'
-                                               class="btn btn-primary btn-lg">Download Data Sample</a>
+                                            <a href='bulkWork/getFile.php?name=bulk_deposit1&loc=1'
+                                               class="btn btn-primary btn-lg">Download Deposit Data Sample</a>
+                                            <a href='bulkWork/getFile.php?name=bulk_withdraw&loc=1'
+                                               class="btn btn-success btn-lg">Download Withdrawal Data Sample</a>
                                         </div>
                                     </div>
                                 </div>
