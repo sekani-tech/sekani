@@ -8,6 +8,8 @@ $destination = "report_loan.php";
  if (isset($_GET["view15"])) {
         
     ?>
+    <link href='datatable/DataTables/datatables.min.css' rel='stylesheet' type='text/css'>
+<script src="datatable/DataTables/datatables.min.js"></script>
 
 <div class="content">
         <div class="container-fluid">
@@ -51,15 +53,40 @@ $destination = "report_loan.php";
                    }?> Disbursed Loans</p>
                 </div>
                 <div class="card-body">
+                  <form method="POST" action="../composer/disbursedloan.php">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Start Date</label>
+                          <input type="date" value="" name="start" class="form-control" id="start">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">End Date</label>
+                          <input type="date" value="" name="end" class="form-control" id="end">
+                          <input type="text" id="int_id" hidden name="" value="<?php echo $sessint_id;?>" class="form-control" readonly>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="reset" class="btn btn-danger pull-right">Reset</button>
+                  <button type="submit" id="runi" class="btn btn-primary pull-right">Print PDF</button>
+                  </form>
+                </div>
+                <div class="card-body">
                 <div class="form-group">
+                
                 </div>
                   <div class="table-responsive">
-                    <table class="rtable display nowrap" style="width:100%">
+                    <table id="empTablex" class="display nowrap dataTable" style="width:100%">
                       <thead class="text-primary">
                       <?php
-                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' ORDER BY maturedon_date ASC";
-                        $result = mysqli_query($connection, $query);
+                        // $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' ORDER BY maturedon_date ASC";
+                        // $result = mysqli_query($connection, $query);
                       ?>
+                      <th>
+                          Id
+                        </th>
                         <th style="width:50px;">
                           Client Name
                         </th>
@@ -85,148 +112,51 @@ $destination = "report_loan.php";
                           Loan Officer
                         </th>
                       </thead>
-                      <tbody>
-                          <?php 
-                               if ($_SESSION["int_id"] == 'NULL') {
-                                $tableJoinOutstanding = "
-                                    SELECT *
-                                    FROM outstanding_report_migrate
-                                    LEFT JOIN clients_branch_migrate ON outstanding_report_migrate.client_name = clients_branch_migrate.name;
-                              ";
-                              $outstandingResult = mysqli_query($connection, $tableJoinOutstanding);
-                              while ($resultRow = mysqli_fetch_array($outstandingResult, MYSQLI_ASSOC))
-                              {
-                          ?>
-                            <tr>
-                                <td><?php echo $resultRow['client_name'];?> </td>
-                                <td><?php echo $resultRow['loan_principal'];?> </td>
-                                <td><?php echo "Loan Term ";?> </td>
-                                <td><?php echo $resultRow['disbursed'];?> </td>
-                                <td><?php echo $resultRow['maturity_date'];?> </td>
-                                <td><?php echo $resultRow['interest'];?> </td>
-                                <td><?php echo $resultRow['outstanding_principal'];?> </td>
-                                <td><?php echo $resultRow['loan_officer'];?> </td>
-                            </tr>
-                              <?php }} else {
-
-                              ?>
-                                        <?php if (mysqli_num_rows($result) > 0) {
-                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
-                        <tr>
-                        <?php $lo_id = $row["id"]; ?>
-                        <?php 
-                            $name = $row['client_id'];
-                            $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
-                            $f = mysqli_fetch_array($anam);
-                            $nae = strtoupper($f["firstname"]." ".$f["lastname"]);
-                            
-                        ?>
-                          <th><?php echo $nae; ?></th>
-                          <th><?php echo number_format($row["principal_amount"]); ?></th>
-                          <?php
-                          $loan_off = $row['loan_officer'];
-                          $fido = mysqli_query($connection, "SELECT * FROM staff WHERE id = '$loan_off'");
-                          $fd = mysqli_fetch_array($fido);
-                          $account = $fd['display_name'];
-                          ?>
-                          <th><?php echo $row["loan_term"]; ?></th>
-                          <th><?php echo $row["disbursement_date"]; ?></th>
-                          <th><?php echo $row["maturedon_date"];?></th>
-                          <th><?php echo $row["interest_rate"]."%"; ?></th>
-                          <?php
-                          $int_rate = $row["interest_rate"];
-                          $prina = $row["principal_amount"];
-                          $intr = $int_rate/100;
-                          $final = $intr * $prina;
-                          ?>
-                          <?php
-                            $loant = $row["loan_term"];
-                            $total = $loant * $final;
-                            @$totalint +=$total;
-                          ?>
-                          <?php
-                          $fee = $row["fee_charges_charged_derived"];
-                          $income = $fee + $total;
-                          @$ttlinc += $income;
-                          ?>
-                            <?php
-                            // repaymeny
-                              $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$lo_id'";
-                              $sdoi = mysqli_query($connection, $dd);
-                              $e = mysqli_fetch_array($sdoi);
-                              $interest = $e['interest_amount'];
-
-                              $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$lo_id'";
-                              $sdswe = mysqli_query($connection, $dfdf);
-                              $u = mysqli_fetch_array($sdswe);
-                              $prin = $u['principal_amount'];
-
-                              $outstanding = $prin + $interest;
-// Arrears
-                              $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$lo_id'";
-                              $fosdi = mysqli_query($connection, $ldfkl);
-                              $l = mysqli_fetch_array($fosdi);
-                              $interesttwo = $l['interest_amount'];
-
-                              $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$lo_id'";
-                              $sodi = mysqli_query($connection, $sdospd);
-                              $s = mysqli_fetch_array($sodi);
-                              $printwo = $s['principal_amount'];
-
-                              $outstandingtwo = $printwo + $interesttwo;
-                            ?>
-                          <th><?php $bal = $row["total_outstanding_derived"];
-                          $df = $bal;
-                          $ttloutbalance = 0;
-                          $ttloustanding = $outstanding + $outstandingtwo;
-                           echo number_format($ttloustanding);
-                           $ttloutbalance += $ttloustanding;
-                            ?></th>
-                            <th><?php echo $account; ?></th>
-                          <!-- <td><a href="client_view.php?edit=<?php echo $cid;?>" class="btn btn-info">View</a></td> -->
-                        </tr>
-                        <?php }
-                          }
-                          else {
-                            // echo "0 Document";
-                          }
-                          ?>
-                      
-                              <?php
-                               echo number_format($ttloutbalance);
-                            ?></th>
-                            <th></th>
-                            
-                          </tr> -->
-                          <!-- <th></th> -->
-
-                              <?php
-                              } ?>
-                      </tbody>
                     </table>
                   </div>
+                  <script>
+                            $(document).ready(function() {
+                                $('#empTablex').DataTable({
+                                    'processing': true,
+                                    'serverSide': true,
+                                    'serverMethod': 'post',
+                                    'ajax': {
+                                        'url': 'datatable/loan_dis_data.php'
+                                    },
+                                    'columns': [
+                                      {
+                                            data: 'id'
+                                        },
+                                      {
+                                            data: 'ClientName'
+                                        },
+                                        {
+                                            data: 'principal_amount'
+                                        },
+                                        {
+                                            data: 'loan_term'
+                                        },
+                                        {
+                                            data: 'DisbursementDate'
+                                        },
+                                        {
+                                            data: 'DateofMaturity'
+                                        },
+                                        {
+                                            data: 'InterestRate'
+                                        },
+                                        {
+                                            data: 'OutstandingLoanBalance'
+                                        },
+                                        {
+                                            data: 'LoanOfficer'
+                                        },
+                                    ]
+                                });
+                            });
+                        </script>
                 </div>
-                <div class="card-body">
-                  <form method="POST" action="../composer/disbursedloan.php">
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Start Date</label>
-                          <input type="date" value="" name="start" class="form-control" id="start">
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">End Date</label>
-                          <input type="date" value="" name="end" class="form-control" id="end">
-                          <input type="text" id="int_id" hidden name="" value="<?php echo $sessint_id;?>" class="form-control" readonly>
-                        </div>
-                      </div>
-                    </div>
-                    <button type="reset" class="btn btn-danger pull-right">Reset</button>
-                  <button type="submit" id="runi" class="btn btn-primary pull-right">Print PDF</button>
-                  </form>
-                </div>
+                
               </div>
             </div>
           </div>
