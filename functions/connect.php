@@ -41,7 +41,6 @@ function ddA($value)
 function executeQuery($sql, $data = [])
 {
     global $connection;
-
     $stmt = $connection->prepare($sql);
     if (!empty($data)) {
         $values = array_values($data);
@@ -195,7 +194,6 @@ function create($table, $data)
         }
         $i++;
     }
-
     $stmt = executeQuery($sql, $data);
     $id = $stmt->insert_id;
     return $id;
@@ -232,13 +230,10 @@ function update($table, $id, $conName, $data)
  * @param $id
  * @return int
  */
-function delete($table, $id)
+function delete($table, $id, $consName)
 {
-    global $connection;
-    $sql = "DELETE FROM $table WHERE " . $id . "=?";
-
-
-    $stmt = executeQuery($sql, ['id' => $id]);
+    $sql = "DELETE FROM $table WHERE " . $consName . "=?";
+    $stmt = executeQuery($sql, [$consName => $id]);
     return $stmt->affected_rows;
 }
 

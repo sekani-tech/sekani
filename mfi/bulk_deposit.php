@@ -157,8 +157,7 @@ $(document).ready(function(){
 ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-}
-// transaction type not removed
+} // transaction type not removed
 else if (isset($_GET["message8"])) {
     $key = $_GET["message8"];
     $tt = 0;
@@ -178,8 +177,7 @@ $(document).ready(function(){
 ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-}
-// transaction deposit error
+} // transaction deposit error
 else if (isset($_GET["message9"])) {
     $key = $_GET["message9"];
     $tt = 0;
@@ -199,8 +197,7 @@ $(document).ready(function(){
 ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-}
-// transaction deposit error
+} // transaction deposit error
 else if (isset($_GET["message10"])) {
     $key = $_GET["message10"];
     $tt = 0;

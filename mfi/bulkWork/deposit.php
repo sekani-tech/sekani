@@ -122,7 +122,6 @@ if (isset($_POST['submit'])) {
 
 //                  get account information using account number
                             $accountDetails = selectOne('account', ['account_no' => $accountNumber]);
-
 //                  account information for other table
                             $accountProductId = $accountDetails['product_id'];
                             $accountId = $accountDetails['id'];
@@ -139,7 +138,7 @@ if (isset($_POST['submit'])) {
                                 'staff_id' => $currentAppUser,
                                 'amount' => $amount,
                                 'pay_type' => 'Cash',
-                                'transact_type' => 'Deposit',
+                                'transact_type' => '1',
                                 'product_type' => $accountProductId,
                                 'status' => 'Pending',
                                 'date' => $fullDate,
@@ -387,7 +386,7 @@ if (isset($_POST['submit'])) {
                             'staff_id' => $currentAppUser,
                             'amount' => $amount,
                             'pay_type' => 'Cash',
-                            'transact_type' => 'Withdrawal',
+                            'transact_type' => '2',
                             'product_type' => $accountProductId,
                             'status' => 'Pending',
                             'date' => $fullDate,
@@ -413,3 +412,76 @@ if (isset($_POST['submit'])) {
         exit();
     }
 }
+
+if (isset($_POST['submitGl'])) {
+    //    check for excel file submitted
+    if ($_FILES["excelFile"]["name"] !== '') {
+        $allowed_extension = array('xls', 'csv', 'xlsx');
+        $file_array = explode(".", $_FILES["excelFile"]["name"]);
+        $file_extension = end($file_array);
+
+        if (in_array($file_extension, $allowed_extension)) {
+            try {
+                $file_name = time() . '.' . $file_extension;
+                move_uploaded_file($_FILES['excelFile']['tmp_name'], $file_name);
+                $file_type = IOFactory::identify($file_name);
+                $reader = IOFactory::createReader($file_type);
+                $spreadsheet = $reader->load($file_name);
+
+                unlink($file_name);
+
+//            Data from excel Sheet
+                $data = $spreadsheet->getActiveSheet()->toArray();
+            } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
+            }
+            $ourDataTables = [];
+        }
+        foreach ($data as $key => $row) {
+            $ourDataTables[] = array(
+                'int_id' => $row['0'],
+                'branch_id' => $row['1'],
+                'gl_code' => $row['2'],
+                'parent_id' => $row['3'],
+                'transaction_id' => $row['4'],
+                'description' => $row['5'],
+                'transaction_type' => $row['6'],
+                'teller_id' => $row['7'],
+                'transaction_date' => $row['8'],
+                'amount' => $row['9'],
+                'gl_account_balance_derived' => $row['10'],
+                'branch_balance_derived' => $row['11'],
+                'cumulative_balance_derived' => $row['12'],
+                'created_date' => $row['13'],
+                'credit' => $row['14'],
+                'debit' => $row['15']
+            );
+        }
+
+        foreach ($ourDataTables as $ourDataTable){
+            $convertDate = strtotime($ourDataTable['transaction_date']);
+            $date = date('Y-m-d', $convertDate);
+            $fullDate = $date . ' ' . date('H:i:s');
+            $glCondition = [
+                'int_id' => $ourDataTable['int_id'],
+                'branch_id' => $ourDataTable['branch_id'],
+                'gl_code' => $ourDataTable['gl_code'],
+                'parent_id' => $ourDataTable['parent_id'],
+                'transaction_id' => $ourDataTable['transaction_id'],
+                'description' => $ourDataTable['description'],
+                'transaction_type' => $ourDataTable['transaction_type'],
+                'teller_id' => $ourDataTable['teller_id'],
+                'transaction_date' => $date,
+                'amount' => $ourDataTable['amount'],
+                'gl_account_balance_derived' => $ourDataTable['gl_account_balance_derived'],
+                'branch_balance_derived' => $ourDataTable['branch_balance_derived'],
+                'cumulative_balance_derived' => $ourDataTable['cumulative_balance_derived'],
+                'created_date' => $fullDate,
+                'credit' => $ourDataTable['credit'],
+                'debit' => $ourDataTable['debit']
+            ];
+            $gl_transaction = create('gl_account_transaction', $glCondition);
+            ddA($gl_transaction);
+        }
+    }
+}
+
