@@ -65,18 +65,18 @@ if (isset($_POST['submit'])) {
 //        get the total money and and teller Id and check of the header is removed
         foreach ($ourDataTables as $key => $ourData) {
             //                check if the header was remove
-            if ($ourData['teller_id'] === "teller id" || empty($ourData['teller_id'])) {
+            if ($ourData['teller_id'] === "teller id") {
                 $_SESSION["Lack_of_intfund_$randms"] = "Sorry Please remove the header from this file";
                 header("Location: ../bulk_deposit.php?message6=$randms");
                 exit();
             }
 
-            if ($ourData['payment_type_id'] === 'payment type id' || empty($ourData['payment_type_id'])) {
+            if ($ourData['payment_type_id'] === 'payment type id') {
                 $_SESSION["Lack_of_intfund_$randms"] = "Sorry Please Add the payment type Id before upload";
                 header("Location: ../bulk_deposit.php?message7=$randms");
                 exit();
             }
-            if ($ourData['transaction_type_id'] === 'Transaction Type' || empty($ourData['transaction_type_id'])) {
+            if ($ourData['transaction_type_id'] === 'Transaction Type') {
                 $_SESSION["Lack_of_intfund_$randms"] = "Sorry Please Add the transaction type Id before upload";
                 header("Location: ../bulk_deposit.php?message8=$randms");
                 exit();
@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
             $totalAmount += $ourData['amount'];
             $tellerId = $ourData['teller_id'];
         }
-//        dd($transactionType);
+
         //                getting tellers info to check for post limit
         $tellersCondition = ['id' => $tellerId];
         $tellerDetails = selectOne('tellers', $tellersCondition);
@@ -93,7 +93,8 @@ if (isset($_POST['submit'])) {
         $tellerBranch = $tellerDetails['branch_id'];
         $tellerPostLimit = $tellerDetails['post_limit'];
 
-        if (isset($transactionType) && $transactionType == '1') {
+        if ($transactionType == 1) {
+            // deposit
             if ($ourData['transaction_type_id'] != $transactionType) {
                 $_SESSION["Lack_of_intfund_$randms"] = "Sorry File Input Rejected!";
                 header("Location: ../bulk_deposit.php?message9=$randms");
@@ -112,7 +113,9 @@ if (isset($_POST['submit'])) {
                         $fullDate = $date . ' ' . date('H:i:s');
                         $transactionNumber = $ourDataTable['deposit_slip_number'];
 //                    check account number given
-                        if (strlen($ourDataTable['Account_Number']) < 10) {
+                        if (strlen($ourDataTable['Account_Number']) === 9) {
+                            $accountNumber = '0' . $ourDataTable['Account_Number'];
+                        } else if (strlen($ourDataTable['Account_Number']) <= 8) {
                             $accountNumber = '00' . $ourDataTable['Account_Number'];
                         } else {
                             $accountNumber = $ourDataTable['Account_Number'];
@@ -341,7 +344,8 @@ if (isset($_POST['submit'])) {
                 }
             }
         }
-        if (isset($transactionType) && $transactionType == '2') {
+        if ($transactionType == 2) {
+            // withdrawal
             if ($ourData['transaction_type_id'] != $transactionType) {
                 $_SESSION["Lack_of_intfund_$randms"] = "Sorry File Input Rejected!";
                 header("Location: ../bulk_deposit.php?message10=$randms");
@@ -359,7 +363,9 @@ if (isset($_POST['submit'])) {
                     $fullDate = $date . ' ' . date('H:i:s');
                     $transactionNumber = $ourDataTable['deposit_slip_number'];
 //                    check account number given
-                    if (strlen($ourDataTable['Account_Number']) < 10) {
+                    if (strlen($ourDataTable['Account_Number']) === 9) {
+                        $accountNumber = '0' . $ourDataTable['Account_Number'];
+                    } else if (strlen($ourDataTable['Account_Number']) <= 8) {
                         $accountNumber = '00' . $ourDataTable['Account_Number'];
                     } else {
                         $accountNumber = $ourDataTable['Account_Number'];
