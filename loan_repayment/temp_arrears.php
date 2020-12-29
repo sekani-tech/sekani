@@ -491,6 +491,8 @@ $(document).ready(function() {
         }
          
         }
+    } else {
+        echo "Cant Find Loan";
     }
     
 }
