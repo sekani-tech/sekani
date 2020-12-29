@@ -55,10 +55,9 @@ if (isset($_POST['submit'])) {
                 'Phone_Number' => $row['3'],
                 'date' => $row['4'],
                 'amount' => $row['5'],
-                'deposit_slip_number' => $row['6'],
-                'teller_id' => $row['7'],
-                'payment_type_id' => $row['8'],
-                'transaction_type_id' => $row['9']
+                'teller_id' => $row['6'],
+                'payment_type_id' => $row['7'],
+                'transaction_type_id' => $row['8']
             );
         }
 
@@ -84,7 +83,7 @@ if (isset($_POST['submit'])) {
             $totalAmount += $ourData['amount'];
             $tellerId = $ourData['teller_id'];
         }
-
+        
         //                getting tellers info to check for post limit
         $tellersCondition = ['id' => $tellerId];
         $tellerDetails = selectOne('tellers', $tellersCondition);
@@ -92,7 +91,7 @@ if (isset($_POST['submit'])) {
         $tellerNameId = $tellerDetails['name'];
         $tellerBranch = $tellerDetails['branch_id'];
         $tellerPostLimit = $tellerDetails['post_limit'];
-
+        
         if ($transactionType == 1) {
             // deposit
             if ($ourData['transaction_type_id'] != $transactionType) {
@@ -104,6 +103,10 @@ if (isset($_POST['submit'])) {
 //            send information one by one
                     foreach ($ourDataTables as $key => $ourDataTable) {
 //                Variable Name
+                        try {
+                            $depositRand = str_pad(random_int(0, (10 ** $digit) - 1), 7, '0', STR_PAD_LEFT);
+                        } catch (Exception $e) {
+                        }
                         $accountClientName = $ourDataTable['Account_Name'];
                         $paymentType = $ourDataTable['payment_type_id'];
                         $amount = $ourDataTable['amount'];
@@ -111,15 +114,15 @@ if (isset($_POST['submit'])) {
                         $convertDate = strtotime($ourDataTable['date']);
                         $date = date('Y-m-d', $convertDate);
                         $fullDate = $date . ' ' . date('H:i:s');
-                        $transactionNumber = $ourDataTable['deposit_slip_number'];
+//                        $transactionNumber = $ourDataTable['deposit_slip_number'];
 //                    check account number given
                         if (strlen($ourDataTable['Account_Number']) === 9) {
-                            $accountNumber = '0' . $ourDataTable['Account_Number'];
-                        } else if (strlen($ourDataTable['Account_Number']) <= 8) {
-                            $accountNumber = '00' . $ourDataTable['Account_Number'];
-                        } else {
-                            $accountNumber = $ourDataTable['Account_Number'];
-                        }
+                        $accountNumber = '0' . $ourDataTable['Account_Number'];
+                    } else if (strlen($ourDataTable['Account_Number']) <= 8) {
+                        $accountNumber = '00' . $ourDataTable['Account_Number'];
+                    } else {
+                        $accountNumber = $ourDataTable['Account_Number'];
+                    }
 
                         if ($chosenBranch == $tellerBranch) {
 
@@ -133,7 +136,7 @@ if (isset($_POST['submit'])) {
                             $transactionCacheCon = [
                                 'int_id' => $inst_id,
                                 'branch_id' => $chosenBranch,
-                                'transact_id' => $transactionNumber,
+                                'transact_id' => $depositRand,
                                 'description' => 'Bulk Deposit',
                                 'account_no' => $accountNumber,
                                 'client_id' => $accountClientId,
@@ -169,7 +172,7 @@ if (isset($_POST['submit'])) {
                         $convertDate = strtotime($ourDataTable['date']);
                         $date = date('Y-m-d', $convertDate);
                         $fullDate = $date . ' ' . date('H:i:s');
-                        $transactionNumber = $ourDataTable['deposit_slip_number'];
+//                        $transactionNumber = $ourDataTable['deposit_slip_number'];
 //                    check account number given
                         if (strlen($ourDataTable['Account_Number']) < 10) {
                             $accountNumber = '00' . $ourDataTable['Account_Number'];
@@ -212,7 +215,7 @@ if (isset($_POST['submit'])) {
                                 'account_no' => $accountNumber,
                                 'client_id' => $accountClientId,
                                 'teller_id' => $tellerId,
-                                'transaction_id' => $transactionNumber,
+                                'transaction_id' => $randms,
                                 'description' => 'bulk deposit',
                                 'transaction_type' => 'credit',
                                 'transaction_date' => $fullDate,
@@ -260,7 +263,7 @@ if (isset($_POST['submit'])) {
                                 'int_id' => $inst_id,
                                 'branch_id' => $chosenBranch,
                                 'client_id' => $accountClientId,
-                                'transaction_id' => $transactionNumber,
+                                'transaction_id' => $randms,
                                 'description' => 'Bulk Deposit',
                                 'transaction_type' => 'credit',
                                 'teller_id' => $tellerNameId,
@@ -279,7 +282,7 @@ if (isset($_POST['submit'])) {
                             $transactionCacheCon = [
                                 'int_id' => $inst_id,
                                 'branch_id' => $chosenBranch,
-                                'transact_id' => $transactionNumber,
+                                'transact_id' => $randms,
                                 'description' => 'Bulk Deposit',
                                 'account_no' => $accountNumber,
                                 'client_id' => $accountClientId,
@@ -301,7 +304,7 @@ if (isset($_POST['submit'])) {
                                 'branch_id' => $chosenBranch,
                                 'gl_code' => $glCode,
                                 'parent_id' => $accountProductId,
-                                'transaction_id' => $transactionNumber,
+                                'transaction_id' => $randms,
                                 'description' => 'Bulk Deposit',
                                 'transaction_type' => 'Deposit',
                                 'teller_id' => $tellerNameId,
@@ -353,6 +356,10 @@ if (isset($_POST['submit'])) {
             } else {
 //            send information one by one
                 foreach ($ourDataTables as $key => $ourDataTable) {
+                    try {
+                        $withDrawRand = str_pad(random_int(0, (10 ** $digit) - 1), 7, '0', STR_PAD_LEFT);
+                    } catch (Exception $e) {
+                    }
 //                Variable Name
                     $accountClientName = $ourDataTable['Account_Name'];
                     $paymentType = $ourDataTable['payment_type_id'];
@@ -361,7 +368,7 @@ if (isset($_POST['submit'])) {
                     $convertDate = strtotime($ourDataTable['date']);
                     $date = date('Y-m-d', $convertDate);
                     $fullDate = $date . ' ' . date('H:i:s');
-                    $transactionNumber = $ourDataTable['deposit_slip_number'];
+//                    $transactionNumber = $ourDataTable['deposit_slip_number'];
 //                    check account number given
                     if (strlen($ourDataTable['Account_Number']) === 9) {
                         $accountNumber = '0' . $ourDataTable['Account_Number'];
@@ -384,7 +391,7 @@ if (isset($_POST['submit'])) {
                         $transactionCacheCon = [
                             'int_id' => $inst_id,
                             'branch_id' => $chosenBranch,
-                            'transact_id' => $transactionNumber,
+                            'transact_id' => $withDrawRand,
                             'description' => 'Bulk Withdrawal',
                             'account_no' => $accountNumber,
                             'client_id' => $accountClientId,

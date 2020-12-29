@@ -405,7 +405,7 @@ $(document).ready(function(){
                                             </li>
                                         </ul>
                                         <div class="card-body text-center">
-                                            <a href='bulkWork/getFile.php?name=bulk_deposit1&loc=1'
+                                            <a href='bulkWork/getFile.php?name=bulk_deposit&loc=1'
                                                class="btn btn-primary btn-lg">Download Deposit Data Sample</a>
 
                                         </div>
