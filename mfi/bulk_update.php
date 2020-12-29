@@ -116,6 +116,49 @@ function like($str, $searchTerm)
                                                         style="margin: auto;">description</i></a>
                                         </td>
                                     </tr>
+
+
+                                    <!-- LOAN RESTRUCTURING -->
+                                    <tr>
+
+                                        <th>Loan Repayment Schedule</th>
+                                        <th>Auto run code for Loan Schedule</th>
+                                        <td><a target="_blank" href="../functions/loans/schedule.php" class="btn btn-info"><i
+                                                        class="material-icons"
+                                                        style="margin: auto;">description</i></a>
+                                        </td>
+                                    </tr>
+                                    <!-- LOAN REPAYMENT -->
+                                    <tr>
+
+                                        <th>Loan Repayment</th>
+                                        <th>Auto run code for Loan Repayment</th>
+                                        <td><a target="_blank" href="../loan_repayment/repayment_script.php" class="btn btn-info"><i
+                                                        class="material-icons"
+                                                        style="margin: auto;">description</i></a>
+                                        </td>
+                                    </tr>
+                                    <!-- LOAN ARREARS CHECK -->
+                                    <tr>
+
+                                        <th>Loan Arrears Check</th>
+                                        <th>Auto run code for Arrears Check</th>
+                                        <td><a target="_blank" href="../functions/loans/arrears.php" class="btn btn-info"><i
+                                                        class="material-icons"
+                                                        style="margin: auto;">description</i></a>
+                                        </td>
+                                    </tr>
+                                    <!-- LOAN ARREARS -->
+                                    <tr>
+
+                                        <th>Loan Arrears Collection</th>
+                                        <th>Auto run code for Arrears Collection</th>
+                                        <td><a target="_blank" href="../loan_repayment/temp_arrears.php" class="btn btn-info"><i
+                                                        class="material-icons"
+                                                        style="margin: auto;">description</i></a>
+                                        </td>
+                                    </tr>
+                                    
                                     </tbody>
                                 </table>
                             </div>
