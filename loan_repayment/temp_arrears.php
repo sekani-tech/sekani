@@ -273,7 +273,7 @@ $(document).ready(function() {
             }
 
          } else  {
-
+echo "Else no Money";
             //  INPUT ELSE NOW
             // Else if it's not Greater Logic has to Change
                     
