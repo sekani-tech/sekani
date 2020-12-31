@@ -523,7 +523,7 @@ function fill_accounting($connection)
                   </div>
                 </div>
               </div>
-              <!-- POP UP ENDS -->
+              <!-- POP UP ENDS -->  
             </form>
           </div>
         </div>
