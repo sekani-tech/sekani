@@ -4,7 +4,7 @@ $destination = "client.php";
 include('header.php');
 ?>
 <?php
-if(isset($_GET["edit"])) {
+if (isset($_GET["edit"])) {
   $id = $_GET["edit"];
   $update = true;
   $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id' && int_id ='$sessint_id'");
@@ -39,7 +39,7 @@ if(isset($_GET["edit"])) {
     $acount = mysqli_query($connection, "SELECT * FROM staff WHERE id='$loanofficer_id'");
     if (count([$acount]) == 1) {
       $j = mysqli_fetch_array($acount);
-      $displayname = strtoupper($j['first_name'] ." ". $j['last_name']);
+      $displayname = strtoupper($j['first_name'] . " " . $j['last_name']);
     }
     $signature = $n['signature'];
     $id_img_url = $n['id_img_url'];
@@ -53,528 +53,579 @@ if(isset($_GET["edit"])) {
       $gogo = mysqli_query($connection, "SELECT * FROM loan WHERE client_id = '$id' && int_id='$sessint_id'");
       if (count([$gogo]) == 1) {
         $ppo = mysqli_fetch_array($gogo);
-        if(isset($ppo)){
-        $sum = $ppo['total_outstanding_derived'];
-        $olb = $ppo['principal_amount'];
-        $prd = $ppo['principal_repaid_derived'];
+        if (isset($ppo)) {
+          $sum = $ppo['total_outstanding_derived'];
+          $olb = $ppo['principal_amount'];
+          $prd = $ppo['principal_repaid_derived'];
         }
         $cv = "Null";
       }
     }
 
-      $soc = $n["account_no"];
-      $length = strlen($soc);
-      if ($length == 1) {
-        $acc ="000000000" . $soc;
-      }
-      elseif ($length == 2) {
-        $acc ="00000000" . $soc;
-      }
-      elseif ($length == 3) {
-        $acc ="00000000" . $soc;
-      }
-      elseif ($length == 4) {
-        $acc ="0000000" . $soc;
-      }
-      elseif ($length == 5) {
-        $acc ="000000" . $soc;
-      }
-      elseif ($length == 6) {
-        $acc ="0000" . $soc;
-      }
-      elseif ($length == 7) {
-        $acc ="000" . $soc;
-      }
-      elseif ($length == 8) {
-        $acc ="00" . $soc;
-      }
-      elseif ($length == 9) {
-        $acc ="0" . $soc;
-      }
-      elseif ($length == 10) {
-        $acc = $n["account_no"];
-      }else{
-        $acc = $n["account_no"];
-      }
+    $soc = $n["account_no"];
+    $length = strlen($soc);
+    if ($length == 1) {
+      $acc = "000000000" . $soc;
+    } elseif ($length == 2) {
+      $acc = "00000000" . $soc;
+    } elseif ($length == 3) {
+      $acc = "00000000" . $soc;
+    } elseif ($length == 4) {
+      $acc = "0000000" . $soc;
+    } elseif ($length == 5) {
+      $acc = "000000" . $soc;
+    } elseif ($length == 6) {
+      $acc = "0000" . $soc;
+    } elseif ($length == 7) {
+      $acc = "000" . $soc;
+    } elseif ($length == 8) {
+      $acc = "00" . $soc;
+    } elseif ($length == 9) {
+      $acc = "0" . $soc;
+    } elseif ($length == 10) {
+      $acc = $n["account_no"];
+    } else {
+      $acc = $n["account_no"];
+    }
   }
 }
 ?>
 <?php
-    function fill_account($connection) {
-      $int_id = $_SESSION['int_id'];
-       $client_id = $_GET['edit'];
-       $out = '';
-       $pen = "SELECT * FROM account WHERE client_id = '$client_id'";
-      $res = mysqli_query($connection, $pen);
-      while ($row = mysqli_fetch_array($res))
-      {
-        $product_type = $row["product_id"];
-        $get_product = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$product_type' AND int_id = '$int_id'");
-       while ($mer = mysqli_fetch_array($get_product)) {
-         $p_n = $mer["name"];
-         $out .= '<option value="'.$row["account_no"].'">'.$row["account_no"].' - '.$p_n.'</option>';
-       }
-      }
-      return $out;
+function fill_account($connection)
+{
+  $int_id = $_SESSION['int_id'];
+  $client_id = $_GET['edit'];
+  $out = '';
+  $pen = "SELECT * FROM account WHERE client_id = '$client_id'";
+  $res = mysqli_query($connection, $pen);
+  while ($row = mysqli_fetch_array($res)) {
+    $product_type = $row["product_id"];
+    $get_product = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$product_type' AND int_id = '$int_id'");
+    while ($mer = mysqli_fetch_array($get_product)) {
+      $p_n = $mer["name"];
+      $out .= '<option value="' . $row["account_no"] . '">' . $row["account_no"] . ' - ' . $p_n . '</option>';
     }
-    function fill_accounting($connection) {
-      $int_id = $_SESSION['int_id'];
-       $client_id = $_GET['edit'];
-       $pen = "SELECT * FROM account WHERE client_id = '$client_id'";
-      $res = mysqli_query($connection, $pen);
-      $out = '';
-      while ($row = mysqli_fetch_array($res))
-      {
-        $product_type = $row["product_id"];
-        $get_product = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$product_type' AND int_id = '$int_id'");
-       while ($mer = mysqli_fetch_array($get_product)) {
-         $p_n = $mer["name"];
-         $out .= '<option value="'.$row["account_no"].'">'.$row["account_no"].' - '.$p_n.'</option>';
-       }
-      }
-      return $out;
+  }
+  return $out;
+}
+function fill_accounting($connection)
+{
+  $int_id = $_SESSION['int_id'];
+  $client_id = $_GET['edit'];
+  $pen = "SELECT * FROM account WHERE client_id = '$client_id'";
+  $res = mysqli_query($connection, $pen);
+  $out = '';
+  while ($row = mysqli_fetch_array($res)) {
+    $product_type = $row["product_id"];
+    $get_product = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$product_type' AND int_id = '$int_id'");
+    while ($mer = mysqli_fetch_array($get_product)) {
+      $p_n = $mer["name"];
+      $out .= '<option value="' . $row["account_no"] . '">' . $row["account_no"] . ' - ' . $p_n . '</option>';
     }
+  }
+  return $out;
+}
 ?>
 <!-- Content added here -->
 <div class="content">
-        <div class="container-fluid">
-          <!-- your content here -->
-          <div class="row">
-            <div class="col-md-8">
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title">Account</h4>
+  <div class="container-fluid">
+    <!-- your content here -->
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Account</h4>
+          </div>
+          <?php
+          if ($ctype == 'INDIVIDUAL' || $ctype == 'GROUP' || $ctype == NULL) {
+            // $search = mysqli_query($connection, "SELECT saving_balances_migration.Submitted_On_Date, saving_balances_migration.Approved_On_Date,
+            // saving_balances_migration.Activated_On_Date, saving_balances_migration.Loan_Officer_Name,
+            // clients_branch_migrate.last_depost, clients_branch_migrate.available_balance,
+            // clients_branch_migrate.name, saving_balances_migration.Account_No, clients_branch_migrate.outstanding_loan_balance
+            // FROM saving_balances_migration
+            // INNER JOIN clients_branch_migrate ON saving_balances_migration.Client_Name = clients_branch_migrate.name WHERE clients_branch_migrate.name = '$display_name' LIMIT 1");
+            // $migrate = mysqli_fetch_array($search, MYSQLI_ASSOC)
+          ?>
+            <div class="card-body">
+              <form action="">
+                <div class="form-group">
+                  <label for="">Name:</label>
+                  <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo $display_name; ?>" readonly name="display_name">
                 </div>
-                <?php
-                if($ctype == 'INDIVIDUAL' || $ctype == 'GROUP' || $ctype == NULL)
-                {
-                  // $search = mysqli_query($connection, "SELECT saving_balances_migration.Submitted_On_Date, saving_balances_migration.Approved_On_Date,
-                  // saving_balances_migration.Activated_On_Date, saving_balances_migration.Loan_Officer_Name,
-                  // clients_branch_migrate.last_depost, clients_branch_migrate.available_balance,
-                  // clients_branch_migrate.name, saving_balances_migration.Account_No, clients_branch_migrate.outstanding_loan_balance
-                  // FROM saving_balances_migration
-                  // INNER JOIN clients_branch_migrate ON saving_balances_migration.Client_Name = clients_branch_migrate.name WHERE clients_branch_migrate.name = '$display_name' LIMIT 1");
-                  // $migrate = mysqli_fetch_array($search, MYSQLI_ASSOC)
-                  ?>
-                <div class="card-body">
-                  <form action="">
+                <div class="row">
+                  <div class="col-md-6">
                     <div class="form-group">
-                      <label for="">Name:</label>
-                      <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo $display_name; ?>" readonly name="display_name">
+                      <label for="">Account No:</label>
+                      <?php
+                      if (fill_account($connection) == "") {
+                      ?>
+                        <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo $migrate['Account_No']; ?>" readonly name="display_name">
+                      <?php
+                      } else {
+                      ?>
+                        <select id="account" class="form-control">
+                          <?php echo fill_account($connection); ?>
+                        </select>
+                      <?php
+                      }
+                      ?>
                     </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Account No:</label>
-                            <?php
-                              if(fill_account($connection) == ""){
-                            ?>
-                            <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo $migrate['Account_No']; ?>" readonly name="display_name">
-                            <?php
-                              } else {
-                            ?>
-                            <select id="account" class="form-control">
-                              <?php echo fill_account($connection);?>
-                            </select>
-                            <?php
-                              }
-                            ?>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Account Officer:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $displayname; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Account Type:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $ctype; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Total Outstanding Loan Balance:</label>
-                          <?php
-                            $prin_query = "SELECT SUM(principal_amount) AS total_out_prin FROM loan_repayment_schedule WHERE (int_id = '$sessint_id' AND installment >= 1) AND client_id = '$id'";
-                            $int_query = "SELECT SUM(interest_amount) AS total_int_prin FROM loan_repayment_schedule WHERE (int_id = '$sessint_id' AND installment >= 1) AND client_id = '$id'";
-                            // LOAN ARREARS
-                            $arr_query1 = mysqli_query($connection, "SELECT SUM(principal_amount) AS arr_out_prin FROM loan_arrear WHERE (int_id = '$sessint_id' AND installment >= 1 )AND client_id = '$id'");
-                            $arr_query2 = mysqli_query($connection, "SELECT SUM(interest_amount) AS arr_out_int FROM loan_arrear WHERE (int_id = '$sessint_id' AND installment >= 1) AND client_id = '$id'");
-                            // check the arrears
-                            $ar = mysqli_fetch_array($arr_query1);
-                            $arx = mysqli_fetch_array($arr_query2);
-                            $arr_p = $ar["arr_out_prin"];
-                            $arr_i = $arx["arr_out_int"];
-                              $pq = mysqli_query($connection, $prin_query);
-                              $iq = mysqli_query($connection, $int_query);
-                              $pqx = mysqli_fetch_array($pq);
-                              $iqx = mysqli_fetch_array($iq);
-                              // check feedback
-                              $print = $pqx['total_out_prin'];
-                              $intet = $iqx['total_int_prin'];
-                              $fde = ($print + $intet) + ($arr_p + $arr_i);
-                          ?>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="NGN - <?php echo number_format(round($fde), 2);?>" readonly>
-                        </div>
-                      </div>
-                      <!-- <div class="col-md-6">
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Account Officer:</label>
+                      <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $displayname; ?>" readonly>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Account Type:</label>
+                      <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $ctype; ?>" readonly>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Total Outstanding Loan Balance:</label>
+                      <?php
+                      $prin_query = "SELECT SUM(principal_amount) AS total_out_prin FROM loan_repayment_schedule WHERE (int_id = '$sessint_id' AND installment >= 1) AND client_id = '$id'";
+                      $int_query = "SELECT SUM(interest_amount) AS total_int_prin FROM loan_repayment_schedule WHERE (int_id = '$sessint_id' AND installment >= 1) AND client_id = '$id'";
+                      // LOAN ARREARS
+                      $arr_query1 = mysqli_query($connection, "SELECT SUM(principal_amount) AS arr_out_prin FROM loan_arrear WHERE (int_id = '$sessint_id' AND installment >= 1 )AND client_id = '$id'");
+                      $arr_query2 = mysqli_query($connection, "SELECT SUM(interest_amount) AS arr_out_int FROM loan_arrear WHERE (int_id = '$sessint_id' AND installment >= 1) AND client_id = '$id'");
+                      // check the arrears
+                      $ar = mysqli_fetch_array($arr_query1);
+                      $arx = mysqli_fetch_array($arr_query2);
+                      $arr_p = $ar["arr_out_prin"];
+                      $arr_i = $arx["arr_out_int"];
+                      $pq = mysqli_query($connection, $prin_query);
+                      $iq = mysqli_query($connection, $int_query);
+                      $pqx = mysqli_fetch_array($pq);
+                      $iqx = mysqli_fetch_array($iq);
+                      // check feedback
+                      $print = $pqx['total_out_prin'];
+                      $intet = $iqx['total_int_prin'];
+                      $fde = ($print + $intet) + ($arr_p + $arr_i);
+                      ?>
+                      <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="NGN - <?php echo number_format(round($fde), 2); ?>" readonly>
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Loan Status:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $loan_status; ?>" readonly>
                         </div>
                       </div> -->
-                      <script>
-                    $(document).ready(function () {
-                      $('#account').on("change", function () {
+                  <script>
+                    $(document).ready(function() {
+                      $('#account').on("change", function() {
                         var id = $(this).val();
                         $.ajax({
-                          url: "ajax_post/client_view_acc.php", 
+                          url: "ajax_post/client_view_acc.php",
                           method: "POST",
-                          data:{id:id},
-                          success: function (data) {
+                          data: {
+                            id: id
+                          },
+                          success: function(data) {
                             $('#soe').html(data);
                           }
                         })
                       });
                     });
                   </script>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Mobile Number:</label>
+                      <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $phone; ?>" readonly>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">BVN:</label>
+                      <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $bvn; ?>" readonly>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="row" id="soe">
                       <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Mobile Number:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $phone; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">BVN:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $bvn; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="row"  id="soe">
-                     <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Account Balance:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php if($abd == ""){echo $migrate['available_balance'];}else{echo $abd;} ?>" readonly>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php if ($abd == "") {
+                                                                                                                            echo $migrate['available_balance'];
+                                                                                                                          } else {
+                                                                                                                            echo $abd;
+                                                                                                                          } ?>" readonly>
                         </div>
-                      </div> 
+                      </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Last Deposit:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php if($tdd == ""){echo $migrate['last_depost'];}else{echo $tdd;} ?>" readonly>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php if ($tdd == "") {
+                                                                                                                            echo $migrate['last_depost'];
+                                                                                                                          } else {
+                                                                                                                            echo $tdd;
+                                                                                                                          } ?>" readonly>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Avaliable Balance:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php if($abd == ""){echo $migrate['available_balance'];}else{echo $abd;} ?>" readonly>
+                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php if ($abd == "") {
+                                                                                                                            echo $migrate['available_balance'];
+                                                                                                                          } else {
+                                                                                                                            echo $abd;
+                                                                                                                          } ?>" readonly>
                         </div>
                       </div>
-                       <div class="col-md-6">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label for="">Last Withdrawal:</label>
                           <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $twd; ?>" readonly>
                         </div>
                       </div>
-                        </div>
-                      </div>
                     </div>
-                    <a href="update_client.php?edit=<?php echo $id;?>" class="btn btn-primary">Edit Client</a>
-                    <a href="add_account.php?edit=<?php echo $id;?>" class="btn btn-primary">Add Account to client</a>
-                  </form>
+                  </div>
                 </div>
-                <?php
-                }
-                else if($ctype == 'CORPORATE')
-                {
-                  $id = $_GET["edit"];
-                  $update = true;
-                  $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id' && int_id ='$sessint_id'");
-                  if (count([$person]) == 1) {
-                    $t = mysqli_fetch_array($person);
-                    $emaila = $t['email_address'];
-                    $dob = $t['date_of_birth'];
-                    $rc_number = $t['rc_number'];
-                    $sig_one = $t['sig_one'];
-                    $sig_two = $t['sig_two'];
-                    $sig_three = $t['sig_three'];
-                    $sig_address_one = $t['sig_address_one'];
-                    $sig_address_two = $t['sig_address_two'];
-                    $sig_address_three = $t['sig_address_three'];
-                    $sig_phone_one = $t['sig_phone_one'];
-                    $sig_phone_two = $t['sig_phone_two'];
-                    $sig_phone_three = $t['sig_phone_three'];
-                    $sig_gender_one = $t['sig_gender_one'];
-                    $sig_gender_two = $t['sig_gender_two'];
-                    $sig_gender_three = $t['sig_gender_three'];
-                    $sig_state_one = $t['sig_state_one'];
-                    $sig_state_two = $t['sig_state_two'];
-                    $sig_state_three = $t['sig_state_three'];
-                    $sig_lga_one = $t['sig_lga_one'];
-                    $sig_lga_two = $t['sig_lga_two'];
-                    $sig_lga_three = $t['sig_lga_three'];
-                    $sig_occu_one = $t['sig_occu_one'];
-                    $sig_occu_two = $t['sig_occu_two'];
-                    $sig_occu_three = $t['sig_occu_three'];
-                    $sig_bvn_one = $t['sig_bvn_one'];
-                    $sig_bvn_two = $t['sig_bvn_two'];
-                    $sig_bvn_three = $t['sig_bvn_three'];
-                    $l_officer = $t['loan_officer_id'];
-                    $acount = mysqli_query($connection, "SELECT * FROM staff WHERE id='$l_officer'");
-                    if (count([$acount]) == 1) {
-                      $r = mysqli_fetch_array($acount);
-                      $acc_off = strtoupper($r['first_name'] ." ". $j['last_name']);
+                <a href="update_client.php?edit=<?php echo $id; ?>" class="btn btn-primary">Edit Client</a>
+                <a href="add_account.php?edit=<?php echo $id; ?>" class="btn btn-primary"> Add Account to client</a>
+
+              </form>
+            </div>
+          <?php
+          } else if ($ctype == 'CORPORATE') {
+            $id = $_GET["edit"];
+            $update = true;
+            $person = mysqli_query($connection, "SELECT * FROM client WHERE id='$id' && int_id ='$sessint_id'");
+            if (count([$person]) == 1) {
+              $t = mysqli_fetch_array($person);
+              $emaila = $t['email_address'];
+              $dob = $t['date_of_birth'];
+              $rc_number = $t['rc_number'];
+              $sig_one = $t['sig_one'];
+              $sig_two = $t['sig_two'];
+              $sig_three = $t['sig_three'];
+              $sig_address_one = $t['sig_address_one'];
+              $sig_address_two = $t['sig_address_two'];
+              $sig_address_three = $t['sig_address_three'];
+              $sig_phone_one = $t['sig_phone_one'];
+              $sig_phone_two = $t['sig_phone_two'];
+              $sig_phone_three = $t['sig_phone_three'];
+              $sig_gender_one = $t['sig_gender_one'];
+              $sig_gender_two = $t['sig_gender_two'];
+              $sig_gender_three = $t['sig_gender_three'];
+              $sig_state_one = $t['sig_state_one'];
+              $sig_state_two = $t['sig_state_two'];
+              $sig_state_three = $t['sig_state_three'];
+              $sig_lga_one = $t['sig_lga_one'];
+              $sig_lga_two = $t['sig_lga_two'];
+              $sig_lga_three = $t['sig_lga_three'];
+              $sig_occu_one = $t['sig_occu_one'];
+              $sig_occu_two = $t['sig_occu_two'];
+              $sig_occu_three = $t['sig_occu_three'];
+              $sig_bvn_one = $t['sig_bvn_one'];
+              $sig_bvn_two = $t['sig_bvn_two'];
+              $sig_bvn_three = $t['sig_bvn_three'];
+              $l_officer = $t['loan_officer_id'];
+              $acount = mysqli_query($connection, "SELECT * FROM staff WHERE id='$l_officer'");
+              if (count([$acount]) == 1) {
+                $r = mysqli_fetch_array($acount);
+                $acc_off = strtoupper($r['first_name'] . " " . $j['last_name']);
+              }
+            }
+          ?>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="">Registered Name:</label>
+                <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo $display_name; ?>" readonly name="display_name">
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="">RC Number:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $rc_number; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="">Account Number:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $acc; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="">Date of Registration:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $dob; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="">Email Address:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $emaila; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="">Account Officer:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $acc_off; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="">Registered Address:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $address; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="">Name of Signatries NO1:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_one; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="">Name of Signatries NO2:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_two; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="">Name of Signatries NO3:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_three; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="">Phone No:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_phone_one; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="">Phone No:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_phone_two; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="">Phone No:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_phone_three; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="">BVN:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_one; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="">BVN:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_two; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="">BVN:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_three; ?>" readonly>
+                  </div>
+                </div>
+                <a href="update_client.php?edit=<?php echo $id; ?>" class="btn btn-primary">Edit CLient</a>
+              </div>
+            </div>
+          <?php
+          } ?>
+
+        </div>
+
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Generate Account Report</h4>
+          </div>
+          <div class="card-body">
+            <form method="POST" action="client_statement.php">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="">Start Date:</label>
+                    <input type="text" name="id" class="form-control" hidden value="<?php echo $id; ?>">
+                    <input type="date" name="start" id="" class="form-control" value="">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="">End Date:</label>
+                    <input type="date" name="end" id="" class="form-control" value="">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="">Account No:</label>
+                    <?php
+                    if (fill_account($connection) == "") {
+                    ?>
+                      <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo $migrate['Account_No']; ?>" readonly name="display_name">
+                    <?php
+                    } else {
+                    ?>
+                      <select id="account" name="account_id" class="form-control">
+                        <?php echo fill_account($connection); ?>
+                      </select>
+                    <?php
                     }
-                  }
-                  ?>
-                <div class="card-body">
-                <div class="form-group">
-                      <label for="">Registered Name:</label>
-                      <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo $display_name; ?>" readonly name="display_name">
+                    ?>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Generate Account Report</button>
+              <!-- Button trigger modal -->
+              <a href="" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Edit Transaction</a>
+              <!-- Button trigger modal -->
+
+              <!-- POP UP BEGINS -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h3 class="modal-title" id="exampleModalLabel">Transaction Adjustment</h3>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
                     </div>
-                    <div class="row">
-                      <div class="col-md-6">
+                    <div class="modal-body">
+                      <div class="col-md-12">
                         <div class="form-group">
-                          <label for="">RC Number:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $rc_number; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Account Number:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $acc; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Date of Registration:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $dob; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Email Address:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $emaila; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Account Officer:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $acc_off; ?>" readonly>
+                          <label class="bmd-label-floating" for="">Date: </label>
+                          <input class="form-control" type="date" placeholder="">
                         </div>
                       </div>
                       <div class="col-md-12">
                         <div class="form-group">
-                          <label for="">Registered Address:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $address; ?>" readonly>
+                          <label class="bmd-label-floating" for="">Amount:</label>
+                          <input class="form-control" type="number" placeholder="" r>
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-12">
                         <div class="form-group">
-                          <label for="">Name of Signatries NO1:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_one; ?>" readonly>
+                          <label class="bmd-label-floating" for="">Receipt Number</label>
+                          <input class="form-control" type="number" placeholder="">
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-12">
                         <div class="form-group">
-                          <label for="">Name of Signatries NO2:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_two; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">Name of Signatries NO3:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_three; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">Phone No:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_phone_one; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">Phone No:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_phone_two; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">Phone No:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_phone_three; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">BVN:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_one; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">BVN:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_two; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="">BVN:</label>
-                          <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_three; ?>" readonly>
-                        </div>
-                      </div>
-                      <a href="update_client.php?edit=<?php echo $id;?>" class="btn btn-primary">Edit CLient</a>
-                    </div>
-                </div>
-                <?php
-                }?>
-                
-              </div>
-              
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title">Generate Account Report</h4>
-                </div> 
-                <div class="card-body">
-                <form method = "POST" action="client_statement.php">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Start Date:</label>
-                          <input type="text" name="id" class="form-control" hidden value="<?php echo $id;?>">
-                          <input type="date" name="start" id="" class="form-control" value="">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">End Date:</label>
-                          <input type="date" name="end" id="" class="form-control" value="">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Account No:</label>
-                          <?php
-                              if(fill_account($connection) == ""){
-                            ?>
-                            <input type="text" name="" id="" style="text-transform: uppercase;" class="form-control" value="<?php echo $migrate['Account_No']; ?>" readonly name="display_name">
-                            <?php
-                              }else{
-                            ?>
-                            <select id="account" name="account_id" class="form-control">
-                              <?php echo fill_account($connection);?>
-                            </select>
-                            <?php
-                              }
-                            ?>
+                          <label class="bmd-label-floating" for="">Mobile Number</label>
+                          <input class="form-control" type="number" placeholder="">
                         </div>
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Generate Account Report</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <!-- Dialog box for signature -->
-              <div id="sig" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"><?php echo $first_name; ?></h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                        <img  src="../functions/clients/sign/<?php echo $signature;?>"/>
-                      </div>
-                    </div>
-                  </div>      
-                </div>
-                <!-- dialog ends -->
-                <!-- Dialog box for passport -->
-              <div id="pas" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"><?php echo $first_name; ?></h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                        <img  src="../functions/clients/passport/<?php echo $passport;?>"/>
-                      </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary">Save Adjustments</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                   </div>
                 </div>
-                <!-- dialog ends -->
-                <!-- Dialog box for id img -->
-              <div id="id" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"><?php echo $first_name; ?></h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                        <img  src="../functions/clients/id/<?php echo $id_img_url;?>"/>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- dialog ends -->
-                <div class="card card-profile">
-                <div class="card-avatar">
-                  <a data-toggle="modal" data-target="#pas">
-                    <img class="img" src="../functions/clients/passport/<?php echo $passport;?>" />
-                  </a>
-                </div>
-                <!-- Get client data -->
-                <div class="card-body">
-                  <h6 class="card-category text-gray">Clients Profile Picture</h6>
-                  <h4 class="card-title"><?php echo $display_name; ?></h4>
-                  <p class="card-description">
-            <?php echo $branch_name; ?>
-                  </p>
-                  <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
-                </div>
               </div>
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a data-toggle="modal" data-target="#id">
-                    <img class="img" src="../functions/clients/id/<?php echo $id_img_url;?>" />
-                  </a>
-                </div>
-                <!-- Get session data and populate user profile -->
-                <div class="card-body">
-                  <h6 class="card-category text-gray">ID Card</h6>
-                  <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
-                </div>
-              </div>
-                <!-- /id card -->
-                <div class="card card-profile">
-                <div class="card-avatar">
-                  <a data-toggle="modal" data-target="#sig">
-                    <img class="img" src="../functions/clients/sign/<?php echo $signature;?>" />
-                  </a>
-                </div>
-                <!-- Get session data and populate user profile -->
-                <div class="card-body">
-                  <h6 class="card-category text-gray">Signature</h6>
-                  <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
-                </div>
-              </div>
-                <!-- signature -->
-            </div>
+              <!-- POP UP ENDS -->  
+            </form>
           </div>
         </div>
       </div>
+      <div class="col-md-4">
+        <!-- Dialog box for signature -->
+        <div id="sig" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title"><?php echo $first_name; ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <img src="../functions/clients/sign/<?php echo $signature; ?>" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- dialog ends -->
+        <!-- Dialog box for passport -->
+        <div id="pas" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title"><?php echo $first_name; ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <img src="../functions/clients/passport/<?php echo $passport; ?>" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- dialog ends -->
+        <!-- Dialog box for id img -->
+        <div id="id" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title"><?php echo $first_name; ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <img src="../functions/clients/id/<?php echo $id_img_url; ?>" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- dialog ends -->
+        <div class="card card-profile">
+          <div class="card-avatar">
+            <a data-toggle="modal" data-target="#pas">
+              <img class="img" src="../functions/clients/passport/<?php echo $passport; ?>" />
+            </a>
+          </div>
+          <!-- Get client data -->
+          <div class="card-body">
+            <h6 class="card-category text-gray">Clients Profile Picture</h6>
+            <h4 class="card-title"><?php echo $display_name; ?></h4>
+            <p class="card-description">
+              <?php echo $branch_name; ?>
+            </p>
+            <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
+          </div>
+        </div>
+        <div class="card card-profile">
+          <div class="card-avatar">
+            <a data-toggle="modal" data-target="#id">
+              <img class="img" src="../functions/clients/id/<?php echo $id_img_url; ?>" />
+            </a>
+          </div>
+          <!-- Get session data and populate user profile -->
+          <div class="card-body">
+            <h6 class="card-category text-gray">ID Card</h6>
+            <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
+          </div>
+        </div>
+        <!-- /id card -->
+        <div class="card card-profile">
+          <div class="card-avatar">
+            <a data-toggle="modal" data-target="#sig">
+              <img class="img" src="../functions/clients/sign/<?php echo $signature; ?>" />
+            </a>
+          </div>
+          <!-- Get session data and populate user profile -->
+          <div class="card-body">
+            <h6 class="card-category text-gray">Signature</h6>
+            <!-- <a href="#pablo" class="btn btn-primary btn-round">Follow</a> -->
+          </div>
+        </div>
+        <!-- signature -->
+      </div>
+    </div>
+  </div>
+</div>
 
 <?php
 
