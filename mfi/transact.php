@@ -26,7 +26,8 @@ if (isset($_GET["message"])) {
     ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-} else if (isset($_GET["message1"])) {
+}
+else if (isset($_GET["message1"])) {
     $key = $_GET["message1"];
     // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
@@ -45,7 +46,8 @@ if (isset($_GET["message"])) {
   ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-} else if (isset($_GET["message2"])) {
+}
+else if (isset($_GET["message2"])) {
     $key = $_GET["message2"];
     // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;

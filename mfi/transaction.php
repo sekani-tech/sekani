@@ -125,7 +125,7 @@ $destination = "../index.php";
             <div class="col-md-4 ml-auto mr-auto">
               <div class="card card-pricing bg-primary"><div class="card-body ">
                   
-                  <h4 class="card-title">Bulk Deposit</h4>
+                  <h4 class="card-title">Bulk Deposit/Withdrawal</h4>
                   <p class="card-description">
                   Make Bulk Deposit in different Branches 
                   </p>
