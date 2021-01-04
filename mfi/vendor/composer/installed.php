@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '0bc7e5b6f7c6ba95b136dd4ccc1bca6c94ef600c',
+    'reference' => 'c416424588e422970da1e68263bd07a6b73658c1',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '0bc7e5b6f7c6ba95b136dd4ccc1bca6c94ef600c',
+      'reference' => 'c416424588e422970da1e68263bd07a6b73658c1',
     ),
     'maennchen/zipstream-php' => 
     array (
@@ -55,6 +55,15 @@
       array (
       ),
       'reference' => 'd178027d1e679832db9f38248fcc7200647dc2b7',
+    ),
+    'phpmailer/phpmailer' => 
+    array (
+      'pretty_version' => 'v6.2.0',
+      'version' => '6.2.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'e38888a75c070304ca5514197d4847a59a5c853f',
     ),
     'phpoffice/phpspreadsheet' => 
     array (
