@@ -143,10 +143,71 @@ $rezz = mysqli_query($connection, $activeq);
     <script src="../assets/js/charts/chart.min.js"></script>
     <script src="../assets/js/charts/chart.bundle.js"></script>
     <script src="../assets/js/charts/chart.bundle.min.js"></script>
+    <!-- autocomplete -->
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+      
+    <!-- <script src="../functions/autocomplete/autocomplete.js"></script>
+    <link href="../functions/autocomplete/autocomplete.css" rel="stylesheet"> -->
     <?php
-        if($yes == "true"){
-            include("items/scripts/complete_call.php");
-        }
+
+    if ($page_title == "Deposit/ Withdrawal") {
+
+    ?>
+        <!-- <script>
+            window.addEventListener("load", function() {
+                suggest.attach({
+                    target: "actName",
+                    url: "../functions/autocomplete/autosearch.php",
+                    data: {
+                        type: "name"
+                    },
+                    // delay : 200,
+                    min: 1
+                });
+
+            });
+            $(document).ready(function() {
+                $('.actName').on("change keyup paste", function() {
+                    var name = $(this).val();
+                    var ist = $('#int_id').val();
+                    $.ajax({
+                        url: "acct_acctName.php",
+                        method: "POST",
+                        data: {
+                            name: name,
+                            ist: ist
+                        },
+                        success: function(data) {
+                            $('#accname').html(data);
+                        }
+                    })
+                });
+            });
+        </script> -->
+    <?php
+    } else {
+    ?>
+        <!-- <script>
+            // var $j = jQuery.noConflict();
+            window.addEventListener("load", function() {
+                suggest.attach({
+                    method: "POST",
+                    target: "groups",
+                    url: "../functions/autocomplete/autosearch2.php",
+                    data: {
+                        type: "groups"
+                    },
+                    // delay : 200,
+                    min: 1
+                });
+
+            });
+        </script> -->
+    <?php
+    }
     ?>
     <style>
         /* custom css */
@@ -235,15 +296,15 @@ $rezz = mysqli_query($connection, $activeq);
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> -->
     <script src="../datatable/sweetalert.min.js"></script>
     <!-- <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css"> -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="../datatable/jquery-3.3.1.min.js"></script>
-    <script src="../datatable/jquery-3.3.2.js"></script>
+    <script src="../datatable/jquery-3.3.2.js"></script> -->
     <!-- DataTables -->
     <link rel="stylesheet" href="../datatable/jquery.dataTables.min.css">
     <link rel="stylesheet" href="../datatable/rowReorder.dataTables.min.css">
     <link rel="stylesheet" href="../datatable/responsive.dataTables.min.css">
     <!-- DataTables scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
     <!-- <script>
         var $j = $.noConflict(true);
     </script> -->

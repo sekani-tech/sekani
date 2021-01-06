@@ -283,7 +283,7 @@ $destination = "report_financial.php";
             <div class="col-md-12">
             <div class="card">
                 <div class="card-header card-header-primary">
-                <h4 class="card-title">Trial Balance</h4>
+                <h4 class="card-title">Daily Trial Balance</h4>
             </div>
             <?php
                   function fill_gl($connection)

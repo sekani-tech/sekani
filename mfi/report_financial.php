@@ -127,7 +127,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
                           <th><?php echo $row["name"]; ?></th>
                           <th><?php echo $row["category"]; ?></th>
                           <th><?php echo $row["description"]; ?></th>
-                          <td><a href="report_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
+                          <th><a href="report_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></th>
                         </tr>
                         <?php }
                           }
@@ -135,6 +135,12 @@ $_SESSION["lack_of_intfund_$key"] = null;
                             // echo "0 Document";
                           }
                           ?>
+                          <tr>
+                            <th>Trail Balance</th>
+                            <th>Financial</th>
+                            <th>list of all the general ledger accounts contained in the ledger of a business(CBN Recomendation)</th>
+                            <th><a href="trial_balance.php" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></th>
+                          </tr>
                           <!-- <th></th> -->
                     </table>
                   </div>
