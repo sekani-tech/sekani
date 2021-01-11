@@ -13,6 +13,7 @@ if (isset($_SESSION["client_id"]) && isset($_SESSION["start"]) && isset($_SESSIO
   $_POST["account_id"] = $_SESSION["account_id"];
 }
 
+
 if(isset($_SESSION["reversal"]) && $_SESSION["reversal"] == 1) {
   echo '<script type="text/javascript">
   $(document).ready(function(){
@@ -26,7 +27,7 @@ if(isset($_SESSION["reversal"]) && $_SESSION["reversal"] == 1) {
   });
   </script>
   ';
-  $_SESSION["reversal"] == 0;
+  unset($_SESSION["reversal"]);
 }
 
 if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"])) {
