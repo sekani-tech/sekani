@@ -1,9 +1,10 @@
 <?php
 // include connection page 
-// include("../connect.php");
-// session_start();
+include("../connect.php");
+session_start();
 
 $institutionID = $_SESSION["int_id"];
+
 // the staff carrying out this operation
 $staff = $_SESSION['user_id'];
 
@@ -34,7 +35,6 @@ if (isset($_POST['id']) && isset($_POST['account_number'])) {
             // check transaction type and calculate reversal account balance amount as needed.
             if ($transactionType = "credit") {
                 $reversedBalance = $accountBalance - $amount;
-                
             } else if ($transactionType = "debit") {
                 $reversedBalance = $accountBalance + $amount;
             } 
@@ -51,7 +51,7 @@ if (isset($_POST['id']) && isset($_POST['account_number'])) {
                                     });
                                     </script>
                                     ';
-                $URL = "client_statement.php";
+                $URL = "../../mfi/client_statement.php";
                 echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
             }
             // check if the teller exists first
@@ -66,6 +66,7 @@ if (isset($_POST['id']) && isset($_POST['account_number'])) {
                     if (count([$findInstitutionAccount]) == 1) {
                         $institutionAccountData =  mysqli_fetch_array($findInstitutionAccount);
                         $insitutionAccountBalance = $institutionAccountData['account_balance_derived'];
+                        
                         if ($transactionType = "credit") {
                             $newBalance = $insitutionAccountBalance - $amount;
                         } else if ($transactionType = "debit") {
@@ -85,18 +86,12 @@ if (isset($_POST['id']) && isset($_POST['account_number'])) {
                                 if ($deleteInstitutionTransaction) {
                                     $deleteTransactionRecord = mysqli_query($connection, "DELETE FROM account_transaction WHERE id = '$accountTransactionId'");
                                     if ($deleteTransactionRecord) {
-                                        echo '<script type="text/javascript">
-                                        $(document).ready(function(){
-                                            swal({
-                                                type: "success",
-                                                title: "Reversal Transaction",
-                                                text: "Transaction Sucessfully",
-                                                showConfirmButton: false,
-                                                timer: 2000
-                                            })
-                                        });
-                                        </script>
-                                        ';
+                                        $_SESSION["reversal"] = 1;
+                                        $_SESSION["client_id"] = $_POST['id'];
+                                        $_SESSION["start"] = $_POST["start"];
+                                        $_SESSION["end"] = $_POST["end"];
+                                        $_SESSION["account_id"] = $_POST["account_id"];
+
                                         $URL = "../../mfi/client_statement.php";
                                         echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                                     }
@@ -114,7 +109,7 @@ if (isset($_POST['id']) && isset($_POST['account_number'])) {
                                         });
                                         </script>
                                         ';
-                                        $URL = "client_statement.php";
+                                        $URL = "../../mfi/client_statement.php";
                                         echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                                     }
                                 } 
@@ -131,7 +126,7 @@ if (isset($_POST['id']) && isset($_POST['account_number'])) {
                                     });
                                     </script>
                                     ';
-                                    $URL = "client_statement.php";
+                                    $URL = "../../mfi/client_statement.php";
                                     echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                                 }
                             }
@@ -149,7 +144,7 @@ if (isset($_POST['id']) && isset($_POST['account_number'])) {
                                 });
                                 </script>
                                 ';
-                                $URL = "client_statement.php";
+                                $URL = "../../mfi/client_statement.php";
                                 echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                             }
                         } 
@@ -166,7 +161,7 @@ if (isset($_POST['id']) && isset($_POST['account_number'])) {
                                     });
                                     </script>
                                     ';
-                            $URL = "client_statement.php";
+                            $URL = "../../mfi/client_statement.php";
                             echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                         }
                     }
@@ -186,7 +181,7 @@ if (isset($_POST['id']) && isset($_POST['account_number'])) {
                                     });
                                     </script>
                                     ';
-                $URL = "client_statement.php";
+                $URL = "../../mfi/client_statement.php";
                 echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
             }
         } 
@@ -203,7 +198,7 @@ if (isset($_POST['id']) && isset($_POST['account_number'])) {
                                     });
                                     </script>
                                     ';
-            $URL = "client_statement.php";
+            $URL = "../../mfi/client_statement.php";
             echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
         }
     }

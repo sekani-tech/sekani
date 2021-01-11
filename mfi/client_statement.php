@@ -5,12 +5,37 @@ $destination = "client.php";
 include('header.php');
 
 $sessint_id = $_SESSION['int_id'];
+
+if (isset($_SESSION["client_id"]) && isset($_SESSION["start"]) && isset($_SESSION["end"]) && isset($_SESSION["account_id"])) {
+  $_POST["id"] = $_SESSION["client_id"];
+  $_POST["start"] = $_SESSION["start"];
+  $_POST["end"] = $_SESSION["end"];
+  $_POST["account_id"] = $_SESSION["account_id"];
+}
+
+if(isset($_SESSION["reversal"]) && $_SESSION["reversal"] == 1) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "Reversal Transaction",
+          text: "Transaction Successful",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["reversal"] == 0;
+}
+
 if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"])) {
   $id = $_POST["id"];
 
   $std = $_POST["start"];
 
   $acc_id = $_POST["account_id"];
+
   $query_account_number = mysqli_query($connection, "SELECT * FROM account WHERE account_no ='$acc_id' && int_id = '$sessint_id'");
   $acx = mysqli_fetch_array($query_account_number);
   $acc_no = $acx["account_no"];
@@ -34,6 +59,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
     $sms_active = $n['SMS_ACTIVE'];
     $email_active = $n['EMAIL_ACTIVE'];
     $query2 = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id='$sessint_id'");
+
     if (count([$query2]) == 1) {
       $b = mysqli_fetch_array($query2);
       $intname = $b['int_name'];
@@ -41,12 +67,14 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
       $full = $b['int_full'];
       $web = $b['website'];
     }
+
     $branchid = mysqli_query($connection, "SELECT * FROM branch WHERE id='$branch'");
     if (count([$branchid]) == 1) {
       $a = mysqli_fetch_array($branchid);
       $branch_name = strtoupper($a['name']);
       $branch_address = $a['location'];
     }
+
     $acount = mysqli_query($connection, "SELECT * FROM account WHERE client_id ='$id' && account_no='$acc_no'");
     if (count([$acount]) == 1) {
       $b = mysqli_fetch_array($acount);
@@ -71,7 +99,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
   }
 
   // session_start();
-  include("../functions/transactions/reversal.php");
+  // include("../functions/transactions/reversal.php");s
   //     // Store data in session variables
   //     session_regenerate_id();
   $_SESSION["loggedin"] = true;
@@ -166,6 +194,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
                                   <!-- <td></td> -->
                                   <td class="column1"><?php echo $row["transaction_date"]; ?></td>
                                   <td class="column2"><?php echo $row["created_date"]; ?></td>
+                                  <!-- Review this Section -->
                                   <?php
                                   if ($row["transaction_type"] == "") {
                                     $desc = "Deposit";
@@ -191,22 +220,22 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
                                   ?>
                                   <td class="column6"><?php echo  number_format($nxtbal, 2); ?></td>
                                   <td>
-                                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?php echo $row["id"]; ?>">Edit</a>
                                     <!-- Button trigger modal -->
+                                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?php echo $row["id"]; ?>">Edit</a>
 
                                     <!-- POP UP BEGINS -->
                                     <form action="../functions/transactions/reversal.php" method="POST">
-                                    <div class="modal fade" id="exampleModal<?php echo $row["id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                      <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <h3 class="modal-title" id="exampleModalLabel">Reverse Transaction</h3>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
-                                            </button>
-                                          </div>
-                                          <div class="modal-body">
-                                            
+                                      <div class="modal fade" id="exampleModal<?php echo $row["id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h3 class="modal-title" id="exampleModalLabel">Reverse Transaction</h3>
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+
                                               <div class="col-md-12">
                                                 <div class="form-group">
                                                   <label class="bmd-label-floating" for="">ID: </label>
@@ -237,25 +266,26 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
                                                   <input class="form-control" type="number" placeholder="" readonly value="<?php echo $row["transaction_id"]; ?>">
                                                 </div>
                                               </div>
+                                            </div>
 
-                                              
-                                            
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary">Reverse</button>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <input type="hidden" name="start" value="<?php echo $std; ?>">
+                                            <input type="hidden" name="end" value="<?php echo $endx; ?>">
+                                            <input type="hidden" name="account_id" value="<?php echo $acc_no; ?>">
+
+                                            <div class="modal-footer">
+                                              <button type="submit" class="btn btn-primary">Reverse</button>
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
-                                    </div>
                                     </form>
                                     <!-- POP UP ENDS -->
                                   </td>
                                 </tr>
                             <?php
                               }
-                          
-                            } 
+                            }
                             ?>
                             <!-- <th></th> -->
                           </tbody>
@@ -423,6 +453,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
     });
    </script>
   ';
+  
 }
 include('footer.php');
 
