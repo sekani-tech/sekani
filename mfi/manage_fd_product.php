@@ -275,10 +275,73 @@ $sint_id = $_SESSION['int_id'];
                               </select>
                             </div>
                           </div>
+                          <div class="col-md-2">
+                          <button class="btn btn-primary">Add</button>
+                          </div>
                           <div class="col-md-6">
                             <div id="show_charges">
                             </div>
                           </div>
+                        </div>
+                        <div class="row" style="margin-top: 50px;">
+                        <div class="col-md-12">
+                        <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>S/N</th>
+                <th>Name</th>
+                <th>Charge(Amount)</th>
+                <th>Collected On</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Loan Application Form</td>
+                <td>₦3,000.00</td>
+                <td>21/2/2021</td>
+                <td><button class="btn btn-primary">Delete</button></td>
+                
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Statement Printing</td>
+                <td>₦3,000.00</td>
+                <td>21/2/2021</td>
+                <td><button class="btn btn-primary">Delete</button></td>
+               
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Loan Penalty</td>
+                <td>₦3,000.00</td>
+                <td>21/2/2021</td>
+                <td><button class="btn btn-primary">Delete</button></td>
+               
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Loan Processing Fees</td>
+                <td>₦3,000.00</td>
+                <td>22/3/2021</td>
+                <td><button class="btn btn-primary">Delete</button></td>
+                
+            </tr>
+            
+          
+        </tbody>
+        
+    </table>
+
+    <script>
+    
+    $(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+                        
+                        </div>
                         </div>
                       </div>
                       <?php
@@ -301,7 +364,151 @@ $sint_id = $_SESSION['int_id'];
                     <!-- Third Tab -->
                     <!-- Fourth Tab -->
                     <div class="tab">
-                      display tab here
+                      <h3> Preview Fixed Deposit Product</h3>
+                        <p><i>All fields with (<span style="color: red;">*</span>) are required</i></p>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Name <span style="color: red;">*</span></label>
+                            <input type="text" name="name" class="form-control" id="" placeholder="Fixed Deposit full name..." readonly>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="shortLoanName">Short Loan Name <span style="color: red;">*</span> </label>
+                            <input type="text" class="form-control" name="short_name" value="" placeholder="Short Name..." readonly>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="loanDescription">Description <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" name="description" value="" placeholder="Description...." readonly>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="installmentAmount">Currency</label>
+                            <input type="text" class="form-control" name="currency" value="" placeholder="currency" readonly>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="interestRate">Deposit Amount <span style="color: red">*</span></label>
+                            <div class="row">
+                              <div class="col-md-4">
+                                <input type="text" class="form-control" name="deposita" value="" placeholder="Default" readonly>
+                              </div>
+                              <div class="col-md-4">
+                                <input type="text" class="form-control" name="deposita_min" value="" placeholder="Min" readonly>
+                              </div>
+                              <div class="col-md-4">
+                                <input type="text" class="form-control" name="deposita_max" value="" placeholder="Max" readonly>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="interestRate">Interest Rate <span style="color: red">*</span></label>
+                            <div class="row">
+                              <div class="col-md-4">
+                                <input type="text" class="form-control" name="interestRateDefault" value="" placeholder="Default" readonly>
+                              </div>
+                              <div class="col-md-4">
+                                <input type="text" class="form-control" name="interestRateMin" value="" placeholder="Min" readonly>
+                              </div>
+                              <div class="col-md-4">
+                                <input type="text" class="form-control" name="interestRateMaz" value="" placeholder="Max" readonly>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="interestRateApplied">Interest Posting period Type</label>
+                            <input type="text" class="form-control" name="IPPT" value="" placeholder="Interest Posting period Type" readonly>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="installmentAmount">Interest Compounding Period</label>
+                            
+                            <input type="text" class="form-control" name="ICP" value="" placeholder="Interest Compounding Period" readonly>
+                          </div>
+                        </div>
+                        <div class="col-md-6" hidden>
+                          <div class="form-group">
+                            <label for="interestMethodology">Interest Calculation Type</label>
+                            <input type="text" class="form-control" name="ICT" value="" placeholder="Interest Calculation Type" readonly>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="amortizatioMethody">Interest Calculation Days in Year type</label>                      
+                            <input type="text" class="form-control" name="ICDiYT" value="" placeholder="Interest Calculation Days in Year type" readonly>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="principal">Minimum Deposit Term <span style="color: red">*</span></label>
+                            <div class="row">
+                              <div class="col-md-4">
+                                <input type="number" class="form-control" name="minimum_dep_term" value="" placeholder="Min" readonly>
+                              </div>
+                              <div class="col-md-8">
+                                <input type="number" class="form-control" name="minimum_dep_time" value="" placeholder="minimum_dep_term_time" readonly>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="additionalCharges">Auto Renew on maturity</label>
+                            <input type="number" class="form-control" name="Auto Renew on maturity" value="" placeholder="Auto Renew on maturity" readonly>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="principal">Maximum Deposit Term <span style="color: red">*</span></label>
+                            <div class="row">
+                              <div class="col-md-4">
+                                <input type="number" class="form-control" name="maximum_dep_term" value="" placeholder="Max" readonly>
+                              </div>
+                              <div class="col-md-8">
+                                <input type="number" class="form-control" name="maximum_dep_term_time" value="" placeholder="maximum_dep_term_time" readonly>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="additionalCharges">Allow Premature Closing Penalty</label>                           
+                            <input type="number" class="form-control" name="Allow Premature Closing Penalty" value="" placeholder="Allow Premature Closing Penalty" readonly>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>GL Codes <span style="color: red">*</span></label>
+                            <input type="text" class="form-control" name="" value="" placeholder="GL Codes" readonly>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="principal">In Multiples of Deposit Term <span style="color: red">*</span></label>
+                            <div class="row">
+                              <div class="col-md-4">
+                                <input type="number" class="form-control" name="inmultiples_dep_term" value="" placeholder="Default" readonly>
+                              </div>
+                              <div class="col-md-8">
+                                
+                                <input type="number" class="form-control" name="inmultiples_dep_term" value="" placeholder="Default" readonly>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <!-- Fourth Tab -->
