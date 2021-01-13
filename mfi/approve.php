@@ -25,17 +25,17 @@ $gends = date('Y-m-d h:i:sa');
 <?php
 if (isset($_GET['approve']) && $_GET['approve'] !== '') {
   $appod = $_GET['approve'];
+
   $checkm = mysqli_query($connection, "SELECT * FROM transact_cache WHERE id = '$appod' && int_id = '$sessint_id' && status = 'Pending'");
   if (count([$checkm]) == 1) {
       $x = mysqli_fetch_array($checkm);
-      $ssint_id = $_SESSION["int_id"];
-      $appuser_id = $_SESSION["user_id"];
+
       $cn = $x['client_name'];
       $client_id = $x['client_id'];
       $id = $client_id;
       $acct_no = $x['account_no'];
       $account_display = substr("$acct_no", 0, 3)."*****".substr("$acct_no",8);
-      $staff_id = $x['staff_id'];
+      $teller_id = $x['teller_id'];
       $ao = $x['account_off_name'];
       $amount = $x['amount'];
       $famt = number_format("$amount", 2);
@@ -52,8 +52,9 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $bank_gl_code = $x["bank_gl_code"];
       $irvs = 0;
 
-      $gl_manq = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$bank_gl_code' && int_id = '$sessint_id'");
-      $glv = mysqli_fetch_array($gl_manq);
+      $glv = selectOne('acc_gl_account', ['int_id'=>$sessint_id,'gl_code'=>$bank_gl_code]);
+//      $gl_manq = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$bank_gl_code' && int_id = '$sessint_id'");
+//      $glv = mysqli_fetch_array($gl_manq);
       $E_acct_bal = $glv["organization_running_balance_derived"];
       // DMAN
       $new_gl_balx = $E_acct_bal + $amount;
@@ -69,7 +70,7 @@ $gends = date('Y-m-d h:i:sa');
 <?php
 // making expense transaction
 // get all important things first
-$taketeller = "SELECT * FROM tellers WHERE name = '$staff_id' && int_id = '$sessint_id'";
+$taketeller = "SELECT * FROM tellers WHERE id = '$teller_id' && int_id = '$sessint_id'";
 $check_me_men = mysqli_query($connection, $taketeller);
 if ($check_me_men) {
 $ex = mysqli_fetch_array($check_me_men);
@@ -91,7 +92,7 @@ $gl_name = $gl["name"];
 $l_acct_bal = $gl["organization_running_balance_derived"];
 $new_gl_bal = $l_acct_bal + $gl_amt;
 // remeber the institution account
-$damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
+$damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$teller_id'");
     if (count([$damn]) == 1) {
         $x = mysqli_fetch_array($damn);
         $int_acct_bal = $x['account_balance_derived'];

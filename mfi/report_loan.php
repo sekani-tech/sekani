@@ -70,7 +70,8 @@ if (isset($_GET["message3"])) {
   </script>
   ';
   $_SESSION["lack_of_intfund_$key"] = null;
-} else if (isset($_GET["message4"])) {
+}
+else if (isset($_GET["message4"])) {
   $key = $_GET["message4"];
   // $out = $_SESSION["lack_of_intfund_$key"];
   echo '<script type="text/javascript">

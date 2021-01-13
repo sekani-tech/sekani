@@ -5,189 +5,11 @@ $destination = "transaction.php";
 include("header.php");
 include("ajaxcallx.php");
 
-function fill_product($connection)
-{
-    $sint_id = $_SESSION["int_id"];
-    $org = "SELECT * FROM product WHERE int_id = '$sint_id' ORDER BY name ASC";
-    $res = mysqli_query($connection, $org);
-    $output = '';
-    while ($row = mysqli_fetch_array($res)) {
-        $output .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
-    }
-    return $output;
-}
-
-// a function for client data fill
-function fill_client($connection)
-{
-    $sint_id = $_SESSION["int_id"];
-    $branc = $_SESSION["branch_id"];
-    $org = "SELECT client.id, client.firstname, client.lastname, client.middlename FROM client JOIN branch ON client.branch_id = branch.id WHERE client.int_id = '$sint_id' AND (branch.id = '$branc' OR branch.parent_id = '$branc') AND status = 'Approved' ORDER BY firstname ASC";
-    $res = mysqli_query($connection, $org);
-    $out = '';
-    while ($row = mysqli_fetch_array($res)) {
-        $out .= '<option value="' . $row["id"] . '">' . strtoupper($row["firstname"]) . " " . strtoupper($row["middlename"]) . " " . strtoupper($row["lastname"]) . '</option>';
-    }
-    return $out;
-}
-
-// a function for collateral
-function fill_collateral($connection)
-{
-    $sint_id = $_SESSION["int_id"];
-    $org = "SELECT * FROM collateral WHERE int_id = '$sint_id'";
-    $res = mysqli_query($connection, $org);
-    $out = '';
-    while ($row = mysqli_fetch_array($res)) {
-        $out .= '<option value="' . $row["id"] . '">' . $row["type"] . '</option>';
-    }
-    return $out;
-}
-
-// Function for charges
-function fill_charges($connection)
-{
-    $sint_id = $_SESSION["int_id"];
-    $org = "SELECT * FROM charge WHERE int_id = '$sint_id'";
-    $res = mysqli_query($connection, $org);
-    $out = '';
-    while ($row = mysqli_fetch_array($res)) {
-        $out .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
-    }
-    return $out;
-}
-
 ?>
 <!-- Content added here -->
-<style>
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        background-color: #f1f1f1;
-    }
-
-    /* #regForm {
-      background-color: #ffffff;
-      margin: 100px auto;
-      font-family: Raleway;
-      padding: 40px;
-      width: 70%;
-      min-width: 300px;
-    } */
-
-    h1 {
-        text-align: center;
-    }
-
-    input {
-        padding: 10px;
-        width: 100%;
-        font-size: 17px;
-        font-family: Raleway;
-        border: 1px solid #aaaaaa;
-    }
-
-    /* Mark input boxes that gets an error on validation: */
-    input.invalid {
-        background-color: #ffdddd;
-    }
-
-    #backg {
-        display: none;
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        top: 0px;
-        left: 0px;
-        background-color: black;
-        opacity: 0.7;
-        z-index: 9999;
-    }
-
-    #dlbox {
-        /*initially dialog box is hidden*/
-        display: none;
-        position: fixed;
-        width: 480px;
-        z-index: 9999;
-        border-radius: 10px;
-        padding: 20px;
-        background-color: #ffffff;
-    }
-
-    /* Hide all steps by default: */
-    .tab {
-        display: none;
-    }
-
-    button {
-        background-color: #a13cb6;
-        color: #ffffff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 17px;
-        font-family: Raleway;
-        cursor: pointer;
-    }
-
-    button:hover {
-        opacity: 0.8;
-    }
-
-    #prevBtn {
-        background-color: #bbbbbb;
-    }
-
-    /* Make circles that indicate the steps of the form: */
-    .step {
-        height: 15px;
-        width: 15px;
-        margin: 0 2px;
-        background-color: #bbbbbb;
-        border: none;
-        border-radius: 50%;
-        display: inline-block;
-        opacity: 0.5;
-    }
-
-    .step.active {
-        opacity: 1;
-    }
-
-    /* Mark the steps that are finished and valid: */
-    .step.finish {
-        background-color: #9e38b5;
-    }
-
-    #background {
-        display: none;
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        top: 0px;
-        left: 0px;
-        background-color: black;
-        opacity: 0.7;
-        z-index: 9999;
-    }
-
-    #diallbox {
-        /*initially dialog box is hidden*/
-        display: none;
-        position: fixed;
-        width: 480px;
-        z-index: 9999;
-        border-radius: 10px;
-        padding: 20px;
-        background-color: #ffffff;
-    }
-</style>
 <div class="content">
     <div class="container-fluid">
         <?php
-        //        Message Response
         if (isset($_GET["message"])) {
             $key = $_GET["message"];
             $tt = 0;
@@ -321,10 +143,62 @@ function fill_charges($connection)
                                         <div class="tab"><h3> Terms:</h3>
                                             <?php
                                             // load user role data
+                                            function fill_product($connection)
+                                            {
+                                                $sint_id = $_SESSION["int_id"];
+                                                $org = "SELECT * FROM product WHERE int_id = '$sint_id' ORDER BY name ASC";
+                                                $res = mysqli_query($connection, $org);
+                                                $output = '';
+                                                while ($row = mysqli_fetch_array($res)) {
+                                                    $output .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
+                                                }
+                                                return $output;
+                                            }
+
+                                            // a function for client data fill
+                                            function fill_client($connection)
+                                            {
+                                                $sint_id = $_SESSION["int_id"];
+                                                $branc = $_SESSION["branch_id"];
+                                                $org = "SELECT client.id, client.firstname, client.lastname, client.middlename FROM client JOIN branch ON client.branch_id = branch.id WHERE client.int_id = '$sint_id' AND (branch.id = '$branc' OR branch.parent_id = '$branc') AND status = 'Approved' ORDER BY firstname ASC";
+                                                $res = mysqli_query($connection, $org);
+                                                $out = '';
+                                                while ($row = mysqli_fetch_array($res)) {
+                                                    $out .= '<option value="' . $row["id"] . '">' . strtoupper($row["firstname"]) . " " . strtoupper($row["middlename"]) . " " . strtoupper($row["lastname"]) . '</option>';
+                                                }
+                                                return $out;
+                                            }
+
+                                            // a function for collateral
+                                            function fill_collateral($connection)
+                                            {
+                                                $sint_id = $_SESSION["int_id"];
+                                                $org = "SELECT * FROM collateral WHERE int_id = '$sint_id'";
+                                                $res = mysqli_query($connection, $org);
+                                                $out = '';
+                                                while ($row = mysqli_fetch_array($res)) {
+                                                    $out .= '<option value="' . $row["id"] . '">' . $row["type"] . '</option>';
+                                                }
+                                                return $out;
+                                            }
+
+                                            // Function for charges
+                                            function fill_charges($connection)
+                                            {
+                                                $sint_id = $_SESSION["int_id"];
+                                                $org = "SELECT * FROM charge WHERE int_id = '$sint_id'";
+                                                $res = mysqli_query($connection, $org);
+                                                $out = '';
+                                                while ($row = mysqli_fetch_array($res)) {
+                                                    $out .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
+                                                }
+                                                return $out;
+                                            }
+
                                             $digit = 6;
                                             $rando = str_pad(rand(0, pow(10, $digit) - 1), $digit, '0', STR_PAD_LEFT);
                                             ?>
-                                            <input hidden type="text" id="random" name="rand" value="<?php echo $rando; ?>"/>
+                                            <input hidden type="text" id="random" value="<?php echo $rando; ?>"/>
                                             <script>
                                                 $(document).ready(function () {
                                                     $('#charges').change(function () {
@@ -391,8 +265,8 @@ function fill_charges($connection)
                                             <!-- <div class="col-md-6">
                         <label class = "bmd-label-floating" for="charge" class="form-align mr-3">Charges</label>
                           <select class="form-control" name="charge"> 
-                            <option>select charge to add</option>                                               
-                          <?php //echo fill_charges($connection); ?>
+                            <option>select charge to add</option>
+<?php echo fill_charges($connection); ?>
                           </select>
                           <button type="button" class="btn btn-primary" name="button" onclick="displayCharge()"> <i class="fa fa-plus"></i> Add To Product </button>
                       </div> -->
@@ -522,7 +396,30 @@ function fill_charges($connection)
                                                             dlg.style.top = "150px";
                                                         }
                                                     </script>
+                                                    <style>
+                                                        #background {
+                                                            display: none;
+                                                            width: 100%;
+                                                            height: 100%;
+                                                            position: fixed;
+                                                            top: 0px;
+                                                            left: 0px;
+                                                            background-color: black;
+                                                            opacity: 0.7;
+                                                            z-index: 9999;
+                                                        }
 
+                                                        #diallbox {
+                                                            /*initially dialog box is hidden*/
+                                                            display: none;
+                                                            position: fixed;
+                                                            width: 480px;
+                                                            z-index: 9999;
+                                                            border-radius: 10px;
+                                                            padding: 20px;
+                                                            background-color: #ffffff;
+                                                        }
+                                                    </style>
                                                 </div>
                                             </div>
                                         </div>
@@ -696,7 +593,30 @@ function fill_charges($connection)
                                                         dlg.style.top = "150px";
                                                     }
                                                 </script>
+                                                <style>
+                                                    #backg {
+                                                        display: none;
+                                                        width: 100%;
+                                                        height: 100%;
+                                                        position: fixed;
+                                                        top: 0px;
+                                                        left: 0px;
+                                                        background-color: black;
+                                                        opacity: 0.7;
+                                                        z-index: 9999;
+                                                    }
 
+                                                    #dlbox {
+                                                        /*initially dialog box is hidden*/
+                                                        display: none;
+                                                        position: fixed;
+                                                        width: 480px;
+                                                        z-index: 9999;
+                                                        border-radius: 10px;
+                                                        padding: 20px;
+                                                        background-color: #ffffff;
+                                                    }
+                                                </style>
                                             </div>
                                         </div>
                                         <!-- Fifth Tab Ends -->
@@ -936,7 +856,7 @@ function fill_charges($connection)
                                                 </div>
                                                 <!-- <div class="col-md-6 form-group">
                                 <label class = "bmd-label-floating">Loan End Date:</label>
-                                <input readonly type="sc" value="<?php //$actualend_date ?>" name="repay_start" id="end" class="form-control">
+                                <input readonly type="sc" value="<?php $actualend_date ?>" name="repay_start" id="end" class="form-control">
                               </div> -->
                                                 <!-- </div> -->
                                             </div>
@@ -999,7 +919,83 @@ function fill_charges($connection)
 </div>
     </div>
     <style>
+        * {
+            box-sizing: border-box;
+        }
 
+        body {
+            background-color: #f1f1f1;
+        }
+
+        /* #regForm {
+          background-color: #ffffff;
+          margin: 100px auto;
+          font-family: Raleway;
+          padding: 40px;
+          width: 70%;
+          min-width: 300px;
+        } */
+
+        h1 {
+            text-align: center;
+        }
+
+        input {
+            padding: 10px;
+            width: 100%;
+            font-size: 17px;
+            font-family: Raleway;
+            border: 1px solid #aaaaaa;
+        }
+
+        /* Mark input boxes that gets an error on validation: */
+        input.invalid {
+            background-color: #ffdddd;
+        }
+
+        /* Hide all steps by default: */
+        .tab {
+            display: none;
+        }
+
+        button {
+            background-color: #a13cb6;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 17px;
+            font-family: Raleway;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        #prevBtn {
+            background-color: #bbbbbb;
+        }
+
+        /* Make circles that indicate the steps of the form: */
+        .step {
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbbbbb;
+            border: none;
+            border-radius: 50%;
+            display: inline-block;
+            opacity: 0.5;
+        }
+
+        .step.active {
+            opacity: 1;
+        }
+
+        /* Mark the steps that are finished and valid: */
+        .step.finish {
+            background-color: #9e38b5;
+        }
     </style>
     <script>
         var currentTab = 0; // Current tab is set to be the first tab (0)
