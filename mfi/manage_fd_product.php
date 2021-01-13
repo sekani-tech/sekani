@@ -31,11 +31,12 @@ $sint_id = $_SESSION['int_id'];
                     <!-- First Tab -->
                     <div class="tab">
                       <h3> New Fixed Deposit Term Product:</h3>
+                        <p><i>All fields with (<span style="color: red;">*</span>) are required</i></p>
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label>Name *:</label>
-                            <input type="text" name="name" class="form-control" id="" required>
+                            <label>Name <span style="color: red;">*</span></label>
+                            <input type="text" name="name" class="form-control" id="" placeholder="Fixed Deposit full name..." required>
                           </div>
                         </div>
                         <div class="col-md-6">
@@ -46,13 +47,10 @@ $sint_id = $_SESSION['int_id'];
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label for="loanDescription">Description *</label>
+                            <label for="loanDescription">Description <span style="color: red;">*</span></label>
                             <input type="text" class="form-control" name="description" value="" placeholder="Description...." required>
                           </div>
                         </div>
-                        <!-- <div class="col-md-6">
-                        just deleted
-                      </div> -->
                         <div class="col-md-6">
                           <div class="form-group">
                             <label for="installmentAmount">Currency</label>
@@ -63,7 +61,7 @@ $sint_id = $_SESSION['int_id'];
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label for="interestRate">Deposit Amount</label>
+                            <label for="interestRate">Deposit Amount <span style="color: red">*</span></label>
                             <div class="row">
                               <div class="col-md-4">
                                 <input type="text" class="form-control" name="deposita" value="" placeholder="Default" required>
@@ -79,16 +77,16 @@ $sint_id = $_SESSION['int_id'];
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label for="interestRate">Interest Amount</label>
+                            <label for="interestRate">Interest Rate <span style="color: red">*</span></label>
                             <div class="row">
                               <div class="col-md-4">
-                                <input type="text" class="form-control" name="" value="" placeholder="Default" required>
+                                <input type="text" class="form-control" name="interestRateDefault" value="" placeholder="Default" required>
                               </div>
                               <div class="col-md-4">
-                                <input type="text" class="form-control" name="" value="" placeholder="Min" required>
+                                <input type="text" class="form-control" name="interestRateMin" value="" placeholder="Min" required>
                               </div>
                               <div class="col-md-4">
-                                <input type="text" class="form-control" name="" value="" placeholder="Max" required>
+                                <input type="text" class="form-control" name="interestRateMaz" value="" placeholder="Max" required>
                               </div>
                             </div>
                           </div>
@@ -107,7 +105,8 @@ $sint_id = $_SESSION['int_id'];
                         <div class="col-md-6">
                           <div class="form-group">
                             <label for="installmentAmount">Interest Compounding Period</label>
-                            <select class="form-control" name="compound_period">
+                            <select class="form-control" name="compound_period" required>
+                              <option value="">Select Option</option>
                               <option value="2">Monthly</option>
                               <option value="3">Quarterly</option>
                               <option value="4">Bi-Annually</option>
@@ -156,7 +155,7 @@ $sint_id = $_SESSION['int_id'];
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label for="principal">Minimum Deposit Term</label>
+                            <label for="principal">Minimum Deposit Term <span style="color: red">*</span></label>
                             <div class="row">
                               <div class="col-md-4">
                                 <input type="number" class="form-control" name="minimum_dep_term" value="" placeholder="Min" required>
@@ -182,7 +181,7 @@ $sint_id = $_SESSION['int_id'];
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label for="principal">Maximum Deposit Term</label>
+                            <label for="principal">Maximum Deposit Term <span style="color: red">*</span></label>
                             <div class="row">
                               <div class="col-md-4">
                                 <input type="number" class="form-control" name="maximum_dep_term" value="" placeholder="Max" required>
@@ -209,13 +208,13 @@ $sint_id = $_SESSION['int_id'];
 
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label>GL Codes</label>
+                            <label>GL Codes <span style="color: red">*</span></label>
                             <input type="text" class="form-control" name="" value="" placeholder="GL Codes" required>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label for="principal">In Multiples of Deposit Term</label>
+                            <label for="principal">In Multiples of Deposit Term <span style="color: red">*</span></label>
                             <div class="row">
                               <div class="col-md-4">
                                 <input type="number" class="form-control" name="inmultiples_dep_term" value="" placeholder="Default" required>
@@ -319,7 +318,7 @@ $sint_id = $_SESSION['int_id'];
                     <span class="step"></span>
                     <span class="step"></span>
                     <span class="step"></span>
-                    <span class="step"></span>
+<!--                    <span class="step"></span>-->
                   </div>
                 </div>
               </div>
