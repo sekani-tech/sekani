@@ -122,19 +122,19 @@ $rezz = mysqli_query($connection, $activeq);
     <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
     <!-- Material Kit CSS -->
     <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
-    <script>
-        function makeRequest() {
-            $.ajax({
-                url: "functions_test/email.php",
-                complete: function(data) {
-                    setTimeout(function() {
-                        makeRequest();
-                    }, 60 * 60 * 1000); // Minutes * Seconds * MS
-                }
-            });
-        }
-        makeRequest();
-    </script>
+<!--    <script>-->
+<!--        function makeRequest() {-->
+<!--            $.ajax({-->
+<!--                url: "functions_test/email.php",-->
+<!--                complete: function(data) {-->
+<!--                    setTimeout(function() {-->
+<!--                        makeRequest();-->
+<!--                    }, 60 * 60 * 1000); // Minutes * Seconds * MS-->
+<!--                }-->
+<!--            });-->
+<!--        }-->
+<!--        makeRequest();-->
+<!--    </script>-->
     <!-- Search Query -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> -->

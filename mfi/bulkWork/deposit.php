@@ -83,7 +83,7 @@ if (isset($_POST['submit'])) {
             $totalAmount += $ourData['amount'];
             $tellerId = $ourData['teller_id'];
         }
-        
+
         //                getting tellers info to check for post limit
         $tellersCondition = ['id' => $tellerId];
         $tellerDetails = selectOne('tellers', $tellersCondition);
@@ -91,7 +91,7 @@ if (isset($_POST['submit'])) {
         $tellerNameId = $tellerDetails['name'];
         $tellerBranch = $tellerDetails['branch_id'];
         $tellerPostLimit = $tellerDetails['post_limit'];
-        
+
         if ($transactionType == 1) {
             // deposit
             if ($ourData['transaction_type_id'] != $transactionType) {
@@ -111,18 +111,19 @@ if (isset($_POST['submit'])) {
                         $paymentType = $ourDataTable['payment_type_id'];
                         $amount = $ourDataTable['amount'];
                         $tellerId = $ourDataTable['teller_id'];
+
                         $convertDate = strtotime($ourDataTable['date']);
                         $date = date('Y-m-d', $convertDate);
                         $fullDate = $date . ' ' . date('H:i:s');
 //                        $transactionNumber = $ourDataTable['deposit_slip_number'];
 //                    check account number given
                         if (strlen($ourDataTable['Account_Number']) === 9) {
-                        $accountNumber = '0' . $ourDataTable['Account_Number'];
-                    } else if (strlen($ourDataTable['Account_Number']) <= 8) {
-                        $accountNumber = '00' . $ourDataTable['Account_Number'];
-                    } else {
-                        $accountNumber = $ourDataTable['Account_Number'];
-                    }
+                            $accountNumber = '0' . $ourDataTable['Account_Number'];
+                        } else if (strlen($ourDataTable['Account_Number']) <= 8) {
+                            $accountNumber = '00' . $ourDataTable['Account_Number'];
+                        } else {
+                            $accountNumber = $ourDataTable['Account_Number'];
+                        }
 
                         if ($chosenBranch == $tellerBranch) {
 
@@ -142,8 +143,9 @@ if (isset($_POST['submit'])) {
                                 'client_id' => $accountClientId,
                                 'client_name' => $accountClientName,
                                 'staff_id' => $currentAppUser,
+                                'teller_id' => $tellerId,
                                 'amount' => $amount,
-                                'pay_type' => 'Cash',
+                                'pay_type' => $paymentType,
                                 'transact_type' => 'Deposit',
                                 'product_type' => $accountProductId,
                                 'status' => 'Pending',
@@ -161,7 +163,8 @@ if (isset($_POST['submit'])) {
                         header("Location: ../bulk_deposit.php?message4=$randms");
                         exit();
                     }
-                } else {
+                }
+                else {
 //            send information one by one
                     foreach ($ourDataTables as $kay => $ourDataTable) {
 //                Variable Name
@@ -202,6 +205,7 @@ if (isset($_POST['submit'])) {
                                 'account_balance_derived' => $accountBal,
                                 'last_deposit' => $amount,
                                 'last_activity_date' => date("Y-m-d"),
+                                'chooseDate' => $date
                             ];
                             //                        update account table
                             $updateLastDeposit = update('account', $accountId, $accountConstantName, $accountData);
@@ -223,6 +227,7 @@ if (isset($_POST['submit'])) {
                                 'running_balance_derived' => $accountBal,
                                 'cumulative_balance_derived' => $accountBal,
                                 'created_date' => date("Y-m-d H:i:s"),
+                                'chooseDate' => $date,
                                 'appuser_id' => $currentAppUser,
                                 'credit' => $amount,
                             ];
@@ -254,7 +259,8 @@ if (isset($_POST['submit'])) {
                                 'account_balance_derived' => $new_inst_acct_bal,
                                 'teller_id' => $tellerNameId,
                                 'total_deposits_derived' => $new_inst_total_bal_der,
-                                'last_activity_date' => $date
+                                'last_activity_date' => date("Y-m-d H:i:s"),
+                                'chooseDate' => $date
                             ];
                             $update_instAccount = update('institution_account', $idValue, 'id', $update_instAccountCon);
 
@@ -397,8 +403,9 @@ if (isset($_POST['submit'])) {
                             'client_id' => $accountClientId,
                             'client_name' => $accountClientName,
                             'staff_id' => $currentAppUser,
+                            'teller_id' => $tellerId,
                             'amount' => $amount,
-                            'pay_type' => 'Cash',
+                            'pay_type' => $paymentType,
                             'transact_type' => 'Withdrawal',
                             'product_type' => $accountProductId,
                             'status' => 'Pending',
@@ -412,6 +419,7 @@ if (isset($_POST['submit'])) {
                     }
                 }
                 if ($transactionCacheApproval) {
+
                     $_SESSION["Lack_of_intfund_$randms"] = "Sent for Approval!";
                     header("Location: ../bulk_deposit.php?message4=$randms");
                     exit();
@@ -426,75 +434,4 @@ if (isset($_POST['submit'])) {
     }
 }
 
-if (isset($_POST['submitGl'])) {
-    //    check for excel file submitted
-    if ($_FILES["excelFile"]["name"] !== '') {
-        $allowed_extension = array('xls', 'csv', 'xlsx');
-        $file_array = explode(".", $_FILES["excelFile"]["name"]);
-        $file_extension = end($file_array);
-
-        if (in_array($file_extension, $allowed_extension)) {
-            try {
-                $file_name = time() . '.' . $file_extension;
-                move_uploaded_file($_FILES['excelFile']['tmp_name'], $file_name);
-                $file_type = IOFactory::identify($file_name);
-                $reader = IOFactory::createReader($file_type);
-                $spreadsheet = $reader->load($file_name);
-
-                unlink($file_name);
-
-//            Data from excel Sheet
-                $data = $spreadsheet->getActiveSheet()->toArray();
-            } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
-            }
-            $ourDataTables = [];
-        }
-        foreach ($data as $key => $row) {
-            $ourDataTables[] = array(
-                'int_id' => $row['0'],
-                'branch_id' => $row['1'],
-                'gl_code' => $row['2'],
-                'parent_id' => $row['3'],
-                'transaction_id' => $row['4'],
-                'description' => $row['5'],
-                'transaction_type' => $row['6'],
-                'teller_id' => $row['7'],
-                'transaction_date' => $row['8'],
-                'amount' => $row['9'],
-                'gl_account_balance_derived' => $row['10'],
-                'branch_balance_derived' => $row['11'],
-                'cumulative_balance_derived' => $row['12'],
-                'created_date' => $row['13'],
-                'credit' => $row['14'],
-                'debit' => $row['15']
-            );
-        }
-
-        foreach ($ourDataTables as $ourDataTable){
-            $convertDate = strtotime($ourDataTable['transaction_date']);
-            $date = date('Y-m-d', $convertDate);
-            $fullDate = $date . ' ' . date('H:i:s');
-            $glCondition = [
-                'int_id' => $ourDataTable['int_id'],
-                'branch_id' => $ourDataTable['branch_id'],
-                'gl_code' => $ourDataTable['gl_code'],
-                'parent_id' => $ourDataTable['parent_id'],
-                'transaction_id' => $ourDataTable['transaction_id'],
-                'description' => $ourDataTable['description'],
-                'transaction_type' => $ourDataTable['transaction_type'],
-                'teller_id' => $ourDataTable['teller_id'],
-                'transaction_date' => $date,
-                'amount' => $ourDataTable['amount'],
-                'gl_account_balance_derived' => $ourDataTable['gl_account_balance_derived'],
-                'branch_balance_derived' => $ourDataTable['branch_balance_derived'],
-                'cumulative_balance_derived' => $ourDataTable['cumulative_balance_derived'],
-                'created_date' => $fullDate,
-                'credit' => $ourDataTable['credit'],
-                'debit' => $ourDataTable['debit']
-            ];
-            $gl_transaction = create('gl_account_transaction', $glCondition);
-            ddA($gl_transaction);
-        }
-    }
-}
 

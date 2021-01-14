@@ -111,7 +111,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="bmd-label-floating">Current Balance:</label>
-                    <input type="text" value="'.number_format($gl_account).'" name="" class="form-control" id="" readonly>
+                    <input type="text" value="'.number_format($balance).'" name="" class="form-control" id="" readonly>
                   </div>
                 </div>
                 <div class="col-md-4 form-group">

@@ -7,15 +7,15 @@ require_once "../vendor/autoload.php";
 // Recipient
 $tos = [
     'james' => 'jambone.james82@gmail.com',
-    'omoteeaiyenigba' => 'omoteeaiyenigba@gmail.com',
-    'easylife' => 'easylifecoop@yahoo.com',
-    'hbf' => 'hbflenders@yahoo.com',
-    'bis' => 'bistoy2012@gmail.com',
-    'greenback' => 'greenbacksmpcs@yahoo.com',
-    'emeraidcm' => 'emeraidcmc@gmail.com',
-    'mutualtrust' => 'mutualtrustcoop@gmail.com',
-    'danelsglobal' => 'info@danelsglobal.com.ng',
-    'lifeenhancement' => 'lifeenhancementhop@gmail.com'
+    'omoteeaiyenigba' => '',
+    'easylife' => '',
+    'hbf' => '',
+    'bis' => '',
+    'greenback' => '',
+    'emeraidcm' => '',
+    'mutualtrust' => '',
+    'danelsglobal' => '',
+    'lifeenhancement' => ''
 ];
 
 //PHPMailer Object
@@ -27,6 +27,15 @@ $mail->FromName = "Sekani-Tech";
 
 //To address and name
 $mail->addAddress("jambone.james82@gmail.com");
+$mail->addAddress("omoteeaiyenigba@gmail.com");
+$mail->addAddress("easylifecoop@yahoo.com");
+$mail->addAddress("hbflenders@yahoo.com");
+$mail->addAddress("bistoy2012@gmail.com");
+$mail->addAddress("greenbacksmpcs@yahoo.com");
+$mail->addAddress("emeraidcmc@gmail.com");
+$mail->addAddress("mutualtrustcoop@gmail.com");
+$mail->addAddress("info@danelsglobal.com.ng");
+$mail->addAddress("lifeenhancementhop@gmail.com");
 //$mail->addAddress("recepient1@example.com");
 
 // Attachment file
@@ -47,7 +56,10 @@ if ($file) {
 
         $mail->Subject = "Happy New Year";
         $mail->Body = '<img src="cid:newYear">';
-        $mail->AddEmbeddedImage(__DIR__ . $file, 'newYear');
+        try {
+            $mail->AddEmbeddedImage( '/sekani-technewyear-min.jpg', 'newYear');
+        } catch (Exception $e) {
+        }
 
 // Send email
         try {
