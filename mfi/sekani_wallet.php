@@ -102,6 +102,9 @@ $destination = "index.php";
             $get_id = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id'");
             $sw = mysqli_fetch_array($get_id);
             $wallet_bal = $sw["running_balance"];
+            $sms_bal = $sw["sms_balance"];
+            $bvn_bal = $sw["bvn_balance"];
+            $bills_bal = $sw["bills_balance"];
             $total_spent = $sw["total_withdrawal"];
             $total_deposit = $sw["total_deposit"];
             ?>
@@ -118,12 +121,24 @@ $destination = "index.php";
                     <div class="form-group">
                       <label for="installmentAmount" >Amount</label>
                       <input type="number" class="form-control" name="amt" value="" required>
+                      <input type="text" class="form-control" name="int_id_transaction" value="<?php echo $int_id; ?>" hidden required>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
                       <label for="installmentAmount">Transaction Id</label>
                       <input type="text" class="form-control" name="trans" value="<?php echo $transaction_id; ?>" readonly>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="installmentAmount" >Wallet</label>
+                      <select class="form-control" name="wallet">
+                      <option value="all" disabled>All Wallet Amount</option>
+                      <option value="sms">SMS Wallet</option>
+                      <option value="bvn">BVN Wallet</option>
+                      <option value="bills">Bills & Airtime Wallet</option>
+                      </select>
                     </div>
                 </div>
                  <div class="col-md-12">
@@ -136,7 +151,16 @@ $destination = "index.php";
                 </div>
                 <div class="card-body">
                     <div class="col-md-12">
-                      Balance: <div style="float: right;">NGN <?php echo number_format($wallet_bal,2); ?></div>
+                      General Balance: <div style="float: right;">NGN <?php echo number_format($wallet_bal,2); ?></div>
+                    </div>
+                    <div class="col-md-12">
+                      SMS Balance: <div style="float: right;">NGN <?php echo number_format($sms_bal,2); ?></div>
+                    </div>
+                    <div class="col-md-12">
+                      BVN Balance: <div style="float: right;">NGN <?php echo number_format($bvn_bal,2); ?></div>
+                    </div>
+                    <div class="col-md-12">
+                      Bills & Airtime Balance: <div style="float: right;">NGN <?php echo number_format($bills_bal,2); ?></div>
                     </div>
                     <hr>
                     <div class="col-md-12">
