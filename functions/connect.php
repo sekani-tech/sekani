@@ -80,6 +80,39 @@ function selectAll($table, $conditions = [])
     }
 }
 
+
+/**
+ * @param $table
+ * @param array $conditions
+ * @return mixed
+ */
+function selectAllWithOr($table, $conditions = [], $orField,$orValue)
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+    if (empty($conditions)) {
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $i = 0;
+        foreach ($conditions as $key => $value) {
+            if ($i === 0) {
+                $sql = $sql . " WHERE $key=?";
+            } else {
+                $sql = $sql . " AND $key=?";
+            }
+            $i++;
+        }
+
+        $sql = $sql. " OR ".$orField."=".$orValue;
+
+        $stmt = executeQuery($sql, $conditions);
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+}
+
+
 /**
  * @param $table
  * @param $conditions
@@ -105,6 +138,61 @@ function selectOne($table, $conditions)
     $stmt = executeQuery($sql, $conditions);
     return $stmt->get_result()->fetch_assoc();
 }
+
+/**
+ * @param $table
+ * @param $conditions
+ * @return array|null
+ */
+function selectOneWithOrder($table, $conditions, $orderCondition, $orderType, $limitNumber)
+{
+    $orderType = strtoupper($orderType);
+    $table = strtolower($table);
+    global $connection;
+    $sql = "SELECT * FROM $table";
+
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $i++;
+    }
+    $sql = $sql . " ORDER BY $orderCondition $orderType"; 
+    $stmt = executeQuery($sql, $conditions);
+    return $stmt->get_result()->fetch_assoc();
+}
+
+
+/**
+ * @param $table
+ * @param $conditions
+ * @return array|null
+ */
+function selectAllWithOrder($table, $conditions, $orderCondition, $orderType)
+{
+    $orderType = strtoupper($orderType);
+    $table = strtolower($table);
+    global $connection;
+    $sql = "SELECT * FROM $table";
+
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $i++;
+    }
+
+    $sql = $sql . " ORDER BY $orderCondition $orderType"; 
+    $stmt = executeQuery($sql, $conditions);
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+}
+
 
 /**
  * @param $table
@@ -148,6 +236,48 @@ function selectSpecificData($table, $pickConditions, $conditions = [])
 
     $stmt = executeQuery($sql, $conditions);
     return $stmt->get_result()->fetch_assoc();
+}
+
+
+/**
+ * @param $table
+ * @param $pickConditions
+ * @param array $conditions
+ * @return array|mixed|null
+ */
+function selectAllSpecificData($table, $pickConditions, $conditions = [])
+{
+    global $connection;
+    $sql = "SELECT";
+    $increamental = 0;
+    foreach ($pickConditions as $value) {
+        if ($increamental === 0) {
+            $sql = $sql . " $value";
+        } else {
+            $sql = $sql . ", $value";
+        }
+        $increamental++;
+    }
+    $sql = $sql . " FROM $table";
+
+    if (empty($conditions)) {
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $i = 0;
+        foreach ($conditions as $key => $value) {
+            if ($i === 0) {
+                $sql = $sql . " WHERE $key=?";
+            } else {
+                $sql = $sql . " AND $key=?";
+            }
+            $i++;
+        }
+    }
+
+    $stmt = executeQuery($sql, $conditions);
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
 /**
