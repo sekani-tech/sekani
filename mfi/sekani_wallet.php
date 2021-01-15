@@ -124,6 +124,7 @@ $destination = "index.php";
                       <input type="text" class="form-control" name="int_id_transaction" value="<?php echo $int_id; ?>" hidden required>
                     </div>
                 </div>
+                
                 <div class="col-md-12">
                     <div class="form-group">
                       <label for="installmentAmount">Transaction Id</label>
