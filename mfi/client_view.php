@@ -3,6 +3,7 @@ $page_title = "View Client";
 $destination = "client.php";
 include('header.php');
 ?>
+
 <?php
 if (isset($_GET["edit"])) {
   $id = $_GET["edit"];
@@ -126,6 +127,55 @@ function fill_accounting($connection)
   return $out;
 }
 ?>
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css"> -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="../assets/fancybox-2.1.7/source/jquery.fancybox.css" type="text/css" media="screen" />
+<script type="text/javascript" src="../assets/fancybox-2.1.7/source/jquery.fancybox.js"></script>
+<script type="text/javascript" src="../assets/fancybox-2.1.7/source/jquery.fancybox.pack.js"></script>
+
+<style>
+.fileinput .thumbnail {
+    display: inline-block;
+    margin-bottom: 10px;
+    overflow: hidden;
+    text-align: center;
+    vertical-align: middle;
+    max-width: 250px;
+    box-shadow: 0 10px 30px -12px rgba(0,0,0,.42), 0 4px 25px 0 rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
+}
+.thumbnail {
+    border: 0 none;
+    border-radius: 4px;
+    padding: 0;
+}
+.fileinput .thumbnail>img {
+    max-height: 100%;
+    width: 100%;
+}
+html * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+.gallery
+{
+    display: inline-block;
+}
+.close-icon{
+    border-radius: 50%;
+    position: absolute;
+    right: 5px;
+    top: -10px;
+    padding: 0.1px;
+    cursor: pointer;
+}
+
+</style>
+
 <!-- Content added here -->
 <div class="content">
   <div class="container-fluid">
@@ -622,10 +672,126 @@ function fill_accounting($connection)
           </div>
         </div>
         <!-- signature -->
+        
+
+        <form action="client_image_upload.php" method="POST" enctype="multipart/form-data">
+
+          <?php 
+            if(!empty($_SESSION['error'])) { 
+              echo "
+                <script>
+                  swal('{$_SESSION['error']}', '', 'danger')
+                </script>"
+              ;
+              unset($_SESSION['error']);
+            }  
+          ?>
+
+          <?php 
+            if(!empty($_SESSION['success'])) { 
+              echo "
+                <script>
+                  swal('{$_SESSION['success']}', '', 'success')
+                </script>"
+              ;
+              unset($_SESSION['success']);
+            } 
+          ?>
+
+          <div class="card card-profile pb-3">
+
+            <div class="card-body">
+
+              <h6 class="card-category text-gray">Upload File Image</h6>
+
+              <div class="fileinput fileinput-new text-center" data-provides="fileinput"> 
+
+                <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+
+                  <div class="row">
+
+                    <div class="col-10">
+                        <input type="file" name="image" class="form-control"/>
+                    </div>
+                    <div class="col-"> 
+                      <a href="#pablo" class="btn btn-danger btn-fab btn-fab-mini btn-round fileinput-exists" data-dismiss="fileinput"> 
+                        <i class="material-icons">clear</i>
+                      </a>
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+
+                    <div class="col-12">
+                        <button type="submit" id="upload-image" class="btn btn-primary">Upload</button>
+                    </div>
+
+                  </div>
+
+                  <input type="hidden" name="client_id" value="<?php echo $_GET['edit']; ?>">
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+ 
+        </form>
+
+        <div class="col-md-8">
+
+          <div class="card">
+
+            <div class="card-body">
+
+              <div class="row">
+
+                <?php
+                $client_id = $_GET['edit'];
+                $sql = "SELECT * FROM client_uploads WHERE client_id = '$client_id'";
+                $images = mysqli_query($connection, $sql);
+
+                while($image = mysqli_fetch_assoc($images)) {
+                ?>
+                  <div class='col-md-4 mb-4'>
+                      <a class="fancybox" rel="group"  href="uploads/<?php echo $image['image'] ?>">
+                          <img class="img-fluid" alt="" src="uploads/<?php echo $image['image'] ?>" />
+                      </a>
+                      <form action="client_image_delete.php" method="POST">
+                          <input type="hidden" name="id" value="<?php echo $image['id'] ?>">
+                          <input type="hidden" name="client_id" value="<?php echo $_GET['edit']; ?>">
+                          <button type="submit" class="close-icon"><i class="material-icons">clear</i></button>
+                      </form>
+                  </div>
+                <?php } ?>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
+
     </div>
+
   </div>
+
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".fancybox").fancybox({
+            openEffect: "none",
+            closeEffect: "none"
+        });
+    });
+</script>
 
 <?php
 
