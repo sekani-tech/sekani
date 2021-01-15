@@ -34,7 +34,7 @@ if ($bvn_length == 11) {
         // check if there is fund in the acoint
         $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id'");
         $qw = mysqli_fetch_array($sql_fund);
-        $balance = $qw["running_balance"];
+        $balance = $qw["bvn_balance"];
         $total_with = $qw["total_withdrawal"];
         $total_int_profit = $qw["int_profit"];
         $total_sekani_charge = $qw["sekani_charge"];
@@ -109,7 +109,7 @@ if ($bvn_length == 11) {
     $date2 = date('Y-m-d H:i:s');
     $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
     $trans = "SKWAL".$randms."LET".$int_id;
-    $update_transaction = mysqli_query($connection, "UPDATE sekani_wallet SET running_balance = '$cal_bal', total_withdrawal = '$cal_with',
+    $update_transaction = mysqli_query($connection, "UPDATE sekani_wallet SET bvn_balance = '$cal_bal', total_withdrawal = '$cal_with',
     int_profit = '$cal_int_prof', sekani_charge = '$cal_sek', merchant_charge = '$cal_mch' WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
     if ($update_transaction) {
         // update
@@ -231,7 +231,7 @@ if ($bvn_length == 11) {
     $date2 = date('Y-m-d H:i:s');
     $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
     $trans = "SKWAL".$randms."LET".$int_id;
-    $update_transaction = mysqli_query($connection, "UPDATE sekani_wallet SET running_balance = '$cal_bal', total_withdrawal = '$cal_with',
+    $update_transaction = mysqli_query($connection, "UPDATE sekani_wallet SET bvn_balance = '$cal_bal', total_withdrawal = '$cal_with',
     int_profit = '$cal_int_prof', sekani_charge = '$cal_sek', merchant_charge = '$cal_mch' WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
     if ($update_transaction) {
         // update
