@@ -364,8 +364,16 @@ $sint_id = $_SESSION['int_id'];
                     <!-- Third Tab -->
                     <!-- Fourth Tab -->
                     <div class="tab">
-                      <h3> Preview Fixed Deposit Product</h3>
+                      <div class="row">
+                        <div class="col-md-6">
+                        <h3> Preview Fixed Deposit Product</h3>
                         <p><i>All fields with (<span style="color: red;">*</span>) are required</i></p>
+                        </div>
+
+                        <div class="col-md-6">
+                        <button class="btn btn-primary">Preview</button>
+                        </div>
+                      </div>
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
