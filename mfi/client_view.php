@@ -127,8 +127,7 @@ function fill_accounting($connection)
   return $out;
 }
 ?>
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css"> -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+
 <!-- Add fancyBox -->
 <link rel="stylesheet" href="../assets/fancybox-2.1.7/source/jquery.fancybox.css" type="text/css" media="screen" />
 <script type="text/javascript" src="../assets/fancybox-2.1.7/source/jquery.fancybox.js"></script>
@@ -680,7 +679,10 @@ img {
             if(!empty($_SESSION['error'])) { 
               echo "
                 <script>
-                  swal('{$_SESSION['error']}', '', 'danger')
+                  swal('{$_SESSION['error']}', ' ', 'error', {
+                    button: false,
+                    timer: 2000
+                  });
                 </script>"
               ;
               unset($_SESSION['error']);
@@ -691,7 +693,10 @@ img {
             if(!empty($_SESSION['success'])) { 
               echo "
                 <script>
-                  swal('{$_SESSION['success']}', '', 'success')
+                  swal('{$_SESSION['success']}', ' ', 'success', {
+                    button: false,
+                    timer: 2000
+                  });
                 </script>"
               ;
               unset($_SESSION['success']);
@@ -702,7 +707,7 @@ img {
 
             <div class="card-body">
 
-              <h6 class="card-category text-gray">Upload File Image</h6>
+              <h6 class="card-category text-gray">Upload Image File</h6>
 
               <div class="fileinput fileinput-new text-center" data-provides="fileinput"> 
 
@@ -743,6 +748,14 @@ img {
 
         <div class="col-md-8">
 
+          <?php
+          $client_id = $_GET['edit'];
+          $sql = "SELECT * FROM client_uploads WHERE client_id = '$client_id'";
+          $images = mysqli_query($connection, $sql);
+
+          if(mysqli_num_rows($images) > 0) {
+          ?>
+
           <div class="card">
 
             <div class="card-body">
@@ -750,20 +763,18 @@ img {
               <div class="row">
 
                 <?php
-                $client_id = $_GET['edit'];
-                $sql = "SELECT * FROM client_uploads WHERE client_id = '$client_id'";
-                $images = mysqli_query($connection, $sql);
-
                 while($image = mysqli_fetch_assoc($images)) {
                 ?>
-                  <div class='col-md-4 mb-4'>
+                  <div class='col-md-4 mt-3'>
                       <a class="fancybox" rel="group"  href="uploads/<?php echo $image['image'] ?>">
                           <img class="img-fluid" alt="" src="uploads/<?php echo $image['image'] ?>" />
                       </a>
                       <form action="client_image_delete.php" method="POST">
                           <input type="hidden" name="id" value="<?php echo $image['id'] ?>">
                           <input type="hidden" name="client_id" value="<?php echo $_GET['edit']; ?>">
-                          <button type="submit" class="close-icon"><i class="material-icons">clear</i></button>
+                          <button type="submit" id="delete-image" class="close-icon" onclick="return confirm('Are you sure you want to delete this image?')">
+                            <i class="material-icons">clear</i>
+                          </button>
                       </form>
                   </div>
                 <?php } ?>
@@ -773,6 +784,8 @@ img {
             </div>
 
           </div>
+
+          <?php } ?>
 
         </div>
 
@@ -789,6 +802,10 @@ img {
         $(".fancybox").fancybox({
             openEffect: "none",
             closeEffect: "none"
+        });
+
+        $("#delete-image").click(function() {
+
         });
     });
 </script>
