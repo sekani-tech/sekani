@@ -16,7 +16,7 @@ if ($cable != "" && $smart != "" && $int_id != "" && $branch_id != "") {
     // finnin
     $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id'");
         $qw = mysqli_fetch_array($sql_fund);
-        $balance = $qw["running_balance"];
+        $balance = $qw["bills_balance"];
         $total_with = $qw["total_withdrawal"];
         $total_int_profit = $qw["int_profit"];
         $total_sekani_charge = $qw["sekani_charge"];

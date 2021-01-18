@@ -7,6 +7,7 @@ $int_id = $_SESSION["int_id"];
 $int_name = $_SESSION["int_name"];
 $branch_id = $_SESSION["branch_id"];
 $sender_id = $_SESSION["sender_id"];
+$staff_id = $_SESSION["staff_id"];
 $type = $_POST["cable"];
 $smart = $_POST["smart"];
 $customerName = $_SESSION["customerName"];
@@ -114,6 +115,20 @@ if ($status == "200" && $status != "") {
          VALUES ('{$int_id}', '{$branch_id}', '{$trans}', 'SMART CARD: $smart, TRANS: $transId, Package: $package', 'bill_cable', NULL, '0', '{$date}', '{$amount}', '{$cal_bal}', '{$cal_bal}', {$date}, 
          NULL, NULL, '{$date2}', '0', '0.00', '{$amount}', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
          if ($insert_transaction) {
+             //  Check for Teller
+             $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$int_id' && teller_id = '$staff_id'");
+             if (mysqli_num_rows($damn) > 0) {
+               $x = mysqli_fetch_array($damn);
+               $int_acct_bal = $x['account_balance_derived'];
+               $tbdx = $x['total_deposits_derived'] + $amount;
+               $new_int_bal = $amount + $int_acct_bal;
+
+               //  Once you are done Update Institution Account Balance
+                $iupq2 = mysqli_query($connection,"UPDATE institution_account SET account_balance_derived = '$new_int_bal', total_deposits_derived = '$tbdx' WHERE int_id = '$int_id' && teller_id = '$staff_id'");
+                // End Institution Account Balance
+             } else {
+               echo "No Account Found";
+             }
             //  go withdra
             echo '<script type="text/javascript">
     $(document).ready(function(){

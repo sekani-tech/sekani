@@ -5,6 +5,7 @@ include("../../../functions/connect.php");
 session_start();
 $int_id = $_SESSION["int_id"];
 $branch_id = $_SESSION["branch_id"];
+$staff_id = $_SESSION["staff_id"];
 $network = $_POST["net"];
 $phone = $_POST["phone"];
 $amount = $_SESSION["price"];
@@ -27,7 +28,7 @@ if ($pass != "") {
     // finnin
     $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id'");
         $qw = mysqli_fetch_array($sql_fund);
-        $balance = $qw["running_balance"];
+        $balance = $qw["bills_balance"];
         $total_with = $qw["total_withdrawal"];
         $total_int_profit = $qw["int_profit"];
         $total_sekani_charge = $qw["sekani_charge"];
@@ -93,7 +94,7 @@ if ($status == "200" && $status != "") {
     $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
     $trans = "SKWAL".$randms."DATA".$int_id;
     // GD
-    $update_transaction = mysqli_query($connection, "UPDATE sekani_wallet SET running_balance = '$cal_bal', total_withdrawal = '$cal_with',
+    $update_transaction = mysqli_query($connection, "UPDATE sekani_wallet SET bills_balance = '$cal_bal', total_withdrawal = '$cal_with',
     int_profit = '$cal_int_prof', sekani_charge = '$cal_sek', merchant_charge = '$cal_mch' WHERE int_id = '$int_id' AND branch_id = '$branch_id'");
     if ($update_transaction) {
         // WE ARE DONE
@@ -103,6 +104,20 @@ if ($status == "200" && $status != "") {
          VALUES ('{$int_id}', '{$branch_id}', '{$trans}', 'Data Recharge $network - $phone', 'bill_data', NULL, '0', '{$date}', '{$amount}', '{$cal_bal}', '{$cal_bal}', {$date}, 
          NULL, NULL, '{$date2}', '0', '0.00', '{$amount}', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
          if ($insert_transaction) {
+            //  Check for Teller
+            $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$int_id' && teller_id = '$staff_id'");
+            if (mysqli_num_rows($damn) > 0) {
+              $x = mysqli_fetch_array($damn);
+              $int_acct_bal = $x['account_balance_derived'];
+              $tbdx = $x['total_deposits_derived'] + $amount;
+              $new_int_bal = $amount + $int_acct_bal;
+
+              //  Once you are done Update Institution Account Balance
+               $iupq2 = mysqli_query($connection,"UPDATE institution_account SET account_balance_derived = '$new_int_bal', total_deposits_derived = '$tbdx' WHERE int_id = '$int_id' && teller_id = '$staff_id'");
+               // End Institution Account Balance
+            } else {
+              echo "No Account Found";
+            }
             //  go withdra
             echo '<script type="text/javascript">
     $(document).ready(function(){
