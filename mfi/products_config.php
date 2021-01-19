@@ -220,6 +220,24 @@ $(document).ready(function(){
               ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
+} if (isset($_GET["messageFTD3"])) {
+    $key = $_GET["messageFTD3"];
+    $tt = 0;
+    if ($tt !== $key) {
+        echo '<script type="text/javascript">
+$(document).ready(function(){
+    swal({
+        type: "success",
+        title: "Fixed Deposit Product",
+        text: "Product Created!",
+        showConfirmButton: true,
+        timer: 30000
+    })
+});
+</script>
+';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
