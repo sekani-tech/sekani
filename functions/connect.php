@@ -1,21 +1,5 @@
 <?php
-/* Database credentials. Assuming you are running MySQL
-server with default setting (user 'root' with no pssword) */
-define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'sekanisy');
-define('DB_PASSWORD', '4rWY#JP+rnl67');
-define('DB_CHARSET', 'utf8');
-define('DB_NAME', 'sekanisy_admin');
-// connect to the database with the defined values
-$connection = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-// if there's an error
-if (!$connection) {
-    echo "Failed to connect database" . die(mysqli_error($connection));;
-}
-$dbselect = mysqli_select_db($connection, DB_NAME);
-if (!$dbselect) {
-    echo "Failed to Select database" . die(mysqli_error($connection));
-}
+include "DbModel/db.php";
 
 //session_start();
 
@@ -86,7 +70,7 @@ function selectAll($table, $conditions = [])
  * @param array $conditions
  * @return mixed
  */
-function selectAllWithOr($table, $conditions = [], $orField,$orValue)
+function selectAllWithOr($table, $conditions = [], $orField, $orValue)
 {
     global $connection;
     $sql = "SELECT * FROM $table";
@@ -105,7 +89,7 @@ function selectAllWithOr($table, $conditions = [], $orField,$orValue)
             $i++;
         }
 
-        $sql = $sql. " OR ".$orField."=".$orValue;
+        $sql = $sql . " OR " . $orField . "=" . $orValue;
 
         $stmt = executeQuery($sql, $conditions);
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -160,7 +144,7 @@ function selectOneWithOrder($table, $conditions, $orderCondition, $orderType, $l
         }
         $i++;
     }
-    $sql = $sql . " ORDER BY $orderCondition $orderType"; 
+    $sql = $sql . " ORDER BY $orderCondition $orderType";
     $stmt = executeQuery($sql, $conditions);
     return $stmt->get_result()->fetch_assoc();
 }
@@ -188,7 +172,7 @@ function selectAllWithOrder($table, $conditions, $orderCondition, $orderType)
         $i++;
     }
 
-    $sql = $sql . " ORDER BY $orderCondition $orderType"; 
+    $sql = $sql . " ORDER BY $orderCondition $orderType";
     $stmt = executeQuery($sql, $conditions);
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
@@ -230,7 +214,6 @@ function selectSpecificData($table, $pickConditions, $conditions = [])
             $i++;
         }
     }
-
 
     $sql = $sql . " LIMIT 1";
 
@@ -428,4 +411,3 @@ function searchGroup($table1, $int_id, $term)
     ]);
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
-
