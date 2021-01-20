@@ -5,58 +5,52 @@ $destination = "accounting.php";
 include("header.php");
 
 ?>
+
+<style>
+.list-group{  
+    cursor: pointer;  
+}
+.list-group-item{  
+    color: #972FB0;
+    padding: 8px;
+    border-bottom: 1px solid #E9ECEF;
+}  
+.list-group-item:hover{  
+    background-color: #972FB0;
+    color: #FFFFFF;  
+}
+</style> 
+
 <?php
-$sessint_id = $_SESSION['int_id'];
+$int_id = $_SESSION['int_id'];
 $branch_id = $_SESSION['branch_id'];
 
-$reo = mysqli_query($connection, "SELECT * FROM inventory WHERE int_id ='$sessint_id'");
-$mw = mysqli_num_rows($reo);
-$sn = $mw + 1;
 $date = date('Y-m-d');
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // check the button value
-    $post = $_POST['submit'];
-    if ($post == 'edit_permission') {
-        $item = $_POST['item'];
-        $seer = $_POST['srial'];
-        $da = $_POST['datce'];
-        $quant = $_POST['quant'];
-        $unit = $_POST['price'];
-        $total = $quant * $unit;
 
-        $rod = "INSERT INTO inventory(int_id, branch_id, serial_no, date, item, quantity, unit_price, total_price)
-   VALUES('{$sessint_id}', '{$branch_id}', '{$seer}', '{$da}', '{$item}', '{$quant}', '{$unit}', '{$total}' ) ";
-        $ccccx = mysqli_query($connection, $rod);
-        if ($ccccx) {
-            $URL = "inventory.php";
-            echo '<script type="text/javascript">
-      $(document).ready(function(){
-          swal({
-              type: "success",
-              title: "Successful",
-              text: "The inventory data has been added successfully",
-              showConfirmButton: false,
-              timer: 2000
-          })
-      });
-      </script>
-      ';
-            echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-        } else {
-            echo '<script type="text/javascript">
-              $(document).ready(function(){
-                  swal({
-                      type: "error",
-                      title: "CannotAdd Inventory",
-                      text: "Error Occured in the Posting",
-                      showConfirmButton: false,
-                      timer: 2000
-                  })
-              });
-              </script>
-              ';
-        }
-    }
+if(isset($_SESSION['error'])) { 
+    echo "
+    <script>
+        swal('{$_SESSION['error']}', ' ', 'error', {
+        button: false,
+        timer: 3000
+        });
+    </script>"
+    ;
+    unset($_SESSION['error']);
+}
+
+if(isset($_SESSION['success'])) {
+    echo "
+    <script>
+        swal('{$_SESSION['success']}', ' ', 'success', {
+        button: false,
+        timer: 3000
+        });
+    </script>"
+    ;
+    unset($_SESSION['success']);
+}
+
 //  else if($post == 'chq'){
 //     $digits = 6;
 //     $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
@@ -104,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //                 ';
 //       }
 //  }
-}
+
 ?>
     <div class="content">
     <div class="container-fluid">
@@ -118,67 +112,78 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="card-body">
                         <div class="col-md-12">
                         </div>
-                        <form method="POST" enctype="multipart/form-data">
+                        <form method="POST" action="ajax_post/inventory_submit.php" enctype="multipart/form-data">
+                            <input type="hidden" name="int_id" value="<?php echo $int_id; ?>">
+                            <input type="hidden" name="branch_id" value="<?php echo $branch_id; ?>">
                             <!-- End of Javascript for the codes -->
                             <!-- for the permission -->
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating" for="">Date:</label>
-                                        <input type="date" readonly value="<?php echo $date; ?>" name="datce"
-                                               id="office_address" class="form-control">
+                                        <input type="date" readonly value="<?php echo $date; ?>" name="date"
+                                               id="date" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating" for="">Serial No:</label>
-                                        <input type="text" readonly value="<?php echo $sn; ?>" name="srial"
-                                               id="office_address" class="form-control">
+                                        <label class="bmd-label-floating" for="">Transaction ID:</label>
+                                        <?php
+                                            $charset = '0123456789';
+                                            $rand_str = '';
+                                            $numLength = '11';
+                                            while(strlen($rand_str) < $numLength) {
+                                                $rand_str .= substr(str_shuffle($charset), 0, 1);
+                                            }
+                                            $transaction_id = 'inv-' . $rand_str;
+                                        ?>
+                                        <input type="text" readonly value="<?php echo $transaction_id; ?>" name="transaction_id"
+                                               id="transactionId" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating" for="">Item:</label>
-                                        <input type="text" name="item" id="office_address" class="form-control">
+                                        <input type="text" name="item" id="item" class="form-control" autocomplete="off" required>
+                                        <span id="itemList"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating" for="">Quantity:</label>
-                                        <input type="number" name="quant" id="quannt" class="form-control">
+                                        <input type="number" name="quantity" id="quantity" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating" for="">Unit Price:</label>
-                                        <input type="number" name="price" id="unit" class="form-control">
+                                        <input type="number" name="price" id="unit" class="form-control" required>
                                     </div>
                                 </div>
                                 <script>
                                     // Script to calculate total
                                     $(document).ready(function () {
-                                        $('#unit').on("change keyup paste click", function () {
-                                            var unitt = $(this).val();
-                                            var quanti = $('#quannt').val();
-                                            var ans = unitt * quanti;
+                                        $('#quantity').on("change keyup paste click", function () {
+                                            var quantity = $(this).val();
+                                            var unit = $('#unit').val();
+                                            var ans = quantity * unit;
                                             if (ans) {
-                                                document.getElementById('tit').readOnly = false;
-                                                $('#tit').val(ans);
+                                                // document.getElementById('total').readOnly = false;
+                                                $('#total').val(ans);
                                             } else {
-                                                $('#tit').val("Nothing");
+                                                $('#total').val("Nothing");
                                             }
                                         });
-                                    });
-                                    $(document).ready(function () {
-                                        $('#quannt').on("change keyup paste click", function () {
-                                            var unitt = $(this).val();
-                                            var quanti = $('#unit').val();
-                                            var ans = unitt * quanti;
+
+                                        $('#unit').on("change keyup paste click", function () {
+                                            var unit = $(this).val();
+                                            var quantity = $('#quantity').val();
+                                            var ans = unit * quantity;
                                             if (ans) {
-                                                document.getElementById('tit').readOnly = false;
-                                                $('#tit').val(ans);
+                                                // document.getElementById('total').readOnly = false;
+                                                $('#total').val(ans);
                                             } else {
-                                                $('#tit').val("Nothing");
+                                                $('#total').val("Nothing");
                                             }
                                         });
                                     });
@@ -186,13 +191,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating" for="">Total Price:</label>
-                                        <input type="number" readonly name="ttl" id="tit" class="form-control">
+                                        <input type="number" readonly name="total" id="total" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating" for="">Charge:</label>
+                                        <input type="text" name="charge" id="charge" class="form-control" required>
+                                        <span id="chargeList"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" name="submit" value="edit_permission" type="button"
-                                        class="btn btn-primary">Save changes
+                                        id="submit" class="btn btn-primary">Save changes
                                 </button>
                             </div>
                         </form>
@@ -282,6 +294,108 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
     </div>
+
+    <script>  
+        $(document).ready(function(){  
+            $('#item').on("change keyup paste click", function(){ 
+                var item = $(this).val();
+                if(item != '')  
+                {  
+                    $.ajax({  
+                        url:"ajax_post/inventory_search.php",  
+                        method:"POST",
+                        data:{item:item},  
+                        success:function(data)  
+                        {  
+                            $('#itemList').fadeIn();  
+                            $('#itemList').html(data);
+                            // since at this point no item is selected,
+                            // set the value of the date field to the current date
+                            var today = '<?php echo $date; ?>';
+                            $('#date').val(today);
+                            // since at this point no item is selected, 
+                            // set the value of the transaction id field to the auto-generated id
+                            var transactionId = '<?php echo $transaction_id; ?>';
+                            $('#transactionId').val(transactionId);
+                            // since at this point no item is selected, 
+                            // set the value of the quantity, unit and total fields to an empty string
+                            $('#quantity').val('');
+                            $('#unit').val('');
+                            $('#total').val('');
+                        }
+                    });
+                } 
+                else {
+                    $('#itemList').fadeOut();
+                }
+            });
+
+            $(document).on('click', '.inv-item', function(){  
+                $('#item').val($(this).text());  
+                $('#itemList').fadeOut();
+                
+                var item = $(this).text();
+                $.ajax({  
+                    url:"ajax_post/inventory_search.php",  
+                    method:"POST",
+                    data:{existingItem:item},
+                    dataType: 'JSON',
+                    success:function(data)  
+                    {
+                        $('#date').val(data.date);
+                        $('#transactionId').val(data.transaction_id);
+                        $('#quantity').val(data.quantity);
+                        $('#unit').val(data.unit_price);
+                        $('#total').val(data.total_price);
+                    } 
+                });
+            });
+
+            $('#charge').on("change keyup paste click", function(){ 
+                var charge = $(this).val();
+                if(charge != '')
+                {  
+                    $.ajax({  
+                        url:"ajax_post/charges_search.php",  
+                        method:"POST",
+                        data:{charge:charge},  
+                        success:function(data)  
+                        {  
+                            $('#chargeList').fadeIn();  
+                            $('#chargeList').html(data);
+                        }
+                    });
+                } 
+                else {
+                    $('#chargeList').fadeOut();
+                }
+            });
+
+            $(document).on('click', '.charge-list-item', function(){  
+                $('#charge').val($(this).text());  
+                $('#chargeList').fadeOut();
+            });
+
+            $('#item').focus(function() { 
+                $('#chargeList').fadeOut(); 
+            });
+
+            $('#quantity').focus(function() { 
+                $('#itemList').fadeOut();
+                $('#chargeList').fadeOut(); 
+            });
+
+            $('#unit').focus(function() { 
+                $('#itemList').fadeOut();
+                $('#chargeList').fadeOut(); 
+            });
+            
+            $('#charge').focus(function() { 
+                $('#itemList').fadeOut(); 
+            });
+        });  
+    </script>
+
 <?php
 
 include("footer.php");
