@@ -18,30 +18,33 @@ if(isset($_POST['id'])){
         }
         return $out;
     }
+
     function fill_officer($connection)
+    {
+        $sint_id = $_SESSION["int_id"];
+        $org = "SELECT * FROM staff WHERE int_id = '$sint_id' AND employee_status = 'Employed' ORDER BY staff.display_name ASC";
+        $res = mysqli_query($connection, $org);
+        $out = '';
+        while ($row = mysqli_fetch_array($res))
         {
-            $sint_id = $_SESSION["int_id"];
-            $org = "SELECT * FROM staff WHERE int_id = '$sint_id' AND employee_status = 'Employed' ORDER BY staff.display_name ASC";
-            $res = mysqli_query($connection, $org);
-            $out = '';
-            while ($row = mysqli_fetch_array($res))
-            {
             $out .= '<option value="'.$row["id"].'">' .$row["display_name"]. '</option>';
-            }
-            return $out;
         }
-        function fill_state($connection)
-                  {
-                  $org = "SELECT * FROM states";
-                  $res = mysqli_query($connection, $org);
-                  $out = '';
-                  while ($row = mysqli_fetch_array($res))
-                  {
-                    $out .= '<option value="'.$row["name"].'">' .$row["name"]. '</option>';
-                  }
-                  return $out;
-                  }
-        //  Data for Corporate
+        return $out;
+    }
+
+    function fill_state($connection)
+    {
+        $org = "SELECT * FROM states";
+        $res = mysqli_query($connection, $org);
+        $out = '';
+        while ($row = mysqli_fetch_array($res))
+        {
+            $out .= '<option value="'.$row["name"].'">' .$row["name"]. '</option>';
+        }
+        return $out;
+    }
+
+    //  Data for Corporate
     if($_POST['id'] == 'Corporate'){
         $output1 ='
         <div class="row">
