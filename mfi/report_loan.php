@@ -70,8 +70,7 @@ if (isset($_GET["message3"])) {
   </script>
   ';
   $_SESSION["lack_of_intfund_$key"] = null;
-}
-else if (isset($_GET["message4"])) {
+} else if (isset($_GET["message4"])) {
   $key = $_GET["message4"];
   // $out = $_SESSION["lack_of_intfund_$key"];
   echo '<script type="text/javascript">
@@ -112,10 +111,14 @@ $(document).ready(function(){
       </div>
     </div>
 
-    <?php if (mysqli_num_rows($result) > 0) {
-      while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-        <div class="row">
-          <div class="col-md-12 ">
+    <?php
+    if (mysqli_num_rows($result) > 0) {
+    ?>
+      <div class="row">
+        <?php
+        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
+
+          <div class="col-md-6 ">
             <div class="card card-pricing bg-primary">
               <div class="card-body ">
 
@@ -126,15 +129,13 @@ $(document).ready(function(){
                 <a href="report_view.php?edit=<?php echo $row["id"]; ?>" class="btn btn-white btn-round">View</a>
               </div>
             </div>
-        <?php }
-    } else {
-      // echo "0 Document";
-    }
-        ?>
           </div>
-        </div>
-
-
+      <?php }
+      } else {
+        // echo "0 Document";
+      }
+      ?>
+      </div>
   </div>
 </div>
 
