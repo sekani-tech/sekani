@@ -55,8 +55,8 @@ if (isset($_GET['edit'])) {
     }
     //     dd($groupTransactQuery);
 
-    $groupName = $output['g_name'];
-    $clientCondition = ['group_name' => $groupName];
+    $groupName = $output['id'];
+    $clientCondition = ['group_id' => $groupName];
     $groupMembers = selectAll($clientTableName, $clientCondition);
 
     //    getting Loan Total
