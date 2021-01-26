@@ -415,7 +415,7 @@ if(isset($_GET["edit"])) {
     padding: 0;
 }
 .btn {
-      padding: 5px 5px;
+      padding: 10px 10px;
 }
 .fileinput .thumbnail>img {
     max-height: 100%;
