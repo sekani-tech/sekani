@@ -121,7 +121,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                   
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM client_charge WHERE int_id = '$sessint_id' AND (branch_id ='$br_id' $branches)";
+                   $query = "SELECT * FROM client_charge WHERE int_id = '$sessint_id' AND (branch_id ='$br_id' AND approved = '0')";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -138,7 +138,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                     <table class="rtable display nowrap" style="width:100%">
                       <thead class=" text-primary">
                       <?php
-                        $query = "SELECT * FROM client_charge WHERE int_id = '$sessint_id' AND (branch_id ='$br_id' $branches)";
+                        $query = "SELECT * FROM client_charge WHERE int_id = '$sessint_id' AND (branch_id ='$br_id' AND approved = '0')";
                         $result = mysqli_query($connection, $query);
                       ?>
                         <tr>

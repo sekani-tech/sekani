@@ -25,8 +25,8 @@ else{
 $client = $_POST['client_id'];
 $transid = $_POST['transid'];
 $descrip = $_POST['descrip'];
-$acct_id = $_POST['acctdi'];
-$date = date('Y-m-d h:m:s');
+$acct_no = $_POST['acct_no'];
+$date = date('Y-m-d H:i:s');
 
 $taketeller = "SELECT * FROM tellers WHERE name = '$staff_id' && int_id = '$sessint_id'";
 $check_me_men = mysqli_query($connection, $taketeller);
@@ -56,7 +56,7 @@ $s = mysqli_fetch_array($don);
 $amount = $s['amount'];
 $pay_type = $s['gl_code'];
 // insertion query for product
-$query4 = "SELECT account.id, client.firstname, client.lastname, account.product_id, account.account_no, account.id, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.account_no = account.account_no WHERE client.int_id = '$sessint_id' AND client.id ='$client'";
+$query4 = "SELECT client.firstname, client.lastname, account.product_id, account.account_no, account.total_withdrawals_derived, account.account_balance_derived FROM client JOIN account ON client.account_no = account.account_no WHERE client.int_id = '$sessint_id' AND client.id ='$client' AND account.account_no = '$acct_no'";
 $queryexec = mysqli_query($connection, $query4);
 $b = mysqli_fetch_array($queryexec);
 $accbal = $b['account_balance_derived'];
@@ -77,10 +77,9 @@ $newbal = $accbal - $amount;
         $description = "Fee on charges";
         $trans_type ="debit";
         $irvs = "0";
-        $iat = "INSERT INTO client_charge (int_id, branch_id, client_id, acct_id, transact_id, charge_id, amount, description, date)
-         VALUES ('{$sessint_id}', '{$branch_id}', '{$client}', '{$acct_id}', '{$transid}', '{$charges}', '{$amount}', '{$descrip}', '{$date}')";
+        $iat = "INSERT INTO client_charge (int_id, branch_id, client_id, acct_no, transact_id, charge_id, amount, description, date)
+         VALUES ('{$sessint_id}', '{$branch_id}', '{$client}', '{$acct_no}', '{$transid}', '{$charges}', '{$amount}', '{$descrip}', '{$date}')";
         $res3 = mysqli_query($connection, $iat);
-
                    if ($res3) {
                     $_SESSION["Lack_of_intfund_$randms"] = " was updated successfully!";
                           echo header ("Location: ../mfi/transact.php?message1=$randms");
