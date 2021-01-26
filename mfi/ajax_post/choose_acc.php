@@ -1,12 +1,12 @@
 <?php
+// echo "HOLA";
 session_start();
 include('../../functions/connect.php');
-?>
-<?php
+
 if(isset($_POST['id'])){
   $dsd = $_POST['id'];
   if($dsd == "000"){
-    $out = '<select name="acctdi" class="form-control">
+    $out = '<select name="acct_no" class="form-control">
     <option value="000">All Clients</option>
   </select>
     ';
