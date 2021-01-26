@@ -214,9 +214,9 @@ if (isset($_POST['add-member'])) {
                                                     <tbody>
                                                         <?php foreach ($groupMembers as $key => $groupMember) { ?>
                                                             <tr>
-                                                                <th><?php echo $key + 1 ?></th>
-                                                                <th><?php echo $groupMember['client_name'] ?></th>
-                                                                <th><?php
+                                                                <th class="text-left"><?php echo $key + 1 ?></th>
+                                                                <th class="text-left"><?php echo $groupMember['client_name'] ?></th>
+                                                                <th class="text-left"><?php
                                                                     $actype = $groupMember['product_id'];
                                                                     $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype' AND int_id = '$sessint_id'");
                                                                     if (mysqli_num_rows($spn) > 0) {
@@ -225,7 +225,7 @@ if (isset($_POST['add-member'])) {
                                                                     }
                                                                     echo $product_name;
                                                                     ?></th>
-                                                                <th><?php echo "00" . $groupMember['account_no'] ?></th>
+                                                                <th class="text-left"><?php echo "00" . $groupMember['account_no'] ?></th>
                                                                 <td>
                                                                     <a href="client_view.php?edit=<?php echo $groupMember['client_id']; ?>" class="btn btn-info">View</a>
                                                                 </td>
