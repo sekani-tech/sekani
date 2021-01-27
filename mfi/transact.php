@@ -4,6 +4,7 @@ $page_title = "Deposit/ Withdrawal";
 $yes = "true";
 $destination = "transaction.php";
 include("header.php");
+include("ajaxcall.php");
 ?>
 <?php
 $exp_error = "";
@@ -474,7 +475,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                                         </div>
                                         <div id="accname"></div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <!-- <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Account Name</label>
                                             <div id="acWrapXXX" class="acWrap">
@@ -491,7 +492,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                                             </div>
                                         </div>
                                         <div id="accname"></div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Amount</label>
@@ -713,8 +714,8 @@ if ($trans_post == 1 || $trans_post == "1") {
                                                 });
                                             </script>
                                             <label for="">Client</label>
-                                            <select id="sdd" name="client_id" class="form-control">
-                                                <option hidden>select clients</option>
+                                            <select id="sddxx" name="client_id" class="form-control">
+                                                <option value="000"></option>
                                                 <option value="000">All</option>
                                                 <?php echo fill_client($connection); ?>
                                             </select>
@@ -735,9 +736,10 @@ if ($trans_post == 1 || $trans_post == "1") {
                                             <input type="text" value="" name="descrip" class="form-control">
                                         </div>
                                     </div>
+                                    
                                     <script>
                                         $(document).ready(function () {
-                                            $('#sdd').on("change", function () {
+                                            $('#sddxx').on("change", function () {
                                                 var id = $(this).val();
                                                 var ist = $('#int_id').val();
                                                 $.ajax({

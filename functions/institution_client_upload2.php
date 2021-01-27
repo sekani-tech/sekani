@@ -66,106 +66,108 @@ if($ctype == 'INDIVIDUAL' || $ctype == 'GROUP'){
   $activation_date = date("Y-m-d");
   $submitted_on = date("Y-m-d");
   // $sa = $_POST['sms_active'];
-}
+// }
 
 ?>
 
-<input type="text" id="s_int_id" value="<?php echo $sessint_id; ?>" hidden>
-<input type="text" id="s_acct_nox" value="<?php echo $account_no; ?>" hidden>
-<input type="text" id="s_branch_id" value="<?php echo $branch_id; ?>" hidden>
-<input type="text" id="s_phone" value="<?php echo $phone; ?>" hidden>
-<input type="text" id="s_sender_id" value="<?php echo $sender_id; ?>" hidden>
-<input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
-<div id="make_display"></div>
+  <input type="text" id="s_int_id" value="<?php echo $sessint_id; ?>" hidden>
+  <input type="text" id="s_acct_nox" value="<?php echo $account_no; ?>" hidden>
+  <input type="text" id="s_branch_id" value="<?php echo $branch_id; ?>" hidden>
+  <input type="text" id="s_phone" value="<?php echo $phone; ?>" hidden>
+  <input type="text" id="s_sender_id" value="<?php echo $sender_id; ?>" hidden>
+  <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
+  <div id="make_display"></div>
 
 <?php
 
-$queryd = mysqli_query($connection, "SELECT * FROM savings_product WHERE id='$acct_type'");
-$res = mysqli_fetch_array($queryd);
-$accttname = $res['name'];
-$type_id = $res['accounting_type'];
-$id_card = $_POST['id_card'];
+  $queryd = mysqli_query($connection, "SELECT * FROM savings_product WHERE id='$acct_type'");
+  $res = mysqli_fetch_array($queryd);
+  $accttname = $res['name'];
+  $type_id = $res['accounting_type'];
+  $id_card = $_POST['id_card'];
 
-$digits = 9;
+  $digits = 9;
 
-$temp = explode(".", $_FILES['signature']['name']);
-$randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-$image1 = $randms. '.' .end($temp);
+  $temp = explode(".", $_FILES['signature']['name']);
+  $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+  $image1 = $randms. '.' .end($temp);
 
-if (move_uploaded_file($_FILES['signature']['tmp_name'], "clients/sign/" . $image1)) {
-    $msg = "Image uploaded successfully";
-} else {
-  $msg = "Image Failed";
-}
-
-$temp2 = explode(".", $_FILES['id_img_url']['name']);
-$randms2 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-$image2 = $randms2. '.' .end($temp2);
-
-if (move_uploaded_file($_FILES['id_img_url']['tmp_name'], "clients/id/" . $image2)) {
-$msg = "Image uploaded successfully";
-} else {
-$msg = "Image Failed";
-}
-
-$temp3 = explode(".", $_FILES['passport']['name']);
-$randms3 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-$image3 = $randms3. '.' .end($temp3);
-
-if (move_uploaded_file($_FILES['passport']['tmp_name'], "clients/passport/" . $image3)) {
-$msg = "Image uploaded successfully";
-} else {
-$msg = "Image Failed";
-}
-
-
-// insert into client
-
-$query = "INSERT INTO client (int_id, loan_officer_id, client_type, account_type,
-display_name, account_no, firstname, lastname, middlename, mobile_no, mobile_no_2, email_address, address, gender, date_of_birth, 
-branch_id, country, STATE_OF_ORIGIN, lga, occupation, id_card,
-passport, signature, id_img_url, loan_status, submittedon_date, activation_date) VALUES ('{$sessint_id}', '{$loan_officer_id}', '{$ctype}',
-'{$acct_type}', '{$display_name}', '{$account_no}', '{$first_name}', '{$last_name}', '{$middlename}', '{$phone}', '{$phone2}', '{$email}', '{$address}', 
-'{$gender}', '{$date_of_birth}', '{$branch}', '{$country}', '{$state}', '{$lga}', '{$occupation}',
-'{$id_card}', '{$image3}', '{$image1}', '{$image2}', '{$loan_status}', '{$submitted_on}', '{$activation_date}')";
-
-$res = mysqli_query($connection, $query);
-var_dump($res);
-
-if($res){
-  $acctquery = mysqli_query($connection, "SELECT * FROM client WHERE account_no = '$account_no'");
-  if(count([$acctquery]) == 1){
-        $x = mysqli_fetch_array($acctquery);
-        $int_id = $x['int_id'];
-        $branch_id = $x['branch_id'];
-        $account_no = $x['account_no'];
-        $account_type = $x['account_type'];
-        $client_id = $x['id'];
-        $field_officer_id = $x['loan_officer_id'];
-        $submittedon_date = $x['submittedon_date'];
-        $submittedon_userid = $x['loan_officer_id'];
-        $currency_code = "NGN";
-        $activation_date = $x['activation_date'];
-        $activation_userid = $x['loan_officer_id'];
-        $account_balance_derived = 0;
-
-        $accountins = "INSERT INTO account (int_id, branch_id, account_no, account_type,
-        type_id, product_id, client_id, field_officer_id, submittedon_date, updatedon_date, submittedon_userid,
-        currency_code, activatedon_date, activatedon_userid,
-        account_balance_derived) VALUES ('{$int_id}', '{$branch_id}', '{$account_no}',
-        '{$accttname}', '{$type_id}', '{$account_type}', '{$client_id}', '{$field_officer_id}', '{$submittedon_date}', '{$submittedon_date}',
-        '{$submittedon_userid}', '{$currency_code}', '{$activation_date}', '{$activation_userid}',
-        '{$account_balance_derived}')";
-        // var_dump($accountins);
-
-        $go = mysqli_query($connection, $accountins);
-        if($go){
-          $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
-          echo header ("Location: ../mfi/configuration.php?message1=$randms");
-        }else{
-          echo "Account Creation Failed";
-        }
+  if (move_uploaded_file($_FILES['signature']['tmp_name'], "clients/sign/" . $image1)) {
+      $msg = "Image uploaded successfully";
+  } else {
+    $msg = "Image Failed";
   }
+
+  $temp2 = explode(".", $_FILES['id_img_url']['name']);
+  $randms2 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+  $image2 = $randms2. '.' .end($temp2);
+
+  if (move_uploaded_file($_FILES['id_img_url']['tmp_name'], "clients/id/" . $image2)) {
+  $msg = "Image uploaded successfully";
+  } else {
+  $msg = "Image Failed";
+  }
+
+  $temp3 = explode(".", $_FILES['passport']['name']);
+  $randms3 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+  $image3 = $randms3. '.' .end($temp3);
+
+  if (move_uploaded_file($_FILES['passport']['tmp_name'], "clients/passport/" . $image3)) {
+  $msg = "Image uploaded successfully";
+  } else {
+  $msg = "Image Failed";
+  }
+
+
+  // insert into client
+
+  $query = "INSERT INTO client (int_id, loan_officer_id, client_type, account_type,
+  display_name, account_no, firstname, lastname, middlename, mobile_no, mobile_no_2, email_address, address, gender, date_of_birth, 
+  branch_id, country, STATE_OF_ORIGIN, lga, occupation, id_card,
+  passport, signature, id_img_url, loan_status, submittedon_date, activation_date) VALUES ('{$sessint_id}', '{$loan_officer_id}', '{$ctype}',
+  '{$acct_type}', '{$display_name}', '{$account_no}', '{$first_name}', '{$last_name}', '{$middlename}', '{$phone}', '{$phone2}', '{$email}', '{$address}', 
+  '{$gender}', '{$date_of_birth}', '{$branch}', '{$country}', '{$state}', '{$lga}', '{$occupation}',
+  '{$id_card}', '{$image3}', '{$image1}', '{$image2}', '{$loan_status}', '{$submitted_on}', '{$activation_date}')";
+
+  $res = mysqli_query($connection, $query);
+  var_dump($res);
+
+  if($res){
+    $acctquery = mysqli_query($connection, "SELECT * FROM client WHERE account_no = '$account_no'");
+    if(count([$acctquery]) == 1){
+      $x = mysqli_fetch_array($acctquery);
+      $int_id = $x['int_id'];
+      $branch_id = $x['branch_id'];
+      $account_no = $x['account_no'];
+      $account_type = $x['account_type'];
+      $client_id = $x['id'];
+      $field_officer_id = $x['loan_officer_id'];
+      $submittedon_date = $x['submittedon_date'];
+      $submittedon_userid = $x['loan_officer_id'];
+      $currency_code = "NGN";
+      $activation_date = $x['activation_date'];
+      $activation_userid = $x['loan_officer_id'];
+      $account_balance_derived = 0;
+
+      $accountins = "INSERT INTO account (int_id, branch_id, account_no, account_type,
+      type_id, product_id, client_id, field_officer_id, submittedon_date, updatedon_date, submittedon_userid,
+      currency_code, activatedon_date, activatedon_userid,
+      account_balance_derived) VALUES ('{$int_id}', '{$branch_id}', '{$account_no}',
+      '{$accttname}', '{$type_id}', '{$account_type}', '{$client_id}', '{$field_officer_id}', '{$submittedon_date}', '{$submittedon_date}',
+      '{$submittedon_userid}', '{$currency_code}', '{$activation_date}', '{$activation_userid}',
+      '{$account_balance_derived}')";
+      // var_dump($accountins);
+
+      $go = mysqli_query($connection, $accountins);
+      if($go){
+        $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
+        echo header ("Location: ../mfi/configuration.php?message1=$randms");
+      }else{
+        echo "Account Creation Failed";
+      }
+    }
+  }
+  
 }else if($ctype == 'CORPORATE'){
   $rc_number = $_POST['rc_number'];
   $loan_officer_id = $_POST["acct_ofa"];
