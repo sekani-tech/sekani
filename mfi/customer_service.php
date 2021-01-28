@@ -49,7 +49,7 @@ $destination = "../index.php";
 
                             <h4 class="card-title">Create client</h4>
                             <p class="card-description">
-                                Create client with BVN
+                                Create client without BVN
                             </p>
                             <a href="client_create.php" class="btn btn-white btn-round">View</a>
                         </div>
