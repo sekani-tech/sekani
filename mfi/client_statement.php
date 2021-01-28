@@ -124,7 +124,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
                 <link rel="stylesheet" media="print" href="../composer/pdf/util.css">
                 <div class="card-body">
                   <div class="form-group">
-                    <form method="POST" action="client_statement.php">
+                    <form method="POST" action="../composer/client_statement.php">
                       <input hidden name="id" type="text" value="<?php echo $id; ?>" />
                       <input hidden name="start" type="text" value="<?php echo $std; ?>" />
                       <input hidden name="end" type="text" value="<?php echo $endx; ?>" />
