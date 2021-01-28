@@ -59,41 +59,51 @@ if (isset($_GET["view1"])) {
                                     </button>
 
                                 </div>
+
+                                <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-profile ml-auto mr-auto" style="max-width: 360px; max-height: 360px">
+                                    <div class="card-body ">
+                                        <h4 class="card-title"> Danel Global Microfinance Bank</h4>
+                                        <h6 class="card-category text-gray">Head Office</h6>
+                                    </div>
+                                    <div class="card-footer justify-content-center">
+                                        <b> 9 Ndjamena Crescent Wuse II, Abuja </b>
+                                    </div>
+                                    <div class="card-footer justify-content-center">
+                                       Date: <b> 20-01-2021 - 02-05-2021 </b> 
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                                
+                                <div class="row">
                                 <div class="table-responsive">
-                                    <table class="rtable display nowrap" style="width:100%" id="table_content">
-                                        <thead class=" text-primary">
-                                        <?php
+                                <table id="example" class="display" style="width:100%">
+        <thead>
+        <?php
                                         $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && (client.branch_id ='$br_id' $branches) ";
                                         $result = mysqli_query($connection, $query);
                                         ?>
-                                        <th>
-                                            First Name
-                                        </th>
-                                        <th>
-                                            Last Name
-                                        </th>
-                                        <th>
-                                            Account officer
-                                        </th>
-                                        <th>
-                                            Account Type
-                                        </th>
-                                        <th>
-                                            Account Number
-                                        </th>
-                                        <th>
-                                            Account Balances
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <?php if (mysqli_num_rows($result) > 0) {
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Account officer</th>
+                <th>Account Type</th>
+                <th>Account Number</th>
+                <th>Account Balances</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php if (mysqli_num_rows($result) > 0) {
                                             while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
                                                 <tr>
                                                     <?php $row["id"];
                                                     $idd = $row["id"]; ?>
-                                                    <th><?php echo $row["firstname"]; ?></th>
-                                                    <th><?php echo $row["lastname"]; ?></th>
-                                                    <th><?php echo strtoupper($row["first_name"] . " " . $row["last_name"]); ?></th>
+                                                    <td><?php echo $row["firstname"]; ?></td>
+                                                    <td><?php echo $row["lastname"]; ?></td>
+                                                    <td><?php echo strtoupper($row["first_name"] . " " . $row["last_name"]); ?></td>
                                                     <?php
                                                     $class = "";
                                                     $row["account_type"];
@@ -110,7 +120,7 @@ if (isset($_GET["view1"])) {
                                                     }
 
                                                     ?>
-                                                    <th><?php echo $savingp; ?></th>
+                                                    <td><?php echo $savingp; ?></td>
                                                     <?php
                                                     $soc = $row["account_no"];
                                                     $length = strlen($soc);
@@ -138,23 +148,35 @@ if (isset($_GET["view1"])) {
                                                         $acc = $row["account_no"];
                                                     }
                                                     ?>
-                                                    <th><?php echo $acc; ?></th>
+                                                    <td><?php echo $acc; ?></td>
                                                     <?php
                                                     $don = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$idd'");
                                                     $ew = mysqli_fetch_array($don);
                                                     $accountb = $ew['account_balance_derived'];
                                                     ?>
-                                                    <th><?php echo $accountb; ?></th>
+                                                    <td><?php echo $accountb; ?></td>
                                                 </tr>
                                             <?php }
                                         } else {
                                             // echo "0 Document";
                                         }
                                         ?>
-                                        <!-- <th></th> -->
-                                        </tbody>
-                                    </table>
+          
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Account officer</th>
+                <th>Account Type</th>
+                <th>Account Number</th>
+                <th>Account Balances</th>
+            </tr>
+        </tfoot>
+    </table>
                                 </div>
+                                </div>
+                               
                             </div>
                         </form>
                     </div>
@@ -184,6 +206,11 @@ if (isset($_GET["view1"])) {
                     $('#convert_form').submit();
                 });
             });
+
+
+            $(document).ready(function() {
+    $('#example').DataTable();
+} );
         </script>
     </div>
 

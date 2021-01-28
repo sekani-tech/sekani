@@ -267,7 +267,7 @@ $(document).ready(function(){
 ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-}else if (isset($_GET["messageBulkApp9"])) {
+} else if (isset($_GET["messageBulkApp9"])) {
     $key = $_GET["messageBulkApp9"];
     $tt = 0;
     if ($tt !== $key) { ?>
@@ -417,7 +417,7 @@ if ($can_transact == 1 || $can_transact == "1") {
 
                                                     ?>
 
-                                                    <td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]'
+                                                    <td><input class='checkBox' type='checkbox' name='checkBoxArray[]'
                                                                value='<?php echo $row["id"] ?>'></td>
                                                     <td><?php echo $key + 1 ?></td>
                                                     <td><?php echo $showBranchName; ?></td>
@@ -451,20 +451,28 @@ if ($can_transact == 1 || $can_transact == "1") {
 
     ?>
     <script>
-        $(document).ready(function () {
-            $('#selectAllBoxes').click(function (event) {
-                if (this.checked) {
-                    $('.checkBoxes').each(function () {
-                        this.checked = true;
-                    });
-                } else {
-
-                    $('.checkBoxes').each(function () {
-                        this.checked = false;
-                    });
-                }
+        //        to check
+        function check(checked = true) {
+            const cbs = document.querySelectorAll('input[class="checkBox"]');
+            cbs.forEach((cb) => {
+                cb.checked = checked;
             });
-        });
+        }
+
+        function checkAll() {
+            check();
+            // reassign click event handler
+            this.onclick = uncheckAll;
+        }
+
+        function uncheckAll() {
+            check(false);
+            // reassign click event handler
+            this.onclick = checkAll;
+        }
+
+        const checkMultiple = document.querySelector('#selectAllBoxes');
+        checkMultiple.onclick = checkAll;
     </script>
     <?php
 } else {

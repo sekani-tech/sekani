@@ -18,7 +18,7 @@ $destination = "../index.php";
     </div>
 
           <div class="row">
-            <div class="col-md-6 ml-auto mr-auto">
+            <div class="col-md-4 ml-auto mr-auto">
               <div class="card card-pricing bg-primary"><div class="card-body ">
                   
                   <h4 class="card-title">Register Client</h4>
@@ -30,7 +30,7 @@ $destination = "../index.php";
               </div>
             </div>
 
-            <div class="col-md-6 ml-auto mr-auto">
+            <div class="col-md-4 ml-auto mr-auto">
               <div class="card card-pricing bg-primary"><div class="card-body ">
                   
                   <h4 class="card-title">Register Group</h4>
@@ -40,7 +40,21 @@ $destination = "../index.php";
                   <a href="create_group.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
-            </div>   
+            </div>  
+
+             <div class="col-md-4 ml-auto mr-auto">
+
+                    <div class="card card-pricing bg-primary">
+                        <div class="card-body ">
+
+                            <h4 class="card-title">Create client</h4>
+                            <p class="card-description">
+                                Create client without BVN
+                            </p>
+                            <a href="client_create.php" class="btn btn-white btn-round">View</a>
+                        </div>
+                    </div>
+                </div> 
 
         </div>
 
@@ -70,7 +84,10 @@ $destination = "../index.php";
               </div>
             </div>   
 
+           
+
         </div>
+        
           
         </div>
       </div>

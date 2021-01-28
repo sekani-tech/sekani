@@ -475,7 +475,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                                         </div>
                                         <div id="accname"></div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <!-- <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Account Name</label>
                                             <div id="acWrapXXX" class="acWrap">
@@ -492,7 +492,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                                             </div>
                                         </div>
                                         <div id="accname"></div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Amount</label>

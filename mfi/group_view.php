@@ -163,7 +163,7 @@ if (isset($_POST['add-member'])) {
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Group puce Balance</label>
+                                    <label for="">Group purse Balance</label>
                                     <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $groupBalanceQuery['account_balance_derived']; ?>" readonly>
                                 </div>
                             </div>
@@ -204,7 +204,7 @@ if (isset($_POST['add-member'])) {
                                                     <thead class=" text-primary">
 
                                                         <th>SN</th>
-                                                        <th>First Name</th>
+                                                        <th>Full Name</th>
                                                         <th>Account Type</th>
                                                         <th>Account Number</th>
                                                         <th>View</th>
