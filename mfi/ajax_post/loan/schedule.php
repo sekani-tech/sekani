@@ -1,5 +1,12 @@
 <?php
-include('../connect.php');
+if ($_POST["id"]) {
+
+echo "WELCOMING";
+
+} else {
+    echo "NOT WELCOMING";
+}
+include('../../../functions/connect.php');
 $hello = "SELECT * FROM loan_disbursement_cache WHERE status = 'Approved'";
 $query1 = mysqli_query($connection, $hello);
 
@@ -9,7 +16,7 @@ if (mysqli_num_rows($query1) > 0) {
         $client_id = $ex["client_id"];
         $product_id = $ex["product_id"];
         $int_id = $ex["int_id"];
-
+// make a new form
         // $ex = mysqli_fetch_array($query1);
         // var_dump($ex);
         // $client_id = $ex["client_id"];
