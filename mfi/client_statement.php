@@ -124,7 +124,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
                 <link rel="stylesheet" media="print" href="../composer/pdf/util.css">
                 <div class="card-body">
                   <div class="form-group">
-                    <form method="POST" action="client_statement">
+                    <form method="POST" action="../composer/client_statement.php">
                       <input hidden name="id" type="text" value="<?php echo $id; ?>" />
                       <input hidden name="start" type="text" value="<?php echo $std; ?>" />
                       <input hidden name="end" type="text" value="<?php echo $endx; ?>" />
@@ -171,7 +171,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
                             // $resultmm = mysqli_query($connection, "SELECT * FROM account_transaction WHERE ((account_id = '$acc_id' && int_id = $sessint_id) && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
                             // $kx = mysqli_fetch_array($resultmm);
                             // $querytoget = "SELECT * FROM account_transaction WHERE account_id = '65' && int_id = '5' && branch_id = '1' && transaction_date BETWEEN '2019-01-01' AND '2020-03-03' ORDER BY transaction_date ASC";
-                            $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
+                            $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date, id ASC");
                             // $result = mysqli_query($connection, $querytoget);
                             // $v = 0;
                             ?>

@@ -2,8 +2,9 @@
 $page_title = "Loan Disbursement Approval";
 $destination = "approval.php";
     include("header.php");
-
 ?>
+<input type="text" value="5" id="dummy" hidden>
+
 <?php
 if (isset($_GET["message1"])) {
   $key = $_GET["message1"];
@@ -98,6 +99,7 @@ if ($loan_appv == 1 || $loan_appv == "1") {
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Disbursed Loans</h4>
+<div id="auto_sch_xs" hidden></div>
                   
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
@@ -180,6 +182,24 @@ if ($loan_appv == 1 || $loan_appv == "1") {
     include("footer.php");
 
 ?>
+<?php
+    include("ajaxcallx.php");
+?>
+<script>
+$(document).ready(function () {
+  setInterval( function () {
+   var id = $('#dummy').val();
+    $.ajax({
+      url: "ajax_post/loan/schedule.php",
+      method: "POST",
+      data: {id: id},
+      success: function (data) {
+        $('#auto_sch_xs').html(data);
+      }
+    });
+  }, 3000);
+});
+</script>
 <?php
 } else {
   echo '<script type="text/javascript">
