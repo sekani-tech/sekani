@@ -92,6 +92,10 @@ if (isset($_POST['submit'])) {
         $tellerBranch = $tellerDetails['branch_id'];
         $tellerPostLimit = $tellerDetails['post_limit'];
 
+        // echo $ourData['transaction_type_id'];
+
+        // dd($transactionType);
+
         if ($transactionType == 1) {
             // deposit
             if ($ourData['transaction_type_id'] != $transactionType) {
@@ -133,12 +137,16 @@ if (isset($_POST['submit'])) {
                             $accountProductId = $accountDetails['product_id'];
                             $accountId = $accountDetails['id'];
                             $accountClientId = $accountDetails['client_id'];
-                            //                      get information and update transact_cache
+//                  get information and update transact_cache
+                            $description = 'Bulk Deposit';
+                            $transactType = 'Deposit';
+                            $status = 'Pending';
+                            
                             $transactionCacheCon = [
                                 'int_id' => $inst_id,
                                 'branch_id' => $chosenBranch,
                                 'transact_id' => $depositRand,
-                                'description' => 'Bulk Deposit',
+                                'description' => $description,
                                 'account_no' => $accountNumber,
                                 'client_id' => $accountClientId,
                                 'client_name' => $accountClientName,
@@ -146,12 +154,58 @@ if (isset($_POST['submit'])) {
                                 'teller_id' => $tellerId,
                                 'amount' => $amount,
                                 'pay_type' => $paymentType,
-                                'transact_type' => 'Deposit',
+                                'transact_type' => $transactType,
                                 'product_type' => $accountProductId,
-                                'status' => 'Pending',
-                                'date' => $fullDate,
+                                'status' => $status,
+                                'date' => $fullDate
                             ];
-                            $transactionCacheApproval = create('transact_cache', $transactionCacheCon);
+
+                            if(count($transactionCacheCon)) {
+                                $keys = array_keys($transactionCacheCon);
+                                $values = '';
+                                $x = 1;
+                        
+                                foreach($transactionCacheCon as $field) {
+                                    $values .= '?';
+                                    if($x < count($transactionCacheCon)) {
+                                        $values .= ', ';
+                                    }
+                                    $x++;
+                                }
+
+                                $sql = "INSERT INTO transact_cache (`" . implode( '`,`', $keys) . "`) VALUES ({$values});";
+                                
+                                $stmt = mysqli_stmt_init($connection);
+
+                                if(!mysqli_stmt_prepare($stmt, $sql)) {
+                                    echo "SQL Error!";
+                                } else {
+                                    mysqli_stmt_bind_param($stmt, "sssssssssssssss", 
+                                    $inst_id, 
+                                    $chosenBranch, 
+                                    $depositRand,
+                                    $description,
+                                    $accountNumber,
+                                    $accountClientId,
+                                    $accountClientName,
+                                    $currentAppUser,
+                                    $tellerId,
+                                    $amount,
+                                    $paymentType,
+                                    $transactType,
+                                    $accountProductId,
+                                    $status,
+                                    $fullDate);
+
+                                    mysqli_stmt_execute($stmt);
+
+                                    $transactionCacheApproval = true;
+                                }
+
+                            }
+
+                            // $transactionCacheApproval = create('transact_cache', $transactionCacheCon);
+
                         } else {
                             $_SESSION["Lack_of_intfund_$randms"] = "Sorry this Teller Can not Preform this Action";
                             header("Location: ../bulk_deposit.php?message5=$randms");
