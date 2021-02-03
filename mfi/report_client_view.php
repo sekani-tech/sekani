@@ -18,10 +18,10 @@ function branch_opt($connection)
     return $out;
 }
 
+$inst_id = $_SESSION["int_id"];
 $br_id = $_SESSION["branch_id"];
 $branches = branch_opt($connection);
-?>
-<?php
+
 if (isset($_GET["view1"])) {
 ?>
     <!-- Content added here -->
@@ -36,178 +36,199 @@ if (isset($_GET["view1"])) {
 
                             <!-- Insert number users institutions -->
                             <p class="card-category"><?php
-                                                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && (client.branch_id ='$br_id' $branches) ";
-                                                        $result = mysqli_query($connection, $query);
-                                                        if ($result) {
-                                                            $inr = mysqli_num_rows($result);
-                                                            echo $inr;
-                                                        } ?> clients</p>
+                            $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && (client.branch_id ='$br_id' $branches) ";
+                            $result = mysqli_query($connection, $query);
+                            if ($result) {
+                                $inr = mysqli_num_rows($result);
+                                echo $inr;
+                            } ?> clients</p>
                         </div>
-                        <form method="POST" id="convert_form" action="../composer/client_balance.php">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <input hidden name="id" type="text" value="<?php echo $id; ?>" />
-                                    <input hidden name="start" type="text" value="<?php echo $start; ?>" />
-                                    <input hidden name="end" type="text" value="<?php echo $end; ?>" />
-                                    <input type="hidden" name="file_content" id="file_content" />
-                                    <button type="submit" id="clientbalance" class="btn btn-primary pull-left">Download
-                                        PDF
-                                    </button>
-                                    <button type="button" name="convert" id="convertExcel" class="btn btn-success">
-                                        Download Excel
-                                    </button>
 
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card card-profile ml-auto mr-auto" style="max-width: 360px; max-height: 360px">
-                                            <div class="card-body ">
-                                                <h4 class="card-title"> Danel Global Microfinance Bank</h4>
-                                                <h6 class="card-category text-gray">Head Office</h6>
-                                            </div>
-                                            <div class="card-footer justify-content-center">
-                                                <b> 9 Ndjamena Crescent Wuse II, Abuja </b>
-                                            </div>
-                                            <div class="card-footer justify-content-center">
-                                                Date: <b> 20-01-2021 - 02-05-2021 </b>
-                                            </div>
+                        <?php
+                            $getInstData = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id = '$inst_id'");
+                            foreach($getInstData as $inst) {
+                                $instName = $inst['int_name'];
+                                $instAddress = $inst['office_address'];
+                            }
+                            $getBranchData = mysqli_query($connection, "SELECT name FROM branch WHERE id = '$br_id'");
+                            foreach($getBranchData as $branch) {
+                                $branchName = $branch['name'];
+                            }
+                        ?>
+
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card card-profile ml-auto mr-auto" style="max-width: 360px; max-height: 360px">
+                                        <div class="card-body ">
+                                            <h4 class="card-title"> <?php echo $instName; ?> </h4>
+                                            <h6 class="card-category text-gray"> <?php echo $branchName; ?> </h6>
                                         </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="table-responsive">
-                                            <table id="example" class="display" style="width:100%">
-                                                <thead>
-                                                    <?php
-                                                    $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && (client.branch_id ='$br_id' $branches) ";
-                                                    $result = mysqli_query($connection, $query);
-                                                    ?>
-                                                    <tr>
-                                                        <th>First Name</th>
-                                                        <th>Last Name</th>
-                                                        <th>Account officer</th>
-                                                        <th>Account Type</th>
-                                                        <th>Account Number</th>
-                                                        <th>Account Balances</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php if (mysqli_num_rows($result) > 0) {
-                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-                                                            <tr>
-                                                                <?php $row["id"];
-                                                                $idd = $row["id"]; ?>
-                                                                <td><?php echo $row["firstname"]; ?></td>
-                                                                <td><?php echo $row["lastname"]; ?></td>
-                                                                <td><?php echo strtoupper($row["first_name"] . " " . $row["last_name"]); ?></td>
-                                                                <?php
-                                                                $class = "";
-                                                                $row["account_type"];
-                                                                $cid = $row["id"];
-                                                                $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
-                                                                if (count([$atype]) == 1) {
-                                                                    $yxx = mysqli_fetch_array($atype);
-                                                                    $actype = $yxx['product_id'];
-                                                                    $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype' AND int_id = '$sessint_id'");
-                                                                    if (count([$spn])) {
-                                                                        $d = mysqli_fetch_array($spn);
-                                                                        $savingp = $d["name"];
-                                                                    }
-                                                                }
-
-                                                                ?>
-                                                                <td><?php echo $savingp; ?></td>
-                                                                <?php
-                                                                $soc = $row["account_no"];
-                                                                $length = strlen($soc);
-                                                                if ($length == 1) {
-                                                                    $acc = "000000000" . $soc;
-                                                                } elseif ($length == 2) {
-                                                                    $acc = "00000000" . $soc;
-                                                                } elseif ($length == 3) {
-                                                                    $acc = "00000000" . $soc;
-                                                                } elseif ($length == 4) {
-                                                                    $acc = "0000000" . $soc;
-                                                                } elseif ($length == 5) {
-                                                                    $acc = "000000" . $soc;
-                                                                } elseif ($length == 6) {
-                                                                    $acc = "0000" . $soc;
-                                                                } elseif ($length == 7) {
-                                                                    $acc = "000" . $soc;
-                                                                } elseif ($length == 8) {
-                                                                    $acc = "00" . $soc;
-                                                                } elseif ($length == 9) {
-                                                                    $acc = "0" . $soc;
-                                                                } elseif ($length == 10) {
-                                                                    $acc = $row["account_no"];
-                                                                } else {
-                                                                    $acc = $row["account_no"];
-                                                                }
-                                                                ?>
-                                                                <td><?php echo $acc; ?></td>
-                                                                <?php
-                                                                $don = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$idd'");
-                                                                $ew = mysqli_fetch_array($don);
-                                                                $accountb = $ew['account_balance_derived'];
-                                                                ?>
-                                                                <td><?php echo $accountb; ?></td>
-                                                            </tr>
-                                                    <?php }
-                                                    } else {
-                                                        // echo "0 Document";
-                                                    }
-                                                    ?>
-
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>First Name</th>
-                                                        <th>Last Name</th>
-                                                        <th>Account officer</th>
-                                                        <th>Account Type</th>
-                                                        <th>Account Number</th>
-                                                        <th>Account Balances</th>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
+                                        <div class="card-footer justify-content-center">
+                                            <b> <?php echo $instAddress; ?> </b>
+                                        </div>
+                                        <div class="card-footer justify-content-center">
+                                            <b> <?php echo date('d F Y', time()); ?> </b> 
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-                        </form>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table id="example" class="display" style="width:100%">
+                                            <thead>
+                                                <?php
+                                                $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && (client.branch_id ='$br_id' $branches) ";
+                                                $result = mysqli_query($connection, $query);
+                                                ?>
+                                                <tr>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Account Officer</th>
+                                                    <th>Account Type</th>
+                                                    <th>Account Number</th>
+                                                    <th>Account Balances</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php if (mysqli_num_rows($result) > 0) {
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
+                                                        <tr>
+                                                            <?php $row["id"];
+                                                            $idd = $row["id"]; ?>
+                                                            <td><?php echo $row["firstname"]; ?></td>
+                                                            <td><?php echo $row["lastname"]; ?></td>
+                                                            <td><?php echo strtoupper($row["first_name"] . " " . $row["last_name"]); ?></td>
+                                                            <?php
+                                                            $class = "";
+                                                            $row["account_type"];
+                                                            $cid = $row["id"];
+                                                            $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
+                                                            if (count([$atype]) == 1) {
+                                                                $yxx = mysqli_fetch_array($atype);
+                                                                $actype = $yxx['product_id'];
+                                                                $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype' AND int_id = '$sessint_id'");
+                                                                if (count([$spn])) {
+                                                                    $d = mysqli_fetch_array($spn);
+                                                                    $savingp = $d["name"];
+                                                                }
+                                                            }
+
+                                                            ?>
+                                                            <td><?php echo $savingp; ?></td>
+                                                            <?php
+                                                            $soc = $row["account_no"];
+                                                            $length = strlen($soc);
+                                                            if ($length == 1) {
+                                                                $acc = "000000000" . $soc;
+                                                            } elseif ($length == 2) {
+                                                                $acc = "00000000" . $soc;
+                                                            } elseif ($length == 3) {
+                                                                $acc = "00000000" . $soc;
+                                                            } elseif ($length == 4) {
+                                                                $acc = "0000000" . $soc;
+                                                            } elseif ($length == 5) {
+                                                                $acc = "000000" . $soc;
+                                                            } elseif ($length == 6) {
+                                                                $acc = "0000" . $soc;
+                                                            } elseif ($length == 7) {
+                                                                $acc = "000" . $soc;
+                                                            } elseif ($length == 8) {
+                                                                $acc = "00" . $soc;
+                                                            } elseif ($length == 9) {
+                                                                $acc = "0" . $soc;
+                                                            } elseif ($length == 10) {
+                                                                $acc = $row["account_no"];
+                                                            } else {
+                                                                $acc = $row["account_no"];
+                                                            }
+                                                            ?>
+                                                            <td><?php echo $acc; ?></td>
+                                                            <?php
+                                                            $don = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$idd'");
+                                                            $ew = mysqli_fetch_array($don);
+                                                            $accountb = $ew['account_balance_derived'];
+                                                            ?>
+                                                            <td><?php echo $accountb; ?></td>
+                                                        </tr>
+                                                <?php }
+                                                } else {
+                                                    // echo "0 Document";
+                                                }
+                                                ?>
+
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Account Officer</th>
+                                                    <th>Account Type</th>
+                                                    <th>Account Number</th>
+                                                    <th>Account Balances</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="form-group mt-4">
+
+                                        <form method="POST" id="convert_form" action="../composer/client_balance.php">
+
+                                            <input hidden name="id" type="text" value="<?php echo $id; ?>"/>
+                                            <input hidden name="start" type="text" value="<?php echo $start; ?>"/>
+                                            <input hidden name="end" type="text" value="<?php echo $end; ?>"/>
+                                            <input type="hidden" name="file_content" id="file_content"/>
+
+                                            <button type="submit" name="exportPDF" class="btn btn-primary">
+                                                Download PDF
+                                            </button>
+                                        
+                                            <button type="submit" name="exportExcel" class="btn btn-success">
+                                                Download Excel
+                                            </button>
+                                            
+                                        </form>
+
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
         <script>
-            $(document).ready(function() {
-                $('#clientbalance').on("click", function() {
-                    swal({
-                        type: "success",
-                        title: "CLIENT BALANCE REPORT",
-                        text: "From " + start1 + " to " + end1 + "Loading...",
-                        showConfirmButton: false,
-                        timer: 5000
+            // $(document).ready(function() {
+            //     $('#clientbalance').on("click", function() {
+            //         swal({
+            //             type: "success",
+            //             title: "CLIENT BALANCE REPORT",
+            //             text: "From " + start1 + " to " + end1 + "Loading...",
+            //             showConfirmButton: false,
+            //             timer: 5000
 
-                    })
-                });
-            });
+            //         })
+            //     });
+            // });
 
-            $(document).ready(function() {
-                $('#convertExcel').click(function() {
-                    var table_content = '<table>';
-                    table_content += $('#table_content').html();
-                    table_content += '</table>';
-                    $('#file_content').val(table_content);
-                    $('#convert_form').submit();
-                });
-            });
-
+            // $(document).ready(function() {
+            //     $('#convertExcel').click(function() {
+            //         var table_content = '<table>';
+            //         table_content += $('#table_content').html();
+            //         table_content += '</table>';
+            //         $('#file_content').val(table_content);
+            //         $('#convert_form').submit();
+            //     });
+            // });
 
             $(document).ready(function() {
                 $('#example').DataTable();
