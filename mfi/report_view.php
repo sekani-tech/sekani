@@ -11,7 +11,7 @@ if(isset($_GET["edit"])) {
     echo header("Location: report_client_view.php?view1");
   }
   else if($location == "2"){
-    
+    echo header("Location: report_client_view.php?view2");
   }
   else if($location == 3){
     echo header("Location: report_client_view.php?view3");
