@@ -201,7 +201,6 @@ if (isset($_POST['submit'])) {
 
                                     $transactionCacheApproval = true;
                                 }
-
                             }
 
                             // $transactionCacheApproval = create('transact_cache', $transactionCacheCon);

@@ -16,6 +16,5 @@ ALTER TABLE `groups` CHANGE `id` `id` INT(100) NOT NULL AUTO_INCREMENT, add PRIM
 ALTER TABLE `group_clients` CHANGE `id` `id` INT(100) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`id`);
 ALTER TABLE `group_client_cache` CHANGE `id` `id` INT(100) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`id`);
 
-
 -- for bulk deposit
 ALTER TABLE `transact_cache` ADD `teller_id` INT(100) NOT NULL AFTER `staff_id`;
