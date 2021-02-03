@@ -221,8 +221,12 @@ if (isset($_GET["view1"])) {
 ?>
     <div class="content">
         <div class="container-fluid">
+
+
+
             <div class="row">
                 <div class="col-md-12">
+
 
                     <div class="card">
                         <div class="card-header card-header-primary">
@@ -231,175 +235,187 @@ if (isset($_GET["view1"])) {
                         </div>
                         <div class="card-body">
 
-                        <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card card-profile ml-auto mr-auto" style="max-width: 360px; max-height: 360px">
-                                            <div class="card-body ">
-                                                <h4 class="card-title"> Danel Global Microfinance Bank</h4>
-                                                <h6 class="card-category text-gray">Head Office</h6>
-                                            </div>
-                                            <div class="card-footer justify-content-center">
-                                                <b> 9 Ndjamena Crescent Wuse II, Abuja </b>
-                                            </div>
-                                            <div class="card-footer justify-content-center">
-                                                Date: <b>02-05-2021</b>
-                                            </div>
-                                        </div>
+                            <div class="form-group">
 
-                                    </div>
-                                </div>
+
+                                <button type="submit" id="clientbalance" class="btn btn-primary pull-left">Download
+                                    PDF
+                                </button>
+                                <button type="button" name="convert" id="convertExcel" class="btn btn-success">
+                                    Download Excel
+                                </button>
+
+                            </div>
 
                             <div class="row">
                                 <div class="col-md-12">
-                                <div class="table-responsive">
-                                <table id="acctanalysis" class="display" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th><small>S/N</small></th>
-                                            <th><small>Account Types</small></th>
-                                            <th><small>Accounts in debit</small></th>
-                                            <th><small>Accounts in credit</small></th>
-                                            <th><small>Accounts with Zero Bal</small></th>
-                                            <th><small>Total</small></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>0301</td>
-                                            <td>Current Account Individual</td>
-                                            <td>9</td>
-                                            <td>1,334</td>
-                                            <td>430</td>    
-                                        </tr>
-                                        <tr>
-                                            <td>0301</td>
-                                            <td>Current Account Individual</td>
-                                            <td>9</td>
-                                            <td>1,334</td>
-                                            <td>430</td>    
-                                        </tr>
-                                        <tr>
-                                            <td>0301</td>
-                                            <td>Current Account Individual</td>
-                                            <td>9</td>
-                                            <td>1,334</td>
-                                            <td>430</td>    
-                                        </tr>
-                                        <tr>
-                                            <td>0301</td>
-                                            <td>Current Account Individual</td>
-                                            <td>9</td>
-                                            <td>1,334</td>
-                                            <td>430</td>    
-                                        </tr>
-                                        <tr>
-                                            <td>0301</td>
-                                            <td>Current Account Individual</td>
-                                            <td>9</td>
-                                            <td>1,334</td>
-                                            <td>430</td>    
-                                        </tr>
-                                        <tr>
-                                            <td>0301</td>
-                                            <td>Current Account Individual</td>
-                                            <td>9</td>
-                                            <td>1,334</td>
-                                            <td>430</td>    
-                                        </tr>
-                                        <tr>
-                                            <td>0301</td>
-                                            <td>Current Account Individual</td>
-                                            <td>9</td>
-                                            <td>1,334</td>
-                                            <td>430</td>    
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><b>Total Per Product</b></td>   
-                                            <td>2,256.00</td> 
-                                        </tr>
+                                    <div class="card card-profile ml-auto mr-auto" style="max-width: 360px; max-height: 360px">
+                                        <div class="card-body ">
+                                            <h4 class="card-title"> Danel Global Microfinance Bank</h4>
+                                            <h6 class="card-category text-gray">Head Office</h6>
+                                        </div>
+                                        <div class="card-footer justify-content-center">
+                                            <b> 9 Ndjamena Crescent Wuse II, Abuja </b>
+                                        </div>
+                                        <div class="card-footer justify-content-center">
+                                            Date: <b>02-05-2021</b>
+                                        </div>
+                                    </div>
 
-                                        <tr>
-                                            <td>0301</td>
-                                            <td>Loans-Individual</td>
-                                            <td>9</td>
-                                            <td>1,334</td>
-                                            <td>430</td>    
-                                        </tr>
-                                        <tr>
-                                            <td>0301</td>
-                                            <td>Loans-Staff</td>
-                                            <td>9</td>
-                                            <td>1,334</td>
-                                            <td>430</td>    
-                                        </tr>
-                                        <tr>
-                                            <td>0301</td>
-                                            <td>Loans-NAPEP</td>
-                                            <td>9</td>
-                                            <td>1,334</td>
-                                            <td>430</td>    
-                                        </tr>
-                                        <tr>
-                                            <td>0301</td>
-                                            <td>Loans-Micro Credit</td>
-                                            <td>9</td>
-                                            <td>1,334</td>
-                                            <td>430</td>    
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><b>Total Per Product</b></td>   
-                                            <td>2,256.00</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>0500</td>
-                                            <td>Save & Win Promo</td>
-                                            <td>9</td>
-                                            <td>1,334</td>
-                                            <td>430</td>    
-                                        </tr>
-                                        <tr>
-                                            <td>0500</td>
-                                            <td>Savings Account - Individual</td>
-                                            <td>9</td>
-                                            <td>1,334</td>
-                                            <td>430</td>    
-                                        </tr>
-                                        <tr>
-                                            <td>0500</td>
-                                            <td>Savings Account - Staff</td>
-                                            <td>9</td>
-                                            <td>1,334</td>
-                                            <td>430</td>    
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><b>Total Per Product</b></td>   
-                                            <td>2,256.00</td> 
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                    <tr>
-                                            <th><small>S/N</small></th>
-                                            <th><small>Account Types</small></th>
-                                            <th><small>Accounts in debit</small></th>
-                                            <th><small>Accounts in credit</small></th>
-                                            <th><small>Accounts with Zero Bal</small></th>
-                                            <th><small>Total</small></th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                                </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table id="acctanalysis" class="display" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th><small>S/N</small></th>
+                                                    <th><small>Account Types</small></th>
+                                                    <th><small>Accounts in debit</small></th>
+                                                    <th><small>Accounts in credit</small></th>
+                                                    <th><small>Accounts with Zero Bal</small></th>
+                                                    <th><small>Total</small></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>0301</td>
+                                                    <td>Current Account Individual</td>
+                                                    <td>9</td>
+                                                    <td>1,334</td>
+                                                    <td>430</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>0301</td>
+                                                    <td>Current Account Individual</td>
+                                                    <td>9</td>
+                                                    <td>1,334</td>
+                                                    <td>430</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>0301</td>
+                                                    <td>Current Account Individual</td>
+                                                    <td>9</td>
+                                                    <td>1,334</td>
+                                                    <td>430</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>0301</td>
+                                                    <td>Current Account Individual</td>
+                                                    <td>9</td>
+                                                    <td>1,334</td>
+                                                    <td>430</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>0301</td>
+                                                    <td>Current Account Individual</td>
+                                                    <td>9</td>
+                                                    <td>1,334</td>
+                                                    <td>430</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>0301</td>
+                                                    <td>Current Account Individual</td>
+                                                    <td>9</td>
+                                                    <td>1,334</td>
+                                                    <td>430</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>0301</td>
+                                                    <td>Current Account Individual</td>
+                                                    <td>9</td>
+                                                    <td>1,334</td>
+                                                    <td>430</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td><b>Total Per Product</b></td>
+                                                    <td>2,256.00</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>0301</td>
+                                                    <td>Loans-Individual</td>
+                                                    <td>9</td>
+                                                    <td>1,334</td>
+                                                    <td>430</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>0301</td>
+                                                    <td>Loans-Staff</td>
+                                                    <td>9</td>
+                                                    <td>1,334</td>
+                                                    <td>430</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>0301</td>
+                                                    <td>Loans-NAPEP</td>
+                                                    <td>9</td>
+                                                    <td>1,334</td>
+                                                    <td>430</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>0301</td>
+                                                    <td>Loans-Micro Credit</td>
+                                                    <td>9</td>
+                                                    <td>1,334</td>
+                                                    <td>430</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td><b>Total Per Product</b></td>
+                                                    <td>2,256.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>0500</td>
+                                                    <td>Save & Win Promo</td>
+                                                    <td>9</td>
+                                                    <td>1,334</td>
+                                                    <td>430</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>0500</td>
+                                                    <td>Savings Account - Individual</td>
+                                                    <td>9</td>
+                                                    <td>1,334</td>
+                                                    <td>430</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>0500</td>
+                                                    <td>Savings Account - Staff</td>
+                                                    <td>9</td>
+                                                    <td>1,334</td>
+                                                    <td>430</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td><b>Total Per Product</b></td>
+                                                    <td>2,256.00</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th><small>S/N</small></th>
+                                                    <th><small>Account Types</small></th>
+                                                    <th><small>Accounts in debit</small></th>
+                                                    <th><small>Accounts in credit</small></th>
+                                                    <th><small>Accounts with Zero Bal</small></th>
+                                                    <th><small>Total</small></th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
