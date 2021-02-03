@@ -3,8 +3,7 @@
 $page_title = "Client Report";
 $destination = "report_client.php";
 include("header.php");
-?>
-<?php
+
 function branch_opt($connection)
 {
     $br_id = $_SESSION["branch_id"];
