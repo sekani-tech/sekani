@@ -525,54 +525,7 @@ img {
                 </div>
               </div>
               <button type="submit" class="btn btn-primary">Generate Account Report</button>
-              <!-- Button trigger modal -->
-              <a href="" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Edit Transaction</a>
-              <!-- Button trigger modal -->
-
-              <!-- POP UP BEGINS -->
-              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h3 class="modal-title" id="exampleModalLabel">Transaction Adjustment</h3>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating" for="">Date: </label>
-                          <input class="form-control" type="date" placeholder="">
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating" for="">Amount:</label>
-                          <input class="form-control" type="number" placeholder="" r>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating" for="">Receipt Number</label>
-                          <input class="form-control" type="number" placeholder="">
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating" for="">Mobile Number</label>
-                          <input class="form-control" type="number" placeholder="">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-primary">Save Adjustments</button>
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- POP UP ENDS -->  
+                
             </form>
           </div>
         </div>
