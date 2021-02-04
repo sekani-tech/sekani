@@ -44,7 +44,6 @@ if (isset($_GET["view1"])) {
                             } ?> clients</p>
                         </div>
 
-
                         <?php
                             $getInstData = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id = '$inst_id'");
                             foreach($getInstData as $inst) {
@@ -240,48 +239,48 @@ if (isset($_GET["view1"])) {
 } else if (isset($_GET["view2"])) {
 ?>
     <div class="content">
+
         <div class="container-fluid">
 
-
-
             <div class="row">
+
                 <div class="col-md-12">
 
-
                     <div class="card">
+
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">Account Analysis</h4>
                             <p class="category">Recent Behaviour and Changes in the clients</p>
                         </div>
+
+                        <?php
+                            $getInstData = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id = '$inst_id'");
+                            foreach($getInstData as $inst) {
+                                $instName = $inst['int_name'];
+                                $instAddress = $inst['office_address'];
+                            }
+                            $getBranchData = mysqli_query($connection, "SELECT name FROM branch WHERE id = '$br_id'");
+                            foreach($getBranchData as $branch) {
+                                $branchName = $branch['name'];
+                            }
+                        ?>
+
                         <div class="card-body">
-
-                            <div class="form-group">
-
-
-                                <button type="submit" id="clientbalance" class="btn btn-primary pull-left">Download
-                                    PDF
-                                </button>
-                                <button type="button" name="convert" id="convertExcel" class="btn btn-success">
-                                    Download Excel
-                                </button>
-
-                            </div>
 
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="card card-profile ml-auto mr-auto" style="max-width: 360px; max-height: 360px">
                                         <div class="card-body ">
-                                            <h4 class="card-title"> Danel Global Microfinance Bank</h4>
-                                            <h6 class="card-category text-gray">Head Office</h6>
+                                            <h4 class="card-title"> <?php echo $instName; ?> </h4>
+                                            <h6 class="card-category text-gray"> <?php echo $branchName; ?> </h6>
                                         </div>
                                         <div class="card-footer justify-content-center">
-                                            <b> 9 Ndjamena Crescent Wuse II, Abuja </b>
+                                            <b> <?php echo $instAddress; ?> </b>
                                         </div>
                                         <div class="card-footer justify-content-center">
-                                            Date: <b>02-05-2021</b>
+                                            <b> <?php echo date('d F Y', time()); ?> </b> 
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
 
@@ -291,151 +290,87 @@ if (isset($_GET["view1"])) {
                                         <table id="acctanalysis" class="display" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th><small>S/N</small></th>
                                                     <th><small>Account Types</small></th>
                                                     <th><small>Accounts in debit</small></th>
                                                     <th><small>Accounts in credit</small></th>
-                                                    <th><small>Accounts with Zero Bal</small></th>
+                                                    <th><small>Accounts with zero balance</small></th>
                                                     <th><small>Total</small></th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>0301</td>
-                                                    <td>Current Account Individual</td>
-                                                    <td>9</td>
-                                                    <td>1,334</td>
-                                                    <td>430</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>0301</td>
-                                                    <td>Current Account Individual</td>
-                                                    <td>9</td>
-                                                    <td>1,334</td>
-                                                    <td>430</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>0301</td>
-                                                    <td>Current Account Individual</td>
-                                                    <td>9</td>
-                                                    <td>1,334</td>
-                                                    <td>430</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>0301</td>
-                                                    <td>Current Account Individual</td>
-                                                    <td>9</td>
-                                                    <td>1,334</td>
-                                                    <td>430</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>0301</td>
-                                                    <td>Current Account Individual</td>
-                                                    <td>9</td>
-                                                    <td>1,334</td>
-                                                    <td>430</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>0301</td>
-                                                    <td>Current Account Individual</td>
-                                                    <td>9</td>
-                                                    <td>1,334</td>
-                                                    <td>430</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>0301</td>
-                                                    <td>Current Account Individual</td>
-                                                    <td>9</td>
-                                                    <td>1,334</td>
-                                                    <td>430</td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td><b>Total Per Product</b></td>
-                                                    <td>2,256.00</td>
-                                                </tr>
 
+                                            <tbody>
+                                                <?php
+                                                $savingsProducts = mysqli_query($connection, "SELECT * FROM `savings_product`");
+                                                foreach($savingsProducts as $savingsProduct) {
+                                                    $productID = $savingsProduct['id'];
+                                                ?>
                                                 <tr>
-                                                    <td>0301</td>
-                                                    <td>Loans-Individual</td>
-                                                    <td>9</td>
-                                                    <td>1,334</td>
-                                                    <td>430</td>
+                                                    <td><?php echo $savingsProduct['name']; ?></td>
+                                                    <td>
+                                                    <?php
+                                                        $query = "SELECT count(account_no) FROM `account` WHERE product_id = $productID AND account_balance_derived LIKE '%-%'";
+                                                        $accountsInDebit = mysqli_query($connection, $query);
+                                                        $row = mysqli_fetch_array($accountsInDebit);
+                                                        echo $row[0];
+                                                    ?>
+                                                    </td>
+                                                    <td>
+                                                    <?php
+                                                        $query = "SELECT count(account_no) FROM `account` WHERE (product_id = $productID) AND (account_balance_derived NOT LIKE '%-%' AND account_balance_derived <> 0.00 AND account_balance_derived <> 0)";
+                                                        $accountsInCredit = mysqli_query($connection, $query);
+                                                        $row = mysqli_fetch_array($accountsInCredit);
+                                                        echo $row[0];
+                                                    ?>
+                                                    </td>
+                                                    <td>
+                                                    <?php
+                                                        $query = "SELECT count(account_no) FROM `account` WHERE (product_id = $productID) AND (account_balance_derived = 0.00 OR account_balance_derived = 0)";
+                                                        $accountsInZero = mysqli_query($connection, $query);
+                                                        $row = mysqli_fetch_array($accountsInZero);
+                                                        echo $row[0];
+                                                    ?>
+                                                    </td>
+                                                    <td>
+                                                    <?php
+                                                        $query = "SELECT count(account_no) FROM `account` WHERE (product_id = $productID)";
+                                                        $totalAccounts = mysqli_query($connection, $query);
+                                                        $row = mysqli_fetch_array($totalAccounts);
+                                                        echo $row[0];
+                                                    ?>
+                                                    </td>
+                                                    
                                                 </tr>
-                                                <tr>
-                                                    <td>0301</td>
-                                                    <td>Loans-Staff</td>
-                                                    <td>9</td>
-                                                    <td>1,334</td>
-                                                    <td>430</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>0301</td>
-                                                    <td>Loans-NAPEP</td>
-                                                    <td>9</td>
-                                                    <td>1,334</td>
-                                                    <td>430</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>0301</td>
-                                                    <td>Loans-Micro Credit</td>
-                                                    <td>9</td>
-                                                    <td>1,334</td>
-                                                    <td>430</td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td><b>Total Per Product</b></td>
-                                                    <td>2,256.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>0500</td>
-                                                    <td>Save & Win Promo</td>
-                                                    <td>9</td>
-                                                    <td>1,334</td>
-                                                    <td>430</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>0500</td>
-                                                    <td>Savings Account - Individual</td>
-                                                    <td>9</td>
-                                                    <td>1,334</td>
-                                                    <td>430</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>0500</td>
-                                                    <td>Savings Account - Staff</td>
-                                                    <td>9</td>
-                                                    <td>1,334</td>
-                                                    <td>430</td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td><b>Total Per Product</b></td>
-                                                    <td>2,256.00</td>
-                                                </tr>
+                                                <?php
+                                                }
+                                                ?>
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th><small>S/N</small></th>
                                                     <th><small>Account Types</small></th>
                                                     <th><small>Accounts in debit</small></th>
                                                     <th><small>Accounts in credit</small></th>
-                                                    <th><small>Accounts with Zero Bal</small></th>
+                                                    <th><small>Accounts with zero balance</small></th>
                                                     <th><small>Total</small></th>
                                                 </tr>
                                             </tfoot>
                                         </table>
                                     </div>
+
+                                    <div class="form-group mt-4">
+
+                                        <form method="POST" action="../composer/account_analysis.php">
+
+                                            <button type="submit" name="exportPDF" class="btn btn-primary pull-left">
+                                                Download PDF
+                                            </button>
+                                            <button type="submit" name="exportExcel" class="btn btn-success">
+                                                Download Excel
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -465,54 +400,43 @@ if (isset($_GET["view1"])) {
                             <h4 class="card-title ">Clients</h4>
 
                             <!-- Insert number users institutions -->
-                            <p class="card-category"><?php
-                                                        $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved' && (branch_id ='$br_id' $branches)";
-                                                        $result = mysqli_query($connection, $query);
-                                                        if ($result) {
-                                                            $inr = mysqli_num_rows($result);
-                                                            echo $inr;
-                                                        } ?> registered clients
+                            <p class="card-category">
+                                <?php
+                                $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved' && (branch_id ='$br_id' $branches)";
+                                $result = mysqli_query($connection, $query);
+                                if ($result) {
+                                    $inr = mysqli_num_rows($result);
+                                    echo $inr;
+                                } 
+                                ?> registered clients
                         </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <form method="POST" action="../composer/client_list.php">
-                                    <input hidden name="id" type="text" value="<?php echo $id; ?>" />
-                                    <input hidden name="start" type="text" value="<?php echo $start; ?>" />
-                                    <input hidden name="end" type="text" value="<?php echo $end; ?>" />
-                                    <button type="submit" id="clientlist" class="btn btn-primary pull-left">Download
-                                        PDF
-                                    </button>
-                                    <script>
-                                        $(document).ready(function() {
-                                            $('#clientlist').on("click", function() {
-                                                swal({
-                                                    type: "success",
-                                                    title: "CLIENT REPORT",
-                                                    text: "Printing Successful",
-                                                    showConfirmButton: false,
-                                                    timer: 5000
 
-                                                })
-                                            });
-                                        });
-                                    </script>
-                                </form>
-                            </div>
+                        <div class="card-body">
+                            <?php
+                                $getInstData = mysqli_query($connection, "SELECT * FROM institutions WHERE int_id = '$inst_id'");
+                                foreach($getInstData as $inst) {
+                                    $instName = $inst['int_name'];
+                                    $instAddress = $inst['office_address'];
+                                }
+                                $getBranchData = mysqli_query($connection, "SELECT name FROM branch WHERE id = '$br_id'");
+                                foreach($getBranchData as $branch) {
+                                    $branchName = $branch['name'];
+                                }
+                            ?>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="card card-profile ml-auto mr-auto" style="max-width: 360px; max-height: 360px">
                                         <div class="card-body ">
-                                            <h4 class="card-title"> Danel Global Microfinance Bank</h4>
-                                            <h6 class="card-category text-gray">Head Office</h6>
+                                            <h4 class="card-title"> <?php echo $instName; ?> </h4>
+                                            <h6 class="card-category text-gray"> <?php echo $branchName; ?> </h6>
                                         </div>
                                         <div class="card-footer justify-content-center">
-                                            <b> 9 Ndjamena Crescent Wuse II, Abuja </b>
+                                            <b> <?php echo $instAddress; ?> </b>
                                         </div>
                                         <div class="card-footer justify-content-center">
-                                            Date: <b> 20-01-2021 - 02-05-2021 </b>
+                                            <b> <?php echo date('d F Y', time()); ?> </b> 
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="row">
@@ -523,7 +447,7 @@ if (isset($_GET["view1"])) {
                                                 <tr>
                                                     <th><small>First Name</small></th>
                                                     <th><small>Last Name</small></th>
-                                                    <th><small>Account officer</small></th>
+                                                    <th><small>Account Officer</small></th>
                                                     <th><small>Account Type</small></th>
                                                     <th><small>Account Number</small></th>
                                                     <th><small>Date of Birth</small></th>
@@ -599,7 +523,7 @@ if (isset($_GET["view1"])) {
                                                 <tr>
                                                     <th><small>First Name</small></th>
                                                     <th><small>Last Name</small></th>
-                                                    <th><small>Account officer</small></th>
+                                                    <th><small>Account Officer</small></th>
                                                     <th><small>Account Type</small></th>
                                                     <th><small>Account Number</small></th>
                                                     <th><small>Date of Birth</small></th>
@@ -615,6 +539,18 @@ if (isset($_GET["view1"])) {
                                             });
                                         </script>
                                     </div>
+
+                                    <div class="form-group mt-4">
+                                        <form method="POST" action="../composer/client_list.php">
+                                            <input hidden name="id" type="text" value="<?php echo $id; ?>" />
+                                            <input hidden name="start" type="text" value="<?php echo $start; ?>" />
+                                            <input hidden name="end" type="text" value="<?php echo $end; ?>" />
+                                            <button type="submit" id="clientlist" class="btn btn-primary pull-left">
+                                                Download PDF
+                                            </button>
+                                        </form>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
