@@ -149,119 +149,7 @@ $rezz = mysqli_query($connection, $activeq);
       <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
       <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
       
-    <!-- <script src="../functions/autocomplete/autocomplete.js"></script>
-    <link href="../functions/autocomplete/autocomplete.css" rel="stylesheet"> -->
-    <?php
-
-    if ($page_title == "Deposit/ Withdrawal") {
-
-    ?>
-        <!-- <script>
-            window.addEventListener("load", function() {
-                suggest.attach({
-                    target: "actName",
-                    url: "../functions/autocomplete/autosearch.php",
-                    data: {
-                        type: "name"
-                    },
-                    // delay : 200,
-                    min: 1
-                });
-
-            });
-            $(document).ready(function() {
-                $('.actName').on("change keyup paste", function() {
-                    var name = $(this).val();
-                    var ist = $('#int_id').val();
-                    $.ajax({
-                        url: "acct_acctName.php",
-                        method: "POST",
-                        data: {
-                            name: name,
-                            ist: ist
-                        },
-                        success: function(data) {
-                            $('#accname').html(data);
-                        }
-                    })
-                });
-            });
-        </script> -->
-    <?php
-    } else {
-    ?>
-        <!-- <script>
-            // var $j = jQuery.noConflict();
-            window.addEventListener("load", function() {
-                suggest.attach({
-                    method: "POST",
-                    target: "groups",
-                    url: "../functions/autocomplete/autosearch2.php",
-                    data: {
-                        type: "groups"
-                    },
-                    // delay : 200,
-                    min: 1
-                });
-
-            });
-        </script> -->
-    <?php
-    }
-    ?>
-    <style>
-        /* custom css */
-        .ac_results {
-            padding: 0px;
-            border: 1px solid #84a10b;
-            background-color: #84a10b;
-            overflow: hidden;
-        }
-
-        .ac_results ul {
-            width: 100%;
-            list-style-position: outside;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .ac_results li {
-            margin: 0px;
-            padding: 2px 5px;
-            cursor: default;
-            display: block;
-            color: #fff;
-            font-family: verdana;
-            /* 
-            if width will be 100% horizontal scrollbar will apear 
-            when scroll mode will be used
-            */
-            /*width: 100%;*/
-            font-size: 12px;
-            /* 
-            it is very important, if line-height not setted or setted 
-            in relative units scroll will be broken in firefox
-            */
-            line-height: 16px;
-            overflow: hidden;
-
-        }
-
-        .ac_loading {
-            background: white url('../images/indicator.gif') right center no-repeat;
-        }
-
-        .ac_odd {
-            background-color: #84a10b;
-            color: #ffffff;
-        }
-
-        .ac_over {
-            background-color: #5a6b13;
-            color: #ffffff;
-        }
-    </style>
+    
     <!-- CHAT BOT -->
     <script type="text/javascript">
         (function(w, d, v3) {
@@ -568,7 +456,7 @@ $rezz = mysqli_query($connection, $activeq);
                                 ?>
                                 <!-- Notificaion for charges -->
                                 <?php
-                                $fdef = "SELECT * FROM client_charge WHERE int_id = '$sessint_id' AND (branch_id ='$br_id')";
+                                $fdef = "SELECT * FROM client_charge WHERE int_id = '$sessint_id' AND (branch_id ='$br_id') AND approved = '0'";
                                 $sdf = mysqli_query($connection, $fdef);
                                 $charge = mysqli_num_rows($sdf);
                                 ?>

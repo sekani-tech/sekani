@@ -69,7 +69,7 @@ if (isset($_GET["message3"])) {
     }
 } else if (isset($_GET["message4"])) {
     $key = $_GET["message4"];
-// $out = $_SESSION["lack_of_intfund_$key"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
     if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
         echo '<script type="text/javascript">
@@ -145,8 +145,8 @@ $(document).ready(function(){
     }
 }
 ?>
-    <!-- Content added here -->
-    <!-- POST INTO -->
+<!-- Content added here -->
+<!-- POST INTO -->
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sessint_id = $_SESSION['int_id'];
@@ -285,59 +285,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-    <!-- DONE POSTING -->
-    <div class="content">
-        <div class="container-fluid">
-            <!-- your content here -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header card-header-primary">
-                            <h4 class="card-title ">Chart of Accounts</h4>
-                            <!-- Insert number users institutions -->
-                            <p class="card-category"><?php
-                                $query = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id'";
-                                $result = mysqli_query($connection, $query);
-                                if ($result) {
-                                    $inr = mysqli_num_rows($result);
-                                    echo $inr;
-                                } ?> Chart of Accounts || <a style="color: white;" data-toggle="modal"
-                                                             data-target=".bd-example-modal-lg" href="#">Add Account</a>
-                            </p>
-                            <!-- Insert number users institutions -->
+<!-- DONE POSTING -->
+<div class="content">
+    <div class="container-fluid">
+        <!-- your content here -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title ">Chart of Accounts</h4>
+                        <!-- Insert number users institutions -->
+                        <p class="card-category"><?php
+                                                    $query = "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id'";
+                                                    $result = mysqli_query($connection, $query);
+                                                    if ($result) {
+                                                        $inr = mysqli_num_rows($result);
+                                                        echo $inr;
+                                                    } ?> Chart of Accounts || <a style="color: white;" data-toggle="modal" data-target=".bd-example-modal-lg" href="#">Add Account</a>
+                        </p>
+                        <!-- Insert number users institutions -->
 
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="rtable display nowrap" style="width:100%">
-                                    <thead class=" text-primary">
-                                    <?php
-                                    $query = "SELECT * FROM acc_gl_account WHERE int_id ='$sessint_id' ORDER BY classification_enum ASC, name ASC";
-                                    $result = mysqli_query($connection, $query);
-                                    ?>
-                                    <th>
-                                        GL No
-                                    </th>
-                                    <th>
-                                        Account Name
-                                    </th>
-                                    <th>
-                                        Account Type
-                                    </th>
-                                    <th>
-                                        Balance
-                                    </th>
-                                    <th>Delete</th>
-                                    <th>Edit</th>
-                                    <!-- <th>Phone</th> -->
-                                    </thead>
-                                    <tbody>
-                                    <?php if (mysqli_num_rows($result) > 0) {
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>GL No</th>
+                                        <th>Account Name</th>
+                                        <th>Account Type</th>
+                                        <th>Balance</th>
+                                        <th>Delete</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php if (mysqli_num_rows($result) > 0) {
                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-                                            <tr>
-                                                <?php $row["id"]; ?>
-                                                <th><?php echo $row["gl_code"]; ?></th>
-                                                <?php
+                                    <tr>
+                                    <?php $row["id"]; ?>
+                                        <td><?php echo $row["gl_code"]; ?></td>
+                                        <?php
                                                 // using the parent_id to sort them out
                                                 $nameofacct = "";
                                                 $rid = $row["id"];
@@ -353,9 +341,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                 }
 
                                                 ?>
-                                                <th><?php echo $nameofacct; ?></th>
-                                                <!-- this is for account type classification_enum -->
-                                                <?php
+                                        <td><?php echo $nameofacct; ?></td>
+                                        <?php
                                                 // get classification for account type using conditions
                                                 $class = "";
                                                 $row["classification_enum"];
@@ -371,13 +358,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                     $class = "EXPENSE";
                                                 }
                                                 ?>
-                                                <th><?php echo $class; ?></th>
-                                                <th><?php if ($row["organization_running_balance_derived"] < 0) {
+                                        <td><?php echo $class; ?></td>
+                                        <td><?php if ($row["organization_running_balance_derived"] < 0) {
                                                         echo '<div style="color: red;">' . number_format($row["organization_running_balance_derived"]) . '</div>';
                                                     } else {
                                                         echo number_format($row["organization_running_balance_derived"]);
-                                                    } ?></th>
-                                                <?php
+                                                    } ?></td>
+                                                    <?php
                                                 $cash = $row["organization_running_balance_derived"];
                                                 $intid = $row['int_id'];
                                                 $gltype = $row["parent_id"];
@@ -392,35 +379,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                 }
                                                 if ($cash == 0 && $gltype != '0' && $dsd == 0) {
                                                     ?>
-                                                    <td>
-                                                        <a href="delete_chart_account.php?edit=<?php echo $row["id"]; ?>"
+                                        <td><a href="delete_chart_account.php?edit=<?php echo $row["id"]; ?>"
                                                            class="btn btn-danger btn-fab btn-fab-mini btn-round"><i
                                                                     style="color:#ffffff;"
                                                                     class="material-icons">close</i></a></td>
-                                                    <?php
+                                                                    <td><a hidden><i style="color:#ffffff;" class="material-icons">create</i></a> </td>
+                                                                    <?php
                                                 } else {
                                                     ?>
-                                                    <td><a hidden><i style="color:#ffffff;" class="material-icons">create</i></a>
-                                                    </td>
-                                                    <?php
+                                                    <td><a hidden><i style="color:#ffffff;" class="material-icons">create</i></a> </td>
+                                        <td><a href="edit_chart_account.php?edit=<?php echo $row["id"]; ?>"
+                                                       class="btn btn-info btn-fab btn-fab-mini btn-round"><i
+                                                                style="color:#ffffff;" class="material-icons">create</i></td>
+                                                                <?php
                                                 }
                                                 ?>
-                                                <td><a href="edit_chart_account.php?edit=<?php echo $row["id"]; ?>"
-                                                       class="btn btn-info btn-fab btn-fab-mini btn-round"><i
-                                                                style="color:#ffffff;" class="material-icons">create</i></a>
-                                                </td>
-                                            </tr>
-                                        <?php }
+                                    </tr>
+                                    <?php }
                                     } else {
                                         echo "0 Document";
                                     }
                                     ?>
-                                    </tbody>
-                                </table>
-                                <!-- start dialog -->
-                                <!-- <button type="button" class="btn btn-primary" >Large modal</button> -->
-
-                                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>GL No</th>
+                                        <th>Account Name</th>
+                                        <th>Account Type</th>
+                                        <th>Balance</th>
+                                        <th>Delete</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
                                      aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -649,14 +641,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         </div>
                                     </div>
                                 </div>
-                                <!-- end dialog -->
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+    });
+</script>
 
 <?php
 
