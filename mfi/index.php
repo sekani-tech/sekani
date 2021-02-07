@@ -117,8 +117,14 @@ if ($view_dashboard == 1) {
                 //  30 days in arrears
                 $dewe = "SELECT SUM(bank_provision) AS bank_provision FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1' AND counter < '30'";
                 $sdd = mysqli_query($connection, $dewe);
-                $sdt = mysqli_fetch_array($sdd);
-                $bnk_provsix = $sdt['bank_provision'];
+                if (!$sdd) {
+                    printf("Error: %s\n", mysqli_error($connection));//checking for errors
+                    exit();
+                }else{
+                    $sdt = mysqli_fetch_array($sdd);
+                    $bnk_provsix = $sdt['bank_provision'];
+                }
+                
 
                 // 60 days in arrears
                 $dewe = "SELECT SUM(bank_provision) AS bank_provision FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1' AND counter < '60' AND counter > 30";
