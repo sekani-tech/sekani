@@ -129,7 +129,7 @@ if(isset($_POST['exportPDF'])) {
 
   <main>
     <table>
-      <thead class=" text-primary">
+      <thead class="text-primary">
         <tr>
           <th style="font-size: 30px;" class="column1">
             First Name
@@ -157,7 +157,9 @@ if(isset($_POST['exportPDF'])) {
     </table>
   </main>
   ');
-  $file_name = 'Client Balance Report for '.$intname.'-'.$date.'.pdf';
+
+  $file_name = 'client-balance-report-' . time() . '.pdf';
+  
   $mpdf->Output($file_name, 'D');
 }
 
