@@ -410,6 +410,7 @@ if (isset($_GET["view1"])) {
                                     echo $inr;
                                 } 
                                 ?> registered clients
+                            </p>
                         </div>
 
                         <div class="card-body">
@@ -645,31 +646,31 @@ if (isset($_GET["view1"])) {
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Registered Clients</h4>
-
                             <!-- Insert number users institutions -->
-                            <p class="card-category"><?php
-                                                        $std = date("Y-m-d");
-                                                        $thisyear = date("Y");
-                                                        $thismonth = date("m");
-                                                        // $end = date('Y-m-d', strtotime('-30 days'));
-                                                        $curren = $thisyear . "-" . $thismonth . "-01";
-                                                        $query = "SELECT * FROM client WHERE client.int_id = '$sessint_id' && client.status = 'Approved' && submittedon_date BETWEEN '$curren' AND '$std' && (branch_id ='$br_id' $branches)";
-                                                        $result = mysqli_query($connection, $query);
-                                                        if ($result) {
-                                                            $inr = mysqli_num_rows($result);
-                                                            $date = date("F");
-                                                        } ?>
-                            <div id="month_no"><?php echo $inr; ?> Registered Clients this month</div>
+                            <p class="card-category">
+                                <?php
+                                $std = date("Y-m-d");
+                                $thisyear = date("Y");
+                                $thismonth = date("m");
+                                // $end = date('Y-m-d', strtotime('-30 days'));
+                                $current = $thisyear . "-" . $thismonth . "-01";
+                                $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved' && submittedon_date BETWEEN '$current' AND '$std' && (branch_id ='$br_id' $branches)";
+                                $result = mysqli_query($connection, $query);
+                                if ($result) {
+                                    $inr = mysqli_num_rows($result);
+                                    $date = date("F");
+                                } ?>
+                                <div id="month_no"><?php echo $inr; ?> Registered Clients this month</div>
                             </p>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <form method="POST" action="../composer/registered_client.php">
+                                        <form method="POST" action="">
                                             <label for="">Pick Month</label>
                                             <select id="month" class="form-control" style="text-transform: uppercase;" name="month">
-                                                <option value="0"></option>
+                                                <option value=""></option>
                                                 <option value="1">January</option>
                                                 <option value="2">February</option>
                                                 <option value="3">March</option>
@@ -683,30 +684,11 @@ if (isset($_GET["view1"])) {
                                                 <option value="11">November</option>
                                                 <option value="12">December</option>
                                             </select>
-
-                                            <input hidden name="id" type="text" value="<?php echo $id; ?>" />
-                                            <input hidden name="start" type="text" value="<?php echo $start; ?>" />
-                                            <input hidden name="end" type="text" value="<?php echo $end; ?>" />
-                                            <button type="submit" id="registeredclient" class="btn btn-primary pull-left">Download PDF
-                                            </button>
-                                            <script>
-                                                $(document).ready(function() {
-                                                    $('#registeredclient').on("click", function() {
-                                                        swal({
-                                                            type: "success",
-                                                            title: "REGISTERED CLIENT REPORT",
-                                                            text: "Printing Successful",
-                                                            showConfirmButton: false,
-                                                            timer: 5000
-
-                                                        })
-                                                    });
-                                                });
-                                            </script>
+                                            <button type="submit" name="generateReport" class="btn btn-primary pull-left">Generate Report</button>
                                         </form>
                                     </div>
                                 </div>
-                                <script>
+                                <!-- <script>
                                     $(document).ready(function() {
                                         $('#month').on("change", function() {
                                             var month = $(this).val();
@@ -721,10 +703,7 @@ if (isset($_GET["view1"])) {
                                                 }
                                             })
                                         });
-                                    });
-                                </script>
-                                <script>
-                                    $(document).ready(function() {
+                                    
                                         $('#month').on("change", function() {
                                             var month = $(this).val();
                                             $.ajax({
@@ -739,7 +718,7 @@ if (isset($_GET["view1"])) {
                                             })
                                         });
                                     });
-                                </script>
+                                </script> -->
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -755,46 +734,49 @@ if (isset($_GET["view1"])) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php if (mysqli_num_rows($result) > 0) {
-                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-                                                    <tr>
-                                                        <?php $row["id"]; ?>
-                                                        <td><?php echo $row["firstname"]; ?></td>
-                                                        <td><?php echo $row["lastname"]; ?></td>
-                                                        <?php $ffd = $row["loan_officer_id"];
-                                                        $ds = "SELECT * FROM staff WHERE int_id ='$sessint_id' AND id = '$ffd'";
-                                                        $fdi = mysqli_query($connection, $ds);
-                                                        $fd = mysqli_fetch_array($fdi);
-                                                        $fn = $fd['first_name'];
-                                                        $ln = $fd['last_name'];
-                                                        ?>
-                                                        <td><?php echo strtoupper($fn . " " . $ln); ?></td>
-                                                        <?php
-                                                        $class = "";
-                                                        $row["account_type"];
-                                                        $cid = $row["id"];
-                                                        $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
-                                                        if (count([$atype]) == 1) {
-                                                            $yxx = mysqli_fetch_array($atype);
-                                                            $actype = $yxx['product_id'];
-                                                            $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype' AND int_id = '$sessint_id'");
-                                                            if (count([$spn])) {
-                                                                $d = mysqli_fetch_array($spn);
-                                                                $savingp = $d["name"];
+                                            <?php 
+                                            if(isset($_POST['generateReport'])) {
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
+                                                        <tr>
+                                                            <?php $row["id"]; ?>
+                                                            <td><?php echo $row["firstname"]; ?></td>
+                                                            <td><?php echo $row["lastname"]; ?></td>
+                                                            <?php $ffd = $row["loan_officer_id"];
+                                                            $ds = "SELECT * FROM staff WHERE int_id ='$sessint_id' AND id = '$ffd'";
+                                                            $fdi = mysqli_query($connection, $ds);
+                                                            $fd = mysqli_fetch_array($fdi);
+                                                            $fn = $fd['first_name'];
+                                                            $ln = $fd['last_name'];
+                                                            ?>
+                                                            <td><?php echo strtoupper($fn . " " . $ln); ?></td>
+                                                            <?php
+                                                            $class = "";
+                                                            $row["account_type"];
+                                                            $cid = $row["id"];
+                                                            $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
+                                                            if (count([$atype]) == 1) {
+                                                                $yxx = mysqli_fetch_array($atype);
+                                                                $actype = $yxx['product_id'];
+                                                                $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype' AND int_id = '$sessint_id'");
+                                                                if (count([$spn])) {
+                                                                    $d = mysqli_fetch_array($spn);
+                                                                    $savingp = $d["name"];
+                                                                }
                                                             }
-                                                        }
+                                                            ?>
+                                                            <td><?php echo $savingp; ?></td>
+                                                            <td><?php echo $row["account_no"]; ?></td>
+                                                            <td><?php echo $row["mobile_no"]; ?></td>
+                                                        </tr>
+                                                    <?php 
+                                                    }
+                                                }
 
-                                                        ?>
-                                                        <td><?php echo $savingp; ?></td>
-                                                        <td><?php echo $row["account_no"]; ?></td>
-                                                        <td><?php echo $row["mobile_no"]; ?></td>
-                                                    </tr>
-                                            <?php }
                                             } else {
                                                 // echo "0 Document";
                                             }
                                             ?>
-
                                         </tbody>
                                         <tfoot>
                                             <tr>
@@ -814,6 +796,16 @@ if (isset($_GET["view1"])) {
                                     $('#dismonth').DataTable();
                                 });
                             </script>
+
+                            <div class="form-group mt-4">
+                                <form method="POST" action="../composer/registered_client.php">
+                                    <input hidden name="id" type="text" value="<?php echo $id; ?>" />
+                                    <input hidden name="start" type="text" value="<?php echo $start; ?>" />
+                                    <input hidden name="end" type="text" value="<?php echo $end; ?>" />
+                                    <input type="hidden" name="month" value="<?php if(isset($_POST['month'])) {echo $_POST['month'];} ?>" />
+                                    <button type="submit" name="downloadPDF" class="btn btn-primary pull-left">Download PDF</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
