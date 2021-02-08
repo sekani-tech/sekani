@@ -10,10 +10,10 @@ if (isset($_POST["id"])) {
         $rand = $_POST["rand"];
         $client = $_POST["client_id"];
         // remove previous charges with this loan
-        $fdo = mysqli_query($connection, "DELETE FROM loan_charge WHERE loan_cache_id = '$rand'");
+        $fdo = mysqli_query($connection, "DELETE FROM loan_charge WHERE int_id = '$sessint_id'");
 
         // put it temporarily in loan_charge table
-        $query = "SELECT * FROM product_loan_charge WHERE product_loan_id = '$p_id' && int_id = '$sessint_id' LIMIT 1";
+        $query = "SELECT * FROM product_loan_charge WHERE product_loan_id = '$p_id' && int_id = '$sessint_id'";
         $resd = mysqli_query($connection, $query);
         while ($rot = mysqli_fetch_array($resd)) {
             $prod_id = $rot['product_loan_id'];
@@ -22,7 +22,7 @@ if (isset($_POST["id"])) {
             $dof = mysqli_query($connection, "INSERT INTO `loan_charge` (`int_id`, `charge_id`, `client_id`, `product_loan_id`, `loan_cache_id`) VALUES ('$sessint_id', '$charge_oi', '$client', '$prod_id', '$rand')");
         }
         if ($dof) {
-            $query = "SELECT * FROM loan_charge WHERE product_loan_id = '$p_id' && int_id = '$sessint_id' LIMIT 1";
+            $query = "SELECT * FROM loan_charge WHERE product_loan_id = '$p_id' && int_id = '$sessint_id'";
             $result = mysqli_query($connection, $query);
         }
         ?>

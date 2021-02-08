@@ -98,11 +98,11 @@ $(document).ready(function(){
 } else if (isset($_GET["messageBulkApp1"])) {
     $key = $_GET["messageBulkApp1"];
     $tt = 0;
-//    dd($_SESSION["lack_of_intfund_$key"]);
+    //    dd($_SESSION["lack_of_intfund_$key"]);
     if ($tt !== $_GET["messageBulkApp1"]) {
-        ?>
+?>
         <input type="text" hidden value="<?php echo $key ?>" id="showNumber">
-        <?php
+    <?php
         echo '<script type="text/javascript">
 $(document).ready(function(){
     let showNumber = document.getElementById("showNumber").value;
@@ -122,9 +122,9 @@ $(document).ready(function(){
     $key = $_GET["messageBulkApp2"];
     $tt = 0;
     if ($tt !== $key) {
-        ?>
+    ?>
         <input type="text" hidden value="<?php echo $key ?>" id="showNumber">
-        <?php
+    <?php
         echo '<script type="text/javascript">
 $(document).ready(function(){
     let showNumber = document.getElementById("showNumber").value;
@@ -144,9 +144,9 @@ $(document).ready(function(){
     $key = $_GET["messageBulkApp3"];
     $tt = 0;
     if ($tt !== $key) {
-        ?>
+    ?>
         <input type="text" hidden value="<?php echo $key ?>" id="showNumber">
-        <?php
+    <?php
         echo '<script type="text/javascript">
 $(document).ready(function(){
     let showNumber = document.getElementById("showNumber").value;
@@ -166,9 +166,9 @@ $(document).ready(function(){
     $key = $_GET["messageBulkApp4"];
     $tt = 0;
     if ($tt !== $key) {
-        ?>
+    ?>
         <input type="text" hidden value="<?php echo $key ?>" id="showNumber">
-        <?php
+    <?php
         echo '<script type="text/javascript">
 $(document).ready(function(){
     let showNumber = document.getElementById("showNumber").value;
@@ -188,9 +188,9 @@ $(document).ready(function(){
     $key = $_GET["messageBulkApp5"];
     $tt = 0;
     if ($tt !== $key) {
-        ?>
+    ?>
         <input type="text" hidden value="<?php echo $key ?>" id="showNumber">
-        <?php
+    <?php
         echo '<script type="text/javascript">
 $(document).ready(function(){
     let showNumber = document.getElementById("showNumber").value;
@@ -210,9 +210,9 @@ $(document).ready(function(){
     $key = $_GET["messageBulkApp6"];
     $tt = 0;
     if ($tt !== $key) {
-        ?>
+    ?>
         <input type="text" hidden value="<?php echo $key ?>" id="showNumber">
-        <?php
+    <?php
         echo '<script type="text/javascript">
 $(document).ready(function(){
     let showNumber = document.getElementById("showNumber").value;
@@ -251,7 +251,7 @@ $(document).ready(function(){
     $tt = 0;
     if ($tt !== $key) { ?>
         <input type="text" hidden value="<?php echo $key ?>" id="showNumber">
-        <?php
+    <?php
         echo '<script type="text/javascript">
 $(document).ready(function(){
     let showNumber = document.getElementById("showNumber").value;
@@ -272,7 +272,7 @@ $(document).ready(function(){
     $tt = 0;
     if ($tt !== $key) { ?>
         <input type="text" hidden value="<?php echo $key ?>" id="showNumber">
-        <?php
+    <?php
         echo '<script type="text/javascript">
 $(document).ready(function(){
     let showNumber = document.getElementById("showNumber").value;
@@ -328,17 +328,17 @@ if ($can_transact == 1 || $can_transact == "1") {
 
                             <!-- Insert number users institutions -->
                             <p class="card-category"><?php
-                                //                                $query = "SELECT * FROM transact_cache WHERE int_id='$sessint_id' && status = 'Pending'";
-                                $result = selectAll('transact_cache', ['int_id' => $sessint_id, 'status' => 'Pending']);
-                                if ($result) {
-                                    $totalResult = count($result);
-                                    if ($totalResult == '0') {
-                                        echo 'No Transactions need of approval';
-                                    } else {
-                                        echo '' . $totalResult . ' Transactions on the platform';
-                                    }
-                                }
-                                ?> || Approve Transaction</p>
+                                                        //                                $query = "SELECT * FROM transact_cache WHERE int_id='$sessint_id' && status = 'Pending'";
+                                                        $result = selectAll('transact_cache', ['int_id' => $sessint_id, 'status' => 'Pending']);
+                                                        if ($result) {
+                                                            $totalResult = count($result);
+                                                            if ($totalResult == '0') {
+                                                                echo 'No Transactions need of approval';
+                                                            } else {
+                                                                echo '' . $totalResult . ' Transactions on the platform';
+                                                            }
+                                                        }
+                                                        ?> || Approve Transaction</p>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -347,8 +347,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                                         <div class="row">
                                             <div class="col-md-4 p-3" id="bulkOptionsContainer">
                                                 <label for="">Select Action</label>
-                                                <select class="form-control custom-select" name="bulk_options" id=""
-                                                        required>
+                                                <select class="form-control custom-select" name="bulk_options" id="" required>
                                                     <option value="">Select Options</option>
                                                     <option value="Approval">Approval</option>
                                                     <option value="Decline">Decline</option>
@@ -356,85 +355,91 @@ if ($can_transact == 1 || $can_transact == "1") {
                                             </div>
                                             <div class="col-md-4 p-3" id="bulkOptionsContainer">
                                                 <label for="">Action Type</label>
-                                                <select class="form-control custom-select" name="bulk_options_type"
-                                                        id="" required>
+                                                <select class="form-control custom-select" name="bulk_options_type" id="" required>
                                                     <option value="">Select Action Type</option>
                                                     <option value="Deposit">Deposit</option>
                                                     <option value="Withdrawal">Withdrawal</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-4 p-3">
-                                                <input type="submit" name="submit" class="btn btn-success"
-                                                       value="Apply">
+                                                <input type="submit" name="submit" class="btn btn-success" value="Apply">
                                             </div>
                                         </div>
 
                                         <thead class=" text-primary">
-                                        <?php
-                                        $results = selectAll('transact_cache', ['int_id' => $sessint_id, 'status' => 'Pending']);
-                                        ?>
-                                        <tr>
-                                            <th><input id="selectAllBoxes" type="checkbox"></th>
-                                            <th>S/N</th>
-                                            <th class="th-sm">
-                                                Branch
-                                            </th>
-                                            <th class="th-sm">
-                                                Transaction Type
-                                            </th>
-                                            <th class="th-sm">
-                                                Amount
-                                            </th>
-                                            <th class="th-sm">
-                                                Posted By
-                                            </th>
-                                            <th class="th-sm">
-                                                Client
-                                            </th>
+                                            <?php
+                                            $results = selectAll('transact_cache', ['int_id' => $sessint_id, 'status' => 'Pending']);
+                                            ?>
+                                            <tr>
+                                                <th><input id="selectAllBoxes" type="checkbox"></th>
+                                                <th>S/N</th>
+                                                <th class="th-sm">
+                                                    Branch
+                                                </th>
+                                                <th class="th-sm">
+                                                    Transaction Type
+                                                </th>
+                                                <th class="th-sm">
+                                                    Narration
+                                                </th>
+                                                <th class="th-sm">
+                                                    Amount
+                                                </th>
+                                                <th class="th-sm">
+                                                    Posted By
+                                                </th>
+                                                <th class="th-sm">
+                                                    Client
+                                                </th>
 
-                                            <th class="th-sm">Status</th>
-                                            <th>Approval</th>
-                                        </tr>
-                                        <!-- <th>Phone</th> -->
+                                                <th class="th-sm">Status</th>
+                                                <th>Approval</th>
+                                            </tr>
+                                            <!-- <th>Phone</th> -->
                                         </thead>
                                         <tbody>
-                                        <?php if ($results) {
+                                            <?php if ($results) {
 
-                                            foreach ($results as $key => $row) {
-                                                ?>
-                                                <tr>
-                                                    <?php $row["id"]; ?>
-                                                    <?php
-                                                    //                                                    changing branch id to name
-                                                    $branchId = $row["branch_id"];
-                                                    $branchName = selectSpecificData('branch', ['name'], ['id' => $branchId, 'int_id' => $sessint_id]);
-                                                    $showBranchName = $branchName['name'];
+                                                foreach ($results as $key => $row) {
+                                            ?>
+                                                    <tr>
+                                                        <?php $row["id"]; ?>
+                                                        <?php
+                                                        //                                                    changing branch id to name
+                                                        $branchId = $row["branch_id"];
+                                                        $branchName = selectSpecificData('branch', ['name'], ['id' => $branchId, 'int_id' => $sessint_id]);
+                                                        $showBranchName = $branchName['name'];
 
-                                                    //                                                    changing staff id to name
-                                                    $staffId = $row['staff_id'];
-                                                    $staffName = selectSpecificData('staff', ['display_name'], ['id' => $staffId, 'int_id' => $sessint_id]);
-                                                    $showStaffName = $staffName['display_name'];
+                                                        //                                                    changing staff id to name
+                                                        $staffId = $row['staff_id'];
+                                                        $staffName = selectSpecificData('staff', ['display_name'], ['id' => $staffId, 'int_id' => $sessint_id]);
+                                                        $showStaffName = $staffName['display_name'];
 
-                                                    ?>
+                                                        ?>
 
-                                                    <td><input class='checkBox' type='checkbox' name='checkBoxArray[]'
-                                                               value='<?php echo $row["id"] ?>'></td>
-                                                    <td><?php echo $key + 1 ?></td>
-                                                    <td><?php echo $showBranchName; ?></td>
-                                                    <td><?php echo $row["transact_type"]; ?></td>
-                                                    <td><?php echo number_format($row["amount"], 2); ?></td>
-                                                    <td><?php echo $showStaffName; ?></td>
-                                                    <td><?php echo $row["client_name"]; ?></td>
-                                                    <td><?php echo $row["status"]; ?></td>
-                                                    <td><a href="approve.php?approve=<?php echo $row["id"]; ?>"
-                                                           class="btn btn-info">View</a></td>
-                                                </tr>
-                                                <!-- <th></th> -->
+                                                        <td><input class='checkBox' type='checkbox' name='checkBoxArray[]' value='<?php echo $row["id"] ?>'></td>
+                                                        <td><?php echo $key + 1 ?></td>
+                                                        <td><?php echo $showBranchName; ?></td>
+                                                        <td><?php echo $row["transact_type"]; ?></td>
+                                                        <td>
+                                                            <?php if ($row["is_bank"] == 1) {
+                                                                echo "Bank";
+                                                            } else if ($row["is_bank"] == 0) {
+                                                                echo "Cash";
+                                                            } ?>
+                                                        </td>
+                                                        <td><?php echo number_format($row["amount"], 2); ?></td>
+                                                        <td><?php echo $showStaffName; ?></td>
+                                                        <td><?php echo $row["client_name"]; ?></td>
+                                                        <td><?php echo $row["status"]; ?></td>
+                                                        <td><a href="approve.php?approve=<?php echo $row["id"]; ?>" class="btn btn-info">View</a></td>
+                                                    </tr>
+                                                    <!-- <th></th> -->
                                             <?php }
-                                        } else {
-                                            // echo "0 Staff";
-                                        }
-                                        ?>
+                                            } else {
+                                                // echo "0 Staff";
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </form>
@@ -474,7 +479,7 @@ if ($can_transact == 1 || $can_transact == "1") {
         const checkMultiple = document.querySelector('#selectAllBoxes');
         checkMultiple.onclick = checkAll;
     </script>
-    <?php
+<?php
 } else {
     echo '<script type="text/javascript">
   $(document).ready(function(){
