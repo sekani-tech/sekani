@@ -3,6 +3,7 @@
 $page_title = "Bills Payment";
 $destination = "index.php";
     include("header.php");
+    include("ajaxcall.php");
 
 ?>
 <?php
