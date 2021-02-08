@@ -133,62 +133,68 @@ if (isset($_GET["view15"])) { ?>
                         </div>
                         <div class="card-body">
                             <div class="table-resposive">
-                            <table id="dloan" class="display" style="width:100%">
-        <thead>
-            <tr>
-                <th><small>Client Name</small></th>
-                <th><small>Principal Amount</small></th>
-                <th><small>Loan Term</small></th>
-                <th><small>Disbursement Date</small></th>
-                <th><small>Maturity Date</small></th>
-                <th><small>Interest Rate</small></th>
-                <th><small>Interest Amount</small></th>
-                <th><small>Total Income</small></th>
-                <th><small>Total Oustanding Bal</small></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>EMMANUEL OKAFOR</th>
-                <th>₦100,000.00</th>
-                <th>3</th>
-                <th>2020-08-24</th>
-                <th>2020-08-27</th>
-                <th>₦3.00</th>
-                <th>₦30,000.00</th>
-                <th>₦9.00</th>
-                <th>₦100,000.00</th>
-            </tr>
-            
-        </tbody>
-        <tfoot>
-            <tr>
-            <th><small>Client Name</small></th>
-                <th><small>Principal Amount</small></th>
-                <th><small>Loan Term</small></th>
-                <th><small>Disbursement Date</small></th>
-                <th><small>Maturity Date</small></th>
-                <th><small>Interest Rate</small></th>
-                <th><small>Interest Amount</small></th>
-                <th><small>Total Income</small></th>
-                <th><small>Total Oustanding Bal</small></th>
-            </tr>
-        </tfoot>
-    </table>
+                                <table id="dloan" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th><small>Client Name</small></th>
+                                            <th><small>Principal Amount</small></th>
+                                            <th><small>Loan Term</small></th>
+                                            <th><small>Disbursement Date</small></th>
+                                            <th><small>Maturity Date</small></th>
+                                            <th><small>Interest Rate</small></th>
+                                            <th><small>Interest Amount</small></th>
+                                            <th><small>Total Income</small></th>
+                                            <th><small>Total Oustanding Bal</small></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>EMMANUEL OKAFOR</th>
+                                            <th>₦100,000.00</th>
+                                            <th>3</th>
+                                            <th>2020-08-24</th>
+                                            <th>2020-08-27</th>
+                                            <th>₦3.00</th>
+                                            <th>₦30,000.00</th>
+                                            <th>₦9.00</th>
+                                            <th>₦100,000.00</th>
+                                        </tr>
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th><small>Client Name</small></th>
+                                            <th><small>Principal Amount</small></th>
+                                            <th><small>Loan Term</small></th>
+                                            <th><small>Disbursement Date</small></th>
+                                            <th><small>Maturity Date</small></th>
+                                            <th><small>Interest Rate</small></th>
+                                            <th><small>Interest Amount</small></th>
+                                            <th><small>Total Income</small></th>
+                                            <th><small>Total Oustanding Bal</small></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
+
+
+
                     </div>
                 </div>
+
+
+
             </div>
 
         </div>
 
     </div>
-<script>
-$(document).ready( function () {
-    $('#dloan').DataTable();
-} );
-</script>
+    <script>
+        $(document).ready(function() {
+            $('#dloan').DataTable();
+        });
+    </script>
 
     <script>
         $(document).ready(function() {
