@@ -69,6 +69,20 @@ if (isset($_GET["view15"])) { ?>
                                 } ?> Disbursed Loans</p>
                         </div>
                         <div class="card-body">
+
+                        <div class="card card-profile ml-auto mr-auto" style="max-width: 370px; max-height: 360px">
+                                    <div class="card-body ">
+                                        <h4 class="card-title">Total Outstanding Loans: <b>NGN <?php echo number_format(round($fde), 2); ?></b></h4>
+                                        <!-- <h6 class="card-category text-gray">Head Office</h6> -->
+                                    </div>
+                                    <!-- <div class="card-footer justify-content-center">
+                                        <b> 9 Ndjamena Crescent Wuse II, Abuja </b>
+                                    </div> -->
+                                    <!-- <div class="card-footer justify-content-center">
+                                        Date: <b> 02-05-2021 </b>
+                                    </div> -->
+                                </div>
+
                             <form method="POST" action="../composer/disbursedloan.php">
                                 <div class="row">
                                     <!--                                    Start Date Area-->
