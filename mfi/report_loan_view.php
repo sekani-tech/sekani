@@ -69,18 +69,7 @@ if (isset($_GET["view15"])) { ?>
                         </div>
                         <div class="card-body">
 
-                            <div class="card card-profile ml-auto mr-auto" style="max-width: 370px; max-height: 360px">
-                                <div class="card-body ">
-                                    <h4 class="card-title">Total Outstanding Loans: <b>NGN <?php echo number_format(round($fde), 2); ?></b></h4>
-                                    <!-- <h6 class="card-category text-gray">Head Office</h6> -->
-                                </div>
-                                <!-- <div class="card-footer justify-content-center">
-                                        <b> 9 Ndjamena Crescent Wuse II, Abuja </b>
-                                    </div> -->
-                                <!-- <div class="card-footer justify-content-center">
-                                        Date: <b> 02-05-2021 </b>
-                                    </div> -->
-                            </div>
+                           
 
                             <form method="POST" action="../composer/disbursedloan.php">
                                 <div class="row">
@@ -116,7 +105,6 @@ if (isset($_GET["view15"])) { ?>
                                     </div>
                                 </div>
                                 <button type="reset" class="btn btn-danger pull-right">Reset</button>
-                                <button type="submit" id="runi" class="btn btn-primary pull-right">Download PDF</button>
                                 <button type="submit" id="excel" class="btn btn-success pull-right">Run Report</button>
                             </form>
                         </div>
@@ -132,6 +120,22 @@ if (isset($_GET["view15"])) { ?>
                             <!-- <p class="category">Category subtitle</p> -->
                         </div>
                         <div class="card-body">
+
+                        <div class="card card-profile ml-auto mr-auto" style="max-width: 370px; max-height: 360px">
+                                <div class="card-body ">
+                                    <h4 class="card-title">Total Outstanding Loans: <b>NGN <?php echo number_format(round($fde), 2); ?></b></h4>
+                                    <!-- <h6 class="card-category text-gray">Head Office</h6> -->
+                                </div>
+                                <!-- <div class="card-footer justify-content-center">
+                                        <b> 9 Ndjamena Crescent Wuse II, Abuja </b>
+                                    </div> -->
+                                <!-- <div class="card-footer justify-content-center">
+                                        Date: <b> 02-05-2021 </b>
+                                    </div> -->
+                            </div>
+
+                            <div class="row">
+                            <div class="col-md-12">
                             <div class="table-resposive">
                                 <table id="dloan" class="display" style="width:100%">
                                     <thead>
@@ -159,6 +163,17 @@ if (isset($_GET["view15"])) { ?>
                                             <th>₦9.00</th>
                                             <th>₦100,000.00</th>
                                         </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Total</th>
+                                            <th>₦100,000.00</th>
+                                        </tr>
 
                                     </tbody>
                                     <tfoot>
@@ -176,6 +191,16 @@ if (isset($_GET["view15"])) { ?>
                                     </tfoot>
                                 </table>
                             </div>
+                            </div>
+                            
+                            </div>
+
+                            <div class="row">
+                            <div class="form-group mt-4">
+                            <button type="submit" id="excel" class="btn btn-primary pull-right">Download PDF</button>
+                            <button type="submit" id="excel" class="btn btn-primary pull-right">Download Excel</button>
+                            </div>
+                            </div>
                         </div>
 
 
@@ -192,7 +217,9 @@ if (isset($_GET["view15"])) { ?>
     </div>
     <script>
         $(document).ready(function() {
-            $('#dloan').DataTable();
+            $('#dloan').DataTable(
+                {"ordering": false}
+            );
         });
     </script>
 
