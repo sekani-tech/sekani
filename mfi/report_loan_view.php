@@ -28,7 +28,7 @@ if (isset($_GET["message1"])) {
 if (isset($_GET["view15"])) { ?>
     <div class="content">
         <div class="container-fluid">
-            <!-- your content here -->
+             your content here 
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -56,7 +56,7 @@ if (isset($_GET["view15"])) { ?>
 
                             <h4 class="card-title">Disbursed Loans Accounts</h4>
 
-                            <!-- Insert number users institutions -->
+                             Insert number users institutions 
                             <p class="card-category">
                                 <?php
                                 $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
@@ -72,14 +72,14 @@ if (isset($_GET["view15"])) { ?>
                         <div class="card-body">
                             <form method="POST" action="">
                                 <div class="row">
-                                    <!-- Start Date Area -->
+                                     Start Date Area 
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Start Date</label>
                                             <input type="date" value="" name="start" class="form-control" id="start">
                                         </div>
                                     </div>
-                                    <!-- End date area -->
+                                     End date area 
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">End Date</label>
@@ -87,7 +87,7 @@ if (isset($_GET["view15"])) { ?>
                                             <input type="text" id="int_id" hidden name="" value="<?php echo $sessint_id; ?>" class="form-control" readonly>
                                         </div>
                                     </div>
-                                    <!-- Select Branch area -->
+                                     Select Branch area 
                                     <div class="col-md-4">
                                         <label class="bmd-label-floating">Branch Names <span style="color: red">*</span>:</label>
                                         <select name="branch_id" class="form-control">
@@ -100,7 +100,7 @@ if (isset($_GET["view15"])) { ?>
                                 </div>
                                 <div class="row">
                                     <div id="showDisbursedLoan">
-                                        <!-- this shows the disburse table chosen by the client -->
+                                         this shows the disburse table chosen by the client 
                                     </div>
                                 </div>
                                 <button type="reset" class="btn btn-danger">Reset</button>
@@ -116,20 +116,20 @@ if (isset($_GET["view15"])) { ?>
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">Disbursed Loan Accounts Report</h4>
-                            <!-- <p class="category">Category subtitle</p> -->
+                             <p class="category">Category subtitle</p> 
                         </div>
                         <div class="card-body">
                             <div class="card card-profile ml-auto mr-auto" style="max-width: 370px; max-height: 360px">
                                 <div class="card-body ">
                                     <h4 class="card-title">Total Outstanding Loans: <b>NGN <?php echo number_format(round($fde), 2); ?></b></h4>
-                                    <!-- <h6 class="card-category text-gray">Head Office</h6> -->
+                                     <h6 class="card-category text-gray">Head Office</h6> 
                                 </div>
-                                <!-- <div class="card-footer justify-content-center">
+                                 <div class="card-footer justify-content-center">
                                         <b> 9 Ndjamena Crescent Wuse II, Abuja </b>
-                                    </div> -->
-                                <!-- <div class="card-footer justify-content-center">
+                                    </div> 
+                                 <div class="card-footer justify-content-center">
                                         Date: <b> 02-05-2021 </b>
-                                    </div> -->
+                                    </div> 
                             </div>
                             <div class="row">
                                 <div class="col-12">
@@ -195,7 +195,7 @@ if (isset($_GET["view15"])) { ?>
                                                 }
                                             }
                                             ?>
-                                                <!-- <tr>
+                                                 <tr>
                                                     <th></th>
                                                     <th></th>
                                                     <th></th>
@@ -205,7 +205,7 @@ if (isset($_GET["view15"])) { ?>
                                                     <th></th>
                                                     <th>Total</th>
                                                     <th>₦100,000.00</th>
-                                                </tr> -->
+                                                </tr> 
                                             </tbody>
                                             <tfoot>
                                                 <tr>
@@ -291,17 +291,17 @@ if (isset($_GET["view15"])) { ?>
 <?php
 } else if (isset($_GET["view16"])) {
 ?>
-    <!-- Content added here -->
+     <!-- Content added here  -->
     <div class="content">
         <div class="container-fluid">
-            <!-- your content here -->
+             <!-- your content here  -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Outstanding Loan Balance Report</h4>
 
-                            <!-- Insert number users institutions -->
+                             Insert number users institutions 
                             <p class="card-category"><?php
                                                         $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
                                                         $result = mysqli_query($connection, $query);
@@ -312,114 +312,114 @@ if (isset($_GET["view15"])) { ?>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <!--                    <table class="rtable display nowrap" style="width:100%">-->
-                                <!--                      <thead class=" text-primary">-->
-                                <!--                      --><?php
-                                                                //                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
-                                                                //                        $result = mysqli_query($connection, $query);
-                                                                //                      
+                                                   <table class="rtable display nowrap" style="width:100%">
+                                                     <thead class=" text-primary">
+                                                    <?php
+                                                                                       $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
+                                                                                       $result = mysqli_query($connection, $query);
+                                                                                     
                                                                 ?>
-                                <!--                        <th>-->
-                                <!--                          Client Name-->
-                                <!--                        </th>-->
-                                <!--                        <th>-->
-                                <!--                          Account No-->
-                                <!--                        </th>-->
-                                <!--                        <th>-->
-                                <!--                          Principal Amount-->
-                                <!--                        </th>-->
-                                <!--                        <th>-->
-                                <!--                          Disbursement Date-->
-                                <!--                        </th>-->
-                                <!--                        <th>-->
-                                <!--                          Maturity Date-->
-                                <!--                        </th>-->
-                                <!--                        <th>-->
-                                <!--                          Outstanding Loan Balances-->
-                                <!--                        </th>-->
-                                <!--                        <th>View</th>-->
-                                <!--                      <tbody>-->
-                                <!--                      --><?php //if (mysqli_num_rows($result) > 0) {
-                                                                //                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                                                       <th>
+                                                       Client Name
+                                                       </th>
+                                                       <th>
+                                                         Account No
+                                                       </th>
+                                                       <th>
+                                                         Principal Amount
+                                                       </th>
+                                                       <th>
+                                                         Disbursement Date
+                                                       </th>
+                                                       <th>
+                                                         Maturity Date
+                                                       </th>
+                                                        <th>
+                                                          Outstanding Loan Balances 
+                                                        </th>
+                                                        <th>View</th>
+                                                      <tbody> 
+                                                      <?php if (mysqli_num_rows($result) > 0) {
+                                                                                       while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                                 ?>
-                                <!--                        <tr>-->
-                                <!--                        --><?php //$fi =  $row["id"]; 
+                                                        <tr>
+                                                        <?php $fi =  $row["id"]; 
                                                                 ?>
-                                <!--                        --><?php //
-                                                                //                            $name = $row['client_id'];
-                                                                //                            $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
-                                                                //                            $f = mysqli_fetch_array($anam);
-                                                                //                            $nae = strtoupper($f["firstname"]." ".$f["lastname"]);
-                                                                //                        
+                                                        <?php //
+                                                                                           $name = $row['client_id'];
+                                                                                           $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
+                                                                                           $f = mysqli_fetch_array($anam);
+                                                                                           $nae = strtoupper($f["firstname"]." ".$f["lastname"]);
+                                                                                       
                                                                 ?>
-                                <!--                          <th>--><?php //echo $nae; 
+                                                          <th><?php echo $nae; 
                                                                         ?>
-                                <!--</th>-->
-                                <!--                          <th>--><?php //echo $row["account_no"]; 
+                                </th>
+                                                          <th><?php echo $row["account_no"]; 
                                                                         ?>
-                                <!--</th>-->
-                                <!--                          <th>-->
-                                <?php //echo $row["principal_amount"]; 
+                                </th>
+                                                          <th>
+                                <?php echo $row["principal_amount"]; 
                                 ?>
-                                <!--</th>-->
-                                <!--                          <th>-->
-                                <?php //echo $row["disbursement_date"];
+                                </th>
+                                                          <th>
+                                <?php echo $row["disbursement_date"];
                                 ?>
-                                <!--</th>-->
-                                <!--                          <th>--><?php //echo $row["repayment_date"];
+                                </th>
+                                                          <th><?php echo $row["repayment_date"];
                                                                         ?>
-                                <!--</th>-->
-                                <!--                          --><?php
+                                </th>
+                                                          <?php
                                                                     //                            // repaymeny
-                                                                    //                              $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
-                                                                    //                              $sdoi = mysqli_query($connection, $dd);
-                                                                    //                              $e = mysqli_fetch_array($sdoi);
-                                                                    //                              $interest = $e['interest_amount'];
-                                                                    //
-                                                                    //                              $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
-                                                                    //                              $sdswe = mysqli_query($connection, $dfdf);
-                                                                    //                              $u = mysqli_fetch_array($sdswe);
-                                                                    //                              $prin = $u['principal_amount'];
-                                                                    //
-                                                                    //                              $outstanding = $prin + $interest;
-                                                                    //                              // Arrears
-                                                                    //                              $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
-                                                                    //                              $fosdi = mysqli_query($connection, $ldfkl);
-                                                                    //                              $l = mysqli_fetch_array($fosdi);
-                                                                    //                              $interesttwo = $l['interest_amount'];
-                                                                    //
-                                                                    //                              $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
-                                                                    //                              $sodi = mysqli_query($connection, $sdospd);
-                                                                    //                              $s = mysqli_fetch_array($sodi);
-                                                                    //                              $printwo = $s['principal_amount'];
-                                                                    //
-                                                                    //                              $outstandingtwo = $printwo + $interesttwo;
-                                                                    //                            
+                                                                                                 $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                                                                                                 $sdoi = mysqli_query($connection, $dd);
+                                                                                                 $e = mysqli_fetch_array($sdoi);
+                                                                                                 $interest = $e['interest_amount'];
+                                                                    
+                                                                                                 $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                                                                                                 $sdswe = mysqli_query($connection, $dfdf);
+                                                                                                 $u = mysqli_fetch_array($sdswe);
+                                                                                                 $prin = $u['principal_amount'];
+                                                                    
+                                                                                                 $outstanding = $prin + $interest;
+                                                                                                 // Arrears
+                                                                                                 $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                                                                                                 $fosdi = mysqli_query($connection, $ldfkl);
+                                                                                                 $l = mysqli_fetch_array($fosdi);
+                                                                                                 $interesttwo = $l['interest_amount'];
+                                                                    
+                                                                                                 $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                                                                                                 $sodi = mysqli_query($connection, $sdospd);
+                                                                                                 $s = mysqli_fetch_array($sodi);
+                                                                                                 $printwo = $s['principal_amount'];
+                                                                    
+                                                                                                 $outstandingtwo = $printwo + $interesttwo;
+                                                                                               
                                                                     ?>
-                                <!--                          <th>--><?php //$bal = $row["total_outstanding_derived"];
-                                                                        //                          $df = $bal;
-                                                                        //                          $ttloutbalance = 0;
-                                                                        //                          $ttloustanding = $outstanding + $outstandingtwo;
-                                                                        //                           echo number_format($ttloustanding);
-                                                                        //                           $ttloutbalance += $ttloustanding;
-                                                                        //                            
+                                                          <th><?php $bal = $row["total_outstanding_derived"];
+                                                                                                 $df = $bal;
+                                                                                                 $ttloutbalance = 0;
+                                                                                                 $ttloustanding = $outstanding + $outstandingtwo;
+                                                                                                  echo number_format($ttloustanding);
+                                                                                                  $ttloutbalance += $ttloustanding;
+                                                                                                   
                                                                         ?>
-                                <!--</th>-->
-                                <!--                          <td><a href="loan_report_view.php?edit=-->
-                                <?php //echo $row["id"];
+                                </th>
+                                                          <td><a href="loan_report_view.php?edit=
+                                <?php echo $row["id"];
                                 ?>
-                                <!--" class="btn btn-info">View</a></td>-->
-                                <!--                         </tr>-->
-                                <!--                        --><?php //}
-                                                                //                          }
-                                                                //                          else {
-                                                                //                            // echo "0 Document";
-                                                                //                          }
-                                                                //                          
+                                " class="btn btn-info">View</a></td>
+                                                         </tr>
+                                                        <?php }
+                                                                                         }
+                                                                                         else {
+                                                                                           // echo "0 Document";
+                                                                                         }
+                                                                                         
                                                                 ?>
-                                <!--                          <!-- <th></th> -->-->
-                                <!--                      </tbody>-->
-                                <!--                    </table>-->
+                                                           <th></th> 
+                                                      </tbody>
+                                                    </table>
                             </div>
                         </div>
                     </div>
@@ -433,7 +433,7 @@ else if (isset($_GET["view17"])) {
 ?>
     <div class="content">
         <div class="container-fluid">
-            <!-- your content here -->
+             <!-- your content here  -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -514,7 +514,7 @@ else if (isset($_GET["view18"])) {
 ?>
     <div class="content">
         <div class="container-fluid">
-            <!-- your content here -->
+             your content here 
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -532,12 +532,12 @@ else if (isset($_GET["view18"])) {
                                         <label for="">End Date</label>
                                         <input type="date" name="" id="end" class="form-control">
                                     </div>
-                                    <!-- <div class="form-group col-md-3">
+                                     <div class="form-group col-md-3">
                                       <label for="">Branch</label>
                                       <select name="" id="branch" class="form-control">
                                           <option value="">Head Office</option>
                                       </select>
-                                    </div> -->
+                                    </div> 
                                 </div>
                                 <button type="reset" class="btn btn-danger">Reset</button>
                                 <span id="runclass" type="submit" class="btn btn-primary">Run report</span>
@@ -574,17 +574,17 @@ else if (isset($_GET["view18"])) {
 } //Loan Collateral Schedule
 else if (isset($_GET["view19"])) {
 ?>
-    <!-- Content added here -->
+     Content added here 
     <div class="content">
         <div class="container-fluid">
-            <!-- your content here -->
+             your content here 
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Loan Collateral's Schedule</h4>
 
-                            <!-- Insert number users institutions -->
+                             Insert number users institutions 
                             <p class="card-category"><?php
                                                         $query = "SELECT * FROM collateral WHERE int_id = '$sessint_id'";
                                                         $result = mysqli_query($connection, $query);
@@ -685,18 +685,18 @@ else if (isset($_GET["view19"])) {
 <?php
 } else if (isset($_GET["view20"])) {
 ?>
-    <!-- Data for clients registered this month -->
-    <!-- Content added here -->
+     Data for clients registered this month 
+     Content added here 
     <div class="content">
         <div class="container-fluid">
-            <!-- your content here -->
+             your content here 
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Matured Loan Report</h4>
 
-                            <!-- Insert number users institutions -->
+                             Insert number users institutions 
                             <p class="card-category">
                                 <?php
                                 $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
@@ -806,7 +806,7 @@ else if (isset($_GET["view19"])) {
 <?php
 } else if (isset($_GET["view21"])) {
 ?>
-    <!-- <div class="content">
+     <div class="content">
            <div class="container-fluid">
                        your content here
                        <div class="row">
@@ -875,13 +875,13 @@ else if (isset($_GET["view19"])) {
                </div>
              </div>
            </div>
-    </div> -->
+    </div> 
 <?php
 } else if (isset($_GET["view23"])) {
 ?>
     <div class="content">
         <div class="container-fluid">
-            <!-- your content here -->
+             your content here 
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -965,14 +965,14 @@ else if (isset($_GET["view19"])) {
 
     <div class="content">
         <div class="container-fluid">
-            <!-- your content here -->
+             your content here 
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Expected Loan Repayment</h4>
 
-                            <!-- Insert number users institutions -->
+                             Insert number users institutions 
                             <p class="card-category">
                                 <?php
                                 $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date'";
@@ -1032,9 +1032,9 @@ else if (isset($_GET["view19"])) {
                                         <th>
                                             Outstanding Loan Balance
                                         </th>
-                                        <!-- <th>
+                                         <th>
                                       Status
-                                    </th> -->
+                                    </th> 
                                     </thead>
                                     <tbody>
                                         <?php if (mysqli_num_rows($result) > 0) {
@@ -1078,7 +1078,7 @@ else if (isset($_GET["view19"])) {
                                             // echo "0 Document";
                                         }
                                         ?>
-                                        <!-- <th></th> -->
+                                         <th></th> 
                                     </tbody>
                                 </table>
                             </div>
@@ -1094,14 +1094,14 @@ else if (isset($_GET["view19"])) {
 ?>
     <div class="content">
         <div class="container-fluid">
-            <!-- your content here -->
+             your content here 
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Expected Loan Repayment</h4>
 
-                            <!-- Insert number users institutions -->
+                             Insert number users institutions 
                             <p class="card-category">
                                 <?php
                                 $currentdate = date('Y-m-d');
@@ -1164,9 +1164,9 @@ else if (isset($_GET["view19"])) {
                                         <th>
                                             Outstanding Loan Balance
                                         </th>
-                                        <!-- <th>
+                                         <th>
                                       Status
-                                    </th> -->
+                                    </th> 
                                     </thead>
                                     <tbody>
                                         <?php if (mysqli_num_rows($result) > 0) {
@@ -1210,7 +1210,7 @@ else if (isset($_GET["view19"])) {
                                             // echo "0 Document";
                                         }
                                         ?>
-                                        <!-- <th></th> -->
+                                         <th></th> 
                                     </tbody>
                                 </table>
                             </div>
@@ -1225,14 +1225,14 @@ else if (isset($_GET["view19"])) {
 ?>
     <div class="content">
         <div class="container-fluid">
-            <!-- your content here -->
+             your content here 
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Loans in Arrears</h4>
 
-                            <!-- Insert number users institutions -->
+                             Insert number users institutions 
                             <p class="card-category">
                                 <?php
                                 $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= '1'";
@@ -1296,9 +1296,9 @@ else if (isset($_GET["view19"])) {
                                         <th>
                                             Outstanding Loan Balance
                                         </th>
-                                        <!-- <th>
+                                         <th>
                                       Status
-                                    </th> -->
+                                    </th> 
                                     </thead>
                                     <tbody>
                                         <?php if (mysqli_num_rows($result) > 0) {
@@ -1358,7 +1358,7 @@ else if (isset($_GET["view19"])) {
                                             // echo "0 Document";
                                         }
                                         ?>
-                                        <!-- <th></th> -->
+                                         <th></th> 
                                     </tbody>
                                 </table>
                             </div>
