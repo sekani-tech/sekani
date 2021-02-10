@@ -30,7 +30,7 @@ if (isset($_GET["view15"])) { ?>
         <div class="container-fluid">
             <!-- your content here -->
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <?php
@@ -53,7 +53,8 @@ if (isset($_GET["view15"])) { ?>
                             $intet = $iqx['total_int_prin'];
                             $fde = ($print + $intet) + ($arr_p + $arr_i);
                             ?>
-                            <h4 class="card-title ">Disbursed Loans Accounts</h4>
+
+                            <h4 class="card-title">Disbursed Loans Accounts</h4>
 
                             <!-- Insert number users institutions -->
                             <p class="card-category">
@@ -65,22 +66,20 @@ if (isset($_GET["view15"])) { ?>
                                     $inr = mysqli_num_rows($result);
                                     echo $inr;
                                     $date = date("F");
-                                } ?> Disbursed Loans</p>
+                                } ?> Disbursed Loans
+                            </p>
                         </div>
                         <div class="card-body">
-
-                           
-
-                            <form method="POST" action="../composer/disbursedloan.php">
+                            <form method="POST" action="">
                                 <div class="row">
-                                    <!--                                    Start Date Area-->
+                                    <!-- Start Date Area -->
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Start Date</label>
                                             <input type="date" value="" name="start" class="form-control" id="start">
                                         </div>
                                     </div>
-                                    <!--                                    End date area-->
+                                    <!-- End date area -->
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">End Date</label>
@@ -88,10 +87,10 @@ if (isset($_GET["view15"])) { ?>
                                             <input type="text" id="int_id" hidden name="" value="<?php echo $sessint_id; ?>" class="form-control" readonly>
                                         </div>
                                     </div>
-                                    <!--                                    Select Branch area-->
+                                    <!-- Select Branch area -->
                                     <div class="col-md-4">
                                         <label class="bmd-label-floating">Branch Names <span style="color: red">*</span>:</label>
-                                        <select name="group_id" class="form-control" id="group_id">
+                                        <select name="branch_id" class="form-control">
                                             <option value="">select an option</option>
                                             <?php foreach ($getBranch as $branch) { ?>
                                                 <option value="<?php echo $branch['id'] ?>"><?php echo $branch['name'] ?></option>
@@ -101,11 +100,11 @@ if (isset($_GET["view15"])) { ?>
                                 </div>
                                 <div class="row">
                                     <div id="showDisbursedLoan">
-                                        <!--                                        this shows the disburse table chosen by the client-->
+                                        <!-- this shows the disburse table chosen by the client -->
                                     </div>
                                 </div>
-                                <button type="reset" class="btn btn-danger pull-right">Reset</button>
-                                <button type="submit" id="excel" class="btn btn-success pull-right">Run Report</button>
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                                <button type="submit" class="btn btn-success" name="generateDLAR">Run Report</button>
                             </form>
                         </div>
                     </div>
@@ -113,15 +112,14 @@ if (isset($_GET["view15"])) { ?>
             </div>
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Disbured Loan Accounts Report</h4>
+                            <h4 class="card-title">Disbursed Loan Accounts Report</h4>
                             <!-- <p class="category">Category subtitle</p> -->
                         </div>
                         <div class="card-body">
-
-                        <div class="card card-profile ml-auto mr-auto" style="max-width: 370px; max-height: 360px">
+                            <div class="card card-profile ml-auto mr-auto" style="max-width: 370px; max-height: 360px">
                                 <div class="card-body ">
                                     <h4 class="card-title">Total Outstanding Loans: <b>NGN <?php echo number_format(round($fde), 2); ?></b></h4>
                                     <!-- <h6 class="card-category text-gray">Head Office</h6> -->
@@ -133,85 +131,116 @@ if (isset($_GET["view15"])) { ?>
                                         Date: <b> 02-05-2021 </b>
                                     </div> -->
                             </div>
-
                             <div class="row">
-                            <div class="col-md-12">
-                            <div class="table-resposive">
-                                <table id="dloan" class="display" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th><small>Client Name</small></th>
-                                            <th><small>Principal Amount</small></th>
-                                            <th><small>Loan Term</small></th>
-                                            <th><small>Disbursement Date</small></th>
-                                            <th><small>Maturity Date</small></th>
-                                            <th><small>Interest Rate</small></th>
-                                            <th><small>Interest Amount</small></th>
-                                            <th><small>Total Income</small></th>
-                                            <th><small>Total Oustanding Bal</small></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th>EMMANUEL OKAFOR</th>
-                                            <th>₦100,000.00</th>
-                                            <th>3</th>
-                                            <th>2020-08-24</th>
-                                            <th>2020-08-27</th>
-                                            <th>₦3.00</th>
-                                            <th>₦30,000.00</th>
-                                            <th>₦9.00</th>
-                                            <th>₦100,000.00</th>
-                                        </tr>
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>Total</th>
-                                            <th>₦100,000.00</th>
-                                        </tr>
+                                <div class="col-12">
+                                    <div class="table-resposive">
+                                        <table id="dloan" class="display" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th><small>Client Name</small></th>
+                                                    <th><small>Principal Amount</small></th>
+                                                    <th><small>Loan Term</small></th>
+                                                    <th><small>Disbursement Date</small></th>
+                                                    <th><small>Maturity Date</small></th>
+                                                    <th><small>Interest Rate</small></th>
+                                                    <th><small>Interest Amount</small></th>
+                                                    <th><small>Total Interest</small></th>
+                                                    <th><small>Total Oustanding Bal</small></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php
+                                            if(isset($_POST['generateDLAR'])) {
+                                                if (!empty($_POST["start"]) && !empty($_POST["end"]) && !empty($_POST["branch_id"])) {
+                                                    $start = $_POST["start"];
+                                                    $end = $_POST["end"];
+                                                    $branch_id = $_POST["branch_id"];
 
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th><small>Client Name</small></th>
-                                            <th><small>Principal Amount</small></th>
-                                            <th><small>Loan Term</small></th>
-                                            <th><small>Disbursement Date</small></th>
-                                            <th><small>Maturity Date</small></th>
-                                            <th><small>Interest Rate</small></th>
-                                            <th><small>Interest Amount</small></th>
-                                            <th><small>Total Income</small></th>
-                                            <th><small>Total Oustanding Bal</small></th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            </div>
-                            
-                            </div>
+                                                    $getParentID = mysqli_query($connection, "SELECT parent_id FROM `branch` WHERE int_id = $sessint_id AND id = $branch_id");
+                                                    while ($result = mysqli_fetch_array($getParentID)) {
+                                                        $parent_id = $result['parent_id'];
+                                                    }
 
+                                                    if($parent_id == 0) {
+                                                        // Select loan data from all branches
+                                                        $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_outstanding_derived, c.display_name, c.branch_id FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id AND (l.submittedon_date BETWEEN '$start' AND '$end')";
+                                                        $result = mysqli_query($connection, $accountquery);
+                                                    } else {
+                                                        $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_outstanding_derived, c.display_name, c.branch_id, b.parent_id FROM loan l JOIN client c ON l.client_id = c.id JOIN branch b ON c.branch_id = b.id WHERE l.int_id = $sessint_id AND (l.submittedon_date BETWEEN '$start' AND '$end') AND b.id = $branch_id";
+                                                        $result = mysqli_query($connection, $accountquery);
+                                                    }
+
+                                                    while ($loan = mysqli_fetch_array($result)) {
+                                            ?>
+                                                        <tr>
+                                                            <th><?php echo $loan['display_name']; ?></th>
+                                                            <th><?php echo $loan['principal_amount']; ?></th>
+                                                            <th><?php echo $loan['loan_term']; ?></th>
+                                                            <th><?php echo $loan['disbursement_date']; ?></th>
+                                                            <th><?php echo $loan['repayment_date']; ?></th>
+                                                            <th><?php echo $loan['interest_rate']; ?></th>
+                                                            <?php
+                                                            $intr = $loan['interest_rate']/100;
+                                                            $final = $intr * $loan['principal_amount'];
+                                                            $total_interest = $loan['loan_term'] * $final;
+                                                            // the code below is as a result of the total_outstanding_derived column in the loan table not been updated at the moment
+                                                            $total_outstanding_bal = $loan['total_outstanding_derived'] + $total_interest;
+                                                            ?>
+                                                            <th><?php echo $final; ?></th>
+                                                            <th><?php echo $total_interest; ?></th>
+                                                            <th><?php echo $total_outstanding_bal; ?></th>
+                                                        </tr>
+                                            <?php
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                                <!-- <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th>Total</th>
+                                                    <th>₦100,000.00</th>
+                                                </tr> -->
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th><small>Client Name</small></th>
+                                                    <th><small>Principal Amount</small></th>
+                                                    <th><small>Loan Term</small></th>
+                                                    <th><small>Disbursement Date</small></th>
+                                                    <th><small>Maturity Date</small></th>
+                                                    <th><small>Interest Rate</small></th>
+                                                    <th><small>Interest Amount</small></th>
+                                                    <th><small>Total Interest</small></th>
+                                                    <th><small>Total Oustanding Bal</small></th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
-                            <div class="form-group mt-4">
-                            <button type="submit" id="excel" class="btn btn-primary pull-right">Download PDF</button>
-                            <button type="submit" id="excel" class="btn btn-primary pull-right">Download Excel</button>
-                            </div>
+                                <div class="col-12">
+                                    <div class="form-group mt-4">
+                                        <form method="POST" action="../composer/disbursedloan.php">
+                                            <input hidden name="branch_id" type="text" value="<?php if(!empty($_POST["branch_id"])) { echo $_POST["branch_id"];} ?>" />
+                                            <input hidden name="start" type="text" value="<?php if(!empty($_POST["start"])) { echo $_POST["start"];} ?>" />
+                                            <input hidden name="end" type="text" value="<?php if(!empty($_POST["end"])) { echo $_POST["end"];} ?>" />
+                                            <button type="submit" name="downloadPDF" class="btn btn-primary">Download PDF</button>
+                                            <button type="submit" name="downloadExcel" class="btn btn-primary">Download Excel</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
-
-
-
             </div>
-
         </div>
 
     </div>
