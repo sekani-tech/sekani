@@ -241,7 +241,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <!-- <tr> -->
                        
                           <th>Account Name</th>
-                          <th>Account Number</th>
                           <th>Loan Term</th>
                           <th>Interest Rate</th>
                           <th>Principal Amount</th>
@@ -262,7 +261,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $firstname = strtoupper($cm["firstname"]." ".$cm["lastname"]);
                             ?>
                           <td><?php echo $firstname ?></td>
-                          <td><?php echo $row["account_no"] ?></td>
                           <td><?php echo $row["loan_term"]." ".$row["repay_every"]."(s)"; ?></td>
                           <td><?php echo $row["interest_rate"]."%"; ?></td>
                           <td><?php echo "₦ ".number_format($row["principal_amount"], 2); ?></td>
