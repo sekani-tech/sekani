@@ -522,7 +522,7 @@ else if (isset($_GET["view18"])) {
                             <h4 class="card-title">Loan Classification Report</h4>
                         </div>
                         <div class="card-body">
-                            <form action="">
+                            <form action="">     
                                 <div class="row">
                                     <div class="form-group col-md-3">
                                         <label for="">Start Date</label>
