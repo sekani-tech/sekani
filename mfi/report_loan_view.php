@@ -394,7 +394,7 @@ if (isset($_GET["view15"])) { ?>
                                         <?php }
                                         } else {
                                             // echo "0 Document";
-                                        }
+                                        }     
 
                                         ?>
 
