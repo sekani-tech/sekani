@@ -28,7 +28,6 @@ if (isset($_GET["message1"])) {
 if (isset($_GET["view15"])) { ?>
     <div class="content">
         <div class="container-fluid">
-             your content here 
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -55,9 +54,7 @@ if (isset($_GET["view15"])) { ?>
                             ?>
 
                             <h4 class="card-title">Disbursed Loans Accounts</h4>
-
-                             Insert number users institutions 
-                            <p class="card-category">
+                            <!-- <p class="card-category">
                                 <?php
                                 $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
                                 // $query = "SELECT * FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
@@ -67,19 +64,17 @@ if (isset($_GET["view15"])) { ?>
                                     echo $inr;
                                     $date = date("F");
                                 } ?> Disbursed Loans
-                            </p>
+                            </p> -->
                         </div>
                         <div class="card-body">
                             <form method="POST" action="">
                                 <div class="row">
-                                     Start Date Area 
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Start Date</label>
                                             <input type="date" value="" name="start" class="form-control" id="start">
                                         </div>
                                     </div>
-                                     End date area 
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">End Date</label>
@@ -87,7 +82,6 @@ if (isset($_GET["view15"])) { ?>
                                             <input type="text" id="int_id" hidden name="" value="<?php echo $sessint_id; ?>" class="form-control" readonly>
                                         </div>
                                     </div>
-                                     Select Branch area 
                                     <div class="col-md-4">
                                         <label class="bmd-label-floating">Branch Names <span style="color: red">*</span>:</label>
                                         <select name="branch_id" class="form-control">
@@ -100,7 +94,6 @@ if (isset($_GET["view15"])) { ?>
                                 </div>
                                 <div class="row">
                                     <div id="showDisbursedLoan">
-                                         this shows the disburse table chosen by the client 
                                     </div>
                                 </div>
                                 <button type="reset" class="btn btn-danger">Reset</button>
@@ -116,20 +109,14 @@ if (isset($_GET["view15"])) { ?>
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">Disbursed Loan Accounts Report</h4>
-                             <p class="category">Category subtitle</p> 
+                             <!-- <p class="category">Category subtitle</p>  -->
                         </div>
                         <div class="card-body">
                             <div class="card card-profile ml-auto mr-auto" style="max-width: 370px; max-height: 360px">
                                 <div class="card-body ">
                                     <h4 class="card-title">Total Outstanding Loans: <b>NGN <?php echo number_format(round($fde), 2); ?></b></h4>
                                      <h6 class="card-category text-gray">Head Office</h6> 
-                                </div>
-                                 <div class="card-footer justify-content-center">
-                                        <b> 9 Ndjamena Crescent Wuse II, Abuja </b>
-                                    </div> 
-                                 <div class="card-footer justify-content-center">
-                                        Date: <b> 02-05-2021 </b>
-                                    </div> 
+                                </div> 
                             </div>
                             <div class="row">
                                 <div class="col-12">
@@ -195,17 +182,7 @@ if (isset($_GET["view15"])) { ?>
                                                 }
                                             }
                                             ?>
-                                                 <tr>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th>Total</th>
-                                                    <th>₦100,000.00</th>
-                                                </tr> 
+                                                
                                             </tbody>
                                             <tfoot>
                                                 <tr>
@@ -514,7 +491,6 @@ else if (isset($_GET["view18"])) {
 ?>
     <div class="content">
         <div class="container-fluid">
-             your content here 
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
