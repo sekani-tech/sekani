@@ -448,7 +448,6 @@ else if (isset($_GET["view17"])) {
                                         }
                                         return $out;
                                     }
-
                                     ?>
                                     <div class="form-group col-md-3">
                                         <label for="">Branch</label>
@@ -468,7 +467,7 @@ else if (isset($_GET["view17"])) {
                                 var start = $('#start').val();
                                 var end = $('#end').val();
                                 var hide = $('#hide').val();
-                                var branch = $('#branch').val();
+                                var branch_id = $('#branch').val();
                                 $.ajax({
                                     url: "items/analysis.php",
                                     method: "POST",
@@ -476,7 +475,7 @@ else if (isset($_GET["view17"])) {
                                         start: start,
                                         end: end,
                                         hide: hide,
-                                        branch: branch
+                                        branch_id: branch_id
                                     },
                                     success: function(data) {
                                         $('#shanalysis').html(data);
