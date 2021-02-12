@@ -2,7 +2,7 @@
 
 $page_title = "Loan Report";
 $destination = "report_loan_view.php?view16";
-    include("header.php");
+include("header.php");
 
 ?>
 <?php 
@@ -36,7 +36,7 @@ $clis = $w['client_id'];
 $ccd = mysqli_query($connection, "SELECT * FROM loan_gaurantor WHERE client_id = '$clis'");
 $gau = mysqli_num_rows($ccd);
 
-$dom = $w['loan_sub_status_id'];
+$dom = $w['loan_sub_status'];
 if($dom == 1){
 $loan_sec = "Agriculture, Mining & Quarry";
 }
@@ -154,7 +154,7 @@ $overdue_principal = number_format($wty["overdue_principal"], 2);
 // $query_overdue_interest = mysqli_query($connection, "");
 $query_overdue_interest = mysqli_query($connection, "SELECT SUM(interest_amount) AS overdue_interest FROM `loan_arrear` WHERE (int_id = '$sessint_id' AND loan_id = '$id') AND installment = 1");
 $wtyx = mysqli_fetch_array($query_overdue_interest);
-$overdue_interest = number_format($wtyx["overdue_principal"], 2);
+$overdue_interest = number_format($wtyx["overdue_interest"], 2);
 
 ?>
 <input type="text" hidden id = "principal_amount" value="<?php echo $principal;?>" name=""/>
@@ -367,7 +367,6 @@ $overdue_interest = number_format($wtyx["overdue_principal"], 2);
                       </table>
                     </div>
                     <div class="tab-pane" id="repoay">
-                    <h5>Repayment Schedule</h5>
                     <?php
 if (isset($_GET["edit"]) AND $_GET["edit"] != "") {
     $loan_id = $_GET["edit"];
@@ -378,7 +377,9 @@ if (isset($_GET["edit"]) AND $_GET["edit"] != "") {
     $cm = mysqli_fetch_array($query_client);
     $firstname = strtoupper($cm["firstname"]." ".$cm["lastname"]);
     $account_no = $x["account_no"];
-    $outstanding = number_format($x["total_outstanding_derived"], 2);
+    // the code below is as a result of the total_outstanding_derived column in the loan table not been updated at the moment
+    $outstanding = $x["total_outstanding_derived"] + ($x["loan_term"] * $x["principal_amount"] * ($x["interest_rate"]/100));
+    $outstanding = number_format($outstanding, 2);
 ?>
  <?php
                           $sum_tot = mysqli_query($connection, "SELECT SUM(principal_amount) AS prin_sum FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND loan_id = '$loan_id'");

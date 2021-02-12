@@ -283,13 +283,16 @@ if (isset($_GET["view15"])) { ?>
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Outstanding Loan Balance Report</h4>
-                            <p class="card-category"><?php
-                                                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
-                                                        $result = mysqli_query($connection, $query);
-                                                        if ($result) {
-                                                            $inr = mysqli_num_rows($result);
-                                                            echo $inr;
-                                                        } ?> Loans</p>
+                            <p class="card-category">
+                            <?php
+                            $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
+                            $result = mysqli_query($connection, $query);
+                            if ($result) {
+                                $inr = mysqli_num_rows($result);
+                                echo $inr;
+                            } 
+                            ?> Loans
+                            </p>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -298,7 +301,6 @@ if (isset($_GET["view15"])) { ?>
                                         <?php
                                         $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
                                         $result = mysqli_query($connection, $query);
-
                                         ?>
                                         <th>
                                             Client Name
@@ -377,25 +379,22 @@ if (isset($_GET["view15"])) { ?>
                                                     $outstandingtwo = $printwo + $interesttwo;
 
                                                     ?>
-                                                    <th><?php $bal = $row["total_outstanding_derived"];
+                                                    <th>
+                                                    <?php 
+                                                        $bal = $row["total_outstanding_derived"];
                                                         $df = $bal;
                                                         $ttloutbalance = 0;
                                                         $ttloustanding = $outstanding + $outstandingtwo;
                                                         echo number_format($ttloustanding);
                                                         $ttloutbalance += $ttloustanding;
-
-                                                        ?>
+                                                    ?>
                                                     </th>
-                                                    <th><a href="loan_report_view.php?edit=
-                                <?php echo $row["id"];
-                                ?>
-                                " class="btn btn-info">View</a></th>
+                                                    <th><a href="loan_report_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></th>
                                                 </tr>
                                         <?php }
                                         } else {
                                             // echo "0 Document";
                                         }
-
                                         ?>
 
                                     </tbody>
