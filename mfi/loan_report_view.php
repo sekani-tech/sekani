@@ -36,7 +36,7 @@ $clis = $w['client_id'];
 $ccd = mysqli_query($connection, "SELECT * FROM loan_gaurantor WHERE client_id = '$clis'");
 $gau = mysqli_num_rows($ccd);
 
-$dom = $w['loan_sub_status'];
+$dom = $w['loan_sub_status_id'];
 if($dom == 1){
 $loan_sec = "Agriculture, Mining & Quarry";
 }
