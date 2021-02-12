@@ -361,8 +361,7 @@ $overdue_interest = number_format($wtyx["overdue_interest"], 2);
                           else {
                             // echo "0 Document";
                           }
-                          ?>
-
+                        ?>
                       </tbody>
                       </table>
                     </div>

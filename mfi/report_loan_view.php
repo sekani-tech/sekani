@@ -396,7 +396,6 @@ if (isset($_GET["view15"])) { ?>
                                             // echo "0 Document";
                                         }
                                         ?>
-
                                     </tbody>
                                 </table>
                             </div>
