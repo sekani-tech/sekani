@@ -18,7 +18,7 @@ ALTER TABLE `group_client_cache` CHANGE `id` `id` INT(100) NOT NULL AUTO_INCREME
 -- for bulk deposit
 ALTER TABLE `transact_cache` ADD `teller_id` INT(100) NOT NULL AFTER `staff_id`;
 
---client_charge
+-- client_charge
 ALTER TABLE `client_charge` ADD `approved` INT NOT NULL AFTER `date`;
 
 -- for bulk approval this update is needed
