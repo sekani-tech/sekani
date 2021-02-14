@@ -557,10 +557,53 @@ else if (isset($_GET["view18"])) {
 } //Loan Collateral Schedule
 else if (isset($_GET["view19"])) {
 ?>
-    Content added here
+    
     <div class="content">
         <div class="container-fluid">
-            your content here
+            <div class="row">
+            <div class="col-md-12">
+            <div class="card">
+                        <div class="card-header card-header-primary">
+                             <h4 class="card-title">Generate Loan Collateral's Schedule</h4>
+                            <!-- <p class="card-category">
+                                 Disbursed Loans
+                            </p> -->
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" action="">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Start Date</label>
+                                            <input type="date" value="" name="start" class="form-control" id="start">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">End Date</label>
+                                            <input type="date" value="" name="end" class="form-control" id="end">
+                                            <input type="text" id="int_id" hidden name="" value="<?php echo $sessint_id; ?>" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="bmd-label-floating">Branch Names <span style="color: red">*</span>:</label>
+                                        <select name="branch_id" class="form-control">
+                                            <option value="">select an option</option>
+                                                                                    </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div id="showDisbursedLoan">
+                                    </div>
+                                </div>
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                                <button type="submit" class="btn btn-success" name="generateDLAR">Run Report</button>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+            
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -584,6 +627,8 @@ else if (isset($_GET["view19"])) {
                                     <input hidden name="end" type="text" value="<?php echo $end; ?>" />
                                     <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download
                                         PDF
+                                    </button>
+                                    <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download Excel
                                     </button>
                                     <script>
                                         $(document).ready(function() {
@@ -668,11 +713,53 @@ else if (isset($_GET["view19"])) {
 <?php
 } else if (isset($_GET["view20"])) {
 ?>
-    Data for clients registered this month
-    Content added here
+    
     <div class="content">
         <div class="container-fluid">
-            your content here
+        <div class="row">
+            <div class="col-md-12">
+            <div class="card">
+                        <div class="card-header card-header-primary">
+                             <h4 class="card-title">Generate Matured Loan Report</h4>
+                            <!-- <p class="card-category">
+                                 Disbursed Loans
+                            </p> -->
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" action="">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Start Date</label>
+                                            <input type="date" value="" name="start" class="form-control" id="start">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">End Date</label>
+                                            <input type="date" value="" name="end" class="form-control" id="end">
+                                            <input type="text" id="int_id" hidden name="" value="<?php echo $sessint_id; ?>" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="bmd-label-floating">Branch Names <span style="color: red">*</span>:</label>
+                                        <select name="branch_id" class="form-control">
+                                            <option value="">select an option</option>
+                                                                                    </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div id="showDisbursedLoan">
+                                    </div>
+                                </div>
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                                <button type="submit" class="btn btn-success" name="generateDLAR">Run Report</button>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+            
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -699,21 +786,9 @@ else if (isset($_GET["view19"])) {
                                     <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download
                                         PDF
                                     </button>
-                                    <script>
-                                        $(document).ready(function() {
-                                            $('#disbursed').on("click", function() {
-                                                swal({
-                                                    type: "success",
-                                                    title: "MATURED LOAN REPORT",
-                                                    text: "Printing Successful",
-                                                    showConfirmButton: false,
-                                                    timer: 3000
-
-                                                })
-                                            });
-                                        });
-                                    </script>
-                                </form>
+                                    <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download Excel
+                                    </button>
+                                       </form>
                             </div>
                             <div class="table-responsive">
                                 <table id="mlr" class="display" style="width:100%">
