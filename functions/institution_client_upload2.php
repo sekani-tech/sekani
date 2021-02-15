@@ -353,12 +353,14 @@ if($ctype == 'INDIVIDUAL' || $ctype == 'GROUP'){
         $go = mysqli_query($connection, $accountins);
         if ($go) {
           $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
-          echo header ("Location: ../mfi/configuration.php?message3=$randms");
+          // echo header ("Location: ../mfi/configuration.php?message3=$randms");
+          echo header("location: ../mfi/client.php?message3=$randms");
+
         } else {
            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
            echo "error";
-          echo header ("Location: ../mfi/configuration.php?message4=$randms");
-            // echo header("location: ../mfi/client.php");
+          // echo header ("Location: ../mfi/configuration.php?message4=$randms");
+            echo header("location: ../mfi/client.php?message4=$randms");
         }
     }
   }
