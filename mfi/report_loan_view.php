@@ -499,7 +499,7 @@ else if (isset($_GET["view18"])) {
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">Loan Classification Report</h4>
@@ -508,17 +508,26 @@ else if (isset($_GET["view18"])) {
                             <form action="">
                                 <div class="row">
                                     <div class="form-group col-md-3">
-                                        <label for="">Start Date</label>
-                                        <input type="date" name="" id="start" class="form-control">
+                                        <label for="">Date</label>
+                                        <input type="date" name="" id="picked_date" class="form-control">
                                     </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="">End Date</label>
-                                        <input type="date" name="" id="end" class="form-control">
-                                    </div>
+                                    <?php
+                                    function fill_branch($connection)
+                                    {
+                                        $sint_id = $_SESSION["int_id"];
+                                        $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
+                                        $res = mysqli_query($connection, $org);
+                                        $out = '';
+                                        while ($row = mysqli_fetch_array($res)) {
+                                            $out .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
+                                        }
+                                        return $out;
+                                    }
+                                    ?>
                                     <div class="form-group col-md-3">
                                         <label for="">Branch</label>
-                                        <select name="" id="branch" class="form-control">
-                                            <option value="">Head Office</option>
+                                        <select name="" id="branch_id" class="form-control">
+                                            <?php echo fill_branch($connection); ?>
                                         </select>
                                     </div>
                                 </div>
@@ -530,14 +539,14 @@ else if (isset($_GET["view18"])) {
                     <script>
                         $(document).ready(function() {
                             $('#runclass').on("click", function() {
-                                var start = $('#start').val();
-                                var end = $('#end').val();
+                                var picked_date = $('#picked_date').val();
+                                var branch_id = $('#branch_id').val();
                                 $.ajax({
                                     url: "items/loan_class.php",
                                     method: "POST",
                                     data: {
-                                        start: start,
-                                        end: end
+                                        picked_date: picked_date,
+                                        branch_id: branch_id
                                     },
                                     success: function(data) {
                                         $('#shclass').html(data);
@@ -546,7 +555,9 @@ else if (isset($_GET["view18"])) {
                             });
                         });
                     </script>
-                    <div id="shclass" class="col-md-12">
+                </div>
+                <div class="col-12">
+                    <div id="shclass">
 
                     </div>
                 </div>
@@ -557,16 +568,15 @@ else if (isset($_GET["view18"])) {
 } //Loan Collateral Schedule
 else if (isset($_GET["view19"])) {
 ?>
-    
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-            <div class="col-md-12">
-            <div class="card">
+                <div class="col-12">
+                    <div class="card">
                         <div class="card-header card-header-primary">
-                             <h4 class="card-title">Generate Loan Collateral's Schedule</h4>
+                            <h4 class="card-title">Generate Loan Collateral's Schedule</h4>
                             <!-- <p class="card-category">
-                                 Disbursed Loans
+                                    Disbursed Loans
                             </p> -->
                         </div>
                         <div class="card-body">
@@ -601,11 +611,10 @@ else if (isset($_GET["view19"])) {
                             </form>
                         </div>
                     </div>
-            </div>
-            
+                </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Loan Collateral's Schedule</h4>
@@ -630,20 +639,6 @@ else if (isset($_GET["view19"])) {
                                     </button>
                                     <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download Excel
                                     </button>
-                                    <script>
-                                        $(document).ready(function() {
-                                            $('#disbursed').on("click", function() {
-                                                swal({
-                                                    type: "success",
-                                                    title: "LOAN COLLATERAL REPORT",
-                                                    text: "Printing Successful",
-                                                    showConfirmButton: false,
-                                                    timer: 3000
-
-                                                })
-                                            });
-                                        });
-                                    </script>
                                 </form>
                             </div>
                             <div class="table-responsive">
