@@ -122,19 +122,6 @@ $rezz = mysqli_query($connection, $activeq);
     <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
     <!-- Material Kit CSS -->
     <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
-<!--    <script>-->
-<!--        function makeRequest() {-->
-<!--            $.ajax({-->
-<!--                url: "functions_test/email.php",-->
-<!--                complete: function(data) {-->
-<!--                    setTimeout(function() {-->
-<!--                        makeRequest();-->
-<!--                    }, 60 * 60 * 1000); // Minutes * Seconds * MS-->
-<!--                }-->
-<!--            });-->
-<!--        }-->
-<!--        makeRequest();-->
-<!--    </script>-->
     <!-- Search Query -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> -->
@@ -201,7 +188,7 @@ $rezz = mysqli_query($connection, $activeq);
     <script src="../datatable/dataTables.rowReorder.min.js"></script>
     <script src="../datatable/dataTables.responsive.min.js"></script>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/materia/bootstrap.min.css"> -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177058907-1"></script>
     <script>
