@@ -208,7 +208,7 @@ $(document).ready(function(){
                         <p class="card-description">
                             Fund Institution Sekani Wallet, Keep Activity Up to Date
                         </p>
-                        <a href="sekani_wallet.php" class="btn btn-white btn-round">View</a>
+                        <a href="wallet.php" class="btn btn-white btn-round">View</a>
                     </div>
                 </div>
             </div>
