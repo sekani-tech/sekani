@@ -83,9 +83,8 @@ if (isset($_GET["view15"])) { ?>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="bmd-label-floating">Branch Names <span style="color: red">*</span>:</label>
+                                        <label class="bmd-label-floating">Branch</label>
                                         <select name="branch_id" class="form-control">
-                                            <option value="">select an option</option>
                                             <?php foreach ($getBranch as $branch) { ?>
                                                 <option value="<?php echo $branch['id'] ?>"><?php echo $branch['name'] ?></option>
                                             <?php } ?>
@@ -165,7 +164,7 @@ if (isset($_GET["view15"])) { ?>
                                                                 <th><?php echo $loan['loan_term']; ?></th>
                                                                 <th><?php echo $loan['disbursement_date']; ?></th>
                                                                 <th><?php echo $loan['repayment_date']; ?></th>
-                                                                <th><?php echo $loan['interest_rate']; ?></th>
+                                                                <th><?php echo $loan['interest_rate']; ?>%</th>
                                                                 <?php
                                                                 $intr = $loan['interest_rate'] / 100;
                                                                 $final = $intr * $loan['principal_amount'];
@@ -596,10 +595,23 @@ else if (isset($_GET["view19"])) {
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="bmd-label-floating">Branch Names <span style="color: red">*</span>:</label>
-                                        <select name="branch_id" class="form-control">
-                                            <option value="">select an option</option>
-                                                                                    </select>
+                                        <?php
+                                        function fill_branch($connection)
+                                        {
+                                            $sint_id = $_SESSION["int_id"];
+                                            $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
+                                            $res = mysqli_query($connection, $org);
+                                            $out = '';
+                                            while ($row = mysqli_fetch_array($res)) {
+                                                $out .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
+                                            }
+                                            return $out;
+                                        }
+                                        ?>
+                                        <label class="bmd-label-floating">Branch</label>
+                                        <select name="branch_id" id="branch_id" class="form-control">
+                                            <?php echo fill_branch($connection); ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -607,103 +619,42 @@ else if (isset($_GET["view19"])) {
                                     </div>
                                 </div>
                                 <button type="reset" class="btn btn-danger">Reset</button>
-                                <button type="submit" class="btn btn-success" name="generateDLAR">Run Report</button>
+                                <input type="button" class="btn btn-success" id="generateLCS" value="Run Report"/>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header card-header-primary">
-                            <h4 class="card-title ">Loan Collateral's Schedule</h4>
 
-                            Insert number users institutions
-                            <p class="card-category"><?php
-                                                        $query = "SELECT * FROM collateral WHERE int_id = '$sessint_id'";
-                                                        $result = mysqli_query($connection, $query);
-                                                        if ($result) {
-                                                            $inr = mysqli_num_rows($result);
-                                                            echo $inr;
-                                                        } ?> Collaterals </p>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <form method="POST" action="../composer/loan_collateral.php">
-                                    <input hidden name="id" type="text" value="<?php echo $id; ?>" />
-                                    <input hidden name="start" type="text" value="<?php echo $start; ?>" />
-                                    <input hidden name="end" type="text" value="<?php echo $end; ?>" />
-                                    <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download
-                                        PDF
-                                    </button>
-                                    <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download Excel
-                                    </button>
-                                </form>
-                            </div>
-                            <div class="table-responsive">
-                                <table id="mytable" class="display" style="width:100%">
-                                    <thead>
-                                        <?php
-                                        $query = "SELECT * FROM collateral WHERE int_id = '$sessint_id'";
-                                        $result = mysqli_query($connection, $query);
-                                        ?>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Client Name</th>
-                                            <th>Type</th>
-                                            <th>Value</th>
-                                            <th>Description</th>
+            <script>
+                $(document).ready(function() {
+                    $('#generateLCS').on("click", function() {
+                        var start = $('#start').val();
+                        var end = $('#end').val();
+                        var branch_id = $('#branch_id').val();
+                        $.ajax({
+                            url: "ajax_post/loan_collateral.php",
+                            method: "POST",
+                            data: {
+                                start: start,
+                                end: end,
+                                branch_id: branch_id
+                            },
+                            success: function(data) {
+                                $('#LCSReport').html(data);
+                            }
+                        })
+                    });
+                });
+            </script>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php if (mysqli_num_rows($result) > 0) {
-                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-                                                <tr>
-                                                    <?php $row["id"]; ?>
-                                                    <?php
-                                                    $name = $row['client_id'];
-                                                    $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
-                                                    $f = mysqli_fetch_array($anam);
-                                                    $nae = strtoupper($f["firstname"] . " " . $f["lastname"]);
-                                                    ?>
-                                                    <td><?php echo $row["date"]; ?></td>
-                                                    <td><?php echo $nae; ?></td>
-                                                    <td><?php echo $row["value"]; ?></td>
-                                                    <td><?php echo $row["type"]; ?></td>
-                                                    <td><?php echo $row["description"]; ?></td>
-                                                </tr>
-                                        <?php }
-                                        } else {
-                                            // echo "0 Document";
-                                        }
-                                        ?>
-
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Client Name</th>
-                                            <th>Type</th>
-                                            <th>Value</th>
-                                            <th>Description</th>
-
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="row" id="LCSReport">
+                
             </div>
+
         </div>
     </div>
-    <script>
-        $(document).ready(function() {
-            $('#mytable').DataTable();
-        });
-    </script>
+    
 
 <?php
 } else if (isset($_GET["view20"])) {
