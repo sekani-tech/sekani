@@ -711,8 +711,6 @@ else if (isset($_GET["view19"])) {
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Matured Loan Report</h4>
-
-                            Insert number users institutions
                             <p class="card-category">
                                 <?php
                                 $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
