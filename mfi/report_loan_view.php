@@ -283,14 +283,14 @@ if (isset($_GET["view15"])) { ?>
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Outstanding Loan Balance Report</h4>
                             <p class="card-category">
-                            <?php
-                            $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
-                            $result = mysqli_query($connection, $query);
-                            if ($result) {
-                                $inr = mysqli_num_rows($result);
-                                echo $inr;
-                            } 
-                            ?> Loans
+                                <?php
+                                $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
+                                $result = mysqli_query($connection, $query);
+                                if ($result) {
+                                    $inr = mysqli_num_rows($result);
+                                    echo $inr;
+                                }
+                                ?> Loans
                             </p>
                         </div>
                         <div class="card-body">
@@ -379,21 +379,21 @@ if (isset($_GET["view15"])) { ?>
 
                                                     ?>
                                                     <th>
-                                                    <?php 
+                                                        <?php
                                                         $bal = $row["total_outstanding_derived"];
                                                         $df = $bal;
                                                         $ttloutbalance = 0;
                                                         $ttloustanding = $outstanding + $outstandingtwo;
                                                         echo number_format($ttloustanding);
                                                         $ttloutbalance += $ttloustanding;
-                                                    ?>
+                                                        ?>
                                                     </th>
-                                                    <th><a href="loan_report_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info">View</a></th>
+                                                    <th><a href="loan_report_view.php?edit=<?php echo $row["id"]; ?>" class="btn btn-info">View</a></th>
                                                 </tr>
                                         <?php }
                                         } else {
                                             // echo "0 Document";
-                                        }     
+                                        }
 
                                         ?>
                                     </tbody>
@@ -619,7 +619,7 @@ else if (isset($_GET["view19"])) {
                                     </div>
                                 </div>
                                 <button type="reset" class="btn btn-danger">Reset</button>
-                                <input type="button" class="btn btn-success" id="generateLCS" value="Run Report"/>
+                                <input type="button" class="btn btn-success" id="generateLCS" value="Run Report" />
                             </form>
                         </div>
                     </div>
@@ -649,24 +649,24 @@ else if (isset($_GET["view19"])) {
             </script>
 
             <div class="row" id="LCSReport">
-                
+
             </div>
 
         </div>
     </div>
-    
+
 
 <?php
 } else if (isset($_GET["view20"])) {
 ?>
-    
+
     <div class="content">
         <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-            <div class="card">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
                         <div class="card-header card-header-primary">
-                             <h4 class="card-title">Generate Matured Loan Report</h4>
+                            <h4 class="card-title">Generate Matured Loan Report</h4>
                             <!-- <p class="card-category">
                                  Disbursed Loans
                             </p> -->
@@ -691,7 +691,7 @@ else if (isset($_GET["view19"])) {
                                         <label class="bmd-label-floating">Branch Names <span style="color: red">*</span>:</label>
                                         <select name="branch_id" class="form-control">
                                             <option value="">select an option</option>
-                                                                                    </select>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -703,8 +703,8 @@ else if (isset($_GET["view19"])) {
                             </form>
                         </div>
                     </div>
-            </div>
-            
+                </div>
+
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -727,12 +727,8 @@ else if (isset($_GET["view19"])) {
                                     <input hidden name="id" type="text" value="<?php echo $id; ?>" />
                                     <input hidden name="start" type="text" value="<?php echo $start; ?>" />
                                     <input hidden name="end" type="text" value="<?php echo $end; ?>" />
-                                    <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download
-                                        PDF
-                                    </button>
-                                    <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download Excel
-                                    </button>
-                                       </form>
+
+                                </form>
                             </div>
                             <div class="table-responsive">
                                 <table id="mlr" class="display" style="width:100%">
@@ -792,6 +788,18 @@ else if (isset($_GET["view19"])) {
                                         </tr>
                                     </tfoot>
                                 </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group mt-4" >
+
+                                    <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download
+                                        PDF
+                                    </button>
+                                    <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download Excel
+                                    </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

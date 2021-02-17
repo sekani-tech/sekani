@@ -188,7 +188,16 @@ $rezz = mysqli_query($connection, $activeq);
     <script src="../datatable/dataTables.rowReorder.min.js"></script>
     <script src="../datatable/dataTables.responsive.min.js"></script>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/materia/bootstrap.min.css"> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <?php
+            if($page_title = "Loan Report"){
+
+            }else{
+                ?>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <?php
+            }
+    ?>
+    
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177058907-1"></script>
     <script>
