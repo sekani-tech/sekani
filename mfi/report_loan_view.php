@@ -694,7 +694,7 @@ else if (isset($_GET["view19"])) {
                                 <div class="row">
                                     <div class="col-12 mt-3">
                                         <button type="reset" class="btn btn-danger">Reset</button>
-                                        <input type="button" class="btn btn-success" id="generateMLR" value="Run Report"/>
+                                        <input type="button" class="btn btn-success" id="generateMLR" value="Run Report" />
                                     </div>
                                 </div>
                             </form>
@@ -909,7 +909,7 @@ else if (isset($_GET["view19"])) {
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="rtable display nowrap" style="width:100%">
+                                <table id="ple" class="rtable display nowrap" style="width:100%">
                                     <thead class="text-primary">
                                         <?php
                                         $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date'";
@@ -938,11 +938,11 @@ else if (isset($_GET["view19"])) {
                                         </th>
                                     </thead>
                                     <tbody>
-                                        <?php 
+                                        <?php
                                         if (mysqli_num_rows($result) > 0) {
                                             while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
                                                 <tr>
-                                                    <?php 
+                                                    <?php
                                                     $std = date("Y-m-d");
                                                     $row["id"];
                                                     $loan_id = $row["loan_id"];
@@ -970,12 +970,18 @@ else if (isset($_GET["view19"])) {
                                                     <th><?php echo $row["fromdate"]; ?></th>
                                                     <th>NGN <?php echo number_format($t_o, 2); ?></th>
                                                 </tr>
-                                        <?php 
+                                        <?php
                                             }
                                         }
                                         ?>
                                     </tbody>
                                 </table>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#ple').DataTable();
+                                    });
+                                </script>
                             </div>
 
                             <div class="form-group mt-4">
