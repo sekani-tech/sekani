@@ -722,7 +722,6 @@ else if (isset($_GET["view19"])) {
             </script>
 
             <div class="row" id="MLReport">
-
             </div>
         </div>
     </div>

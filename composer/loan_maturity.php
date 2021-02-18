@@ -127,73 +127,73 @@ if(isset($_POST["downloadPDF"])) {
 if(isset($_POST["downloadExcel"])) {
 
   $getParentID = mysqli_query($connection, "SELECT parent_id FROM `branch` WHERE int_id = $sessint_id AND id = $branch_id");
-    while ($result = mysqli_fetch_array($getParentID)) {
-        $parent_id = $result['parent_id'];
+  while ($result = mysqli_fetch_array($getParentID)) {
+      $parent_id = $result['parent_id'];
+  }
+
+  if ($parent_id == 0) {
+      // Select loan data from all branches
+      $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
+      $result = mysqli_query($connection, $query);
+  } else {
+      $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND client_id IN (SELECT id FROM client WHERE branch_id = $branch_id)";
+      $result = mysqli_query($connection, $query);
+  }
+
+  $file = new Spreadsheet();
+  $active_sheet = $file->getActiveSheet();
+  $active_sheet->setCellValue('A1', 'Client Name');
+  $active_sheet->setCellValue('B1', 'Principal Amount');
+  $active_sheet->setCellValue('C1', 'Loan Term');
+  $active_sheet->setCellValue('D1', 'Disbursement Date');
+  $active_sheet->setCellValue('E1', 'Maturity Date');
+  $active_sheet->setCellValue('F1', 'Outstanding Loan Balance');
+
+  $count = 2;
+
+  while ($q = mysqli_fetch_array($result, MYSQLI_ASSOC))
+  {
+    $std = date("Y-m-d");
+
+    if ($std >= $q["maturedon_date"]) {
+      $name = $q['client_id'];
+      $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
+      $f = mysqli_fetch_array($anam);
+      $nae = strtoupper($f["firstname"]." ".$f["lastname"]);
+      $principal = number_format($q["principal_amount"]);
+      $loant = $q["loan_term"];
+      $disb_date = $q["disbursement_date"];
+      $repay = $q["maturedon_date"];
+      $bal = $q["total_outstanding_derived"];
     }
 
-    if ($parent_id == 0) {
-        // Select loan data from all branches
-        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
-        $result = mysqli_query($connection, $query);
-    } else {
-        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND client_id IN (SELECT id FROM client WHERE branch_id = $branch_id)";
-        $result = mysqli_query($connection, $query);
-    }
+    $active_sheet->setCellValue('A' . $count, $nae);
+    $active_sheet->setCellValue('B' . $count, $principal);
+    $active_sheet->setCellValue('C' . $count, $loant);
+    $active_sheet->setCellValue('D' . $count, $disb_date);
+    $active_sheet->setCellValue('E' . $count, $repay);
+    $active_sheet->setCellValue('F' . $count, $bal);
 
-    $file = new Spreadsheet();
-    $active_sheet = $file->getActiveSheet();
-    $active_sheet->setCellValue('A1', 'Client Name');
-    $active_sheet->setCellValue('B1', 'Principal Amount');
-    $active_sheet->setCellValue('C1', 'Loan Term');
-    $active_sheet->setCellValue('D1', 'Disbursement Date');
-    $active_sheet->setCellValue('E1', 'Maturity Date');
-    $active_sheet->setCellValue('F1', 'Outstanding Loan Balance');
+    $count++;
+  }
 
-    $count = 2;
+  $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($file, 'Xlsx');
 
-    while ($q = mysqli_fetch_array($result, MYSQLI_ASSOC))
-    {
-      $std = date("Y-m-d");
+  $file_name = 'Matured loan reports for '.$intname.'-'.$currentdate.'.xlsx';
 
-      if ($std >= $q["maturedon_date"]) {
-        $name = $q['client_id'];
-        $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
-        $f = mysqli_fetch_array($anam);
-        $nae = strtoupper($f["firstname"]." ".$f["lastname"]);
-        $principal = number_format($q["principal_amount"]);
-        $loant = $q["loan_term"];
-        $disb_date = $q["disbursement_date"];
-        $repay = $q["maturedon_date"];
-        $bal = $q["total_outstanding_derived"];
-      }
+  $writer->save($file_name);
 
-      $active_sheet->setCellValue('A' . $count, $nae);
-      $active_sheet->setCellValue('B' . $count, $principal);
-      $active_sheet->setCellValue('C' . $count, $loant);
-      $active_sheet->setCellValue('D' . $count, $disb_date);
-      $active_sheet->setCellValue('E' . $count, $repay);
-      $active_sheet->setCellValue('F' . $count, $bal);
+  header('Content-Type: application/x-www-form-urlencoded');
 
-      $count++;
-    }
+  header('Content-Transfer-Encoding: Binary');
 
-    $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($file, 'Xlsx');
+  header("Content-disposition: attachment; filename=\"".$file_name."\"");
 
-    $file_name = 'Matured loan reports for '.$intname.'-'.$currentdate.'.xlsx';
+  readfile($file_name);
 
-    $writer->save($file_name);
+  unlink($file_name);
 
-    header('Content-Type: application/x-www-form-urlencoded');
-
-    header('Content-Transfer-Encoding: Binary');
-
-    header("Content-disposition: attachment; filename=\"".$file_name."\"");
-
-    readfile($file_name);
-
-    unlink($file_name);
-
-    exit;
+  exit;
 }
 
 ?>

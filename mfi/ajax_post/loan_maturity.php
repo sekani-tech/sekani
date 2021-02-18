@@ -42,33 +42,29 @@ if ($parent_id == 0) {
                         <?php
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-                                <tr>
-                                    <?php $std = date("Y-m-d");
-                                    if ($std >= $row["maturedon_date"]) {
+                            <tr>
+                                <?php $std = date("Y-m-d");
+                                if ($std >= $row["maturedon_date"]) {
+                                ?>
+                                    <?php $row["id"]; ?>
+                                    <?php
+                                    $name = $row['client_id'];
+                                    $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
+                                    $f = mysqli_fetch_array($anam);
+                                    $nae = strtoupper($f["firstname"] . " " . $f["lastname"]);
                                     ?>
-                                        <?php $row["id"]; ?>
-                                        <?php
-                                        $name = $row['client_id'];
-                                        $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
-                                        $f = mysqli_fetch_array($anam);
-                                        $nae = strtoupper($f["firstname"] . " " . $f["lastname"]);
-                                        ?>
-                                        <td><?php echo $nae; ?></td>
-                                        <td><?php echo number_format($row["principal_amount"]); ?></td>
-                                        <td><?php echo $row["loan_term"]; ?></td>
-                                        <td><?php echo $row["disbursement_date"]; ?></td>
-                                        <td><?php echo $row["maturedon_date"]; ?></td>
-                                        <td><?php echo number_format($row["total_outstanding_derived"], 2); ?></td>
-                                    <?php 
-                                    } else {
-                                        // echo "0 Document";
-                                    }
-                                    ?>
-                                </tr>
+                                    <td><?php echo $nae; ?></td>
+                                    <td><?php echo number_format($row["principal_amount"]); ?></td>
+                                    <td><?php echo $row["loan_term"]; ?></td>
+                                    <td><?php echo $row["disbursement_date"]; ?></td>
+                                    <td><?php echo $row["maturedon_date"]; ?></td>
+                                    <td><?php echo number_format($row["total_outstanding_derived"], 2); ?></td>
+                                <?php 
+                                }
+                                ?>
+                            </tr>
                         <?php   
                             }
-                        } else {
-                            // echo "0 Document";
                         }
                         ?>
                     </tbody>
