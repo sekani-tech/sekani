@@ -172,7 +172,7 @@ if($ctype == 'INDIVIDUAL' || $ctype == 'GROUP'){
   $rc_number = $_POST['rc_number'];
   $loan_officer_id = $_POST["acct_ofa"];
   $acct_type = strtoupper($_POST['acct_type']);
-  $branch = strtoupper($_POST['brancha']);
+  $branch = $_POST['branch'];
   $display_name = strtoupper($_POST['display_namea']);
   $email = $_POST['emaila'];
   $address = $_POST['addressa'];
@@ -342,22 +342,21 @@ if($ctype == 'INDIVIDUAL' || $ctype == 'GROUP'){
         $activation_userid = $x['loan_officer_id'];
         $account_balance_derived = 0;
 
-        $accountins = "INSERT INTO account (int_id, branch_id, account_no, account_type,
-        type_id, product_id, client_id, field_officer_id, submittedon_date, submittedon_userid,
+        $accountins = "INSERT INTO account (int_id, branch_id, account_no, account_type, type_id, product_id, client_id, field_officer_id, submittedon_date, submittedon_userid,
         currency_code, activatedon_date, activatedon_userid,
         account_balance_derived) VALUES ('{$int_id}', '{$branch_id}', '{$account_no}',
-        '{$accttname}', {$type_id}', '{$account_type}', '{$client_id}', '{$field_officer_id}', '{$submittedon_date}',
+        '{$accttname}', '{$type_id}', '{$account_type}', '{$client_id}', '{$field_officer_id}', '{$submittedon_date}',
         '{$submittedon_userid}', '{$currency_code}', '{$activation_date}', '{$activation_userid}',
         '{$account_balance_derived}')";
 
-        $go = mysqli_query($connection, $accountins);
+
         if ($go) {
           $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
-          echo header ("Location: ../mfi/configuration.php?message3=$randms");
+          echo header ("Location: ../mfi/client.php?message3=$randms");
         } else {
            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";
            echo "error";
-          echo header ("Location: ../mfi/configuration.php?message4=$randms");
+          echo header ("Location: ../mfi/client.php?message4=$randms");
             // echo header("location: ../mfi/client.php");
         }
     }
