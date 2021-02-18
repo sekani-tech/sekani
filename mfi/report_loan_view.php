@@ -887,20 +887,16 @@ else if (isset($_GET["view19"])) {
 
 <?php
 } else if (isset($_GET["view39"])) {
-    $main_date = $_GET["view39"];
     $main_date = date('Y-m-d');
 ?>
 
     <div class="content">
         <div class="container-fluid">
-            your content here
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Expected Loan Repayment</h4>
-
-                            Insert number users institutions
                             <p class="card-category">
                                 <?php
                                 $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date'";
@@ -908,36 +904,13 @@ else if (isset($_GET["view19"])) {
                                 if ($result) {
                                     $inr = mysqli_num_rows($result);
                                     echo $inr;
-                                } ?> loans expected to be repayed today</p>
+                                } ?> loans expected to be repayed today
+                            </p>
                         </div>
                         <div class="card-body">
-                            <div class="form-group">
-                                <form method="POST" action="../composer/exp_loan_repay.php">
-                                    <input hidden name="id" type="text" value="<?php echo $id; ?>" />
-                                    <input hidden name="start" type="text" value="<?php echo $start; ?>" />
-                                    <input hidden name="end" type="text" value="<?php echo $main_date; ?>" />
-                                    <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download
-                                        PDF
-                                    </button>
-                                    <script>
-                                        $(document).ready(function() {
-                                            $('#disbursed').on("click", function() {
-                                                swal({
-                                                    type: "success",
-                                                    title: "DISBURSED LOAN REPORT",
-                                                    text: "Printing Successful",
-                                                    showConfirmButton: false,
-                                                    timer: 3000
-
-                                                })
-                                            });
-                                        });
-                                    </script>
-                                </form>
-                            </div>
                             <div class="table-responsive">
                                 <table class="rtable display nowrap" style="width:100%">
-                                    <thead class=" text-primary">
+                                    <thead class="text-primary">
                                         <?php
                                         $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date'";
                                         $result = mysqli_query($connection, $query);
@@ -965,12 +938,13 @@ else if (isset($_GET["view19"])) {
                                         </th>
                                     </thead>
                                     <tbody>
-                                        <?php if (mysqli_num_rows($result) > 0) {
+                                        <?php 
+                                        if (mysqli_num_rows($result) > 0) {
                                             while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
                                                 <tr>
-                                                    <?php $std = date("Y-m-d");
-                                                    ?>
-                                                    <?php $row["id"];
+                                                    <?php 
+                                                    $std = date("Y-m-d");
+                                                    $row["id"];
                                                     $loan_id = $row["loan_id"];
                                                     $install = $row["installment"];
                                                     if ($install == 0) {
@@ -978,8 +952,6 @@ else if (isset($_GET["view19"])) {
                                                     } else {
                                                         $install = "Pending";
                                                     }
-                                                    ?>
-                                                    <?php
                                                     $name = $row['client_id'];
                                                     $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
                                                     $f = mysqli_fetch_array($anam);
@@ -997,19 +969,24 @@ else if (isset($_GET["view19"])) {
                                                     <th><?php echo $l_n; ?></th>
                                                     <th><?php echo $row["fromdate"]; ?></th>
                                                     <th>NGN <?php echo number_format($t_o, 2); ?></th>
-                                                    <?php
-
-                                                    ?>
                                                 </tr>
-                                        <?php }
-                                        } else {
-                                            // echo "0 Document";
+                                        <?php 
+                                            }
                                         }
                                         ?>
-                                        <th></th>
                                     </tbody>
                                 </table>
                             </div>
+
+                            <div class="form-group mt-4">
+                                <form method="POST" action="../composer/exp_loan_repay.php">
+                                    <input hidden name="id" type="text" value="<?php echo $id; ?>" />
+                                    <input hidden name="start" type="text" value="<?php echo $start; ?>" />
+                                    <input hidden name="end" type="text" value="<?php echo $main_date; ?>" />
+                                    <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download PDF</button>
+                                </form>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -1022,14 +999,11 @@ else if (isset($_GET["view19"])) {
 ?>
     <div class="content">
         <div class="container-fluid">
-            your content here
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Expected Loan Repayment</h4>
-
-                            Insert number users institutions
                             <p class="card-category">
                                 <?php
                                 $currentdate = date('Y-m-d');
