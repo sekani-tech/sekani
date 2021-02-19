@@ -349,7 +349,7 @@ if($ctype == 'INDIVIDUAL' || $ctype == 'GROUP'){
         '{$submittedon_userid}', '{$currency_code}', '{$activation_date}', '{$activation_userid}',
         '{$account_balance_derived}')";
 
-
+        $go = mysqli_query($connection, $accountins);
         if ($go) {
           $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
           echo header ("Location: ../mfi/client.php?message3=$randms");

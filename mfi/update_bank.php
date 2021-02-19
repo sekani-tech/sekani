@@ -46,7 +46,7 @@ if (isset($_POST["acct_gl"])) {
                         <!-- <p class="card-category">Fill in all important data</p> -->
                     </div>
                     <div class="card-body">
-                        <form action="Update_bank.php" method="post">
+                        <form action="update_bank.php" method="post">
                             <div class="row">
                                 <div class="col-md-4">
                                     <script>
