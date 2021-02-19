@@ -809,7 +809,6 @@ else if (isset($_GET["view19"])) {
 ?>
     <div class="content">
         <div class="container-fluid">
-            your content here
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -827,19 +826,19 @@ else if (isset($_GET["view19"])) {
                                         <label for="">End Date</label>
                                         <input type="date" name="" id="" class="form-control">
                                     </div>
-                                    <div class="form-group col-md-3">
+                                    <div class="form-group col-md-2">
                                         <label for="">Branch</label>
                                         <select name="" id="" class="form-control">
                                             <option value="">Head Office</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-3">
+                                    <div class="form-group col-md-2">
                                         <label for="">Break Down per Branch</label>
                                         <select name="" id="" class="form-control">
                                             <option value="">No</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-3">
+                                    <div class="form-group col-md-2">
                                         <label for="">Hide Zero Balances</label>
                                         <select name="" id="" class="form-control">
                                             <option value="">No</option>
