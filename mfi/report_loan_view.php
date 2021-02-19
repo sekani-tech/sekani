@@ -1133,7 +1133,6 @@ else if (isset($_GET["view19"])) {
 ?>
     <div class="content">
         <div class="container-fluid">
-            your content here
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -1176,7 +1175,7 @@ else if (isset($_GET["view19"])) {
                                 </form>
                             </div>
                             <div class="table-responsive">
-                                <table class="rtable display nowrap" style="width:100%">
+                                <table id="areas" class="rtable display nowrap" style="width:100%">
                                     <thead class=" text-primary">
                                         <?php
                                         $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= '1'";
@@ -1257,6 +1256,8 @@ else if (isset($_GET["view19"])) {
                                                     }
                                                     ?>
                                                     <th><?php echo number_format($outbalance, 2); ?></th>
+                                                    <th></th>
+
                                                     <?php
 
                                                     ?>
@@ -1266,9 +1267,14 @@ else if (isset($_GET["view19"])) {
                                             // echo "0 Document";
                                         }
                                         ?>
-                                        <th></th>
+                                        
                                     </tbody>
                                 </table>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#areas').DataTable();
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>
