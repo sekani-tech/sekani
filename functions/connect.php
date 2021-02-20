@@ -411,3 +411,18 @@ function searchGroup($table1, $int_id, $term)
     ]);
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
+
+// function to insert a new row into an arbitrary table, with the columns filled with the values 
+// from an associative array and completely SQL-injection safe
+
+function insert($table, $record) {
+    global $connection;
+    $cols = array();
+    $vals = array();
+    foreach (array_keys($record) as $col) $cols[] = sprintf("`%s`", $col);
+    foreach (array_values($record) as $val) $vals[] = sprintf("'%s'", mysqli_real_escape_string($connection, $val));
+
+    mysqli_query($connection, sprintf("INSERT INTO `%s`(%s) VALUES(%s)", $table, implode(", ", $cols), implode(", ", $vals)));
+
+    return mysqli_insert_id($connection);
+}

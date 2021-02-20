@@ -122,19 +122,6 @@ $rezz = mysqli_query($connection, $activeq);
     <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
     <!-- Material Kit CSS -->
     <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
-<!--    <script>-->
-<!--        function makeRequest() {-->
-<!--            $.ajax({-->
-<!--                url: "functions_test/email.php",-->
-<!--                complete: function(data) {-->
-<!--                    setTimeout(function() {-->
-<!--                        makeRequest();-->
-<!--                    }, 60 * 60 * 1000); // Minutes * Seconds * MS-->
-<!--                }-->
-<!--            });-->
-<!--        }-->
-<!--        makeRequest();-->
-<!--    </script>-->
     <!-- Search Query -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> -->
@@ -149,119 +136,7 @@ $rezz = mysqli_query($connection, $activeq);
       <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
       <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
       
-    <!-- <script src="../functions/autocomplete/autocomplete.js"></script>
-    <link href="../functions/autocomplete/autocomplete.css" rel="stylesheet"> -->
-    <?php
-
-    if ($page_title == "Deposit/ Withdrawal") {
-
-    ?>
-        <!-- <script>
-            window.addEventListener("load", function() {
-                suggest.attach({
-                    target: "actName",
-                    url: "../functions/autocomplete/autosearch.php",
-                    data: {
-                        type: "name"
-                    },
-                    // delay : 200,
-                    min: 1
-                });
-
-            });
-            $(document).ready(function() {
-                $('.actName').on("change keyup paste", function() {
-                    var name = $(this).val();
-                    var ist = $('#int_id').val();
-                    $.ajax({
-                        url: "acct_acctName.php",
-                        method: "POST",
-                        data: {
-                            name: name,
-                            ist: ist
-                        },
-                        success: function(data) {
-                            $('#accname').html(data);
-                        }
-                    })
-                });
-            });
-        </script> -->
-    <?php
-    } else {
-    ?>
-        <!-- <script>
-            // var $j = jQuery.noConflict();
-            window.addEventListener("load", function() {
-                suggest.attach({
-                    method: "POST",
-                    target: "groups",
-                    url: "../functions/autocomplete/autosearch2.php",
-                    data: {
-                        type: "groups"
-                    },
-                    // delay : 200,
-                    min: 1
-                });
-
-            });
-        </script> -->
-    <?php
-    }
-    ?>
-    <style>
-        /* custom css */
-        .ac_results {
-            padding: 0px;
-            border: 1px solid #84a10b;
-            background-color: #84a10b;
-            overflow: hidden;
-        }
-
-        .ac_results ul {
-            width: 100%;
-            list-style-position: outside;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .ac_results li {
-            margin: 0px;
-            padding: 2px 5px;
-            cursor: default;
-            display: block;
-            color: #fff;
-            font-family: verdana;
-            /* 
-            if width will be 100% horizontal scrollbar will apear 
-            when scroll mode will be used
-            */
-            /*width: 100%;*/
-            font-size: 12px;
-            /* 
-            it is very important, if line-height not setted or setted 
-            in relative units scroll will be broken in firefox
-            */
-            line-height: 16px;
-            overflow: hidden;
-
-        }
-
-        .ac_loading {
-            background: white url('../images/indicator.gif') right center no-repeat;
-        }
-
-        .ac_odd {
-            background-color: #84a10b;
-            color: #ffffff;
-        }
-
-        .ac_over {
-            background-color: #5a6b13;
-            color: #ffffff;
-        }
-    </style>
+    
     <!-- CHAT BOT -->
     <script type="text/javascript">
         (function(w, d, v3) {
@@ -313,7 +188,16 @@ $rezz = mysqli_query($connection, $activeq);
     <script src="../datatable/dataTables.rowReorder.min.js"></script>
     <script src="../datatable/dataTables.responsive.min.js"></script>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/materia/bootstrap.min.css"> -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <?php
+            if($page_title = "Loan Report"){
+
+            }else{
+                ?>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <?php
+            }
+    ?>
+    
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177058907-1"></script>
     <script>
@@ -568,7 +452,7 @@ $rezz = mysqli_query($connection, $activeq);
                                 ?>
                                 <!-- Notificaion for charges -->
                                 <?php
-                                $fdef = "SELECT * FROM client_charge WHERE int_id = '$sessint_id' AND (branch_id ='$br_id')";
+                                $fdef = "SELECT * FROM client_charge WHERE int_id = '$sessint_id' AND (branch_id ='$br_id') AND approved = '0'";
                                 $sdf = mysqli_query($connection, $fdef);
                                 $charge = mysqli_num_rows($sdf);
                                 ?>

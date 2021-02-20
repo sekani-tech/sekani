@@ -2,18 +2,18 @@
 
 $page_title = "Client report";
 $destination = "reports.php";
-    include("header.php");
-    // include("../../functions/connect.php");
+include("header.php");
+// include("../../functions/connect.php");
 
 ?>
 <?php
 //  Sweet alert Function
 
 // If it is successfull, It will show this message
-  if (isset($_GET["message1"])) {
-    $key = $_GET["message1"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    echo '<script type="text/javascript">
+if (isset($_GET["message1"])) {
+  $key = $_GET["message1"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  echo '<script type="text/javascript">
     $(document).ready(function(){
         swal({
             type: "success",
@@ -25,7 +25,7 @@ $destination = "reports.php";
     });
     </script>
     ';
-    $_SESSION["lack_of_intfund_$key"] = null;
+  $_SESSION["lack_of_intfund_$key"] = null;
 }
 // If it is not successfull, It will show this message
 else if (isset($_GET["message2"])) {
@@ -61,11 +61,10 @@ if (isset($_GET["message3"])) {
   </script>
   ';
   $_SESSION["lack_of_intfund_$key"] = null;
-}
-else if (isset($_GET["message4"])) {
-$key = $_GET["message4"];
-// $out = $_SESSION["lack_of_intfund_$key"];
-echo '<script type="text/javascript">
+} else if (isset($_GET["message4"])) {
+  $key = $_GET["message4"];
+  // $out = $_SESSION["lack_of_intfund_$key"];
+  echo '<script type="text/javascript">
 $(document).ready(function(){
     swal({
         type: "error",
@@ -77,76 +76,65 @@ $(document).ready(function(){
 });
 </script>
 ';
-$_SESSION["lack_of_intfund_$key"] = null;
+  $_SESSION["lack_of_intfund_$key"] = null;
 }
 ?>
 <!-- Content added here -->
-    <div class="content">
-        <div class="container-fluid">
-          <!-- your content here -->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Client Reports</h4>
-                  
-                  <!-- Insert number users institutions -->
-                  <p class="card-category"><?php
-                   $query = "SELECT * FROM reports WHERE category = 'client'";
-                   $result = mysqli_query($connection, $query);
-                   if ($result) {
-                     $inr = mysqli_num_rows($result);
-                     echo $inr;
-                   }?> Current reports</p>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="rtable display nowrap" style="width:100%">
-                      <thead class=" text-primary">
-                      <?php
+<div class="content">
+  <div class="container-fluid">
+    <!-- your content here -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title ">Client Reports</h4>
+
+            <!-- Insert number users institutions -->
+            <p class="card-category"><?php
+                                      $query = "SELECT * FROM reports WHERE category = 'client'";
+                                      $result = mysqli_query($connection, $query);
+                                      if ($result) {
+                                        $inr = mysqli_num_rows($result);
+                                        echo $inr;
+                                      } ?> Current reports</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <?php
                         $query = "SELECT * FROM reports WHERE category = 'client'";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <th>
-                          Name
-                        </th>
-                        <th>
-                          Category
-                        </th>
-                        <th>
-                         Description
-                        </th>
-                        <th>view </th>
-                        <!-- <th>Phone</th> -->
-                      </thead>
-                      <tbody>
-                      <?php if (mysqli_num_rows($result) > 0) {
+    <div class="row">
+    <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
-                        <tr>
+                        
                         <?php $row["id"]; ?>
-                          <th><?php echo $row["name"]; ?></th>
-                          <th><?php echo $row["category"]; ?></th>
-                          <th><?php echo strtoupper($row["description"]); ?></th>
-                          <td><a href="report_view.php?edit=<?php echo $row["id"];?>" class="btn btn-info"><i class="material-icons" style="margin: auto;">description</i></a></td>
-                        </tr>
-                        <?php }
+      <div class="col-md-6 ml-auto mr-auto">
+        <div class="card card-pricing bg-primary">
+          <div class="card-body ">
+
+            <h4 class="card-title"><?php echo $row["name"]; ?></h4>
+            <p class="card-description">
+            <small><?php echo strtoupper($row["description"]); ?></small>
+            </p>
+            <a href="report_view.php?edit=<?php echo $row["id"];?>" class="btn btn-white btn-round"> View</a>
+          </div>
+        </div>
+      </div>
+      <?php }
                           }
                           else {
                             // echo "0 Document";
                           }
                           ?>
-                          <!-- <th></th> -->
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    </div>
 
-<?php
+  </div>
 
-    include("footer.php");
+  <?php
 
-?>
+  include("footer.php");
+
+  ?>

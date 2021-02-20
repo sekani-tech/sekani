@@ -58,6 +58,15 @@ function like($str, $searchTerm)
                                         </td>
                                     </tr>
                                     <tr>
+                                        <th>Banks to Institutions</th>
+                                        <th>These adds banks to institution accounts</th>
+                                        <td>
+                                            <a href="update_bank.php" class="btn btn-info">
+                                                <i class="material-icons" style="margin: auto;">description</i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <?php } ?>
                                         <th>Charge Data</th>
                                         <th>Upload Institution Charge data</th>

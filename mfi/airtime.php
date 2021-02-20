@@ -3,7 +3,7 @@
 $page_title = "Airtime & Data";
 $destination = "bill_airtime.php";
     include("header.php");
-
+    include("ajaxcall.php");
 ?>
 <?php
 //  Sweet alert Function

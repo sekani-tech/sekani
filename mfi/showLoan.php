@@ -2,10 +2,10 @@
 
 $page_title = "Approve Loan";
 $destination = "disbursement_approval.php";
-    include("header.php");
-    include("ajaxcall.php");
+include("header.php");
+include("ajaxcall.php");
 
-    // call
+// call
 require_once "../bat/phpmailer/PHPMailerAutoload.php";
 // qwertyuiop
 // CHECK HTN APPROVAL
@@ -25,121 +25,116 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
   $appod = $_GET['approve'];
   $checkm = mysqli_query($connection, "SELECT * FROM loan_disbursement_cache WHERE id = '$appod' AND int_id = '$sessint_id' && status = 'Pending'");
   if (count([$checkm]) == 1) {
-      $x = mysqli_fetch_array($checkm);
-      $ssint_id = $_SESSION["int_id"];
-      $client_id = $x["client_id"];
-      // GET CLIENT DETAILS LIKE EMAIL
-      $get_client_degtails = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' AND int_id = '$sessint_id'");
-      // GET IT
-      $cxp = mysqli_fetch_array($get_client_degtails);
-      $client_email = $cxp["email_address"];
-      $crn = $cxp["firstname"]." ".$cxp["lastname"];
-      $client_phone = $cxp["mobile_no"];
-      $client_sms = $cxp["SMS_ACTIVE"];
-      $state = strtolower($cxp["STATE_OF_ORIGIN"]);
+    $x = mysqli_fetch_array($checkm);
+    $ssint_id = $_SESSION["int_id"];
+    $client_id = $x["client_id"];
+    // GET CLIENT DETAILS LIKE EMAIL
+    $get_client_degtails = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' AND int_id = '$sessint_id'");
+    // GET IT
+    $cxp = mysqli_fetch_array($get_client_degtails);
+    $client_email = $cxp["email_address"];
+    $crn = $cxp["firstname"] . " " . $cxp["lastname"];
+    $client_phone = $cxp["mobile_no"];
+    $client_sms = $cxp["SMS_ACTIVE"];
+    $state = strtolower($cxp["STATE_OF_ORIGIN"]);
+    $state_ai = "other";
+    if ($state == "akute"  || $state == "agege" || $state == "abuja" || $state == "ayobo" || $state == "agbado" || $state == "akure" || $state == "badagry" || $state == "ibadan" || $state == "jos" || $state == "kaduna" || $state == "lagosisland" || $state == "lagos" || $state == "lekki" || $state == "nassarawa" || $state == "ogun" || $state == "oyo" || $state == "ondo") {
+      $state_ai = $state;
+    } else if ($state == "oshodi" || $state == "surulere" || $state == "zamfara") {
+      $state_ai = $state;
+    } else {
       $state_ai = "other";
-      if ($state == "akute"  || $state == "agege" || $state == "abuja" || $state == "ayobo" || $state == "agbado" || $state == "akure" || $state == "badagry" || $state == "ibadan" || $state == "jos" || $state == "kaduna" || $state == "lagosisland" || $state == "lagos" || $state == "lekki" || $state =="nassarawa" || $state == "ogun" || $state == "oyo" || $state == "ondo" ){
-        $state_ai = $state;
-      } else if ($state == "oshodi" || $state == "surulere" || $state == "zamfara") {
-        $state_ai = $state;
-      } else {
-        $state_ai ="other";
-      }
-      $gender = ucfirst(strtolower($cxp["gender"]));
-      $pint = date('Y-m-d H:i:s');
-      // phone for email
-      $client_phone = $cxp["mobile_no"];
-      // end client
-      $sub_user_id = $x["submittedon_userid"];
-      $sub_user_date = $x["submittedon_date"];
-      $cn = $x['display_name'];
-      $loan_product = $x["product_id"];
-      $loan_sector = $x["loan_sub_status_id"];
-      $account_officer = $x["loan_officer"];
-      $acct_no = $x["account_no"];
-      $dis_cache_status = $x["status"];
-      // GET THE GL _ MONEY WILL COME OUT FROM
-      
-      $exp_mature_date = $x["expected_maturedon_date"];
-      $pay_id = $x["fund_id"];
-      $loan_purpose = $x["loan_purpose"];
-      $branch_id = $_SESSION["branch_id"];
-      $app_user = $_SESSION["staff_id"];
-      $get_payment_gl = mysqli_query($connection, "SELECT * FROM acct_rule WHERE loan_product_id = '$loan_product' AND int_id = '$sessint_id'");
-      $fool = mysqli_fetch_array($get_payment_gl);
-      $ggl = $fool["asst_loan_port"];
-      // Get the GL and the balance
-      $get_gl = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$ggl' AND int_id = '$sessint_id'");
-      $fool1 = mysqli_fetch_array($get_gl);
-      $running_gl_balance = $fool1["organization_running_balance_derived"];
-      // END GL_BALANCE
+    }
+    $gender = ucfirst(strtolower($cxp["gender"]));
+    $pint = date('Y-m-d H:i:s');
+    // phone for email
+    $client_phone = $cxp["mobile_no"];
+    // end client
+    $sub_user_id = $x["submittedon_userid"];
+    $sub_user_date = $x["submittedon_date"];
+    $cn = $x['display_name'];
+    $loan_product = $x["product_id"];
+    $loan_sector = $x["loan_sub_status_id"];
+    $account_officer = $x["loan_officer"];
+    $acct_no = $x["account_no"];
+    $dis_cache_status = $x["status"];
+    // GET THE GL _ MONEY WILL COME OUT FROM
 
-      // here are the things
-      $interest = $x["interest_rate"];
-      $prin_amt = $x["approved_principal"];
-      $loan_term = $x["loan_term"];
-      $repay_eve = $x["repay_every"];
-      $no_repayment = $x["number_of_repayments"];
-      $disburse_date = $x["disbursement_date"];
-      $repayment_date = $x["repayment_date"];
-      $term_frequency = $x["term_frequency"];
-      $date = date('d, D, F, Y', strtotime($disburse_date));
-      $date2 = date('d, D, F, Y', strtotime($repayment_date));
-      // calculation
-      $tot_int = ((($interest/100) * $prin_amt) * $loan_term);
+    $exp_mature_date = $x["expected_maturedon_date"];
+    $pay_id = $x["fund_id"];
+    $loan_purpose = $x["loan_purpose"];
+    $branch_id = $_SESSION["branch_id"];
+    $app_user = $_SESSION["staff_id"];
+    $get_payment_gl = mysqli_query($connection, "SELECT * FROM acct_rule WHERE loan_product_id = '$loan_product' AND int_id = '$sessint_id'");
+    $fool = mysqli_fetch_array($get_payment_gl);
+    $ggl = $fool["asst_loan_port"];
+    // Get the GL and the balance
+    $get_gl = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$ggl' AND int_id = '$sessint_id'");
+    $fool1 = mysqli_fetch_array($get_gl);
+    $running_gl_balance = $fool1["organization_running_balance_derived"];
+    // END GL_BALANCE
+
+    // here are the things
+    $interest = $x["interest_rate"];
+    $prin_amt = $x["approved_principal"];
+    $loan_term = $x["loan_term"];
+    $repay_eve = $x["repay_every"];
+    $no_repayment = $x["number_of_repayments"];
+    $disburse_date = $x["disbursement_date"];
+    $repayment_date = $x["repayment_date"];
+    $term_frequency = $x["term_frequency"];
+    $date = date('d, D, F, Y', strtotime($disburse_date));
+    $date2 = date('d, D, F, Y', strtotime($repayment_date));
+    // calculation
+    if ($repay_eve == "month") {
+      $tot_int = ((($interest / 100) * $prin_amt) * $loan_term);
       $prin_due = $tot_int + $prin_amt;
-      // get off
-      $get_off = mysqli_query($connection, "SELECT * FROM staff WHERE id = '$account_officer'");
-      $cx = mysqli_fetch_assoc($get_off);
-      $off_dis = strtoupper($cx["display_name"]);
-      $account_display = substr("$acct_no",7)."*****".substr("$acct_no",8);
-      // sector
-      $me = "";
-      if($loan_sector == 1){
-$loan_sec = "Agriculture, Mining & Quarry";
-}
-else if($loan_sector == 2){
-  $loan_sec = "Manufacturing";
-}
-else if($loan_sector == 3){
-  $loan_sec = "Agricultural sector";
-}
-else if($loan_sector == 4){
-  $loan_sec = "Banking";
-}
-else if($loan_sector == 5){
-  $loan_sec = "Public Service";
-}
-else if($loan_sector == 6){
-  $loan_sec = "Health";
-}
-else if($loan_sector == 7){
-  $loan_sec = "Education";
-}
-else if($loan_sector == 8){
-  $loan_sec = "Tourism";
-}
-else if($loan_sector == 9){
-  $loan_sec = "Civil Service";
-}
-else if($loan_sector == 10){
-  $loan_sec = "Trade & Commerce";
-}
-else if($loan_sector == 11){
-  $loan_sec = "Others";
-}
-else{
-  $loan_sec = "Others";
-}
+    } else if ($repay_eve == "week") {
+      $term = $loan_term / 4;
+      $tot_int = ((($interest / 100) * $prin_amt) * $term);
+      $prin_due = $tot_int + $prin_amt;
+    }
+    // get off
+    $get_off = mysqli_query($connection, "SELECT * FROM staff WHERE id = '$account_officer'");
+    $cx = mysqli_fetch_assoc($get_off);
+    $off_dis = strtoupper($cx["display_name"]);
+    $account_display = substr("$acct_no", 7) . "*****" . substr("$acct_no", 8);
+    // sector
+    $me = "";
+    if ($loan_sector == 1) {
+      $loan_sec = "Agriculture, Mining & Quarry";
+    } else if ($loan_sector == 2) {
+      $loan_sec = "Manufacturing";
+    } else if ($loan_sector == 3) {
+      $loan_sec = "Agricultural sector";
+    } else if ($loan_sector == 4) {
+      $loan_sec = "Banking";
+    } else if ($loan_sector == 5) {
+      $loan_sec = "Public Service";
+    } else if ($loan_sector == 6) {
+      $loan_sec = "Health";
+    } else if ($loan_sector == 7) {
+      $loan_sec = "Education";
+    } else if ($loan_sector == 8) {
+      $loan_sec = "Tourism";
+    } else if ($loan_sector == 9) {
+      $loan_sec = "Civil Service";
+    } else if ($loan_sector == 10) {
+      $loan_sec = "Trade & Commerce";
+    } else if ($loan_sector == 11) {
+      $loan_sec = "Others";
+    } else {
+      $loan_sec = "Others";
+    }
 
-      // get the product
-      $ln_prod =  mysqli_query($connection, "SELECT * FROM product WHERE id = '$loan_product' && int_id = '$sessint_id'");
-      $pd = mysqli_fetch_array($ln_prod);
-      $ln_prod_name = $pd["name"];
-      // app staff id.
-      $check_users = mysqli_query($connection, "SELECT * FROM users WHERE id = '$sub_user_id' && int_id = '$sessint_id'");
-      $mx = mysqli_fetch_array($check_users);
-      $user_fullname = $mx["fullname"];
+    // get the product
+    $ln_prod =  mysqli_query($connection, "SELECT * FROM product WHERE id = '$loan_product' && int_id = '$sessint_id'");
+    $pd = mysqli_fetch_array($ln_prod);
+    $ln_prod_name = $pd["name"];
+    // app staff id.
+    $check_users = mysqli_query($connection, "SELECT * FROM users WHERE id = '$sub_user_id' && int_id = '$sessint_id'");
+    $mx = mysqli_fetch_array($check_users);
+    $user_fullname = $mx["fullname"];
     // we will start the computation for the credit check
     $general1 = mysqli_query($connection, "SELECT * FROM `loan_repayment_status` WHERE int_id = '$sessint_id' && client_id = '$client_id'");
     $gen1 = mysqli_num_rows($general1);
@@ -177,7 +172,7 @@ else{
     $kq1 = mysqli_fetch_assoc($kyc_query1);
     $col_va = $cm["type"];
     $agex = $kq1["date_of_birth"];
-    $age = (date('Y') - date('Y',strtotime($agex)));
+    $age = (date('Y') - date('Y', strtotime($agex)));
 
     $k_in = $kq["income"];
     $k_yb = $kq["years_in_job"];
@@ -192,7 +187,7 @@ else{
     $nod = "";
     $loe = "";
     if ($k_yb != "") {
-      $yicj = $k_yb." years";
+      $yicj = $k_yb . " years";
     } else {
       echo "Non";
     }
@@ -205,7 +200,7 @@ else{
 
     if ($k_dep != "") {
       $nod = $k_dep;
-    }  else if ($k_dep == "7") {
+    } else if ($k_dep == "7") {
       $nod = "7 or More";
     }
 
@@ -252,10 +247,10 @@ else{
     $total_imm = 100 + 30;
     $total_bad = 100 + 30;
     // GENERAL critarial - BASED ON BIG 100
-    $mxx = ($early_rep/$gen1) * 100;
-    $mxx1 = ($imm_rep/$gen1) * 100;
-    $mxx2 = ($late_rep/$gen1) * 100;
-    if ($mxx >= 0 && $mxx <= 30 ) {
+    $mxx = ($early_rep / $gen1) * 100;
+    $mxx1 = ($imm_rep / $gen1) * 100;
+    $mxx2 = ($late_rep / $gen1) * 100;
+    if ($mxx >= 0 && $mxx <= 30) {
       $total_early -= 40;
       $total_imm -= 10;
       $total_bad -= 20;
@@ -277,7 +272,7 @@ else{
       $total_bad -= 78;
     }
     // END OF 
-    if ($mxx1 >= 0 && $mxx1 <= 30 ) {
+    if ($mxx1 >= 0 && $mxx1 <= 30) {
       $total_early -= 10;
       $total_imm -= 40;
       $total_bad -= 20;
@@ -301,7 +296,7 @@ else{
       // DAMN
     }
     // END
-    if ($mxx2 >= 0 && $mxx2 <= 30 ) {
+    if ($mxx2 >= 0 && $mxx2 <= 30) {
       $total_early -= 10;
       $total_imm -= 20;
       $total_bad -= 40;
@@ -329,7 +324,7 @@ else{
     if ($total_early > $total_imm && $total_early > $total_bad) {
       $color = "success";
       $auto_perc -= 0.02;
-    }  else if ($total_imm > $total_early && $total_imm > $total_bad) {
+    } else if ($total_imm > $total_early && $total_imm > $total_bad) {
       $color = "warning";
       $auto_perc -= 1;
     } else {
@@ -435,7 +430,7 @@ else{
     if ($bad1 >= $good1 && $bad1 > $warn1) {
       $warn1 = 30;
       $bad1 = 40;
-       $good1 = 30;
+      $good1 = 30;
     } else if ($warn1 > $bad1 && $warn1 >= $good1) {
       $warn1 = 40;
       $bad1 = 30;
@@ -443,18 +438,18 @@ else{
     } else if ($warn1 == $bad1) {
       $warn1 = 40;
       $bad1 = 40;
-       $good1 = 20;
+      $good1 = 20;
     } else {
       $warn1 = 30;
       $bad1 = 20;
-       $good1 = 50;
+      $good1 = 50;
     }
     // collateral calculation
-    $get_col_meet = ((120/100) * $prin_amt);
-    $get_col_val = ((120/100) * $col_va);
+    $get_col_meet = ((120 / 100) * $prin_amt);
+    $get_col_val = ((120 / 100) * $col_va);
     // a value amount
-    $prec = ($col_va/$prin_amt) * 100;
-    if ($prec >= 0 && $prec <= 50 ) {
+    $prec = ($col_va / $prin_amt) * 100;
+    if ($prec >= 0 && $prec <= 50) {
       $warn1 += 10;
       $bad1 += 10;
       $good1 -= 10;
@@ -475,7 +470,7 @@ else{
     if ($good1 > $warn1 && $good1 > $bad1) {
       $color3 = "success";
       $auto_perc -= 0.02;
-    }  else if ($warn1 > $good1 && $warn1 > $bad1) {
+    } else if ($warn1 > $good1 && $warn1 > $bad1) {
       $color3 = "warning";
       $auto_perc -= 1;
     } else {
@@ -487,8 +482,8 @@ else{
     $bad2 = 100;
     $good2 = 100;
     // avg. savings bal
-    $prec1 = ($s1x/$prin_amt) * 100;
-    if ($prec1 >= 0 && $prec1 <= 30 ) {
+    $prec1 = ($s1x / $prin_amt) * 100;
+    if ($prec1 >= 0 && $prec1 <= 30) {
       $warn2 -= 10;
       $bad2 -= 10;
       $good2 -= 30;
@@ -510,8 +505,8 @@ else{
       $good2 += 20;
     }
     // End Savings
-    $prec2 = ($s2x/$prin_amt) * 100;
-    if ($prec2 >= 0 && $prec2 <= 30 ) {
+    $prec2 = ($s2x / $prin_amt) * 100;
+    if ($prec2 >= 0 && $prec2 <= 30) {
       $warn2 -= 10;
       $bad2 -= 10;
       $good2 -= 30;
@@ -550,7 +545,7 @@ else{
     if ($good2 > $warn2 && $good2 > $bad2) {
       $color4 = "success";
       $auto_perc -= 0.2;
-    }  else if ($warn3 > $good3 && $warn1 > $bad1) {
+    } else if ($warn3 > $good3 && $warn1 > $bad1) {
       $color4 = "warning";
       $auto_perc -= 1;
     } else {
@@ -563,84 +558,84 @@ else{
 }
 ?>
 <?php
- if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // here we will be posting
-    // TAKE DISPLAYED DATA
-    // check if approved or declined
-    // if System Computation or the Original Loan Principal
-    // check if the gl payment source have the balance if its more or less
-    // take out the charges at the point of disbursement
-    // post the loan out to loan
-    ?>
-    <input type="text" id="s_int_id" value="<?php echo $sessint_id; ?>" hidden>
-    <input type="text" id="s_branch_id" value="<?php echo $branch_id; ?>" hidden>
-    <input type="text" id="s_sender_id" value="<?php echo $sender_id; ?>" hidden>
-    <input type="text" id="s_phone" value="<?php echo $client_phone; ?>" hidden>
-    <input type="text" id="s_client_id" value="<?php echo $client_id; ?>" hidden>
-    <input type="text" id="s_acct_nox" value="<?php echo $acct_no; ?>" hidden>
-    <div id="make_display"></div>
-                   <?php
-    // record the loan in the loan transaction table
-    // Take the loan principal out of the Vualt(Gl payment Type)
-    // Record the Vualt Transaction (Gl Transaction in future)
-    // reflect the transaction on the clients account
-    // and the client account transction.
-    // EMAIL FOR BOTH SIDES
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  // here we will be posting
+  // TAKE DISPLAYED DATA
+  // check if approved or declined
+  // if System Computation or the Original Loan Principal
+  // check if the gl payment source have the balance if its more or less
+  // take out the charges at the point of disbursement
+  // post the loan out to loan
+?>
+  <input type="text" id="s_int_id" value="<?php echo $sessint_id; ?>" hidden>
+  <input type="text" id="s_branch_id" value="<?php echo $branch_id; ?>" hidden>
+  <input type="text" id="s_sender_id" value="<?php echo $sender_id; ?>" hidden>
+  <input type="text" id="s_phone" value="<?php echo $client_phone; ?>" hidden>
+  <input type="text" id="s_client_id" value="<?php echo $client_id; ?>" hidden>
+  <input type="text" id="s_acct_nox" value="<?php echo $acct_no; ?>" hidden>
+  <div id="make_display"></div>
+  <?php
+  // record the loan in the loan transaction table
+  // Take the loan principal out of the Vualt(Gl payment Type)
+  // Record the Vualt Transaction (Gl Transaction in future)
+  // reflect the transaction on the clients account
+  // and the client account transction.
+  // EMAIL FOR BOTH SIDES
 
-    // END ALGORITHM END
-    // 1. DISPLAY DATA
-    $but_type = $_POST["submit"];
-    // if the status is rejected or one
-    if ($dis_cache_status == "Pending") {
-      if ($but_type == "submit" || $but_type == "submit_b") {
-        // 2. check it its system computation or intial principal
-        if ($but_type == "submit") {
-          // MEANS SYSTEM COMPUTATION
-          $loan_amount = $comp_amt;
-        } else {
-          // MEANS ORIGINAL LOAN PRICIPAL
-          $loan_amount = $prin_amt;
-        }
-        // get the data of the amount that will be disbursed
-        // 3. CHECK IF VAULT HAVE THAT AMOUNT
-        // query vault to get the balance of the institution
-        // $branch_id = $_SESSION["branch_id"];
-        // $v_query = mysqli_query($connection, "SELECT * FROM int_vault WHERE int_id = '$sessint_id' && branch_id = '$branch_id'");
-        // $ivb = mysqli_fetch_array($v_query);
-        $new_gl_run_bal = $running_gl_balance + $loan_amount;
-        // take out the amount from the vualt balance for the transaction balance
-        if ($new_gl_run_bal >= $loan_amount) {
-          // $cqb = mysqli_fetch_array($charge_query);
-          $charge_query = mysqli_query($connection, "SELECT * FROM `product_loan_charge` WHERE product_loan_id = '$loan_product' && int_id = '$sessint_id'");
-          // $cqb = mysqli_fetch_array($charge_query);
-          // charge application start.
-          if (mysqli_num_rows($charge_query) > 0 ) {
-            $get_client_account = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
-            $fct = mysqli_fetch_array($get_client_account);
-            $client_running_bal = $fct["account_balance_derived"];
-            $account_id = $fct["id"];
-            $client_charge_bal = $fct["total_fees_charge_derived"];
-            // be useful at the point of charges
-            $new_client_running_bal = $client_running_bal + $loan_amount;
+  // END ALGORITHM END
+  // 1. DISPLAY DATA
+  $but_type = $_POST["submit"];
+  // if the status is rejected or one
+  if ($dis_cache_status == "Pending") {
+    if ($but_type == "submit" || $but_type == "submit_b") {
+      // 2. check it its system computation or intial principal
+      if ($but_type == "submit") {
+        // MEANS SYSTEM COMPUTATION
+        $loan_amount = $comp_amt;
+      } else {
+        // MEANS ORIGINAL LOAN PRICIPAL
+        $loan_amount = $prin_amt;
+      }
+      // get the data of the amount that will be disbursed
+      // 3. CHECK IF VAULT HAVE THAT AMOUNT
+      // query vault to get the balance of the institution
+      // $branch_id = $_SESSION["branch_id"];
+      // $v_query = mysqli_query($connection, "SELECT * FROM int_vault WHERE int_id = '$sessint_id' && branch_id = '$branch_id'");
+      // $ivb = mysqli_fetch_array($v_query);
+      $new_gl_run_bal = $running_gl_balance + $loan_amount;
+      // take out the amount from the vualt balance for the transaction balance
+      if ($new_gl_run_bal >= $loan_amount) {
+        // $cqb = mysqli_fetch_array($charge_query);
+        $charge_query = mysqli_query($connection, "SELECT * FROM `product_loan_charge` WHERE product_loan_id = '$loan_product' && int_id = '$sessint_id'");
+        // $cqb = mysqli_fetch_array($charge_query);
+        // charge application start.
+        if (mysqli_num_rows($charge_query) > 0) {
+          $get_client_account = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
+          $fct = mysqli_fetch_array($get_client_account);
+          $client_running_bal = $fct["account_balance_derived"];
+          $account_id = $fct["id"];
+          $client_charge_bal = $fct["total_fees_charge_derived"];
+          // be useful at the point of charges
+          $new_client_running_bal = $client_running_bal + $loan_amount;
 
-            $insert_client_trans1 = "";
-            // update the PAYMENT GL.
-            // record the gl transaction
-            // we get client current balance, email..
-            // we make this transaction..
-            // we store this transaction in account transaction..
-            // hit this client mail
+          $insert_client_trans1 = "";
+          // update the PAYMENT GL.
+          // record the gl transaction
+          // we get client current balance, email..
+          // we make this transaction..
+          // we store this transaction in account transaction..
+          // hit this client mail
 
-            $update_acct_gl = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_gl_run_bal' WHERE int_id = '$sessint_id' && gl_code = '$ggl'");
-            if ($update_acct_gl) {
-              // echo "UPDATED FIRST CODE";
-              // record gl transaction
-              $digits = 6;
-              $trans_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-              $gends = $disburse_date;
-              $gen_date = $disburse_date;
-              $crd_d = date('Y-m-d h:i:sa');
-              $insert_gl_trans = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
+          $update_acct_gl = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$new_gl_run_bal' WHERE int_id = '$sessint_id' && gl_code = '$ggl'");
+          if ($update_acct_gl) {
+            // echo "UPDATED FIRST CODE";
+            // record gl transaction
+            $digits = 6;
+            $trans_id = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+            $gends = $disburse_date;
+            $gen_date = $disburse_date;
+            $crd_d = date('Y-m-d h:i:sa');
+            $insert_gl_trans = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
               `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,
               `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`,
               `manually_adjusted_or_reversed`, `credit`, `debit`) 
@@ -648,16 +643,16 @@ else{
               'Loan Disbursement', 'loan_disbursement', '{$client_id}', '0', '{$gends}', '{$loan_amount}', '{$new_gl_run_bal}',
               '{$new_gl_run_bal}', '{$gends}', '0', '{$new_gl_run_bal}', '{$crd_d}',
               '0', '0.00', '{$loan_amount}')");
-              // you can send EMAIL HERE FOR GL TRANSACTION FROM BANK
-              if ($insert_gl_trans) {
-                // echo "INSERTED INTO GL ACCOUNT TRANSACTION";
-                // get client running balance
-                $client_loan_status = mysqli_query($connection, "UPDATE client SET loan_status = 'ACTIVE' WHERE account_no = '$acct_no' AND id = '$client_id' AND int_id = '$sessint_id'");
+            // you can send EMAIL HERE FOR GL TRANSACTION FROM BANK
+            if ($insert_gl_trans) {
+              // echo "INSERTED INTO GL ACCOUNT TRANSACTION";
+              // get client running balance
+              $client_loan_status = mysqli_query($connection, "UPDATE client SET loan_status = 'ACTIVE' WHERE account_no = '$acct_no' AND id = '$client_id' AND int_id = '$sessint_id'");
 
-                $update_client_bal = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$new_client_running_bal' WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
-                if ($update_client_bal) {
-                  // echo "UPDATED ACCOUNT";
-                  $insert_client_trans = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
+              $update_client_bal = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$new_client_running_bal' WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
+              if ($update_client_bal) {
+                // echo "UPDATED ACCOUNT";
+                $insert_client_trans = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
                   `product_id`, `account_id`, `account_no`, `client_id`, `teller_id`, `transaction_id`,
                   `description`, `transaction_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
                   `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
@@ -666,19 +661,19 @@ else{
                   'Loan Disbursement', 'loan_disbursement', '0', '{$gen_date}', '{$loan_amount}', '{$loan_amount}',
                   '{$gends}', '0', '{$new_client_running_bal}',
                   '{$new_client_running_bal}', '{$crd_d}', '{$app_user}', '0', '0.00', '{$loan_amount}')");
-                  // store the transaction
-                  if ($insert_client_trans) {
-                    // echo "INSERTED INTO ACCTOUNT TRANSACTION";
-                    if ($client_sms == "1") {
-                      ?>
-                      <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
-                      <input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
-                      <input type="text" id="s_amount" value="<?php echo number_format($loan_amount, 2); ?>" hidden>
-                      <input type="text" id="s_desc" value="<?php echo "Loan Disbursement"; ?>" hidden>
-                      <input type="text" id="s_date" value="<?php echo $pint; ?>" hidden>
-                      <input type="text" id="s_balance" value="<?php echo number_format($new_client_running_bal, 2); ?>" hidden>
-                      <script>
-                    $(document).ready(function() {
+                // store the transaction
+                if ($insert_client_trans) {
+                  // echo "INSERTED INTO ACCTOUNT TRANSACTION";
+                  if ($client_sms == "1") {
+  ?>
+                    <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
+                    <input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
+                    <input type="text" id="s_amount" value="<?php echo number_format($loan_amount, 2); ?>" hidden>
+                    <input type="text" id="s_desc" value="<?php echo "Loan Disbursement"; ?>" hidden>
+                    <input type="text" id="s_date" value="<?php echo $pint; ?>" hidden>
+                    <input type="text" id="s_balance" value="<?php echo number_format($new_client_running_bal, 2); ?>" hidden>
+                    <script>
+                      $(document).ready(function() {
                         var int_id = $('#s_int_id').val();
                         var branch_id = $('#s_branch_id').val();
                         var sender_id = $('#s_sender_id').val();
@@ -694,33 +689,41 @@ else{
                         var date = $('#s_date').val();
                         var balance = $('#s_balance').val();
                         // now we work on the body.
-                        var msg = int_name+" "+trans_type+" \n" + "Amt: NGN "+amount+" \n Acct: "+acct_no+"\nDesc: "+desc+" \nBal: "+balance+" \nAvail: "+balance+"\nDate: "+date+"\nThank you for Banking with Us!";
+                        var msg = int_name + " " + trans_type + " \n" + "Amt: NGN " + amount + " \n Acct: " + acct_no + "\nDesc: " + desc + " \nBal: " + balance + " \nAvail: " + balance + "\nDate: " + date + "\nThank you for Banking with Us!";
                         $.ajax({
-                          url:"ajax_post/sms/sms.php",
-                          method:"POST",
-                          data:{int_id:int_id, branch_id:branch_id, sender_id:sender_id, phone:phone, msg:msg, client_id:client_id, account_no:account_no },
-                          success:function(data){
+                          url: "ajax_post/sms/sms.php",
+                          method: "POST",
+                          data: {
+                            int_id: int_id,
+                            branch_id: branch_id,
+                            sender_id: sender_id,
+                            phone: phone,
+                            msg: msg,
+                            client_id: client_id,
+                            account_no: account_no
+                          },
+                          success: function(data) {
                             $('#make_display').html(data);
                           }
                         });
-                    });
-                  </script>
-                      <?php
-                    }
-                      // sends a mail first
-                    // HERE YOU CAN HIT THE MAIL
-                    $get_client_account1 = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
-                    $fct1 = mysqli_fetch_array($get_client_account1);
-                    $client_running_bal1 = $fct1["account_balance_derived"];
-                    // be useful at the point of charges
-                    $mail = new PHPMailer;
-                    $mail->From = $int_email;
-                    $mail->FromName = $int_name;
-                    $mail->addAddress($client_email);
-                    $mail->addReplyTo($int_email, "No Reply");
-                    $mail->isHTML(true);
-                    $mail->Subject = "Transaction Alert from $int_name";
-                    $mail->Body = "<!DOCTYPE html>
+                      });
+                    </script>
+                    <?php
+                  }
+                  // sends a mail first
+                  // HERE YOU CAN HIT THE MAIL
+                  $get_client_account1 = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
+                  $fct1 = mysqli_fetch_array($get_client_account1);
+                  $client_running_bal1 = $fct1["account_balance_derived"];
+                  // be useful at the point of charges
+                  $mail = new PHPMailer;
+                  $mail->From = $int_email;
+                  $mail->FromName = $int_name;
+                  $mail->addAddress($client_email);
+                  $mail->addReplyTo($int_email, "No Reply");
+                  $mail->isHTML(true);
+                  $mail->Subject = "Transaction Alert from $int_name";
+                  $mail->Body = "<!DOCTYPE html>
                     <html>
                         <head>
                         <style>
@@ -828,83 +831,81 @@ else{
                           </div>
                         </body>
                     </html>";
-                    $mail->AltBody = "This is the plain text version of the email content";
-                    // mail system
-                    if(!$mail->send()) 
-                       {
-                           echo "Mailer Error: " . $mail->ErrorInfo;
-                          //  $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
-                          //  echo header ("Location: ../mfi/transact.php?message0=$randms");
-                       } else
-                       {
-                          echo "Email Successful";
-                       }
-                    // $new_client_running_bal1 = $client_running_bal1 + $loan_amount;
-                     // TAKE OUT THE CHRAGES at the Disbursment point
-                    // a query to select charges
-                  $charge_query= mysqli_query($connection, "SELECT * FROM `product_loan_charge` WHERE product_loan_id = '$loan_product' && int_id = '$sessint_id'");
-                    // THEN TEST FOR THE LOAN
-             while ($cxr = mysqli_fetch_array($charge_query)) {
-              //  echo "<P>PRODUCT LOAN CHARGE</P>";
-            $final[] = $cxr;
-            $c_id = $cxr["charge_id"];
-            $pay_charge1 = 0;
-            $pay_charge2 = 0;
-            $calc = 0;
-            $chg2 = 0;
-            // qwerty
-           
-            $select_each_charge = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' AND int_id = '$sessint_id' AND charge_time_enum = '1' ");
-            while ($ex = mysqli_fetch_array($select_each_charge)) {
-              // echo "<P>CHARGE WHILE LOOP</P>";
-              $values = $ex["charge_time_enum"];
-              $nameofc = $ex["name"];
-              $amt = 0;
-              $forx = $ex["charge_calculation_enum"];
-              $rmt = $loan_amount;
-              $amt_2 = $ex["amount"];
-              if ($forx == '1') {
-                $amt = $ex["amount"];
-                $charge_name1 = $ex["name"];
-                $gl_code1 = $ex["gl_code"];
-                // ACCOUNT
-                $get_client_account1 = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
-                while ($fct1 = mysqli_fetch_array($get_client_account1)) {
-                  // echo "<P>FLAT WHILE LOOP</P>";
-                $client_running_bal1 = $fct1["account_balance_derived"];
-                if (isset( $client_running_bal1)) {
-                // echo "AMOUNT".$amt;
-                $get_gl2xx = "SELECT * FROM `acc_gl_account` WHERE gl_code = '$gl_code1' AND int_id = '$sessint_id'";
-                // echo "GL NUMBER".$gl_code1;
-              //   if ($connection->error) {
-              //     try {   
-              //         throw new Exception("MySQL error $connection->error <br> Query:<br> $get_gl_2xx", $mysqli->error);   
-              //     } catch(Exception $e ) {
-              //         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-              //         echo nl2br($e->getTraceAsString());
-              //     }
-              // }
-                $get_gl2 = mysqli_query($connection, $get_gl2xx);
-                    while ($fool2 = mysqli_fetch_array($get_gl2)) {
-                      // echo "<P>SELECT ACCT GL WHILE LOOP</P>";
-                    $running_gl_balance2 = $fool2["organization_running_balance_derived"];
-                    // DONE WITH GL MOVE TO ACCOUNT
-                $ultimate_client_running_balance = $client_running_bal1 - $amt;
-                $ultimate_gl_bal = $running_gl_balance2 + $amt;
-                // WE WILL HAVE TO UPDATE THE GL AND CLIENT ACCOUNT WITH THE TRANSACTION
+                  $mail->AltBody = "This is the plain text version of the email content";
+                  // mail system
+                  if (!$mail->send()) {
+                    echo "Mailer Error: " . $mail->ErrorInfo;
+                    //  $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
+                    //  echo header ("Location: ../mfi/transact.php?message0=$randms");
+                  } else {
+                    echo "Email Successful";
+                  }
+                  // $new_client_running_bal1 = $client_running_bal1 + $loan_amount;
+                  // TAKE OUT THE CHRAGES at the Disbursment point
+                  // a query to select charges
+                  $charge_query = mysqli_query($connection, "SELECT * FROM `product_loan_charge` WHERE product_loan_id = '$loan_product' && int_id = '$sessint_id'");
+                  // THEN TEST FOR THE LOAN
+                  while ($cxr = mysqli_fetch_array($charge_query)) {
+                    //  echo "<P>PRODUCT LOAN CHARGE</P>";
+                    $final[] = $cxr;
+                    $c_id = $cxr["charge_id"];
+                    $pay_charge1 = 0;
+                    $pay_charge2 = 0;
+                    $calc = 0;
+                    $chg2 = 0;
+                    // qwerty
+
+                    $select_each_charge = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' AND int_id = '$sessint_id' AND charge_time_enum = '1' ");
+                    while ($ex = mysqli_fetch_array($select_each_charge)) {
+                      // echo "<P>CHARGE WHILE LOOP</P>";
+                      $values = $ex["charge_time_enum"];
+                      $nameofc = $ex["name"];
+                      $amt = 0;
+                      $forx = $ex["charge_calculation_enum"];
+                      $rmt = $loan_amount;
+                      $amt_2 = $ex["amount"];
+                      if ($forx == '1') {
+                        $amt = $ex["amount"];
+                        $charge_name1 = $ex["name"];
+                        $gl_code1 = $ex["gl_code"];
+                        // ACCOUNT
+                        $get_client_account1 = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
+                        while ($fct1 = mysqli_fetch_array($get_client_account1)) {
+                          // echo "<P>FLAT WHILE LOOP</P>";
+                          $client_running_bal1 = $fct1["account_balance_derived"];
+                          if (isset($client_running_bal1)) {
+                            // echo "AMOUNT".$amt;
+                            $get_gl2xx = "SELECT * FROM `acc_gl_account` WHERE gl_code = '$gl_code1' AND int_id = '$sessint_id'";
+                            // echo "GL NUMBER".$gl_code1;
+                            //   if ($connection->error) {
+                            //     try {   
+                            //         throw new Exception("MySQL error $connection->error <br> Query:<br> $get_gl_2xx", $mysqli->error);   
+                            //     } catch(Exception $e ) {
+                            //         echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+                            //         echo nl2br($e->getTraceAsString());
+                            //     }
+                            // }
+                            $get_gl2 = mysqli_query($connection, $get_gl2xx);
+                            while ($fool2 = mysqli_fetch_array($get_gl2)) {
+                              // echo "<P>SELECT ACCT GL WHILE LOOP</P>";
+                              $running_gl_balance2 = $fool2["organization_running_balance_derived"];
+                              // DONE WITH GL MOVE TO ACCOUNT
+                              $ultimate_client_running_balance = $client_running_bal1 - $amt;
+                              $ultimate_gl_bal = $running_gl_balance2 + $amt;
+                              // WE WILL HAVE TO UPDATE THE GL AND CLIENT ACCOUNT WITH THE TRANSACTION
 
 
 
-                // START
-                if ($amt > 0) {
-                  $update_acct_gl1 = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$ultimate_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_code1'");
-                  if ($update_acct_gl1) {
-              $trans_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-              $gends = $disburse_date;
-              $gen_date = $disburse_date;
-              $crd_d = date('Y-m-d h:i:sa');
-              // transaction
-              $insert_charge_gl = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
+                              // START
+                              if ($amt > 0) {
+                                $update_acct_gl1 = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$ultimate_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_code1'");
+                                if ($update_acct_gl1) {
+                                  $trans_id = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+                                  $gends = $disburse_date;
+                                  $gen_date = $disburse_date;
+                                  $crd_d = date('Y-m-d h:i:sa');
+                                  // transaction
+                                  $insert_charge_gl = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
               `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,
               `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`,
               `manually_adjusted_or_reversed`, `credit`, `debit`) 
@@ -912,11 +913,11 @@ else{
               'Loan_Charge - {$nameofc} / {$crn}', 'flat_charge', '{$client_id}', '0', '{$gends}', '{$amt}', '{$ultimate_gl_bal}',
               '{$ultimate_gl_bal}', '{$gends}', '0', '{$ultimate_gl_bal}', '{$crd_d}',
               '0', '{$amt}', '0.00')");
-              // SEND THE REST
-              if ($insert_charge_gl) {
-                $update_client_bal1 = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$ultimate_client_running_balance' WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
-                if ($update_client_bal1) {
-                  $insert_client_trans1 = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
+                                  // SEND THE REST
+                                  if ($insert_charge_gl) {
+                                    $update_client_bal1 = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$ultimate_client_running_balance' WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
+                                    if ($update_client_bal1) {
+                                      $insert_client_trans1 = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
                   `product_id`, `account_id`, `account_no`, `client_id`, `teller_id`, `transaction_id`,
                   `description`, `transaction_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
                   `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
@@ -925,56 +926,64 @@ else{
                   'Loan_Charge - {$nameofc} / {$crn}', 'flat_charge', '0', '{$gen_date}', '{$amt}', '{$amt}',
                   '{$gends}', '0', '{$ultimate_client_running_balance}',
                   '{$ultimate_client_running_balance}', '{$crd_d}', '{$app_user}', '0', '{$amt}', '0.00')");
-                  // END CLIENT TRANSACTION
-                  if ($insert_client_trans1) {
-                    // SEND THE EMAIL
-                    if ($client_sms == "1") {
-                      ?>
-                      <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
-                      <input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
-                      <input type="text" id="s_amount" value="<?php echo number_format($amt, 2); ?>" hidden>
-                      <input type="text" id="s_desc" value="<?php echo "Loan Charge ".$nameofc; ?>" hidden>
-                      <input type="text" id="s_date" value="<?php echo $pint; ?>" hidden>
-                      <input type="text" id="s_balance" value="<?php echo number_format($ultimate_client_running_balance, 2); ?>" hidden>
-                      <script>
-                    $(document).ready(function() {
-                        var int_id = $('#s_int_id').val();
-                        var branch_id = $('#s_branch_id').val();
-                        var sender_id = $('#s_sender_id').val();
-                        var phone = $('#s_phone').val();
-                        var client_id = $('#s_client_id').val();
-                        var account_no = $('#s_acct_nox').val();
-                        // function
-                        var amount = $('#s_amount').val();
-                        var acct_no = $('#s_acct_no').val();
-                        var int_name = $('#s_int_name').val();
-                        var trans_type = "Debit";
-                        var desc = $('#s_desc').val();
-                        var date = $('#s_date').val();
-                        var balance = $('#s_balance').val();
-                        // now we work on the body.
-                        var msg = int_name+" "+trans_type+" \n" + "Amt: NGN "+amount+" \n Acct: "+acct_no+"\nDesc: "+desc+" \nBal: "+balance+" \nAvail: "+balance+"\nDate: "+date+"\nThank you for Banking with Us!";
-                        $.ajax({
-                          url:"ajax_post/sms/sms.php",
-                          method:"POST",
-                          data:{int_id:int_id, branch_id:branch_id, sender_id:sender_id, phone:phone, msg:msg, client_id:client_id, account_no:account_no },
-                          success:function(data){
-                            $('#make_display').html(data);
-                          }
-                        });
-                    });
-                  </script>
-                      <?php
-                    }
-                    // END IT HERE
-                    $mail = new PHPMailer;
-                    $mail->From = $int_email;
-                    $mail->FromName = $int_name;
-                    $mail->addAddress($client_email);
-                    $mail->addReplyTo($int_email, "No Reply");
-                    $mail->isHTML(true);
-                    $mail->Subject = "Transaction Alert from $int_name";
-                    $mail->Body = "<!DOCTYPE html>
+                                      // END CLIENT TRANSACTION
+                                      if ($insert_client_trans1) {
+                                        // SEND THE EMAIL
+                                        if ($client_sms == "1") {
+                    ?>
+                                          <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
+                                          <input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
+                                          <input type="text" id="s_amount" value="<?php echo number_format($amt, 2); ?>" hidden>
+                                          <input type="text" id="s_desc" value="<?php echo "Loan Charge " . $nameofc; ?>" hidden>
+                                          <input type="text" id="s_date" value="<?php echo $pint; ?>" hidden>
+                                          <input type="text" id="s_balance" value="<?php echo number_format($ultimate_client_running_balance, 2); ?>" hidden>
+                                          <script>
+                                            $(document).ready(function() {
+                                              var int_id = $('#s_int_id').val();
+                                              var branch_id = $('#s_branch_id').val();
+                                              var sender_id = $('#s_sender_id').val();
+                                              var phone = $('#s_phone').val();
+                                              var client_id = $('#s_client_id').val();
+                                              var account_no = $('#s_acct_nox').val();
+                                              // function
+                                              var amount = $('#s_amount').val();
+                                              var acct_no = $('#s_acct_no').val();
+                                              var int_name = $('#s_int_name').val();
+                                              var trans_type = "Debit";
+                                              var desc = $('#s_desc').val();
+                                              var date = $('#s_date').val();
+                                              var balance = $('#s_balance').val();
+                                              // now we work on the body.
+                                              var msg = int_name + " " + trans_type + " \n" + "Amt: NGN " + amount + " \n Acct: " + acct_no + "\nDesc: " + desc + " \nBal: " + balance + " \nAvail: " + balance + "\nDate: " + date + "\nThank you for Banking with Us!";
+                                              $.ajax({
+                                                url: "ajax_post/sms/sms.php",
+                                                method: "POST",
+                                                data: {
+                                                  int_id: int_id,
+                                                  branch_id: branch_id,
+                                                  sender_id: sender_id,
+                                                  phone: phone,
+                                                  msg: msg,
+                                                  client_id: client_id,
+                                                  account_no: account_no
+                                                },
+                                                success: function(data) {
+                                                  $('#make_display').html(data);
+                                                }
+                                              });
+                                            });
+                                          </script>
+                                        <?php
+                                        }
+                                        // END IT HERE
+                                        $mail = new PHPMailer;
+                                        $mail->From = $int_email;
+                                        $mail->FromName = $int_name;
+                                        $mail->addAddress($client_email);
+                                        $mail->addReplyTo($int_email, "No Reply");
+                                        $mail->isHTML(true);
+                                        $mail->Subject = "Transaction Alert from $int_name";
+                                        $mail->Body = "<!DOCTYPE html>
                     <html>
                         <head>
                         <style>
@@ -1082,22 +1091,20 @@ else{
                           </div>
                         </body>
                     </html>";
-                    $mail->AltBody = "This is the plain text version of the email content";
-                    // mail system
-                    if(!$mail->send()) 
-                       {
-                           echo "Mailer Error: " . $mail->ErrorInfo;
-                          //  $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
-                          //  echo header ("Location: ../mfi/transact.php?message0=$randms");
-                       } else
-                       {
-                          echo "Email Successful";
-                       }
-                      //  ACCOUNT BALANCE
-                  } else {
-                    // echo the client transaction
-                    // echo "Error in Client Transaction";
-                    echo '<script type="text/javascript">
+                                        $mail->AltBody = "This is the plain text version of the email content";
+                                        // mail system
+                                        if (!$mail->send()) {
+                                          echo "Mailer Error: " . $mail->ErrorInfo;
+                                          //  $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
+                                          //  echo header ("Location: ../mfi/transact.php?message0=$randms");
+                                        } else {
+                                          echo "Email Successful";
+                                        }
+                                        //  ACCOUNT BALANCE
+                                      } else {
+                                        // echo the client transaction
+                                        // echo "Error in Client Transaction";
+                                        echo '<script type="text/javascript">
                     $(document).ready(function(){
                         swal({
                             type: "error",
@@ -1109,11 +1116,11 @@ else{
                     });
                     </script>
                     ';
-                  }
-                } else {
-                  // echo error updating client account
-                  // echo "Error in Update Client Account";
-                  echo '<script type="text/javascript">
+                                      }
+                                    } else {
+                                      // echo error updating client account
+                                      // echo "Error in Update Client Account";
+                                      echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1125,11 +1132,11 @@ else{
                 });
                 </script>
                 ';
-                }
-              } else {
-                // echo error in charge gl error
-                // echo "Error in Charge GL";
-                echo '<script type="text/javascript">
+                                    }
+                                  } else {
+                                    // echo error in charge gl error
+                                    // echo "Error in Charge GL";
+                                    echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1141,11 +1148,11 @@ else{
                 });
                 </script>
                 ';
-              }
-                  } else {
-                    // echo error in update of the charge gl
-                    // echo "Error in Update Charge GL";
-                    echo '<script type="text/javascript">
+                                  }
+                                } else {
+                                  // echo error in update of the charge gl
+                                  // echo "Error in Update Charge GL";
+                                  echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1157,51 +1164,50 @@ else{
                 });
                 </script>
                 ';
-                  }
-                } else {
-                  // echo empty
-                  // echo "Error in Emoty";
-                }
-              // end while loop
-                    }
+                                }
+                              } else {
+                                // echo empty
+                                // echo "Error in Emoty";
+                              }
+                              // end while loop
+                            }
+                          } else {
+                            echo "NO CODE";
+                          }
+                        }
 
-                  } else {
-                    echo "NO CODE";
-                  }
-              }
+                        // ENDING
+                        // ALSO SEND A MAIL
+                      } else {
+                        $charge_name2 = $ex["name"];
+                        $calc = ($amt_2 / 100) * $rmt;
+                        $charge_name2 = $ex["name"];
+                        $gl_code2 = $ex["gl_code"];
+                        // echo "<P>PERCENTAGE WHILE LOOP</P>";
+                        // ACCOUNT
+                        $get_client_account2 = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
+                        while ($fct2 = mysqli_fetch_array($get_client_account2)) {
+                          // echo "<P>ANOTHER PERC WHILE LOOP</P>";
+                          $client_running_bal2 = $fct2["account_balance_derived"];
+                          // echo "AMOUNT".$amt;
+                          $get_gl3 = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$gl_code2' AND int_id = '$sessint_id'");
+                          while ($fool3 = mysqli_fetch_array($get_gl3)) {
+                            $running_gl_balance3 = $fool3["organization_running_balance_derived"];
+                            // DONE WITH GL MOVE TO ACCOUNT
+                            $ultimate_client_running_balance1 = $client_running_bal2 - $calc;
+                            $ultimate_gl_bal1 = $running_gl_balance3 + $calc;
+                            // WE WILL HAVE TO UPDATE THE GL AND CLIENT ACCOUNT WITH THE TRANSACTION
 
-                // ENDING
-                // ALSO SEND A MAIL
-              } else {
-                $charge_name2 = $ex["name"];
-                $calc = ($amt_2 / 100) * $rmt;
-                $charge_name2 = $ex["name"];
-                $gl_code2 = $ex["gl_code"];
-                // echo "<P>PERCENTAGE WHILE LOOP</P>";
-                // ACCOUNT
-                $get_client_account2 = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
-                while ($fct2 = mysqli_fetch_array($get_client_account2)) {
-                  // echo "<P>ANOTHER PERC WHILE LOOP</P>";
-                $client_running_bal2 = $fct2["account_balance_derived"];
-                // echo "AMOUNT".$amt;
-                $get_gl3 = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE gl_code = '$gl_code2' AND int_id = '$sessint_id'");
-                    while ($fool3 = mysqli_fetch_array($get_gl3)) {
-                    $running_gl_balance3 = $fool3["organization_running_balance_derived"];
-                    // DONE WITH GL MOVE TO ACCOUNT
-                $ultimate_client_running_balance1 = $client_running_bal2 - $calc;
-                $ultimate_gl_bal1 = $running_gl_balance3 + $calc;
-                // WE WILL HAVE TO UPDATE THE GL AND CLIENT ACCOUNT WITH THE TRANSACTION
-
-                // SENDING FOR PERCENTAGE
-                if ($calc > 0) {
-                  $update_acct_gl1 = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$ultimate_gl_bal1' WHERE int_id = '$sessint_id' && gl_code = '$gl_code2'");
-                  if ($update_acct_gl1) {
-              $trans_id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-              $gends = $disburse_date;
-              $gen_date = $disburse_date;
-              $app_on = date('Y-m-d h:i:sa');
-              // transaction
-              $insert_charge_gl5 = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
+                            // SENDING FOR PERCENTAGE
+                            if ($calc > 0) {
+                              $update_acct_gl1 = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$ultimate_gl_bal1' WHERE int_id = '$sessint_id' && gl_code = '$gl_code2'");
+                              if ($update_acct_gl1) {
+                                $trans_id = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+                                $gends = $disburse_date;
+                                $gen_date = $disburse_date;
+                                $app_on = date('Y-m-d h:i:sa');
+                                // transaction
+                                $insert_charge_gl5 = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`,
               `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `gl_account_balance_derived`,
               `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`,
               `manually_adjusted_or_reversed`, `credit`, `debit`) 
@@ -1209,11 +1215,11 @@ else{
               'Loan_Charge - {$charge_name2} / {$crn}', 'percentage_charge', '{$client_id}', '0', '{$gends}', '{$calc}', '{$ultimate_gl_bal1}',
               '{$ultimate_gl_bal1}', '{$gends}', '0', '{$ultimate_gl_bal1}', '{$app_on}',
               '0', '{$calc}', '0.00')");
-              // SEND THE REST
-              if ($insert_charge_gl5) {
-                $update_client_bal5 = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$ultimate_client_running_balance1' WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
-                if ($update_client_bal5) {
-                  $insert_client_trans1 = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
+                                // SEND THE REST
+                                if ($insert_charge_gl5) {
+                                  $update_client_bal5 = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$ultimate_client_running_balance1' WHERE account_no = '$acct_no' AND client_id = '$client_id' AND int_id = '$sessint_id'");
+                                  if ($update_client_bal5) {
+                                    $insert_client_trans1 = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
                   `product_id`, `account_id`, `account_no`, `client_id`, `teller_id`, `transaction_id`,
                   `description`, `transaction_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
                   `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
@@ -1222,56 +1228,64 @@ else{
                   'Loan_Charge - {$charge_name2} / {$crn}', 'percentage_charge', '0', '{$gen_date}', '{$calc}', '{$calc}',
                   '{$gends}', '0', '{$ultimate_client_running_balance1}',
                   '{$ultimate_client_running_balance1}', '{$app_on}', '{$app_user}', '0', '{$calc}', '0.00')");
-                  // END CLIENT TRANSACTION
-                  if ($insert_client_trans1) {
-                    // SEND THE EMAIL
-                    if ($client_sms == "1") {
-                      ?>
-                      <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
-                      <input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
-                      <input type="text" id="s_amount" value="<?php echo number_format($calc, 2); ?>" hidden>
-                      <input type="text" id="s_desc" value="<?php echo "Loan Charge ".$charge_name2; ?>" hidden>
-                      <input type="text" id="s_date" value="<?php echo $pint; ?>" hidden>
-                      <input type="text" id="s_balance" value="<?php echo number_format($ultimate_client_running_balance1, 2); ?>" hidden>
-                      <script>
-                    $(document).ready(function() {
-                        var int_id = $('#s_int_id').val();
-                        var branch_id = $('#s_branch_id').val();
-                        var sender_id = $('#s_sender_id').val();
-                        var phone = $('#s_phone').val();
-                        var client_id = $('#s_client_id').val();
-                        var account_no = $('#s_acct_nox').val();
-                        // function
-                        var amount = $('#s_amount').val();
-                        var acct_no = $('#s_acct_no').val();
-                        var int_name = $('#s_int_name').val();
-                        var trans_type = "Debit";
-                        var desc = $('#s_desc').val();
-                        var date = $('#s_date').val();
-                        var balance = $('#s_balance').val();
-                        // now we work on the body.
-                        var msg = int_name+" "+trans_type+" \n" + "Amt: NGN "+amount+" \n Acct: "+acct_no+"\nDesc: "+desc+" \nBal: "+balance+" \nAvail: "+balance+"\nDate: "+date+"\nThank you for Banking with Us!";
-                        $.ajax({
-                          url:"ajax_post/sms/sms.php",
-                          method:"POST",
-                          data:{int_id:int_id, branch_id:branch_id, sender_id:sender_id, phone:phone, msg:msg, client_id:client_id, account_no:account_no },
-                          success:function(data){
-                            $('#make_display').html(data);
-                          }
-                        });
-                    });
-                  </script>
-                      <?php
-                    }
-                    // SMS
-                    $mail = new PHPMailer;
-                    $mail->From = $int_email;
-                    $mail->FromName = $int_name;
-                    $mail->addAddress($client_email);
-                    $mail->addReplyTo($int_email, "No Reply");
-                    $mail->isHTML(true);
-                    $mail->Subject = "Transaction Alert from $int_name";
-                    $mail->Body = "<!DOCTYPE html>
+                                    // END CLIENT TRANSACTION
+                                    if ($insert_client_trans1) {
+                                      // SEND THE EMAIL
+                                      if ($client_sms == "1") {
+                                        ?>
+                                        <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
+                                        <input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
+                                        <input type="text" id="s_amount" value="<?php echo number_format($calc, 2); ?>" hidden>
+                                        <input type="text" id="s_desc" value="<?php echo "Loan Charge " . $charge_name2; ?>" hidden>
+                                        <input type="text" id="s_date" value="<?php echo $pint; ?>" hidden>
+                                        <input type="text" id="s_balance" value="<?php echo number_format($ultimate_client_running_balance1, 2); ?>" hidden>
+                                        <script>
+                                          $(document).ready(function() {
+                                            var int_id = $('#s_int_id').val();
+                                            var branch_id = $('#s_branch_id').val();
+                                            var sender_id = $('#s_sender_id').val();
+                                            var phone = $('#s_phone').val();
+                                            var client_id = $('#s_client_id').val();
+                                            var account_no = $('#s_acct_nox').val();
+                                            // function
+                                            var amount = $('#s_amount').val();
+                                            var acct_no = $('#s_acct_no').val();
+                                            var int_name = $('#s_int_name').val();
+                                            var trans_type = "Debit";
+                                            var desc = $('#s_desc').val();
+                                            var date = $('#s_date').val();
+                                            var balance = $('#s_balance').val();
+                                            // now we work on the body.
+                                            var msg = int_name + " " + trans_type + " \n" + "Amt: NGN " + amount + " \n Acct: " + acct_no + "\nDesc: " + desc + " \nBal: " + balance + " \nAvail: " + balance + "\nDate: " + date + "\nThank you for Banking with Us!";
+                                            $.ajax({
+                                              url: "ajax_post/sms/sms.php",
+                                              method: "POST",
+                                              data: {
+                                                int_id: int_id,
+                                                branch_id: branch_id,
+                                                sender_id: sender_id,
+                                                phone: phone,
+                                                msg: msg,
+                                                client_id: client_id,
+                                                account_no: account_no
+                                              },
+                                              success: function(data) {
+                                                $('#make_display').html(data);
+                                              }
+                                            });
+                                          });
+                                        </script>
+<?php
+                                      }
+                                      // SMS
+                                      $mail = new PHPMailer;
+                                      $mail->From = $int_email;
+                                      $mail->FromName = $int_name;
+                                      $mail->addAddress($client_email);
+                                      $mail->addReplyTo($int_email, "No Reply");
+                                      $mail->isHTML(true);
+                                      $mail->Subject = "Transaction Alert from $int_name";
+                                      $mail->Body = "<!DOCTYPE html>
                     <html>
                         <head>
                         <style>
@@ -1379,22 +1393,20 @@ else{
                           </div>
                         </body>
                     </html>";
-                    $mail->AltBody = "This is the plain text version of the email content";
-                    // mail system
-                    if(!$mail->send()) 
-                       {
-                           echo "Mailer Error: " . $mail->ErrorInfo;
-                          //  $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
-                          //  echo header ("Location: ../mfi/transact.php?message0=$randms");
-                       } else
-                       {
-                          echo "Email Successful";
-                       }
-                    // MAILING SYSTEM
-                  } else {
-                    // echo the client transaction
-                    // echo "Error in Client Transaction";
-                    echo '<script type="text/javascript">
+                                      $mail->AltBody = "This is the plain text version of the email content";
+                                      // mail system
+                                      if (!$mail->send()) {
+                                        echo "Mailer Error: " . $mail->ErrorInfo;
+                                        //  $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
+                                        //  echo header ("Location: ../mfi/transact.php?message0=$randms");
+                                      } else {
+                                        echo "Email Successful";
+                                      }
+                                      // MAILING SYSTEM
+                                    } else {
+                                      // echo the client transaction
+                                      // echo "Error in Client Transaction";
+                                      echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1406,11 +1418,11 @@ else{
                 });
                 </script>
                 ';
-                  }
-                } else {
-                  // echo error updating client account
-                  // echo "Error in Update Client Account";
-                  echo '<script type="text/javascript">
+                                    }
+                                  } else {
+                                    // echo error updating client account
+                                    // echo "Error in Update Client Account";
+                                    echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1422,11 +1434,11 @@ else{
                 });
                 </script>
                 ';
-                }
-              } else {
-                // echo error in charge gl error
-                // echo "Error in Charge GL";
-                echo '<script type="text/javascript">
+                                  }
+                                } else {
+                                  // echo error in charge gl error
+                                  // echo "Error in Charge GL";
+                                  echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1438,11 +1450,11 @@ else{
                 });
                 </script>
                 ';
-              }
-                  } else {
-                    // echo error in update of the charge gl
-                    // echo "Error in Update Charge GL";
-                    echo '<script type="text/javascript">
+                                }
+                              } else {
+                                // echo error in update of the charge gl
+                                // echo "Error in Update Charge GL";
+                                echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1454,43 +1466,42 @@ else{
                 });
                 </script>
                 ';
+                              }
+                            } else {
+                              // echo empty
+                              // echo "Empt";
+                              //   echo '<script type="text/javascript">
+                              // $(document).ready(function(){
+                              //     swal({
+                              //         type: "error",
+                              //         title: "",
+                              //         text: "",
+                              //         showConfirmButton: false,
+                              //         timer: 4000
+                              //     })
+                              // });
+                              // </script>
+                              // ';
+                            }
+
+
+                            // END LOOP
+                          }
+                        }
+                        // LOOP
+                        // ENDING
+                      }
+                      // $pay_charge2 += $calc;
+                      // $pay_charge1 += $amt;
+                    }
                   }
-                } else {
-                  // echo empty
-                  // echo "Empt";
-                //   echo '<script type="text/javascript">
-                // $(document).ready(function(){
-                //     swal({
-                //         type: "error",
-                //         title: "",
-                //         text: "",
-                //         showConfirmButton: false,
-                //         timer: 4000
-                //     })
-                // });
-                // </script>
-                // ';
-                }
-
-
-                // END LOOP
-              }
-
-            }
-                // LOOP
-                // ENDING
-              }
-              // $pay_charge2 += $calc;
-              // $pay_charge1 += $amt;
-            }
-          }
-          // YOU NEED TO TEST THE QUERY HERE THEN TAKE OFF
-          // DISBUSE TO LOAN
-          $check_charge = 1;
-          if ($insert_client_trans1 || $check_charge == 1) {
-            // OK MAKE MOVE
-            // loan inputting
-            $l_d_m = "INSERT INTO `loan` (`int_id`, `account_no`, `client_id`, `product_id`,
+                  // YOU NEED TO TEST THE QUERY HERE THEN TAKE OFF
+                  // DISBUSE TO LOAN
+                  $check_charge = 1;
+                  if ($insert_client_trans1 || $check_charge == 1) {
+                    // OK MAKE MOVE
+                    // loan inputting
+                    $l_d_m = "INSERT INTO `loan` (`int_id`, `account_no`, `client_id`, `product_id`,
             `fund_id`, `col_id`, `col_name`, `col_description`, `loan_officer`, `loan_purpose`, `currency_code`,
             `currency_digits`, `principal_amount_proposed`, `principal_amount`, `loan_term`, `interest_rate`,
             `approved_principal`, `repayment_date`, `arrearstolerance_amount`, `is_floating_interest_rate`, 
@@ -1531,16 +1542,16 @@ else{
             '{$prin_due}', '0.000000',
             '1', NULL, '{$loan_sector}',
             '0', '1', '1', NULL, NULL, '0.00')";
-            $loan_disb = mysqli_query($connection, $l_d_m);
-            if($loan_disb) {
-              $update_loan_cache = mysqli_query($connection, "UPDATE loan_disbursement_cache SET status = 'Approved' WHERE id = '$appod' AND int_id = '$sessint_id'");
+                    $loan_disb = mysqli_query($connection, $l_d_m);
+                    if ($loan_disb) {
+                      $update_loan_cache = mysqli_query($connection, "UPDATE loan_disbursement_cache SET status = 'Approved' WHERE id = '$appod' AND int_id = '$sessint_id'");
 
-              $dfofi = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND account_no = '$acct_no' AND client_id = '$client_id'");
-              $fdo = mysqli_fetch_array($dfofi);
-              $loan_id = $fdo['id'];
-              $dfei = mysqli_query($connection,"UPDATE loan_charge SET loan_id = '$loan_id', loan_cache_id = '0' WHERE client_id = '$client_id'");
-              if ($update_loan_cache) {
-                echo '<script type="text/javascript">
+                      $dfofi = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND account_no = '$acct_no' AND client_id = '$client_id'");
+                      $fdo = mysqli_fetch_array($dfofi);
+                      $loan_id = $fdo['id'];
+                      $dfei = mysqli_query($connection, "UPDATE loan_charge SET loan_id = '$loan_id', loan_cache_id = '0' WHERE client_id = '$client_id'");
+                      if ($update_loan_cache) {
+                        echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "success",
@@ -1552,12 +1563,12 @@ else{
                 });
                 </script>
                 ';
-                $URL="disbursement_approval.php";
-            echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-              } else {
-                // error in loan cache
-                // echo "Error in Update Loan gl";
-                echo '<script type="text/javascript">
+                        $URL = "disbursement_approval.php";
+                        echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                      } else {
+                        // error in loan cache
+                        // echo "Error in Update Loan gl";
+                        echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1569,11 +1580,11 @@ else{
                 });
                 </script>
                 ';
-              }
-            } else {
-              // error  in loan
-              // echo "Error in Loan sir";
-              echo '<script type="text/javascript">
+                      }
+                    } else {
+                      // error  in loan
+                      // echo "Error in Loan sir";
+                      echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1585,11 +1596,11 @@ else{
                 });
                 </script>
                 ';
-            }
-          } else {
-            // echo nothing
-            // echo "God full of wisloan_sector";
-            echo '<script type="text/javascript">
+                    }
+                  } else {
+                    // echo nothing
+                    // echo "God full of wisloan_sector";
+                    echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1601,21 +1612,21 @@ else{
                 });
                 </script>
                 ';
-          }
-          if ($connection->error) {
-                try {   
-                    throw new Exception("MySQL error $connection->error <br> Query:<br> $l_d_m", $mysqli->error);   
-                } catch(Exception $e ) {
-                    echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-                    echo nl2br($e->getTraceAsString());
-                }
-            }
-          // UPDATE THE DISBURSMENT CACHE
-          // WE TALK ABOUT LOAN STAUS
-                  } else {
-                    // error in client transaction
-                    // echo "Error in Client Transaction";
-                    echo '<script type="text/javascript">
+                  }
+                  if ($connection->error) {
+                    try {
+                      throw new Exception("MySQL error $connection->error <br> Query:<br> $l_d_m", $mysqli->error);
+                    } catch (Exception $e) {
+                      echo "Error No: " . $e->getCode() . " - " . $e->getMessage() . "<br >";
+                      echo nl2br($e->getTraceAsString());
+                    }
+                  }
+                  // UPDATE THE DISBURSMENT CACHE
+                  // WE TALK ABOUT LOAN STAUS
+                } else {
+                  // error in client transaction
+                  // echo "Error in Client Transaction";
+                  echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1627,11 +1638,11 @@ else{
                 });
                 </script>
                 ';
-                  }
-                } else {
-                  // echo error in client balance update
-                  // echo "Error in Client Bal Update";
-                  echo '<script type="text/javascript">
+                }
+              } else {
+                // echo error in client balance update
+                // echo "Error in Client Bal Update";
+                echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1643,11 +1654,11 @@ else{
                 });
                 </script>
                 ';
-                }
-              } else {
-                // echo error in gl account transaction
-                // echo "Error Gl trans";
-                echo '<script type="text/javascript">
+              }
+            } else {
+              // echo error in gl account transaction
+              // echo "Error Gl trans";
+              echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1659,11 +1670,11 @@ else{
                 });
                 </script>
                 ';
-              }
-            } else {
-              // error in update gl ACCOUNT
-              // echo "Error in Update GL";
-              echo '<script type="text/javascript">
+            }
+          } else {
+            // error in update gl ACCOUNT
+            // echo "Error in Update GL";
+            echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1675,12 +1686,11 @@ else{
                 });
                 </script>
                 ';
-            }
-           
-          } else {
-            // echo not up to
-            // echo "Noot Up to";
-            echo '<script type="text/javascript">
+          }
+        } else {
+          // echo not up to
+          // echo "Noot Up to";
+          echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1692,11 +1702,11 @@ else{
                 });
                 </script>
                 ';
-          }
-        }  else {
-          // echo insufficient fund from vualt
-          // echo "insufficient fund from the payment method";
-          echo '<script type="text/javascript">
+        }
+      } else {
+        // echo insufficient fund from vualt
+        // echo "insufficient fund from the payment method";
+        echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1708,14 +1718,14 @@ else{
                 });
                 </script>
                 ';
-        }
-      } else if ($but_type == "reject") {
-        // reject the loan
-        // store the rejected loan status in cache - to rejecteds
-        $update_loan_cache = mysqli_query($connection, "UPDATE loan_disbursement_cache SET status = 'Rejected' WHERE id = '$appod' AND int_id = '$sessint_id'");
-        if ($update_loan_cache) {
-          // echo "Done";
-          echo '<script type="text/javascript">
+      }
+    } else if ($but_type == "reject") {
+      // reject the loan
+      // store the rejected loan status in cache - to rejecteds
+      $update_loan_cache = mysqli_query($connection, "UPDATE loan_disbursement_cache SET status = 'Rejected' WHERE id = '$appod' AND int_id = '$sessint_id'");
+      if ($update_loan_cache) {
+        // echo "Done";
+        echo '<script type="text/javascript">
           $(document).ready(function(){
               swal({
                   type: "success",
@@ -1727,11 +1737,11 @@ else{
           });
           </script>
           ';
-          $URL="disbursement_approval.php";
-            echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-        } else {
-          // error in loan cache
-          echo '<script type="text/javascript">
+        $URL = "disbursement_approval.php";
+        echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+      } else {
+        // error in loan cache
+        echo '<script type="text/javascript">
           $(document).ready(function(){
               swal({
                   type: "error",
@@ -1743,12 +1753,12 @@ else{
           });
           </script>
           ';
-        }
-        // echo "you rejected the loan";
-      } else {
-        // push out an error to the person approving
-        // echo "error on approval";
-        echo '<script type="text/javascript">
+      }
+      // echo "you rejected the loan";
+    } else {
+      // push out an error to the person approving
+      // echo "error on approval";
+      echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1760,13 +1770,13 @@ else{
                 });
                 </script>
                 ';
-      }
-    } else if ($dis_cache_status == "Rejected") {
-      // echo already rejected
-      $update_loan_cache = mysqli_query($connection, "UPDATE loan_disbursement_cache SET status = 'Rejected' WHERE id = '$appod' AND int_id = '$sessint_id'");
-              if ($update_loan_cache) {
-                // echo "Done";
-                echo '<script type="text/javascript">
+    }
+  } else if ($dis_cache_status == "Rejected") {
+    // echo already rejected
+    $update_loan_cache = mysqli_query($connection, "UPDATE loan_disbursement_cache SET status = 'Rejected' WHERE id = '$appod' AND int_id = '$sessint_id'");
+    if ($update_loan_cache) {
+      // echo "Done";
+      echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "success",
@@ -1778,11 +1788,11 @@ else{
                 });
                 </script>
                 ';
-                $URL="disbursement_approval.php";
-            echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-              } else {
-                // error in loan cache
-                echo '<script type="text/javascript">
+      $URL = "disbursement_approval.php";
+      echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+    } else {
+      // error in loan cache
+      echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
                         type: "error",
@@ -1794,11 +1804,11 @@ else{
                 });
                 </script>
                 ';
-              }
-    } else {
-      // already approved
-      // echo "Already Approved";
-      echo '<script type="text/javascript">
+    }
+  } else {
+    // already approved
+    // echo "Already Approved";
+    echo '<script type="text/javascript">
     $(document).ready(function(){
         swal({
             type: "error",
@@ -1810,287 +1820,288 @@ else{
     });
     </script>
     ';
-    }
+  }
 }
 ?>
 <!-- Content added here -->
-    <div class="content">
-        <div class="container-fluid">
-          <!-- your content here -->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title">Loan Approval - Summary</h4>
-                  <p class="card-category">Make sure everything is in order</p>
+<div class="content">
+  <div class="container-fluid">
+    <!-- your content here -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Loan Approval - Summary</h4>
+            <p class="card-category">Make sure everything is in order</p>
+          </div>
+          <div class="card-body">
+            <form method="post">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Client Name:</label>
+                    <input type="text" class="form-control" name="name" value="<?php echo $cn; ?>" readonly>
+                  </div>
                 </div>
-                <div class="card-body">
-                  <form method="post">
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Client Name:</label>
-                          <input type="text" class="form-control" name="name" value="<?php echo $cn; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Posted By</label>
-                          <input type="text" class="form-control" name="email" value="<?php echo strtoupper($user_fullname); ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Loan Product</label>
-                          <input type="text" class="form-control" name="phone" value="<?php echo strtoupper($ln_prod_name); ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Loan Sector</label>
-                          <input type="text" class="form-control" name="phone" value="<?php echo strtoupper($me); ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Account Officer</label>
-                          <input type="text" class="form-control" name="phone" value="<?php echo $off_dis; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Linked Account</label>
-                          <?php
-                           $pen = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' && client_id = '$client_id' && int_id = '$sessint_id'");
-                           $np = mysqli_fetch_array($pen);
-                          $product_type = $np["product_id"];
-                          $get_product = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$product_type' AND int_id = '$sessint_id'");
-                          $mer = mysqli_fetch_array($get_product);
-                           $p_n = $mer["name"];
-                          ?>
-                          <input type="text" class="form-control" name="phone" value="<?php echo $acct_no." ".$p_n; ?>" readonly>
-                        </div>
-                      </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Posted By</label>
+                    <input type="text" class="form-control" name="email" value="<?php echo strtoupper($user_fullname); ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Loan Product</label>
+                    <input type="text" class="form-control" name="phone" value="<?php echo strtoupper($ln_prod_name); ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Loan Sector</label>
+                    <input type="text" class="form-control" name="phone" value="<?php echo strtoupper($me); ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Account Officer</label>
+                    <input type="text" class="form-control" name="phone" value="<?php echo $off_dis; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Linked Account</label>
+                    <?php
+                    $pen = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$acct_no' && client_id = '$client_id' && int_id = '$sessint_id'");
+                    $np = mysqli_fetch_array($pen);
+                    $product_type = $np["product_id"];
+                    $get_product = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$product_type' AND int_id = '$sessint_id'");
+                    $mer = mysqli_fetch_array($get_product);
+                    $p_n = $mer["name"];
+                    ?>
+                    <input type="text" class="form-control" name="phone" value="<?php echo $acct_no . " " . $p_n; ?>" readonly>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Interest (%)</label>
+                    <input type="text" class="form-control" name="phone" value="<?php echo number_format($interest, 2); ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Principal Amount (0.00)</label>
+                    <input type="text" class="form-control" name="location" value="<?php echo number_format($prin_amt, 2); ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Loan Term</label>
+                    <input type="text" class="form-control" name="transidddd" value="<?php echo $loan_term . " - " . $repay_eve . "(s)"; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Disbursement Date</label>
+                    <input type="text" class="form-control" name="transidddd" value="<?php echo $date; ?>" readonly>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Total Interest (0.00)</label>
+                    <input type="text" class="form-control" name="phone" value="<?php echo number_format($tot_int, 2); ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Total Repayment Due (0.00)</label>
+                    <input type="text" class="form-control" name="location" value="<?php echo number_format($prin_due, 2); ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Repayment Every</label>
+                    <input type="text" class="form-control" name="transidddd" value="<?php echo $no_repayment . " Time(s) Every " . $repay_eve; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Repayment Date</label>
+                    <input type="text" class="form-control" name="transidddd" value="<?php echo $date2; ?>" readonly>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <p>Run Credit Check - Statistic Scoring</p>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card card-nav-tabs" style="width: 30rem;">
+                    <div class="card-header card-header-<?php echo $color; ?>">
+                      Delinquency Counter
                     </div>
-                    <br>
-                      <div class="row">
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Interest (%)</label>
-                          <input type="text" class="form-control" name="phone" value="<?php echo number_format($interest, 2); ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Principal Amount (0.00)</label>
-                          <input type="text" class="form-control" name="location" value="<?php echo number_format($prin_amt, 2); ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Loan Term</label>
-                          <input type="text" class="form-control" name="transidddd" value="<?php echo $loan_term. " - " .$repay_eve."(s)"; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Disbursement Date</label>
-                          <input type="text" class="form-control" name="transidddd" value="<?php echo $date; ?>" readonly>
-                        </div>
-                      </div>
-                      </div>
-                      <br>
-                      <div class="row">
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Total Interest (0.00)</label>
-                          <input type="text" class="form-control" name="phone" value="<?php echo number_format($tot_int, 2); ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Total Repayment Due (0.00)</label>
-                          <input type="text" class="form-control" name="location" value="<?php echo number_format($prin_due, 2); ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Repayment Every</label>
-                          <input type="text" class="form-control" name="transidddd" value="<?php echo $no_repayment." Time(s) Every ". $repay_eve; ?>" readonly>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Repayment Date</label>
-                          <input type="text" class="form-control" name="transidddd" value="<?php echo $date2; ?>" readonly>
-                        </div>
-                      </div>
-                      </div>
-                      <br>
-                      <p>Run Credit Check - Statistic Scoring</p>
-                      <div class="row">
-                        <div class="col-md-6">
-                        <div class="card card-nav-tabs" style="width: 30rem;">
-                        <div class="card-header card-header-<?php echo $color; ?>">
-                         Delinquency Counter
-                         </div>
-                        <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Healthy Repayment: <?php echo $early_rep; ?>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">Healthy Repayment: <?php echo $early_rep; ?>
                         <div class="progress-container progress-success">
                           <span class="progress-badge">Good</span>
                           <div class="progress">
-                           <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $total_early."%"; ?>;" aria-valuenow="<?php echo $total_early; ?>" aria-valuemin="0" aria-valuemax="100">
-                           Good
-                          </div>
+                            <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $total_early . "%"; ?>;" aria-valuenow="<?php echo $total_early; ?>" aria-valuemin="0" aria-valuemax="100">
+                              Good
+                            </div>
                           </div>
                         </div>
                       </li>
-                        <li class="list-group-item">UnHealthy Repayment: <?php echo $imm_rep; ?>
+                      <li class="list-group-item">UnHealthy Repayment: <?php echo $imm_rep; ?>
                         <div class="progress-container progress-success">
                           <span class="progress-badge">Warning</span>
                           <div class="progress">
-                           <div class="progress-bar  bg-warning" role="progressbar" style="width: <?php echo $total_imm."%"; ?>;" aria-valuenow="<?php echo $total_imm; ?>" aria-valuemin="0" aria-valuemax="100">
-                           Warning
-                          </div>
+                            <div class="progress-bar  bg-warning" role="progressbar" style="width: <?php echo $total_imm . "%"; ?>;" aria-valuenow="<?php echo $total_imm; ?>" aria-valuemin="0" aria-valuemax="100">
+                              Warning
+                            </div>
                           </div>
                         </div>
                       </li>
-                        <li class="list-group-item">Late Repayment: <?php echo $late_rep; ?></li>
-                        <li class="list-group-item">
-                        
+                      <li class="list-group-item">Late Repayment: <?php echo $late_rep; ?></li>
+                      <li class="list-group-item">
+
                         <div class="progress-container progress-success">
                           <span class="progress-badge">Bad</span>
                           <div class="progress">
-                           <div class="progress-bar  bg-danger" role="progressbar" style="width: <?php echo $total_bad."%"; ?>" aria-valuenow="<?php echo $total_bad; ?>" aria-valuemin="0" aria-valuemax="100">
-                           Bad
+                            <div class="progress-bar  bg-danger" role="progressbar" style="width: <?php echo $total_bad . "%"; ?>" aria-valuenow="<?php echo $total_bad; ?>" aria-valuemin="0" aria-valuemax="100">
+                              Bad
+                            </div>
                           </div>
-                          </div>
                         </div>
-                        </li>
-                        </ul>
-                        </div>
-                        </div>
-                        <!-- Next -->
-                        <div class="col-md-6">
-                        <div class="card card-nav-tabs" style="width: 30rem;">
-                        <div class="card-header card-header-<?php echo $col_2; ?>">
-                         Loan Behaviour
-                         </div>
-                        <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Active Loan: <?php echo $atv_loan; ?></li>
-                        <li class="list-group-item">Bad Loan: <?php echo $bad_loan; ?></li>
-                        <li class="list-group-item">Written Off Loan: <?php echo $wrt_loan; ?></li>
-                        <li class="list-group-item">Same Product Outstanding: <?php echo $out_loan; ?></li>
-                        <li class="list-group-item">
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- Next -->
+                <div class="col-md-6">
+                  <div class="card card-nav-tabs" style="width: 30rem;">
+                    <div class="card-header card-header-<?php echo $col_2; ?>">
+                      Loan Behaviour
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">Active Loan: <?php echo $atv_loan; ?></li>
+                      <li class="list-group-item">Bad Loan: <?php echo $bad_loan; ?></li>
+                      <li class="list-group-item">Written Off Loan: <?php echo $wrt_loan; ?></li>
+                      <li class="list-group-item">Same Product Outstanding: <?php echo $out_loan; ?></li>
+                      <li class="list-group-item">
                         <div class="progress">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?php echo $bad."%"; ?>" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
-                         Danger
+                          <div class="progress-bar bg-danger" role="progressbar" style="width: <?php echo $bad . "%"; ?>" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
+                            Danger
+                          </div>
+                          <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $warn . "%"; ?>" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
+                            Warning
+                          </div>
+                          <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $good . "%"; ?>" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
+                            Good
+                          </div>
                         </div>
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $warn."%"; ?>" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
-                        Warning
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- Next -->
+              <div class="row">
+                <!-- new -->
+                <div class="col-md-6">
+                  <div class="card card-nav-tabs" style="width: 30rem;">
+                    <div class="card-header card-header-<?php echo $color3; ?>">
+                      Clients KYC
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">Age: <?php echo $age; ?></li>
+                      <li class="list-group-item">Income: <?php echo number_format($k_in, 2); ?></li>
+                      <li class="list-group-item">Years in current Job/Business: <?php echo $yicj; ?></li>
+                      <li class="list-group-item">Marital Status: <?php echo $mst; ?></li>
+                      <li class="list-group-item">Level of Education: <?php echo $loe; ?></li>
+                      <li class="list-group-item">Number of Dependents: <?php echo $nod; ?></li>
+                      <li class="list-group-item">Collateral Value: <?php echo number_format($prec, 2) . "% of principal amount"; ?></li>
+                      <li class="list-group-item">
+                        <div class="progress">
+                          <div class="progress-bar bg-danger" role="progressbar" style="width: <?php echo $bad1 . "%"; ?>" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
+                            Danger
+                          </div>
+                          <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $warn1 . "%"; ?>" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
+                            Warning
+                          </div>
+                          <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $good1 . "%"; ?>" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
+                            Good
+                          </div>
                         </div>
-                        <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $good."%"; ?>" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
-                        Good
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- new -->
+                <div class="col-md-6">
+                  <div class="card card-nav-tabs" style="width: 30rem;">
+                    <div class="card-header card-header-<?php echo $color4; ?>">
+                      Savings Behaviour
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">Average Savings Balance: <?php echo number_format($s1x, 2); ?></li>
+                      <li class="list-group-item">Maximum Savings Balance: <?php echo number_format($s2x, 2); ?></li>
+                      <li class="list-group-item">Number of Deposit: <?php echo $acct_credit; ?></li>
+                      <li class="list-group-item">Number of Withdrawals: <?php echo $acct_debit; ?></li>
+                      <li class="list-group-item">Average Deposit Amount: <?php echo number_format($s5x, 2); ?></li>
+                      <li class="list-group-item">Average Withdrawal Amount: <?php echo number_format($s6x, 2); ?></li>
+                      <li class="list-group-item">
+                        <div class="progress">
+                          <div class="progress-bar bg-danger" role="progressbar" style="width: <?php echo $bad2 . "%"; ?>" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
+                            Danger
+                          </div>
+                          <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $warn2 . "%"; ?>" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
+                            Warning
+                          </div>
+                          <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $good2 . "%"; ?>" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
+                            Success
+                          </div>
                         </div>
-                        </div>
-                        </li>
-                        </ul>
-                        </div>
-                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- hyped -->
+                <br>
+                <!-- never be -->
+                <!-- saving -->
+                <div class="col-md-6">
+                  <div class="card card-pricing bg-success">
+                    <div class="card-body ">
+                      <div class="card-icon">
+                        <i class="material-icons">money</i>
                       </div>
-                        <!-- Next -->
-                        <div class="row">
-                        <!-- new -->
-                        <div class="col-md-6">
-                        <div class="card card-nav-tabs" style="width: 30rem;">
-                        <div class="card-header card-header-<?php echo $color3; ?>">
-                         Clients KYC
-                         </div>
-                        <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Age: <?php echo $age; ?></li>
-                        <li class="list-group-item">Income: <?php echo number_format($k_in, 2); ?></li>
-                        <li class="list-group-item">Years in current Job/Business: <?php echo $yicj; ?></li>
-                        <li class="list-group-item">Marital Status: <?php echo $mst; ?></li>
-                        <li class="list-group-item">Level of Education: <?php echo $loe; ?></li>
-                        <li class="list-group-item">Number of Dependents: <?php echo $nod; ?></li>
-                        <li class="list-group-item">Collateral Value: <?php echo number_format($prec, 2)."% of principal amount"; ?></li>
-                        <li class="list-group-item">
-                        <div class="progress">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?php echo $bad1."%"; ?>" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
-                         Danger
-                        </div>
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $warn1."%"; ?>" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
-                        Warning
-                        </div>
-                        <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $good1."%"; ?>" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
-                        Good
-                        </div>
-                        </div>
-                        </li>
-                        </ul>
-                        </div>
-                        </div>
-                        <!-- new -->
-                        <div class="col-md-6">
-                        <div class="card card-nav-tabs" style="width: 30rem;">
-                        <div class="card-header card-header-<?php echo $color4; ?>">
-                         Savings Behaviour
-                         </div>
-                        <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Average Savings Balance: <?php echo number_format($s1x, 2); ?></li>
-                        <li class="list-group-item">Maximum Savings Balance: <?php echo number_format($s2x, 2); ?></li>
-                        <li class="list-group-item">Number of Deposit: <?php echo $acct_credit; ?></li>
-                        <li class="list-group-item">Number of Withdrawals: <?php echo $acct_debit; ?></li>
-                        <li class="list-group-item">Average Deposit Amount: <?php echo number_format($s5x, 2); ?></li>
-                        <li class="list-group-item">Average Withdrawal Amount: <?php echo number_format($s6x, 2); ?></li>
-                        <li class="list-group-item">
-                        <div class="progress">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?php echo $bad2."%"; ?>" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
-                         Danger
-                        </div>
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $warn2."%"; ?>" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
-                         Warning
-                        </div>
-                        <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $good2."%"; ?>" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
-                         Success
-                        </div>
-                        </div>
-                        </li>
-                        </ul>
-                        </div>
-                        </div>
-                        <!-- hyped -->
-                        <br>
-                        <!-- never be -->
-                         <!-- saving -->
-                         <div class="col-md-6">
-                           <div class="card card-pricing bg-success"><div class="card-body ">
-                           <div class="card-icon">
-                             <i class="material-icons">money</i>
-                           </div>
-                           <?php
-                          //  make API call
-                          $curl = curl_init();
+                      <?php
+                      //  make API call
+                      $curl = curl_init();
 
-curl_setopt_array($curl, array(
-  CURLOPT_URL => "http://score.restoration.africa:8000/predict?age=$age&loanAmount=$prin_amt&lga=$state_ai&children=$k_dep&education=$loe&gender=$gender&employLength=$k_yb&employerCategory=$k_emp_category&bankName=$k_other_bank",
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => "",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 0,
-  CURLOPT_FOLLOWLOCATION => true,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => "POST",
-));
+                      curl_setopt_array($curl, array(
+                        CURLOPT_URL => "http://score.restoration.africa:8000/predict?age=$age&loanAmount=$prin_amt&lga=$state_ai&children=$k_dep&education=$loe&gender=$gender&employLength=$k_yb&employerCategory=$k_emp_category&bankName=$k_other_bank",
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => "",
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => "POST",
+                      ));
 
-$response = curl_exec($curl);
+                      $response = curl_exec($curl);
 
-$err = curl_close($curl);
-// curl_close($curl);
-// echo $age."p". $prin_amt ."state". $state_ai ."dep". $k_dep ."leo". $loe, $gender, $k_yb, $k_emp_category, $k_other_bank;
-if ($err) {
-  //    echo "cURL Error #:" . $err;
-  echo '<script type="text/javascript">
+                      $err = curl_close($curl);
+                      // curl_close($curl);
+                      // echo $age."p". $prin_amt ."state". $state_ai ."dep". $k_dep ."leo". $loe, $gender, $k_yb, $k_emp_category, $k_other_bank;
+                      if ($err) {
+                        //    echo "cURL Error #:" . $err;
+                        echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
           type: "error",
@@ -2105,56 +2116,57 @@ if ($err) {
   });
   </script>
   ';
-  echo "NO INTERNET CONNECTION";
-  } else {
-    // echo $response;
-    $obj = json_decode($response, TRUE);
-        $status = $obj[0];
-  }
-                           ?>
-                            <h3 class="card-title"> <?php echo ($status * 100); ?>% - LOAN REPAYMENT RISK ANALYSIS </h3>
-                           <p class="card-description">
-                           Artifical Intelligence Credit Scoring Repayment Analysis  | <?php echo $auto_perc ?>% of System Computation.
-                           </p>
-                            <button type="submit" value="submit_b" name="submit" class="btn btn-white btn-round">Approve Plan</button>
-                          </div>
-                          </div>
-                         </div>
-                         <!-- saving -->
-                         <div class="col-md-6">
-                           <div class="card card-pricing bg-warning"><div class="card-body ">
-                           <div class="card-icon">
-                             <i class="material-icons">money</i>
-                           </div>
-                            <h3 class="card-title">&#x20a6; <?php echo number_format($prin_amt, 2); ?> </h3>
-                           <p class="card-description">
-                          100% of the principal amount.
-                           </p>
-                            <button type="submit" value="submit_b" name="submit" class="btn btn-white btn-round">Approve Plan</button>
-                          </div>
-                          </div>
-                         </div>
-                         <div class="col-md-12">
-                           <hr>
-                           <div>
-                           <a href="#" class="btn btn-success btn-round pull-left">Print Credit Score</a>
-                           <button type="submit" value="reject" name="submit" class="btn btn-danger btn-round pull-right">Reject Loan</button>
-                           </div>
-                         </div>
-                        </div>
-                  </form>
+                        echo "NO INTERNET CONNECTION";
+                      } else {
+                        // echo $response;
+                        $obj = json_decode($response, TRUE);
+                        $status = $obj[0];
+                      }
+                      ?>
+                      <h3 class="card-title"> <?php echo ($status * 100); ?>% - LOAN REPAYMENT RISK ANALYSIS </h3>
+                      <p class="card-description">
+                        Artifical Intelligence Credit Scoring Repayment Analysis | <?php echo $auto_perc ?>% of System Computation.
+                      </p>
+                      <button type="submit" value="submit_b" name="submit" class="btn btn-white btn-round">Approve Plan</button>
+                    </div>
+                  </div>
+                </div>
+                <!-- saving -->
+                <div class="col-md-6">
+                  <div class="card card-pricing bg-warning">
+                    <div class="card-body ">
+                      <div class="card-icon">
+                        <i class="material-icons">money</i>
                       </div>
-                    <div class="clearfix"></div>
+                      <h3 class="card-title">&#x20a6; <?php echo number_format($prin_amt, 2); ?> </h3>
+                      <p class="card-description">
+                        100% of the principal amount.
+                      </p>
+                      <button type="submit" value="submit_b" name="submit" class="btn btn-white btn-round">Approve Plan</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <hr>
+                  <div>
+                    <a href="#" class="btn btn-success btn-round pull-left">Print Credit Score</a>
+                    <button type="submit" value="reject" name="submit" class="btn btn-danger btn-round pull-right">Reject Loan</button>
+                  </div>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
-          <!-- /content -->
+          <div class="clearfix"></div>
         </div>
       </div>
+    </div>
+  </div>
+  <!-- /content -->
+</div>
+</div>
 
 <?php
 
-    include("footer.php");
+include("footer.php");
 
 ?>

@@ -301,16 +301,16 @@ else if (isset($_GET["message2"])) {
     $tt = 0;
     if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
         echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "error",
-          title: "Error",
-          text: "Your Have an Error",
-          showConfirmButton: false,
-          timer: 3000
-      })
-  });
-  </script>
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "Error",
+                text: "Your Have an Error",
+                showConfirmButton: false,
+                timer: 3000
+            })
+        });
+    </script>
   ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
@@ -320,15 +320,15 @@ else if (isset($_GET["message2"])) {
     $tt = 0;
     if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
         echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "error",
-          title: "System Error",
-          text: "Call Us",
-          showConfirmButton: false,
-          timer: 3000
-      })
-  });
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "System Error",
+                text: "Call Us",
+                showConfirmButton: false,
+                timer: 3000
+            })
+        });
   </script>
   ';
         $_SESSION["lack_of_intfund_$key"] = 0;

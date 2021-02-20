@@ -3,7 +3,7 @@
 $page_title = "Loan Report";
 $destination = "report_loan_view.php?view16";
 include("header.php");
-
+include("manual_process.php");
 ?>
 <?php 
 $sint_id = $_SESSION['int_id'];

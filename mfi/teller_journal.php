@@ -218,7 +218,7 @@ if ($valut == 1 || $valut == "1") {
 // then if will reflect inside of int_transaction for the teller that will be picked
 // then you can display a message that the transaction is successful.
 // remember to add code of making institution branch add a vualt and also Super Admin
-    ?>
+?>
     <div class="content">
         <div class="container-fluid">
             <!-- your content here -->
