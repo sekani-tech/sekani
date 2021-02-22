@@ -4,7 +4,7 @@
 $page_title = "New Client";
 $destination = "client.php";
 include("header.php");
-
+include("ajaxcallx.php");
 ?>
 <?php
 if ($acc_op == 1 || $acc_op == "1") {
