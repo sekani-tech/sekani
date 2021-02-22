@@ -93,6 +93,10 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $term = $loan_term / 4;
       $tot_int = ((($interest / 100) * $prin_amt) * $term);
       $prin_due = $tot_int + $prin_amt;
+    }  else if ($repay_eve == "day") {
+      $term = $loan_term / 4 / 7;
+      $tot_int = ((($interest / 100) * $prin_amt) * $term);
+      $prin_due = $tot_int + $prin_amt;
     }
     // get off
     $get_off = mysqli_query($connection, "SELECT * FROM staff WHERE id = '$account_officer'");
