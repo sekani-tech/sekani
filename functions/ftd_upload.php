@@ -71,6 +71,7 @@ if(isset($_POST['ftd_no'])){
             '{$dating}', '{$amount}', '{$new_linked_account_bal}', '{$amount}',
             '{$dating}', '{$user_id}', {$amount})";
             $res3 = mysqli_query($connection, $iat);
+            // dd($res3);
 
             if($res3){
                 $dsopdo = "INSERT INTO account (int_id, branch_id, account_no, account_type, type_id,

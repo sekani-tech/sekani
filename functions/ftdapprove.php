@@ -1,7 +1,7 @@
-<?php 
+<?php
 include("connect.php");
 session_start();
-$randms = str_pad(rand(0, pow(10, 8)-1), 10, '0', STR_PAD_LEFT);
+$randms = str_pad(rand(0, pow(10, 8) - 1), 10, '0', STR_PAD_LEFT);
 ?>
 <?php
 if (isset($_POST['id'])) {
@@ -29,7 +29,7 @@ if (isset($_POST['id'])) {
     $prev_linked_account = $iod['linked_savings_account'];
 
     // to check if linked account is equal
-    if($prev_linked_account == $linked){
+    if ($prev_linked_account == $linked) {
         // Data for the linked savings
         $qpeo = mysqli_query($connection, "SELECT * FROM account WHERE int_id = '$sessint_id' AND id = '$prev_linked_account'");
         $iweo = mysqli_fetch_array($qpeo);
@@ -40,42 +40,69 @@ if (isset($_POST['id'])) {
         $clien = $iweo['client_id'];
 
         // to check if the amount hasnt changed
-        if($prev_amount == $amount){
+        if ($prev_amount == $amount) {
             // FTD was not update. Code runs normal
             $up = "UPDATE ftd_booking_account SET ftd_id = '$ftd_no', field_officer_id = '$acc_off', submittedon_date = '$date', account_balance_derived = '$amount', term = '$l_term',
               int_rate = '$int_rate', maturedon_date = '$mat_date', linked_savings_account = '$linked', auto_renew_on_closure = '$auto_renew', interest_repayment = '$int_repay',
               status = 'Approved' WHERE int_id = '$sessint_id' AND id = '$id'";
             $update = mysqli_query($connection, $up);
-            if($update){
+            // Interest Calculation
+            $interest_amount = ($int_rate / 100) * $amount;
+            if ($update) {
                 // FTD Successful
-                $_SESSION["Lack_of_intfund_$randms"] = "";
-                echo header ("Location: ../mfi/ftd_approval.php?message1=$randms");
-            }
-            else{
-                 // FTD not Successfull
+                // FTD schdeule 
+
+
+                $i = 1;
+                while ($i <= $l_term) {
+                    $repay = date('Y-m-d', strtotime($date . ' + ' . $i . ' ' . $int_repay));
+                    echo $repay . '</br>';
+                    $scheduleData = [
+                        'int_id' => $sessint_id,
+                        'branch_id' => $branch_id,
+                        'client_id' => $clien,
+                        'ftd_id' => $ftd_no,
+                        'installment' => $amount,
+                        'end_date' => $repay,
+                        'interest_rate' => $int_rate,
+                        'interest_amount' => $interest_amount,
+                        'interest_payment' => '0',
+                        'linked_savings_account' => $linked
+                    ];
+                    $schedule = insert('ftd_interest_schedule', $scheduleData);
+                    
+                    if ($schedule) {
+                        // success message
+                    $_SESSION["Lack_of_intfund_$randms"] = "";
+                    echo header("Location: ../mfi/ftd_approval.php?message1=$randms"); 
+                    }
+                    $i++;
+                }
+
+            } else {
+                // FTD not Successfull
                 $_SESSION["Lack_of_intfund_$randms"] = "";
                 // echo header ("Location: ../mfi/ftd_approval.php?message2=$randms");
-                echo $l_term.'tom';
+                echo $l_term . 'tom';
                 if ($connection->error) {
-                    try {   
-                        throw new Exception("MySQL error $connection->error <br> Query:<br> $up", $mysqli->error);   
-                    } catch(Exception $e ) {
-                        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+                    try {
+                        throw new Exception("MySQL error $connection->error <br> Query:<br> $up", $mysqli->error);
+                    } catch (Exception $e) {
+                        echo "Error No: " . $e->getCode() . " - " . $e->getMessage() . "<br >";
                         echo nl2br($e->getTraceAsString());
                     }
                 }
             }
-        }
-        else if($prev_amount != $amount){
+        } else if ($prev_amount != $amount) {
             // FTD Amount was updated. Creating new data for calculation
             $new_balance = $prev_amount + $linked_savings_amount;
             // If amount is not equal to balance
-            if($amount >= $new_balance){
+            if ($amount >= $new_balance) {
                 $_SESSION["Lack_of_intfund_$randms"] = " ";
-                echo header ("Location: ../mfi/ftd_approval.php?message3=$randms");
+                echo header("Location: ../mfi/ftd_approval.php?message3=$randms");
             }
             // if new_balance is more than amount
-            else if($new_balance > $amount){
+            else if ($new_balance > $amount) {
                 $acc_bal = $new_balance - $amount;
                 $up = "UPDATE ftd_booking_account SET ftd_id = '$ftd_no', field_officer_id = '$acc_off', submittedon_date = '$date', account_balance_derived = '$amount', term = '$l_term',
                 int_rate = '$int_rate', maturedon_date = '$mat_date', linked_savings_account = '$linked', auto_renew_on_closure = '$auto_renew', interest_repayment = '$int_repay',
@@ -105,17 +132,15 @@ if (isset($_POST['id'])) {
                 $spod = mysqli_query($connection, $opweop);
 
                 // If Transaction Successful
-                if($update && $wow && $mdso && $spod){
+                if ($update && $wow && $mdso && $spod) {
                     $_SESSION["Lack_of_intfund_$randms"] = " ";
-                    echo header ("Location: ../mfi/ftd_approval.php?message1=$randms");
-                }
-                else{
-                    echo header ("Location: ../mfi/ftd_approval.php?message2=$randms");
+                    echo header("Location: ../mfi/ftd_approval.php?message1=$randms");
+                } else {
+                    echo header("Location: ../mfi/ftd_approval.php?message2=$randms");
                 }
             }
         }
-    }
-    else if($prev_linked_account != $linked){
+    } else if ($prev_linked_account != $linked) {
         // Data For Old Linked Account
         $qpeo = mysqli_query($connection, "SELECT * FROM account WHERE int_id = '$sessint_id' AND id = '$prev_linked_account'");
         $iweo = mysqli_fetch_array($qpeo);
@@ -135,12 +160,12 @@ if (isset($_POST['id'])) {
         $clien_b = $sdopw['client_id'];
 
         // If theres not enough money in the new account, Throw error Back
-        if($linked_savings_amount_b < $amount){
+        if ($linked_savings_amount_b < $amount) {
             $_SESSION["Lack_of_intfund_$randms"] = "";
-            echo header ("Location: ../mfi/ftd_approval.php?message3=$randms");
+            echo header("Location: ../mfi/ftd_approval.php?message3=$randms");
         }
         // If Money is available, Proceed to execute code
-        else if($linked_savings_amount_b >= $amount){
+        else if ($linked_savings_amount_b >= $amount) {
             // Code to add amount back to the previous account
             $new_bal = $linked_savings_amount + $amount;
             $fdio = "UPDATE account SET account_balance_derived = '$new_bal', updatedon_date = '$tday', last_deposit = '$amount' WHERE int_id = '$sessint_id' AND id = '$prev_linked_account'";
@@ -175,29 +200,25 @@ if (isset($_POST['id'])) {
             status = 'Approved' WHERE int_id = '$sessint_id' AND id = '$id'";
             $update = mysqli_query($connection, $up);
             // If queries are successful
-            if($wow && $mdso && $eowpsd && $dsio && $update){
+            if ($wow && $mdso && $eowpsd && $dsio && $update) {
                 $_SESSION["Lack_of_intfund_$randms"] = "";
-                echo header ("Location: ../mfi/ftd_approval.php?message1=$randms");
-            }
-            else{
+                echo header("Location: ../mfi/ftd_approval.php?message1=$randms");
+            } else {
                 $_SESSION["Lack_of_intfund_$randms"] = "";
-                echo header ("Location: ../mfi/ftd_approval.php?message3=$randms");
+                echo header("Location: ../mfi/ftd_approval.php?message3=$randms");
             }
         }
     }
-}
-else if(isset($_GET['approve'])) {
+} else if (isset($_GET['approve'])) {
     $id = $_GET['approve'];
 
     $fdoi = mysqli_query($connection, "UPDATE ftd_booking_account SET status = 'Approved' WHERE id = '$id'");
-    if($fdoi){
+    if ($fdoi) {
         $_SESSION["Lack_of_intfund_$randms"] = " Account was updated successfully!";
-        echo header ("Location: ../mfi/ftd_approval.php?message1=$randms");
-    }
-    else{
+        echo header("Location: ../mfi/ftd_approval.php?message1=$randms");
+    } else {
         $_SESSION["Lack_of_intfund_$randms"] = " Account was updated successfully!";
-        echo header ("Location: ../mfi/ftd_approval.php?message2=$randms");
+        echo header("Location: ../mfi/ftd_approval.php?message2=$randms");
     }
-
 }
 ?>
