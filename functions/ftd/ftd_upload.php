@@ -90,9 +90,9 @@ if(isset($_POST['ftd_no'])){
                     'int_rate' => $int_rate, 
                     'booked_date' => $booked_date, 
                     'linked_savings_account' => $linkedAccount, 
-                    'last_deposit' => $anount, 
+                    'last_deposit' => $amount, 
                     'auto_renew_on_closure' => $auto_renew, 
-                    'interest_posting_period_enum' => $int_post,
+                    // 'interest_posting_period_enum' => $int_post,
                     'interest_repayment' => $int_repay, 
                     'status' => 'Pending'
                 ];

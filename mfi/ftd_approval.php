@@ -1,11 +1,8 @@
 <?php
-
 $page_title = " FTD approval";
 $destination = "approval.php";
-    include("header.php");
+include("header.php");
 
-?>
-<?php
 if (isset($_GET["message1"])) {
   $key = $_GET["message1"];
   $tt = 0;
@@ -170,23 +167,23 @@ if ($can_transact == 1 || $can_transact == "1") {
 <script type="text/javascript" src="vendor/js/addons/datatables.min.js"></script> -->
 <!-- Content added here -->
 <?php
-                        function branch_opt($connection)
-                        {  
-                            $br_id = $_SESSION["branch_id"];
-                            $sint_id = $_SESSION["int_id"];
-                            $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
-                            $dof = mysqli_query($connection, $dff);
-                            $out = '';
-                            while ($row = mysqli_fetch_array($dof))
-                            {
-                              $do = $row['id'];
-                            $out .= " OR branch_id ='$do'";
-                            }
-                            return $out;
-                        }
-                        $br_id = $_SESSION["branch_id"];
-                        $branches = branch_opt($connection);
-                        ?>
+function branch_opt($connection)
+{  
+    $br_id = $_SESSION["branch_id"];
+    $sint_id = $_SESSION["int_id"];
+    $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+    $dof = mysqli_query($connection, $dff);
+    $out = '';
+    while ($row = mysqli_fetch_array($dof))
+    {
+      $do = $row['id'];
+    $out .= " OR branch_id ='$do'";
+    }
+    return $out;
+}
+$br_id = $_SESSION["branch_id"];
+$branches = branch_opt($connection);
+?>
 <div class="content">
         <div class="container-fluid">
           <!-- your content here -->

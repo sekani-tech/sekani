@@ -1,7 +1,8 @@
-<?
+<?php
 include("../connect.php");
 session_start();
 $userId = $_SESSION['user_id'];
+$sessint_id = $_SESSION['int_id'];
 $randms = str_pad(rand(0, pow(10, 8) - 1), 10, '0', STR_PAD_LEFT);
 // first condition caters for when you first view before approval
 // $id = isset($_GET["approve"]);
@@ -18,9 +19,7 @@ if(!isset($_GET["approve"])){
     $int_repay = $_POST['int_repay'];
     $auto_renew = $_POST['auto_renew'];
     $acc_off = $_POST['acc_off'];
-    $sessint_id = $_SESSION['int_id'];
     $curr_date = date('Y-m-d h:i:sa');
-    $user_id = $_SESSION['user_id'];
     $tday = date('Y-m-d');
 
     // update record in case of changes
@@ -54,7 +53,7 @@ if(!isset($_GET["approve"])){
 
             // now run check
             if($currentAccountBalance >= $bookedAmount){
-                // We can now successfully book the clients FTD by deducting the amount from 
+                // We can now successfully book the clients FTD by deducting the amount from 1
                 // the linked account
                 // first calculate amount after withdrawal
                 $debitAmount = $currentAccountBalance - $bookedAmount;
@@ -149,7 +148,7 @@ if(!isset($_GET["approve"])){
     // ends here
 }else if(isset($_GET["approve"])){ //here I am only carrying out the function when you hit approve on ftd_approval.php
     // check for the needed FTD information
-    $id = isset($_GET["approve"]);
+    $id = $_GET["approve"];
     $pickFTD = mysqli_query($connection, "SELECT * FROM ftd_booking_account WHERE int_id = '$sessint_id' AND id = '$id'");
     $picked = mysqli_fetch_array($pickFTD);
     $bookedAmount = $picked['account_balance_derived'];
@@ -173,7 +172,7 @@ if(!isset($_GET["approve"])){
 
         // now run check
         if($currentAccountBalance >= $bookedAmount){
-            // We can now successfully book the clients FTD by deducting the amount from 
+            // We can now successfully book the clients FTD by deducting the amount from 2
             // the linked account
             // first calculate amount after withdrawal
             $debitAmount = $currentAccountBalance - $bookedAmount;
@@ -231,31 +230,31 @@ if(!isset($_GET["approve"])){
                         $updateFTD = mysqli_query($connection, "UPDATE ftd_booking_account SET status = 'Approved' WHERE id = '$id'");
                         if($updateFTD){
                             $_SESSION["Lack_of_intfund_$randms"] = "FTD approval Successful";
-                            echo header("Location: ../mfi/ftd_approval.php?message1=$randms");
+                            echo header("Location: ../../mfi/ftd_approval.php?message1=$randms");
                         }else{
                             // something is wrong... update not successful
                             $_SESSION["Lack_of_intfund_$randms"] = "Something is wrong! FTD status not changed";
-                            echo header("Location: ../mfi/ftd_approval.php?message7=$randms");       
+                            echo header("Location: ../../mfi/ftd_approval.php?message7=$randms");       
                         }
                     }
                 }
                 else{
                     // something is wrong... transaction record not inserted into DB
                     $_SESSION["Lack_of_intfund_$randms"] = "Money deducted but record of transaction not stored";
-                    echo header("Location: ../mfi/ftd_approval.php?message6=$randms");
+                    echo header("Location: ../../mfi/ftd_approval.php?message6=$randms");
                 }
 
             }else{
                 // something is wrong... accounts table not updated hence 
                 // money not deducted
                 $_SESSION["Lack_of_intfund_$randms"] = "Money not deducted from account";
-                echo header("Location: ../mfi/ftd_approval.php?message4=$randms");
+                echo header("Location: ../../mfi/ftd_approval.php?message4=$randms");
             }
             
         }else{
             // not enough money in linked account
             $_SESSION["Lack_of_intfund_$randms"] = "Not enough Money in Linked account!";
-            echo header("Location: ../mfi/ftd_approval.php?message3=$randms");    
+            echo header("Location: ../../mfi/ftd_approval.php?message3=$randms");    
         }
     }else{
         printf('Error: %s\n', mysqli_error($connection));//checking for errors
@@ -264,5 +263,5 @@ if(!isset($_GET["approve"])){
 
 }else{
     $_SESSION["Lack_of_intfund_$randms"] = " Something is wrong with this FTD booking!";
-    echo header("Location: ../mfi/ftd_approval.php?message2=$randms");
+    echo header("Location: ../../mfi/ftd_approval.php?message2=$randms");
 }
