@@ -1,0 +1,2 @@
+ALTER TABLE `ftd_booking_account` CHANGE `submittedon_date` `submittedon_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE `ftd_booking_account` CHANGE `maturedon_date` `booked_date` DATE NOT NULL;

@@ -114,6 +114,8 @@ $(document).ready(function(){
     <?php
     if (mysqli_num_rows($result) > 0) {
     ?>
+
+    
       <div class="row">
         <?php
         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
@@ -124,7 +126,7 @@ $(document).ready(function(){
 
                 <h4 class="card-title"><?php echo $row["name"]; ?></h4>
                 <p class="card-description">
-                  <?php echo strtoupper($row["description"]); ?>
+                  <small><?php echo strtoupper($row["description"]); ?></small>
                 </p>
                 <a href="report_view.php?edit=<?php echo $row["id"]; ?>" class="btn btn-white btn-round">View</a>
               </div>
@@ -135,6 +137,18 @@ $(document).ready(function(){
         // echo "0 Document";
       }
       ?>
+       <div class="col-md-6 ">
+            <div class="card card-pricing bg-primary">
+              <div class="card-body ">
+
+                <h4 class="card-title">Loan Portfolio Aging Schedule</h4>
+                <p class="card-description">
+                  <small>Get your Loan Portfolio Aging Schedule</small>
+                </p>
+                <a href="report_view.php?edit=48" class="btn btn-white btn-round">View</a>
+              </div>
+            </div>
+          </div>
       </div>
   </div>
 </div>

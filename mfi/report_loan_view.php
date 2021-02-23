@@ -1128,6 +1128,370 @@ else if (isset($_GET["view19"])) {
         </div>
     </div>
 <?php
+} else if (isset($_GET["view40"])) {
+
+?>
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Loan Portfolio Activity</h4>
+                            <!-- <p class="category">Loan Portfolio over a period of time</p> -->
+                        </div>
+                        <div class="card-body">
+
+                            <form method="POST" action="">
+
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Start Date</label>
+                                            <input type="date" value="" name="start" class="form-control" id="start">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">End Date</label>
+                                            <input type="date" value="" name="end" class="form-control" id="end">
+                                            <input type="text" id="int_id" hidden="" name="" value="9" class="form-control" readonly="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="bmd-label-floating">Branch</label>
+                                        <select name="branch_id" class="form-control">
+                                            <option value="18">Head Office</option>
+                                            <option value="19">Head Office Branch</option>
+                                            <option value="20">IBADAN BRANCH</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                                <button type="submit" class="btn btn-success" name="generateDLAR">Run Report</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Loan Portfolio Activity Report</h4>
+                            <!-- <p class="category"></p> -->
+                        </div>
+                        <div class="card-body">
+
+
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <table id="lp" class="table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th><small>Account Name</small></th>
+                                                <th><small>Name</small></th>
+                                                <th><small>Number of Loans</small></th>
+                                                <th><small>Value of Portfolio</small></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+
+
+                                                <td>Loans Disbured</td>
+                                                <td><b>Portfolio Activity</b></td>
+                                                <td>32,148</td>
+                                                <td>159,200,300</td>
+                                                
+                                            </tr>
+                                            <tr>
+
+                                                <td>Loans Outstanding</td>
+                                                <td><b>Portfolio Activity</b></td>
+                                                <td>32,148</td>
+                                                <td>159,200,300</td>
+                                               
+                                            </tr>
+                                            <tr>
+
+
+                                                <td>Impairment Loss Allowance, Begining of Period</td>
+                                                <td><b>Movement in Impairment Loss Allowance</b></td>
+                                                <td></td>
+                                                <td>159,200,300</td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>Impairment Loss Allowance, End of Period</td>
+                                                <td><b>Movement in Impairment Loss Allowance</b></td>
+                                                <td></td>
+                                                <td>159,200,300</td>
+                                               
+                                            </tr>
+                                            <tr>
+                                                <td>Loans Wriiten off</td>
+                                                <td><b>Movement in Impairment Loss Allowance</b></td>
+                                                <td>147</td>
+                                                <td>159,200</td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>Provision of Loans Impairment</td>
+                                                <td><b>Movement in Impairment Loss Allowance</b></td>
+                                                <td></td>
+                                                <td>159,200</td>
+                                               
+                                            </tr>
+                                            <tr>
+                                                <td>Loans in Recovery or Recovered</td>
+                                                <td><b>Movement in Impairment Loss Allowance</b></td>
+                                                <td>14</td>
+                                                <td>159,200</td>
+                                                
+                                            </tr>
+
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+
+                                                <th><small>Account Name</small></th>
+                                                <th><small>Name</small></th>
+                                                <th><small>Number of Loans</small></th>
+                                                <th><small>Value of Portfolio</small></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <script>
+                                        $(document).ready(function() {
+                                            var groupColumn = 1;
+                                            var table = $('#lp').DataTable({
+
+                                                "columnDefs": [{
+                                                    "visible": false,
+                                                    "targets": groupColumn
+                                                }],
+                                                "ordering": false,
+                                                "order": [],
+                                                "displayLength": 25,
+                                                "drawCallback": function(settings) {
+                                                    var api = this.api();
+                                                    var rows = api.rows({
+                                                        page: 'current'
+                                                    }).nodes();
+                                                    var last = null;
+
+                                                    api.column(groupColumn, {
+                                                        page: 'current'
+                                                    }).data().each(function(group, i) {
+                                                        if (last !== group) {
+                                                            $(rows).eq(i).before(
+                                                                '<tr class="group text-center"><td colspan="5">' + group + '</td></tr>'
+                                                            );
+
+                                                            last = group;
+                                                        }
+                                                    });
+                                                }
+                                            });
+
+
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">Loan Portfolio Aging Schedule Report</h4>
+            <!-- <p class="category">Category subtitle</p> -->
+        </div>
+        <div class="card-body">
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <table id="pas" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+
+                            <tr>
+
+                                <th><small>Account Name</small></th>
+                                <th><small>Number of Loans</small></th>
+                                <th><small>Value of Portfolio</small></th>
+                                <th><small>Loss Allowance Rate %</small></th>
+                                <th><small>Impairment Loss Alowance</small></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Current Porfolio</td>
+                                <td>8,790</td>
+                                <td>₦51,155,003</td>
+                                <td>0</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Porfolio at Risk 1 to 30 days</td>
+                                <td>2,790</td>
+                                <td>₦2,155,003</td>
+                                <td>10</td>
+                                <td>22,400</td>
+                            </tr>
+                            <tr>
+                                <td>Porfolio at Risk 31 to 60 days</td>
+                                <td>2,790</td>
+                                <td>₦2,155,003</td>
+                                <td>10</td>
+                                <td>22,400</td>
+                            </tr>
+                            <tr>
+                                <td>Porfolio at Risk 61 to 90 days</td>
+                                <td>2,790</td>
+                                <td>₦2,155,003</td>
+                                <td>10</td>
+                                <td>22,400</td>
+                            </tr>
+                            <tr>
+                                <td>Porfolio at Risk 91 to 180 days</td>
+                                <td>2,790</td>
+                                <td>₦2,155,003</td>
+                                <td>10</td>
+                                <td>22,400</td>
+                            </tr>
+                            <tr>
+                                <td>Renegotiated Porfolio 1 - 30 days</td>
+                                <td>2,790</td>
+                                <td>₦2,155,003</td>
+                                <td>10</td>
+                                <td>22,400</td>
+                            </tr>
+                            <tr>
+                                <td>Renegotiated Porfolio 1 > 30 days</td>
+                                <td>2,790</td>
+                                <td>₦2,155,003</td>
+                                <td>10</td>
+                                <td>22,400</td>
+                            </tr>
+                            <tr>
+                                <td>Loans Outstanding</td>
+                                <td>14,790</td>
+                                <td>55,155,003</td>
+                                <td>10</td>
+                                <td>1,222,400</td>
+                            </tr>
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+
+                                <th><small>Account Name</small></th>
+                                <th><small>Number of Loans</small></th>
+                                <th><small>Value of Portfolio</small></th>
+                                <th><small>Number of Loans</small></th>
+                                <th><small>Value of Portfolio</small></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <script>
+                        $(document).ready(function() {
+                            $('#pas').DataTable();
+                        });
+                    </script>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+        </div>
+
+    </div>
+
+    </div>
+    </div>
+
+<?php
+} else if (isset($_GET["view41"])) {
+
+?>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Loan Portfolio Aging Schedule</h4>
+                            <!-- <p class="category">Category subtitle</p> -->
+                        </div>
+                        <div class="card-body">
+                        
+
+                            <form method="POST" action="">
+
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Start Date</label>
+                                            <input type="date" value="" name="start" class="form-control" id="start">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">End Date</label>
+                                            <input type="date" value="" name="end" class="form-control" id="end">
+                                            <input type="text" id="int_id" hidden="" name="" value="9" class="form-control" readonly="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="bmd-label-floating">Branch</label>
+                                        <select name="branch_id" class="form-control">
+                                            <option value="18">Head Office</option>
+                                            <option value="19">Head Office Branch</option>
+                                            <option value="20">IBADAN BRANCH</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                                <button type="submit" class="btn btn-success" name="generateDLAR">Run Report</button>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+           
+
+        </div>
+
+
+    </div>
+    </div>
+
+
+
+<?php
 } else if (isset($_GET["view45"])) {
 ?>
     <div class="content">
@@ -1277,9 +1641,9 @@ else if (isset($_GET["view19"])) {
 
                             <div class="row mt-4">
                                 <div class="col-md-12">
-                                <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download
-                                                PDF
-                                            </button>
+                                    <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download
+                                        PDF
+                                    </button>
                                 </div>
                             </div>
                         </div>

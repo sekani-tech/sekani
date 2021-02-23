@@ -7,7 +7,7 @@
   $sessint_id = $_SESSION['int_id'];
   $rom = "do";
 
-  if(isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch_id"])) {
+  if(!empty($_POST["start"]) && !empty($_POST["end"])) {
     $start = $_POST["start"];
     $end = $_POST["end"];
     $branch_id = $_POST["branch_id"];

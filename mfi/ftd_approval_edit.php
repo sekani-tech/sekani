@@ -150,7 +150,7 @@ $l_account = $fdio['account_no'];
                   <p class="card-category"><?php echo $name;?></p>
                 </div>
                 <div class="card-body">
-                  <form action="../functions/ftdapprove.php" method="POST">
+                  <form action="../functions/ftd/ftd_approve.php" method="POST">
                     <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
