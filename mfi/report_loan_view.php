@@ -1138,7 +1138,7 @@ else if (isset($_GET["view19"])) {
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Portfolio Activity</h4>
+                            <h4 class="card-title">Loan Portfolio Activity</h4>
                             <!-- <p class="category">Category subtitle</p> -->
                         </div>
 
@@ -1151,8 +1151,8 @@ else if (isset($_GET["view19"])) {
 
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Compare Loan Portfolio over a period of time</h4>
-                            <!-- <p class="category">Category subtitle</p> -->
+                            <!-- <h4 class="card-title">Compare Loan Portfolio over a period of time</h4> -->
+                            <p class="category">Compare Loan Portfolio over a period of time</p>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -1160,7 +1160,7 @@ else if (isset($_GET["view19"])) {
                                     <form method="POST" action="">
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <h2>1st Period</h2>
+                                                <h3>1st Period</h3>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
@@ -1192,7 +1192,7 @@ else if (isset($_GET["view19"])) {
                                     <form method="POST" action="">
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <h2>2nd Period</h2>
+                                                <h3>2nd Period</h3>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
@@ -1215,21 +1215,10 @@ else if (isset($_GET["view19"])) {
                                                     <option value="20">IBADAN BRANCH</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <button type="reset" class="btn btn-danger">Reset</button>
+                                            <button type="reset" class="btn btn-danger">Reset</button>
                                                 <button type="submit" class="btn btn-success" name="generateDLAR">Run Report</button>
-                                            </div>
-                                            <div class="col-md-4">
-
-                                            </div>
-
                                         </div>
+                                       
 
                                         <div class="row mt-4">
                                             <div class="col-md-12">
@@ -1395,7 +1384,7 @@ else if (isset($_GET["view19"])) {
 
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Full header coloured</h4>
+                            <h4 class="card-title">Loan Portfolio Aging Schedule</h4>
                             <!-- <p class="category">Category subtitle</p> -->
                         </div>
                         <div class="card-body">
@@ -1443,7 +1432,7 @@ else if (isset($_GET["view19"])) {
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Portfolio Aging Schedule</h4>
+                            <h4 class="card-title">Loan Portfolio Aging Schedule Report</h4>
                             <!-- <p class="category">Category subtitle</p> -->
                         </div>
                         <div class="card-body">

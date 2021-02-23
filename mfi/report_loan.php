@@ -141,9 +141,9 @@ $(document).ready(function(){
             <div class="card card-pricing bg-primary">
               <div class="card-body ">
 
-                <h4 class="card-title">Portfolio Aging Schedule</h4>
+                <h4 class="card-title">Loan Portfolio Aging Schedule</h4>
                 <p class="card-description">
-                  <small>Get the Portfolio Aging Schedule</small>
+                  <small>Get your Loan Portfolio Aging Schedule</small>
                 </p>
                 <a href="report_view.php?edit=48" class="btn btn-white btn-round">View</a>
               </div>
