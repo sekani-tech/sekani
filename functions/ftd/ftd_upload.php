@@ -136,7 +136,7 @@ if(isset($_POST['ftd_no'])){
                 // inserting ftd data into db
                 $bookFTD = insert('ftd_booking_account', $ftdData);
                 if(!$bookFTD) {
-                    printf('Error: %s\n', mysqli_error(connection));//checking for errors
+                    printf('Error: %s\n', mysqli_error($connection));//checking for errors
                     exit();
                 }else{
                     //output

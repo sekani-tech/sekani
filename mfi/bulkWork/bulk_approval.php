@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 
                         $tellerCon = ['id' => $transactionCacheTellerId, 'int_id' => $transactionCacheInst_id];
                         $tellerDetails = selectOne('tellers', $tellerCon);
-                        $tellerNameID = $tellerDetails['name'];
+                        $tellerNameID = $tellerDetails['id'];
 
                         //                  get account information using account number
                         $accountDetails = selectOne('account', ['account_no' => $transactionCacheAccountNo]);

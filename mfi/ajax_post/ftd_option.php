@@ -129,7 +129,6 @@ if(isset($_POST['id'])){
             <option value="150">150</option>
             <option value="180">180</option>
             <option value="360">360</option>
-            <option value="365">180</option>
           </select>
         </div>
       </div>

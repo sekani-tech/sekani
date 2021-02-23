@@ -33,8 +33,8 @@ if (isset($_GET["message1"])) {
       swal({
           type: "error",
           title: "Error",
-          text: "Error updating FTD",
-          showConfirmButton: false,
+          text: "Something is wrong with this FTD booking!",
+          showConfirmButton: true,
           timer: 2000
       })
   });
@@ -50,7 +50,45 @@ if (isset($_GET["message1"])) {
   $(document).ready(function(){
       swal({
           type: "error",
-          title: "Not enough money in the Account",
+          title: "Insufficient Balance",
+          text: "Please re-adjust data",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
+else if (isset($_GET["message4"])) {
+  $key = $_GET["message4"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Money not deducted from account",
+          text: "Please re-adjust data",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });Money deducted but record of transaction not stored
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
+else if (isset($_GET["message5"])) {
+  $key = $_GET["message5"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Money deducted but record of transaction not stored",
           text: "Please re-adjust data",
           showConfirmButton: false,
           timer: 2000
@@ -61,7 +99,7 @@ if (isset($_GET["message1"])) {
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
 } else if (isset($_GET["message6"])) {
-  $key = $_GET["message8"];
+  $key = $_GET["message6"];
   $tt = 0;
   if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
   echo '<script type="text/javascript">
@@ -69,7 +107,26 @@ if (isset($_GET["message1"])) {
       swal({
           type: "error",
           title: "Error",
-          text: "Error Deleting Client",
+          text: "Money deducted but record of transaction not stored",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
+else if (isset($_GET["message7"])) {
+  $key = $_GET["message7"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Error",
+          text: "Something is wrong! FTD status not changed",
           showConfirmButton: false,
           timer: 2000
       })
@@ -79,7 +136,27 @@ if (isset($_GET["message1"])) {
   $_SESSION["lack_of_intfund_$key"] = 0;
 }
 
-} else {
+}
+else if (isset($_GET["message9"])) {
+  $key = $_GET["message9"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Error",
+          text: "Something is wrong unable to Approve FTD!",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+  $_SESSION["lack_of_intfund_$key"] = 0;
+}
+}
+else {
   echo "";
 }
 ?>
@@ -201,7 +278,7 @@ if ($can_transact == 1 || $can_transact == "1") {
                           <th><?php echo $row["account_balance_derived"]; ?></th>
                           <th><?php echo $row["int_rate"]; ?></th>
                           <td><a href="ftd_approval_edit.php?delete=<?php echo $row["id"];?>" class="btn btn-info">View</a></td>
-                          <td><a href="../functions/ftdapprove.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
+                          <td><a href="../functions/ftd/ftd_approve.php?approve=<?php echo $row["id"];?>" class="btn btn-info">Approve</a></td>
                           </tr>
                           <!-- <th></th> -->
                           <?php }
