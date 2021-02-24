@@ -35,7 +35,7 @@ if ($parent_id == 0) {
                             <th>Loan Term</th>
                             <th>Disbursement Date</th>
                             <th>Maturity Date</th>
-                            <th>Outstanding Loan Balance</th>
+                            <th>Outstanding Balance</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,16 +68,6 @@ if ($parent_id == 0) {
                         }
                         ?>
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>Client Name</th>
-                            <th>Principal Amount</th>
-                            <th>Loan Term</th>
-                            <th>Disbursement Date</th>
-                            <th>Maturity Date</th>
-                            <th>Outstanding Loan Balance</th>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>   
             <div class="row">

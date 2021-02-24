@@ -24,7 +24,7 @@ $branches = branch_opt($connection);
 ?>
 <?php
 if (isset($_GET["view1"])) {
-    ?>
+?>
     <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -37,20 +37,20 @@ if (isset($_GET["view1"])) {
 
                             <!-- Insert number users institutions -->
                             <p class="card-category"><?php
-                                $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved' && (branch_id ='$br_id' $branches)";
-                                $result = mysqli_query($connection, $query);
-                                if ($result) {
-                                    $inr = mysqli_num_rows($result);
-                                    echo $inr;
-                                } ?> groups</p>
+                                                        $query = "SELECT * FROM client WHERE int_id = '$sessint_id' && status = 'Approved' && (branch_id ='$br_id' $branches)";
+                                                        $result = mysqli_query($connection, $query);
+                                                        if ($result) {
+                                                            $inr = mysqli_num_rows($result);
+                                                            echo $inr;
+                                                        } ?> groups</p>
                         </div>
                         <form method="POST" id="convert_form" action="../composer/client_balance.php">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <input hidden name="id" type="text" value="<?php echo $id; ?>"/>
-                                    <input hidden name="start" type="text" value="<?php echo $start; ?>"/>
-                                    <input hidden name="end" type="text" value="<?php echo $end; ?>"/>
-                                    <input type="hidden" name="file_content" id="file_content"/>
+                                    <input hidden name="id" type="text" value="<?php echo $id; ?>" />
+                                    <input hidden name="start" type="text" value="<?php echo $start; ?>" />
+                                    <input hidden name="end" type="text" value="<?php echo $end; ?>" />
+                                    <input type="hidden" name="file_content" id="file_content" />
                                     <button type="submit" id="clientbalance" class="btn btn-primary pull-left">Download
                                         PDF
                                     </button>
@@ -61,96 +61,96 @@ if (isset($_GET["view1"])) {
                                 <div class="table-responsive">
                                     <table class="rtable display nowrap" style="width:100%">
                                         <thead class=" text-primary">
-                                        <?php
-                                        $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
-                                        $result = mysqli_query($connection, $query);
-                                        ?>
-                                        <th>
-                                            First Name
-                                        </th>
-                                        <th>
-                                            Last Name
-                                        </th>
-                                        <th>
-                                            Account officer
-                                        </th>
-                                        <th>
-                                            Account Type
-                                        </th>
-                                        <th>
-                                            Account Number
-                                        </th>
-                                        <th>
-                                            Account Balances
-                                        </th>
+                                            <?php
+                                            $query = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname,  staff.first_name, staff.last_name FROM client JOIN staff ON client.loan_officer_id = staff.id WHERE client.int_id = '$sessint_id' && client.status = 'Approved'";
+                                            $result = mysqli_query($connection, $query);
+                                            ?>
+                                            <th>
+                                                First Name
+                                            </th>
+                                            <th>
+                                                Last Name
+                                            </th>
+                                            <th>
+                                                Account officer
+                                            </th>
+                                            <th>
+                                                Account Type
+                                            </th>
+                                            <th>
+                                                Account Number
+                                            </th>
+                                            <th>
+                                                Account Balances
+                                            </th>
                                         </thead>
                                         <tbody>
-                                        <?php if (mysqli_num_rows($result) > 0) {
-                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-                                                <tr>
-                                                    <?php $row["id"];
-                                                    $idd = $row["id"]; ?>
-                                                    <th><?php echo $row["firstname"]; ?></th>
-                                                    <th><?php echo $row["lastname"]; ?></th>
-                                                    <th><?php echo strtoupper($row["first_name"] . " " . $row["last_name"]); ?></th>
-                                                    <?php
-                                                    $class = "";
-                                                    $row["account_type"];
-                                                    $cid = $row["id"];
-                                                    $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
-                                                    if (count([$atype]) == 1) {
-                                                        $yxx = mysqli_fetch_array($atype);
-                                                        $actype = $yxx['product_id'];
-                                                        $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
-                                                        if (count([$spn])) {
-                                                            $d = mysqli_fetch_array($spn);
-                                                            $savingp = $d["name"];
+                                            <?php if (mysqli_num_rows($result) > 0) {
+                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
+                                                    <tr>
+                                                        <?php $row["id"];
+                                                        $idd = $row["id"]; ?>
+                                                        <th><?php echo $row["firstname"]; ?></th>
+                                                        <th><?php echo $row["lastname"]; ?></th>
+                                                        <th><?php echo strtoupper($row["first_name"] . " " . $row["last_name"]); ?></th>
+                                                        <?php
+                                                        $class = "";
+                                                        $row["account_type"];
+                                                        $cid = $row["id"];
+                                                        $atype = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$cid'");
+                                                        if (count([$atype]) == 1) {
+                                                            $yxx = mysqli_fetch_array($atype);
+                                                            $actype = $yxx['product_id'];
+                                                            $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$actype'");
+                                                            if (count([$spn])) {
+                                                                $d = mysqli_fetch_array($spn);
+                                                                $savingp = $d["name"];
+                                                            }
                                                         }
-                                                    }
 
-                                                    ?>
-                                                    <th><?php echo $savingp; ?></th>
-                                                    <?php
-                                                    $soc = $row["account_no"];
-                                                    $length = strlen($soc);
-                                                    if ($length == 1) {
-                                                        $acc = "000000000" . $soc;
-                                                    } elseif ($length == 2) {
-                                                        $acc = "00000000" . $soc;
-                                                    } elseif ($length == 3) {
-                                                        $acc = "00000000" . $soc;
-                                                    } elseif ($length == 4) {
-                                                        $acc = "0000000" . $soc;
-                                                    } elseif ($length == 5) {
-                                                        $acc = "000000" . $soc;
-                                                    } elseif ($length == 6) {
-                                                        $acc = "0000" . $soc;
-                                                    } elseif ($length == 7) {
-                                                        $acc = "000" . $soc;
-                                                    } elseif ($length == 8) {
-                                                        $acc = "00" . $soc;
-                                                    } elseif ($length == 9) {
-                                                        $acc = "0" . $soc;
-                                                    } elseif ($length == 10) {
-                                                        $acc = $row["account_no"];
-                                                    } else {
-                                                        $acc = $row["account_no"];
-                                                    }
-                                                    ?>
-                                                    <th><?php echo $acc; ?></th>
-                                                    <?php
-                                                    $don = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$idd'");
-                                                    $ew = mysqli_fetch_array($don);
-                                                    $accountb = $ew['account_balance_derived'];
-                                                    ?>
-                                                    <th><?php echo $accountb; ?></th>
-                                                </tr>
+                                                        ?>
+                                                        <th><?php echo $savingp; ?></th>
+                                                        <?php
+                                                        $soc = $row["account_no"];
+                                                        $length = strlen($soc);
+                                                        if ($length == 1) {
+                                                            $acc = "000000000" . $soc;
+                                                        } elseif ($length == 2) {
+                                                            $acc = "00000000" . $soc;
+                                                        } elseif ($length == 3) {
+                                                            $acc = "00000000" . $soc;
+                                                        } elseif ($length == 4) {
+                                                            $acc = "0000000" . $soc;
+                                                        } elseif ($length == 5) {
+                                                            $acc = "000000" . $soc;
+                                                        } elseif ($length == 6) {
+                                                            $acc = "0000" . $soc;
+                                                        } elseif ($length == 7) {
+                                                            $acc = "000" . $soc;
+                                                        } elseif ($length == 8) {
+                                                            $acc = "00" . $soc;
+                                                        } elseif ($length == 9) {
+                                                            $acc = "0" . $soc;
+                                                        } elseif ($length == 10) {
+                                                            $acc = $row["account_no"];
+                                                        } else {
+                                                            $acc = $row["account_no"];
+                                                        }
+                                                        ?>
+                                                        <th><?php echo $acc; ?></th>
+                                                        <?php
+                                                        $don = mysqli_query($connection, "SELECT * FROM account WHERE client_id = '$idd'");
+                                                        $ew = mysqli_fetch_array($don);
+                                                        $accountb = $ew['account_balance_derived'];
+                                                        ?>
+                                                        <th><?php echo $accountb; ?></th>
+                                                    </tr>
                                             <?php }
-                                        } else {
-                                            // echo "0 Document";
-                                        }
-                                        ?>
-                                        <!-- <th></th> -->
+                                            } else {
+                                                // echo "0 Document";
+                                            }
+                                            ?>
+                                            <!-- <th></th> -->
                                         </tbody>
                                     </table>
                                 </div>
@@ -161,8 +161,8 @@ if (isset($_GET["view1"])) {
             </div>
         </div>
         <script>
-            $(document).ready(function () {
-                $('#clientbalance').on("click", function () {
+            $(document).ready(function() {
+                $('#clientbalance').on("click", function() {
                     swal({
                         type: "success",
                         title: "CLIENT BALANCE REPORT",
@@ -173,8 +173,8 @@ if (isset($_GET["view1"])) {
                     })
                 });
             });
-            $(document).ready(function () {
-                $('#convertExcel').click(function () {
+            $(document).ready(function() {
+                $('#convertExcel').click(function() {
                     var table_content = '<table>';
                     table_content += $('#table_content').html();
                     table_content += '</table>';
@@ -184,9 +184,9 @@ if (isset($_GET["view1"])) {
             });
         </script>
     </div>
-    <?php
+<?php
 } else if (isset($_GET["view6"])) {
-    ?>
+?>
     <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -199,20 +199,20 @@ if (isset($_GET["view1"])) {
 
                             <!-- Insert number users institutions -->
                             <p class="card-category"><?php
-                                $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved' && (branch_id ='$br_id' $branches)";
-                                $result = mysqli_query($connection, $query);
-                                if ($result) {
-                                    $inr = mysqli_num_rows($result);
-                                    echo $inr;
-                                } ?> registered groups
+                                                        $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved' && (branch_id ='$br_id' $branches)";
+                                                        $result = mysqli_query($connection, $query);
+                                                        if ($result) {
+                                                            $inr = mysqli_num_rows($result);
+                                                            echo $inr;
+                                                        } ?> registered groups
                         </div>
                         <div class="card-body">
                             <div class="form-group">
                                 <form method="POST" action="../composer/group_list.php">
-                                    <input hidden name="id" type="text" value="<?php echo $id; ?>"/>
-                                    <input hidden name="start" type="text" value="<?php echo $start; ?>"/>
-                                    <input hidden name="end" type="text" value="<?php echo $end; ?>"/>
-                                    <input type="hidden" name="file_content" id="file_content"/>
+                                    <input hidden name="id" type="text" value="<?php echo $id; ?>" />
+                                    <input hidden name="start" type="text" value="<?php echo $start; ?>" />
+                                    <input hidden name="end" type="text" value="<?php echo $end; ?>" />
+                                    <input type="hidden" name="file_content" id="file_content" />
                                     <button type="submit" id="clientlist" class="btn btn-primary pull-left">Download
                                         PDF
                                     </button>
@@ -222,60 +222,67 @@ if (isset($_GET["view1"])) {
 
                                 </form>
                             </div>
-                            <div class="table-responsive">
-                                <table class="rtable display nowrap" style="width:100%">
-                                    <thead class=" text-primary">
+
+                            <table id="reportgroup" class="display" style="width:100%">
+                                <thead>
                                     <?php
                                     $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' AND status = 'Approved' && (branch_id ='$br_id' $branches) ORDER BY g_name ASC";
                                     $result = mysqli_query($connection, $query);
                                     ?>
-                                    <th>
-                                        Group Name
-                                    </th>
-                                    <th>
-                                        Reg Type
-                                    </th>
-                                    <th>
-                                        Meeting Day
-                                    </th>
-                                    <th>
-                                        Meeting Frequency
-                                    </th>
-                                    <th>
-                                        Meeting Time
-                                    </th>
-                                    <th>
-                                        Meeting Location
-                                    </th>
-                                    </thead>
-                                    <tbody>
+                                    <tr>
+                                        <th> Group Name</th>
+                                        <th>Reg Type</th>
+                                        <th>Meeting Day</th>
+                                        <th>Meeting Frequency</th>
+                                        <th>Meeting Time</th>
+                                        <th>Meeting Location</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     <?php if (mysqli_num_rows($result) > 0) {
                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
                                             <tr>
                                                 <?php $row["id"]; ?>
-                                                <th><?php echo $row["g_name"]; ?></th>
-                                                <th><?php echo $row["reg_type"]; ?></th>
-                                                <th><?php echo $row["meeting_day"]; ?></th>
-                                                <th><?php echo $row["meeting_frequency"]; ?></th>
-                                                <th><?php echo $row["meeting_time"]; ?></th>
-                                                <th><?php echo $row["meeting_location"]; ?></th>
+                                                <td><?php echo $row["g_name"]; ?></td>
+                                                <td><?php echo $row["reg_type"]; ?></td>
+                                                <td><?php echo $row["meeting_day"]; ?></td>
+                                                <td><?php echo $row["meeting_frequency"]; ?></td>
+                                                <td><?php echo $row["meeting_time"]; ?></td>
+                                                <td><?php echo $row["meeting_location"]; ?></td>
                                             </tr>
-                                        <?php }
+                                    <?php }
                                     } else {
                                         // echo "0 Document";
                                     }
                                     ?>
-                                    <!-- <th></th> -->
-                                    </tbody>
-                                </table>
-                            </div>
+
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th> Group Name</th>
+                                        <th>Reg Type</th>
+                                        <th>Meeting Day</th>
+                                        <th>Meeting Frequency</th>
+                                        <th>Meeting Time</th>
+                                        <th>Meeting Location</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
+
             <script>
-                $(document).ready(function () {
-                    $('#clientbalance').on("click", function () {
+                $(document).ready(function() {
+                    $('#reportgroup').DataTable();
+                });
+            </script>
+
+            <script>
+                $(document).ready(function() {
+                    $('#clientbalance').on("click", function() {
                         swal({
                             type: "success",
                             title: "CLIENT BALANCE REPORT",
@@ -286,8 +293,8 @@ if (isset($_GET["view1"])) {
                         })
                     });
                 });
-                $(document).ready(function () {
-                    $('#convertExcel').click(function () {
+                $(document).ready(function() {
+                    $('#convertExcel').click(function() {
                         var table_content = '<table>';
                         table_content += $('#table_content').html();
                         table_content += '</table>';
@@ -299,9 +306,9 @@ if (isset($_GET["view1"])) {
         </div>
     </div>
 
-    <?php
+<?php
 } else if (isset($_GET["view8"])) {
-    ?>
+?>
     <?php
     function fill_client($connection)
     {
@@ -320,7 +327,7 @@ if (isset($_GET["view1"])) {
 
     <div class="content">
         <div class="container-fluid">
-            your content here
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -333,8 +340,7 @@ if (isset($_GET["view1"])) {
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <input type="text" hidden required id="intt"
-                                                   value="<?php echo $sessint_id; ?>"/>
+                                            <input type="text" hidden required id="intt" value="<?php echo $sessint_id; ?>" />
                                             <label class="bmd-label-floating">Pick Branch</label>
                                             <select name="branch" class="form-control" id="input" required>
                                                 <option value="">select an option</option>
@@ -349,15 +355,18 @@ if (isset($_GET["view1"])) {
                             </form>
                         </div>
                         <script>
-                            $(document).ready(function () {
-                                $('#input').on("change", function () {
+                            $(document).ready(function() {
+                                $('#input').on("change", function() {
                                     var cid = $(this).val();
                                     var intid = $('#intt').val();
                                     $.ajax({
                                         url: "ajax_post/reports_post/groupby_branch.php",
                                         method: "POST",
-                                        data: {cid: cid, intid: intid},
-                                        success: function (data) {
+                                        data: {
+                                            cid: cid,
+                                            intid: intid
+                                        },
+                                        success: function(data) {
                                             $('#hdhd').html(data);
                                         }
                                     })
@@ -372,33 +381,33 @@ if (isset($_GET["view1"])) {
         </div>
     </div>
     </div>
-    <?php
+<?php
 } else if (isset($_GET["view9"])) {
-    ?>
+?>
     <!-- Data for groups registered this month -->
     <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
             <!-- your content here -->
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Registered groups</h4>
 
                             <!-- Insert number users institutions -->
                             <p class="card-category"><?php
-                                $std = date("Y-m-d");
-                                $thisyear = date("Y");
-                                $thismonth = date("m");
-                                // $end = date('Y-m-d', strtotime('-30 days'));
-                                $curren = $thisyear . "-" . $thismonth . "-01";
-                                $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved' AND (branch_id ='$br_id' $branches) && submittedon_date BETWEEN '$curren' AND '$std'";
-                                $result = mysqli_query($connection, $query);
-                                if ($result) {
-                                    $inr = mysqli_num_rows($result);
-                                    $date = date("F");
-                                } ?>
+                                                        $std = date("Y-m-d");
+                                                        $thisyear = date("Y");
+                                                        $thismonth = date("m");
+                                                        // $end = date('Y-m-d', strtotime('-30 days'));
+                                                        $curren = $thisyear . "-" . $thismonth . "-01";
+                                                        $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved' AND (branch_id ='$br_id' $branches) && submittedon_date BETWEEN '$curren' AND '$std'";
+                                                        $result = mysqli_query($connection, $query);
+                                                        if ($result) {
+                                                            $inr = mysqli_num_rows($result);
+                                                            $date = date("F");
+                                                        } ?>
                             <div id="month_no"><?php echo $inr; ?> Registered group(s) this month</div>
                             </p>
                         </div>
@@ -408,8 +417,7 @@ if (isset($_GET["view1"])) {
                                     <div class="form-group">
                                         <form method="POST" action="../composer/registered_group.php">
                                             <label for="">Pick Month</label>
-                                            <select id="month" class="form-control" style="text-transform: uppercase;"
-                                                    name="month">
+                                            <select id="month" class="form-control" style="text-transform: uppercase;" name="month">
                                                 <option value="0"></option>
                                                 <option value="1">January</option>
                                                 <option value="2">February</option>
@@ -425,15 +433,14 @@ if (isset($_GET["view1"])) {
                                                 <option value="12">December</option>
                                             </select>
 
-                                            <input hidden name="id" type="text" value="<?php echo $id; ?>"/>
-                                            <input hidden name="start" type="text" value="<?php echo $start; ?>"/>
-                                            <input hidden name="end" type="text" value="<?php echo $end; ?>"/>
-                                            <button type="submit" id="registeredclient"
-                                                    class="btn btn-primary pull-left">Download PDF
+                                            <input hidden name="id" type="text" value="<?php echo $id; ?>" />
+                                            <input hidden name="start" type="text" value="<?php echo $start; ?>" />
+                                            <input hidden name="end" type="text" value="<?php echo $end; ?>" />
+                                            <button type="submit" id="registeredclient" class="btn btn-primary pull-left">Download PDF
                                             </button>
                                             <script>
-                                                $(document).ready(function () {
-                                                    $('#registeredclient').on("click", function () {
+                                                $(document).ready(function() {
+                                                    $('#registeredclient').on("click", function() {
                                                         swal({
                                                             type: "success",
                                                             title: "REGISTERED CLIENT REPORT",
@@ -449,14 +456,16 @@ if (isset($_GET["view1"])) {
                                     </div>
                                 </div>
                                 <script>
-                                    $(document).ready(function () {
-                                        $('#month').on("change", function () {
+                                    $(document).ready(function() {
+                                        $('#month').on("change", function() {
                                             var month = $(this).val();
                                             $.ajax({
                                                 url: "ajax_post/reports_post/pick_group_month_copy.php",
                                                 method: "POST",
-                                                data: {month: month},
-                                                success: function (data) {
+                                                data: {
+                                                    month: month
+                                                },
+                                                success: function(data) {
                                                     $('#month_no').html(data);
                                                 }
                                             })
@@ -464,14 +473,16 @@ if (isset($_GET["view1"])) {
                                     });
                                 </script>
                                 <script>
-                                    $(document).ready(function () {
-                                        $('#month').on("change", function () {
+                                    $(document).ready(function() {
+                                        $('#month').on("change", function() {
                                             var month = $(this).val();
                                             $.ajax({
                                                 url: "ajax_post/reports_post/pick_group_month.php",
                                                 method: "POST",
-                                                data: {month: month},
-                                                success: function (data) {
+                                                data: {
+                                                    month: month
+                                                },
+                                                success: function(data) {
                                                     $('#dismonth').html(data);
                                                 }
                                             })
@@ -479,63 +490,64 @@ if (isset($_GET["view1"])) {
                                     });
                                 </script>
                             </div>
-                            <div class="table-responsive">
-                                <div></div>
-                                <table id="dismonth" class="rtable display nowrap" style="width:100%">
-                                    <thead class=" text-primary">
-                                    <?php
+                            <table id="dismonth" class="display" style="width:100%">
+                                <thead>
+                                <?php
                                     $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved'AND (branch_id ='$br_id' $branches)  && submittedon_date BETWEEN '$curren' AND '$std'";
                                     $result = mysqli_query($connection, $query);
                                     ?>
-                                    <th>
-                                        Group Name
-                                    </th>
-                                    <th>
-                                        Reg Type
-                                    </th>
-                                    <th>
-                                        Meeting Day
-                                    </th>
-                                    <th>
-                                        Meeting Frequency
-                                    </th>
-                                    <th>
-                                        Meeting Time
-                                    </th>
-                                    <th>
-                                        Meeting Location
-                                    </th>
-                                    </thead>
-                                    <tbody>
-                                    <?php if (mysqli_num_rows($result) > 0) {
+                                    <tr>
+                                        <th>Group Name</th>
+                                        <th>Reg Type</th>
+                                        <th>Meeting Day</th>
+                                        <th>Meeting Frequency</th>
+                                        <th>Meeting Time</th>
+                                        <th>Meeting Location</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php if (mysqli_num_rows($result) > 0) {
                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-                                            <tr>
-                                                <?php $row["id"]; ?>
-                                                <th><?php echo $row["g_name"]; ?></th>
-                                                <th><?php echo $row["reg_type"]; ?></th>
-                                                <th><?php echo $row["meeting_day"]; ?></th>
-                                                <th><?php echo $row["meeting_frequency"]; ?></th>
-                                                <th><?php echo $row["meeting_time"]; ?></th>
-                                                <th><?php echo $row["meeting_location"]; ?></th>
-                                            </tr>
-                                        <?php }
+                                    <tr>
+                                    <?php $row["id"]; ?>
+                                        <td><?php echo $row["g_name"]; ?></td>
+                                        <td><?php echo $row["reg_type"]; ?></td>
+                                        <td><?php echo $row["meeting_day"]; ?></td>
+                                        <td><?php echo $row["meeting_frequency"]; ?></td>
+                                        <td><?php echo $row["meeting_time"]; ?></td>
+                                        <td><?php echo $row["meeting_location"]; ?></td>
+                                    </tr>
+                                    <?php }
                                     } else {
                                         // echo "0 Document";
                                     }
                                     ?>
-                                    <!-- <th></th> -->
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Group Name</th>
+                                        <th>Reg Type</th>
+                                        <th>Meeting Day</th>
+                                        <th>Meeting Frequency</th>
+                                        <th>Meeting Time</th>
+                                        <th>Meeting Location</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <?php
+    <script>
+        $(document).ready(function() {
+            $('#dismonth').DataTable();
+        });
+    </script>
+<?php
 } else if (isset($_GET["view46"])) {
-    ?>
+?>
     <div class="content">
         <div class="container-fluid">
             <!-- your content here -->
@@ -573,14 +585,16 @@ if (isset($_GET["view1"])) {
 
                         ?>
                         <script>
-                            $(document).ready(function () {
-                                $('#brne').on("change click", function () {
+                            $(document).ready(function() {
+                                $('#brne').on("change click", function() {
                                     var id = $(this).val();
                                     $.ajax({
                                         url: "ajax_post/reports_post/staff.php",
                                         method: "POST",
-                                        data: {id: id},
-                                        success: function (data) {
+                                        data: {
+                                            id: id
+                                        },
+                                        success: function(data) {
                                             $('#outstaff').html(data);
                                         }
                                     })
@@ -619,14 +633,16 @@ if (isset($_GET["view1"])) {
                             </form>
                         </div>
                         <script>
-                            $(document).ready(function () {
-                                $('#officer').on("change", function () {
+                            $(document).ready(function() {
+                                $('#officer').on("change", function() {
                                     var officer = $('#officer').val();
                                     $.ajax({
                                         url: "ajax_post/group_by_acc.php",
                                         method: "POST",
-                                        data: {officer: officer},
-                                        success: function (data) {
+                                        data: {
+                                            officer: officer
+                                        },
+                                        success: function(data) {
                                             $('#sio').html(data);
                                         }
                                     })
@@ -634,8 +650,8 @@ if (isset($_GET["view1"])) {
                             });
                         </script>
                         <script>
-                            $(document).ready(function () {
-                                $('#runstaff').on("click", function () {
+                            $(document).ready(function() {
+                                $('#runstaff').on("click", function() {
                                     var start = $('#start').val();
                                     var end = $('#end').val();
                                     var branch = $('#brne').val();
@@ -644,8 +660,14 @@ if (isset($_GET["view1"])) {
                                     $.ajax({
                                         url: "ajax_post/reports_post/group_collection.php",
                                         method: "POST",
-                                        data: {start: start, end: end, branch: branch, officer: officer, group: group},
-                                        success: function (data) {
+                                        data: {
+                                            start: start,
+                                            end: end,
+                                            branch: branch,
+                                            officer: officer,
+                                            group: group
+                                        },
+                                        success: function(data) {
                                             $('#shstaff').html(data);
                                         }
                                     })
@@ -664,6 +686,6 @@ if (isset($_GET["view1"])) {
 
         </div>
     </div>
-    <?php
+<?php
 }
 ?>

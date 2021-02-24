@@ -190,7 +190,7 @@ if (isset($_GET["view15"])) { ?>
                                             Maturity Date
                                         </th>
                                         <th>
-                                            Outstanding Loan Balances
+                                            Outstanding Balances
                                         </th>
                                         <th>
                                             View
@@ -810,7 +810,7 @@ else if (isset($_GET["view19"])) {
                                             Disbursement Date
                                         </th>
                                         <th>
-                                            Outstanding Loan Balance
+                                            Outstanding Balance
                                         </th>
                                         <th>
                                             Status

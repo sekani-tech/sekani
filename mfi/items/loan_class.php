@@ -153,62 +153,61 @@ if(!empty($_POST['picked_date'])) {
       <table class="table">
 
         <thead>
-          <th style="font-weight:bold;">S/N</th>
           <th style="font-weight:bold; text-align: center;"></th>
           <th style="font-weight:bold; text-align: center;">AMOUNT <br> &#x20A6</th>
         </thead>
 
         <tbody>
           <tr>
-              <td>10762</td>
+              
               <td>Performing</td>
               <td style=" text-align: center;"><?php echo number_format($performing, 2);?></td>
               <!-- <td style="background-color:bisque;"></td> -->
           </tr>
           <tr>
-              <td>10763</td>
+              
               <td><b>Non-Performing (Portfolio-At-Risk)</b></td>
               <td style=" text-align: center;"></td>
               <!-- <td style="background-color:bisque;"></td> -->
           </tr>
           <tr>
-              <td>10764</td>
+              
               <td>Pass & Watch</td>
               <!-- <td></td> -->
               <td style="background-color:bisque; text-align: center;"><?php echo number_format($pandw, 2);?></td>
           </tr>
           <tr>
-              <td>10765</td>
+              
               <td>Substandard</td>
               <!-- <td></td> -->
               <td style="background-color:bisque; text-align: center;"><?php echo number_format($sub, 2);?></td>
           </tr>
           <tr>
-              <td>10766</td>
+              
               <td>Doubtful</td>
               <!-- <td></td> -->
               <td style="background-color:bisque; text-align: center;"><?php echo number_format($doub, 2);?></td>
           </tr>
           <tr>
-              <td>10767</td>
+              
               <td>Lost</td>
               <!-- <td></td> -->
               <td style="background-color:bisque; text-align: center;"><?php echo number_format($los, 2);?></td>
           </tr>
           <tr>
-              <td>10768</td>
+             
               <td><b>Total (Portfolio-At-Risk)</b></td>
               <!-- <td></td> -->
               <td style="background-color:bisque; font-weight:bold; text-align: center;"><?php echo number_format($tpar, 2);?></td>
           </tr>
           <tr>
-              <td></td>
+              
               <td>Interest In Suspense</td>
               <!-- <td></td> -->
               <td style="background-color:bisque; text-align: center;"><?php echo number_format($fdl, 2);?></td>
           </tr>
           <tr>
-              <td>10769</td>
+              
               <td><b>Total</b></td>
               <!-- <td style="background-color:bisque;"></td> -->
               <?php

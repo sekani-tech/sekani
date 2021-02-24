@@ -39,11 +39,11 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
                     <table id="mytable" class="display" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Client Name</th>
-                                <th>Type</th>
-                                <th>Value</th>
-                                <th>Description</th>
+                                <th><small>Date</small></th>
+                                <th><small>Client Name</small></th>
+                                <th><small>Type</small></th>
+                                <th><small>Value</small></th>
+                                <th><small>Description</small></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -69,15 +69,6 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
                             }
                             ?>
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Date</th>
-                                <th>Client Name</th>
-                                <th>Type</th>
-                                <th>Value</th>
-                                <th>Description</th>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
                 <div class="form-group mt-4">

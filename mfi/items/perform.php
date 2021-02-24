@@ -5,16 +5,7 @@ $out= '';
 $logo = $_SESSION['int_logo'];
 $name = $_SESSION['int_name'];
 $out = '
-              <div class="card">
-                <div class="card-body">
-                  <div style="margin:auto; text-align:center;">
-                  <img style = "height: 200px; width: 200px;" src="'.$logo.'" alt="sf">
-                  <h2>'.$name.'</h2>
-                  <h4>Schedule of Micro Loans by Lending Models</h4>
-                  <P>From: 24/05/2020  ||  To: 24/05/2020</P>
-                  </div>
-                </div>
-              </div>
+            
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Schedule of Micro Loans by Lending Models</h4>
@@ -31,49 +22,31 @@ $out = '
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Individuals</td>
+                            <td>Individual Account</td>
                             <td></td>
                             <td></td>
                             <td style="background-color:bisque;"></td>
                         </tr>
                         <tr>
-                            <td>Solidarity Group</td>
+                            <td>Joint Account</td>
                             <td></td>
                             <td></td>
                             <td style="background-color:bisque;"></td>
                         </tr>
                         <tr>
-                            <td>Neighborhood and Small Group Revilving Funds</td>
+                            <td>Coporate Account</td>
                             <td></td>
                             <td></td>
                             <td style="background-color:bisque;"></td>
                         </tr>
                         <tr>
-                            <td>Village Banking</td>
+                            <td>Group Account</td>
                             <td></td>
                             <td></td>
                             <td style="background-color:bisque;"></td>
                         </tr>
                         <tr>
-                            <td>Wholesale Lending</td>
-                            <td></td>
-                            <td></td>
-                            <td style="background-color:bisque;"></td>
-                        </tr>
-                        <tr>
-                            <td>Credit Unions</td>
-                            <td></td>
-                            <td></td>
-                            <td style="background-color:bisque;"></td>
-                        </tr>
-                        <tr>
-                            <td>Staff</td>
-                            <td></td>
-                            <td></td>
-                            <td style="background-color:bisque;"></td>
-                        </tr>
-                        <tr>
-                            <td>Others - Specify</td>
+                            <td>Staff Account</td>
                             <td></td>
                             <td></td>
                             <td style="background-color:bisque;"></td>
