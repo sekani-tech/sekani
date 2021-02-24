@@ -84,6 +84,7 @@ if (isset($_GET["view15"])) { ?>
         </div>
 
     </div>
+
     <script>
         $(document).ready(function() {
             $('#generateDLAR').on("click", function() {
@@ -106,7 +107,6 @@ if (isset($_GET["view15"])) { ?>
             });
         });
     </script>
-    </div>
 <?php
 } else if (isset($_GET["view16"])) {
 ?>

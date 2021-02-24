@@ -40,9 +40,8 @@ if(isset($_POST["downloadPDF"])) {
         $disb = $loan["disbursement_date"];
         $repay = $loan["repayment_date"];
         $intrate = $loan["interest_rate"];
-        $intr = $loan['interest_rate']/100;
-        $final = $intr * $loan['principal_amount'];
-        $total_interest = $loan['loan_term'] * $final;
+        $intr = $loan['interest_rate'] / 100;
+        $total_interest = $loan['loan_term'] * $intr * $loan['principal_amount'];
         // the code below is as a result of the total_outstanding_derived column in the loan table not been updated at the moment
         $total_outstanding_bal = $loan['total_outstanding_derived'] + $total_interest;
         $out .= '
@@ -53,7 +52,6 @@ if(isset($_POST["downloadPDF"])) {
             <td style = "font-size:20px;">'.$disb.'</td>
             <td style = "font-size:20px;">'.$repay.'</td>
             <td style = "font-size:20px;">'.$intrate.'</td>
-            <td style = "font-size:20px;">&#8358; '.$final.'</td>
             <td style = "font-size:20px;">&#8358; '.$total_interest.'</td>
             <td style = "font-size:20px;">&#8358; '.$total_outstanding_bal.'</td>
         </tr>
@@ -110,9 +108,8 @@ if(isset($_POST["downloadPDF"])) {
             <th style = "font-size:20px;">Disbursement Date</th>
             <th style = "font-size:20px;">Maturity Date</th>
             <th style = "font-size:20px;">Interest Rate</th>
-            <th style = "font-size:20px;">Interest Amount</th>
-            <th style = "font-size:20px;">Total Interest</th>
-            <th style = "font-size:20px;">Total Oustanding Bal</th>
+            <th style = "font-size:20px;">Cumulative Interest Amt</th>
+            <th style = "font-size:20px;">Total Outstanding Balance</th>
           </tr>
         </thead>
         <tbody>
@@ -122,7 +119,7 @@ if(isset($_POST["downloadPDF"])) {
     </main>
     ');
 
-    $file_name = 'Disbursed Loan Report as at ' . date('Y-m-d', time()) . '.pdf';
+    $file_name = 'disbursed-loan-accounts-report-' . date('d-m-Y', time()) . '.pdf';
     $mpdf->Output($file_name, 'D');
 
   } else {
@@ -163,9 +160,8 @@ if(isset($_POST["downloadExcel"])) {
     $active_sheet->setCellValue('D1', 'Disbursement Date');
     $active_sheet->setCellValue('E1', 'Maturity Date');
     $active_sheet->setCellValue('F1', 'Interest Rate');
-    $active_sheet->setCellValue('G1', 'Interest Amount');
-    $active_sheet->setCellValue('H1', 'Total Interest');
-    $active_sheet->setCellValue('I1', 'Total Oustanding Balance');
+    $active_sheet->setCellValue('G1', 'Cumulative Interest Amount');
+    $active_sheet->setCellValue('H1', 'Total Outstanding Balance');
 
     $count = 2;
 
@@ -177,22 +173,20 @@ if(isset($_POST["downloadExcel"])) {
       $active_sheet->setCellValue('E' . $count, $loan["repayment_date"]);
       $active_sheet->setCellValue('F' . $count, $loan["interest_rate"]);
 
-      $intr = $loan['interest_rate']/100;
-      $final = $intr * $loan['principal_amount'];
-      $total_interest = $loan['loan_term'] * $final;
+      $intr = $loan['interest_rate'] / 100;
+      $total_interest = $loan['loan_term'] * $intr * $loan['principal_amount'];
       // the code below is as a result of the total_outstanding_derived column in the loan table not been updated at the moment
       $total_outstanding_bal = $loan['total_outstanding_derived'] + $total_interest;
 
-      $active_sheet->setCellValue('G' . $count, $final);
-      $active_sheet->setCellValue('H' . $count, $total_interest);
-      $active_sheet->setCellValue('I' . $count, $total_outstanding_bal);
+      $active_sheet->setCellValue('G' . $count, $total_interest);
+      $active_sheet->setCellValue('H' . $count, $total_outstanding_bal);
       
       $count++;
     }
 
     $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($file, 'Xlsx');
 
-    $file_name = 'Disbursed Loan Report as at ' . date('Y-m-d', time()) . '.xlsx';
+    $file_name = 'disbursed-loan-accounts-report-' . date('d-m-Y', time()) . '.xlsx';
 
     $writer->save($file_name);
 

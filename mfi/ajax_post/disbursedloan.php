@@ -19,34 +19,35 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
             <div class="card card-profile ml-auto mr-auto" style="max-width: 370px; max-height: 360px">
                 <div class="card-body ">
                     <?php
-                        $totalDisbursedLoans = 0;
+                        $getParentID = mysqli_query($connection, "SELECT parent_id FROM `branch` WHERE int_id = $sessint_id AND id = $branch_id");
+                        while ($result = mysqli_fetch_array($getParentID)) {
+                            $parent_id = $result['parent_id'];
+                        }
+
+                        if ($parent_id == 0) {
+                            // Select loan data from all branches
+                            $accountquery = "SELECT l.principal_amount FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id AND (l.submittedon_date BETWEEN '$start' AND '$end')";
+                            $result = mysqli_query($connection, $accountquery);
+                        } else {
+                            $accountquery = "SELECT l.principal_amount FROM loan l JOIN client c ON l.client_id = c.id JOIN branch b ON c.branch_id = b.id WHERE l.int_id = $sessint_id AND (l.submittedon_date BETWEEN '$start' AND '$end') AND b.id = $branch_id";
+                            $result = mysqli_query($connection, $accountquery);
+                        }
                         
-                        if (!empty($_POST["start"]) && !empty($_POST["end"]) && !empty($_POST["branch_id"])) {
-                            $start = $_POST["start"];
-                            $end = $_POST["end"];
-                            $branch_id = $_POST["branch_id"];
-
-                            $getParentID = mysqli_query($connection, "SELECT parent_id FROM `branch` WHERE int_id = $sessint_id AND id = $branch_id");
-                            while ($result = mysqli_fetch_array($getParentID)) {
-                                $parent_id = $result['parent_id'];
-                            }
-
-                            if ($parent_id == 0) {
-                                // Select loan data from all branches
-                                $accountquery = "SELECT l.principal_amount FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id AND (l.submittedon_date BETWEEN '$start' AND '$end')";
-                                $result = mysqli_query($connection, $accountquery);
-                            } else {
-                                $accountquery = "SELECT l.principal_amount FROM loan l JOIN client c ON l.client_id = c.id JOIN branch b ON c.branch_id = b.id WHERE l.int_id = $sessint_id AND (l.submittedon_date BETWEEN '$start' AND '$end') AND b.id = $branch_id";
-                                $result = mysqli_query($connection, $accountquery);
-                            }
-                            
-                            while ($loan = mysqli_fetch_array($result)) {
-                                $totalDisbursedLoans += $loan['principal_amount'];
-                            }
+                        $totalDisbursedLoans = 0;
+                        while ($loan = mysqli_fetch_array($result)) {
+                            $totalDisbursedLoans += $loan['principal_amount'];
                         }
                     ?>
                     <h4 class="card-title">Total Disbursed Loans: <b>&#8358;<?php echo number_format(round($totalDisbursedLoans), 2); ?></b></h4>
-                    <h6 class="card-category text-gray">Head Office</h6>
+                    <h6 class="card-category text-gray">
+                        <?php
+                            $getBranchName = mysqli_query($connection, "SELECT name FROM `branch` WHERE int_id = $sessint_id AND id = $branch_id");
+                            while ($branch = mysqli_fetch_array($getBranchName)) {
+                                $branchName = $branch['name'];
+                            }
+                            echo $branchName;
+                        ?>
+                    </h6>
                 </div>
             </div>
             <div class="row">
@@ -61,54 +62,45 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
                                     <th><small>Disbursement Date</small></th>
                                     <th><small>Maturity Date</small></th>
                                     <th><small>Interest Rate</small></th>
-                                    <th><small>Interest Amount</small></th>
-                                    <th><small>Total Interest</small></th>
-                                    <th><small>Total Outstanding Bal</small></th>
+                                    <th><small>Cumulative Interest Amount</small></th>
+                                    <th><small>Total Outstanding Balance</small></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                    if (!empty($_POST["start"]) && !empty($_POST["end"]) && !empty($_POST["branch_id"])) {
-                                        $start = $_POST["start"];
-                                        $end = $_POST["end"];
-                                        $branch_id = $_POST["branch_id"];
+                                    $getParentID = mysqli_query($connection, "SELECT parent_id FROM `branch` WHERE int_id = $sessint_id AND id = $branch_id");
+                                    while ($result = mysqli_fetch_array($getParentID)) {
+                                        $parent_id = $result['parent_id'];
+                                    }
 
-                                        $getParentID = mysqli_query($connection, "SELECT parent_id FROM `branch` WHERE int_id = $sessint_id AND id = $branch_id");
-                                        while ($result = mysqli_fetch_array($getParentID)) {
-                                            $parent_id = $result['parent_id'];
-                                        }
+                                    if ($parent_id == 0) {
+                                        // Select loan data from all branches
+                                        $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_outstanding_derived, c.display_name, c.branch_id FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id AND (l.submittedon_date BETWEEN '$start' AND '$end')";
+                                        $result = mysqli_query($connection, $accountquery);
+                                    } else {
+                                        $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_outstanding_derived, c.display_name, c.branch_id, b.parent_id FROM loan l JOIN client c ON l.client_id = c.id JOIN branch b ON c.branch_id = b.id WHERE l.int_id = $sessint_id AND (l.submittedon_date BETWEEN '$start' AND '$end') AND b.id = $branch_id";
+                                        $result = mysqli_query($connection, $accountquery);
+                                    }
 
-                                        if ($parent_id == 0) {
-                                            // Select loan data from all branches
-                                            $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_outstanding_derived, c.display_name, c.branch_id FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id AND (l.submittedon_date BETWEEN '$start' AND '$end')";
-                                            $result = mysqli_query($connection, $accountquery);
-                                        } else {
-                                            $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_outstanding_derived, c.display_name, c.branch_id, b.parent_id FROM loan l JOIN client c ON l.client_id = c.id JOIN branch b ON c.branch_id = b.id WHERE l.int_id = $sessint_id AND (l.submittedon_date BETWEEN '$start' AND '$end') AND b.id = $branch_id";
-                                            $result = mysqli_query($connection, $accountquery);
-                                        }
-
-                                        while ($loan = mysqli_fetch_array($result)) {
+                                    while ($loan = mysqli_fetch_array($result)) {
                                 ?>
-                                            <tr>
-                                                <th><?php echo $loan['display_name']; ?></th>
-                                                <th><?php echo number_format(round($loan['principal_amount']), 2); ?></th>
-                                                <th><?php echo $loan['loan_term']; ?></th>
-                                                <th><?php echo $loan['disbursement_date']; ?></th>
-                                                <th><?php echo $loan['repayment_date']; ?></th>
-                                                <th><?php echo $loan['interest_rate']; ?>%</th>
-                                                <?php
+                                        <tr>
+                                            <th><?php echo $loan['display_name']; ?></th>
+                                            <th><?php echo number_format(round($loan['principal_amount']), 2); ?></th>
+                                            <th><?php echo $loan['loan_term']; ?></th>
+                                            <th><?php echo $loan['disbursement_date']; ?></th>
+                                            <th><?php echo $loan['repayment_date']; ?></th>
+                                            <th><?php echo $loan['interest_rate']; ?>%</th>
+                                            <?php
                                                 $intr = $loan['interest_rate'] / 100;
-                                                $final = $intr * $loan['principal_amount'];
-                                                $total_interest = $loan['loan_term'] * $final;
+                                                $total_interest = $loan['loan_term'] * $intr * $loan['principal_amount'];
                                                 // the code below is as a result of the total_outstanding_derived column in the loan table not been updated at the moment
                                                 $total_outstanding_bal = $loan['total_outstanding_derived'] + $total_interest;
-                                                ?>
-                                                <th><?php echo $final; ?></th>
-                                                <th><?php echo $total_interest; ?></th>
-                                                <th><?php echo number_format(round($total_outstanding_bal), 2); ?></th>
-                                            </tr>
+                                            ?>
+                                            <th><?php echo number_format(round($total_interest), 2); ?></th>
+                                            <th><?php echo number_format(round($total_outstanding_bal), 2); ?></th>
+                                        </tr>
                                 <?php
-                                        }
                                     }
                                 ?>
 
@@ -121,9 +113,9 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
                 <div class="col-12">
                     <div class="form-group mt-4">
                         <form method="POST" action="../composer/disbursedloan.php">
-                            <input type="hidden" name="branch_id" value="<?php if (!empty($_POST["branch_id"])) { echo $_POST["branch_id"]; } ?>" />
-                            <input type="hidden" name="start" value="<?php if (!empty($_POST["start"])) { echo $_POST["start"]; } ?>" />
-                            <input type="hidden" name="end" value="<?php if (!empty($_POST["end"])) {  $_POST["end"]; } ?>" />
+                            <input hidden type="text" name="branch_id" value="<?php echo $branch_id; ?>" />
+                            <input hidden type="text" name="start" value="<?php echo $start; ?>" />
+                            <input hidden type="text" name="end" value="<?php echo $end; ?>" />
                             <button type="submit" name="downloadPDF" class="btn btn-primary">Download PDF</button>
                             <button type="submit" name="downloadExcel" class="btn btn-primary">Download Excel</button>
                         </form>
