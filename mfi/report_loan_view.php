@@ -684,7 +684,7 @@ else if (isset($_GET["view19"])) {
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">Loan Structure Report</h4>
@@ -756,7 +756,7 @@ else if (isset($_GET["view19"])) {
                             });
                         });
                     </script>
-                    <div id="shstructure" class="card">
+                    <div id="shstructure" class="row">
 
                     </div>
                 </div>
