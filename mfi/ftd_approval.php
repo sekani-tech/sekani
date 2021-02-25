@@ -71,7 +71,7 @@ else if (isset($_GET["message4"])) {
           showConfirmButton: false,
           timer: 2000
       })
-  });Money deducted but record of transaction not stored
+  });
   </script>
   ';
   $_SESSION["lack_of_intfund_$key"] = 0;

@@ -38,18 +38,19 @@ if(!isset($_GET["approve"])){
         $branchId = $picked['branch_id'];
         $transactionDate = $picked['booked_date'];
         $intRate = $picked['int_rate'];
+        $ftdTerm = $picked['term'];
 
         if($pickFTD){
             // check clients account balance so we can make the necessary deduction
             // first collect data for check
-            $checkAccount = mysqli_query($sonnection, "SELECT id account_balance_derived, account_no, product_id, client_id 
-            FROM account WHERE int_id = '$institutionId' AND $linkedAccount");
+            $checkAccount = mysqli_query($connection, "SELECT id account_balance_derived, account_no, product_id, client_id 
+            FROM account WHERE int_id = '$institutionId' AND account_no = '$linkedAccount'");
             $accountDetails = mysqli_fetch_array($checkAccount);
             $accountId = $picked['id'];
             $currentAccountBalance = $accountDetails['account_balance_derived'];
             $productId = $accountDetails['product_id'];
             $clientId = $accountDetails['client_id'];
-            $ftdTerm = ['term'];
+            
 
             // now run check
             if($currentAccountBalance >= $bookedAmount){
@@ -68,8 +69,8 @@ if(!isset($_GET["approve"])){
                         'client_id' => $clientId,
                         'account_no' => $linkedAccount,
                         'amount' => $amount,
-                        'acount_id' => $accountId,
-                        'transction_id' => $ftd_no,
+                        'account_id' => $accountId,
+                        'transaction_id' => $ftd_no,
                         'description' => "FTD Booking",
                         'transaction_date' => $transactionDate,
                         'transaction_type' => "debit",
@@ -85,7 +86,7 @@ if(!isset($_GET["approve"])){
                         $interestValue = ($intRate / 100) * $amount;
                         $interestAmount =  $interestValue / $ftdTerm;
                         $i = 1;
-                        while ($i <= $dtdTerm) {
+                        while ($i <= $ftdTerm) {
                             $repay = date('Y-m-d', strtotime($date . ' + ' . $i . ' ' . $transactionDate));
                             echo $repay . '</br>';
                             $scheduleData = [
@@ -97,7 +98,7 @@ if(!isset($_GET["approve"])){
                                 'end_date' => $repay,
                                 'interest_rate' => $intRate,
                                 'interest_amount' => $interestAmount,
-                                'interest_payment' => '0',
+                                'interest_repayment' => '0',
                                 'linked_savings_account' => $linkedAccount
                             ];
                             $schedule = insert('ftd_interest_schedule', $scheduleData);
@@ -111,31 +112,31 @@ if(!isset($_GET["approve"])){
                             $updateFTD = mysqli_query($connection, "UPDATE ftd_booking_account SET status = 'Approved' WHERE id = '$id'");
                             if($updateFTD){
                                 $_SESSION["Lack_of_intfund_$randms"] = "FTD approval Successful";
-                                echo header("Location: ../mfi/ftd_approval.php?message1=$randms");
+                                echo header("Location: ../../mfi/ftd_approval.php?message1=$randms");
                             }else{
                                 // something is wrong... update not successful
                                 $_SESSION["Lack_of_intfund_$randms"] = "Something is wrong! FTD status not changed";
-                                echo header("Location: ../mfi/ftd_approval.php?message7=$randms");       
+                                echo header("Location: ../../mfi/ftd_approval.php?message7=$randms");       
                             }
                         }
                     }
                     else{
                         // something is wrong... transaction record not inserted into DB
                         $_SESSION["Lack_of_intfund_$randms"] = "Money deducted but record of transaction not stored";
-                        echo header("Location: ../mfi/ftd_approval.php?message6=$randms");
+                        echo header("Location: ../../mfi/ftd_approval.php?message6=$randms");
                     }
 
                 }else{
                     // something is wrong... accounts table not updated hence 
                     // money not deducted
                     $_SESSION["Lack_of_intfund_$randms"] = "Money not deducted from account";
-                    echo header("Location: ../mfi/ftd_approval.php?message4=$randms");
+                    echo header("Location: ../../mfi/ftd_approval.php?message4=$randms");
                 }
                 
             }else{
                 // not enough money in linked account
                 $_SESSION["Lack_of_intfund_$randms"] = "Not enough Money in Linked account!";
-                echo header("Location: ../mfi/ftd_approval.php?message3=$randms");    
+                echo header("Location: ../../mfi/ftd_approval.php?message3=$randms");    
             }
         }else{
             printf('Error: %s\n', mysqli_error($connection));//checking for errors
@@ -143,7 +144,7 @@ if(!isset($_GET["approve"])){
         }
     }else{
         $_SESSION["Lack_of_intfund_$randms"] = " Something is wrong unable to Approve FTD!";
-        echo header("Location: ../mfi/ftd_approval.php?message9=$randms");
+        echo header("Location: ../../mfi/ftd_approval.php?message9=$randms");
     }
     // ends here
 }else if(isset($_GET["approve"])){ //here I am only carrying out the function when you hit approve on ftd_approval.php
@@ -157,18 +158,19 @@ if(!isset($_GET["approve"])){
     $branchId = $picked['branch_id'];
     $transactionDate = $picked['booked_date'];
     $intRate = $picked['int_rate'];
+    $ftdTerm = $picked['term'];
+    $ftd_no = $picked['ftd_id'];
 
     if($pickFTD){
         // check clients account balance so we can make the necessary deduction
         // first collect data for check
-        $checkAccount = mysqli_query($sonnection, "SELECT id account_balance_derived, account_no, product_id, client_id 
-        FROM account WHERE int_id = '$institutionId' AND $linkedAccount");
+        $checkAccount = mysqli_query($connection, "SELECT id, account_balance_derived, account_no, product_id, client_id FROM account WHERE int_id = '$institutionId' AND account_no = '$linkedAccount'");
         $accountDetails = mysqli_fetch_array($checkAccount);
         $accountId = $picked['id'];
         $currentAccountBalance = $accountDetails['account_balance_derived'];
         $productId = $accountDetails['product_id'];
         $clientId = $accountDetails['client_id'];
-        $ftdTerm = ['term'];
+        
 
         // now run check
         if($currentAccountBalance >= $bookedAmount){
@@ -186,25 +188,26 @@ if(!isset($_GET["approve"])){
                     'branch_id' => $branchId,
                     'client_id' => $clientId,
                     'account_no' => $linkedAccount,
-                    'amount' => $amount,
-                    'acount_id' => $accountId,
-                    'transction_id' => $ftd_no,
+                    'amount' => $bookedAmount,
+                    'account_id' => $accountId,
+                    'transaction_id' => $ftd_no,
                     'description' => "FTD Booking",
                     'transaction_date' => $transactionDate,
                     'transaction_type' => "debit",
-                    'overdraft_amount_derived' => $amount,
+                    'overdraft_amount_derived' => $bookedAmount,
                     'running_balance_derived' => $debitAmount,
-                    'appuser_id' => $userid,
-                    'debit' => $amount
+                    'appuser_id' => $userId,
+                    'debit' => $bookedAmount
                 ];
 
+                // dd($transactionRecords);
                 // after collecting the details we then insert it into the db
                 $recordTransaction = insert('account_transaction', $transactionRecords);
                 if($recordTransaction){
-                    $interestValue = ($intRate / 100) * $amount;
+                    $interestValue = ($intRate / 100) * $bookedAmount;
                     $interestAmount =  $interestValue / $ftdTerm;
                     $i = 1;
-                    while ($i <= $dtdTerm) {
+                    while ($i <= $ftdTerm) {
                         $repay = date('Y-m-d', strtotime($date . ' + ' . $i . ' ' . $transactionDate));
                         echo $repay . '</br>';
                         $scheduleData = [
@@ -212,11 +215,11 @@ if(!isset($_GET["approve"])){
                             'branch_id' => $branchId,
                             'client_id' => $clientId,
                             'ftd_id' => $ftd_no,
-                            'installment' => $amount,
+                            'installment' => $bookedAmount,
                             'end_date' => $repay,
                             'interest_rate' => $intRate,
                             'interest_amount' => $interestAmount,
-                            'interest_payment' => '0',
+                            'interest_repayment' => '0',
                             'linked_savings_account' => $linkedAccount
                         ];
                         $schedule = insert('ftd_interest_schedule', $scheduleData);
