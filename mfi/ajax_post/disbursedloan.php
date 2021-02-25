@@ -63,7 +63,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
                                     <th><small>Maturity Date</small></th>
                                     <th><small>Interest Rate</small></th>
                                     <th><small>Cumulative Interest Amount</small></th>
-                                    <th><small>Total Outstanding Balance</small></th>
+                                    <th><small>Outstanding Balances</small></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,10 +75,10 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
 
                                     if ($parent_id == 0) {
                                         // Select loan data from all branches
-                                        $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_outstanding_derived, c.display_name, c.branch_id FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id AND (l.disbursement_date  BETWEEN '$start' AND '$end')";
+                                        $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_expected_repayment_derived, l.total_repayment_derived, c.display_name, c.branch_id FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id AND (l.disbursement_date  BETWEEN '$start' AND '$end')";
                                         $result = mysqli_query($connection, $accountquery);
                                     } else {
-                                        $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_outstanding_derived, c.display_name, c.branch_id, b.parent_id FROM loan l JOIN client c ON l.client_id = c.id JOIN branch b ON c.branch_id = b.id WHERE l.int_id = $sessint_id AND (l.disbursement_date  BETWEEN '$start' AND '$end') AND b.id = $branch_id";
+                                        $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_expected_repayment_derived, l.total_repayment_derived, c.display_name, c.branch_id, b.parent_id FROM loan l JOIN client c ON l.client_id = c.id JOIN branch b ON c.branch_id = b.id WHERE l.int_id = $sessint_id AND (l.disbursement_date  BETWEEN '$start' AND '$end') AND b.id = $branch_id";
                                         $result = mysqli_query($connection, $accountquery);
                                     }
 
@@ -94,8 +94,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
                                             <?php
                                                 $intr = $loan['interest_rate'] / 100;
                                                 $total_interest = $loan['loan_term'] * $intr * $loan['principal_amount'];
-                                                // the code below is as a result of the total_outstanding_derived column in the loan table not been updated at the moment
-                                                $total_outstanding_bal = $loan['total_outstanding_derived'] + $total_interest;
+                                                $total_outstanding_bal = $loan['total_expected_repayment_derived'] - $loan['total_repayment_derived'];
                                             ?>
                                             <th><?php echo number_format(round($total_interest), 2); ?></th>
                                             <th><?php echo number_format(round($total_outstanding_bal), 2); ?></th>

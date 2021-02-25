@@ -115,19 +115,19 @@ if (isset($_GET["view15"])) { ?>
         <div class="container-fluid">
             <!-- your content here  -->
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Outstanding Loan Balance Report</h4>
                             <p class="card-category">
                                 <?php
-                                $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
+                                $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
                                 $result = mysqli_query($connection, $query);
                                 if ($result) {
                                     $inr = mysqli_num_rows($result);
                                     echo $inr;
                                 }
-                                ?> Loans
+                                ?> Outstanding Loans
                             </p>
                         </div>
                         <div class="card-body">
@@ -135,35 +135,17 @@ if (isset($_GET["view15"])) { ?>
                             <div class="card card-profile ml-auto mr-auto" style="max-width: 370px; max-height: 360px">
                                 <div class="card-body ">
                                     <?php
-                                        if (isset($_POST['generateDLAR'])) {
-                                            if (!empty($_POST["start"]) && !empty($_POST["end"]) && !empty($_POST["branch_id"])) {
-                                                $start = $_POST["start"];
-                                                $end = $_POST["end"];
-                                                $branch_id = $_POST["branch_id"];
-
-                                                $getParentID = mysqli_query($connection, "SELECT parent_id FROM `branch` WHERE int_id = $sessint_id AND id = $branch_id");
-                                                while ($result = mysqli_fetch_array($getParentID)) {
-                                                    $parent_id = $result['parent_id'];
-                                                }
-
-                                                if ($parent_id == 0) {
-                                                    // Select loan data from all branches
-                                                    $accountquery = "SELECT l.principal_amount FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id AND (l.submittedon_date BETWEEN '$start' AND '$end')";
-                                                    $result = mysqli_query($connection, $accountquery);
-                                                } else {
-                                                    $accountquery = "SELECT l.principal_amount FROM loan l JOIN client c ON l.client_id = c.id JOIN branch b ON c.branch_id = b.id WHERE l.int_id = $sessint_id AND (l.submittedon_date BETWEEN '$start' AND '$end') AND b.id = $branch_id";
-                                                    $result = mysqli_query($connection, $accountquery);
-                                                }
-                                                
-                                                $totalDisbursedLoans = 0;
-                                                while ($loan = mysqli_fetch_array($result)) {
-                                                    $totalDisbursedLoans += $loan['principal_amount'];
-                                                }
-                                            }
+                                        $accountquery = "SELECT total_expected_repayment_derived, total_repayment_derived FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id";
+                                        $result = mysqli_query($connection, $accountquery);
+                                        
+                                        $cumulativeTotalOutstandingLoans = 0;
+                                        while ($loan = mysqli_fetch_array($result)) {
+                                            $total_outstanding_bal = $loan['total_expected_repayment_derived'] - $loan['total_repayment_derived'];
+                                            $cumulativeTotalOutstandingLoans += $total_outstanding_bal;
                                         }
                                     ?>
-                                    <h4 class="card-title">Total Disbursed Loans: <b>&#8358;<?php echo number_format(round($totalDisbursedLoans), 2); ?></b></h4>
-                                    <h6 class="card-category text-gray">Head Office</h6>
+                                    <h4 class="card-title">Total Outstanding Loans: <b>&#8358;<?php echo number_format(round($cumulativeTotalOutstandingLoans), 2); ?></b></h4>
+                                    <!-- <h6 class="card-category text-gray">Head Office</h6> -->
                                 </div>
                             </div>
 
@@ -171,7 +153,7 @@ if (isset($_GET["view15"])) { ?>
                                 <table id="outstand" class="rtable display nowrap" style="width:100%">
                                     <thead class=" text-primary">
                                         <?php
-                                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
+                                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
                                         $result = mysqli_query($connection, $query);
                                         ?>
                                         <th>
@@ -193,38 +175,35 @@ if (isset($_GET["view15"])) { ?>
                                             Outstanding Balances
                                         </th>
                                         <th>
-                                            View
+                                            
                                         </th>
+                                    </thead>
                                     <tbody>
                                         <?php if (mysqli_num_rows($result) > 0) {
                                             while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                         ?>
                                                 <tr>
-                                                    <?php $fi =  $row["id"];
-                                                    ?>
-                                                    <?php //
+                                                    <?php 
+                                                    $fi =  $row["id"];
                                                     $name = $row['client_id'];
                                                     $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
                                                     $f = mysqli_fetch_array($anam);
                                                     $nae = strtoupper($f["firstname"] . " " . $f["lastname"]);
-
                                                     ?>
-                                                    <th><?php echo $nae;
-                                                        ?>
-                                                    </th>
-                                                    <th><?php echo $row["account_no"];
-                                                        ?>
+                                                    <th>
+                                                        <?php echo $nae; ?>
                                                     </th>
                                                     <th>
-                                                        <?php echo $row["principal_amount"];
-                                                        ?>
+                                                        <?php echo $row["account_no"]; ?>
                                                     </th>
                                                     <th>
-                                                        <?php echo $row["disbursement_date"];
-                                                        ?>
+                                                        <?php echo $row["principal_amount"]; ?>
                                                     </th>
-                                                    <th><?php echo $row["repayment_date"];
-                                                        ?>
+                                                    <th>
+                                                        <?php echo $row["disbursement_date"]; ?>
+                                                    </th>
+                                                    <th>
+                                                        <?php echo $row["repayment_date"]; ?>
                                                     </th>
                                                     <?php
                                                     //                            // repaymeny
@@ -254,12 +233,13 @@ if (isset($_GET["view15"])) { ?>
                                                     ?>
                                                     <th>
                                                         <?php
-                                                        $bal = $row["total_outstanding_derived"];
-                                                        $df = $bal;
+                                                        // $bal = $row["total_outstanding_derived"];
+                                                        // $df = $bal;
+                                                        // $ttloutstanding = $outstanding + $outstandingtwo;
+                                                        $total_outstanding_bal = $row['total_expected_repayment_derived'] - $row['total_repayment_derived'];
+                                                        echo number_format($total_outstanding_bal, 2);
                                                         $ttloutbalance = 0;
-                                                        $ttloustanding = $outstanding + $outstandingtwo;
-                                                        echo number_format($ttloustanding);
-                                                        $ttloutbalance += $ttloustanding;
+                                                        $ttloutbalance += $total_outstanding_bal;
                                                         ?>
                                                     </th>
                                                     <th><a href="loan_report_view.php?edit=<?php echo $row["id"]; ?>" class="btn btn-info">View</a></th>
@@ -268,7 +248,6 @@ if (isset($_GET["view15"])) { ?>
                                         } else {
                                             // echo "0 Document";
                                         }
-
                                         ?>
                                     </tbody>
                                 </table>
@@ -293,7 +272,7 @@ else if (isset($_GET["view17"])) {
         <div class="container-fluid">
             <!-- your content here  -->
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">Loan Analysis Report</h4>
@@ -606,7 +585,7 @@ else if (isset($_GET["view19"])) {
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">Loan Performance Report</h4>
@@ -884,7 +863,7 @@ else if (isset($_GET["view19"])) {
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Expected Loan Repayment</h4>
@@ -1013,7 +992,7 @@ else if (isset($_GET["view19"])) {
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">Loan Portfolio Activity</h4>
@@ -1057,7 +1036,7 @@ else if (isset($_GET["view19"])) {
 
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
 
                     <div class="card">
                         <div class="card-header card-header-primary">
@@ -1066,7 +1045,7 @@ else if (isset($_GET["view19"])) {
                         </div>
                         <div class="card-body">
                             <div class="row mt-4">
-                                <div class="col-md-12">
+                                <div class="col-12">
                                     <table id="lp" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
@@ -1172,7 +1151,7 @@ else if (isset($_GET["view19"])) {
 
             <div class="row">
 
-<div class="col-md-12">
+<div class="col-12">
     <div class="card">
         <div class="card-header card-header-primary">
             <h4 class="card-title">Loan Portfolio Aging Schedule Report</h4>
@@ -1180,7 +1159,7 @@ else if (isset($_GET["view19"])) {
         </div>
         <div class="card-body">
             <div class="row mt-4">
-                <div class="col-md-12">
+                <div class="col-12">
                     <table id="pas" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
@@ -1288,7 +1267,7 @@ else if (isset($_GET["view19"])) {
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
 
                     <div class="card">
                         <div class="card-header card-header-primary">
@@ -1352,7 +1331,7 @@ else if (isset($_GET["view19"])) {
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Loans in Arrears</h4>
@@ -1367,7 +1346,7 @@ else if (isset($_GET["view19"])) {
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-12">
                                     <div class="form-group">
                                         <form method="POST" action="../composer/arrear_report.php">
                                             <input hidden name="id" type="text" value="<?php echo $id; ?>" />
@@ -1495,7 +1474,7 @@ else if (isset($_GET["view19"])) {
                             </div>
 
                             <div class="row mt-4">
-                                <div class="col-md-12">
+                                <div class="col-12">
                                     <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download
                                         PDF
                                     </button>
