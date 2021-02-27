@@ -27,7 +27,7 @@ function airtime(){
     $stmt = $this->conn->prepare($select_query);
   
     // sanitize
-    $this->api_key=htmlspecialchars(strip_tags($this->api_key));
+    // $this->api_key=htmlspecialchars(strip_tags($this->api_key));
   
     // bind values
     $stmt->bindParam(":client_id", $this->client_id);
@@ -39,7 +39,7 @@ function airtime(){
     $row = $stmt->fetch();
     $num = $stmt->rowCount();
 
-    if ($num > 0 && $row["API_KEY"] != "0") {
+    if ($num > 0) {
         $id = $row["id"];
         $int_id = $row["int_id"];
         $branch_id = $row["branch_id"];
@@ -58,8 +58,8 @@ function airtime(){
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-        //   CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
-          CURLOPT_URL => "http://34.68.51.255/shago/public/api/test/b2b",
+          CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
+        //   CURLOPT_URL => "http://34.68.51.255/shago/public/api/test/b2b",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -69,10 +69,10 @@ function airtime(){
           CURLOPT_CUSTOMREQUEST => "POST",
           CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"QAB\",\r\n\"phone\" : \"$phone\",\r\n\"amount\": \"$amount\",\r\n\"vend_type\" : \"VTU \",\r\n\"network\": \"$network\",\r\n\"request_id\": \"$generate\"\r\n}",
           CURLOPT_HTTPHEADER => array(
-            // "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
-            "Content-Type: application/json",
-            "email: test@shagopayments.com",
-            "password: test123"
+            "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
+            "Content-Type: application/json"
+            // "email: test@shagopayments.com",
+            // "password: test123"
           ),
         ));
         // return true;
@@ -130,8 +130,75 @@ function airtime(){
 
     // MAKE FINAL ECHO
     if($query_table){
-        echo json_encode(array("message" => "Airtime Transaction Successful", "transaction_id" => "$trans", "status" => "success"));
-        return true;
+        // Institution Account
+        $query_int_walllet = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id'");
+        if (mysqli_num_rows($query_int_walllet) > 0) {
+            $row = mysqli_fetch_array($query_int_walllet);
+            $id = $row["id"];
+            $branch_id = $row["branch_id"];
+            $running_balance = $row["bills_balance"];
+            $total_deposit = $row["total_deposit"];
+            $total_withdrawal = $row["total_withdrawal"];
+            $total_int_profit = $row["int_profit"];
+            $total_merchant_charge = $row["merchant_charge"];
+            $total_sekani_charge = $row["sekani_charge"];
+            
+            // Balance -- goes here
+            $cal_bal = $running_balance - $amount;
+            $cal_with = $total_withdrawal + $amount;
+            $cal_sek = $total_sekani_charge + 0;
+            $cal_mch = $total_merchant_charge + $amount;
+            $cal_int_prof = $total_int_profit + 0;
+            // $digits = 9;
+            // $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+            // $trans = "SKWAL".$randms."AIRTIME".$int_id;
+            $date = date("Y-m-d");
+            $date2 = date('Y-m-d H:i:s');
+
+            // RUN UPDATE QUERY
+            $update_queryx = "UPDATE
+                sekani_wallet
+            SET
+            running_balance = :cal_bal,
+            total_withdrawal = :cal_with,
+            int_profit = :cal_int_prof,
+            sekani_charge = :cal_sek,
+            merchant_charge = :cal_mch
+            WHERE
+                id = :id";
+
+            // prepare query statement
+            $stmtu = $this->conn->prepare($update_queryx);
+            $stmtu->bindParam(':cal_bal', $cal_bal);
+            $stmtu->bindParam(':cal_with', $cal_with);
+            $stmtu->bindParam(':cal_int_prof', $cal_int_prof);
+            $stmtu->bindParam(':cal_sek', $cal_sek);
+            $stmtu->bindParam(':cal_mch', $cal_mch);
+            $stmtu->bindParam(':id', $id);
+
+            if ($stmtu->execute()) {
+                    $query_tablex = mysqli_query($connection, "INSERT INTO `sekani_wallet_transaction` (`int_id`, `branch_id`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `wallet_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, 
+                    `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`,
+                    `int_profit`, `sekani_charge`, `merchant_charge`)
+                    VALUES ('{$int_id}', '{$branch_id}', '{$trans}',
+                    '{$generate}', 'bill_airtime', 
+                    NULL, '0', '{$date}', '{$amount}', '{$cal_bal}',
+                    '{$cal_bal}', {$date}, 
+                    NULL, NULL, '{$date2}', '0', '0.00', '{$amount}', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
+
+                    if ($query_tablex) {
+                        echo json_encode(array("message" => "Airtime Transaction Successful", "transaction_id" => "$trans", "status" => "success"));
+                        return true;
+                    } else {
+                        echo json_encode(array("message" => "Error at Inserting Wallet Transaction, Please Contact Sekani", "status" => "failed"));
+                    }
+                
+            } else {
+                echo json_encode(array("message" => "Error at Updating Wallet, Please Contact Sekani", "status" => "failed"));
+            }
+        }
+        // End Insitution Account
+        
     } else {
         echo json_encode(array("message" => "Error at Inserting Wallet Transaction, Please Contact Sekani", "status" => "failed"));
         return false;
