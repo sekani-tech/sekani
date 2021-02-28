@@ -11,8 +11,8 @@ function airtimex(){
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
-        //   CURLOPT_URL => "http://34.68.51.255/shago/public/api/test/b2b",
+        //   CURLOPT_URL => "https://shagopayments.com/api/live/b2b",
+          CURLOPT_URL => "http://34.68.51.255/shago/public/api/test/b2b",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -22,10 +22,10 @@ function airtimex(){
           CURLOPT_CUSTOMREQUEST => "POST",
           CURLOPT_POSTFIELDS =>"{\r\n\"serviceCode\" : \"QAB\",\r\n\"phone\" : \"$phone\",\r\n\"amount\": \"$amount\",\r\n\"vend_type\" : \"VTU \",\r\n\"network\": \"$network\",\r\n\"request_id\": \"$generate\"\r\n}",
           CURLOPT_HTTPHEADER => array(
-            "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
-            "Content-Type: application/json"
-            // "email: test@shagopayments.com",
-            // "password: test123"
+            // "hashKey: ddceb2126614e2b4aec6d0d247e17f746de538fef19311cc4c3471feada85d30",
+            "Content-Type: application/json",
+            "email: test@shagopayments.com",
+            "password: test123"
           ),
         ));
         // return true;
