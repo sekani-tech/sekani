@@ -33,8 +33,6 @@ if(
     $airtime->amount = $data->amount;
     $airtime->network = $data->network;
     $airtime->request_id = $data->request_id;
-    $airtime->client_id = $data->client_id;
-    $airtime->account_no = $data->account_no;
   
     // create the Airtime
     if($airtime->airtime()){
