@@ -7,8 +7,6 @@ function airtime(){
         $amount = $this->amount;
         $network = $this->network;
         $generate = $this->request_id;
-        $account_no = $this->account_no;
-        $client_id = $this->client_id;
         // start integration
         $curl = curl_init();
         
@@ -37,6 +35,7 @@ function airtime(){
             echo json_encode(array("message" => "Network Error", "status" => "failed"));
         } else {
             echo $response;
+            return true;
         }
     
 }
