@@ -22,12 +22,10 @@ $data = json_decode(file_get_contents("php://input"));
   
 // make sure data is not empty
 if(
-    !empty($data->phone) &&
-    !empty($data->amount) &&
-    !empty($data->network) &&
-    !empty($data->request_id) &&
-    !empty($data->client_id) &&
-    !empty($data->account_no)
+    $data->phone == "" &&
+    $data->amount == "" &&
+    $data->network == "" &&
+    $data->request_id == ""
 ){
     // making a new move in the code
     
