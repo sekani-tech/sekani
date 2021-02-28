@@ -1,7 +1,7 @@
 <?php
 class Sekani{
     // define class path
-function airtime(){
+function airtimex(){
         // get all the vaule to Shago
         $phone = $this->phone;
         $amount = $this->amount;

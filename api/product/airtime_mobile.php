@@ -22,10 +22,10 @@ $data = json_decode(file_get_contents("php://input"));
   
 // make sure data is not empty
 if(
-    $data->phone == "" &&
-    $data->amount == "" &&
-    $data->network == "" &&
-    $data->request_id == ""
+    !empty($data->phone) &&
+    !empty($data->amount) &&
+    !empty($data->network) &&
+    !empty($data->request_id)
 ){
     // making a new move in the code
     
@@ -35,7 +35,7 @@ if(
     $airtime->request_id = $data->request_id;
   
     // create the Airtime
-    if($airtime->airtime()){
+    if($airtime->airtimex()){
   
         // set response code - 201 created
         http_response_code(201);
