@@ -768,7 +768,7 @@ else if (isset($_GET["view19"])) {
                             <h4 class="card-title ">Expected Loan Repayment</h4>
                             <p class="card-category">
                                 <?php
-                                $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date'";
+                                $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
                                 $result = mysqli_query($connection, $query);
                                 if ($result) {
                                     $inr = mysqli_num_rows($result);
@@ -781,7 +781,7 @@ else if (isset($_GET["view19"])) {
                                 <table id="ple" class="rtable display nowrap" style="width:100%">
                                     <thead class="text-primary">
                                         <?php
-                                        $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date'";
+                                        $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
                                         $result = mysqli_query($connection, $query);
                                         ?>
                                         <th>
@@ -828,10 +828,10 @@ else if (isset($_GET["view19"])) {
                                                     ?>
                                                     <th><?php echo $nae; ?></th>
                                                     <?php
-                                                    $get_loan = mysqli_query($connection, "SELECT loan_term, total_outstanding_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
+                                                    $get_loan = mysqli_query($connection, "SELECT loan_term, total_expected_repayment_derived, total_repayment_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
                                                     $mik = mysqli_fetch_array($get_loan);
                                                     $l_n = $mik["loan_term"];
-                                                    $t_o = $mik["total_outstanding_derived"];
+                                                    $t_o = $mik['total_expected_repayment_derived'] - $mik['total_repayment_derived'];
                                                     ?>
                                                     <th>NGN <?php echo number_format($row["principal_amount"], 2); ?></th>
                                                     <th>NGN <?php echo number_format($row["interest_amount"], 2); ?></th>

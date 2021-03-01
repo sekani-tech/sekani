@@ -69,10 +69,10 @@ if ($parent_id == 0) {
                         <?php
                             if ($parent_id == 0) {
                                 // Select loan data from all branches
-                                $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
+                                $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
                                 $result = mysqli_query($connection, $query);
                             } else {
-                                $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND client_id IN (SELECT id FROM client WHERE branch_id = $branch_id)";
+                                $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND client_id IN (SELECT id FROM client WHERE branch_id = $branch_id) AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
                                 $result = mysqli_query($connection, $query);
                             }
 
