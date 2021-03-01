@@ -161,8 +161,21 @@ if(isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch_id"]))
         $sector11 = mysqli_num_rows($donk);
     }
 
-    $ttunt = $amount1 + $amount2 + $amount3 + $amount4 + $amount5 + $amount6 + $amount7 + $amount8 + $amount9 + $amount10 + $amount11;
     $ttlsector = $sector1 + $sector2 + $sector3 + $sector4 + $sector5 + $sector6 + $sector7 + $sector8 + $sector9 + $sector10 + $sector11;
+    $ttunt = $amount1 + $amount2 + $amount3 + $amount4 + $amount5 + $amount6 + $amount7 + $amount8 + $amount9 + $amount10 + $amount11;
+
+    $percentAmount1 = !empty($amount1) ? $amount1 / $ttunt * 100 : '';
+    $percentAmount2 = !empty($amount2) ? $amount2 / $ttunt * 100 : '';
+    $percentAmount3 = !empty($amount3) ? $amount3 / $ttunt * 100 : '';
+    $percentAmount4 = !empty($amount4) ? $amount4 / $ttunt * 100 : '';
+    $percentAmount5 = !empty($amount5) ? $amount5 / $ttunt * 100 : '';
+    $percentAmount6 = !empty($amount6) ? $amount6 / $ttunt * 100 : '';
+    $percentAmount7 = !empty($amount7) ? $amount7 / $ttunt * 100 : '';
+    $percentAmount8 = !empty($amount8) ? $amount8 / $ttunt * 100 : '';
+    $percentAmount9 = !empty($amount9) ? $amount9 / $ttunt * 100 : '';
+    $percentAmount10 = !empty($amount10) ? $amount10 / $ttunt * 100 : '';
+    $percentAmount11 = !empty($amount11) ? $amount11 / $ttunt * 100 : '';
+
     $ttlamount = number_format($ttunt, 2);
 
     require_once __DIR__ . '/vendor/autoload.php';
@@ -174,7 +187,7 @@ if(isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch_id"]))
       <div id="logo">
         <img src="'.$_SESSION["int_logo"].'" height="80" width="80">
       </div>
-      <h1>'.$_SESSION["int_full"].' <br/> Loan Analysis Schedule</h1>
+      <h1>'.$_SESSION["int_full"].' <br/> Loan Analysis Report</h1>
       <div id="company" class="clearfix">
         <div>'.$branch.'</div>
         <div>'.$branch_location.'</div>
@@ -189,92 +202,92 @@ if(isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch_id"]))
       <table class="table">
         <thead class=" text-primary">
           <tr>
-            <th style="font-size: 30px;" class="column1">
+            <th style="font-size: 24px;" class="column1">
               SECTOR
             </th>
-            <th style="font-size: 30px;" class="column1">
+            <th style="font-size: 24px;" class="column1">
               NUMBER OF LOANS
             </th>
-            <th style="font-size: 30px;" class="column1">
-              AMOUNT &#x20A6
+            <th style="font-size: 24px;" class="column1">
+              AMOUNT (&#x20A6;)
             </th>
-            <th style="font-size: 30px;" class="column1">
+            <th style="font-size: 24px;" class="column1">
               %
             </th>
           </tr>
         </thead>
         <tbody>
           <tr>
-              <th style="font-size: 30px;" class="column1">Agriculture, Mining & Quarry</th>
-              <th style="font-size: 30px;" class="column1">'.$sector1.'</th>
-              <th style="font-size: 30px;" class="column1">'.$amount1.'</th>
-              <th  class="column1" style="background-color:bisque;"></th>
+              <th style="font-size: 24px;" class="column1">Agriculture, Mining & Quarry</th>
+              <th style="font-size: 24px;" class="column1">'.$sector1.'</th>
+              <th style="font-size: 24px;" class="column1">'.$amount1.'</th>
+              <th class="column1" style="background-color:bisque; font-size: 24px;">'.$percentAmount1.'</th>
           </tr>
           <tr>
-              <th style="font-size: 30px;" class="column1">Manufacturing</th>
-              <th style="font-size: 30px;" class="column1">'.$sector2.'</th>
-              <th style="font-size: 30px;" class="column1">'.$amount2.'</th>
-              <th  class="column1" style="background-color:bisque;"></th>
+              <th style="font-size: 24px;" class="column1">Manufacturing</th>
+              <th style="font-size: 24px;" class="column1">'.$sector2.'</th>
+              <th style="font-size: 24px;" class="column1">'.$amount2.'</th>
+              <th class="column1" style="background-color:bisque; font-size: 24px;">'.$percentAmount2.'</th>
           </tr>
           <tr>
-              <th style="font-size: 30px;" class="column1">Agricultural sector</th>
-              <th style="font-size: 30px;" class="column1">'.$sector3.'</th>
-              <th style="font-size: 30px;" class="column1">'.$amount3.'</th>>
-              <th  class="column1" style="background-color:bisque;"></th>
+              <th style="font-size: 24px;" class="column1">Agricultural sector</th>
+              <th style="font-size: 24px;" class="column1">'.$sector3.'</th>
+              <th style="font-size: 24px;" class="column1">'.$amount3.'</th>>
+              <th class="column1" style="background-color:bisque; font-size: 24px;">'.$percentAmount3.'</th>
           </tr>
           <tr>
-              <th style="font-size: 30px;" class="column1">Banking</th>
-              <th style="font-size: 30px;" class="column1">'.$sector4.'</th>
-              <th style="font-size: 30px;" class="column1">'.$amount4.'</th>
-              <th  class="column1" style="background-color:bisque;"></th>
+              <th style="font-size: 24px;" class="column1">Banking</th>
+              <th style="font-size: 24px;" class="column1">'.$sector4.'</th>
+              <th style="font-size: 24px;" class="column1">'.$amount4.'</th>
+              <th class="column1" style="background-color:bisque; font-size: 24px;">'.$percentAmount4.'</th>
           </tr>
           <tr>
-              <th style="font-size: 30px;" class="column1">Public Service</th>
-              <th style="font-size: 30px;" class="column1">'.$sector5.'</th>
-              <th style="font-size: 30px;" class="column1">'.$amount5.'</th>
-              <th  class="column1" style="background-color:bisque;"></th>
+              <th style="font-size: 24px;" class="column1">Public Service</th>
+              <th style="font-size: 24px;" class="column1">'.$sector5.'</th>
+              <th style="font-size: 24px;" class="column1">'.$amount5.'</th>
+              <th class="column1" style="background-color:bisque; font-size: 24px;">'.$percentAmount5.'</th>
           </tr>
           <tr>
-              <th style="font-size: 30px;" class="column1">Health</th>
-              <th style="font-size: 30px;" class="column1">'.$sector6.'</th>
-              <th style="font-size: 30px;" class="column1">'.$amount6.'</th>
-              <th  class="column1" style="background-color:bisque;"></th>
+              <th style="font-size: 24px;" class="column1">Health</th>
+              <th style="font-size: 24px;" class="column1">'.$sector6.'</th>
+              <th style="font-size: 24px;" class="column1">'.$amount6.'</th>
+              <th class="column1" style="background-color:bisque; font-size: 24px;">'.$percentAmount6.'</th>
           </tr>
           <tr>
-              <th style="font-size: 30px;" class="column1">Education</th>
-              <th style="font-size: 30px;" class="column1">'.$sector7.'</th>
-              <th style="font-size: 30px;" class="column1">'.$amount7.'</th>
-              <th  class="column1" style="background-color:bisque;"></th>
+              <th style="font-size: 24px;" class="column1">Education</th>
+              <th style="font-size: 24px;" class="column1">'.$sector7.'</th>
+              <th style="font-size: 24px;" class="column1">'.$amount7.'</th>
+              <th class="column1" style="background-color:bisque; font-size: 24px;">'.$percentAmount7.'</th>
           </tr>
           <tr>
-              <th style="font-size: 30px;" class="column1">Tourism</th>
-              <th style="font-size: 30px;" class="column1">'.$sector8.'</th>
-              <th style="font-size: 30px;" class="column1">'.$amount8.'</th>
-              <th  class="column1" style="background-color:bisque;"></th>
+              <th style="font-size: 24px;" class="column1">Tourism</th>
+              <th style="font-size: 24px;" class="column1">'.$sector8.'</th>
+              <th style="font-size: 24px;" class="column1">'.$amount8.'</th>
+              <th class="column1" style="background-color:bisque; font-size: 24px;">'.$percentAmount8.'</th>
           </tr>
           <tr>
-              <th style="font-size: 30px;" class="column1">Civil Service</th>
-              <th style="font-size: 30px;" class="column1">'.$sector9.'</th>
-              <th style="font-size: 30px;" class="column1">'.$amount9.'</th>
-              <th  class="column1" style="background-color:bisque;"></th>
+              <th style="font-size: 24px;" class="column1">Civil Service</th>
+              <th style="font-size: 24px;" class="column1">'.$sector9.'</th>
+              <th style="font-size: 24px;" class="column1">'.$amount9.'</th>
+              <th class="column1" style="background-color:bisque; font-size: 24px;">'.$percentAmount9.'</th>
           </tr>
           <tr>
-              <th style="font-size: 30px;" class="column1">Trade & Commerce</th>
-              <th style="font-size: 30px;" class="column1">'.$sector10.'</th>
-              <th style="font-size: 30px;" class="column1">'.$amount10.'</th>
-              <th  class="column1" style="background-color:bisque;"></th>
+              <th style="font-size: 24px;" class="column1">Trade & Commerce</th>
+              <th style="font-size: 24px;" class="column1">'.$sector10.'</th>
+              <th style="font-size: 24px;" class="column1">'.$amount10.'</th>
+              <th class="column1" style="background-color:bisque; font-size: 24px;">'.$percentAmount10.'</th>
           </tr>
           <tr>
-              <th style="font-size: 30px;" class="column1">Others</th>
-              <th style="font-size: 30px;" class="column1">'.$sector11.'</th>
-              <th style="font-size: 30px;" class="column1">'.$amount11.'</th>
-              <th  class="column1" style="background-color:bisque;"></th>
+              <th style="font-size: 24px;" class="column1">Others</th>
+              <th style="font-size: 24px;" class="column1">'.$sector11.'</th>
+              <th style="font-size: 24px;" class="column1">'.$amount11.'</th>
+              <th class="column1" style="background-color:bisque; font-size: 24px;">'.$percentAmount11.'</th>
           </tr>
           <tr>
-              <th style="font-size: 30px;" class="column1"><b>TOTAL</b></th>
-              <th style="font-size: 30px;" class="column1"><b>'.$ttlsector.'</b></th>
-              <th style="font-size: 30px;" class="column1"><b>'.$ttlamount.'</b></th>
-              <th style="font-size: 30px;" class="column1"><b></b></th>
+              <th style="font-size: 24px;" class="column1"><b>TOTAL</b></th>
+              <th style="font-size: 24px;" class="column1"><b>'.$ttlsector.'</b></th>
+              <th style="font-size: 24px;" class="column1"><b>'.$ttlamount.'</b></th>
+              <th style="font-size: 24px;" class="column1"><b></b></th>
           </tr>
         </tbody>
       </table>

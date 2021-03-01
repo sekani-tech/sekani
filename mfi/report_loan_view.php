@@ -118,7 +118,7 @@ if (isset($_GET["view15"])) { ?>
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title ">Outstanding Loan Balance Report</h4>
+                            <h4 class="card-title ">Outstanding Loans Balance Report</h4>
                             <p class="card-category">
                                 <?php
                                 $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
@@ -151,7 +151,7 @@ if (isset($_GET["view15"])) { ?>
 
                             <div class="table-responsive">
                                 <table id="outstand" class="rtable display nowrap" style="width:100%">
-                                    <thead class=" text-primary">
+                                    <thead class="text-primary">
                                         <?php
                                         $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
                                         $result = mysqli_query($connection, $query);
@@ -206,40 +206,40 @@ if (isset($_GET["view15"])) { ?>
                                                         <?php echo $row["repayment_date"]; ?>
                                                     </th>
                                                     <?php
-                                                    //                            // repaymeny
-                                                    $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
-                                                    $sdoi = mysqli_query($connection, $dd);
-                                                    $e = mysqli_fetch_array($sdoi);
-                                                    $interest = $e['interest_amount'];
+                                                    // repayment
+                                                    // $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                                                    // $sdoi = mysqli_query($connection, $dd);
+                                                    // $e = mysqli_fetch_array($sdoi);
+                                                    // $interest = $e['interest_amount'];
 
-                                                    $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
-                                                    $sdswe = mysqli_query($connection, $dfdf);
-                                                    $u = mysqli_fetch_array($sdswe);
-                                                    $prin = $u['principal_amount'];
+                                                    // $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                                                    // $sdswe = mysqli_query($connection, $dfdf);
+                                                    // $u = mysqli_fetch_array($sdswe);
+                                                    // $prin = $u['principal_amount'];
 
-                                                    $outstanding = $prin + $interest;
+                                                    // $outstanding = $prin + $interest;
                                                     // Arrears
-                                                    $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
-                                                    $fosdi = mysqli_query($connection, $ldfkl);
-                                                    $l = mysqli_fetch_array($fosdi);
-                                                    $interesttwo = $l['interest_amount'];
+                                                    // $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                                                    // $fosdi = mysqli_query($connection, $ldfkl);
+                                                    // $l = mysqli_fetch_array($fosdi);
+                                                    // $interesttwo = $l['interest_amount'];
 
-                                                    $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
-                                                    $sodi = mysqli_query($connection, $sdospd);
-                                                    $s = mysqli_fetch_array($sodi);
-                                                    $printwo = $s['principal_amount'];
+                                                    // $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                                                    // $sodi = mysqli_query($connection, $sdospd);
+                                                    // $s = mysqli_fetch_array($sodi);
+                                                    // $printwo = $s['principal_amount'];
 
-                                                    $outstandingtwo = $printwo + $interesttwo;
+                                                    // $outstandingtwo = $printwo + $interesttwo;
                                                     ?>
                                                     <th>
                                                         <?php
                                                         // $bal = $row["total_outstanding_derived"];
                                                         // $df = $bal;
                                                         // $ttloutstanding = $outstanding + $outstandingtwo;
-                                                        $total_outstanding_bal = $row['total_expected_repayment_derived'] - $row['total_repayment_derived'];
-                                                        echo number_format($total_outstanding_bal, 2);
-                                                        $ttloutbalance = 0;
-                                                        $ttloutbalance += $total_outstanding_bal;
+                                                        // $ttloutbalance = 0;
+                                                        // $ttloutbalance += $total_outstanding_bal;
+                                                        $outstandingBalance = $row['total_expected_repayment_derived'] - $row['total_repayment_derived'];
+                                                        echo number_format($outstandingBalance, 2);
                                                         ?>
                                                     </th>
                                                     <th><a href="loan_report_view.php?edit=<?php echo $row["id"]; ?>" class="btn btn-info">View</a></th>
@@ -258,6 +258,17 @@ if (isset($_GET["view15"])) { ?>
                                     $('#outstand').DataTable();
                                 });
                             </script>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group mt-4">
+                                        <form method="POST" action="../composer/outstanding_loan_balance.php">
+                                            <button type="submit" name="downloadPDF" class="btn btn-primary">Download PDF</button>
+                                            <button type="submit" name="downloadExcel" class="btn btn-primary">Download Excel</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
