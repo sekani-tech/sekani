@@ -93,7 +93,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $term = $loan_term / 4;
       $tot_int = ((($interest / 100) * $prin_amt) * $term);
       $prin_due = $tot_int + $prin_amt;
-    }  else if ($repay_eve == "day") {
+    } else if ($repay_eve == "day") {
       $term = $loan_term / 4 / 7;
       $tot_int = ((($interest / 100) * $prin_amt) * $term);
       $prin_due = $tot_int + $prin_amt;
@@ -2077,64 +2077,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <br>
                 <!-- never be -->
                 <!-- saving -->
-                <div class="col-md-6">
-                  <div class="card card-pricing bg-success">
-                    <div class="card-body ">
-                      <div class="card-icon">
-                        <i class="material-icons">money</i>
-                      </div>
-                      <?php
-                      //  make API call
-                      $curl = curl_init();
-
-                      curl_setopt_array($curl, array(
-                        CURLOPT_URL => "http://score.restoration.africa:8000/predict?age=$age&loanAmount=$prin_amt&lga=$state_ai&children=$k_dep&education=$loe&gender=$gender&employLength=$k_yb&employerCategory=$k_emp_category&bankName=$k_other_bank",
-                        CURLOPT_RETURNTRANSFER => true,
-                        CURLOPT_ENCODING => "",
-                        CURLOPT_MAXREDIRS => 10,
-                        CURLOPT_TIMEOUT => 0,
-                        CURLOPT_FOLLOWLOCATION => true,
-                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                        CURLOPT_CUSTOMREQUEST => "POST",
-                      ));
-
-                      $response = curl_exec($curl);
-
-                      $err = curl_close($curl);
-                      // curl_close($curl);
-                      // echo $age."p". $prin_amt ."state". $state_ai ."dep". $k_dep ."leo". $loe, $gender, $k_yb, $k_emp_category, $k_other_bank;
-                      if ($err) {
-                        //    echo "cURL Error #:" . $err;
-                        echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "error",
-          title: "CONNECTION ERROR",
-          text: "TIMED OUT",
-          showConfirmButton: false,
-          timer: 3000
-      })
-      document.getElementById("cbvn").setAttribute("hidden", "");
-      document.getElementById("wbvn").removeAttribute("hidden");
-      $(":input[type=submit]").prop("disabled", true);
-  });
-  </script>
-  ';
-                        echo "NO INTERNET CONNECTION";
-                      } else {
-                        // echo $response;
-                        $obj = json_decode($response, TRUE);
-                        $status = $obj[0];
-                      }
-                      ?>
-                      <h3 class="card-title"> <?php echo ($status * 100); ?>% - LOAN REPAYMENT RISK ANALYSIS </h3>
-                      <p class="card-description">
-                        Artifical Intelligence Credit Scoring Repayment Analysis | <?php echo $auto_perc ?>% of System Computation.
-                      </p>
-                      <button type="submit" value="submit_b" name="submit" class="btn btn-white btn-round">Approve Plan</button>
-                    </div>
-                  </div>
-                </div>
+                
                 <!-- saving -->
                 <div class="col-md-6">
                   <div class="card card-pricing bg-warning">

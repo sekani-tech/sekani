@@ -118,7 +118,8 @@ $rezz = mysqli_query($connection, $activeq);
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <!-- <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" /> -->
+    <link rel="stylesheet" href="../assets/css/material_icons.css">
     <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
     <!-- Material Kit CSS -->
     <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
@@ -175,9 +176,9 @@ $rezz = mysqli_query($connection, $activeq);
     <script src="../datatable/jquery-3.3.1.min.js"></script>
     <script src="../datatable/jquery-3.3.2.js"></script> -->
     <!-- DataTables -->
-    <link rel="stylesheet" href="../datatable/jquery.dataTables.min.css">
+    <!-- <link rel="stylesheet" href="../datatable/jquery.dataTables.min.css">
     <link rel="stylesheet" href="../datatable/rowReorder.dataTables.min.css">
-    <link rel="stylesheet" href="../datatable/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="../datatable/responsive.dataTables.min.css"> -->
     <!-- DataTables scripts -->
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
     <!-- <script>
@@ -302,19 +303,6 @@ $rezz = mysqli_query($connection, $activeq);
                             Transaction
                         </a>
                     </li>
-                    <!-- <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#" aria-haspopup="false" aria-expanded="fasle">
-                    <i class="material-icons">account_balance_wallet</i>
-                    Transaction
-                  </a>
-                  <div class="dropdown-menu">
-                    <a href="transact.php" class="dropdown-item">Deposit/Withdrawal</a>
-                    <a href="#" class="dropdown-item">FTD Booking</a>
-                    <a href="lend.php" class="dropdown-item">Book Loan</a>
-                    <a href="cheque_book_posting.php" class="dropdown-item">CHQ/Pass Book Posting</a>
-                    <a href="teller_journal.php" class="dropdown-item">Vault Posting</a>
-                  </div>
-                </li> -->
                     <li class="nav-item dropdown">
                         <a class="nav-link" href="approval.php">
                             <i class="material-icons" style="color:#7f3f98">library_books</i>
