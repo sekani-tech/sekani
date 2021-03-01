@@ -52,7 +52,7 @@ if(isset($_POST["downloadPDF"])) {
         $loant = $q["loan_term"];
         $disb_date = $q["disbursement_date"];
         $repay = $q["maturedon_date"];
-        $bal = $q["total_outstanding_derived"];
+        $bal = $q["total_expected_repayment_derived"] - $q["total_repayment_derived"];
 
         $out .= '
         <tr>
@@ -133,10 +133,10 @@ if(isset($_POST["downloadExcel"])) {
 
   if ($parent_id == 0) {
       // Select loan data from all branches
-      $query = "SELECT * FROM loan WHERE int_id = '$sessint_id'";
+      $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
       $result = mysqli_query($connection, $query);
   } else {
-      $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND client_id IN (SELECT id FROM client WHERE branch_id = $branch_id)";
+      $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND client_id IN (SELECT id FROM client WHERE branch_id = $branch_id) AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
       $result = mysqli_query($connection, $query);
   }
 
@@ -164,7 +164,7 @@ if(isset($_POST["downloadExcel"])) {
       $loant = $q["loan_term"];
       $disb_date = $q["disbursement_date"];
       $repay = $q["maturedon_date"];
-      $bal = $q["total_outstanding_derived"];
+      $bal = $q["total_expected_repayment_derived"] - $q["total_repayment_derived"];
     }
 
     $active_sheet->setCellValue('A' . $count, $nae);
