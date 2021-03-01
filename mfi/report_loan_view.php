@@ -768,12 +768,11 @@ else if (isset($_GET["view19"])) {
                             <h4 class="card-title ">Expected Loan Repayment</h4>
                             <p class="card-category">
                                 <?php
-                                $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
+                                $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date' AND completed_derived = '0'";
                                 $result = mysqli_query($connection, $query);
-                                if ($result) {
-                                    $inr = mysqli_num_rows($result);
-                                    echo $inr;
-                                } ?> loans expected to be repayed today
+                                $inr = mysqli_num_rows($result);
+                                echo $inr . " loans expected to be repayed today";
+                                ?>
                             </p>
                         </div>
                         <div class="card-body">
@@ -781,7 +780,7 @@ else if (isset($_GET["view19"])) {
                                 <table id="ple" class="rtable display nowrap" style="width:100%">
                                     <thead class="text-primary">
                                         <?php
-                                        $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
+                                        $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date' AND completed_derived = '0'";
                                         $result = mysqli_query($connection, $query);
                                         ?>
                                         <th>
