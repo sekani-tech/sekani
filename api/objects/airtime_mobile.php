@@ -41,13 +41,21 @@ function airtimex(){
   $get_intwall = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id'");
   if (mysqli_num_rows($get_intwall) > 0) {
     $xcv = mysqli_fetch_array($get_intwall);
-    $wallet_balance = $xcv["bills_balance"];
+    $bills_balance = $xcv["bills_balance"];
+    $digits = 9;
+    $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+    $trans = "APP".$randms."AIRTIME".$int_id;
+    $date = date("Y-m-d");
+    $date2 = date('Y-m-d H:i:s');
+    $wallet_total_withdrawal = $xcv["total_withdrawal"];
 
-    if ($wallet_balance >= $amount) {
+    if ($bills_balance >= $amount) {
       $get_client = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$account_no' AND client_id = '$client_id' AND int_id = '$int_id'");
       if (mysqli_num_rows($get_client) > 0) {
         $xpc = mysqli_fetch_array($get_client);
+        $branch_id = $xpc["branch_id"];
         $account_balance = $xpc["account_balance_derived"];
+        $account_total_withdrawal = $xpc["last_withdrawal"];
 
         if ($account_balance >= $amount) {
           // EXECUTE
@@ -78,7 +86,8 @@ function airtimex(){
           if ($err) {
               echo json_encode(array("message" => "Network Error", "status" => "failed"));
           } else {
-              echo $response;
+              echo json_encode(array(
+              "int_id" => $int_id, "branch_id" => $branch_id, "transaction_id" => $trans, "bills_balance" => $bills_balance, "total_withdrawal" => $wallet_total_withdrawal, "account_balance" => $account_balance, "account_total_withdrawal" => $account_total_withdrawal)).$response;
               return true;
           }
         } else {
