@@ -176,9 +176,9 @@ $rezz = mysqli_query($connection, $activeq);
     <script src="../datatable/jquery-3.3.1.min.js"></script>
     <script src="../datatable/jquery-3.3.2.js"></script> -->
     <!-- DataTables -->
-    <!-- <link rel="stylesheet" href="../datatable/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="../datatable/jquery.dataTables.min.css">
     <link rel="stylesheet" href="../datatable/rowReorder.dataTables.min.css">
-    <link rel="stylesheet" href="../datatable/responsive.dataTables.min.css"> -->
+    <link rel="stylesheet" href="../datatable/responsive.dataTables.min.css">
     <!-- DataTables scripts -->
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
     <!-- <script>

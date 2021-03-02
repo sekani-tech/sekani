@@ -2,7 +2,9 @@
 include("../connect.php");
 // die($_POST["amount"]);
 // OUTTA HERE
-if (isset($_POST["amount"]) && isset($_POST["payment_date"]) && isset($_POST["payment_type"]) && isset($_POST["out_id"]) && isset($_POST["account_no"])) {
+session_start();
+$sessint_id =  $_SESSION['int_id'];
+if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
 
     $manual_amount = $_POST["amount"];
     $manual_payment_date = $_POST["payment_date"];
@@ -101,21 +103,23 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"]) && isset($_POST["pa
                         }
                         $update_repayment = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET principal_amount = '$prin_bal', interest_amount = '$int_bal', installment = '$install' WHERE id = '$manual_repayment_id' AND int_id = '$sessint_id'");
                         if ($update_repayment) {
+                            echo "Done";
                             echo '<script type="text/javascript">
-                $(document).ready(function(){
-                 swal({
-                  type: "success",
-                  title: "Repayment Successful",
-                  text: "Thank you",
-                 showConfirmButton: false,
-                  timer: 2000
-                  })
-                  });
-                 </script>
-                ';
+                                    $(document).ready(function(){
+                                    swal({
+                                    type: "success",
+                                    title: "Repayment Successful",
+                                    text: "Thank you",
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                    })
+                                    });
+                                    </script>
+                                    ';
                             $URL = "../../mfi/manual_recollection.php";
                             echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                         } else {
+                            echo "Failed";
                             echo '<script type="text/javascript">
               $(document).ready(function(){
                swal({
@@ -132,6 +136,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"]) && isset($_POST["pa
                             echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                         }
                     } else {
+                        echo "account issue";
                         echo '<script type="text/javascript">
               $(document).ready(function(){
                swal({
@@ -148,6 +153,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"]) && isset($_POST["pa
                         echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                     }
                 } else {
+                    echo "6";
                     echo '<script type="text/javascript">
       $(document).ready(function(){
        swal({
@@ -164,6 +170,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"]) && isset($_POST["pa
                     echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                 }
             } else {
+                echo "5";
                 echo '<script type="text/javascript">
           $(document).ready(function(){
            swal({
@@ -178,6 +185,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"]) && isset($_POST["pa
           ';
             }
         } else {
+            echo "4";
             echo '<script type="text/javascript">
       $(document).ready(function(){
        swal({
@@ -194,6 +202,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"]) && isset($_POST["pa
             echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
         }
     } else {
+        echo "3";
         echo '<script type="text/javascript">
         $(document).ready(function(){
          swal({
@@ -210,6 +219,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"]) && isset($_POST["pa
         echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
     }
 } else {
+    echo "1";
     echo '<script type="text/javascript">
       $(document).ready(function(){
        swal({

@@ -23,6 +23,22 @@ if (isset($_GET["view"]) && $_GET["view"] != "") {
     $outp = $st["prin_sum"];
     $outt = $stt["int_sum"];
     $duebalance = $outp + $outt;
+
+    if(isset($_SESSION["reversal"]) && $_SESSION["reversal"] == 1) {
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "success",
+                title: "Reversal Transaction",
+                text: "Transaction Successful",
+                showConfirmButton: false,
+                timer: 2000
+            })
+        });
+        </script>
+        ';
+        unset($_SESSION["reversal"]);
+      }
 ?>
     <!-- do your front end -->
     <div class="content">
@@ -186,7 +202,7 @@ if (isset($_GET["view"]) && $_GET["view"] != "") {
                                                                                         </select>
                                                                                     </div>
                                                                                 </div>
-                                                                                <input type="text" name="id" id="" value="<?php echo $row["out_id"]; ?>" hidden readonly>
+                                                                                <input type="text" name="out_id" id="" value="<?php echo $row["id"]; ?>" hidden readonly>
                                                                             </div>
 
                                                                             <div class="modal-footer">
