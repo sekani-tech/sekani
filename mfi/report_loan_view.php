@@ -768,12 +768,11 @@ else if (isset($_GET["view19"])) {
                             <h4 class="card-title ">Expected Loan Repayment</h4>
                             <p class="card-category">
                                 <?php
-                                $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date'";
+                                $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date' AND completed_derived = '0'";
                                 $result = mysqli_query($connection, $query);
-                                if ($result) {
-                                    $inr = mysqli_num_rows($result);
-                                    echo $inr;
-                                } ?> loans expected to be repayed today
+                                $inr = mysqli_num_rows($result);
+                                echo $inr . " loans expected to be repayed today";
+                                ?>
                             </p>
                         </div>
                         <div class="card-body">
@@ -781,7 +780,7 @@ else if (isset($_GET["view19"])) {
                                 <table id="ple" class="rtable display nowrap" style="width:100%">
                                     <thead class="text-primary">
                                         <?php
-                                        $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date'";
+                                        $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date' AND completed_derived = '0'";
                                         $result = mysqli_query($connection, $query);
                                         ?>
                                         <th>
@@ -828,10 +827,10 @@ else if (isset($_GET["view19"])) {
                                                     ?>
                                                     <th><?php echo $nae; ?></th>
                                                     <?php
-                                                    $get_loan = mysqli_query($connection, "SELECT loan_term, total_outstanding_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
+                                                    $get_loan = mysqli_query($connection, "SELECT loan_term, total_expected_repayment_derived, total_repayment_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
                                                     $mik = mysqli_fetch_array($get_loan);
                                                     $l_n = $mik["loan_term"];
-                                                    $t_o = $mik["total_outstanding_derived"];
+                                                    $t_o = $mik['total_expected_repayment_derived'] - $mik['total_repayment_derived'];
                                                     ?>
                                                     <th>NGN <?php echo number_format($row["principal_amount"], 2); ?></th>
                                                     <th>NGN <?php echo number_format($row["interest_amount"], 2); ?></th>
@@ -1358,30 +1357,9 @@ else if (isset($_GET["view19"])) {
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="form-group">
-                                        <form method="POST" action="../composer/arrear_report.php">
-                                            <input hidden name="id" type="text" value="<?php echo $id; ?>" />
-                                            <input hidden name="start" type="text" value="<?php echo $start; ?>" />
-                                            <input hidden name="end" type="text" value="<?php echo $currentdate; ?>" />
-                                            <script>
-                                                $(document).ready(function() {
-                                                    $('#disbursed').on("click", function() {
-                                                        swal({
-                                                            type: "success",
-                                                            title: "DISBURSED LOAN REPORT",
-                                                            text: "Printing Successful",
-                                                            showConfirmButton: false,
-                                                            timer: 3000
-
-                                                        })
-                                                    });
-                                                });
-                                            </script>
-                                        </form>
-                                    </div>
                                     <div class="table-responsive">
                                         <table id="areas" class="rtable display nowrap" style="width:100%">
-                                            <thead class=" text-primary">
+                                            <thead class="text-primary">
                                                 <?php
                                                 $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= '1'";
                                                 $result = mysqli_query($connection, $query);
@@ -1392,7 +1370,9 @@ else if (isset($_GET["view19"])) {
                                                 <th>
                                                     Principal Due
                                                 </th>
-                                                <th>Days in Arrears</th>
+                                                <th>
+                                                    Days in Arrears
+                                                </th>
                                                 <th>
                                                     Interest Due
                                                 </th>
@@ -1435,7 +1415,7 @@ else if (isset($_GET["view19"])) {
                                                             ?>
                                                             <th><?php echo $nae; ?></th>
                                                             <?php
-                                                            $get_loan = mysqli_query($connection, "SELECT loan_term, total_outstanding_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
+                                                            $get_loan = mysqli_query($connection, "SELECT loan_term, total_expected_repayment_derived, total_repayment_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
                                                             $mik = mysqli_fetch_array($get_loan);
                                                             $l_n = $mik["loan_term"];
                                                             $eos = $row["installment"];
@@ -1456,12 +1436,11 @@ else if (isset($_GET["view19"])) {
                                                             $sf = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND id = '$loan_id' AND client_id = '$cli_id'";
                                                             $do = mysqli_query($connection, $sf);
                                                             while ($sd = mysqli_fetch_array($do)) {
-
-                                                                $outbalance = $sd['total_outstanding_derived'];
+                                                                $outbalance = $sd['total_expected_repayment_derived'] - $sd['total_repayment_derived'];
                                                             }
                                                             ?>
                                                             <th><?php echo number_format($outbalance, 2); ?></th>
-                                                            <th></th>
+                                                            <th><?php echo $eod; ?></th>
 
                                                             <?php
 
@@ -1481,14 +1460,12 @@ else if (isset($_GET["view19"])) {
                                             });
                                         </script>
                                     </div>
-                                </div>
-                            </div>
 
-                            <div class="row mt-4">
-                                <div class="col-12">
-                                    <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download
-                                        PDF
-                                    </button>
+                                    <div class="form-group mt-4">
+                                        <form method="POST" action="../composer/arrear_report.php">
+                                            <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
