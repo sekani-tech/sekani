@@ -4,8 +4,6 @@ $page_title = "Loan Report";
 $destination = "report_loan_view.php?view16";
 include("header.php");
 
-?>
-<?php 
 $sint_id = $_SESSION['int_id'];
 $id = $_GET['edit'];
 $data = mysqli_query($connection, "SELECT * FROM loan WHERE id = '$id ' AND int_id = '$sint_id'");
@@ -257,11 +255,40 @@ $overdue_interest = number_format($wtyx["overdue_interest"], 2);
                             <b><h4 style="text-align:right;" class="card-title">Timely Repayments</h4></b>
                           </div>
                           <div class="col-md-3">
+                            <?php
+                              // Query below is meant to calculate timely repayments for a client who has taken one or more loans
+                              // $query = "SELECT * FROM loan_repayment_schedule l JOIN client c ON l.client_id = c.id WHERE l.client_id = '$client_id' AND duedate >= obligations_met_on_date";
+
+                              // Query below is meant to calculate timely repayments for a specific loan taken
+                              $loan_id = $_GET["edit"];
+                              $query = "SELECT * FROM loan_repayment_schedule WHERE loan_id = '$loan_id' AND duedate >= obligations_met_on_date";
+                              $result = mysqli_query($connection, $query);
+
+                              if(mysqli_num_rows($result) > 0) {
+                                $timely_repayments = mysqli_num_rows($result);
+                              } else {
+                                $timely_repayments = 0;
+                              }
+
+                              echo $timely_repayments;
+                            ?>
                           </div>
                           <div class="col-md-3">
                             <b><h4 style="text-align:right;" class="card-title">Last Payment</h4></b>
                           </div>
                           <div class="col-md-3">
+                            <?php
+                              $loan_id = $_GET["edit"];
+                              $query = "SELECT * FROM `loan_repayment_schedule` WHERE loan_id = '$loan_id' ORDER BY id DESC LIMIT 1";
+                              $result = mysqli_query($connection, $query);
+                              if(mysqli_num_rows($result) > 0) {
+                                $row = mysqli_fetch_array($result);
+                                $lastPayment = $row['principal_completed_derived'] + $row['interest_completed_derived'] + $row['fee_charges_completed_derived'] + $row['penalty_charges_completed_derived'];
+                                echo '&#x20A6; ' . number_format($lastPayment, 2);
+                              } else {
+                                echo 'NIL';
+                              }
+                            ?>
                           </div>
                           <div class="col-md-3">
                             <b><h4 style="text-align:right;" class="card-title">Amount in Arrears</h4></b>
@@ -273,6 +300,42 @@ $overdue_interest = number_format($wtyx["overdue_interest"], 2);
                             <b><h4 style="text-align:right;" class="card-title">Next Payment</h4></b>
                           </div>
                           <div class="col-md-3">
+                              <?php
+                                $today = date('Y-m-d');
+                                $query = "SELECT * FROM `loan_repayment_schedule` WHERE loan_id = '$loan_id' AND duedate < '$today'";
+                                $result = mysqli_query($connection, $query);
+
+                                $principal_outstanding_derived = 0;
+                                $interest_outstanding_derived = 0;
+                                $fee_charges_outstanding_derived = 0;
+                                $penalty_charges_outstanding_derived = 0;
+
+                                while($row = mysqli_fetch_array($result)) {
+                                  $principal_outstanding_derived += $row['principal_amount'] - $row['principal_completed_derived'];
+                                  $interest_outstanding_derived += $row['interest_amount'] - $row['interest_completed_derived'];
+                                  $fee_charges_outstanding_derived += $row['fee_charges_amount'] - $row['fee_charges_completed_derived'];
+                                  $penalty_charges_outstanding_derived += $row['penalty_charges_amount'] - $row['penalty_charges_completed_derived'];
+                                }
+
+                                $outstanding_derived1 = $principal_outstanding_derived + $interest_outstanding_derived + $fee_charges_outstanding_derived + $penalty_charges_outstanding_derived;
+                                  
+                                $query = "SELECT * FROM `loan_repayment_schedule` where loan_id = '$loan_id' AND duedate >= $today LIMIT 1";
+                                $result = mysqli_query($connection, $query);
+
+                                if(mysqli_num_rows($result) > 0) {
+                                  $row = mysqli_fetch_array($result);
+                                  $principal_outstanding_derived = $row['principal_amount'] - $row['principal_completed_derived'];
+                                  $interest_outstanding_derived = $row['interest_amount'] - $row['interest_completed_derived'];
+                                  $fee_charges_outstanding_derived = $row['fee_charges_amount'] - $row['fee_charges_completed_derived'];
+                                  $penalty_charges_outstanding_derived = $row['penalty_charges_amount'] - $row['penalty_charges_completed_derived'];
+                                }
+
+                                $outstanding_derived2 = $principal_outstanding_derived + $interest_outstanding_derived + $fee_charges_outstanding_derived + $penalty_charges_outstanding_derived;
+
+                                $next_payment = $outstanding_derived1 + $outstanding_derived2;
+
+                                echo '&#x20A6; ' . number_format($next_payment, 2);
+                              ?>
                           </div>
                           <div class="col-md-3">
                             <b><h4 style="text-align:right;" class="card-title">Days in Arrears</h4></b>
@@ -293,7 +356,7 @@ $overdue_interest = number_format($wtyx["overdue_interest"], 2);
                           </div>
                           <div class="col-md-3">
                             <?php
-                              $final_repayment_date = date("Y-m-d", strtotime("+" . $loanterm . "Months", strtotime($first_repayment_date)));
+                              $final_repayment_date = date("Y-m-d", strtotime("+" . $loanterm - 1 . "Months", strtotime($first_repayment_date)));
                               echo $final_repayment_date;
                             ?>
                           </div>
