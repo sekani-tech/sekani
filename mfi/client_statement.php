@@ -28,6 +28,7 @@ if(isset($_SESSION["reversal"]) && $_SESSION["reversal"] == 1) {
   </script>
   ';
   unset($_SESSION["reversal"]);
+  unset($_SESSION["client_id"]);
 }
 
 if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"])) {
@@ -172,6 +173,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
                             // $kx = mysqli_fetch_array($resultmm);
                             // $querytoget = "SELECT * FROM account_transaction WHERE account_id = '65' && int_id = '5' && branch_id = '1' && transaction_date BETWEEN '2019-01-01' AND '2020-03-03' ORDER BY transaction_date ASC";
                             $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date, id ASC");
+                            
                             // $result = mysqli_query($connection, $querytoget);
                             // $v = 0;
                             ?>
@@ -219,7 +221,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
                                   // $mink = mysqli_fetch_array($newnext);
                                   // $qwe = $mink["running_balance_derived"];
                                   ?>
-                                  <td class="column6"><?php echo  number_format($nxtbal, 2); ?></td>
+                                  <td class="column6"><?php echo number_format($nxtbal, 2); ?></td>
                                   <td>
                                     <!-- Button trigger modal -->
                                     <a href="" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?php echo $row["id"]; ?>">Edit</a>
@@ -439,20 +441,20 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
 <?php
 } else {
   echo '<script type="text/javascript">
-  $(document).ready(function(){
-   swal({
-    type: "error",
-    title: "Client Statement Cant Read Form",
-    text: "Please Verfiy Account Properly",
-   showConfirmButton: false,
-    timer: 2000
-    }).then(
-    function (result) {
-      history.go(-1);
-    }
-    )
+    $(document).ready(function() {
+      swal({
+        type: "error",
+        title: "Client Statement Can\'t Read Form",
+        text: "Please Verfiy Account Properly",
+        showConfirmButton: false,
+          timer: 2000
+      }).then(
+        function (result) {
+          history.go(-1);
+        }
+      )
     });
-   </script>
+  </script>
   ';
   
 }
