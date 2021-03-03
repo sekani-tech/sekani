@@ -101,7 +101,7 @@ if (isset($_POST['id']) && isset($_POST['account_number'])) {
                                     teller_id, is_vault, is_reversed, transaction_date, amount, running_balance_derived, overdraft_amount_derived, balance_end_date_derived,
                                     balance_number_of_days_derived, cumulative_balance_derived, created_date, appuser_id, manually_adjusted_or_reversed, credit)
                                     VALUES ('$institutionID', '$branchId', '$clientId', '$transactionId', '$description', '$transactionType',
-                                    '$tellerId', 0, 0, '$transactionDate', '$amount', '$reversedAccountBalance', '$overdraftAmountDerived', '$balanceEndDateDerived',
+                                    '$tellerId', 0, 0, '$transactionDate', '$amount', '$newInstitutionBalance', '$overdraftAmountDerived', '$balanceEndDateDerived',
                                     '$balanceNoOfDaysDerived', '$cumulativeBalanceDerived', '$createdDate', '$appUserId', 1, '$amount')";
                                     
                                 } else if ($transactionType == "debit") {
@@ -109,7 +109,7 @@ if (isset($_POST['id']) && isset($_POST['account_number'])) {
                                     teller_id, is_vault, is_reversed, transaction_date, amount, running_balance_derived, overdraft_amount_derived, balance_end_date_derived,
                                     balance_number_of_days_derived, cumulative_balance_derived, created_date, appuser_id, manually_adjusted_or_reversed, debit)
                                     VALUES ('$institutionID', '$branchId', '$clientId', '$transactionId', '$description', '$transactionType',
-                                    '$tellerId', 0, 0, '$transactionDate', '$amount', '$reversedAccountBalance', '$overdraftAmountDerived', '$balanceEndDateDerived',
+                                    '$tellerId', 0, 0, '$transactionDate', '$amount', '$newInstitutionBalance', '$overdraftAmountDerived', '$balanceEndDateDerived',
                                     '$balanceNoOfDaysDerived', '$cumulativeBalanceDerived', '$createdDate', '$appUserId', 1, '$amount')";
                                 }
                                 
