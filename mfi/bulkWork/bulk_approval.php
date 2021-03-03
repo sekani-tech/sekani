@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
                         $doneBefore = selectSpecificData('account_transaction', ['transaction_id'], $doneBeforeCon);
                         if ($doneBefore) {
                             $showKey = $key + 1;
-                            $_SESSION["Lack_of_intfund_$randms"] = "Sorry This traction is already done";
+                            $_SESSION["Lack_of_intfund_$randms"] = "Sorry this transaction is already done";
                             header("Location: ../transact_approval.php?messageBulkApp1=$showKey");
                             exit();
                         }
@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
                         $accountDetails = selectOne('account', ['account_no' => $transactionCacheAccountNo]);
                         if (!$accountDetails) {
                             $showKey = $key + 1;
-                            $_SESSION["Lack_of_intfund_$randms"] = "Sorry Account Number is  not Found";
+                            $_SESSION["Lack_of_intfund_$randms"] = "Sorry Account Number is Not Found";
                             header("Location: ../transact_approval.php?messageBulkApp2=$showKey");
                             exit();
                         }

@@ -244,7 +244,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             // damn with
                             $insert_loan_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
                  `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
-                VALUES ('{$int_id}', '{$branch_id}', '{$loan_port}', '{$transid}', 'Loan Repayment Principal / {$clientt_name}', 'Loan Repayment Principal', '0', '0', '{$gen_date}',
+                VALUES ('{$int_id}', '{$branch_id}', '{$loan_port}', '{$transid}', 'Loan Repayment Principal / {$clientt_name}', 'Loan Repayment Principal', '0', '0', '{$transaction_date}',
                  '{$collection_principal}', '{$updated_loan_port}', '{$updated_loan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_principal}', '0.00')");
                             if ($insert_loan_port) {
                               //  go for the interest
@@ -252,7 +252,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               if ($update_the_int_loan) {
                                 $insert_i_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
              `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
-            VALUES ('{$int_id}', '{$branch_id}', '{$int_loan_port}', '{$transid}', 'Loan Repayment Interest / {$clientt_name}', 'Loan Repayment Interest', '0', '0', '{$gen_date}',
+            VALUES ('{$int_id}', '{$branch_id}', '{$int_loan_port}', '{$transid}', 'Loan Repayment Interest / {$clientt_name}', 'Loan Repayment Interest', '0', '0', '{$transaction_date}',
              '{$collection_interest}', '{$intloan_port}', '{$intloan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_interest}', '0.00')");
                                 // done
                               } else {
@@ -285,7 +285,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             // damn with
                             $insert_loan_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
                  `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
-                VALUES ('{$int_id}', '{$branch_id}', '{$loan_port}', '{$transid}', 'Loan Repayment Principal / {$clientt_name}', 'Loan Repayment Principal', '0', '0', '{$gen_date}',
+                VALUES ('{$int_id}', '{$branch_id}', '{$loan_port}', '{$transid}', 'Loan Repayment Principal / {$clientt_name}', 'Loan Repayment Principal', '0', '0', '{$transaction_date}',
                  '{$collection_principal}', '{$updated_loan_port}', '{$updated_loan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_principal}', '0.00')");
                             if ($insert_loan_port) {
                               //  go for the interest
@@ -293,7 +293,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               if ($update_the_int_loan) {
                                 $insert_i_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
              `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
-            VALUES ('{$int_id}', '{$branch_id}', '{$int_loan_port}', '{$transid}', 'Loan Repayment Interest / {$clientt_name}', 'Loan Repayment Interest', '0', '0', '{$gen_date}',
+            VALUES ('{$int_id}', '{$branch_id}', '{$int_loan_port}', '{$transid}', 'Loan Repayment Interest / {$clientt_name}', 'Loan Repayment Interest', '0', '0', '{$transaction_date}',
              '{$collection_interest}', '{$intloan_port}', '{$intloan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_interest}', '0.00')");
                                 // done
                               } else {
@@ -366,7 +366,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
                                 transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
                                   created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$bank_gl_code}', '{$transid}', '{$description}', '{$trans_type}', '{$staff_id}',
-                                   '{$gen_date}', '{$amount}', '{$new_gl_balx}', '{$amount}', '{$gen_date}', '{$amount}')";
+                                   '{$transaction_date}', '{$amount}', '{$new_gl_balx}', '{$amount}', '{$gen_date}', '{$amount}')";
                           $mxc = mysqli_query($connection, $gl_acc);
                           if ($mxc) {
                             echo '<script type="text/javascript">
@@ -398,7 +398,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                                created_date, appuser_id, credit) VALUES ('{$sessint_id}', '{$branch_id}',
                               '{$client_id}', '{$transid}', '{$description}', '{$trans_type}', '{$teller_id}', '{$irvs}',
-                              '{$gen_date}', '{$amount}', '{$new_int_bal}', '{$amount}',
+                              '{$transaction_date}', '{$amount}', '{$new_int_bal}', '{$amount}',
                               '{$gen_date}', '{$appuser_id}', '{$amount}')";
                           $res9 = mysqli_query($connection, $trust);
                           if ($res9) {
@@ -598,7 +598,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $gl_acc1 = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
                     transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
                       created_date, debit) VALUES ('{$sessint_id}', '{$branch_id}', '{$bank_gl_code}', '{$transid}', '{$description}', '{$trans_type2}', '{$staff_id}',
-                       '{$gen_date}', '{$amount}', '{$new_gl_bal2x}', '{$amount}', '{$gen_date}', '{$amount}')";
+                       '{$transaction_date}', '{$amount}', '{$new_gl_bal2x}', '{$amount}', '{$gen_date}', '{$amount}')";
                             $mkl = mysqli_query($connection, $gl_acc1);
                             if ($mkl) {
                               echo '<script type="text/javascript">
@@ -650,7 +650,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                transaction_date, amount, running_balance_derived, overdraft_amount_derived,
                                created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
                               '{$client_id}', '{$transid}', '{$description}', '{$trans_type2}', '{$teller_id}', '{$irvs}',
-                              '{$gen_date}', '{$amount}', '{$new_int_bal2}', '{$amount}',
+                              '{$transaction_date}', '{$amount}', '{$new_int_bal2}', '{$amount}',
                               '{$gen_date}', '{$appuser_id}', '{$amount}')";
                             $res9 = mysqli_query($connection, $trust);
                             if ($res9) {
@@ -775,7 +775,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
              transaction_date, amount, running_balance_derived, overdraft_amount_derived,
              created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_idm}',
              '{$gl_codex}', '{$trans_id}', '{$description}', 'Debit', '{$irvs}',
-             '{$gen_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
+             '{$transaction_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
              '{$gen_date}', '{$staff_id}', '{$gl_amt}')";
                       $res4 = mysqli_query($connection, $iat2);
                       if ($res4) {
