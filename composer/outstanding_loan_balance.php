@@ -23,7 +23,7 @@ if(isset($_POST['downloadPDF'])) {
     function fill_report($connection, $int_id)
     {
         $out = '';
-        $query = "SELECT * FROM loan WHERE int_id = '$int_id' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
+        $query = "SELECT * FROM loan WHERE int_id = '$int_id' AND (total_outstanding_derived <> 0)";
         $result = mysqli_query($connection, $query);
         
         if (mysqli_num_rows($result) > 0) {
@@ -36,7 +36,7 @@ if(isset($_POST['downloadPDF'])) {
                 $principalAmount = $row["principal_amount"];
                 $disbursementDate = $row["disbursement_date"];
                 $repaymentDate = $row["repayment_date"];
-                $outstandingBalance = $row['total_expected_repayment_derived'] - $row['total_repayment_derived'];
+                $outstandingBalance = $row['total_outstanding_derived'];
 
                 $out .= '
                     <tr>
@@ -117,7 +117,7 @@ if(isset($_POST['downloadPDF'])) {
 
 if(isset($_POST['downloadExcel'])) {
 
-    $query = "SELECT * FROM loan WHERE int_id = '$int_id' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
+    $query = "SELECT * FROM loan WHERE int_id = '$int_id' AND (total_outstanding_derived <> 0)";
     $result = mysqli_query($connection, $query);
     
     $file = new Spreadsheet();
@@ -151,7 +151,7 @@ if(isset($_POST['downloadExcel'])) {
             $repaymentDate = $row["repayment_date"];
             $active_sheet->setCellValue('E' . $count, $repaymentDate);
 
-            $outstandingBalance = $row['total_expected_repayment_derived'] - $row['total_repayment_derived'];
+            $outstandingBalance = $row["total_outstanding_derived"];
             $active_sheet->setCellValue('F' . $count, $outstandingBalance);
 
             $count++;

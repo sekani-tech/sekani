@@ -136,9 +136,9 @@ $paid_interest = $paid_interest;
 
 // outstanding
 $date_new = date('Y-m-d');
-$query_principal_outstanding = mysqli_query($connection, "SELECT principal_outstanding_derived FROM `loan` WHERE int_id = '$sessint_id' AND id = '$id'");
+$query_principal_outstanding = mysqli_query($connection, "SELECT SUM(principal_amount) AS outstanding_principal FROM `loan_repayment_schedule` WHERE (int_id = '$sessint_id' AND loan_id = '$id') AND installment = 1");
 $desx = mysqli_fetch_array($query_principal_outstanding);
-$outstanding_principal_x = number_format($desx["principal_outstanding_derived"], 2);
+$outstanding_principal_x = number_format($desx["outstanding_principal"], 2);
 // interest
 $query_interest_outstanding = mysqli_query($connection, "SELECT SUM(interest_amount) AS outstanding_interest FROM `loan_repayment_schedule` WHERE (int_id = '$sessint_id' AND loan_id = '$id') AND installment = 1");
 $desxxx = mysqli_fetch_array($query_interest_outstanding);
@@ -148,11 +148,11 @@ $outstanding_interest_x = number_format($desxxx["outstanding_interest"], 2);
 // over due query
 $query_overdue_principal = mysqli_query($connection, "SELECT SUM(principal_amount) AS overdue_principal FROM `loan_arrear` WHERE (int_id = '$sessint_id' AND loan_id = '$id') AND installment = 1");
 $wty = mysqli_fetch_array($query_overdue_principal);
-$overdue_principal = number_format($wty["overdue_principal"], 2);
+$overdue_principal = $wty["overdue_principal"];
 // $query_overdue_interest = mysqli_query($connection, "");
 $query_overdue_interest = mysqli_query($connection, "SELECT SUM(interest_amount) AS overdue_interest FROM `loan_arrear` WHERE (int_id = '$sessint_id' AND loan_id = '$id') AND installment = 1");
 $wtyx = mysqli_fetch_array($query_overdue_interest);
-$overdue_interest = number_format($wtyx["overdue_interest"], 2);
+$overdue_interest = $wtyx["overdue_interest"];
 
 ?>
 <input type="text" hidden id = "principal_amount" value="<?php echo $principal;?>" name=""/>
@@ -223,9 +223,51 @@ $overdue_interest = number_format($wtyx["overdue_interest"], 2);
                           </div>
                           <div class="col-md-3" style="color:green">
                             <?php
-                              
+                              $today = date('Y-m-d');
+                              $thirty_days_before_today = date("Y-m-d", strtotime("-30 Days", strtotime($today)));
+                              $loan_id = $_GET["edit"];
+
+                              $performingQuery = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND loan_id = '$loan_id' AND loan_id NOT IN (SELECT loan_id FROM loan_arrear) AND installment >= '1' AND (duedate BETWEEN '$thirty_days_before_today' AND '$today')";
+                              // *(duedate BETWEEN '$thirty_days_before_today' AND '$today')
+                              $performing = mysqli_query($connection, $performingQuery);
+                              $performing = mysqli_fetch_array($performing);
+                              $performing_principal = $performing['principal_amount'];
+                              if($performing_principal != '') {
+                                echo "<b>Performing</b>";
+                              }
+
+                              $pandwQuery = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE int_id = '$sessint_id' AND loan_id = '$loan_id' AND installment >= '1' AND (counter BETWEEN '31' AND '60') AND (duedate BETWEEN '$thirty_days_before_today' AND '$today')";
+                              $pandw = mysqli_query($connection, $pandwQuery);
+                              $pandw = mysqli_fetch_array($pandw);
+                              $pandw_principal = $pandw['principal_amount'];
+                              if($pandw_principal != '') {
+                                echo "<b>Pass and Watch</b>";
+                              }
+
+                              $substandardQuery = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE int_id = '$sessint_id' AND loan_id = '$loan_id' AND installment >= '1' AND (counter BETWEEN '61' AND '90') AND (duedate BETWEEN '$thirty_days_before_today' AND '$today')";
+                              $substandard = mysqli_query($connection, $substandardQuery);
+                              $substandard = mysqli_fetch_array($substandard);
+                              $substandard_principal = $substandard['principal_amount'];
+                              if($substandard_principal != '') {
+                                echo "<b>Substandard</b>";
+                              }
+
+                              $doubtfulQuery = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE int_id = '$sessint_id' AND loan_id = '$loan_id' AND installment >= '1' AND (counter BETWEEN '91' AND '180') AND (duedate BETWEEN '$thirty_days_before_today' AND '$today')";
+                              $doubtful = mysqli_query($connection, $doubtfulQuery);
+                              $doubtful = mysqli_fetch_array($doubtful);
+                              $doubtful_principal = $doubtful['principal_amount'];
+                              if($doubtful_principal != '') {
+                                echo "<b>Doubtful</b>";
+                              }
+
+                              $lostQuery = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE int_id = '$sessint_id' AND loan_id = '$loan_id' AND installment >= '1' AND counter > '180' AND (duedate BETWEEN '$thirty_days_before_today' AND '$today')";
+                              $lost = mysqli_query($connection, $lostQuery);
+                              $lost = mysqli_fetch_array($lost);
+                              $lost_principal = $lost['principal_amount'];
+                              if($lost_principal != '') {
+                                echo "<b>Lost</b>";
+                              }
                             ?>
-                            <b>Active</b>
                           </div>
                           <div class="col-md-3">
                             <b><h4 style="font-weight: 100px; text-align:right;" class="card-title">Client Name</h4></b>
@@ -294,7 +336,7 @@ $overdue_interest = number_format($wtyx["overdue_interest"], 2);
                             <b><h4 style="text-align:right;" class="card-title">Amount in Arrears</h4></b>
                           </div>
                           <div class="col-md-3">
-                            <?php echo $overdue_principal + $overdue_interest; ?>
+                            <?php echo '&#x20A6; ' . number_format($overdue_principal + $overdue_interest, 2); ?>
                           </div>
                           <div class="col-md-3">
                             <b><h4 style="text-align:right;" class="card-title">Next Payment</h4></b>
@@ -362,7 +404,7 @@ $overdue_interest = number_format($wtyx["overdue_interest"], 2);
                           </div>
                         </div>
                       </div>
-                      <table class="table table-bordered">
+                      <table class="table table-bordered mt-4">
                         <thead>
                           <tr>
                               <th></th>
@@ -495,7 +537,7 @@ $overdue_interest = number_format($wtyx["overdue_interest"], 2);
                         $cm = mysqli_fetch_array($query_client);
                         $firstname = strtoupper($cm["firstname"]." ".$cm["lastname"]);
                         $account_no = $x["account_no"];
-                        $outstanding = $x['total_expected_repayment_derived'] - $x['total_repayment_derived'];
+                        $outstanding = $x['total_outstanding_derived'];
                         $outstanding = number_format($outstanding, 2);
                     
                         $sum_tot = mysqli_query($connection, "SELECT SUM(principal_amount) AS prin_sum FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND loan_id = '$loan_id'");

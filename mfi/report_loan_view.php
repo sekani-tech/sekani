@@ -135,12 +135,12 @@ if (isset($_GET["view15"])) { ?>
                             <div class="card card-profile ml-auto mr-auto" style="max-width: 370px; max-height: 360px">
                                 <div class="card-body ">
                                     <?php
-                                        $accountquery = "SELECT total_expected_repayment_derived, total_repayment_derived FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id";
+                                        $accountquery = "SELECT total_outstanding_derived FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id";
                                         $result = mysqli_query($connection, $accountquery);
                                         
                                         $cumulativeTotalOutstandingLoans = 0;
                                         while ($loan = mysqli_fetch_array($result)) {
-                                            $total_outstanding_bal = $loan['total_expected_repayment_derived'] - $loan['total_repayment_derived'];
+                                            $total_outstanding_bal = $loan['total_outstanding_derived'];
                                             $cumulativeTotalOutstandingLoans += $total_outstanding_bal;
                                         }
                                     ?>
@@ -153,7 +153,7 @@ if (isset($_GET["view15"])) { ?>
                                 <table id="outstand" class="rtable display nowrap" style="width:100%">
                                     <thead class="text-primary">
                                         <?php
-                                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
+                                        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_outstanding_derived <> 0)";
                                         $result = mysqli_query($connection, $query);
                                         ?>
                                         <th>
@@ -238,7 +238,7 @@ if (isset($_GET["view15"])) { ?>
                                                         // $ttloutstanding = $outstanding + $outstandingtwo;
                                                         // $ttloutbalance = 0;
                                                         // $ttloutbalance += $total_outstanding_bal;
-                                                        $outstandingBalance = $row['total_expected_repayment_derived'] - $row['total_repayment_derived'];
+                                                        $outstandingBalance = $row['total_outstanding_derived'];
                                                         echo number_format($outstandingBalance, 2);
                                                         ?>
                                                     </th>
