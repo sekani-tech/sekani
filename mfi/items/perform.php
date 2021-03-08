@@ -22,7 +22,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
       $individual = mysqli_fetch_array($individual);
       $individualCount = $individual["client_type_count"];
 
-      $individual = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.client_type = 'individual' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+      $individual = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.client_type = 'individual' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
       $individual = mysqli_fetch_array($individual);
       $individualAmount = $individual["outstanding_loans"];
 
@@ -31,7 +31,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
       $joint = mysqli_fetch_array($joint);
       $jointCount = $joint["client_type_count"];
 
-      $joint = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.client_type = 'joint' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+      $joint = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.client_type = 'joint' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
       $joint = mysqli_fetch_array($joint);
       $jointAmount = $joint["outstanding_loans"];
 
@@ -40,7 +40,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
       $corporate = mysqli_fetch_array($corporate);
       $corporateCount = $corporate["client_type_count"];
 
-      $corporate = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.client_type = 'corporate' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+      $corporate = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.client_type = 'corporate' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
       $corporate = mysqli_fetch_array($corporate);
       $corporateAmount = $corporate["outstanding_loans"];
 
@@ -49,7 +49,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
       $group = mysqli_fetch_array($group);
       $groupCount = $group["client_type_count"];
 
-      $group = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.client_type = 'group' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+      $group = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.client_type = 'group' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
       $group = mysqli_fetch_array($group);
       $groupAmount = $group["outstanding_loans"];
 
@@ -58,7 +58,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
       $staff = mysqli_fetch_array($staff);
       $staffCount = $staff["staff_count"];
 
-      $staff = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.is_staff = '1' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+      $staff = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.is_staff = '1' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
       $staff = mysqli_fetch_array($staff);
       $staffAmount = $staff["outstanding_loans"];
 
@@ -85,7 +85,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
       $individual = mysqli_fetch_array($individual);
       $individualCount = $individual["client_type_count"];
 
-      $individual = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.branch_id = '$branch_id' AND c.client_type = 'individual' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+      $individual = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.branch_id = '$branch_id' AND c.client_type = 'individual' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
       $individual = mysqli_fetch_array($individual);
       $individualAmount = $individual["outstanding_loans"];
 
@@ -94,7 +94,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
       $joint = mysqli_fetch_array($joint);
       $jointCount = $joint["client_type_count"];
 
-      $joint = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.branch_id = '$branch_id' AND c.client_type = 'joint' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+      $joint = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.branch_id = '$branch_id' AND c.client_type = 'joint' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
       $joint = mysqli_fetch_array($joint);
       $jointAmount = $joint["outstanding_loans"];
 
@@ -103,7 +103,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
       $corporate = mysqli_fetch_array($corporate);
       $corporateCount = $corporate["client_type_count"];
 
-      $corporate = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.branch_id = '$branch_id' AND c.client_type = 'corporate' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+      $corporate = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.branch_id = '$branch_id' AND c.client_type = 'corporate' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
       $corporate = mysqli_fetch_array($corporate);
       $corporateAmount = $corporate["outstanding_loans"];
 
@@ -112,7 +112,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
       $group = mysqli_fetch_array($group);
       $groupCount = $group["client_type_count"];
 
-      $group = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.branch_id = '$branch_id' AND c.client_type = 'group' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+      $group = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.branch_id = '$branch_id' AND c.client_type = 'group' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
       $group = mysqli_fetch_array($group);
       $groupAmount = $group["outstanding_loans"];
 
@@ -121,7 +121,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
       $staff = mysqli_fetch_array($staff);
       $staffCount = $staff["staff_count"];
 
-      $staff = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.branch_id = '$branch_id' AND c.is_staff = '1' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+      $staff = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$int_id' AND c.branch_id = '$branch_id' AND c.is_staff = '1' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
       $staff = mysqli_fetch_array($staff);
       $staffAmount = $staff["outstanding_loans"];
 
@@ -163,7 +163,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
             <tr>
                 <td>Individual Account</td>
                 <td class="text-center"><?php echo $individualCount; ?></td>
-                <td class="text-center"><?php echo number_format($individualAmount, 2); ?></td>
+                <td class="text-center"><?php echo number_format(round($individualAmount), 2); ?></td>
                 <td class="text-center" style="background-color:bisque;"><?php echo $individualPercentage; ?></td>
             </tr>
             <?php } ?>
@@ -172,7 +172,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
             <tr>
                 <td>Joint Account</td>
                 <td class="text-center"><?php echo $jointCount; ?></td>
-                <td class="text-center"><?php echo number_format($jointAmount, 2); ?></td>
+                <td class="text-center"><?php echo number_format(round($jointAmount), 2); ?></td>
                 <td class="text-center" style="background-color:bisque;"><?php echo $jointPercentage; ?></td>
             </tr>
             <?php } ?>
@@ -181,7 +181,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
             <tr>
                 <td>Corporate Account</td>
                 <td class="text-center"><?php echo $corporateCount; ?></td>
-                <td class="text-center"><?php echo number_format($corporateAmount, 2); ?></td>
+                <td class="text-center"><?php echo number_format(round($corporateAmount), 2); ?></td>
                 <td class="text-center" style="background-color:bisque;"><?php echo $corporatePercentage; ?></td>
             </tr>
             <?php } ?>
@@ -190,7 +190,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
             <tr>
                 <td>Group Account</td>
                 <td class="text-center"><?php echo $groupCount; ?></td>
-                <td class="text-center"><?php echo number_format($groupAmount, 2); ?></td>
+                <td class="text-center"><?php echo number_format(round($groupAmount), 2); ?></td>
                 <td class="text-center" style="background-color:bisque;"><?php echo $groupPercentage; ?></td>
             </tr>
             <?php } ?>
@@ -199,7 +199,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
             <tr>
                 <td>Staff Account</td>
                 <td class="text-center"><?php echo $staffCount; ?></td>
-                <td class="text-center"><?php echo number_format($staffAmount, 2); ?></td>
+                <td class="text-center"><?php echo number_format(round($staffAmount), 2); ?></td>
                 <td class="text-center" style="background-color:bisque;"><?php echo $staffPercentage; ?></td>
             </tr>
             <?php } ?>
@@ -207,7 +207,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
             <tr>
                 <td>Total</td>
                 <td class="text-center" style="background-color:bisque;"><?php echo $totalCount; ?></td>
-                <td class="text-center" style="background-color:bisque;"><?php echo number_format($totalAmount, 2); ?></td>
+                <td class="text-center" style="background-color:bisque;"><?php echo number_format(round($totalAmount), 2); ?></td>
                 <td class="text-center" style="background-color:bisque;">100</td>
             </tr>
           </tbody>

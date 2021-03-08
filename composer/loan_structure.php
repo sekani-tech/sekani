@@ -11,6 +11,15 @@ if(isset($_POST["downloadPDF"])) {
         $sessint_id = $_SESSION['int_id'];
         $branch_id = $_POST["branch_id"];
 
+        $branchquery = mysqli_query($connection, "SELECT * FROM branch WHERE int_id = '$sessint_id' AND id = '$branch_id'");
+        if (count([$branchquery]) == 1) {
+          $ans = mysqli_fetch_array($branchquery);
+          $branch = $ans['name'];
+          $branch_email = $ans['email'];
+          $branch_location = $ans['location'];
+          $branch_phone = $ans['phone'];
+        }
+
         function fill_data($connection, $start, $end, $sessint_id, $branch_id) {
 
             $getParentID = mysqli_query($connection, "SELECT parent_id FROM `branch` WHERE int_id = $sessint_id AND id = $branch_id");
@@ -23,7 +32,7 @@ if(isset($_POST["downloadPDF"])) {
                 $individual = mysqli_fetch_array($individual);
                 $individualCount = $individual["client_type_count"];
         
-                $individual = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.client_type = 'individual' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+                $individual = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.client_type = 'individual' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
                 $individual = mysqli_fetch_array($individual);
                 $individualAmount = $individual["outstanding_loans"];
         
@@ -32,7 +41,7 @@ if(isset($_POST["downloadPDF"])) {
                 $joint = mysqli_fetch_array($joint);
                 $jointCount = $joint["client_type_count"];
         
-                $joint = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.client_type = 'joint' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+                $joint = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.client_type = 'joint' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
                 $joint = mysqli_fetch_array($joint);
                 $jointAmount = $joint["outstanding_loans"];
         
@@ -41,7 +50,7 @@ if(isset($_POST["downloadPDF"])) {
                 $corporate = mysqli_fetch_array($corporate);
                 $corporateCount = $corporate["client_type_count"];
         
-                $corporate = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.client_type = 'corporate' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+                $corporate = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.client_type = 'corporate' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
                 $corporate = mysqli_fetch_array($corporate);
                 $corporateAmount = $corporate["outstanding_loans"];
         
@@ -50,7 +59,7 @@ if(isset($_POST["downloadPDF"])) {
                 $group = mysqli_fetch_array($group);
                 $groupCount = $group["client_type_count"];
         
-                $group = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.client_type = 'group' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+                $group = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.client_type = 'group' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
                 $group = mysqli_fetch_array($group);
                 $groupAmount = $group["outstanding_loans"];
         
@@ -59,7 +68,7 @@ if(isset($_POST["downloadPDF"])) {
                 $staff = mysqli_fetch_array($staff);
                 $staffCount = $staff["staff_count"];
         
-                $staff = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.is_staff = '1' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+                $staff = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.is_staff = '1' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
                 $staff = mysqli_fetch_array($staff);
                 $staffAmount = $staff["outstanding_loans"];
     
@@ -88,7 +97,7 @@ if(isset($_POST["downloadPDF"])) {
                 $individual = mysqli_fetch_array($individual);
                 $individualCount = $individual["client_type_count"];
           
-                $individual = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.branch_id = '$branch_id' AND c.client_type = 'individual' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+                $individual = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.branch_id = '$branch_id' AND c.client_type = 'individual' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
                 $individual = mysqli_fetch_array($individual);
                 $individualAmount = $individual["outstanding_loans"];
           
@@ -97,7 +106,7 @@ if(isset($_POST["downloadPDF"])) {
                 $joint = mysqli_fetch_array($joint);
                 $jointCount = $joint["client_type_count"];
           
-                $joint = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.branch_id = '$branch_id' AND c.client_type = 'joint' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+                $joint = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.branch_id = '$branch_id' AND c.client_type = 'joint' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
                 $joint = mysqli_fetch_array($joint);
                 $jointAmount = $joint["outstanding_loans"];
           
@@ -106,7 +115,7 @@ if(isset($_POST["downloadPDF"])) {
                 $corporate = mysqli_fetch_array($corporate);
                 $corporateCount = $corporate["client_type_count"];
           
-                $corporate = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.branch_id = '$branch_id' AND c.client_type = 'corporate' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+                $corporate = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.branch_id = '$branch_id' AND c.client_type = 'corporate' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
                 $corporate = mysqli_fetch_array($corporate);
                 $corporateAmount = $corporate["outstanding_loans"];
           
@@ -115,7 +124,7 @@ if(isset($_POST["downloadPDF"])) {
                 $group = mysqli_fetch_array($group);
                 $groupCount = $group["client_type_count"];
           
-                $group = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.branch_id = '$branch_id' AND c.client_type = 'group' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+                $group = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.branch_id = '$branch_id' AND c.client_type = 'group' AND c.is_staff = '0' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
                 $group = mysqli_fetch_array($group);
                 $groupAmount = $group["outstanding_loans"];
           
@@ -124,7 +133,7 @@ if(isset($_POST["downloadPDF"])) {
                 $staff = mysqli_fetch_array($staff);
                 $staffCount = $staff["staff_count"];
           
-                $staff = mysqli_query($connection, "SELECT SUM(total_expected_repayment_derived - total_repayment_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.branch_id = '$branch_id' AND c.is_staff = '1' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
+                $staff = mysqli_query($connection, "SELECT SUM(total_outstanding_derived) AS outstanding_loans FROM loan l JOIN client c ON l.client_id = c.id WHERE c.int_id = '$sessint_id' AND c.branch_id = '$branch_id' AND c.is_staff = '1' AND (l.disbursement_date BETWEEN '$start' AND '$end')");
                 $staff = mysqli_fetch_array($staff);
                 $staffAmount = $staff["outstanding_loans"];
           
@@ -150,40 +159,40 @@ if(isset($_POST["downloadPDF"])) {
 
             $out = '
                 <tr>
-                    <td style = "font-size:16px;">Individual Account</td>
-                    <td style = "font-size:16px;">'.$individualCount.'</td>
-                    <td style = "font-size:16px;">'.number_format($individualAmount, 2).'</td>
-                    <td style = "font-size:16px;">'.$individualPercentage.'</td>
+                    <td style = "font-size:14px;">Individual Account</td>
+                    <td style = "font-size:14px;">'.$individualCount.'</td>
+                    <td style = "font-size:14px;">'.number_format(round($individualAmount), 2).'</td>
+                    <td style = "font-size:14px;">'.$individualPercentage.'</td>
                 </tr>
                 <tr>
-                    <td style = "font-size:16px;">Joint Account</td>
-                    <td style = "font-size:16px;">'.$jointCount.'</td>
-                    <td style = "font-size:16px;">'.number_format($jointAmount, 2).'</td>
-                    <td style = "font-size:16px;">'.$jointPercentage.'</td>
+                    <td style = "font-size:14px;">Joint Account</td>
+                    <td style = "font-size:14px;">'.$jointCount.'</td>
+                    <td style = "font-size:14px;">'.number_format(round($jointAmount), 2).'</td>
+                    <td style = "font-size:14px;">'.$jointPercentage.'</td>
                 </tr>
                 <tr>
-                    <td style = "font-size:16px;">Corporate Account</td>
-                    <td style = "font-size:16px;">'.$corporateCount.'</td>
-                    <td style = "font-size:16px;">'.number_format($corporateAmount, 2).'</td>
-                    <td style = "font-size:16px;">'.$corporatePercentage.'</td>
+                    <td style = "font-size:14px;">Corporate Account</td>
+                    <td style = "font-size:14px;">'.$corporateCount.'</td>
+                    <td style = "font-size:14px;">'.number_format(round($corporateAmount), 2).'</td>
+                    <td style = "font-size:14px;">'.$corporatePercentage.'</td>
                 </tr>
                 <tr>
-                    <td style = "font-size:16px;">Group Account</td>
-                    <td style = "font-size:16px;">'.$groupCount.'</td>
-                    <td style = "font-size:16px;">'.number_format($groupAmount, 2).'</td>
-                    <td style = "font-size:16px;">'.$groupPercentage.'</td>
+                    <td style = "font-size:14px;">Group Account</td>
+                    <td style = "font-size:14px;">'.$groupCount.'</td>
+                    <td style = "font-size:14px;">'.number_format(round($groupAmount), 2).'</td>
+                    <td style = "font-size:14px;">'.$groupPercentage.'</td>
                 </tr>
                 <tr>
-                    <td style = "font-size:16px;">Staff Account</td>
-                    <td style = "font-size:16px;">'.$staffCount.'</td>
-                    <td style = "font-size:16px;">'.number_format($staffAmount, 2).'</td>
-                    <td style = "font-size:16px;">'.$staffPercentage.'</td>
+                    <td style = "font-size:14px;">Staff Account</td>
+                    <td style = "font-size:14px;">'.$staffCount.'</td>
+                    <td style = "font-size:14px;">'.number_format(round($staffAmount), 2).'</td>
+                    <td style = "font-size:14px;">'.$staffPercentage.'</td>
                 </tr>
                 <tr>
-                    <td style = "font-size:16px;">Total</td>
-                    <td style = "font-size:16px;">'.$totalCount.'</td>
-                    <td style = "font-size:16px;">'.number_format($totalAmount, 2).'</td>
-                    <td style = "font-size:16px;">100</td>
+                    <td style = "font-size:14px;">Total</td>
+                    <td style = "font-size:14px;">'.$totalCount.'</td>
+                    <td style = "font-size:14px;">'.number_format(round($totalAmount), 2).'</td>
+                    <td style = "font-size:14px;">100</td>
                 </tr>
             ';
 
@@ -202,16 +211,25 @@ if(isset($_POST["downloadPDF"])) {
       <div id="logo">
         <img src="'.$_SESSION["int_logo"].'" height="80" width="80">
       </div>
-      <h1>Loan Structure Report</h1>
+      <h1>'.$_SESSION["int_full"].' <br/>Loan Structure Report</h1>
+      <div id="company" class="clearfix">
+        <div>'.$branch.'</div>
+        <div>'.$branch_location.'</div>
+        <div>(+234) '.$branch_phone.'</div>
+        <div><a href="mailto:'.$branch_email.'">'.$branch_email.'</a></div>
+      </div>
+      <div id="project">
+        <div><span>BRANCH</span> '.$branch.' </div>
+      </div>
     </header>
     <main>
       <table>
         <thead>
           <tr class="table100-head">
-            <th style = "font-size:16px;">Lending Model</th>
-            <th style = "font-size:16px;">Number</th>
-            <th style = "font-size:16px;">Amount</th>
-            <th style = "font-size:16px;">% (per lending model)</th>
+            <th style = "font-size:14px;">Lending Model</th>
+            <th style = "font-size:14px;">Number</th>
+            <th style = "font-size:14px;">Amount</th>
+            <th style = "font-size:14px;">% (per lending model)</th>
           </tr>
         </thead>
         <tbody>

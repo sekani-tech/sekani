@@ -32,12 +32,12 @@ session_start();
             $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
             $f = mysqli_fetch_array($anam);
             $nae = strtoupper($f["firstname"]." ".$f["lastname"]);
-            $principal = number_format($q["principal_amount"]);
+            $principal = number_format($q["principal_amount"], 2);
             $int_amount = $q["interest_amount"];
-            $get_loan = mysqli_query($connection, "SELECT loan_term, total_expected_repayment_derived, total_repayment_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
+            $get_loan = mysqli_query($connection, "SELECT loan_term, total_outstanding_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
             $mik = mysqli_fetch_array($get_loan);
             $l_n = $mik["loan_term"];
-            $t_o = $mik['total_expected_repayment_derived'] - $mik['total_repayment_derived'];
+            $t_o = number_format(round($mik['total_outstanding_derived']), 2);
             $from = $q["fromdate"];
             $to = $q["duedate"];
             $eos = $q["installment"];
@@ -119,6 +119,6 @@ session_start();
   </table>
   </main>
   ');
-  $file_name = 'Loan Repayments in Arrears for '.$intname.'.pdf';
+  $file_name = 'loan-repayments-in-arrears-for-'.$intname.'.pdf';
   $mpdf->Output($file_name, 'D');
 ?>

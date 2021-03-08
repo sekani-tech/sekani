@@ -827,10 +827,10 @@ else if (isset($_GET["view19"])) {
                                                     ?>
                                                     <th><?php echo $nae; ?></th>
                                                     <?php
-                                                    $get_loan = mysqli_query($connection, "SELECT loan_term, total_expected_repayment_derived, total_repayment_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
+                                                    $get_loan = mysqli_query($connection, "SELECT loan_term, total_outstanding_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
                                                     $mik = mysqli_fetch_array($get_loan);
                                                     $l_n = $mik["loan_term"];
-                                                    $t_o = $mik['total_expected_repayment_derived'] - $mik['total_repayment_derived'];
+                                                    $t_o = $mik['total_outstanding_derived'];
                                                     ?>
                                                     <th>NGN <?php echo number_format($row["principal_amount"], 2); ?></th>
                                                     <th>NGN <?php echo number_format($row["interest_amount"], 2); ?></th>
@@ -1415,7 +1415,7 @@ else if (isset($_GET["view19"])) {
                                                             ?>
                                                             <th><?php echo $nae; ?></th>
                                                             <?php
-                                                            $get_loan = mysqli_query($connection, "SELECT loan_term, total_expected_repayment_derived, total_repayment_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
+                                                            $get_loan = mysqli_query($connection, "SELECT loan_term, total_outstanding_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
                                                             $mik = mysqli_fetch_array($get_loan);
                                                             $l_n = $mik["loan_term"];
                                                             $eos = $row["installment"];
@@ -1436,10 +1436,10 @@ else if (isset($_GET["view19"])) {
                                                             $sf = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND id = '$loan_id' AND client_id = '$cli_id'";
                                                             $do = mysqli_query($connection, $sf);
                                                             while ($sd = mysqli_fetch_array($do)) {
-                                                                $outbalance = $sd['total_expected_repayment_derived'] - $sd['total_repayment_derived'];
+                                                                $outbalance = $sd['total_outstanding_derived'];
                                                             }
                                                             ?>
-                                                            <th><?php echo number_format($outbalance, 2); ?></th>
+                                                            <th><?php echo number_format(round($outbalance), 2); ?></th>
                                                             <th><?php echo $eod; ?></th>
 
                                                             <?php
@@ -1463,7 +1463,7 @@ else if (isset($_GET["view19"])) {
 
                                     <div class="form-group mt-4">
                                         <form method="POST" action="../composer/arrear_report.php">
-                                            <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download</button>
+                                            <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download PDF</button>
                                         </form>
                                     </div>
                                 </div>
