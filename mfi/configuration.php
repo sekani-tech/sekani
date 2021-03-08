@@ -331,6 +331,20 @@ $(document).ready(function(){
                 </div>
             </div>
 
+            <div class="col-md-4 ml-auto mr-auto">
+
+                <div class="card card-pricing bg-primary">
+                    <div class="card-body ">
+
+                        <h4 class="card-title">Migrations</h4>
+                        <p class="card-description">
+                            Migrate your institution data into our system
+                        </p>
+                        <a href="migrations.php" class="btn btn-white btn-round">View</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
