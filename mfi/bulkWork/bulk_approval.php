@@ -60,6 +60,7 @@ if (isset($_POST['submit'])) {
                         $tellerCon = ['id' => $transactionCacheTellerId, 'int_id' => $transactionCacheInst_id];
                         $tellerDetails = selectOne('tellers', $tellerCon);
                         $tellerNameID = $tellerDetails['id'];
+                        $tellerName = $tellerDetails['name'];
 
                         //                  get account information using account number
                         $accountDetails = selectOne('account', ['account_no' => $transactionCacheAccountNo]);
@@ -125,9 +126,13 @@ if (isset($_POST['submit'])) {
                         $newOrgRunningBal = $glAccountDetails['organization_running_balance_derived'] + $transactionCacheAmount;
 
 
-                        //                      get insit information and add new amount to old balance
-                        $instCondition = ['int_id' => $transactionCacheInst_id, 'teller_id' => $tellerNameID];
-                        $instDetails = selectOne('institution_account', $instCondition);
+                        // get insit information and add new amount to old balance
+                        // $instCondition = ['int_id' => $transactionCacheInst_id, 'teller_id' => $tellerNameID || $tellerName];
+                        // $instDetails = selectOne('institution_account', $instCondition);
+
+                        $instCondition = "SELECT * FROM `institution_account` WHERE int_id = '$transactionCacheInst_id' AND teller_id = '$tellerNameID' || '$tellerName'";
+                        $instDetails = mysqli_query($connection, $instCondition);
+
                         if (!$instDetails) {
                             $showKey = $key + 1;
                             $_SESSION["Lack_of_intfund_$randms"] = "Sorry Institution not found";
