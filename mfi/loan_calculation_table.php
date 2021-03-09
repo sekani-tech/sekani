@@ -118,11 +118,11 @@ while (strtotime("+1 ".$rep_every, strtotime($repayment_start)) <= strtotime($ma
   $disburse = $principal_amount;
   $percent = $int_rate / 100;
   if ($rep_every == "month") {
-    $inter_due = ((($int_rate) * $principal_amount) * $loan_term) / $loan_term;
+    $inter_due = $principal_amount * ($int_rate / 100) * $loan_term;
   } else if ($rep_every == "week") {
-    $inter_due = (((($int_rate) * $principal_amount) * $loan_term) / $loan_term) / 4;
+    $inter_due = $principal_amount * ($int_rate / 100) * ($loan_term / 4);
   } else if ($rep_every == "day") {
-    $inter_due = (((($int_rate) * $principal_amount) * $loan_term) / $loan_term) / 28;
+    $inter_due = $principal_amount * ($int_rate / 100) * ($loan_term / 30);
   }
   
   $princi_due = $disburse / $loan_term;

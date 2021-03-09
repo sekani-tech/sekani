@@ -45,7 +45,7 @@ if(isset($_POST['downloadPDF'])) {
                         <th style="font-size: 30px;" class="column1">'.number_format($principalAmount, 2).'</th>
                         <th style="font-size: 30px;" class="column1">'.$disbursementDate.'</th>
                         <th style="font-size: 30px;" class="column1">'.$repaymentDate.'</th>
-                        <th style="font-size: 30px;" class="column1">'.number_format($outstandingBalance, 2).'</th>
+                        <th style="font-size: 30px;" class="column1">'.number_format(round($outstandingBalance), 2).'</th>
                     </tr>
                 ';
             }
@@ -152,7 +152,7 @@ if(isset($_POST['downloadExcel'])) {
             $active_sheet->setCellValue('E' . $count, $repaymentDate);
 
             $outstandingBalance = $row["total_outstanding_derived"];
-            $active_sheet->setCellValue('F' . $count, $outstandingBalance);
+            $active_sheet->setCellValue('F' . $count, round($outstandingBalance));
 
             $count++;
         }

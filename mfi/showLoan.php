@@ -94,7 +94,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
       $tot_int = ((($interest / 100) * $prin_amt) * $term);
       $prin_due = $tot_int + $prin_amt;
     } else if ($repay_eve == "day") {
-      $term = $loan_term / 4 / 7;
+      $term = $loan_term / 30;
       $tot_int = ((($interest / 100) * $prin_amt) * $term);
       $prin_due = $tot_int + $prin_amt;
     }
