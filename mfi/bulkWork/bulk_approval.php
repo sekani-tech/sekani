@@ -130,8 +130,8 @@ if (isset($_POST['submit'])) {
                         // $instCondition = ['int_id' => $transactionCacheInst_id, 'teller_id' => $tellerNameID || $tellerName];
                         // $instDetails = selectOne('institution_account', $instCondition);
 
-                        $instCondition = "SELECT * FROM `institution_account` WHERE int_id = '$transactionCacheInst_id' AND teller_id = '$tellerNameID' || '$tellerName'";
-                        $instDetails = mysqli_query($connection, $instCondition);
+                        $instCondition = mysqli_query($connection, "SELECT * FROM `institution_account` WHERE int_id = '$transactionCacheInst_id' AND teller_id = '$tellerNameID' || '$tellerName'");
+                        $instDetails = mysqli_fetch_array($instCondition);
 
                         if (!$instDetails) {
                             $showKey = $key + 1;
