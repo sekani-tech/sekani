@@ -32,172 +32,70 @@ if (isset($_GET["view26"])) {
     <div class="container-fluid">
       <!-- your content here -->
       <div class="row">
-        <div class="col-md-12">
-        <div class="card">
-                <div class="card-header card-header-primary">
-                    <h4 class="card-title">Financial Provisioning</h4>
-                </div>
-                <div class="card-body">
-                <form action="">
-                    <div class="row">
-                     <div class="form-group col-md-3">
-                        <label for="">Branch</label>
-                        <select name="" id="brne" class="form-control">
-                            <option value="18">Head Office</option><option value="19">Head Office Branch</option><option value="20">IBADAN BRANCH</option>                        </select>
-                      </div>
-                      <div class="form-group col-md-3">
-                        <label for=""></label>
-                        <input type="date" hidden="" value="2021-01-01" name="" id="start" class="form-control">
-                      </div>
-                    </div>
-                    <button type="reset" class="btn btn-danger">Reset</button>
-                    <span id="input" type="submit" class="btn btn-primary">Run report</span>
-                  </form>
-                </div>
-            </div>
+        <div class="col-12">
           <div class="card">
             <div class="card-header card-header-primary">
-              <h4 class="card-title ">Provisioning</h4>
-
-              <!-- Insert number users institutions -->
-              <p class="card-category"><?php
-                                        $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1'";
-                                        $result = mysqli_query($connection, $query);
-                                        if ($result) {
-                                          $inr = mysqli_num_rows($result);
-                                          echo $inr;
-                                        } ?> current Accounts</p>
+              <h4 class="card-title">Financial Provisioning</h4>
             </div>
             <div class="card-body">
-              <div class="form-group">
-                <form method="POST" action="../composer/provision.php">
-                  <input hidden name="id" type="text" value="<?php echo $id; ?>" />
-                  <input hidden name="start" type="text" value="<?php echo $start; ?>" />
-                  <input hidden name="end" type="text" value="<?php echo $end; ?>" />
-                  <input hidden name="acc_bal" type="text" value="<?php echo $ttlacc; ?>" />
-                  <div class="col-md-6">
+              <form>
+                <div class="row">
+                  <div class="form-group col-md-3">
+                    <?php
+                    function fill_branch($connection)
+                    {
+                        $sint_id = $_SESSION["int_id"];
+                        $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
+                        $res = mysqli_query($connection, $org);
+                        $out = '';
+                        while ($row = mysqli_fetch_array($res)) {
+                            $out .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
+                        }
+                        return $out;
+                    }
+                    ?>
+                    <label for="">Branch</label>
+                    <select name="branch_id" id="branch_id" class="form-control">
+                        <?php echo fill_branch($connection); ?>
+                    </select>
                   </div>
-                  <script>
-                    $(document).ready(function() {
-                      $('#currentlist').on("click", function() {
-                        swal({
-                          type: "success",
-                          title: "CURRENT ACCOUNT REPORT",
-                          text: "Printing Successful",
-                          showConfirmButton: false,
-                          timer: 5000
-
-                        })
-                      });
-                    });
-                  </script>
-                </form>
-              </div>
-              <div class="table-responsive">
-                <table id="provision" class="display" style="width:100%">
-                  <thead>
-                    <tr>
-                      <th><small>Customer Name</small></th>
-                      <th><small>Principal Due</small></th>
-                      <th><small>Interest Due</small></th>
-                      <th><small>1-30 days</small></th>
-                      <th><small>31-60 days</small></th>
-                      <th><small>61-90 days</small></th>
-                      <th><small>91-180 days</small></th>
-                      <th><small>180 & Above</small></th>
-                      <th><small>Total NPL</small></th>
-                      <th><small>Provision</small></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Tiger Nixon</td>
-                      <td>₦100,000</td>
-                      <td>5.0</td>
-                      <td>200425</td>
-                      <td>₦320,800</td>
-                      <td>₦20,800</td>
-                      <td>₦3,800</td>
-                      <td>₦12,800</td>
-                      <td>20</td>
-                      <td>₦320,800</td>
-                    </tr>
-                    <tr>
-                      <td>Tiger Nixon</td>
-                      <td>₦100,000</td>
-                      <td>5.0</td>
-                      <td>200425</td>
-                      <td>₦320,800</td>
-                      <td>₦20,800</td>
-                      <td>₦3,800</td>
-                      <td>₦12,800</td>
-                      <td>20</td>
-                      <td>₦320,800</td>
-                    </tr>
-                    <tr>
-                      <td>Tiger Nixon</td>
-                      <td>₦100,000</td>
-                      <td>5.0</td>
-                      <td>200425</td>
-                      <td>₦320,800</td>
-                      <td>₦20,800</td>
-                      <td>₦3,800</td>
-                      <td>₦12,800</td>
-                      <td>20</td>
-                      <td>₦320,800</td>
-                    </tr>
-                    <tr>
-                      <td>Tiger Nixon</td>
-                      <td>₦100,000</td>
-                      <td>5.0</td>
-                      <td>200425</td>
-                      <td>₦320,800</td>
-                      <td>₦20,800</td>
-                      <td>₦3,800</td>
-                      <td>₦12,800</td>
-                      <td>20</td>
-                      <td>₦320,800</td>
-                    </tr>
-                    <tr>
-                      <td>Tiger Nixon</td>
-                      <td>₦100,000</td>
-                      <td>5.0</td>
-                      <td>200425</td>
-                      <td>₦320,800</td>
-                      <td>₦20,800</td>
-                      <td>₦3,800</td>
-                      <td>₦12,800</td>
-                      <td>20</td>
-                      <td>₦320,800</td>
-                    </tr>
-                    <tr>
-                      <td>Tiger Nixon</td>
-                      <td>₦100,000</td>
-                      <td>5.0</td>
-                      <td>200425</td>
-                      <td>₦320,800</td>
-                      <td>₦20,800</td>
-                      <td>₦3,800</td>
-                      <td>₦12,800</td>
-                      <td>20</td>
-                      <td>₦320,800</td>
-                    </tr>
-
-                  </tbody>
-                </table>
-                <button type="submit" id="currentlist" class="btn btn-primary pull-left">Download PDF</button>
-              </div>
+                </div>
+                <button type="reset" class="btn btn-danger">Reset</button>
+                <span id="runFPR" class="btn btn-success" type="submit">Run report</span>
+              </form>
             </div>
           </div>
+
+          <script>
+            $(document).ready(function() {
+                $('#runFPR').on("click", function() {
+                    var branch_id = $('#branch_id').val();
+                    $.ajax({
+                        url: "ajax_post/provision.php",
+                        method: "POST",
+                        data: {
+                            branch_id: branch_id
+                        },
+                        success: function(data) {
+                            $('#provision-result').html(data);
+                        }
+                    })
+                });
+            });
+          </script>
         </div>
+        
+        <div class="col-12">
+
+          <div id="provision-result"></div>
+
+        </div>
+
       </div>
+
     </div>
+
   </div>
-  <script>
-    $(document).ready(function() {
-      $('#provision').DataTable();
-    });
-  </script>
 
 <?php
 } else if (isset($_GET["view25"])) {
