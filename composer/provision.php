@@ -114,16 +114,16 @@ function fill_report($connection, $sessint_id, $branch_id)
 
             $out .= '
               <tr>
-                <th style="font-size: 50px;" class="column1">'.$client_name.'</th>
-                <th style="font-size: 50px;" class="column1">₦ '.number_format(round($principal_due), 2).'</th>
-                <th style="font-size: 50px;" class="column1">₦ '.number_format(round($interest_due), 2).'</th>
-                <th style="font-size: 50px;" class="column1">'.$repay1to30.'</th>
-                <th style="font-size: 50px;" class="column1">'.$repay31to60.'</th>
-                <th style="font-size: 50px;" class="column1">'.$repay61to90.'</th>
-                <th style="font-size: 50px;" class="column1">'.$repay91to180.'</th>
-                <th style="font-size: 50px;" class="column1">'.$repay180andabove.'</th>
-                <th style="font-size: 50px;" class="column1">₦ '.number_format($totalNPL, 2).'</th>
-                <th style="font-size: 50px;" class="column1">₦ '.number_format($provision, 2).'</th>
+                <td style="font-size: 50px;" class="column1">'.$client_name.'</td>
+                <td style="font-size: 50px;" class="column1">₦ '.number_format(round($principal_due), 2).'</td>
+                <td style="font-size: 50px;" class="column1">₦ '.number_format(round($interest_due), 2).'</td>
+                <td style="font-size: 50px;" class="column1">'.$repay1to30.'</td>
+                <td style="font-size: 50px;" class="column1">'.$repay31to60.'</td>
+                <td style="font-size: 50px;" class="column1">'.$repay61to90.'</td>
+                <td style="font-size: 50px;" class="column1">'.$repay91to180.'</td>
+                <td style="font-size: 50px;" class="column1">'.$repay180andabove.'</td>
+                <td style="font-size: 50px;" class="column1">₦ '.number_format($totalNPL, 2).'</td>
+                <td style="font-size: 50px;" class="column1">₦ '.number_format(round($provision), 2).'</td>
               </tr>
             ';
         }
