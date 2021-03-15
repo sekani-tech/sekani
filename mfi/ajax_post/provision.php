@@ -171,6 +171,7 @@ if(isset($_POST['branch_id'])) {
                 </table>
                 <div class="form-group mt-4">
                     <form method="POST" action="../composer/provision.php">
+                        <input type="hidden" name="branch_id" value="<?php echo $branch_id; ?>"/>
                         <button type="submit" id="currentlist" class="btn btn-primary pull-left">Download PDF</button>
                     </form>
                 </div>
