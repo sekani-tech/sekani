@@ -4,6 +4,19 @@ $page_title = "Client Report";
 $destination = "report_savings.php";
     include("header.php");
 ?>
+
+<style>
+  .total-balances .form-control:read-only{
+    font-size: 1.4rem;
+    background-image:none;
+    background: transparent;
+    font-weight:600;
+  }
+
+  th {
+    font-weight: 400;
+}
+</style>
 <?php
   function branch_opt($connection)
   {  
@@ -50,6 +63,7 @@ $destination = "report_savings.php";
                             <button type="submit" id="clientlist" class="btn btn-primary pull-left">Download PDF</button>
                             <script>
                             $(document).ready(function () {
+                              
                             $('#clientlist').on("click", function () {
                               swal({
                                   type: "success",
@@ -172,16 +186,27 @@ $destination = "report_savings.php";
                 <div class="card-body">
                 <div class="form-group">
                 <form method = "POST" action = "../composer/savings_account.php">
-                <div class="col-md-6">
-                <input hidden name ="acc_bal" type="text" value="<?php echo $ttlacc;?>"/>
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Total Account Balances</label>
-                          <input type="text" readonly class="form-control" value="<?php echo number_format($ttlacc, 2); ?>" name="">
-                        </div>
-                      </div>
-              <button type="submit" id="clientlist" class="btn btn-primary pull-left">Download PDF</button>
-              <script>
+                <div class="row">
+                  <div class="col-md-6">
+                    <input hidden name ="acc_bal" type="text" value="<?php echo $ttlacc;?>"/>
+                          <div class="form-group total-balances">
+                              <label class="bmd-label-floating m-0">Total Account Balances</label>
+                              <input type="text" readonly class="form-control" value="<?php echo number_format($ttlacc, 2); ?>" name="">
+                          </div>
+                  </div>
+                  <div class="col-md-6 d-flex align-items-center justify-content-end">
+                    <div>
+                      <button type="submit" id="clientlist" class="btn btn-primary pull-left">Download PDF</button>
+                    </div>
+                  </div>
+                </div>
+            </form> 
+             <script>
               $(document).ready(function () {
+                
+                 // savings account datatable
+                $('#savings-accounts').DataTable(); 
+
               $('#clientlist').on("click", function () {
                 swal({
                     type: "success",
@@ -194,12 +219,12 @@ $destination = "report_savings.php";
               });
             });
      </script>
-            </form>
+            
                 </div>
                 
                   <div class="table-responsive">
-                    <table class="rtable display nowrap" style="width:100%">
-                      <thead class=" text-primary">
+                    <table id="savings-accounts" class="rtable display nowrap" style="width:100%">
+                      <thead class="">
                       <?php
                           $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' && (client.branch_id ='$br_id' $branches)";
                           $result = mysqli_query($connection, $query);
