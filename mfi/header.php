@@ -123,10 +123,19 @@ $rezz = mysqli_query($connection, $activeq);
     <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
     <!-- Material Kit CSS -->
     <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+    <!-- Search Query -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> -->
+    <!-- accordion -->
     <!-- JAVASCRIPT CHART.JS -->
     <script src="../assets/js/charts/chart.min.js"></script>
     <script src="../assets/js/charts/chart.bundle.js"></script>
     <script src="../assets/js/charts/chart.bundle.min.js"></script>
+    <!-- autocomplete -->
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
       
     
     <!-- CHAT BOT -->
@@ -162,6 +171,10 @@ $rezz = mysqli_query($connection, $activeq);
     <!-- END CHART.JS -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> -->
     <script src="../datatable/sweetalert.min.js"></script>
+    <!-- <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css"> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="../datatable/jquery-3.3.1.min.js"></script>
+    <script src="../datatable/jquery-3.3.2.js"></script> -->
     <!-- DataTables -->
     <link rel="stylesheet" href="../datatable/jquery.dataTables.min.css">
     <link rel="stylesheet" href="../datatable/rowReorder.dataTables.min.css">
@@ -176,8 +189,16 @@ $rezz = mysqli_query($connection, $activeq);
     <script src="../datatable/dataTables.rowReorder.min.js"></script>
     <script src="../datatable/dataTables.responsive.min.js"></script>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/materia/bootstrap.min.css"> -->
+    <?php
+            if($page_title = "Loan Report"){
+
+            }else{
+                ?>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <?php
+            }
+    ?>
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177058907-1"></script>
     <script>
@@ -250,6 +271,16 @@ $rezz = mysqli_query($connection, $activeq);
                             <p>Dashboard</p>
                         </a>
                     </li>
+                    <!-- <li class="nav-item dropdown">
+                  <a class="nav-link" href="manage_client.php">
+                    <i class="material-icons">person</i>
+                    Register Client
+                  </a> -->
+                    <!-- <div class="dropdown-menu">
+                  <a class="dropdown-item" href="client.php">Client List</a>
+                  <a href="manage_client.php" class="dropdown-item">Register Client</a>
+                </div> -->
+                    <!-- </li> -->
                     <li class="nav-item dropdown">
                         <a class="nav-link" href="customer_service.php">
                             <i class="material-icons" style="color:#7f3f98">supervised_user_circle</i>
