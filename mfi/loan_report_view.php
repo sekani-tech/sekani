@@ -352,30 +352,35 @@ $overdue_interest = $wtyx["overdue_interest"];
                                 $penalty_charges_outstanding_derived = 0;
 
                                 while($row = mysqli_fetch_array($result)) {
-                                  $principal_outstanding_derived += $row['principal_completed_derived'] - $row['principal_amount'];
-                                  $interest_outstanding_derived += $row['interest_completed_derived'] - $row['interest_amount'];
-                                  $fee_charges_outstanding_derived += $row['fee_charges_completed_derived'] - $row['fee_charges_amount'];
-                                  $penalty_charges_outstanding_derived += $row['penalty_charges_completed_derived'] - $row['penalty_charges_amount'];
+                                  $principal_outstanding_derived += $row['principal_amount'];
+                                  $interest_outstanding_derived += $row['interest_amount'];
+                                  $fee_charges_outstanding_derived += $row['fee_charges_amount'];
+                                  $penalty_charges_outstanding_derived += $row['penalty_charges_amount'];
                                 }
 
                                 $outstanding_derived1 = $principal_outstanding_derived + $interest_outstanding_derived + $fee_charges_outstanding_derived + $penalty_charges_outstanding_derived;
                                   
-                                $query = "SELECT * FROM `loan_repayment_schedule` where loan_id = '$loan_id' AND duedate >= $today LIMIT 1";
+                                $query = "SELECT * FROM `loan_repayment_schedule` where loan_id = '$loan_id' AND duedate >= '$today' ORDER BY id LIMIT 1";
                                 $result = mysqli_query($connection, $query);
 
                                 if(mysqli_num_rows($result) > 0) {
                                   $row = mysqli_fetch_array($result);
-                                  $principal_outstanding_derived = $row['principal_completed_derived'] - $row['principal_amount'];
-                                  $interest_outstanding_derived = $row['interest_completed_derived'] - $row['interest_amount'];
-                                  $fee_charges_outstanding_derived = $row['fee_charges_completed_derived'] - $row['fee_charges_amount'];
-                                  $penalty_charges_outstanding_derived = $row['penalty_charges_completed_derived'] - $row['penalty_charges_amount'];
+                                  $principal_outstanding_derived = $row['principal_amount'];
+                                  $interest_outstanding_derived = $row['interest_amount'];
+                                  $fee_charges_outstanding_derived = $row['fee_charges_amount'];
+                                  $penalty_charges_outstanding_derived = $row['penalty_charges_amount'];
+                                } else {
+                                  $principal_outstanding_derived = 0;
+                                  $interest_outstanding_derived = 0;
+                                  $fee_charges_outstanding_derived = 0;
+                                  $penalty_charges_outstanding_derived = 0;
                                 }
 
                                 $outstanding_derived2 = $principal_outstanding_derived + $interest_outstanding_derived + $fee_charges_outstanding_derived + $penalty_charges_outstanding_derived;
 
                                 $next_payment = $outstanding_derived1 + $outstanding_derived2;
 
-                                echo '&#x20A6; ' . number_format($next_payment, 2);
+                                echo '&#x20A6; ' . number_format(round($next_payment), 2);
                               ?>
                           </div>
                           <div class="col-md-3">
