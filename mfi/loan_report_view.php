@@ -98,7 +98,7 @@ $query_sum_principal = mysqli_query($connection, "SELECT principal_amount_propos
 $qpo = mysqli_fetch_array($query_sum_principal);
 $contract_principal = number_format($qpo["principal_amount_proposed"], 2);
 // for interest
-$query_sum_interest =  mysqli_query($connection, "SELECT SUM(interest_amount) AS contract_interest FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id'");
+$query_sum_interest =  mysqli_query($connection, "SELECT SUM(interest_completed_derived) AS contract_interest FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id'");
 $qpox = mysqli_fetch_array($query_sum_interest);
 $contract_interest = number_format($qpox["contract_interest"], 2);
 
@@ -108,49 +108,48 @@ $query_principal_paid = mysqli_query($connection, "SELECT * FROM `loan_repayment
 if (mysqli_num_rows($query_principal_paid) > 0) {
   while ($qps = mysqli_fetch_array($query_principal_paid)) {
     // make an arrears search
-  $pd_loan_id = $qps["id"];
-  $query_arrears_loan  = mysqli_query($connection, "SELECT * FROM `loan_arrear` WHERE loan_id = '$pd_loan_id' AND int_id = '$sessint_id'");
+    $pd_loan_id = $qps["id"];
+    $query_arrears_loan  = mysqli_query($connection, "SELECT * FROM `loan_arrear` WHERE loan_id = '$pd_loan_id' AND int_id = '$sessint_id'");
 
-  if (mysqli_num_rows($query_arrears_loan) > 0) {
-    echo "x";
-  } else {
-    $query_paid_principal = mysqli_query($connection, "SELECT SUM(principal_amount) AS paid_principal FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id' AND installment = 0");
-    $mmx = mysqli_fetch_array($query_paid_principal);
-    $paid_principal = number_format($mmx["paid_principal"], 2);
+    if (mysqli_num_rows($query_arrears_loan) > 0) {
+      echo "x";
+    } else {
+      $query_paid_principal = mysqli_query($connection, "SELECT SUM(principal_completed_derived) as principal_amount, SUM(principal_amount) AS principal_outstanding FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id'");
+      $mmx = mysqli_fetch_array($query_paid_principal);
+      $paid_principal = $mmx["principal_amount"] - $mmx["principal_outstanding"];
+      $paid_principal = number_format($paid_principal, 2);
 
-    // move
-    $query_paid_interest = mysqli_query($connection, "SELECT SUM(interest_amount) AS paid_interest FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id' AND installment = 0");
-    $mmxx = mysqli_fetch_array($query_paid_interest);
-    $paid_interest = number_format($mmxx["paid_interest"], 2);
-  }
+      // move
+      $query_paid_interest = mysqli_query($connection, "SELECT SUM(interest_completed_derived) as interest_amount, SUM(interest_amount) AS interest_outstanding FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id'");
+      $mmxx = mysqli_fetch_array($query_paid_interest);
+      $paid_interest = $mmxx["interest_amount"] - $mmxx["interest_outstanding"];
+      $paid_interest = number_format($paid_interest, 2);
+    }
   }
 } else {
   $paid_principal = "0.00";
   $paid_interest = "0.00";
 }
 
-$paid_principal = $paid_principal;
-$paid_interest = $paid_interest;
-
 // for interest
 
 // outstanding
 $date_new = date('Y-m-d');
-$query_principal_outstanding = mysqli_query($connection, "SELECT SUM(principal_amount) AS outstanding_principal FROM `loan_repayment_schedule` WHERE (int_id = '$sessint_id' AND loan_id = '$id') AND installment = 1");
+$query_principal_outstanding = mysqli_query($connection, "SELECT SUM(principal_amount) AS outstanding_principal FROM `loan_repayment_schedule` WHERE (int_id = '$sessint_id' AND loan_id = '$id')");
 $desx = mysqli_fetch_array($query_principal_outstanding);
-$outstanding_principal_x = number_format($desx["outstanding_principal"], 2);
+$outstanding_principal_x = number_format(round($desx["outstanding_principal"]), 2);
 // interest
-$query_interest_outstanding = mysqli_query($connection, "SELECT SUM(interest_amount) AS outstanding_interest FROM `loan_repayment_schedule` WHERE (int_id = '$sessint_id' AND loan_id = '$id') AND installment = 1");
+$query_interest_outstanding = mysqli_query($connection, "SELECT SUM(interest_amount) AS outstanding_interest FROM `loan_repayment_schedule` WHERE (int_id = '$sessint_id' AND loan_id = '$id')");
 $desxxx = mysqli_fetch_array($query_interest_outstanding);
 $outstanding_interest_x = number_format($desxxx["outstanding_interest"], 2);
 
 
 // over due query
-$query_overdue_principal = mysqli_query($connection, "SELECT SUM(principal_amount) AS overdue_principal FROM `loan_arrear` WHERE (int_id = '$sessint_id' AND loan_id = '$id') AND installment = 1");
+$query_overdue_principal = mysqli_query($connection, "SELECT SUM(principal_amount) AS overdue_principal FROM `loan_arrear` WHERE (int_id = '$sessint_id' AND loan_id = '$id')");
 $wty = mysqli_fetch_array($query_overdue_principal);
 $overdue_principal = $wty["overdue_principal"];
 // $query_overdue_interest = mysqli_query($connection, "");
-$query_overdue_interest = mysqli_query($connection, "SELECT SUM(interest_amount) AS overdue_interest FROM `loan_arrear` WHERE (int_id = '$sessint_id' AND loan_id = '$id') AND installment = 1");
+$query_overdue_interest = mysqli_query($connection, "SELECT SUM(interest_amount) AS overdue_interest FROM `loan_arrear` WHERE (int_id = '$sessint_id' AND loan_id = '$id')");
 $wtyx = mysqli_fetch_array($query_overdue_interest);
 $overdue_interest = $wtyx["overdue_interest"];
 
@@ -325,7 +324,7 @@ $overdue_interest = $wtyx["overdue_interest"];
                               $result = mysqli_query($connection, $query);
                               if(mysqli_num_rows($result) > 0) {
                                 $row = mysqli_fetch_array($result);
-                                $lastPayment = $row['principal_completed_derived'] + $row['interest_completed_derived'] + $row['fee_charges_completed_derived'] + $row['penalty_charges_completed_derived'];
+                                $lastPayment = ($row['principal_completed_derived'] - $row['principal_amount']) + ($row['interest_completed_derived'] - $row['interest_amount']) + ($row['fee_charges_completed_derived'] - $row['fee_charges_amount']) + ($row['penalty_charges_completed_derived'] - $row['penalty_charges_amount']);
                                 echo '&#x20A6; ' . number_format($lastPayment, 2);
                               } else {
                                 echo 'NIL';
@@ -336,7 +335,7 @@ $overdue_interest = $wtyx["overdue_interest"];
                             <b><h4 style="text-align:right;" class="card-title">Amount in Arrears</h4></b>
                           </div>
                           <div class="col-md-3">
-                            <?php echo '&#x20A6; ' . number_format($overdue_principal + $overdue_interest, 2); ?>
+                            <?php echo '&#x20A6; ' . number_format(round($overdue_principal + $overdue_interest), 2); ?>
                           </div>
                           <div class="col-md-3">
                             <b><h4 style="text-align:right;" class="card-title">Next Payment</h4></b>
@@ -353,30 +352,35 @@ $overdue_interest = $wtyx["overdue_interest"];
                                 $penalty_charges_outstanding_derived = 0;
 
                                 while($row = mysqli_fetch_array($result)) {
-                                  $principal_outstanding_derived += $row['principal_amount'] - $row['principal_completed_derived'];
-                                  $interest_outstanding_derived += $row['interest_amount'] - $row['interest_completed_derived'];
-                                  $fee_charges_outstanding_derived += $row['fee_charges_amount'] - $row['fee_charges_completed_derived'];
-                                  $penalty_charges_outstanding_derived += $row['penalty_charges_amount'] - $row['penalty_charges_completed_derived'];
+                                  $principal_outstanding_derived += $row['principal_amount'];
+                                  $interest_outstanding_derived += $row['interest_amount'];
+                                  $fee_charges_outstanding_derived += $row['fee_charges_amount'];
+                                  $penalty_charges_outstanding_derived += $row['penalty_charges_amount'];
                                 }
 
                                 $outstanding_derived1 = $principal_outstanding_derived + $interest_outstanding_derived + $fee_charges_outstanding_derived + $penalty_charges_outstanding_derived;
                                   
-                                $query = "SELECT * FROM `loan_repayment_schedule` where loan_id = '$loan_id' AND duedate >= $today LIMIT 1";
+                                $query = "SELECT * FROM `loan_repayment_schedule` where loan_id = '$loan_id' AND duedate >= '$today' ORDER BY id LIMIT 1";
                                 $result = mysqli_query($connection, $query);
 
                                 if(mysqli_num_rows($result) > 0) {
                                   $row = mysqli_fetch_array($result);
-                                  $principal_outstanding_derived = $row['principal_amount'] - $row['principal_completed_derived'];
-                                  $interest_outstanding_derived = $row['interest_amount'] - $row['interest_completed_derived'];
-                                  $fee_charges_outstanding_derived = $row['fee_charges_amount'] - $row['fee_charges_completed_derived'];
-                                  $penalty_charges_outstanding_derived = $row['penalty_charges_amount'] - $row['penalty_charges_completed_derived'];
+                                  $principal_outstanding_derived = $row['principal_amount'];
+                                  $interest_outstanding_derived = $row['interest_amount'];
+                                  $fee_charges_outstanding_derived = $row['fee_charges_amount'];
+                                  $penalty_charges_outstanding_derived = $row['penalty_charges_amount'];
+                                } else {
+                                  $principal_outstanding_derived = 0;
+                                  $interest_outstanding_derived = 0;
+                                  $fee_charges_outstanding_derived = 0;
+                                  $penalty_charges_outstanding_derived = 0;
                                 }
 
                                 $outstanding_derived2 = $principal_outstanding_derived + $interest_outstanding_derived + $fee_charges_outstanding_derived + $penalty_charges_outstanding_derived;
 
                                 $next_payment = $outstanding_derived1 + $outstanding_derived2;
 
-                                echo '&#x20A6; ' . number_format($next_payment, 2);
+                                echo '&#x20A6; ' . number_format(round($next_payment), 2);
                               ?>
                           </div>
                           <div class="col-md-3">
@@ -417,31 +421,31 @@ $overdue_interest = $wtyx["overdue_interest"];
                         <tbody>
                           <tr>
                               <th>Principal</th>
-                              <th>NGN <?php echo $contract_principal;?></th>
-                              <th>NGN <?php echo $paid_principal;?></th>
-                              <th>NGN <?php echo $outstanding_principal_x;?></th>
-                              <th>NGN <?php echo $overdue_principal;?></th></th>
+                              <th> <?php echo "₦ ".$contract_principal;?></th>
+                              <th> <?php echo "₦ ".$paid_principal;?></th>
+                              <th> <?php echo "₦ ".$outstanding_principal_x;?></th>
+                              <th> <?php echo "₦ ".number_format(round($overdue_principal), 2);?></th></th>
                           </tr>
                           <tr>
                               <th>Interest</th>
-                              <th>NGN <?php echo $contract_interest;?></th>
-                              <th>NGN <?php echo $paid_interest;?></th>
-                              <th>NGN <?php echo $outstanding_interest_x;?></th>
-                              <th>NGN <?php echo $overdue_interest;?></th></th>
+                              <th> <?php echo "₦ ".$contract_interest;?></th>
+                              <th> <?php echo "₦ ".$paid_interest;?></th>
+                              <th> <?php echo "₦ ".$outstanding_interest_x;?></th>
+                              <th> <?php echo "₦ ".$overdue_interest;?></th></th>
                           </tr>
                           <tr>
                               <th>Fees</th>
-                              <th>NGN <?php echo $fee_charges;?></th>
-                              <th>NGN <?php echo $fee_out;?></th>
-                              <th>NGN <?php echo $princi_repaid;?></th>
-                              <th>NGN <?php echo $overdue;?></th></th>
+                              <th> <?php echo "₦ ".$fee_charges;?></th>
+                              <th> <?php echo "₦ ".$fee_out;?></th>
+                              <th> <?php echo "₦ ".$princi_repaid;?></th>
+                              <th> <?php echo "₦ ".$overdue;?></th></th>
                           </tr>
                           <tr>
                               <th>Penalties</th>
-                              <th>NGN <?php echo $penalty_charges;?></th>
-                              <th>NGN <?php echo $penal_repaid;?></th>
-                              <th>NGN <?php echo $penal_out;?></th>
-                              <th>NGN <?php echo $overdue;?></th></th>
+                              <th> <?php echo "₦ ".$penalty_charges;?></th>
+                              <th> <?php echo "₦ ".$penal_repaid;?></th>
+                              <th> <?php echo "₦ ".$penal_out;?></th>
+                              <th> <?php echo "₦ ".$overdue;?></th></th>
                           </tr>
                         </tbody>
                       </table>
@@ -538,7 +542,7 @@ $overdue_interest = $wtyx["overdue_interest"];
                         $firstname = strtoupper($cm["firstname"]." ".$cm["lastname"]);
                         $account_no = $x["account_no"];
                         $outstanding = $x['total_outstanding_derived'];
-                        $outstanding = number_format($outstanding, 2);
+                        $outstanding = number_format(round($outstanding), 2);
                     
                         $sum_tot = mysqli_query($connection, "SELECT SUM(principal_amount) AS prin_sum FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND loan_id = '$loan_id'");
                         $sum_tott = mysqli_query($connection, "SELECT SUM(interest_amount) AS int_sum FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND loan_id = '$loan_id'");
@@ -562,7 +566,7 @@ $overdue_interest = $wtyx["overdue_interest"];
                         <h6 class="card-category text-gray">Account Number: <?php echo $account_no; ?></h6>
                     </div>
                     <div class="card-footer justify-content-center">
-                        <b>  Loan Outstanding Balance: NGN <?php echo $outstanding; ?> </b>
+                        <b>  Loan Outstanding Balance: <?php echo "₦ " .$outstanding; ?> </b>
                     </div>
                 </div>
                 <!-- end new card profile -->
@@ -600,23 +604,25 @@ $overdue_interest = $wtyx["overdue_interest"];
                           
                           $query_arrears = mysqli_query($connection, "SELECT * FROM `loan_arrear` WHERE ((loan_id = '$loan_id' AND duedate = '$due_d') AND installment > 0) ORDER BY id DESC LIMIT 1");
                           if (mysqli_num_rows($query_arrears) > 0) {
-                            $mxv = mysqli_fetch_array($query_arrears);
-                            $pina = $mxv["principal_amount"];
-                            $inam = $mxv["interest_amount"];
-                            $vbdt = number_format(($pina + $inam), 2);
-                            $inst = "<span style='color:red'>₦ $vbdt in Arrears</span>";
+                              $mxv = mysqli_fetch_array($query_arrears);
+                              $pina = $mxv["principal_amount"];
+                              $inam = $mxv["interest_amount"];
+                              $vbdt = number_format(($pina + $inam), 2);
+                              $inst = "<span style='color:red'>₦ $vbdt in Arrears</span>";
                           } else {
-                            if ($inst <= 0) {
-                                $inst = "<span style='color:green'>Paid</span>";
-                            } else if ($inst > 0 && $row["duedate"] < $current_date) {
-                              $inst = "<span style='color:red'>Not Paid</span>";
-                            } else {
-                              $inst = "<span style='color:orange'>Pending</span>";
-                            }
+                              if ($inst <= 0) {
+                                  $inst = "<span style='color:green'>Paid</span>";
+
+                              } else if ($inst > 0 && $row["duedate"] < $current_date) {
+                                  $inst = "<span style='color:red'>Not Paid</span>";
+
+                              } else {
+                                  $inst = "<span style='color:orange'>Pending</span>";
+                              }
                           }
                           ?>
                           <td><?php echo $inst; ?></td>
-                          <td><?php echo "₦ ".number_format($duebalance, 2); ?></td>
+                          <td><?php echo "₦ ".number_format(round($duebalance), 2); ?></td>
                           <td>
                           <div class="btn-group">
                               <?php
