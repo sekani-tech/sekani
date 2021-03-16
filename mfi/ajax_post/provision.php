@@ -142,23 +142,23 @@ if(isset($_POST['branch_id'])) {
                                 <?php
                                 if ($counter <= 30) {
                                     $provision = $repayment_due * 0.02;
-                                    echo "₦ ".number_format($provision, 2);
+                                    echo "₦ ".number_format(round($provision), 2);
                                     
                                 } else if ($counter > 30 && $counter <= 60) {
                                     $provision = $repayment_due * 0.05;
-                                    echo "₦ ".number_format($provision, 2);
+                                    echo "₦ ".number_format(round($provision), 2);
 
                                 } else if ($counter > 60 && $counter <= 90) {
                                     $provision = $repayment_due * 0.2;
-                                    echo "₦ ".number_format($provision, 2);
+                                    echo "₦ ".number_format(round($provision), 2);
 
                                 } else if ($counter > 91 && $counter <= 180) {
                                     $provision = $repayment_due  * 0.5;
-                                    echo "₦ ".number_format($provision, 2);
+                                    echo "₦ ".number_format(round($provision), 2);
 
                                 } else {
                                     $provision = $repayment_due;
-                                    echo "₦ ".number_format($provision, 2);
+                                    echo "₦ ".number_format(round($provision), 2);
                                 }
                                 ?>
                             </td>
@@ -171,6 +171,7 @@ if(isset($_POST['branch_id'])) {
                 </table>
                 <div class="form-group mt-4">
                     <form method="POST" action="../composer/provision.php">
+                        <input type="hidden" name="branch_id" value="<?php echo $branch_id; ?>"/>
                         <button type="submit" id="currentlist" class="btn btn-primary pull-left">Download PDF</button>
                     </form>
                 </div>

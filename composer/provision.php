@@ -4,7 +4,7 @@ session_start();
 
 $intname = $_SESSION['int_name'];
 $sessint_id = $_SESSION['int_id'];
-$branch_id = $_SESSION["branch_id"];
+$branch_id = $_POST['branch_id'];
 
 $branchquery = mysqli_query($connection, "SELECT * FROM branch WHERE id='$branch_id'");
 if (count([$branchquery]) == 1) {
@@ -114,16 +114,16 @@ function fill_report($connection, $sessint_id, $branch_id)
 
             $out .= '
               <tr>
-                <th style="font-size: 50px;" class="column1">'.$client_name.'</th>
-                <th style="font-size: 50px;" class="column1">₦ '.number_format(round($principal_due), 2).'</th>
-                <th style="font-size: 50px;" class="column1">₦ '.number_format(round($interest_due), 2).'</th>
-                <th style="font-size: 50px;" class="column1">'.$repay1to30.'</th>
-                <th style="font-size: 50px;" class="column1">'.$repay31to60.'</th>
-                <th style="font-size: 50px;" class="column1">'.$repay61to90.'</th>
-                <th style="font-size: 50px;" class="column1">'.$repay91to180.'</th>
-                <th style="font-size: 50px;" class="column1">'.$repay180andabove.'</th>
-                <th style="font-size: 50px;" class="column1">₦ '.number_format($totalNPL, 2).'</th>
-                <th style="font-size: 50px;" class="column1">₦ '.number_format($provision, 2).'</th>
+                <td style="font-size: 50px;" class="column1">'.$client_name.'</td>
+                <td style="font-size: 50px;" class="column1">₦ '.number_format(round($principal_due), 2).'</td>
+                <td style="font-size: 50px;" class="column1">₦ '.number_format(round($interest_due), 2).'</td>
+                <td style="font-size: 50px;" class="column1">'.$repay1to30.'</td>
+                <td style="font-size: 50px;" class="column1">'.$repay31to60.'</td>
+                <td style="font-size: 50px;" class="column1">'.$repay61to90.'</td>
+                <td style="font-size: 50px;" class="column1">'.$repay91to180.'</td>
+                <td style="font-size: 50px;" class="column1">'.$repay180andabove.'</td>
+                <td style="font-size: 50px;" class="column1">₦ '.number_format($totalNPL, 2).'</td>
+                <td style="font-size: 50px;" class="column1">₦ '.number_format(round($provision), 2).'</td>
               </tr>
             ';
         }
@@ -133,70 +133,70 @@ function fill_report($connection, $sessint_id, $branch_id)
 }
 
 
-    require_once __DIR__ . '/vendor/autoload.php';
-    $mpdf = new \Mpdf\Mpdf();
-    $mpdf->SetWatermarkImage(''.$_SESSION["int_logo"].'');
-    $mpdf->showWatermarkImage = true;
-    $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" media="all"/>
-    <header class="clearfix">
-      <div id="logo">
-        <img src="'.$_SESSION["int_logo"].'" height="80" width="80">
-      </div>
-      <h1>'.$_SESSION["int_full"].' <br/>Provision Report as at '.$current.'</h1>
-      <div id="company" class="clearfix">
-        <div>'.$branch.'</div>
-        <div>'.$branch_location.'</div>
-        <div>(+234) '.$branch_phone.'</div>
-        <div><a href="mailto:'.$branch_email.'">'.$branch_email.'</a></div>
-      </div>
-      <div id="project">
-        <div><span>BRANCH</span> '.$branch.' </div>
-      </div>
-    </header>
-    <main>
-      <table>
-        <thead class=" text-primary">
-          <tr>
-            <th style="font-size: 50px;" class="column1">
-              Customer Name
-            </th>
-            <th style="font-size: 50px;" class="column1">
-              Principal Due
-            </th>
-            <th style="font-size: 50px;" class="column1">
-              Interest Due
-            </th>
-            <th style="font-size: 50px;" class="column1">
-              1 - 30 days
-            </th>
-            <th style="font-size: 50px;" class="column1">
-              31 - 60 days
-            </th>
-            <th style="font-size: 50px;" class="column1">
-              61 - 90 days
-            </th>
-            <th style="font-size: 50px;" class="column1">
-              91 - 180 days
-            </th>
-            <th style="font-size: 50px;" class="column1">
-              180 days and more
-            </th>
-            <th style="font-size: 50px;" class="column1">
-              Total NPL
-            </th>
-            <th style="font-size: 50px;" class="column1">
-              Provision
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          "'.fill_report($connection, $sessint_id, $branch_id).'"
-        </tbody>
-      </table>
-    </main>
-  ');
+require_once __DIR__ . '/vendor/autoload.php';
+$mpdf = new \Mpdf\Mpdf();
+$mpdf->SetWatermarkImage(''.$_SESSION["int_logo"].'');
+$mpdf->showWatermarkImage = true;
+$mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" media="all"/>
+<header class="clearfix">
+  <div id="logo">
+    <img src="'.$_SESSION["int_logo"].'" height="80" width="80">
+  </div>
+  <h1>'.$_SESSION["int_full"].' <br/>Provision Report as at '.$current.'</h1>
+  <div id="company" class="clearfix">
+    <div>'.$branch.'</div>
+    <div>'.$branch_location.'</div>
+    <div>(+234) '.$branch_phone.'</div>
+    <div><a href="mailto:'.$branch_email.'">'.$branch_email.'</a></div>
+  </div>
+  <div id="project">
+    <div><span>BRANCH</span> '.$branch.' </div>
+  </div>
+</header>
+<main>
+  <table>
+    <thead class=" text-primary">
+      <tr>
+        <th style="font-size: 50px;" class="column1">
+          Customer Name
+        </th>
+        <th style="font-size: 50px;" class="column1">
+          Principal Due
+        </th>
+        <th style="font-size: 50px;" class="column1">
+          Interest Due
+        </th>
+        <th style="font-size: 50px;" class="column1">
+          1 - 30 days
+        </th>
+        <th style="font-size: 50px;" class="column1">
+          31 - 60 days
+        </th>
+        <th style="font-size: 50px;" class="column1">
+          61 - 90 days
+        </th>
+        <th style="font-size: 50px;" class="column1">
+          91 - 180 days
+        </th>
+        <th style="font-size: 50px;" class="column1">
+          180 days and more
+        </th>
+        <th style="font-size: 50px;" class="column1">
+          Total NPL
+        </th>
+        <th style="font-size: 50px;" class="column1">
+          Provision
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      "'.fill_report($connection, $sessint_id, $branch_id).'"
+    </tbody>
+  </table>
+</main>
+');
 
-  $intname = strtolower($intname);
-  $file_name = 'provision-report-for-'.$intname.'-'.$current.'.pdf';
-  $mpdf->Output($file_name, 'D');
+$intname = strtolower($intname);
+$file_name = 'provision-report-for-'.$intname.'-'.$current.'.pdf';
+$mpdf->Output($file_name, 'D');
 ?>
