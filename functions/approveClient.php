@@ -31,7 +31,7 @@ $date = date('Y-m-d h:m:s');
     $messageId = str_pad(rand(0, pow(10, $digit) - 1), $digit, '0', STR_PAD_LEFT);
     // check for needed values
     // if exists proceed to send SMS
-    if ($senderid != "" && $mobileNo != "" && $message != "" && $intId != "") {
+    if ($senderId != "" && $mobileNo != "" && $message != "" && $intId != "") {
         // Check the length of the phone numer
         // if 10 add country code
         $phoneLength = strlen($mobileNo);
@@ -73,7 +73,7 @@ $date = date('Y-m-d h:m:s');
             // check for success response
             if ($status != "") {
               // Declare variables needed to keep record of the transaction
-              $cal_bal = $balance - 4;
+              $cal_bal = $smsBalance - 4;
               $cal_with = $total_with + 4;
               $cal_sek = $total_sekani_charge + 0;
               $cal_mch = $total_merchant_charge + 4;
