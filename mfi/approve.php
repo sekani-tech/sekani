@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               <div id="make_display"></div>
               <?php
               //    account deposit computation
-              if ($transact_type == "Deposit") {
+              if ($transact_type == "Deposit" && $client_id = $id) {
                 $new_abd = $comp;
                 $iupq = "UPDATE account SET account_balance_derived = '$new_abd',
                    last_deposit = '$amount' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
@@ -504,7 +504,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      </script>
                      ';
                 }
-              } else if ($transact_type == "Withdrawal") {
+              } else if ($transact_type == "Withdrawal" && $client_id = $id) {
                 $getaccount = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
                 $getbal = mysqli_fetch_array($getaccount);
                 $runtellb = 0;
