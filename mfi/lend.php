@@ -1051,7 +1051,7 @@ include("ajaxcallx.php");
                     // add an "invalid" class to the field:
                     y[i].className += " invalid";
                     // and set the current valid status to false
-                    valid = true;
+                    valid = false;
                 }
             }
             // If the valid status is true, mark the step as finished and valid:
