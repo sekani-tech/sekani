@@ -68,7 +68,7 @@ if(isset($_POST['id'])){
         <div class="col-md-4">
             <div class="form-group">
                 <label >Registered Name</label>
-                <input  type="text"  style="text-transform: uppercase;" class="form-control" name="display_namea">
+                <input  type="text"  style="text-transform: uppercase;" class="form-control" name="display_namea" required>
             </div>
         </div>
 
@@ -601,7 +601,7 @@ if(isset($_POST['id'])){
                 input[type="file"]{
                     display: none;
                 }
-                .custom-file-upload{
+                .custom-file-upload{  
                     border: 1px solid #ccc;
                     display: inline-block;
                     padding: 6px 12px;

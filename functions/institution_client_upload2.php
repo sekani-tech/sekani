@@ -55,7 +55,7 @@ if($ctype == 'INDIVIDUAL' || $ctype == 'GROUP'){
   $phone = $_POST['phone'];
   $phone2 = $_POST['phone2'];
   $email = $_POST['email'];
-  $address = $_POST['address'];
+  $address = mysqli_real_escape_string($connection, $_POST['address']);
   $gender = $_POST['gender'];
   $date_of_birth = $_POST['date_of_birth'];
   $country = $_POST['country'];
