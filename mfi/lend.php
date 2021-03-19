@@ -11,10 +11,13 @@ include("ajaxcallx.php");
 body {
   font: 16px Arial;
 }
+
+#client_name{
+    font-size:1rem;
+}
 .autocomplete {
   /*the container must be positioned relative:*/
   position: relative;
-  display: inline-block;
 }
 input {
   border: 1px solid transparent;
@@ -264,7 +267,7 @@ input[type=text] {
                                                 $(document).ready(function () {
                                                     $('#charges').change(function () {
                                                         var id = $(this).val();
-                                                        var client_id = $('#client_name').val();
+                                                        var client_id = $('#client_id').val();
                                                         var rand = $('#random').val();
                                                         $.ajax({
                                                             url: "load_data_lend.php",
@@ -289,9 +292,12 @@ input[type=text] {
                                             <!-- script for autocomplete dropdown -->
                                             <script>
                                                 $(document).ready(function (){
+                                                    // initialise selected client value to pass to submit as empty string
+                                                    let selectedClient = "";
+
+                                                     /*the autocomplete function takes two arguments,
+                                                        the text field element and an array of objects of possible autocompleted values:*/
                                                     function autocomplete(inp, arr) {
-                                                        /*the autocomplete function takes two arguments,
-                                                        the text field element and an array of possible autocompleted values:*/
                                                         var currentFocus;
                                                         /*execute a function when someone writes in the text field:*/
                                                         inp.addEventListener("input", function(e) {
@@ -308,19 +314,25 @@ input[type=text] {
                                                             this.parentNode.appendChild(a);
                                                             /*for each item in the array...*/
                                                             for (i = 0; i < arr.length; i++) {
-                                                                /*check if the item starts with the same letters as the text field value:*/
-                                                                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                                                                /*check if the item has same letters as the text field value:*/ 
+                                                                if (arr[i].name.toUpperCase().includes(val.toUpperCase())) 
+                                                                 {
                                                                 /*create a DIV element for each matching element:*/
                                                                 b = document.createElement("DIV");
                                                                 /*make the matching letters bold:*/
-                                                                b.innerHTML =  arr[i].substr(0, val.length);
-                                                                b.innerHTML += arr[i].substr(val.length);
+                                                                b.innerHTML =  arr[i].name.substr(0, val.length);
+                                                                b.innerHTML += arr[i].name.substr(val.length);
+                                                                
                                                                 /*insert a input field that will hold the current array item's value:*/
-                                                                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                                                                b.innerHTML += "<input type='hidden' value='" + arr[i].name + "'>";
+                                                                b.innerHTML += "<input type='hidden' value='" + arr[i].id + "'>"; 
+
                                                                 /*execute a function when someone clicks on the item value (DIV element):*/
                                                                 b.addEventListener("click", function(e) {
                                                                     /*insert the value for the autocomplete text field:*/
                                                                     inp.value = this.getElementsByTagName("input")[0].value;
+                                                                    document.getElementById("client_id").value = this.getElementsByTagName("input")[1].value;
+                                                                    console.log(document.getElementById("client_id").value, this.getElementsByTagName("input")[0].value)
                                                                     /*close the list of autocompleted values,
                                                                     (or any other open lists of autocompleted values:*/
                                                                     closeAllLists();
@@ -387,29 +399,28 @@ input[type=text] {
                                                         }
 
                                                         var client_info = <?php echo json_encode(fill_client($connection)); ?>;
-[]
+
+                                                        // split string to return an array for clients
                                                         var clients = client_info.split(",");
-                                                        let  clientNames =   clients.map((x) =>{
-                                                                return   x.split("-")[1]
-                                                                })
-                                                        let  clientIds =   clients.map((x) =>{
-                                                                return   x.split("-")[0]
-                                                                })
-                                                        console.log(clientIds, clientNames)
-                                                        
-                                                        /*An array containing all the country names in the world:*/
+
+                                                        // return an array of objects with two keys, id(for client id) and name(for client names)
+                                                        let clientObject = clients.map((x) =>{
+                                                            return{ id : x.split("-")[0],
+                                                                    name : x.split("-")[1],
+                                                             };
+                                                        })
+        
+                                                        console.log(clientObject)
 
                                                         /*initiate the autocomplete function on the "client_name" element, and pass along the clients array as possible autocomplete values:*/
-                                                        autocomplete(document.getElementById("client_name"), clientNames);
+                                                        autocomplete(document.getElementById("client_name"), clientObject);
                                                 })
 
                                     
-                                            </script>
-                                            <script>
-                                                $(document).ready(function () {
                                                     $('#client_name').change(function () {
                                                         var id = $(this).val();
-                                                        var client_id = $('#client_name').val();
+                                                        var client_id = $('#client_id').val();
+                                                        console.log(client_id)
                                                         $.ajax({
                                                             url: "load_data_lend.php",
                                                             method: "POST",
@@ -419,22 +430,24 @@ input[type=text] {
                                                             }
                                                         })
                                                     });
-                                                })
+                                            
                                             </script>
                                             <div class="row">
-                                                <div class="col-md-4">
-                                                    <label class="bmd-label-floating">Client Name *:</label>
+                                                <div class="col-md-6">
+                                                
+                                                    <label class="bmd-label-floating">Client Name *:</label><br />
                                                     <!-- <select name="client_id" class="form-control" id="client_name">
                                                         <option value="">select an option</option>
                                                       
                                                     </select> -->
 
                                                     <!-- autocomplete dropdown for client names -->
-                                                    <div class="autocomplete" style="width:300px;">
-                                                         <input id="client_name" type="text" name="clientName" placeholder="">
+                                                    <div class="autocomplete" >
+                                                         <input id="client_name" type="text" name="clientName" placeholder="Start typing...">
+                                                         <input type="hidden" id="client_id">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-6">
                                                     <label class="bmd-label-floating">Product *:</label>
                                                     <select name="product_id" class="form-control" id="charges">
                                                         <option value="">select an option</option>
@@ -470,7 +483,7 @@ input[type=text] {
                                                     $(document).ready(function () {
                                                         $('#clickit').on("click", function () {
                                                             var id = $(this).val();
-                                                            var client_id = $('#client_name').val();
+                                                            var client_id = $('#client_id').val();
                                                             var colname = $('#colname').val();
                                                             var colval = $('#col_val').val();
                                                             var coldes = $('#col_descr').val();
@@ -492,7 +505,7 @@ input[type=text] {
                                                     });
                                                     setInterval(function () {
                                                         // auto run the col.
-                                                        var client_id = $('#client_name').val();
+                                                        var client_id = $('#client_id').val();
                                                         if (client_id != "") {
                                                             $.ajax({
                                                                 url: "collateral_upload_check.php",
@@ -713,7 +726,7 @@ input[type=text] {
                                                     $(document).ready(function () {
                                                         $('#gau').on("click", function () {
                                                             var id = $(this).val();
-                                                            var client_id = $('#client_name').val();
+                                                            var client_id = $('#client_id').val();
                                                             var firstname = $('#gau_first_name').val();
                                                             var lastname = $('#gau_last_name').val();
                                                             var phone = $('#gau_phone').val();
@@ -745,7 +758,7 @@ input[type=text] {
                                                     });
                                                     setInterval(function () {
                                                         // auto run the col.
-                                                        var client_id = $('#client_name').val();
+                                                        var client_id = $('#client_id').val();
                                                         if (client_id != "") {
                                                             $.ajax({
                                                                 url: "guarantor_upload_check.php",
