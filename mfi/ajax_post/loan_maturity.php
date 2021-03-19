@@ -13,17 +13,17 @@ while ($result = mysqli_fetch_array($getParentID)) {
 
 if ($parent_id == 0) {
     // Select loan data from all branches
-    $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
+    $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_outstanding_derived <> 0)";
     $result = mysqli_query($connection, $query);
 } else {
-    $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND client_id IN (SELECT id FROM client WHERE branch_id = $branch_id) AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
+    $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND client_id IN (SELECT id FROM client WHERE branch_id = $branch_id) AND (total_outstanding_derived <> 0)";
     $result = mysqli_query($connection, $query);
 }
 ?>
 <div class="col-12">
     <div class="card">
         <div class="card-header card-header-primary">
-            <h4 class="card-title ">Matured Loan Report</h4>
+            <h4 class="card-title">Matured Loan Report</h4>
         </div>
         
         <div class="card-body">
@@ -69,10 +69,10 @@ if ($parent_id == 0) {
                         <?php
                             if ($parent_id == 0) {
                                 // Select loan data from all branches
-                                $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
+                                $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_outstanding_derived <> 0)";
                                 $result = mysqli_query($connection, $query);
                             } else {
-                                $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND client_id IN (SELECT id FROM client WHERE branch_id = $branch_id) AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
+                                $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND client_id IN (SELECT id FROM client WHERE branch_id = $branch_id) AND (total_outstanding_derived <> 0)";
                                 $result = mysqli_query($connection, $query);
                             }
 
@@ -87,11 +87,11 @@ if ($parent_id == 0) {
                                     $name = strtoupper($f["firstname"] . " " . $f["lastname"]);
                                 ?>
                                     <td><?php echo $name; ?></td>
-                                    <td><?php echo number_format($row["principal_amount"]); ?></td>
+                                    <td><?php echo number_format($row["principal_amount"], 2); ?></td>
                                     <td><?php echo $row["loan_term"]; ?></td>
                                     <td><?php echo $row["disbursement_date"]; ?></td>
                                     <td><?php echo $row["maturedon_date"]; ?></td>
-                                    <td><?php echo number_format($row["total_expected_repayment_derived"] - $row["total_repayment_derived"], 2); ?></td>
+                                    <td><?php echo number_format(round($row["total_outstanding_derived"]), 2); ?></td>
                                 <?php 
                                 }
                                 ?>

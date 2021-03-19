@@ -218,6 +218,27 @@ $(document).ready(function(){
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
 }
+else if (isset($_GET["message11"])) {
+    $key = $_GET["message11"];
+    $invalidAccounts = $_SESSION['Invalid_Accounts'];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+            $(document).ready(function(){
+                swal({
+                    type: "error",
+                    title: "Invalid Account Numbers Found",
+                    text: "'.implode(", ", $invalidAccounts).'",
+                    showConfirmButton: false,
+                    timer: 60000
+                })
+            });
+        </script>
+        ';
+
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} 
 ?>
 
 
@@ -393,12 +414,12 @@ $(document).ready(function(){
                                             <li>
                                                 <STRONG style="color: red">
                                                     IMPORTANT: FOR DEPOSIT TRANSACTION USE 1 AND FOR WITHDRAWAL USE 2
-                                                    ON THE FIELD CALL TRANSACTION TYPE
+                                                    ON THE FIELD CALLED TRANSACTION TYPE
                                                 </STRONG>
                                             </li>
                                             <li>
                                                 <STRONG style="color: red">
-                                                    IMPORTANT: Before upLoading your excel file please always remember
+                                                    IMPORTANT: Before uploading your excel file please always remember
                                                     to remove
                                                     the default table header (i.e row 1) completely.
                                                 </STRONG>
@@ -415,13 +436,8 @@ $(document).ready(function(){
                             <!-- REQUIREMENTS SAMPLE COLUMN BEGINS -->
                         </div>
                     </div>
-
-
                 </div>
-
-
             </div>
         </div>
-
     </div>
 </div>

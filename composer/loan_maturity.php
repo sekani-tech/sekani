@@ -32,10 +32,10 @@ if(isset($_POST["downloadPDF"])) {
 
     if ($parent_id == 0) {
         // Select loan data from all branches
-        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
+        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_outstanding_derived <> 0)";
         $result = mysqli_query($connection, $query);
     } else {
-        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND client_id IN (SELECT id FROM client WHERE branch_id = $branch_id) AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
+        $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND client_id IN (SELECT id FROM client WHERE branch_id = $branch_id) AND (total_outstanding_derived <> 0)";
         $result = mysqli_query($connection, $query);
     }
 
@@ -48,11 +48,11 @@ if(isset($_POST["downloadPDF"])) {
         $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
         $f = mysqli_fetch_array($anam);
         $nae = strtoupper($f["firstname"]." ".$f["lastname"]);
-        $principal = number_format($q["principal_amount"]);
+        $principal = number_format($q["principal_amount"], 2);
         $loant = $q["loan_term"];
         $disb_date = $q["disbursement_date"];
         $repay = $q["maturedon_date"];
-        $bal = $q["total_expected_repayment_derived"] - $q["total_repayment_derived"];
+        $bal = number_format(round($q["total_outstanding_derived"]), 2);
 
         $out .= '
         <tr>
@@ -119,7 +119,7 @@ if(isset($_POST["downloadPDF"])) {
     </table>
   </main>
   ');
-  $file_name = 'Matured loan reports for '.$intname.'-'.$currentdate.'.pdf';
+  $file_name = 'loan-maturity-report-'.$intname.'-'.$currentdate.'.pdf';
   $mpdf->Output($file_name, 'D');
 }
 
@@ -133,10 +133,10 @@ if(isset($_POST["downloadExcel"])) {
 
   if ($parent_id == 0) {
       // Select loan data from all branches
-      $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
+      $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_outstanding_derived <> 0)";
       $result = mysqli_query($connection, $query);
   } else {
-      $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND client_id IN (SELECT id FROM client WHERE branch_id = $branch_id) AND (total_expected_repayment_derived - total_repayment_derived <> 0)";
+      $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND client_id IN (SELECT id FROM client WHERE branch_id = $branch_id) AND (total_outstanding_derived <> 0)";
       $result = mysqli_query($connection, $query);
   }
 
@@ -160,11 +160,11 @@ if(isset($_POST["downloadExcel"])) {
       $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
       $f = mysqli_fetch_array($anam);
       $nae = strtoupper($f["firstname"]." ".$f["lastname"]);
-      $principal = number_format($q["principal_amount"]);
+      $principal = $q["principal_amount"];
       $loant = $q["loan_term"];
       $disb_date = $q["disbursement_date"];
       $repay = $q["maturedon_date"];
-      $bal = $q["total_expected_repayment_derived"] - $q["total_repayment_derived"];
+      $bal = round($q["total_outstanding_derived"]);
     }
 
     $active_sheet->setCellValue('A' . $count, $nae);
@@ -179,7 +179,7 @@ if(isset($_POST["downloadExcel"])) {
 
   $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($file, 'Xlsx');
 
-  $file_name = 'Matured loan reports for '.$intname.'-'.$currentdate.'.xlsx';
+  $file_name = 'loan-maturity-report-'.$intname.'-'.$currentdate.'.xlsx';
 
   $writer->save($file_name);
 

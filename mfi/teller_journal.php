@@ -251,6 +251,7 @@ if ($valut == 1 || $valut == "1") {
                                                 <?php $branchResults = branch_option($connection);
                                                 foreach ($branchResults as $branchResult) {
                                                     ?>
+                                                    <option value="">.......</option>
                                                     <option value="<?php echo $branchResult['id'] ?>"><?php echo $branchResult['name'] ?>
                                                     </option>
                                                 <?php } ?>
@@ -319,6 +320,7 @@ if ($valut == 1 || $valut == "1") {
                                                 <?php $branchResults = branch_option($connection);
                                                 foreach ($branchResults as $branchResult) {
                                                     ?>
+                                                    <option value="">.......</option>
                                                     <option value="<?php echo $branchResult['id'] ?>"><?php echo $branchResult['name'] ?>
                                                     </option>
                                                 <?php } ?>

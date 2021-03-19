@@ -14,6 +14,15 @@ if(isset($_POST["downloadPDF"])) {
     $sessint_id = $_SESSION['int_id'];
     $branch_id = $_POST["branch_id"];
 
+    $branchquery = mysqli_query($connection, "SELECT * FROM branch WHERE int_id = '$sessint_id' AND id = '$branch_id'");
+    if (count([$branchquery]) == 1) {
+      $ans = mysqli_fetch_array($branchquery);
+      $branch = $ans['name'];
+      $branch_email = $ans['email'];
+      $branch_location = $ans['location'];
+      $branch_phone = $ans['phone'];
+    }
+
     function fill_data($connection, $start, $end, $sessint_id, $branch_id) {
 
       $getParentID = mysqli_query($connection, "SELECT parent_id FROM `branch` WHERE int_id = $sessint_id AND id = $branch_id");
@@ -23,10 +32,10 @@ if(isset($_POST["downloadPDF"])) {
 
       if($parent_id == 0) {
           // Select loan data from all branches
-          $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_expected_repayment_derived, l.total_repayment_derived, c.display_name, c.branch_id FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id AND (l.disbursement_date  BETWEEN '$start' AND '$end')";
+          $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_outstanding_derived, c.display_name, c.branch_id FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id AND (l.disbursement_date  BETWEEN '$start' AND '$end')";
           $result = mysqli_query($connection, $accountquery);
       } else {
-          $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_expected_repayment_derived, l.total_repayment_derived, c.display_name, c.branch_id, b.parent_id FROM loan l JOIN client c ON l.client_id = c.id JOIN branch b ON c.branch_id = b.id WHERE l.int_id = $sessint_id AND (l.disbursement_date  BETWEEN '$start' AND '$end') AND b.id = $branch_id";
+          $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_outstanding_derived, c.display_name, c.branch_id, b.parent_id FROM loan l JOIN client c ON l.client_id = c.id JOIN branch b ON c.branch_id = b.id WHERE l.int_id = $sessint_id AND (l.disbursement_date  BETWEEN '$start' AND '$end') AND b.id = $branch_id";
           $result = mysqli_query($connection, $accountquery);
       }
 
@@ -35,14 +44,14 @@ if(isset($_POST["downloadPDF"])) {
       while ($loan = mysqli_fetch_array($result))
       {
         $nae = strtoupper($loan["display_name"]);
-        $prina = $loan["principal_amount"];
+        $prina = number_format($loan["principal_amount"], 2);
         $loant = $loan["loan_term"];
         $disb = $loan["disbursement_date"];
         $repay = $loan["repayment_date"];
         $intrate = $loan["interest_rate"];
         $intr = $loan['interest_rate'] / 100;
         $total_interest = $loan['loan_term'] * $intr * $loan['principal_amount'];
-        $total_outstanding_bal = $loan['total_expected_repayment_derived'] - $loan['total_repayment_derived'];
+        $total_outstanding_bal = number_format(round($loan['total_outstanding_derived']), 2);
         $out .= '
         <tr>
             <td style = "font-size:20px;">'.$nae.'</td>
@@ -60,32 +69,6 @@ if(isset($_POST["downloadPDF"])) {
       return $out;
     }
 
-    // $accountquery = "SELECT * FROM loan WHERE int_id = $sessint_id AND disbursement_date  BETWEEN '$start' AND '$end'";
-    // $result = mysqli_query($connection, $accountquery);
-    // $out = '';
-
-    // while ($loan = mysqli_fetch_array($result))
-    // {
-    //   $name = $loan['client_id'];
-    //   $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
-    //   $f = mysqli_fetch_array($anam);
-    //   $nae = strtoupper($f["firstname"]." ".$f["lastname"]);
-
-    //   $prina = $loan["principal_amount"];
-    //   $loant = $loan["loan_term"]; 
-    //   $disb = $loan["disbursement_date"]; 
-    //   $repay = $loan["repayment_date"]; 
-    //   $intrate = $loan["interest_rate"]; 
-    //   $intr = $intrate/100;
-    //   $final = $intr * $prina;
-    //   $total = $loant * $final;
-    //   $outbal = $loan["total_outstanding_derived"];
-
-    //   $ttlintamount += $final;
-    //   $covi += $total;
-    //   $offg += $outbal;
-    // }
-
     require_once __DIR__ . '/vendor/autoload.php';
     $mpdf = new \Mpdf\Mpdf();
     $mpdf->SetWatermarkImage(''.$_SESSION["int_logo"].'');
@@ -95,7 +78,16 @@ if(isset($_POST["downloadPDF"])) {
       <div id="logo">
         <img src="'.$_SESSION["int_logo"].'" height="80" width="80">
       </div>
-      <h1>Disbursed Loan Report</h1>
+      <h1>'.$_SESSION["int_full"].' <br/>Disbursed Loan Report</h1>
+      <div id="company" class="clearfix">
+        <div>'.$branch.'</div>
+        <div>'.$branch_location.'</div>
+        <div>(+234) '.$branch_phone.'</div>
+        <div><a href="mailto:'.$branch_email.'">'.$branch_email.'</a></div>
+      </div>
+      <div id="project">
+        <div><span>BRANCH</span> '.$branch.' </div>
+      </div>
     </header>
     <main>
       <table>
@@ -144,10 +136,10 @@ if(isset($_POST["downloadExcel"])) {
 
     if($parent_id == 0) {
         // Select loan data from all branches
-        $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_expected_repayment_derived, l.total_repayment_derived, c.display_name, c.branch_id FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id AND (l.disbursement_date  BETWEEN '$start' AND '$end')";
+        $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_outstanding_derived, c.display_name, c.branch_id FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id AND (l.disbursement_date  BETWEEN '$start' AND '$end')";
         $result = mysqli_query($connection, $accountquery);
     } else {
-        $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_expected_repayment_derived, l.total_repayment_derived, c.display_name, c.branch_id, b.parent_id FROM loan l JOIN client c ON l.client_id = c.id JOIN branch b ON c.branch_id = b.id WHERE l.int_id = $sessint_id AND (l.disbursement_date  BETWEEN '$start' AND '$end') AND b.id = $branch_id";
+        $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_outstanding_derived, c.display_name, c.branch_id, b.parent_id FROM loan l JOIN client c ON l.client_id = c.id JOIN branch b ON c.branch_id = b.id WHERE l.int_id = $sessint_id AND (l.disbursement_date  BETWEEN '$start' AND '$end') AND b.id = $branch_id";
         $result = mysqli_query($connection, $accountquery);
     }
 
@@ -174,7 +166,7 @@ if(isset($_POST["downloadExcel"])) {
 
       $intr = $loan['interest_rate'] / 100;
       $total_interest = $loan['loan_term'] * $intr * $loan['principal_amount'];
-      $total_outstanding_bal = $loan['total_expected_repayment_derived'] - $loan['total_repayment_derived'];
+      $total_outstanding_bal = round($loan['total_outstanding_derived']);
 
       $active_sheet->setCellValue('G' . $count, $total_interest);
       $active_sheet->setCellValue('H' . $count, $total_outstanding_bal);

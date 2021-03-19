@@ -65,7 +65,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
         function fill_report($connection, $int_id, $start, $end, $branch_id, $teller)
         {
           // import
-          $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE (((teller_id = '$teller' OR appuser_id = '$teller') AND (int_id = '$int_id' AND branch_id = '$branch_id')) AND (transaction_date BETWEEN '$start' AND '$end')) ORDER BY id ASC");
+          $querytoget = mysqli_query($connection, "SELECT * FROM institution_account_transaction WHERE (((teller_id = '$teller' OR appuser_id = '$teller') AND (int_id = '$int_id' AND branch_id = '$branch_id')) AND (transaction_date BETWEEN '$start' AND '$end')) ORDER BY transaction_date ASC");
           // $q = mysqli_fetch_array($querytoget);
           $out = '';
           // $q = mysqli_fetch_array($querytoget);
@@ -221,22 +221,22 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
 ?>
 
 <script>
-        $(document).ready(function () {
-        $('#pddf').on("click", function () {
-         
-           var start1 = $('#start1').val();
-           var end1 = $('#end1').val();
-           var branch1 = $('#branch1').val();
-           var teller1 = $('#teller1').val();
-          var int_id1 = $('#int_id1').val();
-          swal({
-              type: "success",
-              title: "TELLER REPORT",
-              text: "From " + start1 + " to " + end1 + "Loading...",
-              showConfirmButton: false,
-              timer: 5000
-                    
-            })
-         });
-       });
-     </script>
+  $(document).ready(function () {
+    $('#pddf').on("click", function () {
+    
+      var start1 = $('#start1').val();
+      var end1 = $('#end1').val();
+      var branch1 = $('#branch1').val();
+      var teller1 = $('#teller1').val();
+      var int_id1 = $('#int_id1').val();
+
+      swal({
+        type: "success",
+        title: "TELLER REPORT",
+        text: "From " + start1 + " to " + end1 + "Loading...",
+        showConfirmButton: false,
+        timer: 5000       
+      })
+    });
+  });
+</script>

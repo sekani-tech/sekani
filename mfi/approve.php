@@ -96,7 +96,7 @@ if ($check_me_men) {
   if (count([$damn]) == 1) {
     $x = mysqli_fetch_array($damn);
     $int_acct_bal = $x['account_balance_derived'];
-    // $tbd = $x['total_deposits_derived'] + $amt;
+    // $tbd = $x['total_deposits_derived'] + $amount;
     $tbd2 = $x['total_withdrawals_derived'] + $gl_amt;
     $new_int_bal2 = $int_acct_bal - $gl_amt;
     $new_int_bal = $amount + $int_acct_bal;
@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               <div id="make_display"></div>
               <?php
               //    account deposit computation
-              if ($transact_type == "Deposit") {
+              if ($transact_type == "Deposit" && $client_id = $id) {
                 $new_abd = $comp;
                 $iupq = "UPDATE account SET account_balance_derived = '$new_abd',
                    last_deposit = '$amount' WHERE account_no = '$acct_no' && int_id = '$sessint_id'";
@@ -230,7 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $update_arrear = mysqli_query($connection, "UPDATE `loan_arrear` SET principal_amount = '0.00', interest_amount = '0.00', installment = '0' WHERE id = '$a_id' AND int_id = '$a_int_id' AND client_id = '$client_id'");
                         // check out the update
                         if ($update_arrear) {
-                          //   $loan_bal = $amt / 2;
+                          //   $loan_bal = $amount / 2;
                           // $loan_bal_prin = $a_principal;
                           // $loan_bal_int = $a_interest;
                           // OK NOW RUN A FUNCTION.
@@ -312,49 +312,86 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       // SMS POSTING
                       // END THE TRANSACTION
                       if ($client_sms == "1") {
-              ?>
-                        <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
-                        <input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
-                        <input type="text" id="s_amount" value="<?php echo $amount; ?>" hidden>
-                        <input type="text" id="s_desc" value="<?php echo $description; ?>" hidden>
-                        <input type="text" id="s_date" value="<?php echo $pint; ?>" hidden>
-                        <input type="text" id="s_balance" value="<?php echo number_format($comp, 2); ?>" hidden>
-                        <script>
-                          $(document).ready(function() {
-                            var int_id = $('#s_int_id').val();
-                            var branch_id = $('#s_branch_id').val();
-                            var sender_id = $('#s_sender_id').val();
-                            var phone = $('#s_phone').val();
-                            var client_id = $('#s_client_id').val();
-                            var account_no = $('#s_acct_nox').val();
-                            // function
-                            var amount = $('#s_amount').val();
-                            var acct_no = $('#s_acct_no').val();
-                            var int_name = $('#s_int_name').val();
-                            var trans_type = "Credit";
-                            var desc = $('#s_desc').val();
-                            var date = $('#s_date').val();
-                            var balance = $('#s_balance').val();
-                            // now we work on the body.
-                            var msg = int_name + " " + trans_type + " \n" + "Amt: NGN " + amount + " \n Acct: " + acct_no + "\nDesc: " + desc + " \nBal: " + balance + " \nAvail: " + balance + "\nDate: " + date + "\nThanks!";
-                            $.ajax({
-                              url: "ajax_post/sms/sms.php",
-                              method: "POST",
-                              data: {
-                                int_id: int_id,
-                                branch_id: branch_id,
-                                sender_id: sender_id,
-                                phone: phone,
-                                msg: msg,
-                                client_id: client_id,
-                                account_no: account_no
-                              },
-                              success: function(data) {
-                                $('#make_display').html(data);
+                        $trans_type = "Credit";
+                        $balance = number_format($comp, 2);
+                        $msg = "$int_name $trans_type \n Amt: NGN {$amount} \n Acct: {$acct_no}\nDesc: {$description} \nBal: {$balance} \nAvail: {$balance}\nDate: {$pint}\nThanks!";
+                        // creating unique message ID
+                        $digits = 9;
+                        $messageId = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+                        // check for needed values
+                        // if exists proceed to send SMS
+                        if ($sender_id != "" && $client_phone != "" && $msg != "" && $sessint_id != "" && $branch_id != "") {
+                          // Check the length of the phone numer
+                          // if 10 add country code
+                          $phoneLength = strlen($client_phone);
+                          if ($phoneLength == 10) {
+                            $client_phone = "234" . $client_phone;
+                          }
+                          $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$sessint_id'");
+                          $qw = mysqli_fetch_array($sql_fund);
+                          $smsBalance = $qw["sms_balance"];
+                          $total_with = $qw["total_withdrawal"];
+                          $total_int_profit = $qw["int_profit"];
+                          $total_sekani_charge = $qw["sekani_charge"];
+                          $total_merchant_charge = $qw["merchant_charge"];
+                          if ($smsBalance >= 4) {
+
+                            $curl = curl_init();
+                            curl_setopt_array($curl, array(
+                              CURLOPT_URL => "https://hordecall.net/sms/postSms.php",
+                              CURLOPT_RETURNTRANSFER => true,
+                              CURLOPT_ENCODING => "",
+                              CURLOPT_MAXREDIRS => 10,
+                              CURLOPT_TIMEOUT => 0,
+                              CURLOPT_FOLLOWLOCATION => true,
+                              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                              CURLOPT_CUSTOMREQUEST => "POST",
+                              CURLOPT_POSTFIELDS => "sender_id=$sender_id&mobile=$client_phone&msg=$msg&msg_id=$messageId&username=2348091141288&password=password@111",
+                              CURLOPT_HTTPHEADER => array(
+                                "Content-Type: application/x-www-form-urlencoded"
+                              ),
+                            ));
+                            $response = curl_exec($curl);
+                            // success
+                            $err = curl_close($curl);
+                            if ($err) {
+                              echo "Connection Error";
+                            } else {
+                              $obj = json_decode($response, TRUE);
+                              $status = $obj['response'];
+                              // check for success response
+                              if ($status != "") {
+                                // Declare variables needed to keep record of the transaction
+                                $cal_bal = $balance - 4;
+                                $cal_with = $total_with + 4;
+                                $cal_sek = $total_sekani_charge + 0;
+                                $cal_mch = $total_merchant_charge + 4;
+                                $cal_int_prof = $total_int_profit + 0;
+                                $digits = 9;
+                                $date = date("Y-m-d");
+                                $date2 = date('Y-m-d H:i:s');
+                                $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+                                $trans = "SKWAL" . $randms . "SMS" . $sessint_id;
+                                $update_transaction = mysqli_query($connection, "UPDATE sekani_wallet SET sms_balance = '$cal_bal', total_withdrawal = '$cal_with',
+                                int_profit = '$cal_int_prof', sekani_charge = '$cal_sek', merchant_charge = '$cal_mch' WHERE int_id = '$sessint_id' AND branch_id = '$branch_id'");
+                                if ($update_transaction) {
+                                  // inserting record of transaction.
+                                  $insert_transaction = mysqli_query($connection, "INSERT INTO `sekani_wallet_transaction` (`int_id`, `branch_id`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `wallet_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, 
+                                  `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`,
+                                  `int_profit`, `sekani_charge`, `merchant_charge`)
+                                  VALUES ('{$sessint_id}', '{$branch_id}', '{$trans}', 'SMS charge', 'sms', NULL, '0', '{$date}', '4', '{$cal_bal}', '{$cal_bal}', {$date}, 
+                                  NULL, NULL, '{$date2}', '0', '0.00', '4.00', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
+                                  if ($insert_transaction) {
+                                    // store SMS charge
+                                    $insert_qualif = mysqli_query($connection, "INSERT INTO `sms_charge` (`int_id`, `branch_id`, `trans_id`, `client_id`, `account_no`, `amount`, `charge_date`) VALUES ('{$sessint_id}', '{$branch_id}', '{$trans}', '{$client_id}', '{$acct_no}', '4', '{$date}')");
+                                  }
+                                }
                               }
-                            });
-                          });
-                        </script>
+                            }
+                          }
+                        }
+              ?>
+
                         <?php
                       }
                       // end it for the SMS POSTING
@@ -504,7 +541,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      </script>
                      ';
                 }
-              } else if ($transact_type == "Withdrawal") {
+              } else if ($transact_type == "Withdrawal" && $client_id = $id) {
                 $getaccount = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
                 $getbal = mysqli_fetch_array($getaccount);
                 $runtellb = 0;
@@ -544,50 +581,86 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       if ($res4) {
                         //  now for DEBIT
                         if ($client_sms == "1") {
-                        ?>
-                          <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
-                          <input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
-                          <input type="text" id="s_amount" value="<?php echo number_format($amount, 2); ?>" hidden>
-                          <input type="text" id="s_desc" value="<?php echo $description; ?>" hidden>
-                          <input type="text" id="s_date" value="<?php echo $pint; ?>" hidden>
-                          <input type="text" id="s_balance" value="<?php echo number_format($comp2, 2); ?>" hidden>
-                          <script>
-                            $(document).ready(function() {
-                              var int_id = $('#s_int_id').val();
-                              var branch_id = $('#s_branch_id').val();
-                              var sender_id = $('#s_sender_id').val();
-                              var phone = $('#s_phone').val();
-                              var client_id = $('#s_client_id').val();
-                              var account_no = $('#s_acct_nox').val();
-                              // function
-                              // will be done soon
-                              var amount = $('#s_amount').val();
-                              var acct_no = $('#s_acct_no').val();
-                              var int_name = $('#s_int_name').val();
-                              var trans_type = "Debit";
-                              var desc = $('#s_desc').val();
-                              var date = $('#s_date').val();
-                              var balance = $('#s_balance').val();
-                              // now we work on the body.
-                              var msg = int_name + " " + trans_type + " \n" + "Amt:NGN " + amount + " \n Acct: " + acct_no + "\nDesc: " + desc + " \nBal: " + balance + " \nAvail: " + balance + "\nDate: " + date + "\nThanks";
-                              $.ajax({
-                                url: "ajax_post/sms/sms.php",
-                                method: "POST",
-                                data: {
-                                  int_id: int_id,
-                                  branch_id: branch_id,
-                                  sender_id: sender_id,
-                                  phone: phone,
-                                  msg: msg,
-                                  client_id: client_id,
-                                  account_no: account_no
-                                },
-                                success: function(data) {
-                                  $('#make_display').html(data);
+                          $trans_type = "Debit";
+                          $balance = number_format($comp, 2);
+                          $msg = "$int_name $trans_type \n Amt: NGN {$amount} \n Acct: {$acct_no}\nDesc: {$description} \nBal: {$balance} \nAvail: {$balance}\nDate: {$pint}\nThanks!";
+                          // creating unique message ID
+                          $digits = 9;
+                          $messageId = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+                          // check for needed values
+                          // if exists proceed to send SMS
+                          if ($sender_id != "" && $client_phone != "" && $msg != "" && $sessint_id != "" && $branch_id != "") {
+                            // Check the length of the phone numer
+                            // if 10 add country code
+                            $phoneLength = strlen($client_phone);
+                            if ($phoneLength == 10) {
+                              $client_phone = "234" . $client_phone;
+                            }
+                            $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$sessint_id'");
+                            $qw = mysqli_fetch_array($sql_fund);
+                            $smsBalance = $qw["sms_balance"];
+                            $total_with = $qw["total_withdrawal"];
+                            $total_int_profit = $qw["int_profit"];
+                            $total_sekani_charge = $qw["sekani_charge"];
+                            $total_merchant_charge = $qw["merchant_charge"];
+                            if ($smsBalance >= 4) {
+
+                              $curl = curl_init();
+                              curl_setopt_array($curl, array(
+                                CURLOPT_URL => "https://hordecall.net/sms/postSms.php",
+                                CURLOPT_RETURNTRANSFER => true,
+                                CURLOPT_ENCODING => "",
+                                CURLOPT_MAXREDIRS => 10,
+                                CURLOPT_TIMEOUT => 0,
+                                CURLOPT_FOLLOWLOCATION => true,
+                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                CURLOPT_CUSTOMREQUEST => "POST",
+                                CURLOPT_POSTFIELDS => "sender_id=$sender_id&mobile=$client_phone&msg=$msg&msg_id=$messageId&username=2348091141288&password=password@111",
+                                CURLOPT_HTTPHEADER => array(
+                                  "Content-Type: application/x-www-form-urlencoded"
+                                ),
+                              ));
+                              $response = curl_exec($curl);
+                              // success
+                              $err = curl_close($curl);
+                              if ($err) {
+                                echo "Connection Error";
+                              } else {
+                                $obj = json_decode($response, TRUE);
+                                $status = $obj['response'];
+                                // check for success response
+                                if ($status != "") {
+                                  // Declare variables needed to keep record of the transaction
+                                  $cal_bal = $balance - 4;
+                                  $cal_with = $total_with + 4;
+                                  $cal_sek = $total_sekani_charge + 0;
+                                  $cal_mch = $total_merchant_charge + 4;
+                                  $cal_int_prof = $total_int_profit + 0;
+                                  $digits = 9;
+                                  $date = date("Y-m-d");
+                                  $date2 = date('Y-m-d H:i:s');
+                                  $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+                                  $trans = "SKWAL" . $randms . "SMS" . $sessint_id;
+                                  $update_transaction = mysqli_query($connection, "UPDATE sekani_wallet SET sms_balance = '$cal_bal', total_withdrawal = '$cal_with',
+                                int_profit = '$cal_int_prof', sekani_charge = '$cal_sek', merchant_charge = '$cal_mch' WHERE int_id = '$sessint_id' AND branch_id = '$branch_id'");
+                                  if ($update_transaction) {
+                                    // inserting record of transaction.
+                                    $insert_transaction = mysqli_query($connection, "INSERT INTO `sekani_wallet_transaction` (`int_id`, `branch_id`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `wallet_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, 
+                                  `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`,
+                                  `int_profit`, `sekani_charge`, `merchant_charge`)
+                                  VALUES ('{$sessint_id}', '{$branch_id}', '{$trans}', 'SMS charge', 'sms', NULL, '0', '{$date}', '4', '{$cal_bal}', '{$cal_bal}', {$date}, 
+                                  NULL, NULL, '{$date2}', '0', '0.00', '4.00', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
+                                    if ($insert_transaction) {
+                                      // store SMS charge
+                                      $insert_qualif = mysqli_query($connection, "INSERT INTO `sms_charge` (`int_id`, `branch_id`, `trans_id`, `client_id`, `account_no`, `amount`, `charge_date`) VALUES ('{$sessint_id}', '{$branch_id}', '{$trans}', '{$client_id}', '{$acct_no}', '4', '{$date}')");
+                                    }
+                                  }
                                 }
-                              });
-                            });
-                          </script>
+                              }
+                            }
+                          }
+                        ?>
+
 <?php
                         }
                         // institution account
@@ -1047,5 +1120,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 include("footer.php");
 
 
- 
+
 ?>

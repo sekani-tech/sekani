@@ -21,15 +21,15 @@ $destination = "products_config.php";
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Name</label>
-                          <input type="text" class="form-control" name="name">
+                          <label class="bmd-label-floating">Name<span style="color: red">*</span></label>
+                          <input type="text" class="form-control" name="name" required>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                             <!-- populate from db -->
-                          <label class="bmd-label-floating">Product</label>
-                          <select name="product" id="" class="form-control">
+                          <label class="bmd-label-floating">Product <span style="color: red">*</span></label>
+                          <select name="product" id="" class="form-control" required>
                               <option value="1">Loan</option>
                               <option value="2">Savings</option>
                               <option value="3">Shares</option>
@@ -39,8 +39,8 @@ $destination = "products_config.php";
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Charge Type</label>
-                          <select name="charge_type" id="ok" class="form-control">
+                          <label class="bmd-label-floating">Charge Type <span style="color: red">*</span></label>
+                          <select name="charge_type" id="ok" class="form-control" required>
                               <option value="1">Disbursement</option>
                               <option value="2">Specified Due Date</option>
                               <option value="3">Installment Fees</option>
@@ -66,12 +66,11 @@ $destination = "products_config.php";
                       });
                     });
                 </script>
-                <div class="col-md-4" id = "okay">
-                </div>
+                
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Amount</label>
-                          <input type="number" step=".01" class="form-control" name="amount">
+                          <label class="bmd-label-floating">Amount <span style="color: red">*</span></label>
+                          <input type="number" step=".01" class="form-control" name="amount" required>
                         </div>
                       </div>
                       <div class=" col-md-4 form-group">
@@ -87,13 +86,13 @@ $destination = "products_config.php";
                           </select>
                       </div>
                       <div class=" col-md-4 form-group">
-                          <label for="bmd-label-floating">Charge Payment Mode</label>
-                          <select name="charge_payment" id="" class="form-control">
+                          <label for="bmd-label-floating">Charge Payment Mode <span style="color: red">*</span></label>
+                          <select name="charge_payment" id="" class="form-control" required>
                               <option value="1">Regular</option>
                               <option value="2">Account Transfer</option>
                           </select>
                       </div>
-                      <div class=" col-md-4 form-group">
+                      <div class=" col-md-3 form-group">
                       <?php
                               function fill_in($connection)
                               {
@@ -108,8 +107,8 @@ $destination = "products_config.php";
                                 return $output;
                               }
                               ?>
-                          <label for="bmd-label-floating">Income GL</label>
-                          <select name="Income_gl" id="" class="form-control">
+                          <label for="bmd-label-floating">Income GL <span style="color: red">*</span></label>
+                          <select name="Income_gl" id="" class="form-control" required>
                               <option value="">Choose Income Account Gl</option>
                               <?php echo fill_in($connection) ?>
                           </select>
@@ -148,8 +147,8 @@ $destination = "products_config.php";
                         </div>
                       </div>
                       </div>
-                      <a href="products_config.php" class="btn btn-secondary">Back</a>
-                    <button type="submit" class="btn btn-primary pull-right">Create Charge</button>
+                      <a href="products_config.php" class="btn btn-secondary" style="margin-top: 20px;">Back</a>
+                    <button type="submit" class="btn btn-primary pull-right" style="margin-top: 20px;">Create Charge</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>

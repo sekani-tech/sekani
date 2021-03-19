@@ -239,7 +239,7 @@ if (isset($_GET["view15"])) { ?>
                                                         // $ttloutbalance = 0;
                                                         // $ttloutbalance += $total_outstanding_bal;
                                                         $outstandingBalance = $row['total_outstanding_derived'];
-                                                        echo number_format($outstandingBalance, 2);
+                                                        echo number_format(round($outstandingBalance), 2);
                                                         ?>
                                                     </th>
                                                     <th><a href="loan_report_view.php?edit=<?php echo $row["id"]; ?>" class="btn btn-info">View</a></th>
@@ -827,10 +827,10 @@ else if (isset($_GET["view19"])) {
                                                     ?>
                                                     <th><?php echo $nae; ?></th>
                                                     <?php
-                                                    $get_loan = mysqli_query($connection, "SELECT loan_term, total_expected_repayment_derived, total_repayment_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
+                                                    $get_loan = mysqli_query($connection, "SELECT loan_term, total_outstanding_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
                                                     $mik = mysqli_fetch_array($get_loan);
                                                     $l_n = $mik["loan_term"];
-                                                    $t_o = $mik['total_expected_repayment_derived'] - $mik['total_repayment_derived'];
+                                                    $t_o = $mik['total_outstanding_derived'];
                                                     ?>
                                                     <th>NGN <?php echo number_format($row["principal_amount"], 2); ?></th>
                                                     <th>NGN <?php echo number_format($row["interest_amount"], 2); ?></th>
@@ -1067,7 +1067,7 @@ else if (isset($_GET["view19"])) {
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>Loans Disbured</td>
+                                                <td>Loans Disbursed</td>
                                                 <td><b>Portfolio Activity</b></td>
                                                 <td>32,148</td>
                                                 <td>159,200,300</td>
@@ -1079,7 +1079,7 @@ else if (isset($_GET["view19"])) {
                                                 <td>159,200,300</td>
                                             </tr>
                                             <tr>
-                                                <td>Impairment Loss Allowance, Begining of Period</td>
+                                                <td>Impairment Loss Allowance, Beginning of Period</td>
                                                 <td><b>Movement in Impairment Loss Allowance</b></td>
                                                 <td></td>
                                                 <td>159,200,300</td>
@@ -1091,7 +1091,7 @@ else if (isset($_GET["view19"])) {
                                                 <td>159,200,300</td>
                                             </tr>
                                             <tr>
-                                                <td>Loans Wriiten off</td>
+                                                <td>Loans Written off</td>
                                                 <td><b>Movement in Impairment Loss Allowance</b></td>
                                                 <td>147</td>
                                                 <td>159,200</td>
@@ -1109,14 +1109,6 @@ else if (isset($_GET["view19"])) {
                                                 <td>159,200</td>
                                             </tr>
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th><small>Account Name</small></th>
-                                                <th><small>Name</small></th>
-                                                <th><small>Number of Loans</small></th>
-                                                <th><small>Value of Portfolio</small></th>
-                                            </tr>
-                                        </tfoot>
                                     </table>
                                     <script>
                                         $(document).ready(function() {
@@ -1161,107 +1153,96 @@ else if (isset($_GET["view19"])) {
 
             <div class="row">
 
-<div class="col-12">
-    <div class="card">
-        <div class="card-header card-header-primary">
-            <h4 class="card-title">Loan Portfolio Aging Schedule Report</h4>
-            <!-- <p class="category">Category subtitle</p> -->
-        </div>
-        <div class="card-body">
-            <div class="row mt-4">
                 <div class="col-12">
-                    <table id="pas" class="table table-striped table-bordered" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th><small>Account Name</small></th>
-                                <th><small>Number of Loans</small></th>
-                                <th><small>Value of Portfolio</small></th>
-                                <th><small>Loss Allowance Rate %</small></th>
-                                <th><small>Impairment Loss Alowance</small></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Current Porfolio</td>
-                                <td>8,790</td>
-                                <td>₦51,155,003</td>
-                                <td>0</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Porfolio at Risk 1 to 30 days</td>
-                                <td>2,790</td>
-                                <td>₦2,155,003</td>
-                                <td>10</td>
-                                <td>22,400</td>
-                            </tr>
-                            <tr>
-                                <td>Porfolio at Risk 31 to 60 days</td>
-                                <td>2,790</td>
-                                <td>₦2,155,003</td>
-                                <td>10</td>
-                                <td>22,400</td>
-                            </tr>
-                            <tr>
-                                <td>Porfolio at Risk 61 to 90 days</td>
-                                <td>2,790</td>
-                                <td>₦2,155,003</td>
-                                <td>10</td>
-                                <td>22,400</td>
-                            </tr>
-                            <tr>
-                                <td>Porfolio at Risk 91 to 180 days</td>
-                                <td>2,790</td>
-                                <td>₦2,155,003</td>
-                                <td>10</td>
-                                <td>22,400</td>
-                            </tr>
-                            <tr>
-                                <td>Renegotiated Porfolio 1 - 30 days</td>
-                                <td>2,790</td>
-                                <td>₦2,155,003</td>
-                                <td>10</td>
-                                <td>22,400</td>
-                            </tr>
-                            <tr>
-                                <td>Renegotiated Porfolio 1 > 30 days</td>
-                                <td>2,790</td>
-                                <td>₦2,155,003</td>
-                                <td>10</td>
-                                <td>22,400</td>
-                            </tr>
-                            <tr>
-                                <td>Loans Outstanding</td>
-                                <td>14,790</td>
-                                <td>55,155,003</td>
-                                <td>10</td>
-                                <td>1,222,400</td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th><small>Account Name</small></th>
-                                <th><small>Number of Loans</small></th>
-                                <th><small>Value of Portfolio</small></th>
-                                <th><small>Number of Loans</small></th>
-                                <th><small>Value of Portfolio</small></th>
-                            </tr>
-                        </tfoot>
-                    </table>
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Loan Portfolio Aging Schedule Report</h4>
+                            <!-- <p class="category">Category subtitle</p> -->
+                        </div>
+                        <div class="card-body">
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <table id="pas" class="table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th><small>Account Name</small></th>
+                                                <th><small>Number of Loans</small></th>
+                                                <th><small>Value of Portfolio</small></th>
+                                                <th><small>Loss Allowance Rate %</small></th>
+                                                <th><small>Impairment Loss Allowance</small></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Current Portfolio</td>
+                                                <td>8,790</td>
+                                                <td>₦51,155,003</td>
+                                                <td>0</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Portfolio at Risk 1 to 30 days</td>
+                                                <td>2,790</td>
+                                                <td>₦2,155,003</td>
+                                                <td>10</td>
+                                                <td>22,400</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Portfolio at Risk 31 to 60 days</td>
+                                                <td>2,790</td>
+                                                <td>₦2,155,003</td>
+                                                <td>10</td>
+                                                <td>22,400</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Portfolio at Risk 61 to 90 days</td>
+                                                <td>2,790</td>
+                                                <td>₦2,155,003</td>
+                                                <td>10</td>
+                                                <td>22,400</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Portfolio at Risk 91 to 180 days</td>
+                                                <td>2,790</td>
+                                                <td>₦2,155,003</td>
+                                                <td>10</td>
+                                                <td>22,400</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Renegotiated Portfolio 1 - 30 days</td>
+                                                <td>2,790</td>
+                                                <td>₦2,155,003</td>
+                                                <td>10</td>
+                                                <td>22,400</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Renegotiated Portfolio 1 > 30 days</td>
+                                                <td>2,790</td>
+                                                <td>₦2,155,003</td>
+                                                <td>10</td>
+                                                <td>22,400</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Loans Outstanding</td>
+                                                <td>14,790</td>
+                                                <td>55,155,003</td>
+                                                <td>10</td>
+                                                <td>1,222,400</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
 
-                    <script>
-                        $(document).ready(function() {
-                            $('#pas').DataTable();
-                        });
-                    </script>
+                                    <script>
+                                        $(document).ready(function() {
+                                            $('#pas').DataTable();
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-</div>
-
-
 
         </div>
 
@@ -1415,7 +1396,7 @@ else if (isset($_GET["view19"])) {
                                                             ?>
                                                             <th><?php echo $nae; ?></th>
                                                             <?php
-                                                            $get_loan = mysqli_query($connection, "SELECT loan_term, total_expected_repayment_derived, total_repayment_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
+                                                            $get_loan = mysqli_query($connection, "SELECT loan_term, total_outstanding_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
                                                             $mik = mysqli_fetch_array($get_loan);
                                                             $l_n = $mik["loan_term"];
                                                             $eos = $row["installment"];
@@ -1436,10 +1417,10 @@ else if (isset($_GET["view19"])) {
                                                             $sf = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND id = '$loan_id' AND client_id = '$cli_id'";
                                                             $do = mysqli_query($connection, $sf);
                                                             while ($sd = mysqli_fetch_array($do)) {
-                                                                $outbalance = $sd['total_expected_repayment_derived'] - $sd['total_repayment_derived'];
+                                                                $outbalance = $sd['total_outstanding_derived'];
                                                             }
                                                             ?>
-                                                            <th><?php echo number_format($outbalance, 2); ?></th>
+                                                            <th><?php echo number_format(round($outbalance), 2); ?></th>
                                                             <th><?php echo $eod; ?></th>
 
                                                             <?php
@@ -1463,7 +1444,7 @@ else if (isset($_GET["view19"])) {
 
                                     <div class="form-group mt-4">
                                         <form method="POST" action="../composer/arrear_report.php">
-                                            <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download</button>
+                                            <button type="submit" id="disbursed" class="btn btn-primary pull-left">Download PDF</button>
                                         </form>
                                     </div>
                                 </div>
