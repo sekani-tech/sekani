@@ -582,7 +582,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         //  now for DEBIT
                         if ($client_sms == "1") {
                           $trans_type = "Debit";
-                          $balance = number_format($comp, 2);
+                          $balance = number_format($comp2, 2);
                           $msg = "$int_name $trans_type \n Amt: NGN {$amount} \n Acct: {$acct_no}\nDesc: {$description} \nBal: {$balance} \nAvail: {$balance}\nDate: {$pint}\nThanks!";
                           // creating unique message ID
                           $digits = 9;
