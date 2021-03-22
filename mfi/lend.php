@@ -282,7 +282,11 @@ input[type=text] {
                                                             method: "POST",
                                                             data: {id: id, rand: rand, client_id: client_id},
                                                             success: function (data) {
+                                                                console.log(data);
                                                                 $('#lend_charge').html(data);
+                                                            },
+                                                            error: function (error) {
+                                                                console.log(error);
                                                             }
                                                         })
                                                     });
@@ -329,10 +333,11 @@ input[type=text] {
 
                                                                 /*execute a function when someone clicks on the item value (DIV element):*/
                                                                 b.addEventListener("click", function(e) {
-                                                                    /*insert the value for the autocomplete text field:*/
+                                                                   
+                                                                    /*insert the value for the autocomplete text field and store client id*/
                                                                     inp.value = this.getElementsByTagName("input")[0].value;
                                                                     document.getElementById("client_id").value = this.getElementsByTagName("input")[1].value;
-                                                                    console.log(document.getElementById("client_id").value, this.getElementsByTagName("input")[0].value)
+                                                                   
                                                                     /*close the list of autocompleted values,
                                                                     (or any other open lists of autocompleted values:*/
                                                                     closeAllLists();

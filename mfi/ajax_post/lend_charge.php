@@ -18,7 +18,7 @@ if (isset($_POST["id"])) {
         while ($rot = mysqli_fetch_array($resd)) {
             $prod_id = $rot['product_loan_id'];
             $charge_oi = $rot['charge_id'];
-
+            dd($charge_oi);
             $dof = mysqli_query($connection, "INSERT INTO `loan_charge` (`int_id`, `charge_id`, `client_id`, `product_loan_id`, `loan_cache_id`) VALUES ('$sessint_id', '$charge_oi', '$client', '$prod_id', '$rand')");
         }
         if ($dof) {
@@ -81,7 +81,7 @@ if (isset($_POST["id"])) {
                         $xs = "Loan Rescheduling Fee";
                     }
                     ?>
-                    <td><?php echo $nameofc; ?></td>
+                    <td><?php echo $nameofc;?></td>
                     <td><?php echo $chg2; ?></td>
                     <td><?php echo $amt . "" . $amt2; ?></td>
                     <td><?php echo $xs; ?></td>
