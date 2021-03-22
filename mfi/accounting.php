@@ -106,7 +106,7 @@ $destination = "../index.php";
                   <p class="card-description">
                   Closing of the Business Day
                   </p>
-                  <a href="#" class="btn btn-white btn-round">View</a>
+                  <a href="end_of_day.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
             </div>   
