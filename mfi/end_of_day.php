@@ -70,7 +70,7 @@ include("header.php");
                                         <div class="form-group col-md-6">
                                             <label for="">Branch</label>
                                             <select name="" id="" class="form-control">
-                                                <option value="">Head Office</option>
+                                                <option value="">Head Office</option>   
                                             </select>
                                         </div>
                                     </div>
