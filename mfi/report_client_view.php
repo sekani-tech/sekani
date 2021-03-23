@@ -300,7 +300,7 @@ if (isset($_GET["view1"])) {
 
                                             <tbody>
                                                 <?php
-                                                $savingsProducts = mysqli_query($connection, "SELECT * FROM `savings_product`");
+                                                $savingsProducts = mysqli_query($connection, "SELECT * FROM `savings_product` WHERE int_id = '$sessint_id'");
                                                 foreach($savingsProducts as $savingsProduct) {
                                                     $productID = $savingsProduct['id'];
                                                 ?>
@@ -344,15 +344,6 @@ if (isset($_GET["view1"])) {
                                                 }
                                                 ?>
                                             </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th><small>Account Types</small></th>
-                                                    <th><small>Accounts in debit</small></th>
-                                                    <th><small>Accounts in credit</small></th>
-                                                    <th><small>Accounts with zero balance</small></th>
-                                                    <th><small>Total</small></th>
-                                                </tr>
-                                            </tfoot>
                                         </table>
                                     </div>
 

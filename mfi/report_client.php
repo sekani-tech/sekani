@@ -1,5 +1,7 @@
 <?php
 
+use PhpOffice\PhpSpreadsheet\Style\Style;
+
 $page_title = "Client report";
 $destination = "reports.php";
 include("header.php");
@@ -8,6 +10,8 @@ include("header.php");
 ?>
 <?php
 //  Sweet alert Function
+
+
 
 // If it is successfull, It will show this message
 if (isset($_GET["message1"])) {
@@ -123,6 +127,7 @@ $(document).ready(function(){
           </div>
         </div>
       </div>
+      
       <?php }
                           }
                           else {

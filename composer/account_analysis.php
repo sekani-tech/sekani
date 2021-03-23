@@ -20,10 +20,10 @@ if(isset($_POST['exportPDF'])) {
         $branch_phone = $ans['phone'];
     }
 
-    function fill_report($connection)
+    function fill_report($connection, $int_id)
     {
         $out = '';
-        $savingsProducts = mysqli_query($connection, "SELECT * FROM `savings_product`");
+        $savingsProducts = mysqli_query($connection, "SELECT * FROM `savings_product` WHERE int_id = '$int_id'");
         
         foreach($savingsProducts as $savingsProduct) {
             $productID = $savingsProduct['id'];
@@ -110,7 +110,7 @@ if(isset($_POST['exportPDF'])) {
                 </tr>
             </thead>
             <tbody>
-            "'.fill_report($connection).'"
+            "'.fill_report($connection, $int_id).'"
             </tbody>
         </table>
     </main>
@@ -124,7 +124,7 @@ if(isset($_POST['exportPDF'])) {
 
 if(isset($_POST['exportExcel'])) {
 
-    $savingsProducts = mysqli_query($connection, "SELECT * FROM `savings_product`");
+    $savingsProducts = mysqli_query($connection, "SELECT * FROM `savings_product` WHERE int_id = '$int_id'");
     
     $file = new Spreadsheet();
     $active_sheet = $file->getActiveSheet();

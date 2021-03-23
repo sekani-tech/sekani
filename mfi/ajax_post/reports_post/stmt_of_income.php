@@ -377,47 +377,43 @@ $out = '
   <h4 class="card-title">Operating Revenue</h4>
 </div>
 <div class="card-body">
-  <table class="table">
-    <thead>
-      <th style="font-weight:bold;">GL Account</th>
-      <th style="text-align: center; font-weight:bold;">'.$curren.'<br/>(NGN)</th>
-      <th style="text-align: center; font-weight:bold;">'.$onemonth.'<br/>(NGN)</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Interest Income:</td>
-        <td style="text-align: center">'.number_format($int_on_loans).'</td>
-        <td style="text-align: center">'.number_format($last_int_on_loans).'</td>
-      </tr>
-      <tr>
-        <td>Less interest Expense:</td>
-        <td style="text-align: center">'.number_format($liabilities).'</td>
-        <td style="text-align: center">'.number_format($otgerliabi).'</td>
-      </tr>
-      <tr>
-        <td style="font-weight:bold;"><b>NET INTEREST INCOME</b></td>
-        <td style="text-align: center; font-weight:bold;"><b>'.$netint.'</b></td>
-        <td style="text-align: center; font-weight:bold;"><b>'.$netint_last.'</b></td>
-      </tr>
-
-      '.fill_charge($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly).'
-      <tr>
-      <td style="font-weight:bold;"><b>SUB TOTAL INCOME</b></td>
-      <td style="text-align: center"><b>'.$totalfeecurrent.'</b></td>
-      <td style="text-align: center"><b>'.$totalfeelast.'</b></td>
+<table class="table">
+<thead>
+    <tr>
+        <th style="font-weight:bold;">GL Account</th>
+        <th style="text-align: center; font-weight:bold;">March 05, 2021<br>(NGN)</th>
     </tr>
-      <tr>
-        <td>Other services and other income</td>
-        <td style="text-align: center">'.number_format($other).'</td>
-        <td style="text-align: center">0.00</td>
-      </tr>
-      <tr>
+</thead>
+<tbody>
+    <tr>
+        <td>Interest Income:</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Fees/charges income</td>
+        <td style="text-align: center">0</td>
+        
+    </tr>
+    <tr>
+        <td>Income from other investment</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;"><b>NET INTEREST INCOME</b></td>
+        <td style="text-align: center; font-weight:bold;"><b>0.00</b></td>
+    </tr>
+
+
+    <tr>
+        <td style="font-weight:bold;"><b>SUB TOTAL INCOME</b></td>
+        <td style="text-align: center"><b>0.00</b></td>
+    </tr>
+    <tr>
         <td style="font-weight:bold;"><b>GROSS OPERATING INCOME</b></td>
-        <td style="text-align: center; font-weight:bold;"><b>'.$ttl_revenue.'</b></td>
-        <td style="text-align: center; font-weight:bold;"><b>'.$ttl_revenuelast.'</b></td>
-      </tr>
-    </tbody>
-  </table>
+        <td style="text-align: center; font-weight:bold;"><b>0.00</b></td>
+    </tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="card">
@@ -425,41 +421,137 @@ $out = '
   <h4 class="card-title">Operating Expenses</h4>
 </div>
 <div class="card-body">
-  <table class="table">
-    <thead>
-      <th style="font-weight:bold;">GL Account</th>
-      <th style="text-align: center; font-weight:bold;">'.$curren.' <br/>(NGN)</th>
-      <th style="text-align: center; font-weight:bold;">'.$onemonth.' <br/>(NGN)</th>
-    </thead>
-    <tbody>
-    '.fill_operation($connection, $sessint_id, $start, $onemontstart, $end, $onemonthly).'
-      <tr>
+<table class="table">
+<thead>
+    <tr>
+        <th style="font-weight:bold;">GL Account</th>
+        <th style="text-align: center; font-weight:bold;">March 05, 2021 <br>(NGN)</th>
+       
+    </tr>
+</thead>
+<tbody>
+<tr>
+        <td>Salaries, Wages And Allowances</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Interest Expense</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Office Rent</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Postage</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Bvn Search</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Fueling And Lubricant</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Electricity And Other Utilities</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Subscription And Web Sevices</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Stationeries</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Telephone And Communications</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Printing</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Professional And Consultancy Fee</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Vehicle Repairs</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Office Building Repairs</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Plant And Machinery Repairs</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Electricals Repairs</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Furniture And Fittings Repairs</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Office Equip Repairs</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Government Dues & Subscriptions</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Directors Cost</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Audit Fee</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Legal Fee</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Office Entertainment</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Office Consumables</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Loan Write Off</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Depreciation Of Fixed Assets</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td>Miscellaneous</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
         <td style="font-weight:bold;">SUB TOTAL EXPENSE</td>
-        <td style="text-align: center; font-weight:bold;"><b>'.$tlcurmont.'</b></td>
-        <td style="text-align: center; font-weight:bold;"><b>'.$tllasmont.'</b></td>
-      </tr>
-      <tr>
+        <td style="text-align: center; font-weight:bold;"><b>5,000.00</b></td>
+    </tr>
+    <tr>
         <td style="font-weight:bold;">GROSS PROFIT/(LOSS) FROM OPERATIONS</td>
-        <td style="font-weight:bold; text-align: center">'.$netprof.'</td>
-        <td style="font-weight:bold; text-align: center">'.$netprof_last.'</td>
-      </tr>
-      <tr>
-        <td>Depreciation</td>
-        <td style="text-align: center">'.number_format($depreciation_current).'</td>
-        <td style="text-align: center">'.number_format($depreciation_last).'</td>
-      </tr>
-      <tr>
-        <td>Income Tax</td>
-        <td style="text-align: center">0.00</td> 
-        <td style="text-align: center">0.00</td>
-      </tr>
-      <tr>
+        <td style="font-weight:bold; text-align: center">(5,000.00)</td>
+    </tr>
+    <tr>
         <td style="font-weight:bold;">NET PROFIT/(LOSS) FOR THE YEAR</td>
-        <td style="font-weight:bold; text-align: center">'.$prof_year.'</td>
-        <td style="font-weight:bold; text-align: center">'.$prof_year_last.'</td>
-      </tr>
-    </tbody>
-  </table>
+        <td style="font-weight:bold; text-align: center">(5,000.00)</td>
+    </tr>
+</tbody>
+</table>
 </div>
 </div>
 <!--//report ends here -->
@@ -497,4 +589,3 @@ $out = '
 </div>';
 echo $out;
 }
-?>

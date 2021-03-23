@@ -10,7 +10,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 include_once '../config/database.php';
   
 // instantiate Airtime object
-include_once '../objects/airtime_client.php';
+include_once '../objects/airtime_mobile.php';
   
 $database = new Database();
 $db = $database->getConnection();
@@ -26,20 +26,22 @@ if(
     !empty($data->amount) &&
     !empty($data->network) &&
     !empty($data->request_id) &&
+    !empty($data->int_id) &&
     !empty($data->client_id) &&
     !empty($data->account_no)
 ){
-  
-    // set Airtime property values
+    // making a new move in the code
+    
     $airtime->phone = $data->phone;
     $airtime->amount = $data->amount;
     $airtime->network = $data->network;
     $airtime->request_id = $data->request_id;
+    $airtime->int_id = $data->int_id;
     $airtime->client_id = $data->client_id;
     $airtime->account_no = $data->account_no;
   
     // create the Airtime
-    if($airtime->airtime()){
+    if($airtime->airtimex()){
   
         // set response code - 201 created
         http_response_code(201);

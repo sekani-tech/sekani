@@ -23,10 +23,10 @@ if(isset($_POST["downloadPDF"])) {
 
       if($parent_id == 0) {
           // Select loan data from all branches
-          $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_outstanding_derived, c.display_name, c.branch_id FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id AND (l.submittedon_date BETWEEN '$start' AND '$end')";
+          $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_expected_repayment_derived, l.total_repayment_derived, c.display_name, c.branch_id FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id AND (l.disbursement_date  BETWEEN '$start' AND '$end')";
           $result = mysqli_query($connection, $accountquery);
       } else {
-          $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_outstanding_derived, c.display_name, c.branch_id, b.parent_id FROM loan l JOIN client c ON l.client_id = c.id JOIN branch b ON c.branch_id = b.id WHERE l.int_id = $sessint_id AND (l.submittedon_date BETWEEN '$start' AND '$end') AND b.id = $branch_id";
+          $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_expected_repayment_derived, l.total_repayment_derived, c.display_name, c.branch_id, b.parent_id FROM loan l JOIN client c ON l.client_id = c.id JOIN branch b ON c.branch_id = b.id WHERE l.int_id = $sessint_id AND (l.disbursement_date  BETWEEN '$start' AND '$end') AND b.id = $branch_id";
           $result = mysqli_query($connection, $accountquery);
       }
 
@@ -40,11 +40,9 @@ if(isset($_POST["downloadPDF"])) {
         $disb = $loan["disbursement_date"];
         $repay = $loan["repayment_date"];
         $intrate = $loan["interest_rate"];
-        $intr = $loan['interest_rate']/100;
-        $final = $intr * $loan['principal_amount'];
-        $total_interest = $loan['loan_term'] * $final;
-        // the code below is as a result of the total_outstanding_derived column in the loan table not been updated at the moment
-        $total_outstanding_bal = $loan['total_outstanding_derived'] + $total_interest;
+        $intr = $loan['interest_rate'] / 100;
+        $total_interest = $loan['loan_term'] * $intr * $loan['principal_amount'];
+        $total_outstanding_bal = $loan['total_expected_repayment_derived'] - $loan['total_repayment_derived'];
         $out .= '
         <tr>
             <td style = "font-size:20px;">'.$nae.'</td>
@@ -53,7 +51,6 @@ if(isset($_POST["downloadPDF"])) {
             <td style = "font-size:20px;">'.$disb.'</td>
             <td style = "font-size:20px;">'.$repay.'</td>
             <td style = "font-size:20px;">'.$intrate.'</td>
-            <td style = "font-size:20px;">&#8358; '.$final.'</td>
             <td style = "font-size:20px;">&#8358; '.$total_interest.'</td>
             <td style = "font-size:20px;">&#8358; '.$total_outstanding_bal.'</td>
         </tr>
@@ -63,7 +60,7 @@ if(isset($_POST["downloadPDF"])) {
       return $out;
     }
 
-    // $accountquery = "SELECT * FROM loan WHERE int_id = $sessint_id AND submittedon_date BETWEEN '$start' AND '$end'";
+    // $accountquery = "SELECT * FROM loan WHERE int_id = $sessint_id AND disbursement_date  BETWEEN '$start' AND '$end'";
     // $result = mysqli_query($connection, $accountquery);
     // $out = '';
 
@@ -110,9 +107,8 @@ if(isset($_POST["downloadPDF"])) {
             <th style = "font-size:20px;">Disbursement Date</th>
             <th style = "font-size:20px;">Maturity Date</th>
             <th style = "font-size:20px;">Interest Rate</th>
-            <th style = "font-size:20px;">Interest Amount</th>
-            <th style = "font-size:20px;">Total Interest</th>
-            <th style = "font-size:20px;">Total Oustanding Bal</th>
+            <th style = "font-size:20px;">Cumulative Interest Amt</th>
+            <th style = "font-size:20px;">Outstanding Balances</th>
           </tr>
         </thead>
         <tbody>
@@ -122,7 +118,7 @@ if(isset($_POST["downloadPDF"])) {
     </main>
     ');
 
-    $file_name = 'Disbursed Loan Report as at ' . date('Y-m-d', time()) . '.pdf';
+    $file_name = 'disbursed-loan-accounts-report-' . date('d-m-Y', time()) . '.pdf';
     $mpdf->Output($file_name, 'D');
 
   } else {
@@ -148,10 +144,10 @@ if(isset($_POST["downloadExcel"])) {
 
     if($parent_id == 0) {
         // Select loan data from all branches
-        $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_outstanding_derived, c.display_name, c.branch_id FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id AND (l.submittedon_date BETWEEN '$start' AND '$end')";
+        $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_expected_repayment_derived, l.total_repayment_derived, c.display_name, c.branch_id FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id AND (l.disbursement_date  BETWEEN '$start' AND '$end')";
         $result = mysqli_query($connection, $accountquery);
     } else {
-        $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_outstanding_derived, c.display_name, c.branch_id, b.parent_id FROM loan l JOIN client c ON l.client_id = c.id JOIN branch b ON c.branch_id = b.id WHERE l.int_id = $sessint_id AND (l.submittedon_date BETWEEN '$start' AND '$end') AND b.id = $branch_id";
+        $accountquery = "SELECT l.client_id, l.principal_amount, l.loan_term, l.disbursement_date, l.repayment_date, l.interest_rate, l.total_expected_repayment_derived, l.total_repayment_derived, c.display_name, c.branch_id, b.parent_id FROM loan l JOIN client c ON l.client_id = c.id JOIN branch b ON c.branch_id = b.id WHERE l.int_id = $sessint_id AND (l.disbursement_date  BETWEEN '$start' AND '$end') AND b.id = $branch_id";
         $result = mysqli_query($connection, $accountquery);
     }
 
@@ -163,9 +159,8 @@ if(isset($_POST["downloadExcel"])) {
     $active_sheet->setCellValue('D1', 'Disbursement Date');
     $active_sheet->setCellValue('E1', 'Maturity Date');
     $active_sheet->setCellValue('F1', 'Interest Rate');
-    $active_sheet->setCellValue('G1', 'Interest Amount');
-    $active_sheet->setCellValue('H1', 'Total Interest');
-    $active_sheet->setCellValue('I1', 'Total Oustanding Balance');
+    $active_sheet->setCellValue('G1', 'Cumulative Interest Amount');
+    $active_sheet->setCellValue('H1', 'Outstanding Balances');
 
     $count = 2;
 
@@ -177,22 +172,19 @@ if(isset($_POST["downloadExcel"])) {
       $active_sheet->setCellValue('E' . $count, $loan["repayment_date"]);
       $active_sheet->setCellValue('F' . $count, $loan["interest_rate"]);
 
-      $intr = $loan['interest_rate']/100;
-      $final = $intr * $loan['principal_amount'];
-      $total_interest = $loan['loan_term'] * $final;
-      // the code below is as a result of the total_outstanding_derived column in the loan table not been updated at the moment
-      $total_outstanding_bal = $loan['total_outstanding_derived'] + $total_interest;
+      $intr = $loan['interest_rate'] / 100;
+      $total_interest = $loan['loan_term'] * $intr * $loan['principal_amount'];
+      $total_outstanding_bal = $loan['total_expected_repayment_derived'] - $loan['total_repayment_derived'];
 
-      $active_sheet->setCellValue('G' . $count, $final);
-      $active_sheet->setCellValue('H' . $count, $total_interest);
-      $active_sheet->setCellValue('I' . $count, $total_outstanding_bal);
+      $active_sheet->setCellValue('G' . $count, $total_interest);
+      $active_sheet->setCellValue('H' . $count, $total_outstanding_bal);
       
       $count++;
     }
 
     $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($file, 'Xlsx');
 
-    $file_name = 'Disbursed Loan Report as at ' . date('Y-m-d', time()) . '.xlsx';
+    $file_name = 'disbursed-loan-accounts-report-' . date('d-m-Y', time()) . '.xlsx';
 
     $writer->save($file_name);
 
