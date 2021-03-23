@@ -89,7 +89,7 @@ $startdate = date("Y-m-d", strtotime($sdoins));
                     });
                   </script>
             </div>
-            <div id="outjournal" class="col-md-10">
+            <div id="outjournal" class="col-md-12">
 
               </div>
           </div>
