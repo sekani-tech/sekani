@@ -107,7 +107,7 @@ $rezz = mysqli_query($connection, $activeq);
 <input type="text" value="<?php echo $acuser; ?>" id="usernameoioio" hidden>
 <input type="text" value="<?php echo $sessint_id; ?>" id="int_idioioioio" hidden>
 
-<!doctype html>
+<!Doctype html>
 <html lang="en">
 
 <head>
@@ -179,6 +179,9 @@ $rezz = mysqli_query($connection, $activeq);
     <link rel="stylesheet" href="../datatable/jquery.dataTables.min.css">
     <link rel="stylesheet" href="../datatable/rowReorder.dataTables.min.css">
     <link rel="stylesheet" href="../datatable/responsive.dataTables.min.css">
+    <script src='https://cdn.tiny.cloud/1/v1swnrhsmr3y1hiqxfod4nn2m7o6ie9l419y7bqsngp0ft44/tinymce/5/tinymce.min.js' referrerpolicy="origin">
+  </script>
+ 
     <!-- DataTables scripts -->
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
     <!-- <script>
