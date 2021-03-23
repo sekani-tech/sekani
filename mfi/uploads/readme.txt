@@ -1,1 +1,0 @@
-Empty folders don't get uploaded
