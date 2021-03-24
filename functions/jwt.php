@@ -1,7 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 use \Firebase\JWT\JWT;
-require './config.php';
+require 'tiny_config.php';
 
 function fatalError($message) {
   http_response_code(500);
@@ -18,7 +18,7 @@ session_start();
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
-if (!isset($_SESSION["user"])) {
+if (!isset($_SESSION["username"])) {
   http_response_code(403);
   echo "Could not produce a jwt token since the user is not logged in.";
   die();
@@ -26,7 +26,7 @@ if (!isset($_SESSION["user"])) {
 
 $payload = array(
   // Unique user id string
-  "sub" => $_SESSION["user"]["username"],
+  "sub" => $_SESSION["id"]["username"],
 
   // Full name of user
   "name" => $_SESSION["user"]["fullname"],
@@ -38,7 +38,7 @@ $payload = array(
 // When this is set the user will only be able to manage and see files in the specified root
 // directory. This makes it possible to have a dedicated home directory for each user.
 if (isset($config["scopeUser"]) && $config["scopeUser"]) {
-  $payload["https://claims.tiny.cloud/drive/root"] = "/" . $_SESSION["user"]["username"];
+  $payload["https://claims.tiny.cloud/drive/root"] = "/" . $_SESSION["id"]["username"];
 }
 
 try {
