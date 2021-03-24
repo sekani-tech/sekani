@@ -190,7 +190,7 @@ $(document).ready(function(){
                 <div class="card card-pricing bg-primary">
                     <div class="card-body ">
 
-                        <h4 class="card-title">SMS Campaign</h4>
+                        <h4 class="card-title">SMS/Email Campaign</h4>
                         <p class="card-description">
                             Handle the alerts that the system recieves
                         </p>
