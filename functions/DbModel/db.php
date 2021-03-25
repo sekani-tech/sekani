@@ -4,11 +4,6 @@ server with default setting (user 'root' with no pssword) */
 define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'sekanisy');
 define('DB_PASSWORD', '4rWY#JP+rnl67');
-<<<<<<< HEAD
-=======
-// define('DB_USERNAME', 'root');
-// define('DB_PASSWORD', '');
->>>>>>> c01bd1b5abfbdd7ef87f5d06242cc50b8c125122
 define('DB_CHARSET', 'utf-8');
 define('DB_NAME', 'sekanisy_admin');
 // connect to the database with the defined values

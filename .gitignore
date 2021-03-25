@@ -1,8 +1,2 @@
-<<<<<<< HEAD
 functions/connect.php
-plug
 functions/DbModel/db.php
-=======
-functions/DbModel/db.php
-mfi/datatable/config.php
->>>>>>> c01bd1b5abfbdd7ef87f5d06242cc50b8c125122
