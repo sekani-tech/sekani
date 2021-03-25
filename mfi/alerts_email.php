@@ -26,7 +26,7 @@ $destination = "../../index.php";
                   <li class="nav-item">
                     <a class="nav-link active" href="#products" data-toggle="tab">
                       <!-- visibility -->
-                      <i class="material-icons">attach_money</i> Campaign
+                      <i class="material-icons">attach_money</i> Campaigns
                       <div class="ripple-container"></div>
                     </a>
                   </li>
