@@ -1,18 +1,23 @@
 <head>
 	<style>
+	.tox .tox-statusbar {
+   		 display: none !important;
+	}
+
 	.modal-header span,	.modal-title{
 			font-size:1rem;
 		}
-		@media (min-width: 992px)
-{.modal-lg {
-    max-width: 800px;
-    max-height: 400px;
-    overflow-y: scroll;
-}}
+	@media (min-width: 992px)
+		{.modal-lg {
+			max-width: 800px;
+			max-height: 400px;
+			overflow-y: scroll;
+		}
+	}
 	</style>
 </head>
 
-<form action="">
+<form action="" id="holiday-email">
 
   <div class="form-group">
     <label for="">Campaign Name</label>
@@ -48,14 +53,17 @@
   </div>
   <div class="form-group">
     <label for="textArea">Email Body</label>
-    <textarea></textarea>
+    <textarea id="textArea"></textarea>
   </div>
 
 
 
 
   <!-- button to preview email -->
-  <button type="button" id="preview" class="btn btn-primary">Preview</button>
+  <!-- <button type="button" id="preview" class="btn btn-primary">Preview</button> -->
+
+  <!-- submit button -->
+  <button type="submit" id="send-mail" class="btn btn-primary">Send</button>
 </form>
 
 
@@ -447,6 +455,7 @@
     $("#preview").click(function () {
 
       $('#exampleModalLabel').text($('#subject').val())
+	  console.log($('#textArea').val())
 	  $('#email-description').text($('#textArea').val())
       $('#exampleModal').modal('show')
     });
@@ -454,6 +463,9 @@
 </script>
 <script>
   tinymce.init({
-    selector: '#textArea'
+    selector: '#textArea',
+	plugins: 'preview',
+  menubar: 'view',
+  toolbar: 'preview'
   });
 </script>
