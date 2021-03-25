@@ -53,7 +53,7 @@
   </div>
   <div class="form-group">
     <label for="textArea">Email Body</label>
-    <textarea id="textArea"></textarea>
+    <textarea id="textArea1" class="text-area"></textarea>
   </div>
 
 
@@ -460,12 +460,4 @@
       $('#exampleModal').modal('show')
     });
   })
-</script>
-<script>
-  tinymce.init({
-    selector: '#textArea',
-	plugins: 'preview',
-  menubar: 'view',
-  toolbar: 'preview'
-  });
 </script>

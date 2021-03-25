@@ -36,7 +36,7 @@ table.dataTable.no-footer {
                             <td>Christmas message to all customers to be sent on christmas day</td>
                             <td>Holiday</td>
                             <td>
-                            <button type="submit" class="btn btn-primary">Activate</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
                             </td>
                         </tr>
                         <tr>
@@ -44,7 +44,7 @@ table.dataTable.no-footer {
                             <td>so many things i can't explain, some extra stuff too</td>
                             <td>Loans</td>
                             <td>
-                            <button type="reset" class="btn btn-danger">Deactivate</button>
+                            <button type="reset" class="btn btn-danger">Delete</button>
                             </td>
                         </tr>
                     </tbody>
