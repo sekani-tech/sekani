@@ -1,9 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
 <?php
 //  BEFOR THE SESSION START
 session_set_cookie_params(0);
 ob_start();
 session_start();
 include("../functions/connect.php");
+require('../functions/tiny_config.php');
 $autologout = 1000;
 $lastactive = $_SESSION['timestamp'] ?? 0;
 if ((time() - $lastactive) > $autologout) {
@@ -107,8 +110,7 @@ $rezz = mysqli_query($connection, $activeq);
 <input type="text" value="<?php echo $acuser; ?>" id="usernameoioio" hidden>
 <input type="text" value="<?php echo $sessint_id; ?>" id="int_idioioioio" hidden>
 
-<!doctype html>
-<html lang="en">
+
 
 <head>
     <title><?php echo "$int_name - $page_title" ?></title>
@@ -179,6 +181,9 @@ $rezz = mysqli_query($connection, $activeq);
     <link rel="stylesheet" href="../datatable/jquery.dataTables.min.css">
     <link rel="stylesheet" href="../datatable/rowReorder.dataTables.min.css">
     <link rel="stylesheet" href="../datatable/responsive.dataTables.min.css">
+    
+  </script>
+ 
     <!-- DataTables scripts -->
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
     <!-- <script>
