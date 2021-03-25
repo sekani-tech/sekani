@@ -272,17 +272,20 @@ input[type=text] {
                                                         $.ajax({
                                                             url: "load_data_lend.php",
                                                             method: "POST",
+                                                            cache: false,
                                                             data: {id: id, client_id: client_id},
                                                             success: function (data) {
+
                                                                 $('#show_product').html(data);
                                                             }
-                                                        });
+                                                        }),
                                                         $.ajax({
                                                             url: "ajax_post/lend_charge.php",
                                                             method: "POST",
-                                                            data: {id: id, rand: rand, client_id: client_id},
+                                                            cache: false,
+                                                            data: {id: id, client_id: client_id},
                                                             success: function (data) {
-                                                                console.log(data);
+                                                                console.log(client_id);
                                                                 $('#lend_charge').html(data);
                                                             },
                                                             error: function (error) {
@@ -449,7 +452,7 @@ input[type=text] {
                                                     <!-- autocomplete dropdown for client names -->
                                                     <div class="autocomplete" >
                                                          <input id="client_name" type="text" name="clientName" placeholder="Start typing...">
-                                                         <input type="hidden" id="client_id">
+                                                         <input type="hidden" id="client_id" name="client_id">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
