@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "End Of Day";
+$page_title = "End Of Month";
 $destination = "";
 include("header.php");
 ?>
@@ -16,11 +16,11 @@ include("header.php");
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title">End of Day</h4>
-                        <p class="category">Closing of the Business Day</p>
+                        <h4 class="card-title">End of Month</h4>
+                        <p class="category">Closing of the Business Month</p>
                     </div>
                     <div class="card-body">
-                        <table id="eod" class="display" style="width:100%">
+                        <table id="eom" class="display" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -32,8 +32,8 @@ include("header.php");
                                 <tr>
                                 <form>
                                     <td></td>
-                                    <td><input type="date" name="" id="" class="form-control" required></td>
-                                    <td><button class="btn btn-primary btn-round">End Day</button></td>
+                                    <td><input type="date" name="" id="" class="form-control"></td>
+                                    <td><button class="btn btn-primary btn-round">End Month</button></td>
                                 </form>
                                 </tr>
 
@@ -41,7 +41,7 @@ include("header.php");
                         </table>
                         <script>
                             $(document).ready(function() {
-                                $('#eod').DataTable();
+                                $('#eom').DataTable();
                             });
 
                         </script>
@@ -55,8 +55,8 @@ include("header.php");
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title">End of Day Report</h4>
-                        <p class="category">Generate End of Day Report</p>
+                        <h4 class="card-title">End of Month Report</h4>
+                        <p class="category">Generate End of Month Report</p>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -83,7 +83,7 @@ include("header.php");
 
                         <div class="row mt-4">
                             <div class="col-md-12">
-                                <table id="eodr" class="display" style="width:100%">
+                                <table id="eomr" class="display" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -105,7 +105,7 @@ include("header.php");
 
                                 <script>
                                     $(document).ready(function() {
-                                        $('#eodr').DataTable();
+                                        $('#eomr').DataTable();
                                     });
                                 </script>
 
