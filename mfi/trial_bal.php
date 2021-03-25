@@ -54,8 +54,8 @@ include("header.php");
                         <table id="example" class="table table-striped table-bordered" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th><small>Account Title</small></th>
                                     <th><small>Account Number</small></th>
+                                    <th><small>Account Title</small></th>
                                     <th><small>Groups</small></th>
                                     <th><small>Opening Balance</small></th>
                                     <th><small>Credit Movement</small></th>
