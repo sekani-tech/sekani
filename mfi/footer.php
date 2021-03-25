@@ -65,7 +65,9 @@
   <!-- google analystics script -->
   <!-- end  -->
   
-  
+  <!-- TEXT AREA -->
+  <script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=<?php echo $config["apiKey"]; ?>"></script>
+  <script src="../functions/assets/js/init.js"></script>
   <script>
     // var options = {
     //       mode: 'wizard',

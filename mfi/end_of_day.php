@@ -8,6 +8,10 @@ include("header.php");
 
 <div class="content">
     <div class="container-fluid">
+       
+
+   
+
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -27,9 +31,7 @@ include("header.php");
                             <tbody>
                                 <tr>
                                     <td></td>
-                                    <td>
-                                        <p id="date"></p>
-                                    </td>
+                                    <td><input type="date" name="" id="" class="form-control"></td>
                                     <td><button class="btn btn-primary btn-round">End Day</button></td>
                                 </tr>
 
@@ -40,16 +42,12 @@ include("header.php");
                                 $('#eod').DataTable();
                             });
 
-                            n = new Date();
-                            y = n.getFullYear();
-                            m = n.getMonth() + 1;
-                            d = n.getDate();
-                            document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
                         </script>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <div class="row">
             <div class="col-md-12">

@@ -48,7 +48,7 @@
   </div>
   <div class="form-group">
     <label for="textArea">Email Body</label>
-    <textarea id="textArea"></textarea>
+    <textarea></textarea>
   </div>
 
 
