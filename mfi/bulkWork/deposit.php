@@ -206,7 +206,7 @@ if (isset($_POST['submit'])) {
                                 if(!mysqli_stmt_prepare($stmt, $sql)) {
                                     echo "SQL Error!";
                                 } else {
-                                    mysqli_stmt_bind_param($stmt, "sssssssssssssss", 
+                                    mysqli_stmt_bind_param($stmt, "ssssssssssssssss", 
                                     $inst_id, 
                                     $chosenBranch, 
                                     $depositRand,
@@ -218,6 +218,7 @@ if (isset($_POST['submit'])) {
                                     $tellerId,
                                     $amount,
                                     $paymentType,
+                                    $isBank,
                                     $transactType,
                                     $accountProductId,
                                     $status,
@@ -375,6 +376,7 @@ if (isset($_POST['submit'])) {
                                 'staff_id' => $currentAppUser,
                                 'amount' => $amount,
                                 'pay_type' => 'Cash',
+                                'is_bank' => $isBank,
                                 'transact_type' => 'Deposit',
                                 'product_type' => $accountProductId,
                                 'status' => 'Verified',
@@ -485,6 +487,7 @@ if (isset($_POST['submit'])) {
                             'teller_id' => $tellerId,
                             'amount' => $amount,
                             'pay_type' => $paymentType,
+                            'is_bank' => $isBank,
                             'transact_type' => 'Withdrawal',
                             'product_type' => $accountProductId,
                             'status' => 'Pending',
