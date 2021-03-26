@@ -10,6 +10,7 @@ if (isset($_POST["id"])) {
     }
 
     $result = mysqli_query($connection, $sql);
+    $client = $_POST['client_id'];
 
     function fill_account($connection)
     {
@@ -233,18 +234,20 @@ if (isset($_POST["id"])) {
 //    $_SESSION['load_term'] = "batman";
 //    $_SESSION['interest_rate'] = "batman";
 //    $_SESSION['disbursment_date'] = "batman";
-?>
 
+?>
+<input type="hidden" id="client" value="<?php echo $client ?>">
 <!-- uphere restric back date -->
 <script>
     $(document).ready(function () {
         $('#principal_amount').on("change keyup paste click", function () {
             var id = $('#charges').val();
+            var client_id = $('#client').val();
             var prin = $(this).val();
             $.ajax({
                 url: "ajax_post/lend_charge.php",
                 method: "POST",
-                data: {id: id, prin: prin},
+                data: {id: id, prin: prin, client_id: client_id},
                 success: function (data) {
                     $('#lend_charge').html(data);
                 }
