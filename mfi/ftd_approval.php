@@ -224,19 +224,19 @@ $branches = branch_opt($connection);
                           Creation Date
                         </th>
                         <th class="th-sm">
-                         Client Name
+                          Client Name
                         </th>
                         <th class="th-sm">
-                         Branch
+                          Branch
                         </th>
                         <th class="th-sm">
-                       Loan Term
+                          Loan Term
                         </th>
                         <th class="th-sm">
-                         Amount
+                          Amount
                         </th>
                         <th class="th-sm">
-                        Interest Rate
+                          Interest Rate
                         </th>
                         <th>View</th>
                         <th>Approve</th>
