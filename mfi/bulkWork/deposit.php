@@ -141,6 +141,9 @@ if (isset($_POST['submit'])) {
                         $convertDate = strtotime($ourDataTable['date']);
                         $date = date('Y-m-d', $convertDate);
                         $fullDate = $date . ' ' . date('H:i:s');
+                        $findBank =  mysqli_query($connection, "SELECT is_bank FROM payment_type WHERE id = '$paymentType'");
+                        $payData = mysqli_fetch_array($findBank);
+                        $isBank = $payData['is_bank'];
 //                        $transactionNumber = $ourDataTable['deposit_slip_number'];
 //                    check account number given
                         if (strlen($ourDataTable['Account_Number']) === 9) {
@@ -176,6 +179,7 @@ if (isset($_POST['submit'])) {
                                 'teller_id' => $tellerId,
                                 'amount' => $amount,
                                 'pay_type' => $paymentType,
+                                'is_bank' => $isBank,
                                 'transact_type' => $transactType,
                                 'product_type' => $accountProductId,
                                 'status' => $status,
