@@ -419,7 +419,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                             <!-- <p class="card-category">Fill in all important data</p> -->
                         </div>
                         <div class="card-body">
-                            <form action="../functions/withdep.php" method="post" autocomplete="off">
+                            <form action="../functions/trannsactions/withdep.php" method="post" autocomplete="off">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <script>
@@ -570,7 +570,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                             <!-- <p class="card-category">Fill in all important data</p> -->
                         </div>
                         <div class="card-body">
-                            <form action="../functions/expense.php" method="post">
+                            <form action="../functions/transactions/expense.php" method="post">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <script>

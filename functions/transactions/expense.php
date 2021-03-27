@@ -1,7 +1,7 @@
 <?php
-include("connect.php");
+include("../connect.php");
 session_start();
-require_once "../bat/phpmailer/PHPMailerAutoload.php";
+require_once "../../bat/phpmailer/PHPMailerAutoload.php";
 // qwertyuiop
 // CHECK HTN APPROVAL
 $int_name = $_SESSION["int_name"];
@@ -61,7 +61,7 @@ if ($isBank == 0) {
         $parent_id = $gl["parent_id"];
         $new_gl_bal = $l_acct_bal + $gl_amt;
         // remeber the institution account
-        $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
+        $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id' OR submittedon_userid = '$staff_id'");
         if (count([$damn]) == 1) {
             $x = mysqli_fetch_array($damn);
             $int_acct_bal = $x['account_balance_derived'];
@@ -115,24 +115,24 @@ if ($isBank == 0) {
                             if ($res4) {
                                 // now we will send a mail
                                 $_SESSION["Lack_of_intfund_$randms"] = "Expense Successful";
-                                echo header("Location: ../mfi/transact.php?loan1=$randms");
+                                echo header("Location: ../../mfi/transact.php?loan1=$randms");
                             } else {
                                 // error in institution account transaction
                                 die("error in institution account transaction");
                                 $_SESSION["Lack_of_intfund_$randms"] = "Expense Failed";
-                                echo header("Location: ../mfi/transact.php?legal=$randms");
+                                echo header("Location: ../../mfi/transact.php?legal=$randms");
                             }
                         } else {
                             // echo error in institution account update
                             die("error in institution account update");
                             $_SESSION["Lack_of_intfund_$randms"] = "Expense Failed";
-                            echo header("Location: ../mfi/transact.php?legal=$randms");
+                            echo header("Location: ../../mfi/transact.php?legal=$randms");
                         }
                     } else {
                         // echo error at the GL posting
                         die("error at the GL posting");
                         $_SESSION["Lack_of_intfund_$randms"] = "Expense Failed";
-                        echo header("Location: ../mfi/transact.php?legal=$randms");
+                        echo header("Location: ../../mfi/transact.php?legal=$randms");
                     }
                 } else {
                     // run the expense for approval
@@ -145,10 +145,10 @@ if ($isBank == 0) {
                     $go = mysqli_query($connection, $trancache);
                     if ($go) {
                         $_SESSION["Lack_of_intfund_$randms"] = "Expense Successful!";
-                        echo header("Location: ../mfi/transact.php?loan2=$randms");
+                        echo header("Location: ../../mfi/transact.php?loan2=$randms");
                     } else {
                         $_SESSION["Lack_of_intfund_$randms"] = "Expense Failed";
-                        echo header("Location: ../mfi/transact.php?loan4=$randms");
+                        echo header("Location: ../../mfi/transact.php?loan4=$randms");
                         //             if ($connection->error) {
                         //     try {   
                         //         throw new Exception("MySQL error $connection->error <br> Query:<br> $trancache", $mysqli->error);   
@@ -162,17 +162,17 @@ if ($isBank == 0) {
             } else {
                 // echo insufficient fund
                 $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";
-                header("Location: ../mfi/transact.php?message5=$randms");
+                header("Location: ../../mfi/transact.php?message5=$randms");
             }
         } else {
             // echo a you are not authorized message
             $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
-            echo header("Location: ../mfi/transact.php?messagex2=$randms");
+            echo header("Location: ../../mfi/transact.php?messagex2=$randms");
         }
     } else {
         // Making now
         $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
-        echo header("Location: ../mfi/transact.php?loan2c=$randms");
+        echo header("Location: ../../mfi/transact.php?loan2c=$randms");
     }
 } else {
     // Find the needed GL
@@ -265,7 +265,7 @@ if ($isBank == 0) {
                             if ($transactionDetail) {
                                 // now we will send a mail
                                 $_SESSION["Lack_of_intfund_$randms"] = "Expense Successful";
-                                echo header("Location: ../mfi/transact.php?loan1=$randms");
+                                echo header("Location: ../../mfi/transact.php?loan1=$randms");
                             } else {
                                 printf("Error: %s\n", mysqli_error($connection));
                                 exit();
@@ -279,7 +279,7 @@ if ($isBank == 0) {
         // error in institution account transaction
         die("error in institution account transaction");
         $_SESSION["Lack_of_intfund_$randms"] = "Expense Failed";
-        echo header("Location: ../mfi/transact.php?legal=$randms");
+        echo header("Location: ../../mfi/transact.php?legal=$randms");
     }
 }
 

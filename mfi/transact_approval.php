@@ -429,7 +429,10 @@ if ($can_transact == 1 || $can_transact == "1") {
                                                                 echo "Bank";
                                                             } else if ($row["is_bank"] == 0) {
                                                                 echo "Cash";
-                                                            } ?>
+                                                            } else if ($row["is_bank"] == 2) {
+                                                                echo "Salary";
+                                                            }
+                                                            ?>
                                                         </td>
                                                         <td><?php echo number_format($row["amount"], 2); ?></td>
                                                         <td><?php 

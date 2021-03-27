@@ -1,8 +1,8 @@
 <?php
-include("connect.php");
-include("../mfi/ajaxcall.php");
+include("../connect.php");
+include("../../mfi/ajaxcall.php");
 session_start();
-require_once "../bat/phpmailer/PHPMailerAutoload.php";
+require_once "../../bat/phpmailer/PHPMailerAutoload.php";
 // qwertyuiop
 // CHECK HTN APPROVAL
 $int_name = $_SESSION["int_name"];
@@ -424,49 +424,7 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                         }
                       }
     ?>
-                      <!-- <input type="text" id="s_amount" value="<?php //echo number_format($amt, 2); 
-                                                                    ?>" hidden>
-                      <input type="text" id="s_desc" value="<?php //echo $description; 
-                                                            ?>" hidden>
-                      <input type="text" id="s_date" value="<?php// echo $pint; ?>" hidden>
-                      <input type="text" id="s_balance" value="<?php //echo number_format($comp, 2); 
-                                                                ?>" hidden>
-                      <script>
-                        $(document).ready(function() {
-                          var int_id = $('#s_int_id').val();
-                          var branch_id = $('#s_branch_id').val();
-                          var sender_id = $('#s_sender_id').val();
-                          var phone = $('#s_phone').val();
-                          var client_id = $('#s_client_id').val();
-                          var account_no = $('#s_acct_nox').val();
-                          // function
-                          var amount = $('#s_amount').val();
-                          var trans_type = "Credit";
-                          var acct_no = $('#s_acct_no').val();
-                          var int_name = $('#s_int_name').val();
-                          var desc = $('#s_desc').val();
-                          var date = $('#s_date').val();
-                          var balance = $('#s_balance').val();
-                          // now we work on the body.
-                          var msg = int_name + " " + trans_type + " \n" + "Amt: NGN " + amount + " \n Acct: " + acct_no + "\nDesc: " + desc + " \nBal: " + balance + " \nAvail: " + balance + "\nDate: " + date + "\nThanks!";
-                          $.ajax({
-                            url: "../mfi/ajax_post/sms/sms.php",
-                            method: "POST",
-                            data: {
-                              int_id: int_id,
-                              branch_id: branch_id,
-                              sender_id: sender_id,
-                              phone: phone,
-                              msg: msg,
-                              client_id: client_id,
-                              account_no: account_no
-                            },
-                            success: function(data) {
-                              $('#make_display').html(data);
-                            }
-                          });
-                        });
-                      </script> -->
+                      
                       <?php
                     }
                     // aomkjjkk
@@ -590,33 +548,33 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                     if (!$mail->send()) {
                       echo "Mailer Error: " . $mail->ErrorInfo;
                       $_SESSION["Lack_of_intfund_$randms"] = "Deposit Successful";
-                      echo header("Location: ../mfi/transact.php?message0=$randms");
+                      echo header("Location: ../../mfi/transact.php?message0=$randms");
                     } else {
                       $_SESSION["Lack_of_intfund_$randms"] = "Deposit Has Been Done, Awaiting Approval!";
-                      echo header("Location: ../mfi/transact.php?messagep=$randms");
+                      echo header("Location: ../../mfi/transact.php?messagep=$randms");
                     }
 
                     // sends a mail first
                   } else {
                     // echo error in the gl
                     $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
-                    echo header("Location: ../mfi/transact.php?legal=$randms");
+                    echo header("Location: ../../mfi/transact.php?legal=$randms");
                   }
                 } else {
                   // echo error at the clients transaction
                   $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
-                  echo header("Location: ../mfi/transact.php?legal=$randms");
+                  echo header("Location: ../../mfi/transact.php?legal=$randms");
                 }
               } else {
                 // echo error at clients transaction
                 $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
-                echo header("Location: ../mfi/transact.php?legal=$randms");
+                echo header("Location: ../../mfi/transact.php?legal=$randms");
               }
             }
           } else {
             // display wrong acount number
             $_SESSION["Lack_of_intfund_$randms"] = "Account not Found";
-            echo header("Location: ../mfi/transact.php?message7=$randms");
+            echo header("Location: ../../mfi/transact.php?message7=$randms");
           }
         } else if ($amt2 > $post_limit && $test == "deposit") {
           $new_abd = $comp;
@@ -650,17 +608,17 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                 $go = mysqli_query($connection, $trancache);
                 if ($go) {
                   $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
-                  echo header("Location: ../mfi/transact.php?message=$randms");
+                  echo header("Location: ../../mfi/transact.php?message=$randms");
                 } else {
                   $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
-                  echo header("Location: ../mfi/transact.php?message2=$randms");
+                  echo header("Location: ../../mfi/transact.php?message2=$randms");
                 }
               } else {
                 echo "Not equal to deposit";
               }
             } else {
               $_SESSION["Lack_of_intfund_$randms"] = "Account not Found";
-              echo header("Location: ../mfi/transact.php?message7=$randms");
+              echo header("Location: ../../mfi/transact.php?message7=$randms");
             }
           }
         } else if ($test == "withdraw") {
@@ -715,6 +673,16 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
             '{$gen_date}', '{$amt}', '{$new_int_bal}', '{$amt}',
             '{$gen_date}', '{$appuser_id}', '{$amt}')";
                         $res4 = mysqli_query($connection, $iat2);
+                      }
+                    }else if($isbank == 2){
+                      $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal2' WHERE int_id = '$sessint_id' && gl_code = '$glcode'";
+                      $dbgl = mysqli_query($connection, $upglacct);
+                      if ($dbgl) {
+                        $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
+                    transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
+                      created_date, debit) VALUES ('{$sessint_id}', '{$branch_id}', '{$glcode}', '{$parent}','{$transid}', '{$description}', '{$trans_type}', '{$staff_id}',
+                       '{$gen_date}', '{$amt}', '{$new_gl_bal2}', '{$amt}', '{$gen_date}', '{$amt}')";
+                        $res4 = mysqli_query($connection, $gl_acc);
                       }
                     }
 
@@ -800,46 +768,7 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                           }
                         }
                       ?>
-                        <!-- <input type="text" id="s_amount" value="<?php //echo number_format($amt, 2); ?>" hidden>
-                        <input type="text" id="s_desc" value="<?php //echo $description; ?>" hidden>
-                        <input type="text" id="s_date" value="<?php //echo $pint; ?>" hidden>
-                        <input type="text" id="s_balance" value="<?php //echo number_format($comp2, 2); ?>" hidden>
-                        <script>
-                          $(document).ready(function() {
-                            var int_id = $('#s_int_id').val();
-                            var branch_id = $('#s_branch_id').val();
-                            var sender_id = $('#s_sender_id').val();
-                            var phone = $('#s_phone').val();
-                            var client_id = $('#s_client_id').val();
-                            var account_no = $('#s_acct_nox').val();
-                            // function
-                            var amount = $('#s_amount').val();
-                            var trans_type = "Debit";
-                            var acct_no = $('#s_acct_no').val();
-                            var int_name = $('#s_int_name').val();
-                            var desc = $('#s_desc').val();
-                            var date = $('#s_date').val();
-                            var balance = $('#s_balance').val();
-                            // now we work on the body.
-                            var msg = int_name + " " + trans_type + " \n" + "Amt: NGN " + amount + " \n Acct: " + acct_no + "\nDesc: " + desc + " \nBal: " + balance + " \nAvail: " + balance + "\nDate: " + date + "\nThanks!";
-                            $.ajax({
-                              url: "../mfi/ajax_post/sms/sms.php",
-                              method: "POST",
-                              data: {
-                                int_id: int_id,
-                                branch_id: branch_id,
-                                sender_id: sender_id,
-                                phone: phone,
-                                msg: msg,
-                                client_id: client_id,
-                                account_no: account_no
-                              },
-                              success: function(data) {
-                                $('#make_display').html(data);
-                              }
-                            });
-                          });
-                        </script> -->
+                        
 <?php
                       }
                       // check the type of that account number product and get the name
@@ -965,26 +894,26 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                       if (!$mail->send()) {
                         echo "Mailer Error: " . $mail->ErrorInfo;
                         $_SESSION["Lack_of_intfund_$randms"] = "Withdrawal Successful";
-                        echo header("Location: ../mfi/transact.php?message0=$randms");
+                        echo header("Location: ../../mfi/transact.php?message0=$randms");
                       } else {
                         $_SESSION["Lack_of_intfund_$randms"] = "Withdrawal Successful!";
-                        echo header("Location: ../mfi/transact.php?message3=$randms");
+                        echo header("Location: ../../mfi/transact.php?message3=$randms");
                       }
                       // sends a mail first
                     } else {
                       // echo error in the gl
                       $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
-                      echo header("Location: ../mfi/transact.php?message2=$randms");
+                      echo header("Location: ../../mfi/transact.php?message2=$randms");
                     }
                   } else {
                     // echo error in the gl
                     $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
-                    echo header("Location: ../mfi/transact.php?message2=$randms");
+                    echo header("Location: ../../mfi/transact.php?message2=$randms");
                   }
                 } else {
                   // echo in account
                   $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
-                  echo header("Location: ../mfi/transact.php?legal=$randms");
+                  echo header("Location: ../../mfi/transact.php?legal=$randms");
                 }
               } else if ($amt2 > $post_limit) {
                 // post to for approval
@@ -1014,60 +943,60 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                         $go = mysqli_query($connection, $trancache);
                         if ($go) {
                           $_SESSION["Lack_of_intfund_$randms"] = "Transaction Failed";
-                          echo header("Location: ../mfi/transact.php?message=$randms");
+                          echo header("Location: ../../mfi/transact.php?message=$randms");
                         } else {
                           $_SESSION["Lack_of_intfund_$randms"] = "Withdrawal Failed";
-                          echo header("Location: ../mfi/transact.php?message4=$randms");
+                          echo header("Location: ../../mfi/transact.php?message4=$randms");
                         }
                       } else {
                         $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";
-                        header("Location: ../mfi/transact.php?message5=$randms");
+                        header("Location: ../../mfi/transact.php?message5=$randms");
                       }
                     } else {
                       echo "Test is Empty";
                     }
                   } else {
                     $_SESSION["Lack_of_intfund_$randms"] = "Account Not Found";
-                    echo header("Location: ../mfi/transact.php?message7=$randms");
+                    echo header("Location: ../../mfi/transact.php?message7=$randms");
                   }
                 }
               } else {
                 $_SESSION["Lack_of_intfund_$randms"] = "Account not Found";
-                echo header("Location: ../mfi/transact.php?message5=$randms");
+                echo header("Location: ../../mfi/transact.php?message5=$randms");
               }
             } else {
               // echo error client has insufficient fund
               $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";
-              header("Location: ../mfi/transact.php?messagex5=$randms");
+              header("Location: ../../mfi/transact.php?messagex5=$randms");
             }
           } else {
             $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";
-            header("Location: ../mfi/transact.php?message5=$randms");
+            header("Location: ../../mfi/transact.php?message5=$randms");
           }
         } else {
           $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";
-          header("Location: ../mfi/transact.php?message5=$randms");
+          header("Location: ../../mfi/transact.php?message5=$randms");
         }
       } else {
         // echo this teller is not authorized
         $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
-        echo header("Location: ../mfi/transact.php?messagex2=$randms");
+        echo header("Location: ../../mfi/transact.php?messagex2=$randms");
       }
     } else {
       $_SESSION["Lack_of_intfund_$randms"] = "System Error";
-      echo header("Location: ../mfi/transact.php?legalq=$randms");
+      echo header("Location: ../../mfi/transact.php?legalq=$randms");
     }
     // cont.
   } else {
     // you're not authorized not a teller
     $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
-    echo header("Location: ../mfi/transact.php?messagex2=$randms");
+    echo header("Location: ../../mfi/transact.php?messagex2=$randms");
     // remeber to fix account transaction for approval
   }
 } else {
   // To Check if CLIENT EXIST
   $_SESSION["Lack_of_intfund_$randms"] = "TELLER";
-  echo header("Location: ../mfi/transact.php?message123=$randms");
+  echo header("Location: ../../mfi/transact.php?message123=$randms");
 }
 ?>
 <?php

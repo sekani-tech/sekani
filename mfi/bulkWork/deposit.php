@@ -13,7 +13,7 @@ try {
 } catch (Exception $e) {
 }
 if (isset($_POST['submit'])) {
-//    chosen branch upon upload
+    //    chosen branch upon upload
     $chosenBranch = $_POST['branch'];
     $transactionType = $_POST['transaction'];
     $inst_id = $_SESSION['int_id'];
@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
     $totalAmount = 0;
     $tellerId = null;
 
-//    check for excel file submitted
+    //    check for excel file submitted
     if ($_FILES["excelFile"]["name"] !== '') {
         $allowed_extension = array('xls', 'csv', 'xlsx');
         $file_array = explode(".", $_FILES["excelFile"]["name"]);
@@ -37,16 +37,16 @@ if (isset($_POST['submit'])) {
 
                 unlink($file_name);
 
-//            Data from excel Sheet
+                //            Data from excel Sheet
                 $data = $spreadsheet->getActiveSheet()->toArray();
             } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
             }
 
-//            our data table for insertion
+            //            our data table for insertion
             $ourDataTables = [];
         }
 
-//            Join data with content from the excel sheet
+        //            Join data with content from the excel sheet
         foreach ($data as $key => $row) {
             $ourDataTables[] = array(
                 'Branch_Name' => $row['0'],
@@ -62,26 +62,26 @@ if (isset($_POST['submit'])) {
         }
 
         $query = mysqli_query($connection, "SELECT account_no FROM account WHERE int_id = '$inst_id'");
-        while($row = mysqli_fetch_array($query)) {
+        while ($row = mysqli_fetch_array($query)) {
             $result[] = $row['account_no'];
         }
 
         $invalidAccounts = array();
 
         foreach ($ourDataTables as $key => $ourData) {
-            if(!in_array($ourData['Account_Number'], $result)) {
+            if (!in_array($ourData['Account_Number'], $result)) {
                 $_SESSION["Lack_of_intfund_$randms"] = $ourData['Account_Number'] . " does not exist <br>";
                 $invalidAccounts[] = $ourData['Account_Number'];
             }
         }
 
-        if(!empty($invalidAccounts)) {
+        if (!empty($invalidAccounts)) {
             $_SESSION['Invalid_Accounts'] = $invalidAccounts;
             header("Location: ../bulk_deposit.php?message11=$randms");
             exit();
         }
 
-//      get the total money and and teller Id and check if the header is removed
+        //      get the total money and and teller Id and check if the header is removed
         foreach ($ourDataTables as $key => $ourData) {
             // check if the header was remove
             if ($ourData['teller_id'] === "teller id") {
@@ -104,12 +104,12 @@ if (isset($_POST['submit'])) {
             $tellerId = $ourData['teller_id'];
         }
 
-        
+
 
         //                getting tellers info to check for post limit
         $tellersCondition = ['id' => $tellerId];
         $tellerDetails = selectOne('tellers', $tellersCondition);
-//                branch and teller id for check
+        //                branch and teller id for check
         $tellerNameId = $tellerDetails['name'];
         $tellerBranch = $tellerDetails['branch_id'];
         $tellerPostLimit = $tellerDetails['post_limit'];
@@ -126,9 +126,9 @@ if (isset($_POST['submit'])) {
                 exit();
             } else {
                 if ($totalAmount > $tellerPostLimit) {
-//            send information one by one
+                    //            send information one by one
                     foreach ($ourDataTables as $key => $ourDataTable) {
-//                Variable Name
+                        //                Variable Name
                         try {
                             $depositRand = str_pad(random_int(0, (10 ** $digit) - 1), 7, '0', STR_PAD_LEFT);
                         } catch (Exception $e) {
@@ -144,8 +144,8 @@ if (isset($_POST['submit'])) {
                         $findBank =  mysqli_query($connection, "SELECT is_bank FROM payment_type WHERE id = '$paymentType'");
                         $payData = mysqli_fetch_array($findBank);
                         $isBank = $payData['is_bank'];
-//                        $transactionNumber = $ourDataTable['deposit_slip_number'];
-//                    check account number given
+                        //                        $transactionNumber = $ourDataTable['deposit_slip_number'];
+                        //                    check account number given
                         if (strlen($ourDataTable['Account_Number']) === 9) {
                             $accountNumber = '0' . $ourDataTable['Account_Number'];
                         } else if (strlen($ourDataTable['Account_Number']) <= 8) {
@@ -156,17 +156,17 @@ if (isset($_POST['submit'])) {
 
                         if ($chosenBranch == $tellerBranch) {
 
-//                  get account information using account number
+                            //                  get account information using account number
                             $accountDetails = selectOne('account', ['account_no' => $accountNumber]);
-//                  account information for other table
+                            //                  account information for other table
                             $accountProductId = $accountDetails['product_id'];
                             $accountId = $accountDetails['id'];
                             $accountClientId = $accountDetails['client_id'];
-//                  get information and update transact_cache
+                            //                  get information and update transact_cache
                             $description = 'Bulk Deposit';
                             $transactType = 'Deposit';
                             $status = 'Pending';
-                            
+
                             $transactionCacheCon = [
                                 'int_id' => $inst_id,
                                 'branch_id' => $chosenBranch,
@@ -186,43 +186,46 @@ if (isset($_POST['submit'])) {
                                 'date' => $fullDate
                             ];
 
-                            if(count($transactionCacheCon)) {
+                            if (count($transactionCacheCon)) {
                                 $keys = array_keys($transactionCacheCon);
                                 $values = '';
                                 $x = 1;
-                        
-                                foreach($transactionCacheCon as $field) {
+
+                                foreach ($transactionCacheCon as $field) {
                                     $values .= '?';
-                                    if($x < count($transactionCacheCon)) {
+                                    if ($x < count($transactionCacheCon)) {
                                         $values .= ', ';
                                     }
                                     $x++;
                                 }
 
-                                $sql = "INSERT INTO transact_cache (`" . implode( '`,`', $keys) . "`) VALUES ({$values});";
-                                
+                                $sql = "INSERT INTO transact_cache (`" . implode('`,`', $keys) . "`) VALUES ({$values});";
+
                                 $stmt = mysqli_stmt_init($connection);
 
-                                if(!mysqli_stmt_prepare($stmt, $sql)) {
+                                if (!mysqli_stmt_prepare($stmt, $sql)) {
                                     echo "SQL Error!";
                                 } else {
-                                    mysqli_stmt_bind_param($stmt, "ssssssssssssssss", 
-                                    $inst_id, 
-                                    $chosenBranch, 
-                                    $depositRand,
-                                    $description,
-                                    $accountNumber,
-                                    $accountClientId,
-                                    $accountClientName,
-                                    $currentAppUser,
-                                    $tellerId,
-                                    $amount,
-                                    $paymentType,
-                                    $isBank,
-                                    $transactType,
-                                    $accountProductId,
-                                    $status,
-                                    $fullDate);
+                                    mysqli_stmt_bind_param(
+                                        $stmt,
+                                        "ssssssssssssssss",
+                                        $inst_id,
+                                        $chosenBranch,
+                                        $depositRand,
+                                        $description,
+                                        $accountNumber,
+                                        $accountClientId,
+                                        $accountClientName,
+                                        $currentAppUser,
+                                        $tellerId,
+                                        $amount,
+                                        $paymentType,
+                                        $isBank,
+                                        $transactType,
+                                        $accountProductId,
+                                        $status,
+                                        $fullDate
+                                    );
 
                                     mysqli_stmt_execute($stmt);
 
@@ -243,11 +246,10 @@ if (isset($_POST['submit'])) {
                         header("Location: ../bulk_deposit.php?message4=$randms");
                         exit();
                     }
-                }
-                else {
-//            send information one by one
+                } else {
+                    //            send information one by one
                     foreach ($ourDataTables as $kay => $ourDataTable) {
-//                Variable Name
+                        //                Variable Name
                         $accountClientName = $ourDataTable['Account_Name'];
                         $paymentType = $ourDataTable['payment_type_id'];
                         $amount = $ourDataTable['amount'];
@@ -255,8 +257,8 @@ if (isset($_POST['submit'])) {
                         $convertDate = strtotime($ourDataTable['date']);
                         $date = date('Y-m-d', $convertDate);
                         $fullDate = $date . ' ' . date('H:i:s');
-//                        $transactionNumber = $ourDataTable['deposit_slip_number'];
-//                    check account number given
+                        //                        $transactionNumber = $ourDataTable['deposit_slip_number'];
+                        //                    check account number given
                         if (strlen($ourDataTable['Account_Number']) < 10) {
                             $accountNumber = '00' . $ourDataTable['Account_Number'];
                         } else {
@@ -265,10 +267,10 @@ if (isset($_POST['submit'])) {
 
                         if ($chosenBranch == $tellerBranch) {
 
-//                  get account information using account number
+                            //                  get account information using account number
                             $accountDetails = selectOne('account', ['account_no' => $accountNumber]);
-//                    dd($accountDetails);
-//                  account information for other table
+                            //                    dd($accountDetails);
+                            //                  account information for other table
                             $accountProductId = $accountDetails['product_id'];
                             $accountId = $accountDetails['id'];
                             $accountClientId = $accountDetails['client_id'];
@@ -322,17 +324,23 @@ if (isset($_POST['submit'])) {
                             $newOrgRunningBal = $glAccountDetails['organization_running_balance_derived'] + $amount;
 
                             //                        update the acc_gl_account
-                            $update_glAccount = update('acc_gl_account', $glAccountDetails['id'],
-                                'id', ['organization_running_balance_derived' => $newOrgRunningBal]);
+                            $update_glAccount = update(
+                                'acc_gl_account',
+                                $glAccountDetails['id'],
+                                'id',
+                                ['organization_running_balance_derived' => $newOrgRunningBal]
+                            );
 
-//                      get insit information and add new amount to old balance
+                            //                      get insit information and add new amount to old balance
                             $instCondition = ['int_id' => $inst_id, 'teller_id' => $tellerNameId];
                             $instDetails = selectOne('institution_account', $instCondition);
                             $new_inst_acct_bal = $instDetails['account_balance_derived'] + $amount;
                             $new_inst_total_bal_der = $instDetails['total_deposits_derived'] + $amount;
-//                        dd($instDetails['account_balance_derived']);
-
-//                        prepare data for update
+                            //                        dd($instDetails['account_balance_derived']);
+                            $findBank =  mysqli_query($connection, "SELECT is_bank FROM payment_type WHERE id = '$paymentType'");
+                            $payData = mysqli_fetch_array($findBank);
+                            $isBank = $payData['is_bank'];
+                            //                        prepare data for update
                             $idValue = $instDetails['id'];
                             $update_instAccountCon = [
                                 'submittedon_userid' => $currentAppUser,
@@ -344,7 +352,7 @@ if (isset($_POST['submit'])) {
                             ];
                             $update_instAccount = update('institution_account', $idValue, 'id', $update_instAccountCon);
 
-//                        get info about institution_account_transaction and update it
+                            //                        get info about institution_account_transaction and update it
                             $instAccountTransCon = [
                                 'int_id' => $inst_id,
                                 'branch_id' => $chosenBranch,
@@ -364,7 +372,7 @@ if (isset($_POST['submit'])) {
                             ];
                             $institution_account = create('institution_account_transaction', $instAccountTransCon);
 
-//                        get information and update transact_cache
+                            //                        get information and update transact_cache
                             $transactionCacheCon = [
                                 'int_id' => $inst_id,
                                 'branch_id' => $chosenBranch,
@@ -382,10 +390,10 @@ if (isset($_POST['submit'])) {
                                 'status' => 'Verified',
                                 'date' => $fullDate,
                             ];
-//                        fix gl_code when you meet boss
+                            //                        fix gl_code when you meet boss
                             $transactionCache = create('transact_cache', $transactionCacheCon);
 
-//                        get information for gl_account_transaction
+                            //                        get information for gl_account_transaction
                             $gl_accountCon = [
                                 'int_id' => $inst_id,
                                 'branch_id' => $chosenBranch,
@@ -408,21 +416,24 @@ if (isset($_POST['submit'])) {
                             header("Location: ../bulk_deposit.php?message5=$randms");
                             exit();
                         }
-
                     }
-//                        check if every data was sent successfully
-                    if (!empty($gl_accountDetails) && !empty($transactionCache) && !empty($institution_account)
+                    //                        check if every data was sent successfully
+                    if (
+                        !empty($gl_accountDetails) && !empty($transactionCache) && !empty($institution_account)
                         && !empty($tellerDetails) && !empty($accountDetails) && !empty($instDetails)
-                        && !empty($glAccountDetails) && !empty($accountTransDetails) && !empty($transactionCacheApproval)) {
+                        && !empty($glAccountDetails) && !empty($accountTransDetails) && !empty($transactionCacheApproval)
+                    ) {
                         if (!empty($update_instAccount) && !empty($update_glAccount) && !empty($updateLastDeposit)) {
                             $_SESSION["Lack_of_intfund_$randms"] = "Transaction Successful!";
                             header("Location: ../bulk_deposit.php?message1=$randms");
                             exit();
                         }
                         // check for approval
-                    } elseif (!empty($transactionCache) && !empty($gl_accountDetails) && !empty($institution_account)
+                    } elseif (
+                        !empty($transactionCache) && !empty($gl_accountDetails) && !empty($institution_account)
                         && !empty($tellerDetails) && !empty($accountDetails) && !empty($instDetails)
-                        && !empty($glAccountDetails) && !empty($accountTransDetails)) {
+                        && !empty($glAccountDetails) && !empty($accountTransDetails)
+                    ) {
                         $_SESSION["Lack_of_intfund_$randms"] = "Sent for Approval!";
                         header("Location: ../bulk_deposit.php?message4=$randms");
                         exit();
@@ -441,13 +452,13 @@ if (isset($_POST['submit'])) {
                 header("Location: ../bulk_deposit.php?message10=$randms");
                 exit();
             } else {
-//            send information one by one
+                //            send information one by one
                 foreach ($ourDataTables as $key => $ourDataTable) {
                     try {
                         $withDrawRand = str_pad(random_int(0, (10 ** $digit) - 1), 7, '0', STR_PAD_LEFT);
                     } catch (Exception $e) {
                     }
-//                Variable Name
+                    //                Variable Name
                     $accountClientName = $ourDataTable['Account_Name'];
                     $paymentType = $ourDataTable['payment_type_id'];
                     $amount = $ourDataTable['amount'];
@@ -455,8 +466,11 @@ if (isset($_POST['submit'])) {
                     $convertDate = strtotime($ourDataTable['date']);
                     $date = date('Y-m-d', $convertDate);
                     $fullDate = $date . ' ' . date('H:i:s');
-//                    $transactionNumber = $ourDataTable['deposit_slip_number'];
-//                    check account number given
+                    $findBank =  mysqli_query($connection, "SELECT is_bank FROM payment_type WHERE id = '$paymentType'");
+                    $payData = mysqli_fetch_array($findBank);
+                    $isBank = $payData['is_bank'];
+                    //                    $transactionNumber = $ourDataTable['deposit_slip_number'];
+                    //                    check account number given
                     if (strlen($ourDataTable['Account_Number']) === 9) {
                         $accountNumber = '0' . $ourDataTable['Account_Number'];
                     } else if (strlen($ourDataTable['Account_Number']) <= 8) {
@@ -467,10 +481,10 @@ if (isset($_POST['submit'])) {
 
                     if ($chosenBranch == $tellerBranch) {
 
-//                  get account information using account number
+                        //                  get account information using account number
                         $accountDetails = selectOne('account', ['account_no' => $accountNumber]);
 
-//                  account information for other table
+                        //                  account information for other table
                         $accountProductId = $accountDetails['product_id'];
                         $accountId = $accountDetails['id'];
                         $accountClientId = $accountDetails['client_id'];
@@ -506,7 +520,6 @@ if (isset($_POST['submit'])) {
                     header("Location: ../bulk_deposit.php?message4=$randms");
                     exit();
                 }
-
             }
         }
     } else {
@@ -515,5 +528,3 @@ if (isset($_POST['submit'])) {
         exit();
     }
 }
-
-
