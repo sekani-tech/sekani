@@ -106,3 +106,5 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 ALTER TABLE `wallet_transaction_cache` ADD `description` LONGTEXT NOT NULL AFTER `wallet_type`;
+
+ALTER TABLE `asset_type` CHANGE `total_amount` `gl_code` BIGINT(20) NULL;
