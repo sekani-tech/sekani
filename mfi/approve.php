@@ -92,7 +92,7 @@ if ($check_me_men) {
   $l_acct_bal = $gl["organization_running_balance_derived"];
   $new_gl_bal = $l_acct_bal + $gl_amt;
   // remeber the institution account
-  $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$teller_id'");
+  $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' AND teller_id = '$teller_id' OR submittedon_userid = '$teller_id'");
   if (count([$damn]) == 1) {
     $x = mysqli_fetch_array($damn);
     $int_acct_bal = $x['account_balance_derived'];
@@ -107,6 +107,7 @@ if ($check_me_men) {
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   //  RUN A QUERY TO CHECK IF THE TRANSACTION HAS BEEN DONE BEFORE
+  dd($int_acct_bal);
   $q1 = mysqli_query($connection, "SELECT * FROM `institution_account_transaction` WHERE transaction_id = '$transid' && int_id='$sessint_id'");
   $resx1 = mysqli_num_rows($q1);
   if ($resx1 == 0) {
@@ -426,7 +427,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
                       } else if ($is_bank == 0) {
                         // institution account
-                        $int_account_trans = "UPDATE institution_account SET account_balance_derived = '$new_int_bal' WHERE teller_id = '$teller_id' && int_id = '$sessint_id'";
+                        $int_account_trans = "UPDATE institution_account SET account_balance_derived = '$new_int_bal' WHERE teller_id = '$teller_id' OR submittedon_userid = '$teller_id' AND int_id = '$sessint_id'";
                         $query1 = mysqli_query($connection, $int_account_trans);
                         // check if int account has been updated
                         if ($query1) {
@@ -542,7 +543,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      ';
                 }
               } else if ($transact_type == "Withdrawal" && $client_id = $id) {
-                $getaccount = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
+                $getaccount = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id' OR submittedon_userid = '$teller_id'");
                 $getbal = mysqli_fetch_array($getaccount);
                 $runtellb = 0;
                 if ($is_bank == 1) {
@@ -714,7 +715,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           }
                         } else if ($is_bank == 0) {
                           // institution account transaction
-                          $int_account_trans = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2' WHERE teller_id = '$teller_id' && int_id = '$sessint_id'";
+                          $int_account_trans = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2' WHERE teller_id = '$teller_id' OR submittedon_userid = '$teller_id' AND int_id = '$sessint_id'";
                           $query1 = mysqli_query($connection, $int_account_trans);
                           // check if int account has been updated
                           if ($query1) {
@@ -832,7 +833,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                    ';
                 }
               } else if ($transact_type == "Expense") {
-                $getaccount = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
+                $getaccount = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id' OR submittedon_userid = '$teller_id'");
                 $getbal = mysqli_fetch_array($getaccount);
                 $runtellb = $getbal["account_balance_derived"];
                 // importing the needed on the gl
@@ -840,7 +841,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_codex'";
                   $dbgl = mysqli_query($connection, $upglacct);
                   if ($dbgl) {
-                    $upinta = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2', total_withdrawals_derived = '$tbd2' WHERE int_id = '$sessint_id' && teller_id = '$staff_id'";
+                    $upinta = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2', total_withdrawals_derived = '$tbd2' WHERE int_id = '$sessint_id' AND teller_id = '$staff_id' OR submittedon_userid = '$teller_id'";
                     $res1 = mysqli_query($connection, $upinta);
                     if ($res1) {
                       $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
@@ -1064,7 +1065,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="bmd-label-floating">Posted By</label>
-                    <input type="text" class="form-control" name="email" value="<?php echo $ao; ?>">
+                    <input type="text" class="form-control" name="email" value="<?php if($ao != ""){
+                      echo $ao;
+                    }else{
+                      $findResponsible = mysqli_query($connection, "SELECT display_name FROM staff WHERE id = '$teller_id'");
+                      $data = mysqli_fetch_array($findResponsible);
+                      echo $staffName = $data['display_name'];
+                    } ?>">
                   </div>
                 </div>
                 <div class="col-md-4">

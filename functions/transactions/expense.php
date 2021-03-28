@@ -61,7 +61,7 @@ if ($isBank == 0) {
         $parent_id = $gl["parent_id"];
         $new_gl_bal = $l_acct_bal + $gl_amt;
         // remeber the institution account
-        $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id' OR submittedon_userid = '$staff_id'");
+        $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' AND teller_id = '$staff_id' OR submittedon_userid = '$staff_id'");
         if (count([$damn]) == 1) {
             $x = mysqli_fetch_array($damn);
             $int_acct_bal = $x['account_balance_derived'];

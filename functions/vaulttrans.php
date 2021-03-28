@@ -38,7 +38,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
     $glbalance = $np['organization_running_balance_derived'];
     $glname = $np['name'];
 
-    $que = "SELECT * FROM institution_account WHERE teller_id = '$tid'";
+    $que = "SELECT * FROM institution_account WHERE teller_id = '$tid' OR submittedon_userid = '$tid' ";
     $rock = mysqli_query($connection, $que);
     $yn = mysqli_fetch_array($rock);
     $tellbalance = $yn['account_balance_derived'];
@@ -49,7 +49,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
     $sd = mysqli_fetch_array($ssddd);
     $tellglbalance = $sd['organization_running_balance_derived'];
 
-    $quet = "SELECT * FROM tellers WHERE name = '$tid'";
+    $quet = "SELECT * FROM tellers WHERE name = '$tid' OR id = '$tid' ";
     $rocka = mysqli_query($connection, $quet);
     $yy = mysqli_fetch_array($rocka);
     $tellname = $yy['description'];
@@ -75,7 +75,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
 
                 $blnc = number_format($new_vaultbalance);
                 $amt = number_format($amount);
-                $vaultinquery = "UPDATE institution_account SET account_balance_derived = '$new_tellbalance' WHERE teller_id = '$tid' AND int_id = '$sessint_id' AND branch_id = '$brand'";
+                $vaultinquery = "UPDATE institution_account SET account_balance_derived = '$new_tellbalance' WHERE teller_id = '$tid' OR submittedon_userid = '$tid' AND int_id = '$sessint_id' AND branch_id = '$brand'";
                 $ein = mysqli_query($connection, $vaultinquery);
                 $description = "Deposited into Vault";
                 if($ein){
@@ -301,7 +301,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                 $blnc = number_format($new_vaultbalance);
                 $amt = number_format($amount);
 
-                $vaultinquery = "UPDATE institution_account SET account_balance_derived = '$new_tellbalance' WHERE teller_id = '$tid' && int_id = '$sint_id' AND int_id = '$sessint_id' AND branch_id = '$brand'";
+                $vaultinquery = "UPDATE institution_account SET account_balance_derived = '$new_tellbalance' WHERE teller_id = '$tid' OR submittedon_userid = '$tid' && int_id = '$sint_id' AND int_id = '$sessint_id' AND branch_id = '$brand'";
                 $ein = mysqli_query($connection, $vaultinquery);
 
                 $ddffd = "UPDATE acc_gl_account SET organization_running_balance_derived = '$newtellgl' WHERE gl_code = '$tellgl' && int_id = '$sint_id' AND branch_id = '$branchid'";

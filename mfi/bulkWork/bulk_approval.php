@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
                         $id = $postValueId;
                         $inst_id = $_SESSION['int_id'];
 
-//        Get the transaction from transact_cache
+                        //        Get the transaction from transact_cache
                         $transactionDataCon = [
                             'id' => $id,
                             'int_id' => $inst_id,
@@ -38,11 +38,12 @@ if (isset($_POST['submit'])) {
                         $transactionCacheTellerId = $transactionData['teller_id'];
                         $transactionCacheAmount = $transactionData['amount'];
                         $transactionCachePayType = $transactionData['pay_type'];
+                        $transactionCacheIsBank = $transactionData['is_bank'];
                         $transactionCacheTransType = $transactionData['transact_type'];
                         $transactionCacheProductType = $transactionData['product_type'];
                         $transactionCacheDate = $transactionData['date'];
 
-//                        check if transaction has been done before
+                        //                        check if transaction has been done before
                         $doneBeforeCon = [
                             'int_id' => $transactionCacheInst_id,
                             'branch_id' => $transactionCacheBranchId,
@@ -70,7 +71,7 @@ if (isset($_POST['submit'])) {
                             header("Location: ../transact_approval.php?messageBulkApp2=$showKey");
                             exit();
                         }
-//                            dd($accountDetails);
+                        //                            dd($accountDetails);
                         //                  account information for other table
                         $accountProductId = $accountDetails['product_id'];
                         $accountId = $accountDetails['id'];
@@ -130,7 +131,7 @@ if (isset($_POST['submit'])) {
                         // $instCondition = ['int_id' => $transactionCacheInst_id, 'teller_id' => $tellerNameID || $tellerName];
                         // $instDetails = selectOne('institution_account', $instCondition);
 
-                        $instCondition = mysqli_query($connection, "SELECT * FROM `institution_account` WHERE int_id = '$transactionCacheInst_id' AND teller_id = '$tellerNameID' || '$tellerName'");
+                        $instCondition = mysqli_query($connection, "SELECT * FROM `institution_account` WHERE int_id = '$transactionCacheInst_id' AND teller_id = '$tellerNameID' OR teller_id = '$tellerName'");
                         $instDetails = mysqli_fetch_array($instCondition);
 
                         if (!$instDetails) {
@@ -189,23 +190,51 @@ if (isset($_POST['submit'])) {
                             'credit' => $transactionCacheAmount
                         ];
 
-//                            a check to make sure all information are available and correct before sending it to data tables
+                        //                            a check to make sure all information are available and correct before sending it to data tables
                         if ($tellerDetails && $accountDetails && $getGlCode && $glAccountDetails && $instDetails) {
                             //                        update account table
                             $updateLastDeposit = update('account', $accountId, $accountConstantName, $accountData);
-//                                insert into account transaction
+                            //                                insert into account transaction
                             $accountTransDetails = insert('account_transaction', $accountTransData);
                             //                        update the acc_gl_account
-                            $update_glAccount = update('acc_gl_account', $glAccountDetails['id'],
-                                'id', ['organization_running_balance_derived' => $newOrgRunningBal]);
-//                                update the institution account information
-                            $update_instAccount = update('institution_account', $idValue, 'id', $update_instAccountCon);
-//                                insert record in institution account transaction
-                            $institution_account = insert('institution_account_transaction', $instAccountTransCon);
-//                                insert record into gl account transaction
-                            $gl_accountDetails = insert('gl_account_transaction', $gl_accountCon);
-//                            Update the transact_cache with verified
-                            $updateTransactionCache = update('transact_cache', $transactionCacheId, 'id', ['status' => 'Verified']);
+                            if ($transactionCacheIsBank == 0) {
+                                $update_glAccount = update(
+                                    'acc_gl_account',
+                                    $glAccountDetails['id'],
+                                    'id',
+                                    ['organization_running_balance_derived' => $newOrgRunningBal]
+                                );
+                                //                                update the institution account information
+                                $update_instAccount = update('institution_account', $idValue, 'id', $update_instAccountCon);
+                                //                                insert record in institution account transaction
+                                $institution_account = insert('institution_account_transaction', $instAccountTransCon);
+                                //                                insert record into gl account transaction
+                                $glAccountUpdate = [
+                                    'organization_running_balance_derived' => $newOrgRunningBal
+                                ];
+                                $glUpdate = update('acc_gl_account', $glCode, 'gl_code', $glAccountUpdate);
+                                $gl_accountDetails = insert('gl_account_transaction', $gl_accountCon);
+                                //                            Update the transact_cache with verified
+                                $updateTransactionCache = update('transact_cache', $transactionCacheId, 'id', ['status' => 'Verified']);
+                            }else if($transactionCacheIsBank == 1){
+                                $glAccountUpdate = [
+                                    'organization_running_balance_derived' => $newOrgRunningBal
+                                ];
+                                $glUpdate = update('acc_gl_account', $glCode, 'gl_code', $glAccountUpdate);
+                                //                                insert record into gl account transaction
+                                $gl_accountDetails = insert('gl_account_transaction', $gl_accountCon);
+                                //                            Update the transact_cache with verified
+                                $updateTransactionCache = update('transact_cache', $transactionCacheId, 'id', ['status' => 'Verified']);
+                            }else if($transactionCacheIsBank == 2){
+                                $glAccountUpdate = [
+                                    'organization_running_balance_derived' => $newOrgRunningBal
+                                ];
+                                $glUpdate = update('acc_gl_account', $glCode, 'gl_code', $glAccountUpdate);
+                                //                                insert record into gl account transaction
+                                $gl_accountDetails = insert('gl_account_transaction', $gl_accountCon);
+                                //                            Update the transact_cache with verified
+                                $updateTransactionCache = update('transact_cache', $transactionCacheId, 'id', ['status' => 'Verified']);
+                            }
                         }
                     }
                     $totalNumber = count($_POST['checkBoxArray']);
@@ -218,7 +247,7 @@ if (isset($_POST['submit'])) {
                         $id = $postValueId;
                         $inst_id = $_SESSION['int_id'];
 
-//        Get the transaction from transact_cache
+                        //        Get the transaction from transact_cache
                         $transactionDataCon = ['id' => $id, 'int_id' => $inst_id, 'status' => 'Pending', 'transact_type' => $bulk_options_type];
                         $transactionData = selectOne('transact_cache', $transactionDataCon);
                         $transactionCacheId = $transactionData['id'];
@@ -233,11 +262,12 @@ if (isset($_POST['submit'])) {
                         $transactionCacheTellerId = $transactionData['teller_id'];
                         $transactionCacheAmount = $transactionData['amount'];
                         $transactionCachePayType = $transactionData['pay_type'];
+                        $transactionCacheIsBank = $transactionData['is_bank'];
                         $transactionCacheTransType = $transactionData['transact_type'];
                         $transactionCacheProductType = $transactionData['product_type'];
                         $transactionCacheDate = $transactionData['date'];
 
-//                        check client account if money is available
+                        //                        check client account if money is available
                         $clientAccountBalanceCon = [
                             'int_id' => $transactionCacheInst_id,
                             'branch_id' => $transactionCacheBranchId,
@@ -276,7 +306,8 @@ if (isset($_POST['submit'])) {
 
                         $tellerCon = ['id' => $transactionCacheTellerId, 'int_id' => $transactionCacheInst_id];
                         $tellerDetails = selectOne('tellers', $tellerCon);
-                        $tellerNameID = $tellerDetails['name'];
+                        $tellerNameID = $tellerDetails['id'];
+                        $tellerName = $tellerDetails['name'];
 
                         //                  get account information using account number
                         $accountDetails = selectOne('account', ['account_no' => $transactionCacheAccountNo]);
@@ -286,7 +317,7 @@ if (isset($_POST['submit'])) {
                             header("Location: ../transact_approval.php?messageBulkApp2=$showKey");
                             exit();
                         }
-//                            dd($accountDetails);
+                        //                            dd($accountDetails);
                         //                  account information for other table
                         $accountProductId = $accountDetails['product_id'];
                         $accountId = $accountDetails['id'];
@@ -342,8 +373,10 @@ if (isset($_POST['submit'])) {
                         $newOrgRunningBal = $glAccountDetails['organization_running_balance_derived'] - $transactionCacheAmount;
 
                         //                      get insit information and add new amount to old balance
-                        $instCondition = ['int_id' => $transactionCacheInst_id, 'teller_id' => $tellerNameID];
-                        $instDetails = selectOne('institution_account', $instCondition);
+                        // $instCondition = ['int_id' => $transactionCacheInst_id, 'teller_id' => $tellerNameID];
+                        // $instDetails = selectOne('institution_account', $instCondition);
+                        $instCondition = mysqli_query($connection, "SELECT * FROM `institution_account` WHERE int_id = '$transactionCacheInst_id' AND teller_id = '$tellerNameID' OR teller_id = '$tellerName'");
+                        $instDetails = mysqli_fetch_array($instCondition);
                         if (!$instDetails) {
                             $showKey = $key + 1;
                             $_SESSION["Lack_of_intfund_$randms"] = "Sorry Institution not found";
@@ -400,23 +433,52 @@ if (isset($_POST['submit'])) {
                             'debit' => $transactionCacheAmount
                         ];
 
-//                            a check to make sure all information are available and correct before sending it to data tables
+                        //                            a check to make sure all information are available and correct before sending it to data tables
                         if ($tellerDetails && $accountDetails && $getGlCode && $glAccountDetails && $instDetails) {
                             //                        update account table
                             $updateLastWithdrawal = update('account', $accountId, $accountConstantName, $accountData);
-//                                insert into account transaction
+                            //                                insert into account transaction
                             $accountTransDetails = insert('account_transaction', $accountTransData);
                             //                        update the acc_gl_account
-                            $update_glAccount = update('acc_gl_account', $glAccountDetails['id'],
-                                'id', ['organization_running_balance_derived' => $newOrgRunningBal]);
-//                                update the institution account information
-                            $update_instAccount = update('institution_account', $idValue, 'id', $update_instAccountCon);
-//                                insert record in institution account transaction
-                            $institution_account = insert('institution_account_transaction', $instAccountTransCon);
-//                                insert record into gl account transaction
-                            $gl_accountDetails = insert('gl_account_transaction', $gl_accountCon);
-//                            Update the transact_cache with verified
-                            $updateTransactionCache = update('transact_cache', $transactionCacheId, 'id', ['status' => 'Verified']);
+                            if($transactionCacheIsBank == 0){
+                                $update_glAccount = update(
+                                    'acc_gl_account',
+                                    $glAccountDetails['id'],
+                                    'id',
+                                    ['organization_running_balance_derived' => $newOrgRunningBal]
+                                );
+                                //                                update the institution account information
+                                $update_instAccount = update('institution_account', $idValue, 'id', $update_instAccountCon);
+                                //                                insert record in institution account transaction
+                                $institution_account = insert('institution_account_transaction', $instAccountTransCon);
+                                //                                insert record into gl account transaction
+                                $gl_accountDetails = insert('gl_account_transaction', $gl_accountCon);
+                                //                            Update the transact_cache with verified
+                                $updateTransactionCache = update('transact_cache', $transactionCacheId, 'id', ['status' => 'Verified']);
+                            }else if($transactionCacheIsBank == 1){
+                                $update_glAccount = update(
+                                    'acc_gl_account',
+                                    $glAccountDetails['id'],
+                                    'id',
+                                    ['organization_running_balance_derived' => $newOrgRunningBal]
+                                );
+                                //                                insert record into gl account transaction
+                                $gl_accountDetails = insert('gl_account_transaction', $gl_accountCon);
+                                //                            Update the transact_cache with verified
+                                $updateTransactionCache = update('transact_cache', $transactionCacheId, 'id', ['status' => 'Verified']);
+                            }else if($transactionCacheIsBank == 0){
+                                $update_glAccount = update(
+                                    'acc_gl_account',
+                                    $glAccountDetails['id'],
+                                    'id',
+                                    ['organization_running_balance_derived' => $newOrgRunningBal]
+                                );
+                                //                                insert record into gl account transaction
+                                $gl_accountDetails = insert('gl_account_transaction', $gl_accountCon);
+                                //                            Update the transact_cache with verified
+                                $updateTransactionCache = update('transact_cache', $transactionCacheId, 'id', ['status' => 'Verified']);
+                            }
+                            
                         }
                     }
                     $totalNumber = count($_POST['checkBoxArray']);
@@ -428,13 +490,13 @@ if (isset($_POST['submit'])) {
             case
             'Decline':
                 $bulk_options_type = $_POST['bulk_options_type'];
-//            Decline Withdrawal
+                //            Decline Withdrawal
                 if ($bulk_options_type === 'Withdrawal') {
                     foreach ($_POST['checkBoxArray'] as $key => $postValueId) {
                         $id = $postValueId;
                         $inst_id = $_SESSION['int_id'];
 
-//        Get the transaction from transact_cache
+                        //        Get the transaction from transact_cache
                         $transactionDataCon = ['id' => $id, 'int_id' => $inst_id, 'status' => 'Pending', 'transact_type' => $bulk_options_type];
                         $transactionData = selectOne('transact_cache', $transactionDataCon);
                         if (!$transactionData) {
@@ -443,7 +505,7 @@ if (isset($_POST['submit'])) {
                             exit();
                         }
                         $transactionCacheId = $transactionData['id'];
-//                            Update the transact_cache with Decline
+                        //                            Update the transact_cache with Decline
                         $updateTransactionCache = update('transact_cache', $transactionCacheId, 'id', ['status' => 'Decline']);
                     }
                     if ($updateTransactionCache) {
@@ -453,12 +515,12 @@ if (isset($_POST['submit'])) {
                         exit();
                     }
                 } else {
-//                    Decline Deposit
+                    //                    Decline Deposit
                     foreach ($_POST['checkBoxArray'] as $key => $postValueId) {
                         $id = $postValueId;
                         $inst_id = $_SESSION['int_id'];
 
-//        Get the transaction from transact_cache
+                        //        Get the transaction from transact_cache
                         $transactionDataCon = ['id' => $id, 'int_id' => $inst_id, 'status' => 'Pending', 'transact_type' => $bulk_options_type];
                         $transactionData = selectOne('transact_cache', $transactionDataCon);
                         if (!$transactionData) {
@@ -467,7 +529,7 @@ if (isset($_POST['submit'])) {
                             exit();
                         }
                         $transactionCacheId = $transactionData['id'];
-//                            Update the transact_cache with Decline
+                        //                            Update the transact_cache with Decline
                         $updateTransactionCache = update('transact_cache', $transactionCacheId, 'id', ['status' => 'Decline']);
                         if ($updateTransactionCache) {
                             $totalNumber = count($_POST['checkBoxArray']);
@@ -476,7 +538,6 @@ if (isset($_POST['submit'])) {
                             exit();
                         }
                     }
-
                 }
                 break;
         }
@@ -486,4 +547,3 @@ if (isset($_POST['submit'])) {
         exit();
     }
 }
-
