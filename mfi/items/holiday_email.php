@@ -29,7 +29,9 @@
       <div class="form-group">
         <label class="bmd-label-floating">Gender Group</label><br />
         <select name="gender" class="form-control" id="gender">
-          <option value="">select an option</option>
+          <option value="">All</option>
+		  <option value="">Male</option>
+		  <option value="">Female</option>
         </select>
       </div>
     </div>
@@ -38,7 +40,9 @@
       <div class="form-group">
         <label class="bmd-label-floating">Religion Group</label><br />
         <select name="religion" class="form-control" id="religion">
-          <option value="">select an option</option>
+          <option value="">All</option>
+		  <option value="">Christian</option>
+		  <option value="">Muslim</option>
         </select>
       </div>
 
@@ -52,8 +56,8 @@
     <input type="text" name="" id="subject" class="form-control">
   </div>
   <div class="form-group">
-    <label for="textArea" >Email Body</label>
-    <textarea id="textArea"name="message" ></textarea>
+    <label for="textArea">Email Body</label>
+    <textarea id="textArea1" class="text-area"></textarea>
   </div>
 
   <!-- button to preview email -->
@@ -463,12 +467,4 @@ include("email_campaign_holiday.php");
       $('#exampleModal').modal('show')
     });
   })
-</script>
-<script>
-  tinymce.init({
-    selector: '#textArea',
-	plugins: 'preview',
-  menubar: 'view',
-  toolbar: 'preview'
-  });
 </script>

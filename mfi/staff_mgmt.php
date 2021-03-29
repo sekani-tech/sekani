@@ -834,7 +834,7 @@ if ($per_con == 1 || $per_con == "1") {
                           // $men = mysqli_fetch_array($done);
                           // $bal = $men["organization_running_balance_derived"];
                           // $rest = substr("$nom", 0, -1);
-                          $till = $row["name"];
+                          $till = $row["id"];
                           $checking = "SELECT * FROM `institution_account` WHERE teller_id ='$till' && int_id = '$sessint_id'";
                           $done = mysqli_query($connection, $checking);
                           $men = mysqli_fetch_array($done);

@@ -104,7 +104,7 @@ if (isset($_POST['submit'])) {
                             'amount' => $transactionCacheAmount,
                             'running_balance_derived' => $accountBal,
                             'cumulative_balance_derived' => $accountBal,
-                            'created_date' => date("Y-m-d H:i:s"),
+                            'insertd_date' => date("Y-m-d H:i:s"),
                             'chooseDate' => $transactionCacheDate,
                             'appuser_id' => $transactionCacheStaff_id,
                             'credit' => $transactionCacheAmount,
@@ -165,7 +165,7 @@ if (isset($_POST['submit'])) {
                             'amount' => $transactionCacheAmount,
                             'running_balance_derived' => $new_inst_acct_bal,
                             'cumulative_balance_derived' => $new_inst_acct_bal,
-                            'created_date' => date("Y-m-d H:i:s"),
+                            'insertd_date' => date("Y-m-d H:i:s"),
                             'appuser_id' => $transactionCacheStaff_id,
                             'credit' => $transactionCacheAmount
                         ];
@@ -185,7 +185,7 @@ if (isset($_POST['submit'])) {
                             'amount' => $transactionCacheAmount,
                             'gl_account_balance_derived' => $newOrgRunningBal,
                             'cumulative_balance_derived' => $newOrgRunningBal,
-                            'created_date' => date("Y-m-d H:i:s"),
+                            'insertd_date' => date("Y-m-d H:i:s"),
                             'credit' => $transactionCacheAmount
                         ];
 
@@ -194,16 +194,16 @@ if (isset($_POST['submit'])) {
                             //                        update account table
                             $updateLastDeposit = update('account', $accountId, $accountConstantName, $accountData);
 //                                insert into account transaction
-                            $accountTransDetails = create('account_transaction', $accountTransData);
+                            $accountTransDetails = insert('account_transaction', $accountTransData);
                             //                        update the acc_gl_account
                             $update_glAccount = update('acc_gl_account', $glAccountDetails['id'],
                                 'id', ['organization_running_balance_derived' => $newOrgRunningBal]);
 //                                update the institution account information
                             $update_instAccount = update('institution_account', $idValue, 'id', $update_instAccountCon);
 //                                insert record in institution account transaction
-                            $institution_account = create('institution_account_transaction', $instAccountTransCon);
+                            $institution_account = insert('institution_account_transaction', $instAccountTransCon);
 //                                insert record into gl account transaction
-                            $gl_accountDetails = create('gl_account_transaction', $gl_accountCon);
+                            $gl_accountDetails = insert('gl_account_transaction', $gl_accountCon);
 //                            Update the transact_cache with verified
                             $updateTransactionCache = update('transact_cache', $transactionCacheId, 'id', ['status' => 'Verified']);
                         }
@@ -320,7 +320,7 @@ if (isset($_POST['submit'])) {
                             'amount' => $transactionCacheAmount,
                             'running_balance_derived' => $accountBal,
                             'cumulative_balance_derived' => $accountBal,
-                            'created_date' => date("Y-m-d H:i:s"),
+                            'insertd_date' => date("Y-m-d H:i:s"),
                             'chooseDate' => $transactionCacheDate,
                             'appuser_id' => $transactionCacheStaff_id,
                             'debit' => $transactionCacheAmount,
@@ -376,7 +376,7 @@ if (isset($_POST['submit'])) {
                             'amount' => $transactionCacheAmount,
                             'running_balance_derived' => $newInstAcctBal,
                             'cumulative_balance_derived' => $newInstAcctBal,
-                            'created_date' => date("Y-m-d H:i:s"),
+                            'insertd_date' => date("Y-m-d H:i:s"),
                             'appuser_id' => $transactionCacheStaff_id,
                             'debit' => $transactionCacheAmount
                         ];
@@ -396,7 +396,7 @@ if (isset($_POST['submit'])) {
                             'amount' => $transactionCacheAmount,
                             'gl_account_balance_derived' => $newOrgRunningBal,
                             'cumulative_balance_derived' => $newOrgRunningBal,
-                            'created_date' => date("Y-m-d H:i:s"),
+                            'insertd_date' => date("Y-m-d H:i:s"),
                             'debit' => $transactionCacheAmount
                         ];
 
@@ -405,16 +405,16 @@ if (isset($_POST['submit'])) {
                             //                        update account table
                             $updateLastWithdrawal = update('account', $accountId, $accountConstantName, $accountData);
 //                                insert into account transaction
-                            $accountTransDetails = create('account_transaction', $accountTransData);
+                            $accountTransDetails = insert('account_transaction', $accountTransData);
                             //                        update the acc_gl_account
                             $update_glAccount = update('acc_gl_account', $glAccountDetails['id'],
                                 'id', ['organization_running_balance_derived' => $newOrgRunningBal]);
 //                                update the institution account information
                             $update_instAccount = update('institution_account', $idValue, 'id', $update_instAccountCon);
 //                                insert record in institution account transaction
-                            $institution_account = create('institution_account_transaction', $instAccountTransCon);
+                            $institution_account = insert('institution_account_transaction', $instAccountTransCon);
 //                                insert record into gl account transaction
-                            $gl_accountDetails = create('gl_account_transaction', $gl_accountCon);
+                            $gl_accountDetails = insert('gl_account_transaction', $gl_accountCon);
 //                            Update the transact_cache with verified
                             $updateTransactionCache = update('transact_cache', $transactionCacheId, 'id', ['status' => 'Verified']);
                         }
