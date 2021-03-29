@@ -3,7 +3,7 @@ include("../functions/connect.php");
 require_once "../bat/phpmailer/PHPMailerAutoload.php";
 ?>
 <?php 
-if(isset($_POST['submit'])){ 
+if(isset($_POST['send-mail'])){ 
 
 $getall = "SELECT * FROM `client` WHERE Gender = '$gender' or religion = '$religion' or date_of_birth = '$date_of_birth' ";
 $getmail = mysqli_query($connection, $getall);

@@ -154,7 +154,7 @@ include("header.php");
     </div>
 
     <div class="row">
-      
+
       <div class="col-md-4 ml-auto mr-auto">
 
         <div class="card card-pricing bg-primary">
@@ -165,6 +165,20 @@ include("header.php");
               Make deposits or withdrawal for group accounts
             </p>
             <a href="grouptrans.php" class="btn btn-white btn-round">View</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 ml-auto mr-auto">
+
+        <div class="card card-pricing bg-primary">
+          <div class="card-body ">
+
+            <h4 class="card-title">Shares Booking</h4>
+            <p class="card-description">
+              Book Shares
+            </p>
+            <a href="shares_booking.php" class="btn btn-white btn-round">View</a>
           </div>
         </div>
       </div>

@@ -61,9 +61,29 @@ if (isset($_POST['submit'])) {
             );
         }
 
-//        get the total money and and teller Id and check of the header is removed
+        $query = mysqli_query($connection, "SELECT account_no FROM account WHERE int_id = '$inst_id'");
+        while($row = mysqli_fetch_array($query)) {
+            $result[] = $row['account_no'];
+        }
+
+        $invalidAccounts = array();
+
         foreach ($ourDataTables as $key => $ourData) {
-            //                check if the header was remove
+            if(!in_array($ourData['Account_Number'], $result)) {
+                $_SESSION["Lack_of_intfund_$randms"] = $ourData['Account_Number'] . " does not exist <br>";
+                $invalidAccounts[] = $ourData['Account_Number'];
+            }
+        }
+
+        if(!empty($invalidAccounts)) {
+            $_SESSION['Invalid_Accounts'] = $invalidAccounts;
+            header("Location: ../bulk_deposit.php?message11=$randms");
+            exit();
+        }
+
+//      get the total money and and teller Id and check if the header is removed
+        foreach ($ourDataTables as $key => $ourData) {
+            // check if the header was remove
             if ($ourData['teller_id'] === "teller id") {
                 $_SESSION["Lack_of_intfund_$randms"] = "Sorry Please remove the header from this file";
                 header("Location: ../bulk_deposit.php?message6=$randms");
@@ -83,6 +103,8 @@ if (isset($_POST['submit'])) {
             $totalAmount += $ourData['amount'];
             $tellerId = $ourData['teller_id'];
         }
+
+        
 
         //                getting tellers info to check for post limit
         $tellersCondition = ['id' => $tellerId];

@@ -7,8 +7,11 @@ if (isset($_POST["id"])) {
     <table class="table table-bordered">
         <?php
         $p_id = $_POST["id"];
-        $rand = $_POST["rand"];
+        // $rand = $_POST["rand"];
         $client = $_POST["client_id"];
+        $digit = 6;
+        $rand = str_pad(rand(0, pow(10, $digit) - 1), $digit, '0', STR_PAD_LEFT);
+        // dd($client);
         // remove previous charges with this loan
         $fdo = mysqli_query($connection, "DELETE FROM loan_charge WHERE int_id = '$sessint_id'");
 
@@ -18,7 +21,6 @@ if (isset($_POST["id"])) {
         while ($rot = mysqli_fetch_array($resd)) {
             $prod_id = $rot['product_loan_id'];
             $charge_oi = $rot['charge_id'];
-
             $dof = mysqli_query($connection, "INSERT INTO `loan_charge` (`int_id`, `charge_id`, `client_id`, `product_loan_id`, `loan_cache_id`) VALUES ('$sessint_id', '$charge_oi', '$client', '$prod_id', '$rand')");
         }
         if ($dof) {
@@ -81,7 +83,7 @@ if (isset($_POST["id"])) {
                         $xs = "Loan Rescheduling Fee";
                     }
                     ?>
-                    <td><?php echo $nameofc; ?></td>
+                    <td><?php echo $nameofc;?></td>
                     <td><?php echo $chg2; ?></td>
                     <td><?php echo $amt . "" . $amt2; ?></td>
                     <td><?php echo $xs; ?></td>

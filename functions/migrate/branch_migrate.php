@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h2>Import Excel File into MySQL Database using PHP</h2>
     
     <div class="outer-container">
@@ -14,6 +15,9 @@
         
     </div>
     <div id="response" class="<?php if(!empty($type)) { echo $type . " display-block"; } ?>"><?php if(!empty($message)) { echo $message; } ?></div>
+=======
+
+>>>>>>> 8ce354db850074da047dddc5f2414718d2550009
 
 <?php
 include('../../functions/connect.php');
@@ -29,6 +33,7 @@ try {
     $randms = str_pad(random_int(0, (10 ** $digit) - 1), 7, '0', STR_PAD_LEFT);
 } catch (Exception $e) {
 }
+<<<<<<< HEAD
 if (isset($_POST['submit'])) {
 
     
@@ -38,6 +43,13 @@ if (isset($_POST['submit'])) {
     if ($_FILES["file"]["name"] !== '') {
         $allowed_extension = array('xls', 'csv', 'xlsx');
         $file_array = explode(".", $_FILES["file"]["name"]);
+=======
+if (isset($_POST['submitbranch'])) {
+//    check for excel file submitted
+    if ($_FILES["file"]["branchData"] !== '') {
+        $allowed_extension = array('xls', 'csv', 'xlsx');
+        $file_array = explode(".", $_FILES["file"]["branchData"]);
+>>>>>>> 8ce354db850074da047dddc5f2414718d2550009
         $file_extension = end($file_array);
 
         if (in_array($file_extension, $allowed_extension)) {
@@ -109,6 +121,10 @@ if (isset($_POST['submit'])) {
             }
         }
     }
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 8ce354db850074da047dddc5f2414718d2550009
 }
 
 

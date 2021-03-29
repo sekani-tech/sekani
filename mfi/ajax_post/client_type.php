@@ -474,7 +474,7 @@ if (isset($_POST['id'])) {
             </div>
             <div class="col-md-4">
             <div class="form-group">
-                <label >First Name</label>
+                <label >First Name <span style="color: red;">*</span></label>
                 <input  type="text" style="text-transform: uppercase;" id="first" class="form-control" name="firstname" required>
             </div>
             </div>
@@ -486,32 +486,32 @@ if (isset($_POST['id'])) {
             </div>
             <div class="col-md-4">
             <div class="form-group">
-                <label >Last Name</label>
+                <label >Last Name <span style="color: red;">*</span></label>
                 <input  type="text" style="text-transform: uppercase;" id="last" class="form-control" name="lastname" required>
             </div>
             </div>
             <div class="col-md-4">
             <div class="form-group">
-                <label >Phone No</label>
-                <input  type="tel" class="form-control" id="phone" name="phone">
+                <label >Phone No <span style="color: red;">*</span></label>
+                <input  type="number" class="form-control" id="phone" name="phone" required>
             </div>
             </div>
             <div class="col-md-4">
             <div class="form-group">
                 <label >Phone No2</label>
-                <input type="text" class="form-control" name="phone2">
+                <input type="number" class="form-control" name="phone2">
             </div>
             </div>
             <div class="col-md-4">
             <div class="form-group">
-                <label >Email address</label>
-                <input  type="email" class="form-control" name="email">
+                <label >Email address <span style="color: red;">*</span></label>
+                <input  type="email" class="form-control" name="email" required>
             </div>
             </div>
             <div class="col-md-8">
             <div class="form-group">
-                <label >Address</label>
-                <input type="text" style="text-transform: uppercase;" class="form-control" name="address">
+                <label >Address <span style="color: red;">*</span></label>
+                <input type="text" style="text-transform: uppercase;" class="form-control" name="address" required>
             </div>
             </div>
             <div class="col-md-4">
@@ -526,7 +526,7 @@ if (isset($_POST['id'])) {
             <div class="col-md-4">
             <div class="form-group">
                 <label class="">Date of Birth:</label>
-                <input  type="date" class="form-control" id="dob" name="date_of_birth">
+                <input  type="date" class="form-control" id="dob" name="date_of_birth" required>
             </div>
             </div>
             <div class="col-md-4">
