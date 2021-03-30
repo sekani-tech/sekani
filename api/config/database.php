@@ -3,10 +3,14 @@ class Database{
   
     // specify your own database credentials
     // pushing live
+    //private $username = "sekanisy";
+    //private $password = "4r6WY#JP+rnl67";
+
+
     private $host = "localhost";
     private $db_name = "sekanisy_admin";
-    private $username = "sekanisy";
-    private $password = "4r6WY#JP+rnl67";
+    private $username = "root";
+    private $password = "";
     public $conn;
     // get the database connection
     public function getConnection(){
