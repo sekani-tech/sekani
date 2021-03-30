@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
                                 'amount' => $transactionCacheAmount,
                                 'running_balance_derived' => $accountBal,
                                 'cumulative_balance_derived' => $accountBal,
-                                'insertd_date' => date("Y-m-d H:i:s"),
+                                'created_date' => date("Y-m-d H:i:s"),
                                 'chooseDate' => $transactionCacheDate,
                                 'appuser_id' => $transactionCacheStaff_id,
                                 'credit' => $transactionCacheAmount,
@@ -173,7 +173,7 @@ if (isset($_POST['submit'])) {
                                 'amount' => $transactionCacheAmount,
                                 'running_balance_derived' => $new_inst_acct_bal,
                                 'cumulative_balance_derived' => $new_inst_acct_bal,
-                                'insertd_date' => date("Y-m-d H:i:s"),
+                                'created_date' => date("Y-m-d H:i:s"),
                                 'appuser_id' => $transactionCacheStaff_id,
                                 'credit' => $transactionCacheAmount
                             ];
@@ -193,7 +193,7 @@ if (isset($_POST['submit'])) {
                                 'amount' => $transactionCacheAmount,
                                 'gl_account_balance_derived' => $newOrgRunningBal,
                                 'cumulative_balance_derived' => $newOrgRunningBal,
-                                'insertd_date' => date("Y-m-d H:i:s"),
+                                'created_date' => date("Y-m-d H:i:s"),
                                 'credit' => $transactionCacheAmount
                             ];
 
@@ -276,7 +276,7 @@ if (isset($_POST['submit'])) {
                                 'amount' => $transactionCacheAmount,
                                 'running_balance_derived' => $accountBal,
                                 'cumulative_balance_derived' => $accountBal,
-                                'insertd_date' => date("Y-m-d H:i:s"),
+                                'created_date' => date("Y-m-d H:i:s"),
                                 'chooseDate' => $transactionCacheDate,
                                 'appuser_id' => $transactionCacheStaff_id,
                                 'credit' => $transactionCacheAmount,
@@ -337,7 +337,7 @@ if (isset($_POST['submit'])) {
                                 'amount' => $transactionCacheAmount,
                                 'running_balance_derived' => $new_inst_acct_bal,
                                 'cumulative_balance_derived' => $new_inst_acct_bal,
-                                'insertd_date' => date("Y-m-d H:i:s"),
+                                'created_date' => date("Y-m-d H:i:s"),
                                 'appuser_id' => $transactionCacheStaff_id,
                                 'credit' => $transactionCacheAmount
                             ];
@@ -357,7 +357,7 @@ if (isset($_POST['submit'])) {
                                 'amount' => $transactionCacheAmount,
                                 'gl_account_balance_derived' => $newOrgRunningBal,
                                 'cumulative_balance_derived' => $newOrgRunningBal,
-                                'insertd_date' => date("Y-m-d H:i:s"),
+                                'created_date' => date("Y-m-d H:i:s"),
                                 'credit' => $transactionCacheAmount
                             ];
 
@@ -518,7 +518,7 @@ if (isset($_POST['submit'])) {
                                 'amount' => $transactionCacheAmount,
                                 'running_balance_derived' => $accountBal,
                                 'cumulative_balance_derived' => $accountBal,
-                                'insertd_date' => date("Y-m-d H:i:s"),
+                                'created_date' => date("Y-m-d H:i:s"),
                                 'chooseDate' => $transactionCacheDate,
                                 'appuser_id' => $transactionCacheStaff_id,
                                 'debit' => $transactionCacheAmount,
@@ -576,7 +576,7 @@ if (isset($_POST['submit'])) {
                                 'amount' => $transactionCacheAmount,
                                 'running_balance_derived' => $newInstAcctBal,
                                 'cumulative_balance_derived' => $newInstAcctBal,
-                                'insertd_date' => date("Y-m-d H:i:s"),
+                                'created_date' => date("Y-m-d H:i:s"),
                                 'appuser_id' => $transactionCacheStaff_id,
                                 'debit' => $transactionCacheAmount
                             ];
@@ -596,7 +596,7 @@ if (isset($_POST['submit'])) {
                                 'amount' => $transactionCacheAmount,
                                 'gl_account_balance_derived' => $newOrgRunningBal,
                                 'cumulative_balance_derived' => $newOrgRunningBal,
-                                'insertd_date' => date("Y-m-d H:i:s"),
+                                'created_date' => date("Y-m-d H:i:s"),
                                 'debit' => $transactionCacheAmount
                             ];
 
@@ -715,7 +715,7 @@ if (isset($_POST['submit'])) {
                                 'amount' => $transactionCacheAmount,
                                 'running_balance_derived' => $accountBal,
                                 'cumulative_balance_derived' => $accountBal,
-                                'insertd_date' => date("Y-m-d H:i:s"),
+                                'created_date' => date("Y-m-d H:i:s"),
                                 'chooseDate' => $transactionCacheDate,
                                 'appuser_id' => $transactionCacheStaff_id,
                                 'debit' => $transactionCacheAmount,
@@ -773,7 +773,7 @@ if (isset($_POST['submit'])) {
                                 'amount' => $transactionCacheAmount,
                                 'running_balance_derived' => $newInstAcctBal,
                                 'cumulative_balance_derived' => $newInstAcctBal,
-                                'insertd_date' => date("Y-m-d H:i:s"),
+                                'created_date' => date("Y-m-d H:i:s"),
                                 'appuser_id' => $transactionCacheStaff_id,
                                 'debit' => $transactionCacheAmount
                             ];
@@ -793,7 +793,7 @@ if (isset($_POST['submit'])) {
                                 'amount' => $transactionCacheAmount,
                                 'gl_account_balance_derived' => $newOrgRunningBal,
                                 'cumulative_balance_derived' => $newOrgRunningBal,
-                                'insertd_date' => date("Y-m-d H:i:s"),
+                                'created_date' => date("Y-m-d H:i:s"),
                                 'debit' => $transactionCacheAmount
                             ];
 

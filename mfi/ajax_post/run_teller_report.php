@@ -71,6 +71,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
           // $q = mysqli_fetch_array($querytoget);
           $client_name = "Expense";
           if (mysqli_num_rows($querytoget) > 0){
+            $counter = 1;
           while ($q = mysqli_fetch_array($querytoget, MYSQLI_ASSOC))
           {
             $client_id = $q["client_id"];
@@ -127,6 +128,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
 
             $out .= '
             <tr>
+            <th>'.$counter.'</th>
             <th>'.$transaction_date.'</th>
             <th>'.$client_name.'</th>
             <th>'.$amt.'</th>
@@ -134,6 +136,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
             <td>'.number_format($balance, 2).'</td>
             </tr>
           ';
+          $counter++;
           }
         }
           return $out;
@@ -176,6 +179,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
             <div class="table-responsive">
               <table id="tabledat4" class="table" style="width: 100%;">
                 <thead class=" text-primary">
+                <th>sn</th>
                 <th>Date/Time</th>
                   <th>Account Name</th>
                   <th>Deposit</th>
@@ -187,6 +191,7 @@ if (isset($_POST["start"]) && isset($_POST["branch"]) && isset($_POST["teller"])
                 <tbody>
                 "'.fill_report($connection, $int_id, $start, $end, $branch_id, $teller).'"
                 <tr>
+                <th></th>
               <th>Total</th>
               <th></th>
                <th>'.$tcdp.'</th>
