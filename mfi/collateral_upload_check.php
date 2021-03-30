@@ -1,10 +1,11 @@
+
 <?php
 include("../functions/connect.php");
 $display2 = '';
 $client_id = $_POST['client_id'];
 $don = "";
 
-if ($client_id != "") {
+if ( $client_id != "" ) {
     $don = "SELECT * FROM collateral WHERE client_id = '$client_id' ORDER BY id DESC";
         $result = mysqli_query($connection, $don);
         if (mysqli_num_rows($result) >= 1) {
