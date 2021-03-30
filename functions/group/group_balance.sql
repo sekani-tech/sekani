@@ -42,12 +42,12 @@ CREATE TABLE `group_balance` (
   `approved_on_date` date NOT NULL,
   `activated_on_date` date NOT NULL,
   `account_no` varchar(11) NOT NULL,
-  `Status` varchar(50) NOT NULL,
+  `status` varchar(50) NOT NULL,
   `total_deposits_derived` int(50) NOT NULL,
   `total_withdrawals_derived` int(50) NOT NULL,
   `total_fees_charge_derived` int(50) NOT NULL,
   `account_balance_derived` int(50) NOT NULL,
-  `Last_activity_date` int(50) NOT NULL
+  `last_activity_date` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -78,7 +78,7 @@ COMMIT;
 
 
 
-ALTER TABLE `group_balance` CHANGE `Last_activity_date` `Last_activity_date` DATE NOT NULL;
+ALTER TABLE `group_balance` CHANGE `Last_activity_date` `last_activity_date` DATE NOT NULL;
 ALTER TABLE `group_balance` CHANGE `product_Id` `product_id` INT(11) NOT NULL;
 ALTER TABLE `group_balance` CHANGE `group_Id` `group_id` INT(11) NOT NULL;
 ALTER TABLE `group_balance` CHANGE `client_Id` `client_id` INT(11) NOT NULL;

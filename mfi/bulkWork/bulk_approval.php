@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
                             // go ahead and perform a group transaction
                             $accountDetails = selectOne('group_balance', ['account_no' => $transactionCacheAccountNo]);
                             
-                            $accountProductId = $accountDetails['product_Id'];
+                            $accountProductId = $accountDetails['product_id'];
                             $accountId = $accountDetails['id'];
                             echo $accountId;
                             //                        set all total derived
