@@ -114,6 +114,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                       if (mysqli_num_rows($rult) > 0) {
                         while ($row = mysqli_fetch_array($rult))
                             {
+                              $client_name =$row['display_name'];
                               $username = $row['username'];
                               $remail = $row['email'];
                               $roleid = $row['org_role'];
@@ -197,7 +198,7 @@ if (isset($_POST['transact_id']) && isset($_POST['type'])) {
                                   </div>
                                       <div class='main'>
                                           <div class='text'>
-                                              Dear $clientt_name,
+                                              Dear $client_name,
                                               <h2 style='text-align:center;'>Notification of Vault Alert</h2>
                                               this is to notify you that a vault-In transaction has been made in $int_name,
                                                by $nm Kindly confirm with your bank.<br/><br/>
