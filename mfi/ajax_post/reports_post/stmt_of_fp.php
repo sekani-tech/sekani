@@ -1,305 +1,310 @@
 <?php
- include("../../../functions/connect.php");
- session_start();
- $out= '';
- $logo = $_SESSION['int_logo'];
-$name = $_SESSION['int_full'];
+include("../../../functions/connect.php");
+session_start();
+
+$out = '';
+
 $sessint_id = $_SESSION['int_id'];
-$current = date('d/m/Y');
 
-// Start date
-$start = $_POST['start'];
-$starttime = strtotime($start);
-$startd = date("F d, Y", $starttime);
+$today = date('d/m/Y');
 
-// End date
-$end = $_POST['end'];
-$endtime = strtotime($end);
-$current = date("F d, Y", $endtime);
+if(!empty($_POST['date'])) {
+  $date = $_POST['date'];
+  $branch_id = $_POST['branch_id'];
 
-// Year Before
-$start = $_POST['start'];
-$strto = strtotime($start);
-$yearbefore = date("Y-m-d", strtotime("-1 day", $strto));
-$yeardisplay = date("F d, Y", strtotime("-1 day", $strto));
+  $getParentID = mysqli_query($connection, "SELECT parent_id FROM `branch` WHERE int_id = '$sessint_id' AND id = '$branch_id'");
+  while ($result = mysqli_fetch_array($getParentID)) {
+    $parent_id = $result['parent_id'];
+  }
 
-////////////////////// CURRENT YEAR DATA begins //////////////////////
-// Current Assets
-// CASH
-$ivoc = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND name LIKE '%cash%' AND classification_enum = '1' AND parent_id = '0'");
-$cas = mysqli_fetch_array($ivoc);
-$name = $cas['name'];
-$cp_id = $cas['id'];
-if($cp_id != 0){
-$fdsp = mysqli_query($connection, "SELECT SUM(credit) AS credit, SUM(debit) AS debit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND parent_id = '$cp_id'");
-$fop = mysqli_fetch_array($fdsp);
-$cash_credit = $fop['credit'];
-$cash_debit = $fop['debit'];
-$cash = $cash_credit - $cash_debit;
-}
-// BANKS
-$sdoi = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND name LIKE '%bank%' AND classification_enum = '1' AND parent_id = '0'");
-$ska = mysqli_fetch_array($sdoi);
-$bname = $ska['name'];
-$bp_id = $ska['id'];
-if($bp_id != 0){
-$dsodi = mysqli_query($connection, "SELECT SUM(credit) AS credit, SUM(debit) AS debit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND parent_id = '$bp_id'");
-$dsp = mysqli_fetch_array($dsodi);
-$bank_credit = $dsp['credit'];
-$bank_debit = $dsp['debit'];
-$bank = $bank_credit - $bank_debit;
-}
-// CASH AND BANK
-$cash_and_bank = $bank + $cash;
+  if ($parent_id == 0) {
+    $current_assets_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND classification_enum = '1' AND parent_id IN (SELECT id FROM `acc_gl_account` WHERE name = 'current asset')");
+    $non_current_assets_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND classification_enum = '1' AND parent_id IN (SELECT id FROM `acc_gl_account` WHERE name = 'non current asset' || 'non-current asset')");
+  } else {
+    $current_assets_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND branch_id = '$branch_id' AND classification_enum = '1' AND parent_id IN (SELECT id FROM `acc_gl_account` WHERE name = 'current asset')");
+    $non_current_assets_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND branch_id = '$branch_id' AND classification_enum = '1' AND parent_id IN (SELECT id FROM `acc_gl_account` WHERE name = 'non current asset' || 'non-current asset')");
+  }
 
-// Loans AND recievables
-$dsdj = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND name LIKE '%LOANS%' AND classification_enum = '1' AND parent_id = '0'");
-$fido = mysqli_fetch_array($dsdj);
-$ln_id = $fido['id'];
-$lname = $fido['name'];
-if($ln_id != 0){
-$oep = mysqli_query($connection, "SELECT SUM(credit) AS credit, SUM(debit) AS debit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND parent_id = '$ln_id'");
-$fop = mysqli_fetch_array($oep);
-$loan_credit = $fop['credit'];
-$loan_debit = $fop['debit'];
-$loan = $loan_credit - $loan_debit;
-}
-// prepayment
-$sdpo = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND name LIKE '%prepayment%' AND classification_enum = '1' AND parent_id = '0'");
-$apa = mysqli_fetch_array($sdpo);
-$pname = $apa['name'];
-$pp_id = $apa['id'];
-if($pp_id != 0){
-$opd = mysqli_query($connection, "SELECT SUM(credit) AS credit, SUM(debit) AS debit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND parent_id = '$pp_id'");
-$sse = mysqli_fetch_array($opd);
-$prepay_credit = $sse['credit'];
-$prepay_debit = $sse['debit'];
-$prepayment = $prepay_credit - $prepay_debit;
-}
+  // Current Assets
+  $gl_acc_ca = '';
+  $total_ca_value = 0;
 
-// total current asset
-$total_current = $prepayment + $loan + $cash_and_bank;
+  while($ca_type = mysqli_fetch_array($current_assets_list)) {
+    $ca = mysqli_query($connection, "SELECT SUM(credit) as credit, SUM(debit) as debit FROM `gl_account_transaction` WHERE int_id = '$sessint_id' AND gl_code = {$ca_type['gl_code']} AND transaction_date <= '$date'");
+    $ca = mysqli_fetch_array($ca);
+    $ca_credit = $ca['credit'];
+    $ca_debit = $ca['debit'];
+
+    $ca_value = $ca_credit - $ca_debit;
+
+    $total_ca_value += $ca_credit - $ca_debit;
+
+    $gl_acc_ca .= '
+      <tr>
+        <td>'.ucfirst(strtolower($ca_type['name'])).'</td>
+        <td style="text-align: center">₦ '.number_format($ca_value, 2).'</td>
+      </tr>
+    ';
+  }
 
 
-// NON CURRENT ASSETS
-function fill_gl($connection, $sessint_id){
-$diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND name LIKE '%NON CURRENT ASSET%' AND classification_enum = '1' AND parent_id = '0'");
-$pdi = mysqli_fetch_array($diis);
-$no_curr_id = $pdi['id'];
+  // Non-Current Assets
+  $gl_acc_nca = '';
+  $total_nca_value = 0;
 
-$dops = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE parent_id = '$no_curr_id' AND int_id = '$sessint_id'");
-$out ='';
+  while($nca_type = mysqli_fetch_array($non_current_assets_list)) {
+    $nca = mysqli_query($connection, "SELECT SUM(credit) as credit, SUM(debit) as debit FROM `gl_account_transaction` WHERE int_id = '$sessint_id' AND gl_code = {$nca_type['gl_code']} AND transaction_date <= '$date'");
+    $nca = mysqli_fetch_array($nca);
+    $nca_credit = $nca['credit'];
+    $nca_debit = $nca['debit'];
 
-while($op = mysqli_fetch_array($dops)){
-  $gll = $op['gl_code'];
-  $glname = $op['name'];
-  $iopf = mysqli_query($connection, "SELECT SUM(credit) AS credit, SUM(debit) AS debit FROM gl_account_transaction WHERE parent_id = '$no_curr_id' AND int_id = '$sessint_id' AND gl_code = '$gll'");
-  $dpd = mysqli_fetch_array($iopf);
-  $gl_credit = $dpd['credit'];
-  $gl_debit = $dpd['debit'];
+    $nca_value = $nca_credit - $nca_debit;
 
-  $gl_am = $gl_credit - $gl_debit;
+    $total_nca_value += $nca_credit - $nca_debit;
+
+    $gl_acc_nca .= '
+      <tr>
+        <td>'.ucfirst(strtolower($nca_type['name'])).'</td>
+        <td style="text-align: center">₦ '.number_format($nca_value, 2).'</td>
+      </tr>
+    ';
+  }
+
+  $total_asset_value = $total_ca_value + $total_nca_value;
+
+  $out = '
+  <div class="card">
+
+    <div class="card-header card-header-primary">
+      <h4 class="card-title">Assets</h4>
+    </div>
+
+    <div class="card-body">
+
+      <table class="table">
+
+        <thead>
+          <th style="font-weight:bold;">GL Account</th>
+          <th></th>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td><b>Current Assets</b></td>
+            <td></td>
+          </tr>
+
+          '.$gl_acc_ca.'
+
+          <tr style="background-color: #eeeeee">
+            <td><b>Total Current Assets</b></td>
+            <td style="text-align: center"><b>₦ '.number_format($total_ca_value, 2).'</b></td>
+          </tr>
+
+          <tr>
+            <td><b>Non-Current Assets</b></td>
+            <td></td>
+          </tr>
+
+          '.$gl_acc_nca.'
+
+          <tr style="background-color: #eeeeee">
+            <td><b>Total Non-Current Assets</b></td>
+            <td style="text-align: center"><b>₦ '.number_format($total_nca_value, 2).'</b></td>
+          </tr>
+
+          <tr>
+            <td><b>Less: Accumulated Depreciation</b></td>
+            <td style="text-align: center"><b></b></td>
+          </tr>
+
+          <tr>
+            <td><b>NPV</b></td>
+            <td style="text-align: center"><b></b></td>
+          </tr>
+
+          <tr style="background-color: #aaaaaa">
+            <td><b>Total Asset</b></td>
+            <td style="text-align: center"><b>₦ '.number_format($total_asset_value, 2).'</b></td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+  ';
+
+
+  if ($parent_id == 0) {
+    $current_liabilities_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND classification_enum = '2' AND parent_id IN (SELECT id FROM `acc_gl_account` WHERE name = 'current liability')");
+    $non_current_liabilities_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND classification_enum = '2' AND parent_id IN (SELECT id FROM `acc_gl_account` WHERE name = 'non-current liability' || 'non current liability')");
+    $equity_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND parent_id <> '0' AND classification_enum = '3'");
+  } else {
+    $current_liabilities_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND branch_id = '$branch_id' AND classification_enum = '2' AND parent_id IN (SELECT id FROM `acc_gl_account` WHERE name = 'current liability')");
+    $non_current_liabilities_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND branch_id = '$branch_id' AND classification_enum = '2' AND parent_id IN (SELECT id FROM `acc_gl_account` WHERE name = 'non-current liability' || 'non current liability')");
+    $equity_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND branch_id = '$branch_id' AND parent_id <> '0' AND classification_enum = '3'");
+  }
+
+  // Current Liabilities
+  $gl_acc_cl = '';
+  $total_cl_value = 0;
+
+  while($cl_type = mysqli_fetch_array($current_liabilities_list)) {
+    $cl = mysqli_query($connection, "SELECT SUM(credit) as credit, SUM(debit) as debit FROM `gl_account_transaction` WHERE int_id = '$sessint_id' AND gl_code = {$cl_type['gl_code']} AND transaction_date <= '$date'");
+    $cl = mysqli_fetch_array($cl);
+    $cl_credit = $cl['credit'];
+    $cl_debit = $cl['debit'];
+
+    $cl_value = $cl_credit - $cl_debit;
+
+    $total_cl_value += $cl_credit - $cl_debit;
+
+    $gl_acc_cl .= '
+      <tr>
+        <td>'.ucfirst(strtolower($cl_type['name'])).'</td>
+        <td style="text-align: center">₦ '.number_format($cl_value, 2).'</td>
+      </tr>
+    ';
+  }
+
+
+  // Non-Current Liabilities
+  $gl_acc_ncl = '';
+  $total_ncl_value = 0;
+
+  while($ncl_type = mysqli_fetch_array($non_current_liabilities_list)) {
+    $ncl = mysqli_query($connection, "SELECT SUM(credit) as credit, SUM(debit) as debit FROM `gl_account_transaction` WHERE int_id = '$sessint_id' AND gl_code = {$ncl_type['gl_code']} AND transaction_date <= '$date'");
+    $ncl = mysqli_fetch_array($ncl);
+    $ncl_credit = $ncl['credit'];
+    $ncl_debit = $ncl['debit'];
+
+    $ncl_value = $ncl_credit - $ncl_debit;
+
+    $total_ncl_value += $ncl_credit - $ncl_debit;
+
+    $gl_acc_ncl .= '
+      <tr>
+        <td>'.ucfirst(strtolower($ncl_type['name'])).'</td>
+        <td style="text-align: center">₦ '.number_format($ncl_value, 2).'</td>
+      </tr>
+    ';
+  }
+
+  $total_cl_ncl_value = $total_cl_value + $total_ncl_value;
+
+  // Equity
+  $gl_acc_equity = '';
+  $total_equity_value = 0;
+
+  while($equity_type = mysqli_fetch_array($equity_list)) {
+    $equity = mysqli_query($connection, "SELECT SUM(credit) as credit, SUM(debit) as debit FROM `gl_account_transaction` WHERE int_id = '$sessint_id' AND gl_code = {$equity_type['gl_code']} AND transaction_date <= '$date'");
+    $equity = mysqli_fetch_array($equity);
+    $equity_credit = $equity['credit'];
+    $equity_debit = $equity['debit'];
+
+    $equity_value = $equity_credit - $equity_debit;
+
+    $total_equity_value += $equity_credit - $equity_debit;
+
+    $gl_acc_equity .= '
+      <tr>
+        <td>'.ucfirst(strtolower($equity_type['name'])).'</td>
+        <td style="text-align: center">₦ '.number_format($equity_value, 2).'</td>
+      </tr>
+    ';
+  }
+
+  $total_cl_ncl_equity_value = $total_cl_value + $total_ncl_value + $total_equity_value;
+
   $out .= '
-  <tr>
-  <td></td>
-  <td>'.$glname.'</td>
-  <td style="text-align: center">'.number_format($gl_am, 2).'</td>
-  <td style="text-align: center"></td>
-</tr>';
-}
-return $out;
-}
+  <div class="card" style="margin-top: 60px">
 
-// total non current asset
-  $diis = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE int_id = '$sessint_id' AND name LIKE '%NON CURRENT ASSET%' AND classification_enum = '1' AND parent_id = '0'");
-  $pdi = mysqli_fetch_array($diis);
-  $no_curr_id = $pdi['id'];
+    <div class="card-header card-header-primary">
+      <h4 class="card-title">Liabilities & Equity</h4>
+    </div>
 
-  $ofe = mysqli_query($connection, "SELECT SUM(credit) AS credit, SUM(debit) AS debit FROM gl_account_transaction WHERE int_id = '$sessint_id' AND parent_id='$no_curr_id'");
-  $iof = mysqli_fetch_array($ofe);
-  $sum_gl_credit = $iof['credit'];
-  $sum_gl_debit = $iof['debit'];
+    <div class="card-body">
 
-  $sum_gl = $sum_gl_credit - $sum_gl_debit;
+      <table class="table">
 
-  // less accumulated depreciation
-$out = '
-<div class="card">
-  <div class="card-header card-header-primary">
-    <h4 class="card-title">Assets</h4>
-  </div>
-  <div class="card-body">
-    <table class="table">
-      <thead>
-        <th style="font-weight:bold;"></th>
-        <th style="font-weight:bold;"></th>
-        <th style="text-align: center; font-weight:bold;">'.$current.' <br/>(NGN)</th>
-        <th style="text-align: center; font-weight:bold;">'.$yeardisplay.' <br/>(NGN)</th>
-      </thead>
-      <tbody>
-      <tr>
-          <td></td>
-          <td><b>ASSETS</b></td>
-          <td style="text-align: center"></td>
-          <td style="text-align: center"></td>
-        </tr>
+        <thead>
+          <th style="font-weight:bold;">GL Account</th>
+          <th></th>
+        </thead>
+
+        <tbody>
+
           <tr>
-              <td></td>
-              <td><b>Current Assets</b></td>
-              <td></td>
-              <td></td>
+            <td><b>Current Liabilities</b></td>
+            <td></td>
           </tr>
-        <tr>
-          <td></td>
-          <td>Cash and Bank</td>
-          <td style="text-align: center">'.number_format($cash_and_bank, 2).'</td>
-          <td style="text-align: center"></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>Loans and Recievables</td>
-          <td style="text-align: center">'.number_format($loan, 2).'</td>
-          <td style="text-align: center"></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>Prepayments</td>
-          <td style="text-align: center">'.number_format($prepayment, 2).'</td>
-          <td style="text-align: center"></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td><b>Total Current Assets</b></td>
-          <td style="text-align: center"><b>'.number_format($total_current, 2).'</b></td>
-          <td style="text-align: center"><b></b></td>
-        </tr>
-        <tr>
-              <td></td>
-              <td><b>Non-Current Assets</b></td>
-              <td></td>
-              <td></td>
+
+          '.$gl_acc_cl.'
+
+          <tr style="background-color: #eeeeee">
+            <td><b>Total Current Liabilities</b></td>
+            <td style="text-align: center"><b>₦ '.number_format($total_cl_value, 2).'</b></td>
           </tr>
-          '.fill_gl($connection, $sessint_id).'
-        <tr>
-          <td></td>
-          <td><b>Total Non-Current Assets</b></td>
-          <td style="text-align: center"><b>'.number_format($sum_gl, 2).'</b></td>
-          <td style="text-align: center"><b></b></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td><b>Less: Accumulated Description</b></td>
-          <td style="text-align: center"><b></b></td>
-          <td style="text-align: center"><b></b></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td><b>NPV</b></td>
-          <td style="text-align: center"><b></b></td>
-          <td style="text-align: center"><b></b></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td><b>Total Asset</b></td>
-          <td style="text-align: center"><b></b></td>
-          <td style="text-align: center"><b></b></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-<div class="card">
-  <div class="card-header card-header-primary">
-    <h4 class="card-title">Liablities</h4>
-  </div>
-  <div class="card-body">
-    <table class="table">
-      <thead>
-        <th style="font-weight:bold;">GL Account</th>
-        <th style="text-align: center; font-weight:bold;">'.$start.' <br/>(NGN)</th>
-        <th style="text-align: center; font-weight:bold;">'.$end.' <br/>(NGN)</th>
-      </thead>
-      <tbody>
-      <tr>
-              <td><b>LIABILITIES & EQUITY</b></td>
-              <td></td>
-              <td></td>
-          </tr>
+
           <tr>
-              <td><b>Current Liabilities</b></td>
-              <td></td>
-              <td></td>
+            <td><b>Non-Current Liabilities</b></td>
+            <td></td>
           </tr>
-        <tr>
-          <td>Deposit Liablities</td>
-          <td style="text-align: center">4,436,527</td>
-          <td style="text-align: center">4,436,527</td>
-        </tr>
-        <tr>
-          <td>Trade and Other Payables</td>
-          <td style="text-align: center">66,109,561</td>
-          <td style="text-align: center">66,109,561</td>
-        </tr>
-        <tr>
-          <td><b>Total Current Liabilities</b></td>
-          <td style="text-align: center"><b></b></td>
-          <td style="text-align: center"><b></b></td>
-        </tr>
-        <tr>
-              <td><b>Non-Current Liabilities</b></td>
-              <td></td>
-              <td></td>
+
+          '.$gl_acc_ncl.'
+
+          <tr style="background-color: #eeeeee">
+            <td><b>Total Non-Current Liabilities</b></td>
+            <td style="text-align: center"><b>₦ '.number_format($total_ncl_value, 2).'</b></td>
           </tr>
-        <tr>
-          <td>Unearned Income</td>
-          <td style="text-align: center"></td>
-          <td style="text-align: center"></td>
-        </tr>
-        <tr>
-          <td><b>Total Non-Current Liabilities</b></td>
-          <td style="text-align: center"><b></b></td>
-          <td style="text-align: center"><b></b></td>
-        </tr>
-        <tr>
-          <td><b>Total Liabilities</b></td>
-          <td style="text-align: center"><b></b></td>
-          <td style="text-align: center"><b></b></td>
-        </tr>
-        <tr>
+
+          <tr style="background-color: #cecece">
+            <td><b>Total Liabilities</b></td>
+            <td style="text-align: center"><b>₦ '.number_format($total_cl_ncl_value, 2).'</b></td>
+          </tr>
+
+          <tr>
             <td><b>Shareholders Equity</b></td>
             <td></td>
-            <td></td>
-        </tr>
-        <tr>
-          <td> Authorised Share Capital</td>
-          <td style="text-align: center">0</td>
-          <td style="text-align: center">0</td>
-        </tr>
-        <tr>
-          <td> Current Retained Earning</td>
-          <td style="text-align: center"></td>
-          <td style="text-align: center"></td>
-        </tr>
-        <tr>
-          <td><b>Total Shareholders Equity</b></td>
-          <td style="text-align: center"><b></b></td>
-          <td style="text-align: center"><b></b></td>
-        </tr>
-        <tr>
-          <td><b>Total Liabilities and Shareholders Equity</b></td>
-          <td style="text-align: center"><b></b></td>
-          <td style="text-align: center"><b></b></td>
-        </tr>
-      </tbody>
-    </table>
+          </tr>
+
+          '.$gl_acc_equity.'
+
+          <tr style="background-color: #eeeeee">
+            <td><b>Total Shareholders Equity</b></td>
+            <td style="text-align: center"><b>₦ '.number_format($total_equity_value, 2).'</b></td>
+          </tr>
+
+          <tr style="background-color: #aaaaaa">
+            <td><b>Total Liabilities and Shareholders Equity</b></td>
+            <td style="text-align: center"><b>₦ '.number_format($total_cl_ncl_equity_value, 2).'</b></td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+    
   </div>
-</div>
-<!--//report ends here -->
-<div class="card">
-   <div class="card-body">
-    <a href="" class="btn btn-primary">Back</a>
-    <a href="" class="btn btn-success btn-left">Print</a>
-   </div>
- </div> ';
- echo $out;
+
+  <div class="card">
+    <div class="card-body">
+      <form method="POST" action="../composer/stmt_fp.php">
+        <input type="hidden" name="date" value="'.$date.'"/>
+        <input type="hidden" name="branch_id" value="'.$branch_id.'"/>
+        <button class="btn btn-primary" name="downloadPDF">Download PDF</button>
+        <button class="btn btn-primary" name="downloadExcel">Download Excel</button>
+      </form>
+    </div>
+  </div>
+  ';
+
+  echo $out;
+  
+}
 ?>

@@ -181,7 +181,7 @@ $destination = "report_savings.php";
                   
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' && (client.branch_id ='$br_id' $branches)";
+                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.display_name, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' && (client.branch_id ='$br_id' $branches)";
                           $result = mysqli_query($connection, $querys);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -230,21 +230,15 @@ $destination = "report_savings.php";
                     <table id="savings-accounts" class="table table-striped table-bordered" style="width:100%">
                       <thead class="">
                       <?php
-                          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' && (client.branch_id ='$br_id' $branches)";
+                          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.display_name, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' && (client.branch_id ='$br_id' $branches)";
                           $result = mysqli_query($connection, $query);
                       ?>
                         <th>
-                          First Name
+                          Client Name
                         </th>
-                        <th>
-                          Last Name
-                        </th>
-                        <th>
-                          Client Type
-                        </th>
-                        <th>
+                        <!-- <th>
                           Account Type
-                        </th>
+                        </th> -->
                         <th>
                           Account Number
                         </th>
@@ -258,9 +252,7 @@ $destination = "report_savings.php";
                         <tr>
                         <?php $row["id"]; 
                         $idd = $row["id"];?>
-                          <th><?php echo $row["firstname"]; ?></th>
-                          <th><?php echo $row["lastname"]; ?></th>
-                          <th><?php echo strtoupper($row["client_type"])?></th>
+                          <th><?php echo $row["display_name"]; ?></th>
                           <?php
                             $class = "";
                             $row["account_type"];
@@ -277,7 +269,6 @@ $destination = "report_savings.php";
                             }
                            
                             ?>
-                          <th><?php echo $savingp; ?></th>
                           <?php
                           $soc = $row["account_no"];
                           $length = strlen($soc);
@@ -390,11 +381,11 @@ $destination = "report_savings.php";
 
 ?>
              <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Savings Account Reports</h4>
+                  <h4 class="card-title ">Savings Account Analysis</h4>
                   
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' && (client.branch_id ='$br_id' $branches)";
+                          $querys = "SELECT client.id, client.account_type, client.account_no, client.mobile_no, client.display_name, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' && (client.branch_id ='$br_id' $branches)";
                           $result = mysqli_query($connection, $querys);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
@@ -402,21 +393,36 @@ $destination = "report_savings.php";
                    }?> savings Accounts</p>
                 </div>
                 <div class="card-body">
-                <div class="d-flex justify-content-center">
-                  <div class="text-center">
+                <div class="">
+                  <div class="row text-center">
+                  <div class="col-md-5">
+                    <div class="card mr-3">
+                      <div class="card-body">
+                        <div class="form-group">
+                          <form method = "POST" action = "../composer/savings_account.php">
+                            <input hidden name ="acc_bal" type="text" value="<?php echo $ttlacc;?>"/>
+                            <div class="form-group total-balances p-0">
+                                <label class="bmd-label-floating mt-0">Total credits</label>
+                                <input type="text" readonly class="form-control text-success" value="<?php echo number_format($ttlacc, 2); ?>" name="">
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div></div>
+                    <div class="col-md-5">
                     <div class="card">
                       <div class="card-body">
                         <div class="form-group">
                           <form method = "POST" action = "../composer/savings_account.php">
                             <input hidden name ="acc_bal" type="text" value="<?php echo $ttlacc;?>"/>
                             <div class="form-group total-balances p-0">
-                                <label class="bmd-label-floating mt-0">Total Account Balances</label>
-                                <input type="text" readonly class="form-control" value="<?php echo number_format($ttlacc, 2); ?>" name="">
+                                <label class="bmd-label-floating mt-0">Total Debits</label>
+                                <input type="text" readonly class="form-control text-danger" value="<?php echo number_format($ttlacc, 2); ?>" name="">
                             </div>
                           </form>
                         </div>
                       </div>
-                    </div>
+                    </div></div>
                   </div>
                 </div>
              <script>
@@ -443,26 +449,18 @@ $destination = "report_savings.php";
                     <table id="savings-accounts" class="table table-striped table-bordered" style="width:100%">
                       <thead class="">
                       <?php
-                          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' && (client.branch_id ='$br_id' $branches)";
+                          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.display_name, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' && (client.branch_id ='$br_id' $branches)";
                           $result = mysqli_query($connection, $query);
                       ?>
                         <th>
-                          First Name
+                          Client Name
+                        </th>
+                    
+                        <th>
+                          Credit
                         </th>
                         <th>
-                          Last Name
-                        </th>
-                        <th>
-                          Client Type
-                        </th>
-                        <th>
-                          Account Type
-                        </th>
-                        <th>
-                          Account Number
-                        </th>
-                        <th>
-                          Account Balances
+                          Debit
                         </th>
                       </thead>
                       <tbody>
@@ -471,9 +469,7 @@ $destination = "report_savings.php";
                         <tr>
                         <?php $row["id"]; 
                         $idd = $row["id"];?>
-                          <th><?php echo $row["firstname"]; ?></th>
-                          <th><?php echo $row["lastname"]; ?></th>
-                          <th><?php echo strtoupper($row["client_type"])?></th>
+                          <th><?php echo $row["display_name"]; ?></th>
                           <?php
                             $class = "";
                             $row["account_type"];
@@ -490,49 +486,13 @@ $destination = "report_savings.php";
                             }
                            
                             ?>
-                          <th><?php echo $savingp; ?></th>
-                          <?php
-                          $soc = $row["account_no"];
-                          $length = strlen($soc);
-                          if ($length == 1) {
-                            $acc ="000000000" . $soc;
-                          }
-                          elseif ($length == 2) {
-                            $acc ="00000000" . $soc;
-                          }
-                          elseif ($length == 3) {
-                            $acc ="00000000" . $soc;
-                          }
-                          elseif ($length == 4) {
-                            $acc ="0000000" . $soc;
-                          }
-                          elseif ($length == 5) {
-                            $acc ="000000" . $soc;
-                          }
-                          elseif ($length == 6) {
-                            $acc ="0000" . $soc;
-                          }
-                          elseif ($length == 7) {
-                            $acc ="000" . $soc;
-                          }
-                          elseif ($length == 8) {
-                            $acc ="00" . $soc;
-                          }
-                          elseif ($length == 9) {
-                            $acc ="0" . $soc;
-                          }
-                          elseif ($length == 10) {
-                            $acc = $row["account_no"];
-                          }else{
-                            $acc = $row["account_no"];
-                          }
-                          ?>
-                          <th><?php echo $acc; ?></th>
+                          
                           <?php
                           $don = mysqli_query($connection, "SELECT SUM(account_balance_derived) AS account_balance_derived FROM account WHERE client_id = '$idd'");
                           $ew = mysqli_fetch_array($don);
                           $accountb = $ew['account_balance_derived'];
                           ?>
+                          <th><?php echo $accountb; ?></th>
                           <th><?php echo $accountb; ?></th>
                         </tr>
                         <?php }
@@ -621,7 +581,7 @@ $destination = "report_savings.php";
                           <form method = "POST" action = "../composer/savings_account.php">
                             <input hidden name ="acc_bal" type="text" value="<?php echo $ttlacc;?>"/>
                             <div class="form-group total-balances p-0">
-                                <label class="bmd-label-floating mt-0">Total Account Balances</label>
+                                <label class="bmd-label-floating mt-0">Total Balances in Debits</label>
                                 <div class="d-flex">
                             <!-- <span>N</span>     -->
                             <input type="text" readonly class="form-control" value="<?php echo number_format($ttlacc, 2); ?>" name="">
@@ -656,15 +616,15 @@ $destination = "report_savings.php";
                     <table id="savings-accounts" class="table table-striped table-bordered" style="width:100%">
                       <thead class="">
                       <?php
-                          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' && (client.branch_id ='$br_id' $branches)";
+                          $query = "SELECT client.client_type, client.id, client.account_type, client.account_no, client.mobile_no, client.display_name, client.firstname, client.lastname FROM client JOIN account ON client.id = account.client_id WHERE client.int_id = '$sessint_id' AND account.type_id = '2' && (client.branch_id ='$br_id' $branches)";
                           $result = mysqli_query($connection, $query);
                       ?>
                         <th>
-                          First Name
+                          Client Name
                         </th>
-                        <th>
+                        <!-- <th>
                           Last Name
-                        </th>
+                        </th> -->
                         <th>
                           Client Type
                         </th>
@@ -684,8 +644,8 @@ $destination = "report_savings.php";
                         <tr>
                         <?php $row["id"]; 
                         $idd = $row["id"];?>
-                          <th><?php echo $row["firstname"]; ?></th>
-                          <th><?php echo $row["lastname"]; ?></th>
+                          <th><?php echo $row["display_name"]; ?></th>
+                          <!-- <th><?php echo $row["lastname"]; ?></th> -->
                           <th><?php echo strtoupper($row["client_type"])?></th>
                           <?php
                             $class = "";

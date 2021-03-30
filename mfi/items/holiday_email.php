@@ -25,23 +25,37 @@
   </div>
 
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
       <div class="form-group">
         <label class="bmd-label-floating">Gender Group</label><br />
         <select name="gender" class="form-control" id="gender">
-          <option value="">select an option</option>
+          <option value="all">All</option>
+		  <option value="male">Male</option>
+		  <option value="male">Female</option>
         </select>
       </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
       <div class="form-group">
         <label class="bmd-label-floating">Religion Group</label><br />
         <select name="religion" class="form-control" id="religion">
-          <option value="">select an option</option>
+			<option value="all">All</option>
+			<option value="christian">Christian</option>
+			<option value="muslim">Muslim</option>
         </select>
       </div>
+    </div>
 
+	<div class="col-md-4">
+      <div class="form-group">
+        <label class="bmd-label-floating">Age Group</label><br />
+        <select name="age" class="form-control" id="age">
+			<option value="">All</option>
+			<option value="age<18">less than 18</option>
+			<option value="age>18">Above 18</option>
+        </select>
+      </div>
     </div>
 
   </div>
