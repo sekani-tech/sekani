@@ -51,7 +51,6 @@ if(!isset($_GET["approve"])){
             $productId = $accountDetails['product_id'];
             $clientId = $accountDetails['client_id'];
             
-
             // now run check
             if($currentAccountBalance >= $bookedAmount){
                 // We can now successfully book the clients FTD by deducting the amount from 1

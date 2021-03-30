@@ -69,7 +69,8 @@ if ($view_dashboard == 1) {
                             // check feedback
                             $print = $pqx['total_out_prin'];
                             $intet = $iqx['total_int_prin'];
-                            $fde = ($print + $intet) + ($arr_p + $arr_i);
+                            // $fde = ($print + $intet) + ($arr_p + $arr_i);
+                            $fde = $print + $intet;
                             // DGMFB
                             ?>
                             <h2 class="card-title">₦<?php echo number_format(round($fde), 2); ?></h2>
