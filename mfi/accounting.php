@@ -93,7 +93,7 @@ $destination = "../index.php";
                   <p class="card-description">
                   Create and review Budgets and other planning activities
                   </p>
-                  <a href="#" class="btn btn-white btn-round">View</a>
+                  <a href="budget_setup.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
             </div>   
@@ -106,7 +106,7 @@ $destination = "../index.php";
                   <p class="card-description">
                   Closing of the Business Day
                   </p>
-                  <a href="#" class="btn btn-white btn-round">View</a>
+                  <a href="end_of_business.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
             </div>   

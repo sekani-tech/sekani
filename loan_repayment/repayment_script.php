@@ -17,96 +17,100 @@ if (mysqli_num_rows($select_loan_client) > 0) {
         // due date is today
         $sch_date = date("Y-m-d");
         $gen_date = date("Y-m-d H:i:s");
+        // get account balance of client account
+        $loan_account = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$account_no' AND client_id = '$collection_client_id' AND int_id = '$int_id'");
+        $u = mysqli_fetch_array($loan_account);
+        $account_balance = $row['account_balance_derived'];
+        if ($account_balance <= 0) {
+            // Query the Loan Repayment Schedule Table
+            $select_loan_repayment = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE ((loan_id = '$loan_id' AND client_id = '$client_id') AND (int_id = '$int_id' AND (installment > 0) AND (duedate <= '$sch_date'))) ORDER BY id ASC LIMIT 1");
+            // Display data if exist
+            if (mysqli_num_rows($select_loan_repayment) > 0) {
 
-        // Query the Loan Repayment Schedule Table
-        $select_loan_repayment = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE ((loan_id = '$loan_id' AND client_id = '$client_id') AND (int_id = '$int_id' AND (installment > 0) AND (duedate <= '$sch_date'))) ORDER BY id ASC LIMIT 1");
-        // Display data if exist
-        if (mysqli_num_rows($select_loan_repayment) > 0) {
-            
-            while($rrow = mysqli_fetch_array($select_loan_repayment)) {
-                // store data in a variable Store Result like (Id, principal, interest, due date)
-                $collection_id = $rrow["id"];
-                $collection_loan = $rrow["loan_id"];
-                $collection_client_id = $rrow["client_id"];
-                $collection_installment = $rrow["installment"];
-                $collection_principal = $rrow["principal_amount"];
-                $collection_interest = $rrow["interest_amount"];
-                $general_date_due = $rrow["duedate"];
-                
-
-                // calculate interest + principal
-                $collection_due_paid = $collection_principal + $collection_interest;
-
-                // get account balance of client account
-                $loan_account = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$account_no' AND client_id = '$collection_client_id' AND int_id = '$int_id'");
-                $u = mysqli_fetch_array($loan_account);
-                $account_id = $u["id"];
-                $client_account_balance = $u["account_balance_derived"];
-                $tot_withdrawal = $u["total_withdrawals_derived"];
-                $balance_remaining = $client_account_balance - $collection_due_paid;
-                $total_withd =  $u["total_withdrawals_derived"] + $collection_due_paid;
-
-                // get client Data Displayable at Description
-                 $client_account = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' AND int_id = '$int_id'");
-                 $cx = mysqli_fetch_array($client_account);
-                 $branch_id = $cx["branch_id"];
-                 $client_firstname = $cx["firstname"];
-                 $client_phone = $cx["mobile_no"];
-
-                //  Declare Transaction ID
-                $digits = 5;
-                $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-                $trans_id = $client_firstname.$randms.$branch_id;
-
-                // Start a Summary of Total Outstanding Derived
-                $query_sum_repayment = mysqli_query($connection, "SELECT SUM(principal_amount + interest_amount) AS outstanding_repayment FROM `loan_repayment_schedule` WHERE ((loan_id = '$loan_id' AND int_id = '$int_id' AND client_id = '$client_id') AND installment > 0)");
-                // get the information
-
-                $gsr = mysqli_fetch_array($query_sum_repayment);
-                $outstanding_repayment = $gsr["outstanding_repayment"];
-                $query_sum_arrears = mysqli_query($connection, "SELECT SUM(principal_amount + interest_amount) AS outstanding_arrears FROM `loan_arrear` WHERE ((loan_id = '$loan_id' AND int_id = '$int_id' AND client_id = '$client_id') AND installment > 0)");
-                // get the information
-
-                $gsa = mysqli_fetch_array($query_sum_arrears);
-                $outstanding_arrears = $gsa["outstanding_arrears"];
-
-                // Output Total Outstanding Loan
-                $outstanding_loan_balance = $outstanding_repayment + $outstanding_arrears;
-                // End of Summary
+                while ($rrow = mysqli_fetch_array($select_loan_repayment)) {
+                    // store data in a variable Store Result like (Id, principal, interest, due date)
+                    $collection_id = $rrow["id"];
+                    $collection_loan = $rrow["loan_id"];
+                    $collection_client_id = $rrow["client_id"];
+                    $collection_installment = $rrow["installment"];
+                    $collection_principal = $rrow["principal_amount"];
+                    $collection_interest = $rrow["interest_amount"];
+                    $general_date_due = $rrow["duedate"];
 
 
+                    // calculate interest + principal
+                    $collection_due_paid = $collection_principal + $collection_interest;
 
+                    // get account balance of client account
+                    $loan_account = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$account_no' AND client_id = '$collection_client_id' AND int_id = '$int_id'");
+                    $u = mysqli_fetch_array($loan_account);
+                    $account_id = $u["id"];
+                    $client_account_balance = $u["account_balance_derived"];
+                    $tot_withdrawal = $u["total_withdrawals_derived"];
+                    $balance_remaining = $client_account_balance - $collection_due_paid;
+                    $total_withd =  $u["total_withdrawals_derived"] + $collection_due_paid;
 
-                // Start Loan GL Portfolio and Interest GL Code
-                $open_acct_rule = mysqli_query($connection, "SELECT * FROM acct_rule WHERE int_id = '$int_id' AND loan_product_id = '$product_id'");
-                $ty = mysqli_fetch_array($open_acct_rule);
-                $loan_port = $ty["asst_loan_port"];
-                $int_loan_port = $ty["inc_interest"];
+                    // get client Data Displayable at Description
+                    $client_account = mysqli_query($connection, "SELECT * FROM client WHERE id = '$client_id' AND int_id = '$int_id'");
+                    $cx = mysqli_fetch_array($client_account);
+                    $branch_id = $cx["branch_id"];
+                    $client_firstname = $cx["firstname"];
+                    $client_phone = $cx["mobile_no"];
 
-                // Get interest and Principal GL Code Accounting Rule and Query the Account GL TABLE
-                $take_d_s = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$loan_port' AND int_id = '$int_id'");
-                $gdb = mysqli_fetch_array($take_d_s);
-                // geng new thing here
-                $int_d_s = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$int_loan_port' AND int_id = '$int_id'");
-                $igdb = mysqli_fetch_array($int_d_s);
+                    //  Declare Transaction ID
+                    $digits = 5;
+                    $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+                    $trans_id = $client_firstname . $randms . $branch_id;
 
-                // Display Both Interest Balance and Port Balance
-                $intbalport = $igdb["organization_running_balance_derived"];
-                $newbalport = $gdb["organization_running_balance_derived"];
-                // End Loan GL Portfolio and Interest GL Code
+                    // Start a Summary of Total Outstanding Derived
+                    $query_sum_repayment = mysqli_query($connection, "SELECT SUM(principal_amount + interest_amount) AS outstanding_repayment FROM `loan_repayment_schedule` WHERE ((loan_id = '$loan_id' AND int_id = '$int_id' AND client_id = '$client_id') AND installment > 0)");
+                    // get the information
+
+                    $gsr = mysqli_fetch_array($query_sum_repayment);
+                    $outstanding_repayment = $gsr["outstanding_repayment"];
+                    $query_sum_arrears = mysqli_query($connection, "SELECT SUM(principal_amount + interest_amount) AS outstanding_arrears FROM `loan_arrear` WHERE ((loan_id = '$loan_id' AND int_id = '$int_id' AND client_id = '$client_id') AND installment > 0)");
+                    // get the information
+
+                    $gsa = mysqli_fetch_array($query_sum_arrears);
+                    $outstanding_arrears = $gsa["outstanding_arrears"];
+
+                    // Output Total Outstanding Loan
+                    $outstanding_loan_balance = $outstanding_repayment + $outstanding_arrears;
+                    // End of Summary
 
 
 
 
-                //  test the condition IF Balance is Greater than Repayment Due Amount
-                if ($client_account_balance >= $collection_due_paid) {
-                    // UPDATE the Client Account Table 
+                    // Start Loan GL Portfolio and Interest GL Code
+                    $open_acct_rule = mysqli_query($connection, "SELECT * FROM acct_rule WHERE int_id = '$int_id' AND loan_product_id = '$product_id'");
+                    $ty = mysqli_fetch_array($open_acct_rule);
+                    $loan_port = $ty["asst_loan_port"];
+                    $int_loan_port = $ty["inc_interest"];
 
-                    $update_client_account = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$balance_remaining', total_withdrawals_derived = '$total_withd' WHERE int_id = '$int_id' AND client_id = '$client_id' AND account_no = '$account_no'");
-                    if ($update_client_account) {
-                        // Insert This Transaction into the Account Transaction Table
+                    // Get interest and Principal GL Code Accounting Rule and Query the Account GL TABLE
+                    $take_d_s = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$loan_port' AND int_id = '$int_id'");
+                    $gdb = mysqli_fetch_array($take_d_s);
+                    // geng new thing here
+                    $int_d_s = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$int_loan_port' AND int_id = '$int_id'");
+                    $igdb = mysqli_fetch_array($int_d_s);
 
-                        $insert_client_trans = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
+                    // Display Both Interest Balance and Port Balance
+                    $intbalport = $igdb["organization_running_balance_derived"];
+                    $newbalport = $gdb["organization_running_balance_derived"];
+                    // End Loan GL Portfolio and Interest GL Code
+
+
+
+
+                    //  test the condition IF Balance is Greater than Repayment Due Amount
+                    if ($client_account_balance >= $collection_due_paid) {
+                        // UPDATE the Client Account Table 
+
+                        $update_client_account = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$balance_remaining', total_withdrawals_derived = '$total_withd' WHERE int_id = '$int_id' AND client_id = '$client_id' AND account_no = '$account_no'");
+                        if ($update_client_account) {
+                            // Insert This Transaction into the Account Transaction Table
+
+                            $insert_client_trans = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
                         `product_id`, `account_id`, `account_no`, `client_id`, `teller_id`, `transaction_id`,
                         `description`, `transaction_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
                         `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
@@ -116,17 +120,17 @@ if (mysqli_num_rows($select_loan_client) > 0) {
                         '{$gen_date}', '0', '{$balance_remaining}',
                         '{$balance_remaining}', '{$gen_date}', '0', '0', '{$collection_due_paid}', '0.00')");
 
-                        if ($insert_client_trans) {
-                            // If client Account Transaction Successful Update the Loan and Loan Transaction Table for Reference
-                            
-                            // Get the Current Loan Outstanding from *LINE 57 to LINE 71*
-                            $new_outstanding_balance = $outstanding_loan_balance - $collection_due_paid;
-                            $up_client_loan = mysqli_query($connection, "UPDATE loan SET total_outstanding_derived = '$new_outstanding_balance' WHERE int_id = '$int_id' AND client_id = '$client_id' AND (id = '$loan_id' AND account_no = $account_no)");
+                            if ($insert_client_trans) {
+                                // If client Account Transaction Successful Update the Loan and Loan Transaction Table for Reference
 
-                            // if loan update successful insert a transaction
-                            if ($up_client_loan) {
-                                // update the loan transaction
-                                $update_loan_trans = mysqli_query($connection, "INSERT INTO `loan_transaction` (`int_id`, `branch_id`, `product_id`, `loan_id`, `transaction_id`, `client_id`, `account_no`, `is_reversed`, `external_id`, `transaction_type`, `transaction_date`, `amount`,
+                                // Get the Current Loan Outstanding from *LINE 57 to LINE 71*
+                                $new_outstanding_balance = $outstanding_loan_balance - $collection_due_paid;
+                                $up_client_loan = mysqli_query($connection, "UPDATE loan SET total_outstanding_derived = '$new_outstanding_balance' WHERE int_id = '$int_id' AND client_id = '$client_id' AND (id = '$loan_id' AND account_no = $account_no)");
+
+                                // if loan update successful insert a transaction
+                                if ($up_client_loan) {
+                                    // update the loan transaction
+                                    $update_loan_trans = mysqli_query($connection, "INSERT INTO `loan_transaction` (`int_id`, `branch_id`, `product_id`, `loan_id`, `transaction_id`, `client_id`, `account_no`, `is_reversed`, `external_id`, `transaction_type`, `transaction_date`, `amount`,
                                 `payment_method`, `principal_portion_derived`, `interest_portion_derived`, `fee_charges_portion_derived`, `penalty_charges_portion_derived`,
                                 `overpayment_portion_derived`, `unrecognized_income_portion`, `suspended_interest_portion_derived`, `suspended_fee_charges_portion_derived`, 
                                 `suspended_penalty_charges_portion_derived`, `outstanding_loan_balance_derived`, `recovered_portion_derived`, `submitted_on_date`, `manually_adjusted_or_reversed`, `created_date`, `appuser_id`, `is_account_transfer`) 
@@ -134,237 +138,242 @@ if (mysqli_num_rows($select_loan_client) > 0) {
                                 'auto_account', '{$collection_principal}', '{$collection_interest}', '0', '0', 
                                 '0', NULL, '0', '0', '0', '{$new_outstanding_balance}', '{$collection_due_paid}', '{$gen_date}', '0', '{$gen_date}', '0', '1')");
 
-                                // if the Loan Transaction Insertion Successful Update Loan Repayment Schedule
-                                if ($update_loan_trans) {
-                                    $update_rep_status = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET installment = '0' WHERE int_id = '$int_id' AND id = '$collection_id'");
+                                    // if the Loan Transaction Insertion Successful Update Loan Repayment Schedule
+                                    if ($update_loan_trans) {
+                                        $update_rep_status = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET installment = '0' WHERE int_id = '$int_id' AND id = '$collection_id'");
 
-                                    // if the repayment update is successful
-                                    if ($update_rep_status) {
+                                        // if the repayment update is successful
+                                        if ($update_rep_status) {
 
-                                        // Update the GL for Loan Interest and Portfolio from *LINE 76 to LINE 92*
+                                            // Update the GL for Loan Interest and Portfolio from *LINE 76 to LINE 92*
 
-                                        // START WITH Portfolio UPDATE - First Calculate the Balance
-                                        $updated_loan_port = $newbalport - $collection_principal;
-                                        $update_the_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$updated_loan_port' WHERE int_id ='$int_id' AND gl_code = '$loan_port'");
+                                            // START WITH Portfolio UPDATE - First Calculate the Balance
+                                            $updated_loan_port = $newbalport - $collection_principal;
+                                            $update_the_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$updated_loan_port' WHERE int_id ='$int_id' AND gl_code = '$loan_port'");
 
-                                        // after update of GL insert into transaction
-                                        if ($update_the_loan) {
-                                            $insert_loan_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
+                                            // after update of GL insert into transaction
+                                            if ($update_the_loan) {
+                                                $insert_loan_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
                                             `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
                                             VALUES ('{$int_id}', '{$branch_id}', '{$loan_port}', '{$trans_id}', 'Loan_Repayment Principal / {$client_firstname}', 'Loan_Repayment Principal', '0', '0', '{$gen_date}',
                                             '{$collection_principal}', '{$updated_loan_port}', '{$updated_loan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_principal}', '0.00')");
-                                            // if The Loan Port folio Transaction has been Inserted Properly
-                                            // Move to Update Interest
-                                            if ($insert_loan_port) {
+                                                // if The Loan Port folio Transaction has been Inserted Properly
+                                                // Move to Update Interest
+                                                if ($insert_loan_port) {
 
-                                                // END WITH Interest UPDATE  - Calculate the Balance
-                                                $intloan_port = $intbalport + $collection_interest;
-                                                $update_the_int_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$intloan_port' WHERE int_id = '$int_id' AND gl_code ='$int_loan_port'");
+                                                    // END WITH Interest UPDATE  - Calculate the Balance
+                                                    $intloan_port = $intbalport + $collection_interest;
+                                                    $update_the_int_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$intloan_port' WHERE int_id = '$int_id' AND gl_code ='$int_loan_port'");
 
-                                                // if Updating Loan Successful, Insert into the Interest Income Portfolio GL
-                                                if ($update_the_int_loan) {
-                                                    $insert_i_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
+                                                    // if Updating Loan Successful, Insert into the Interest Income Portfolio GL
+                                                    if ($update_the_int_loan) {
+                                                        $insert_i_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
                                                     `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
                                                     VALUES ('{$int_id}', '{$branch_id}', '{$int_loan_port}', '{$trans_id}', 'Loan_Repayment Interest / {$client_firstname}', 'Loan_Repayment Interest', '0', '0', '{$gen_date}',
                                                     '{$collection_interest}', '{$intloan_port}', '{$intloan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_interest}', '0.00')");
-                                                    if ($insert_i_port) {
-                                                        echo "Done inserting to port";
-                                                    } else {
-                                                        echo "Error inserting to port";
-                                                    }
+                                                        if ($insert_i_port) {
+                                                            echo "Done inserting to port";
+                                                        } else {
+                                                            echo "Error inserting to port";
+                                                        }
 
 
-// IMPORT AJAX in MFI FOLDER
-include("../mfi/ajaxcallx.php");
-$query_institution = mysqli_query($connection, "SELECT * FROM `institutions` WHERE int_id = '$int_id'");
-if (mysqli_num_rows($query_institution) > 0) {
-    $gi = mysqli_fetch_array($query_institution);
+                                                        // IMPORT AJAX in MFI FOLDER
+                                                        include("../mfi/ajaxcallx.php");
+                                                        $query_institution = mysqli_query($connection, "SELECT * FROM `institutions` WHERE int_id = '$int_id'");
+                                                        if (mysqli_num_rows($query_institution) > 0) {
+                                                            $gi = mysqli_fetch_array($query_institution);
 
-    // Get Information
-    $int_name = $gi["int_name"];
-    $sender_id = $gi["sender_id"];
-    $description = "Loan Repayment";
+                                                            // Get Information
+                                                            $int_name = $gi["int_name"];
+                                                            $sender_id = $gi["sender_id"];
+                                                            $description = "Loan Repayment";
 
-    // Star the Customers Account Number
-    $account_display = substr("$account_no", 0, 3)."*****".substr("$account_no",8);
+                                                            // Star the Customers Account Number
+                                                            $account_display = substr("$account_no", 0, 3) . "*****" . substr("$account_no", 8);
 
 ?>
-<!-- DEFINE TRANSACTION FIRST LAYER -->
-<input type="text" id="s_int_id" value="<?php echo $int_id; ?>" hidden>
-<input type="text" id="s_acct_nox" value="<?php echo $account_no; ?>" hidden>
-<input type="text" id="s_branch_id" value="<?php echo $branch_id; ?>" hidden>
-<input type="text" id="s_sender_id" value="<?php echo $sender_id; ?>" hidden>
-<input type="text" id="s_phone" value="<?php echo $client_phone; ?>" hidden>
-<input type="text" id="s_client_id" value="<?php echo $client_id; ?>" hidden>
+                                                            <!-- DEFINE TRANSACTION FIRST LAYER -->
+                                                            <input type="text" id="s_int_id" value="<?php echo $int_id; ?>" hidden>
+                                                            <input type="text" id="s_acct_nox" value="<?php echo $account_no; ?>" hidden>
+                                                            <input type="text" id="s_branch_id" value="<?php echo $branch_id; ?>" hidden>
+                                                            <input type="text" id="s_sender_id" value="<?php echo $sender_id; ?>" hidden>
+                                                            <input type="text" id="s_phone" value="<?php echo $client_phone; ?>" hidden>
+                                                            <input type="text" id="s_client_id" value="<?php echo $client_id; ?>" hidden>
 
-<!-- ACCOUNT DETIALS -->
-<input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
-<input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
-<input type="text" id="s_amount" value="<?php echo $collection_due_paid; ?>" hidden>
-<input type="text" id="s_desc" value="<?php echo $description; ?>" hidden>
-<input type="text" id="s_date" value="<?php echo $gen_date; ?>" hidden>
-<input type="text" id="s_balance" value="<?php echo number_format($balance_remaining, 2); ?>" hidden>
+                                                            <!-- ACCOUNT DETIALS -->
+                                                            <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
+                                                            <input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
+                                                            <input type="text" id="s_amount" value="<?php echo $collection_due_paid; ?>" hidden>
+                                                            <input type="text" id="s_desc" value="<?php echo $description; ?>" hidden>
+                                                            <input type="text" id="s_date" value="<?php echo $gen_date; ?>" hidden>
+                                                            <input type="text" id="s_balance" value="<?php echo number_format($balance_remaining, 2); ?>" hidden>
 
-<!-- Script to Send AJAX information -->
-<script>
-$(document).ready(function() {
-    // STORE ENTITY DETAILS
-    var int_id = $('#s_int_id').val();
-    var branch_id = $('#s_branch_id').val();
-    var sender_id = $('#s_sender_id').val();
-    var phone = $('#s_phone').val();
-    var client_id = $('#s_client_id').val();
-    var account_no = $('#s_acct_nox').val();
+                                                            <!-- Script to Send AJAX information -->
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    // STORE ENTITY DETAILS
+                                                                    var int_id = $('#s_int_id').val();
+                                                                    var branch_id = $('#s_branch_id').val();
+                                                                    var sender_id = $('#s_sender_id').val();
+                                                                    var phone = $('#s_phone').val();
+                                                                    var client_id = $('#s_client_id').val();
+                                                                    var account_no = $('#s_acct_nox').val();
 
-    // STORE VALUE OF TRANSACTION
-    var amount = $('#s_amount').val();
-    var acct_no = $('#s_acct_no').val();
-    var int_name = $('#s_int_name').val();
-    var trans_type = "Debit";
-    var desc = $('#s_desc').val();
-    var date = $('#s_date').val();
-    var balance = $('#s_balance').val();
-    // now we work on the body.
-    var msg = int_name+" "+trans_type+" \n" + "Amt:NGN "+amount+" \n Acct: "+acct_no+"\nDesc: "+desc+" \nBal: "+balance+" \nAvail: "+balance+"\nDate: "+date+"\nThanks";
-    $.ajax({
-        url:"../mfi/ajax_post/sms/sms.php",
-        method:"POST",
-        data:{int_id:int_id, branch_id:branch_id, sender_id:sender_id, phone:phone, msg:msg, client_id:client_id, account_no:account_no },
-        success:function(data){
-            $('#make_display').html(data);
-            }
-        });
-    });
-</script>
-<div id="make_display" hidden></div>
-<?php
-}
-// END SMS CREATION
+                                                                    // STORE VALUE OF TRANSACTION
+                                                                    var amount = $('#s_amount').val();
+                                                                    var acct_no = $('#s_acct_no').val();
+                                                                    var int_name = $('#s_int_name').val();
+                                                                    var trans_type = "Debit";
+                                                                    var desc = $('#s_desc').val();
+                                                                    var date = $('#s_date').val();
+                                                                    var balance = $('#s_balance').val();
+                                                                    // now we work on the body.
+                                                                    var msg = int_name + " " + trans_type + " \n" + "Amt:NGN " + amount + " \n Acct: " + acct_no + "\nDesc: " + desc + " \nBal: " + balance + " \nAvail: " + balance + "\nDate: " + date + "\nThanks";
+                                                                    $.ajax({
+                                                                        url: "../mfi/ajax_post/sms/sms.php",
+                                                                        method: "POST",
+                                                                        data: {
+                                                                            int_id: int_id,
+                                                                            branch_id: branch_id,
+                                                                            sender_id: sender_id,
+                                                                            phone: phone,
+                                                                            msg: msg,
+                                                                            client_id: client_id,
+                                                                            account_no: account_no
+                                                                        },
+                                                                        success: function(data) {
+                                                                            $('#make_display').html(data);
+                                                                        }
+                                                                    });
+                                                                });
+                                                            </script>
+                                                            <div id="make_display" hidden></div>
+                                                    <?php
+                                                        }
+                                                        // END SMS CREATION
+                                                    } else {
+                                                        echo "There was an Error Updating Loan Interest GL";
+                                                    }
                                                 } else {
-                                                    echo "There was an Error Updating Loan Interest GL";
+                                                    echo "There was an Error Inserting to Loan Port GL";
                                                 }
                                             } else {
-                                                echo "There was an Error Inserting to Loan Port GL";
+                                                echo "There was an Error Updating Loan Port GL";
                                             }
                                         } else {
-                                            echo "There was an Error Updating Loan Port GL";
+                                            echo "There was an Error Updating Repayment Schedule Table";
                                         }
                                     } else {
-                                        echo "There was an Error Updating Repayment Schedule Table";
+                                        echo "There was an Error Inserting into Loan Table";
                                     }
                                 } else {
-                                    echo "There was an Error Inserting into Loan Table";
+                                    echo "There was an Error Updating Loan Table";
                                 }
-
                             } else {
-                                echo "There was an Error Updating Loan Table";
+                                echo "There was an Error Inserting in Client Transaction Table";
                             }
                         } else {
-                            echo "There was an Error Inserting in Client Transaction Table";
+                            echo "There was an Error Updating Client Account";
                         }
+
+
+                        // ELSE SECTION
 
                     } else {
-                        echo "There was an Error Updating Client Account";
-                    }
 
 
-// ELSE SECTION
+                        // Else if it's not Greater Logic has to Change
 
-                } else  {
-                    
+                        // calculate the Remaining Balance
+                        // check if the balance is zero or greater.
+                        if ($client_account_balance > 0) {
+                            $balance_remaining = $client_account_balance - $collection_due_paid;
+                            $new_collection_done = $client_account_balance;
 
-                    // Else if it's not Greater Logic has to Change
-                    
-                    // calculate the Remaining Balance
-                    // check if the balance is zero or greater.
-                    if ($client_account_balance > 0) {
-                        $balance_remaining = $client_account_balance - $collection_due_paid;
-                        $new_collection_done = $client_account_balance;
+                            // INTEREST AND  PRINCIPAL CALCULATION FOR ARREARS
+                            if ($client_account_balance > $collection_interest) {
+                                // CAC_interest for Arrears
+                                $cac_interest = 0;
+                                // cac_p is calculation of balance after taking interest
+                                $cac_p = $client_account_balance - $collection_interest;
+                                // cac principal is current payment minus the balance for pricipal in Arrears
+                                $cac_principal = $collection_principal - $cac_p;
+                                // collection interest for loan 
+                                $collection_interest = $collection_interest;
+                                // Collection Principal Calculation of *LINE284 for GL*
+                                $collection_principal = $cac_p;
+                            } else {
+                                // CAC_interest for Arrears Balance Minus 
+                                $cac_interest = $client_account_balance - $collection_interest;
+                                // CAC principal is Principal in Arrears
+                                $cac_principal = $collection_principal;
+                                // collection interest for loan 
+                                $collection_interest = $client_account_balance;
+                                // Collection Principal Was Zero cause balance was Exhusted
+                                $collection_principal = 0;
+                            }
 
-                        // INTEREST AND  PRINCIPAL CALCULATION FOR ARREARS
-                        if ($client_account_balance > $collection_interest) {
-                            // CAC_interest for Arrears
-                            $cac_interest = 0;
-                            // cac_p is calculation of balance after taking interest
-                            $cac_p = $client_account_balance - $collection_interest;
-                            // cac principal is current payment minus the balance for pricipal in Arrears
-                            $cac_principal = $collection_principal - $cac_p;
-                            // collection interest for loan 
-                            $collection_interest = $collection_interest;
-                            // Collection Principal Calculation of *LINE284 for GL*
-                            $collection_principal = $cac_p;
-                            
-                        } else {
-                            // CAC_interest for Arrears Balance Minus 
-                            $cac_interest = $client_account_balance - $collection_interest;
-                            // CAC principal is Principal in Arrears
-                            $cac_principal = $collection_principal;
-                            // collection interest for loan 
-                            $collection_interest = $client_account_balance;
-                            // Collection Principal Was Zero cause balance was Exhusted
-                            $collection_principal = 0;
-                        }
-                
 
-                        // - D A T A TO GL -
-                        // Update the GL for Loan Interest and Portfolio from *LINE 76 to LINE 92*
+                            // - D A T A TO GL -
+                            // Update the GL for Loan Interest and Portfolio from *LINE 76 to LINE 92*
 
-                                        // START WITH Portfolio UPDATE - First Calculate the Balance
-                                        $updated_loan_port = $newbalport - $collection_principal;
-                                        $update_the_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$updated_loan_port' WHERE int_id ='$int_id' AND gl_code = '$loan_port'");
+                            // START WITH Portfolio UPDATE - First Calculate the Balance
+                            $updated_loan_port = $newbalport - $collection_principal;
+                            $update_the_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$updated_loan_port' WHERE int_id ='$int_id' AND gl_code = '$loan_port'");
 
-                                        // after update of GL insert into transaction
-                                        if ($update_the_loan) {
-                                            $insert_loan_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
+                            // after update of GL insert into transaction
+                            if ($update_the_loan) {
+                                $insert_loan_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
                                             `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
                                             VALUES ('{$int_id}', '{$branch_id}', '{$loan_port}', '{$trans_id}', 'Loan_Repayment Principal / {$client_firstname}', 'Loan_Repayment Principal', '0', '0', '{$gen_date}',
                                             '{$collection_principal}', '{$updated_loan_port}', '{$updated_loan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_principal}', '0.00')");
-                                            // if The Loan Port folio Transaction has been Inserted Properly
-                                            // Move to Update Interest
-                                            if ($insert_loan_port) {
+                                // if The Loan Port folio Transaction has been Inserted Properly
+                                // Move to Update Interest
+                                if ($insert_loan_port) {
 
-                                                // END WITH Interest UPDATE  - Calculate the Balance
-                                                $intloan_port = $intbalport + $collection_interest;
-                                                $update_the_int_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$intloan_port' WHERE int_id = '$int_id' AND gl_code ='$int_loan_port'");
+                                    // END WITH Interest UPDATE  - Calculate the Balance
+                                    $intloan_port = $intbalport + $collection_interest;
+                                    $update_the_int_loan = mysqli_query($connection, "UPDATE acc_gl_account SET organization_running_balance_derived = '$intloan_port' WHERE int_id = '$int_id' AND gl_code ='$int_loan_port'");
 
-                                                // if Updating Loan Successful, Insert into the Interest Income Portfolio GL
-                                                if ($update_the_int_loan) {
-                                                    $insert_i_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
+                                    // if Updating Loan Successful, Insert into the Interest Income Portfolio GL
+                                    if ($update_the_int_loan) {
+                                        $insert_i_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
                                                     `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
                                                     VALUES ('{$int_id}', '{$branch_id}', '{$int_loan_port}', '{$trans_id}', 'Loan_Repayment Interest / {$client_firstname}', 'Loan_Repayment Interest', '0', '0', '{$gen_date}',
                                                     '{$collection_interest}', '{$intloan_port}', '{$intloan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_interest}', '0.00')");
 
-                                                    // update
-                                                    if ($insert_i_port) {
-                                                    echo "Inserted into Port";
-                                                    } else {
-                                                        echo "There is an Error in Inserting into Portfolio";
-                                                    }
-                                                } else {
-                                                    echo "There is an Error in Updating Interest Portfolio";
-                                                }
-                                            } else {
-                                                echo "There is an Error in Inserting to Gl Portfolio";
-                                            }
+                                        // update
+                                        if ($insert_i_port) {
+                                            echo "Inserted into Port";
                                         } else {
-                                            echo "There is an Error in Updating GL Portfolio";
+                                            echo "There is an Error in Inserting into Portfolio";
                                         }
+                                    } else {
+                                        echo "There is an Error in Updating Interest Portfolio";
+                                    }
+                                } else {
+                                    echo "There is an Error in Inserting to Gl Portfolio";
+                                }
+                            } else {
+                                echo "There is an Error in Updating GL Portfolio";
+                            }
 
-                        // UPDATE GL 
-                        // END GL UPDATE
-                    } else {
-                        $balance_remaining = $client_account_balance - $collection_due_paid;
-                        $new_collection_done = 0;
-                        $cac_principal = $collection_principal;
-                        $cac_interest = $collection_interest;
-                    }
+                            // UPDATE GL 
+                            // END GL UPDATE
+                        } else {
+                            $balance_remaining = $client_account_balance - $collection_due_paid;
+                            $new_collection_done = 0;
+                            $cac_principal = $collection_principal;
+                            $cac_interest = $collection_interest;
+                        }
 
-                    // update client account balance
-                    $update_client_account = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$balance_remaining', total_withdrawals_derived = '$total_withd' WHERE int_id = '$int_id' AND client_id = '$client_id' AND account_no = '$account_no'");
-                    if ($update_client_account) {
-                        // Insert This Transaction into the Account Transaction Table
+                        // update client account balance
+                        $update_client_account = mysqli_query($connection, "UPDATE account SET account_balance_derived = '$balance_remaining', total_withdrawals_derived = '$total_withd' WHERE int_id = '$int_id' AND client_id = '$client_id' AND account_no = '$account_no'");
+                        if ($update_client_account) {
+                            // Insert This Transaction into the Account Transaction Table
 
-                        $insert_client_trans = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
+                            $insert_client_trans = mysqli_query($connection, "INSERT INTO `account_transaction` (`int_id`, `branch_id`,
                         `product_id`, `account_id`, `account_no`, `client_id`, `teller_id`, `transaction_id`,
                         `description`, `transaction_type`, `is_reversed`, `transaction_date`, `amount`, `overdraft_amount_derived`,
                         `balance_end_date_derived`, `balance_number_of_days_derived`, `running_balance_derived`,
@@ -374,17 +383,17 @@ $(document).ready(function() {
                         '{$gen_date}', '0', '{$balance_remaining}',
                         '{$balance_remaining}', '{$gen_date}', '0', '0', '{$collection_due_paid}', '0.00')");
 
-                        if ($insert_client_trans) {
-                        // If client Account Transaction Successful Update the Loan and Loan Transaction Table for Reference
+                            if ($insert_client_trans) {
+                                // If client Account Transaction Successful Update the Loan and Loan Transaction Table for Reference
 
-                        // Get the Current Loan Outstanding from *LINE 57 to LINE 71*
-                        $new_outstanding_balance = $outstanding_loan_balance - $new_collection_done;
-                        $up_client_loan = mysqli_query($connection, "UPDATE loan SET total_outstanding_derived = '$new_outstanding_balance' WHERE int_id = '$int_id' AND client_id = '$client_id' AND (id = '$loan_id' AND account_no = $account_no)");
+                                // Get the Current Loan Outstanding from *LINE 57 to LINE 71*
+                                $new_outstanding_balance = $outstanding_loan_balance - $new_collection_done;
+                                $up_client_loan = mysqli_query($connection, "UPDATE loan SET total_outstanding_derived = '$new_outstanding_balance' WHERE int_id = '$int_id' AND client_id = '$client_id' AND (id = '$loan_id' AND account_no = $account_no)");
 
-                        // if loan update successful insert a transaction
-                        if ($up_client_loan) {
-                            // update the loan transaction
-                            $update_loan_trans = mysqli_query($connection, "INSERT INTO `loan_transaction` (`int_id`, `branch_id`, `product_id`, `loan_id`, `transaction_id`, `client_id`, `account_no`, `is_reversed`, `external_id`, `transaction_type`, `transaction_date`, `amount`,
+                                // if loan update successful insert a transaction
+                                if ($up_client_loan) {
+                                    // update the loan transaction
+                                    $update_loan_trans = mysqli_query($connection, "INSERT INTO `loan_transaction` (`int_id`, `branch_id`, `product_id`, `loan_id`, `transaction_id`, `client_id`, `account_no`, `is_reversed`, `external_id`, `transaction_type`, `transaction_date`, `amount`,
                             `payment_method`, `principal_portion_derived`, `interest_portion_derived`, `fee_charges_portion_derived`, `penalty_charges_portion_derived`,
                             `overpayment_portion_derived`, `unrecognized_income_portion`, `suspended_interest_portion_derived`, `suspended_fee_charges_portion_derived`, 
                             `suspended_penalty_charges_portion_derived`, `outstanding_loan_balance_derived`, `recovered_portion_derived`, `submitted_on_date`, `manually_adjusted_or_reversed`, `created_date`, `appuser_id`, `is_account_transfer`) 
@@ -392,105 +401,116 @@ $(document).ready(function() {
                             'auto_account', '{$collection_principal}', '{$collection_interest}', '0', '0', 
                             '0', NULL, '0', '0', '0', '{$new_outstanding_balance}', '{$collection_due_paid}', '{$gen_date}', '0', '{$gen_date}', '0', '1')");
 
-                            // if the Loan Transaction Insertion Successful Update Loan Repayment Schedule
-                            if ($update_loan_trans) {
-                                $update_rep_status = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET installment = '0' WHERE int_id = '$int_id' AND id = '$collection_id'");
+                                    // if the Loan Transaction Insertion Successful Update Loan Repayment Schedule
+                                    if ($update_loan_trans) {
+                                        $update_rep_status = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET installment = '0' WHERE int_id = '$int_id' AND id = '$collection_id'");
 
-                                // if the repayment update is successful
-                                if ($update_rep_status) {
-                                    $query_institution_arrears = mysqli_query($connection, "INSERT INTO `loan_arrear` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, `counter`, `principal_amount`, `principal_completed_derived`, `principal_writtenoff_derived`, `interest_amount`, `interest_completed_derived`, `interest_writtenoff_derived`, `total_paid_late_derived`, `completed_derived`, `obligations_met_on_date`, `createdby_id`, `created_date`, `lastmodified_date`) 
+                                        // if the repayment update is successful
+                                        if ($update_rep_status) {
+                                            $query_institution_arrears = mysqli_query($connection, "INSERT INTO `loan_arrear` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, `counter`, `principal_amount`, `principal_completed_derived`, `principal_writtenoff_derived`, `interest_amount`, `interest_completed_derived`, `interest_writtenoff_derived`, `total_paid_late_derived`, `completed_derived`, `obligations_met_on_date`, `createdby_id`, `created_date`, `lastmodified_date`) 
                                     VALUES ('{$int_id}', '{$collection_loan}', '{$collection_client_id}', '{$gen_date}', '{$general_date_due}', '{$collection_installment}', '1', '{$cac_principal}', '{$cac_principal}', '0', '{$cac_interest}', '{$cac_interest}', '0', '0', '0', NULL, '{$approved_by}', '{$gen_date}', '{$gen_date}')");
 
-                                    if ($query_institution_arrears) {
-// Start SMS
-// IMPORT AJAX in MFI FOLDER
-include("../mfi/ajaxcallx.php");
-$query_institution = mysqli_query($connection, "SELECT * FROM `institutions` WHERE int_id = '$int_id'");
-if (mysqli_num_rows($query_institution) > 0) {
-    $gi = mysqli_fetch_array($query_institution);
+                                            if ($query_institution_arrears) {
+                                                // Start SMS
+                                                // IMPORT AJAX in MFI FOLDER
+                                                include("../mfi/ajaxcallx.php");
+                                                $query_institution = mysqli_query($connection, "SELECT * FROM `institutions` WHERE int_id = '$int_id'");
+                                                if (mysqli_num_rows($query_institution) > 0) {
+                                                    $gi = mysqli_fetch_array($query_institution);
 
-    // Get Information
-    $int_name = $gi["int_name"];
-    $sender_id = $gi["sender_id"];
-    $description = "Loan Due";
+                                                    // Get Information
+                                                    $int_name = $gi["int_name"];
+                                                    $sender_id = $gi["sender_id"];
+                                                    $description = "Loan Due";
 
-    // Star the Customers Account Number
-    $account_display = substr("$account_no", 0, 3)."*****".substr("$account_no",8);
+                                                    // Star the Customers Account Number
+                                                    $account_display = substr("$account_no", 0, 3) . "*****" . substr("$account_no", 8);
 
-?>
-<!-- DEFINE TRANSACTION FIRST LAYER -->
-<input type="text" id="s_int_id" value="<?php echo $int_id; ?>" hidden>
-<input type="text" id="s_acct_nox" value="<?php echo $account_no; ?>" hidden>
-<input type="text" id="s_branch_id" value="<?php echo $branch_id; ?>" hidden>
-<input type="text" id="s_sender_id" value="<?php echo $sender_id; ?>" hidden>
-<input type="text" id="s_phone" value="<?php echo $client_phone; ?>" hidden>
-<input type="text" id="s_client_id" value="<?php echo $client_id; ?>" hidden>
+                                                    ?>
+                                                    <!-- DEFINE TRANSACTION FIRST LAYER -->
+                                                    <input type="text" id="s_int_id" value="<?php echo $int_id; ?>" hidden>
+                                                    <input type="text" id="s_acct_nox" value="<?php echo $account_no; ?>" hidden>
+                                                    <input type="text" id="s_branch_id" value="<?php echo $branch_id; ?>" hidden>
+                                                    <input type="text" id="s_sender_id" value="<?php echo $sender_id; ?>" hidden>
+                                                    <input type="text" id="s_phone" value="<?php echo $client_phone; ?>" hidden>
+                                                    <input type="text" id="s_client_id" value="<?php echo $client_id; ?>" hidden>
 
-<!-- ACCOUNT DETIALS -->
-<input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
-<input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
-<input type="text" id="s_amount" value="<?php echo $collection_due_paid; ?>" hidden>
-<input type="text" id="s_desc" value="<?php echo $description; ?>" hidden>
-<input type="text" id="s_date" value="<?php echo $gen_date; ?>" hidden>
-<input type="text" id="s_balance" value="<?php echo number_format($balance_remaining, 2); ?>" hidden>
+                                                    <!-- ACCOUNT DETIALS -->
+                                                    <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
+                                                    <input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
+                                                    <input type="text" id="s_amount" value="<?php echo $collection_due_paid; ?>" hidden>
+                                                    <input type="text" id="s_desc" value="<?php echo $description; ?>" hidden>
+                                                    <input type="text" id="s_date" value="<?php echo $gen_date; ?>" hidden>
+                                                    <input type="text" id="s_balance" value="<?php echo number_format($balance_remaining, 2); ?>" hidden>
 
-<!-- Script to Send AJAX information -->
-<script>
-$(document).ready(function() {
-    // STORE ENTITY DETAILS
-    var int_id = $('#s_int_id').val();
-    var branch_id = $('#s_branch_id').val();
-    var sender_id = $('#s_sender_id').val();
-    var phone = $('#s_phone').val();
-    var client_id = $('#s_client_id').val();
-    var account_no = $('#s_acct_nox').val();
+                                                    <!-- Script to Send AJAX information -->
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            // STORE ENTITY DETAILS
+                                                            var int_id = $('#s_int_id').val();
+                                                            var branch_id = $('#s_branch_id').val();
+                                                            var sender_id = $('#s_sender_id').val();
+                                                            var phone = $('#s_phone').val();
+                                                            var client_id = $('#s_client_id').val();
+                                                            var account_no = $('#s_acct_nox').val();
 
-    // STORE VALUE OF TRANSACTION
-    var amount = $('#s_amount').val();
-    var acct_no = $('#s_acct_no').val();
-    var int_name = $('#s_int_name').val();
-    var trans_type = "Debit";
-    var desc = $('#s_desc').val();
-    var date = $('#s_date').val();
-    var balance = $('#s_balance').val();
-    // now we work on the body.
-    var msg = int_name+" "+trans_type+" \n" + "Amt:NGN "+amount+" \n Acct: "+acct_no+"\nDesc: "+desc+" \nBal: "+balance+" \nAvail: "+balance+"\nDate: "+date+"\nThanks";
-    $.ajax({
-        url:"../mfi/ajax_post/sms/sms.php",
-        method:"POST",
-        data:{int_id:int_id, branch_id:branch_id, sender_id:sender_id, phone:phone, msg:msg, client_id:client_id, account_no:account_no },
-        success:function(data){
-            $('#make_display').html(data);
-            }
-        });
-    });
-</script>
-<div id="make_display" hidden></div>
+                                                            // STORE VALUE OF TRANSACTION
+                                                            var amount = $('#s_amount').val();
+                                                            var acct_no = $('#s_acct_no').val();
+                                                            var int_name = $('#s_int_name').val();
+                                                            var trans_type = "Debit";
+                                                            var desc = $('#s_desc').val();
+                                                            var date = $('#s_date').val();
+                                                            var balance = $('#s_balance').val();
+                                                            // now we work on the body.
+                                                            var msg = int_name + " " + trans_type + " \n" + "Amt:NGN " + amount + " \n Acct: " + acct_no + "\nDesc: " + desc + " \nBal: " + balance + " \nAvail: " + balance + "\nDate: " + date + "\nThanks";
+                                                            $.ajax({
+                                                                url: "../mfi/ajax_post/sms/sms.php",
+                                                                method: "POST",
+                                                                data: {
+                                                                    int_id: int_id,
+                                                                    branch_id: branch_id,
+                                                                    sender_id: sender_id,
+                                                                    phone: phone,
+                                                                    msg: msg,
+                                                                    client_id: client_id,
+                                                                    account_no: account_no
+                                                                },
+                                                                success: function(data) {
+                                                                    $('#make_display').html(data);
+                                                                }
+                                                            });
+                                                        });
+                                                    </script>
+                                                    <div id="make_display" hidden></div>
 <?php
-}
-// End SMS
+                                                }
+                                                // End SMS
+                                            } else {
+                                                echo "There was an Error Inserting into Loan Arrears(No Balance)";
+                                            }
+                                        } else {
+                                            echo "There was an Error Updating Repayment Schedule (No Balance)";
+                                        }
                                     } else {
-                                        echo "There was an Error Inserting into Loan Arrears(No Balance)";
+                                        echo "There was an Error Inserting to Loan Transaction (No Balance)";
                                     }
                                 } else {
-                                    echo "There was an Error Updating Repayment Schedule (No Balance)";
+                                    echo "There was an Error Updating Loan(No Balance)";
                                 }
                             } else {
-                                echo "There was an Error Inserting to Loan Transaction (No Balance)";
+                                echo "There was an Error Inserting in Client Transaction Table(No Balance)";
                             }
                         } else {
-                            echo "There was an Error Updating Loan(No Balance)";
+                            echo "There was an Error Updating Client Account(No Balance)";
                         }
-                        } else {
-                            echo "There was an Error Inserting in Client Transaction Table(No Balance)";
-                        }
-                    } else {
-                        echo "There was an Error Updating Client Account(No Balance)";
                     }
                 }
+            } else {
+                echo "No Repayment found";
             }
         } else {
-            echo "No Repayment found";
+            include('../functions/loans/arrears.php');
         }
     }
 } else {

@@ -35,10 +35,10 @@ if(isset($_GET["edit"])) {
     echo header("Location: report_savings_view.php?view10");
   }
   else if($location == "11"){
-
+    echo header("Location: report_savings_view.php?view11");
   }
   else if($location == "12"){
-
+    echo header("Location: report_current_view.php?view12");
   }
   else if($location == "13"){
 

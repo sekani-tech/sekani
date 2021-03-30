@@ -55,7 +55,7 @@ else if (isset($_GET["message2"])) {
       swal({
           type: "error",
           title: "Error",
-          text: "Not enough Loan in the teller Account",
+          text: "Not enough Cash in the teller Account",
           showConfirmButton: false,
           timer: 2000
       })

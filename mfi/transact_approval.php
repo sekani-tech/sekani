@@ -386,6 +386,9 @@ if ($can_transact == 1 || $can_transact == "1") {
                                                     Amount
                                                 </th>
                                                 <th class="th-sm">
+                                                    Date
+                                                </th>
+                                                <th class="th-sm">
                                                     Posted By
                                                 </th>
                                                 <th class="th-sm">
@@ -426,9 +429,16 @@ if ($can_transact == 1 || $can_transact == "1") {
                                                                 echo "Bank";
                                                             } else if ($row["is_bank"] == 0) {
                                                                 echo "Cash";
-                                                            } ?>
+                                                            } else if ($row["is_bank"] == 2) {
+                                                                echo "Salary";
+                                                            }
+                                                            ?>
                                                         </td>
                                                         <td><?php echo number_format($row["amount"], 2); ?></td>
+                                                        <td><?php 
+                                                        $dateString = strtotime($row["date"]);
+                                                        echo $date = date('Y/m/d', $dateString);
+                                                         ?></td>
                                                         <td><?php echo $showStaffName; ?></td>
                                                         <td><?php echo $row["client_name"]; ?></td>
                                                         <td><?php echo $row["status"]; ?></td>

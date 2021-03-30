@@ -190,7 +190,7 @@ $(document).ready(function(){
                 <div class="card card-pricing bg-primary">
                     <div class="card-body ">
 
-                        <h4 class="card-title">SMS Campaign</h4>
+                        <h4 class="card-title">SMS/Email Campaign</h4>
                         <p class="card-description">
                             Handle the alerts that the system recieves
                         </p>
@@ -346,6 +346,24 @@ $(document).ready(function(){
             </div>
 
         </div>
+
+        <div class="row">
+                <div class="col-md-4 ml-auto mr-auto">
+
+                    <div class="card card-pricing bg-primary">
+                        <div class="card-body ">
+
+                            <h4 class="card-title">Budget Setup</h4>
+                            <p class="card-description">
+                                Create Institution Budget
+                            </p>
+                            <a href="budget_setup.php" class="btn btn-white btn-round">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
     </div>
 </div>
 

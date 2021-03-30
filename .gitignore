@@ -1,2 +1,2 @@
 functions/connect.php
-plug
+functions/DbModel/db.php

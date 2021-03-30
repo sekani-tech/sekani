@@ -253,7 +253,8 @@ img {
                       // check feedback
                       $print = $pqx['total_out_prin'];
                       $intet = $iqx['total_int_prin'];
-                      $fde = ($print + $intet) + ($arr_p + $arr_i);
+                      // $fde = ($print + $intet) + ($arr_p + $arr_i);
+                      $fde = $print + $intet;
                       ?>
                       <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="NGN - <?php echo number_format(round($fde), 2); ?>" readonly>
                     </div>
