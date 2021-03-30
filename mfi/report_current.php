@@ -100,25 +100,41 @@ $_SESSION["lack_of_intfund_$key"] = null;
                    }?> Current reports</p>
                 </div>
                 <div class="card-body">
-                  <div class="table-responsive">
-                  <table class="rtable display nowrap" style="width:100%">
-                      <thead class=" text-primary">
-                      <?php
+                <div class="row">
+                    <?php
                         $query = "SELECT * FROM reports WHERE category = 'current'";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <th>
-                          Name
-                        </th>
-                        <th>
-                          Category
-                        </th>
-                        <th>
-                         Description
-                        </th>
-                        <th>view </th>
-                        <!-- <th>Phone</th> -->
-                      </thead>
+                       
+                      <?php if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
+                       
+                    
+                      <div class="col-md-4">
+                        <div class="card card-pricing bg-primary">
+                          <div class="card-body ">
+                              <h4 class="card-title"><?php echo $row["name"]; ?></h4>
+                              <p class="card-description">
+                              <?php echo strtoupper($row["description"]); ?>
+                              </p>
+                              <a href="report_view.php?edit=<?php echo $row["id"];?>" class="btn btn-white btn-round">View</a>
+                          </div>
+                        </div>         
+                     </div>
+                        <?php }
+                          }
+                          else {
+                            // echo "0 Document";
+                          }
+                          ?>
+                                    
+                      </div>
+
+                  </div>
+                </div>
+                  <div class="table-responsive">
+                  <table class="rtable display nowrap" style="width:100%">
+                      
                       <tbody>
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>

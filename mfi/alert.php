@@ -31,11 +31,9 @@ $destination = "../index.php";
                         </p>
                         <a href="alerts_sms.php" class="btn btn-white btn-round">View</a>
                     </div>
+                  </div>         
                 </div>
-
-                
-            </div>
-            <div class="col-md-4">
+                <div class="col-md-4">
                   <div class="card card-pricing bg-primary">
                     <div class="card-body ">
                         <h4 class="card-title">Email Campaign</h4>
@@ -44,10 +42,10 @@ $destination = "../index.php";
                         </p>
                         <a href="alerts_email.php" class="btn btn-white btn-round">View</a>
                     </div>
+                  </div>
+                </div>               
                 </div>
-                </div>
-                 
-                </div>
+                
               </div>
             </div>
           </div>
