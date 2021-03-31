@@ -123,7 +123,7 @@ while (strtotime("+1 ".$rep_every, strtotime($repayment_start)) <= strtotime($ma
     $inter_due = $principal_amount * ($int_rate) * ($loan_term / 4) / $loan_term;
   } else if ($rep_every == "day") {
     $inter_due = $principal_amount * ($int_rate) * ($loan_term / 30) / $loan_term;
-  }
+  } 
   
   $princi_due = $disburse / $loan_term;
   $princi_due2 = $princi_due * ($i + 1);
