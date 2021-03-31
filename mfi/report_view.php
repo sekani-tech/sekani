@@ -100,7 +100,7 @@ if(isset($_GET["edit"])) {
     echo header("Location: report_fixed_deposit_view.php?view31");
   }
   else if($location == "32"){
-
+    echo header("Location: report_institution_view.php?view32");
   }
   else if($location == "33"){
     echo header("Location: teller.php");
