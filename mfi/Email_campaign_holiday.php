@@ -1,20 +1,10 @@
 <?php
 include("../functions/connect.php");
 require_once "../bat/phpmailer/PHPMailerAutoload.php";
-?>
-<?php 
-if(isset($_POST['send-mail'])){ 
-
-$getall = "SELECT * FROM `client` WHERE Gender = '$gender' or religion = '$religion' or date_of_birth = '$date_of_birth' ";
-$getmail = mysqli_query($connection, $getall);
-
-
-while ($res = mysqli_fetch_assoc($getmail)) {
-    $gender =  $res["gender"]; 
-    $religion = $res["religion"];
-    $date_of_birth = $res["date_of_birth"];
-    // MAKE ME MOVE
-    $query_institution = mysqli_query($connection, "SELECT * FROM `institutions` WHERE int_id = '$int_id'");
+session_start();
+$institutionId = $_SESSION['int_id'];
+// querying institution data for logo and other informations
+$query_institution = mysqli_query($connection, "SELECT * FROM `institutions` WHERE int_id = '$institutionId'");
     $x = mysqli_fetch_array($query_institution);
     $int_name = $x["int_name"];
     $full_int_name = $x["int_full"];
@@ -23,6 +13,46 @@ while ($res = mysqli_fetch_assoc($getmail)) {
     $name = $x["pc_surname"];
     $position = $x["pc_designation"];
     $img = $x["img"];
+
+
+
+if(isset($_POST['send-mail'])){ 
+
+  // intializing post values
+$subject = $_POST['subject'];
+$message = $_POST['message'];
+$gender = $_POST['gender'];
+$religion =$_POST['religion'];
+$age = $_POST['age'];
+if($gender == "All" && $religion == "All" && $age = "All"){
+  // query if all -  basacally no specifications
+  $getall = mysqli_query($connection, "SELECT * FROM client WHERE int_id = '$institutionId'");
+}else if ($gender != "All" || $religion != "All" || $age != "All"){ //if any of the specifiactions are not equals to All
+  // find specification
+  if($gender != "All" && $religion == "All" && $age == "All"){
+    // check for where gender is not all but the rest are all
+    $getall = mysqli_query($connection, "SELECT * FROM `client` WHERE gender = '$gender'");
+  }else if($gender == "All" && $religion != "All" && $age == "All"){
+    // check where all genders are inclusive but religion is not
+    $getall = mysqli_query($connection, "SELECT * FROM `client` WHERE religion = '$religion'");
+  }else if ($gender != "All" && $religion != "All" && $age == "All"){
+    // check for specific gender and religion
+    $getall = mysqli_query($connection, "SELECT * FROM `client` WHERE gender = '$gender' AND religion = '$religion'"); 
+  }else if ($gender != "All" && $religion != "All" && $age != "All"){
+    // check for specific gender, religion and age
+    $getall = mysqli_query($connection, "SELECT * FROM `client` WHERE gender = '$gender' AND religion = '$religion' AND age = '$age'"); 
+  
+}
+
+
+
+
+while ($res = mysqli_fetch_assoc($getall)) {
+    $gender =  $res["gender"]; 
+    $religion = $res["religion"];
+    $date_of_birth = $res["date_of_birth"];
+    
+    
     $mail = new PHPMailer;
     // from email addreess and name
     $mail->From = "techsupport@sekanisystems.com.ng";
@@ -39,7 +69,7 @@ while ($res = mysqli_fetch_assoc($getmail)) {
    // $mail->addBCC("bcc@example.com");
    // Send HTML or Plain Text Email
    $mail->isHTML(true);
-   $mail->Subject = "HAPPY INDEPENDENCE DAY";
+   $mail->Subject = $subject;
    $mail->Body = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional //EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
    <html xmlns='http://www.w3.org/1999/xhtml' xmlns:v='urn:schemas-microsoft-com:vml' xmlns:o='urn:schemas-microsoft-com:office:office'>
    
@@ -161,156 +191,7 @@ while ($res = mysqli_fetch_assoc($getmail)) {
    
    <body class='clean-body' style='margin: 0; padding: 0; -webkit-text-size-adjust: 100%; background-color: transparent;'>
      <!--[if IE]><div class='ie-browser'><![endif]-->
-     <table class='nl-container' style='table-layout: fixed; vertical-align: top; min-width: 320px; Margin: 0 auto; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: transparent; width: 100%;' cellpadding='0' cellspacing='0' role='presentation' width='100%' bgcolor='transparent' valign='top'>
-       <tbody>
-         <tr style='vertical-align: top;' valign='top'>
-           <td style='word-break: break-word; vertical-align: top;' valign='top'>
-             <!--[if (mso)|(IE)]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td align='center' style='background-color:transparent'><![endif]-->
-             <div style='background-color:#9e58ad;'>
-               <div class='block-grid ' style='Margin: 0 auto; min-width: 320px; max-width: 670px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: transparent;'>
-                 <div style='border-collapse: collapse;display: table;width: 100%;background-color:transparent;'>
-                   <!--[if (mso)|(IE)]><table width='100%' cellpadding='0' cellspacing='0' border='0' style='background-color:#9e58ad;'><tr><td align='center'><table cellpadding='0' cellspacing='0' border='0' style='width:670px'><tr class='layout-full-width' style='background-color:transparent'><![endif]-->
-                   <!--[if (mso)|(IE)]><td align='center' width='670' style='background-color:transparent;width:670px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;' valign='top'><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;'><![endif]-->
-                   <div class='col num12' style='min-width: 320px; max-width: 670px; display: table-cell; vertical-align: top; width: 670px;'>
-                     <div style='width:100% !important;'>
-                       <!--[if (!mso)&(!IE)]><!-->
-                       <div style='border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;'>
-                         <!--<![endif]-->
-                         <div></div>
-                         <!--[if (!mso)&(!IE)]><!-->
-                       </div>
-                       <!--<![endif]-->
-                     </div>
-                   </div>
-                   <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-                   <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-                 </div>
-               </div>
-             </div>
-             <div style='background-color:transparent;'>
-               <div class='block-grid ' style='Margin: 0 auto; min-width: 320px; max-width: 670px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: transparent;'>
-                 <div style='border-collapse: collapse;display: table;width: 100%;background-color:transparent;'>
-                   <!--[if (mso)|(IE)]><table width='100%' cellpadding='0' cellspacing='0' border='0' style='background-color:transparent;'><tr><td align='center'><table cellpadding='0' cellspacing='0' border='0' style='width:670px'><tr class='layout-full-width' style='background-color:transparent'><![endif]-->
-                   <!--[if (mso)|(IE)]><td align='center' width='670' style='background-color:transparent;width:670px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;' valign='top'><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;'><![endif]-->
-                   <div class='col num12' style='min-width: 320px; max-width: 670px; display: table-cell; vertical-align: top; width: 670px;'>
-                     <div style='width:100% !important;'>
-                       <!--[if (!mso)&(!IE)]><!-->
-                       <div style='border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;'>
-                         <!--<![endif]-->
-                         <div class='img-container center fixedwidth' align='center' style='padding-right: 0px;padding-left: 0px;'>
-                           <!--[if mso]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr style='line-height:0px'><td style='padding-right: 0px;padding-left: 0px;' align='center'><![endif]--><img class='center fixedwidth' align='center' border='0' src='$img' alt='Alternate text' title='Alternate text' style='text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 100%; max-width: 134px; display: block;' width='134'>
-                           <!--[if mso]></td></tr></table><![endif]-->
-                         </div>
-                         <!--[if (!mso)&(!IE)]><!-->
-                       </div>
-                       <!--<![endif]-->
-                     </div>
-                   </div>
-                   <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-                   <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-                 </div>
-               </div>
-             </div>
-             <div style='background-color:transparent;'>
-               <div class='block-grid ' style='Margin: 0 auto; min-width: 320px; max-width: 670px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: transparent;'>
-                 <div style='border-collapse: collapse;display: table;width: 100%;background-color:transparent;'>
-                   <!--[if (mso)|(IE)]><table width='100%' cellpadding='0' cellspacing='0' border='0' style='background-color:transparent;'><tr><td align='center'><table cellpadding='0' cellspacing='0' border='0' style='width:670px'><tr class='layout-full-width' style='background-color:transparent'><![endif]-->
-                   <!--[if (mso)|(IE)]><td align='center' width='670' style='background-color:transparent;width:670px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;' valign='top'><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;'><![endif]-->
-                   <div class='col num12' style='min-width: 320px; max-width: 670px; display: table-cell; vertical-align: top; width: 670px;'>
-                     <div style='width:100% !important;'>
-                       <!--[if (!mso)&(!IE)]><!-->
-                       <div style='border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;'>
-                         <!--<![endif]-->
-                         <div class='img-container center fixedwidth' align='center' style='padding-right: 0px;padding-left: 0px;'>
-                           <!--[if mso]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr style='line-height:0px'><td style='padding-right: 0px;padding-left: 0px;' align='center'><![endif]--><img class='center fixedwidth' align='center' border='0' src='https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/BeeProAgency/584396_565995/Nigeria60.png' alt='Alternate text' title='Alternate text' style='text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 100%; max-width: 670px; display: block;' width='670'>
-                           <!--[if mso]></td></tr></table><![endif]-->
-                         </div>
-                         <!--[if (!mso)&(!IE)]><!-->
-                       </div>
-                       <!--<![endif]-->
-                     </div>
-                   </div>
-                   <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-                   <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-                 </div>
-               </div>
-             </div>
-             <div style='background-color:transparent;'>
-               <div class='block-grid ' style='Margin: 0 auto; min-width: 320px; max-width: 670px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: transparent;'>
-                 <div style='border-collapse: collapse;display: table;width: 100%;background-color:transparent;'>
-                   <!--[if (mso)|(IE)]><table width='100%' cellpadding='0' cellspacing='0' border='0' style='background-color:transparent;'><tr><td align='center'><table cellpadding='0' cellspacing='0' border='0' style='width:670px'><tr class='layout-full-width' style='background-color:transparent'><![endif]-->
-                   <!--[if (mso)|(IE)]><td align='center' width='670' style='background-color:transparent;width:670px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;' valign='top'><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;'><![endif]-->
-                   <div class='col num12' style='min-width: 320px; max-width: 670px; display: table-cell; vertical-align: top; width: 670px;'>
-                     <div style='width:100% !important;'>
-                       <!--[if (!mso)&(!IE)]><!-->
-                       <div style='border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;'>
-                         <!--<![endif]-->
-                         <!--[if mso]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Arial, sans-serif'><![endif]-->
-                         <div style='color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;line-height:1.8;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;'>
-                           <div style='line-height: 1.8; font-size: 12px; color: #555555; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; mso-line-height-alt: 22px;'>
-                             <p style='font-size: 14px; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;'><strong><span style='font-size: 20px;'>We have come a long way!</span></strong></p>
-                             <p style='font-size: 14px; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;'><span style='font-size: 14px;'>On this day, we remember all the grief and sufferings that Nigerians had to endure to achieve the long-awaited freedom, independence, and sovereignty of our country. We congratulate all the inhabitants of this beautiful country - Nigeria. May joy, love, smile, luck and peace continue to thrive in our homeland.&nbsp;</span></p>
-                           </div>
-                         </div>
-                         <!--[if mso]></td></tr></table><![endif]-->
-                         <!--[if mso]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Arial, sans-serif'><![endif]-->
-                         <div style='color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;line-height:1.5;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;'>
-                           <div style='line-height: 1.5; font-size: 12px; color: #555555; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; mso-line-height-alt: 18px;'>
-                             <p style='line-height: 1.5; word-break: break-word; text-align: center; font-size: 20px; mso-line-height-alt: 30px; margin: 0;'><span style='font-size: 20px;'>Thank you for choosing <strong>$full_int_name</strong></span></p>
-                           </div>
-                         </div>
-                         <!--[if mso]></td></tr></table><![endif]-->
-                         <!--[if mso]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Arial, sans-serif'><![endif]-->
-                         <div style='color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;line-height:1.5;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;'>
-                           <div style='line-height: 1.5; font-size: 12px; color: #555555; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; mso-line-height-alt: 18px;'>
-                             <p style='line-height: 1.5; word-break: break-word; text-align: left; font-size: 20px; mso-line-height-alt: 30px; margin: 0;'><span style='font-size: 20px;'>Regards</span></p>
-                             <p style='line-height: 1.5; word-break: break-word; text-align: left; font-size: 20px; mso-line-height-alt: 30px; margin: 0;'><span style='font-size: 20px;'>$title $name, $position</span></p>
-                           </div>
-                         </div>
-                         <!--[if mso]></td></tr></table><![endif]-->
-                         <!--[if (!mso)&(!IE)]><!-->
-                       </div>
-                       <!--<![endif]-->
-                     </div>
-                   </div>
-                   <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-                   <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-                 </div>
-               </div>
-             </div>
-             <div style='background-color:#9e58ad;'>
-               <div class='block-grid ' style='Margin: 0 auto; min-width: 320px; max-width: 670px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: transparent;'>
-                 <div style='border-collapse: collapse;display: table;width: 100%;background-color:transparent;'>
-                   <!--[if (mso)|(IE)]><table width='100%' cellpadding='0' cellspacing='0' border='0' style='background-color:#9e58ad;'><tr><td align='center'><table cellpadding='0' cellspacing='0' border='0' style='width:670px'><tr class='layout-full-width' style='background-color:transparent'><![endif]-->
-                   <!--[if (mso)|(IE)]><td align='center' width='670' style='background-color:transparent;width:670px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;' valign='top'><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;'><![endif]-->
-                   <div class='col num12' style='min-width: 320px; max-width: 670px; display: table-cell; vertical-align: top; width: 670px;'>
-                     <div style='width:100% !important;'>
-                       <!--[if (!mso)&(!IE)]><!-->
-                       <div style='border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;'>
-                         <!--<![endif]-->
-                         <!--[if mso]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Arial, sans-serif'><![endif]-->
-                         <div style='color:#f9f9f9;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;line-height:1.2;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;'>
-                           <div style='line-height: 1.2; font-size: 12px; color: #f9f9f9; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 14px;'>
-                             <p style='text-align: center; line-height: 1.2; word-break: break-word; mso-line-height-alt: 14px; margin: 0;'><em>All rights reserved&nbsp; $full_int_name Copyright@ 2020&nbsp;</em></p>
-                             <p style='text-align: center; line-height: 1.2; word-break: break-word; mso-line-height-alt: 14px; margin: 0;'><em>You are receiving this email because you are a Microfinance Institutions(MFI) under Sekani Systems</em></p>
-                           </div>
-                         </div>
-                         <!--[if mso]></td></tr></table><![endif]-->
-                         <!--[if (!mso)&(!IE)]><!-->
-                       </div>
-                       <!--<![endif]-->
-                     </div>
-                   </div>
-                   <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-                   <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-                 </div>
-               </div>
-             </div>
-             <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-           </td>
-         </tr>
-       </tbody>
-     </table>
+     $message
      <!--[if (IE)]></div><![endif]-->
    </body>
    

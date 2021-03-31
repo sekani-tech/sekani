@@ -395,7 +395,7 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                             // check for success response
                             if ($status != "") {
                               // Declare variables needed to keep record of the transaction
-                              $cal_bal = $balance - 4;
+                              $cal_bal = $smsBalance - 4;
                               $cal_with = $total_with + 4;
                               $cal_sek = $total_sekani_charge + 0;
                               $cal_mch = $total_merchant_charge + 4;
@@ -739,7 +739,7 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                               // check for success response
                               if ($status != "") {
                                 // Declare variables needed to keep record of the transaction
-                                $cal_bal = $balance - 4;
+                                $cal_bal = $smsBalance - 4;
                                 $cal_with = $total_with + 4;
                                 $cal_sek = $total_sekani_charge + 0;
                                 $cal_mch = $total_merchant_charge + 4;

@@ -4,6 +4,91 @@ $page_title = "Branch Data";
 $destination = "bulk_upload";
 include("header.php");
 
+
+//  Sweet alert Function
+
+// If it is successfull, It will show this message
+if (isset($_GET["message1"])) {
+    $key = $_GET["message1"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+          type: "success",
+          title: "Success",
+          text: "Branch Created",
+          showConfirmButton: false,
+          timer: 2000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+    }
+  // If it is not successfull, It will show this message
+  else if (isset($_GET["message2"])) {
+    $key = $_GET["message2"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+          type: "error",
+          title: "Error",
+          text: "Error in Creating Branch",
+          showConfirmButton: false,
+          timer: 2000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+  }
+  if (isset($_GET["message3"])) {
+    $key = $_GET["message3"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+          type: "success",
+          title: "Success",
+          text: "Branch Updated",
+          showConfirmButton: false,
+          timer: 2000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+  }
+  else if (isset($_GET["message4"])) {
+    $key = $_GET["message1"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+          type: "error",
+          title: "Error",
+          text: "Error Updating Branch",
+          showConfirmButton: false,
+          timer: 2000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+  }
 ?>
 
 
@@ -39,9 +124,9 @@ include("header.php");
                                                 Sample
                                             </li>
                                             <li>The order of the columns should be the same as stated on the Data
-                                                Sample with the first rows as header
+                                                Sample, all information is important.
                                             </li>
-                                            <li>You can upload a maximum of 4,000 rows in 1 file. If you have more
+                                            <li>You can upload a maximum of 120 rows in 1 file. If you have more
                                                 rows, please split them into multiple files.
                                             </li>
                                             <li>
@@ -50,11 +135,12 @@ include("header.php");
                                                     remember
                                                     to remove
                                                     the default table header (i.e row 1) completely.
+                                                    Clarify your data before uploading because deleting, because a branch cannot be deleted.
                                                 </STRONG>
                                             </li>
                                         </ul>
                                         <div class="card-body text-center">
-                                            <a href='bulkWork/getFile.php?name=clientData&loc=2' class="btn btn-primary btn-lg">Download Data Sample</a>
+                                            <a href='bulkWork/getFile.php?name=branchData&loc=2' class="btn btn-primary btn-lg">Download Data Sample</a>
                                         </div>
                                     </div>
                                 </div>
@@ -67,7 +153,7 @@ include("header.php");
                                         <p class="category"></p>
                                     </div>
                                     <div class="card-body">
-                                        <form action="bulkWork/upload/client.php" method="post" enctype="multipart/form-data">
+                                        <form action="../functions/migrate/branch_migrate.php" method="post" enctype="multipart/form-data">
                                             <div class="input-group">
                                                 <input type="file" name="clientData" class="form-control inputFileVisible">
                                                 <span class="input-group-btn">

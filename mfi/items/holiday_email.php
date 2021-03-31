@@ -17,7 +17,7 @@
 	</style>
 </head>
 
-<form action="" id="holiday-email">
+<form action="Email_campaign_holiday" id="holiday-email">
 
   <div class="form-group">
     <label for="">Campaign Name</label>
@@ -68,7 +68,7 @@
 </form>
 
 <?php
-include("email_campaign_holiday.php");
+//include("email_campaign_holiday.php");
 ?>
 
 
