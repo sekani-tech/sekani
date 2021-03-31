@@ -1,27 +1,44 @@
 <?php
 session_start();
 include('../../functions/connect.php');
+
+$sessint_id = $_SESSION['int_id'];
 ?>
 <?php
-if(isset($_POST['id'])){
-    $state = $_POST['id'];
-    $sint_id = $_SESSION['int_id'];
+if(isset($_POST['acc_name']))
+{
+    $acc_name = $_POST['acc_name'];
+    $result = mysqli_query($connection, "SELECT * FROM client WHERE int_id = '$sessint_id' AND display_name LIKE '%".trim($acc_name)."%'");
+    $output = '';
 
-            $select = "SELECT * FROM account WHERE int_id = '$sint_id' AND client_id = '$state'";
-            $state1 = mysqli_query($connection, $select);
-            $out = '';
-            while ($row = mysqli_fetch_array($state1))
-            {
-                $prod = $row['product_id'];
-                $don = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$prod'");
-                $fdo = mysqli_fetch_array($don);
-                $fiof = $fdo['name'];
-            $out .= '
-            <option value="'.$row["account_no"].'">'.$row["account_no"].'- '.$fiof.'</option>';
-            }
-            echo $out;
+    if(mysqli_num_rows($result) > 0)  
+    {
+        $output = '<ul class="list-group">'; 
+        while($row = mysqli_fetch_array($result))  
+        {  
+            $output .= '<li class="list-group-item acc-name">'.$row["display_name"].'</li>';  
+        }
+        $output .= '</ul>';
     }
-    else {
-        echo 'ID not posted';
+        
+    echo $output;
+}
+
+if(isset($_POST["existing_acc_name"]))  
+{  
+    $acc_name = $_POST['existing_acc_name'];
+    $query = "SELECT account_no FROM client WHERE int_id = '$sessint_id' AND display_name = '$acc_name'";  
+    $result = mysqli_query($connection, $query);
+    $output = '';
+
+    if(mysqli_num_rows($result) > 0)  
+    {
+        while($row = mysqli_fetch_array($result))
+        {
+            $output .= '<option value="'.$row["account_no"].'">'.$row["account_no"].'</option>';  
+        }
     }
+
+    echo $output;
+}
 ?>

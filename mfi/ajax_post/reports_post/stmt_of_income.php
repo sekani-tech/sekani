@@ -59,7 +59,7 @@ if(!empty($_POST['start']) && !empty($_POST['end'])) {
             </thead>
             <tbody>
             '.$gl_acc_op_inc.'
-              <tr>
+              <tr style="background-color: #eeeeee">
                   <td style="font-weight:bold;"><b>TOTAL OPERATING INCOME</b></td>
                   <td style="text-align: center"><b>₦ '.number_format($sub_total_inc, 2).'</b></td>
               </tr>
@@ -105,7 +105,7 @@ if(!empty($_POST['start']) && !empty($_POST['end'])) {
   $out .= '
 
     <div class="">
-      <div class="card">
+      <div class="card" style="margin-top: 60px">
         <div class="card-header card-header-primary">
           <h4 class="card-title">Operating Expenses</h4>
         </div>
@@ -119,11 +119,11 @@ if(!empty($_POST['start']) && !empty($_POST['end'])) {
             </thead>
             <tbody>
                 '.$gl_acc_op_exp.'
-                <tr>
+                <tr style="background-color: #eeeeee">
                     <td style="font-weight:bold;">TOTAL OPERATING EXPENSE</td>
                     <td style="text-align: center; font-weight:bold;">₦ '.number_format($sub_total_exp, 2).'</td>
                 </tr>
-                <tr>
+                <tr style="background-color: #aaaaaa">
                     <td style="font-weight:bold;">NET PROFIT/(LOSS)</td>
                     <td style="font-weight:bold; text-align: center">₦ '.$net_profit_or_loss.'</td>
                 </tr>
@@ -140,7 +140,7 @@ if(!empty($_POST['start']) && !empty($_POST['end'])) {
         <input type="hidden" name="end" value="'.$end.'"/>
         <input type="hidden" name="branch_id" value="'.$branch_id.'"/>
         <button class="btn btn-primary" name="downloadPDF">Download PDF</button>
-        <button class="btn btn-success" name="downloadExcel">Download Excel</button>
+        <button class="btn btn-primary" name="downloadExcel">Download Excel</button>
       </form>
     </div>
   </div>

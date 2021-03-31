@@ -473,7 +473,7 @@ input[type=text] {
                         <label class = "bmd-label-floating" for="charge" class="form-align mr-3">Charges</label>
                           <select class="form-control" name="charge"> 
                             <option>select charge to add</option>
-<?php echo fill_charges($connection); ?>
+<?php echo fill_charges ($connection); ?>
                           </select>
                           <button type="button" class="btn btn-primary" name="button" onclick="displayCharge()"> <i class="fa fa-plus"></i> Add To Product </button>
                       </div> -->

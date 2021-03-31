@@ -292,33 +292,72 @@ $destination = "../index.php";
                   <!-- Insert number users institutions -->
                 </div>
                 <div class="card-body">
-                  <div class="row">
-                      <div class="col-md-6">
-                          <form method="post">
-                            <legend>Change Password:</legend>
-                            <div class="row">
-                                <div class=" col-md-6 form-group">
-                                    <label class = "bmd-label-floating">Old Password:</label>
-                                    <input type="password" value="" name="oldpasskey" class="form-control" required>
-                                </div>
-                                <div class=" col-md-6 form-group">
-                                    <label class = "bmd-label-floating">New Password:</label>
-                                    <input type="password" value="" name="newpasskey" class="form-control" required>
-                                </div>
+
+                <!-- change password -->
+                    <div class="card">
+                        <!-- <div class="card-header card-header-primary">
+                            <h4 class="card-title ">Change Password</h4>
+                    
+                        </div> -->
+                        <div class="card-body">
+                            <div class="mt-3">
+                                <form method="post">
+                                    <legend>Change Password:</legend>
+                                    <div class="row">
+                                        <div class=" col-md-6 form-group">
+                                            <label class = "bmd-label-floating">Old Password</label>
+                                            <input type="password" value="" name="oldpasskey" class="form-control" required>
+                                        </div>
+                                        <div class=" col-md-6 form-group">
+                                            <label class = "bmd-label-floating">New Password</label>
+                                            <input type="password" value="" name="newpasskey" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <input type="submit" value="Change" name="submit" id="submit" class="btn btn-primary"/>
+                                    <input type="reset" value="Reset" name="reset" id="reset" class="btn btn-danger"/>
+                                    <?php
+                                    if ($per_bills == 1 || $per_bills == "1") {
+                                        ?>
+                                    <a href="bill_pin.php" class="btn btn-warning">change transaction password</a>
+                                    <?php
+                                    }
+                                    ?>
+                                    <div class="clearfix"></div>
+                                </form>
                             </div>
-                            <input type="submit" value="Change" name="submit" id="submit" class="btn btn-primary"/>
-                            <input type="reset" value="Reset" name="reset" id="reset" class="btn btn-danger"/>
-                            <?php
-                            if ($per_bills == 1 || $per_bills == "1") {
-                                ?>
-                            <a href="bill_pin.php" class="btn btn-warning">change transaction password</a>
-                            <?php
-                            }
-                            ?>
-                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+
+
+                 <div class="card">
+                    <!-- <div class="card-header card-header-primary">
+                        <h4 class="card-title ">Feedback</h4>
+                  
+                    </div> -->
+                    <div class="card-body">
+                        <div class="mt-3">
+                          <form method="post">
+                            <legend>Feedback:</legend>
+                            
+                                <div class="mt-3">
+                                    <label class = "bmd-label-floating">Complaint Type</label>
+                                    <select name="religion" class="form-control" id="religion">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                                <div class="mt-3">
+                                    <label class = "bmd-label-floating">Complaint Message</label>
+                                    <textarea value="" name="" class="form-control" required></textarea>
+                                </div>
+                           
+                            <input type="submit" value="Submit" name="submit" id="submit" class="btn btn-primary mt-3"/>
+                           
+                            <!-- <div class="clearfix"></div> -->
                           </form>
-                      </div>
-                  </div>
+                        </div>
+                    </div>
+                 </div>
+
                 </div>
               </div>
             </div>
