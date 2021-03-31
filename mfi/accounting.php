@@ -80,7 +80,7 @@ $destination = "../index.php";
                   <p class="card-description">
                   Reconciliation of Bank
                   </p>
-                  <a href="#" class="btn btn-white btn-round">View</a>
+                  <a href="bank_reconciliaition.php" class="btn btn-white btn-round">View</a>
                   </div>
               </div>
             </div>
