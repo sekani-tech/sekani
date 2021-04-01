@@ -48,9 +48,9 @@ if (isset($_GET["view31"])) {
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="rtable display nowrap" style="width:100%">
-                      <thead class=" text-primary">
-                        <?php
+                  <table id="ftd" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                            <?php
                         $getParentID = mysqli_query($connection, "SELECT parent_id FROM `branch` WHERE int_id = $sessint_id AND id = $br_id");
                         while ($result = mysqli_fetch_array($getParentID)) {
                             $parent_id = $result['parent_id'];
@@ -64,34 +64,23 @@ if (isset($_GET["view31"])) {
                             $result = mysqli_query($connection, $query);
                         }
                         ?>
-                        <th>
-                          First Name
-                        </th>
-                        <th>
-                          Last Name
-                        </th>
-                        <th>
-                          Client Type
-                        </th>
-                        <th>
-                          Account Type
-                        </th>
-                        <th>
-                          Account Number
-                        </th>
-                        <th>
-                          Account Balance
-                        </th>
-                      </thead>
-                      <tbody>
-                      <?php 
+                                <tr>
+                                    <th>Display Name</th>
+                                    <th>Client Type</th>
+                                    <th>Account Type</th>
+                                    <th>Account Number</th>
+                                    <th>Account Balance</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php 
                         if (mysqli_num_rows($result) > 0) {
                           while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
-                            <tr>
-                              <th><?php echo $row["firstname"]; ?></th>
-                              <th><?php echo $row["lastname"]; ?></th>
-                              <th><?php echo strtoupper($row["client_type"])?></th>
-                              <?php
+                            
+                                <td><?php echo $row["firstname"]; + $row["lastname"]; ?> </td>
+                                <td><?php echo strtoupper($row["client_type"])?></td>
+                                <?php
                                 $prod = $row["product_id"];
                                 $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$prod'");
                                 if (count([$spn])) {
@@ -99,16 +88,17 @@ if (isset($_GET["view31"])) {
                                   $savings_product = $d["name"];
                                 }
                               ?>
-                              <th><?php echo $savings_product; ?></th>
-                              <th><?php echo $row["account_no"]; ?></th>
-                              <th><?php echo $row["account_balance_derived"]; ?></th>
-                            </tr>
-                      <?php 
+                                <td><?php echo $savings_product; ?></td>
+                                <td><?php echo $row["account_no"]; ?></td>
+                                <td><?php echo $row["account_balance_derived"]; ?></td>
+                                <td> <a href="ftd_schedule.php"><button type="button" class="btn btn-info">View</button></a> </td>
+                              </tr> 
+                              <?php 
                           }
                         }
                       ?>
-                      </tbody>
-                    </table>
+                            </tbody>
+                  </table>
                   </div>
 
                   <div class="form-group mt-4">
@@ -124,7 +114,11 @@ if (isset($_GET["view31"])) {
           </div>
         </div>
       </div>
-
+      <script>
+         $(document).ready(function() {
+        $('#ftd').DataTable();
+    });
+        </script>
 <?php
 }
  else if (isset($_GET["view42"])) {
