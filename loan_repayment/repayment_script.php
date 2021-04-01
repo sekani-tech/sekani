@@ -21,7 +21,7 @@ if (mysqli_num_rows($select_loan_client) > 0) {
         $loan_account = mysqli_query($connection, "SELECT * FROM account WHERE account_no = '$account_no' AND client_id = '$collection_client_id' AND int_id = '$int_id'");
         $u = mysqli_fetch_array($loan_account);
         $account_balance = $row['account_balance_derived'];
-        if ($account_balance <= 0) {
+        if ($account_balance > 0) {
             // Query the Loan Repayment Schedule Table
             $select_loan_repayment = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE ((loan_id = '$loan_id' AND client_id = '$client_id') AND (int_id = '$int_id' AND (installment > 0) AND (duedate <= '$sch_date'))) ORDER BY id ASC LIMIT 1");
             // Display data if exist
