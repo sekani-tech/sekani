@@ -66,7 +66,7 @@ include("header.php");
                                         <p class="category"></p>
                                     </div>
                                     <div class="card-body">
-                                        <form action="bulkWork/upload/client.php" method="post" enctype="multipart/form-data">
+                                        <form action="../functions/migrate/clients_and_accounts.php" method="post" enctype="multipart/form-data">
                                             <div class="input-group">
                                                 <input type="file" name="clientData" class="form-control inputFileVisible">
                                                 <span class="input-group-btn">
@@ -207,15 +207,16 @@ include("header.php");
                                     </div>
                                     <div class="card-body">
 
-
+                                    <form action="../functions/migrate/clients_and_accounts.php" method="post" enctype="multipart/form-data">
                                         <div class="input-group">
-                                            <input type="file" class="form-control inputFileVisible" placeholder="Single File">
+                                            <input type="file" name="AccountTransactionData" class="form-control inputFileVisible" placeholder="Single File">
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-fab btn-round btn-primary">
+                                                <button type="button" name="SubmitAccountTransaction" class="btn btn-fab btn-round btn-primary">
                                                     <i class="material-icons">send</i>
                                                 </button>
                                             </span>
                                         </div>
+                                    </form>
                                     </div>
                                 </div>
                             </div>
