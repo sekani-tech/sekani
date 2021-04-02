@@ -1,20 +1,4 @@
-<h2>Import Excel File into MySQL Database using PHP</h2>
-    
-    <div class="outer-container">
-        <form action="" method="post"
-            name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
-            <div>
-        <label>Choose Excel
-                    File</label> <input type="file" name="file"
-                    id="file" accept=".xls,.xlsx">
-                <button type="submit" id="submit" name="submit"
-                    class="btn-submit">Import</button>
-            </div>
-        </form>
-        
-    </div>
-    <div id="response" class="<?php if(!empty($type)) { echo $type . " display-block"; } ?>"><?php if(!empty($message)) { echo $message; } ?></div>
-    <?php
+<?php
 include('../../functions/connect.php');
 session_start();
 
@@ -28,13 +12,13 @@ try {
     $randms = str_pad(random_int(0, (10 ** $digit) - 1), 7, '0', STR_PAD_LEFT);
 } catch (Exception $e) {
 }
-if (isset($_POST['submit'])) {
+if (isset($_POST['submitClient'])) {
 
     
 
 
 //    check for excel file submitted
-    if ($_FILES["file"]["name"] !== '') {
+    if ($_FILES["clientData"]["name"] !== '') {
         $allowed_extension = array('xls', 'csv', 'xlsx');
         $file_array = explode(".", $_FILES["file"]["name"]);
         $file_extension = end($file_array);
@@ -42,7 +26,7 @@ if (isset($_POST['submit'])) {
         if (in_array($file_extension, $allowed_extension)) {
             try {
                 $file_name = time() . '.' . $file_extension;
-                move_uploaded_file($_FILES['file']['tmp_name'], $file_name);
+                move_uploaded_file($_FILES['clientData']['tmp_name'], $file_name);
                 $file_type = IOFactory::identify($file_name);
                 $reader = IOFactory::createReader($file_type);
                 $spreadsheet = $reader->load($file_name);
