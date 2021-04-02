@@ -95,7 +95,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
     $totalcd = number_format($tcp, 2);
 
     // Closing Balance
-    $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id DESC LIMIT 1");
+    $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date  DESC LIMIT 1");
     $rerc = mysqli_fetch_array($result);
     $closing_bal = $rerc['running_balance_derived'];
   }
