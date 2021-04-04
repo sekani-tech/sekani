@@ -541,8 +541,6 @@ $overdue_interest = $wtyx["overdue_interest"];
                         $cm = mysqli_fetch_array($query_client);
                         $firstname = strtoupper($cm["firstname"]." ".$cm["lastname"]);
                         $account_no = $x["account_no"];
-                        $outstanding = $x['total_outstanding_derived'];
-                        $outstanding = number_format(round($outstanding), 2);
                     
                         $sum_tot = mysqli_query($connection, "SELECT SUM(principal_amount) AS prin_sum FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND loan_id = '$loan_id'");
                         $sum_tott = mysqli_query($connection, "SELECT SUM(interest_amount) AS int_sum FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND loan_id = '$loan_id'");
@@ -566,7 +564,7 @@ $overdue_interest = $wtyx["overdue_interest"];
                         <h6 class="card-category text-gray">Account Number: <?php echo $account_no; ?></h6>
                     </div>
                     <div class="card-footer justify-content-center">
-                        <b>  Loan Outstanding Balance: <?php echo "₦ " .$outstanding; ?> </b>
+                        <b>  Loan Outstanding Balance: <?php echo "₦ " .number_format(round($duebalance), 2); ?> </b>
                     </div>
                 </div>
                 <!-- end new card profile -->
@@ -624,7 +622,7 @@ $overdue_interest = $wtyx["overdue_interest"];
                           <td><?php echo $inst; ?></td>
                           <td><?php echo "₦ ".number_format(round($duebalance), 2); ?></td>
                           <td>
-                          <div class="btn-group">
+                            <div class="btn-group">
                               <?php
                               $current_date = date('Y-m-d');
                               if ($row["installment"] <= 0) {
@@ -633,14 +631,14 @@ $overdue_interest = $wtyx["overdue_interest"];
                                   $option = "";
                               }
                               ?>
-                            <button <?php echo $option; ?> onclick="location.href='loan_single_repayment.php?id=<?php echo $row['id'] ?>'" class="btn btn-secondary">Edit</button>
-                            <button type="button" <?php echo $option; ?> class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                                    <div class="dropdown-menu">
-                                      <a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg">Delete</a>
-                                    </div>
-                                  </div> 
+                              <button <?php echo $option; ?> onclick="location.href='loan_single_repayment.php?id=<?php echo $row['id'] ?>'" class="btn btn-secondary">Edit</button>
+                              <button type="button" <?php echo $option; ?> class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="sr-only">Toggle Dropdown</span>
+                              </button>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg">Delete</a>
+                              </div>
+                            </div> 
                           </td>                         
                         </tr>
                         <tr>
