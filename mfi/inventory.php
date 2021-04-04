@@ -196,8 +196,20 @@ if(isset($_SESSION['success'])) {
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        <label class="bmd-label-floating" for="">Type:</label>
+                                        <select name="is_book" class="form-control" id="is_book" required>
+                                            <option value="">select an option</option>
+                                            <option value="1">Cheque Book</option>
+                                            <option value="2">Pass Book</option>
+                                            <option value="0">None of the above</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
                                         <label class="bmd-label-floating" for="">Charge:</label>
                                         <input type="text" name="charge" id="charge" class="form-control" required>
+                                        <input type="hidden" name="charge_id" id="charge_id">
                                         <span id="chargeList"></span>
                                     </div>
                                 </div>
@@ -322,6 +334,9 @@ if(isset($_SESSION['success'])) {
                             $('#quantity').val('');
                             $('#unit').val('');
                             $('#total').val('');
+                            $('#is_book').val('');
+                            $('#charge').val('');
+                            $('#charge_id').val('');
                         }
                     });
                 } 
@@ -347,6 +362,9 @@ if(isset($_SESSION['success'])) {
                         $('#quantity').val(data.quantity);
                         $('#unit').val(data.unit_price);
                         $('#total').val(data.total_price);
+                        $('#is_book').val(data.is_book);
+                        $('#charge').val(data.charge);
+                        $('#charge_id').val(data.charge_id);
                     } 
                 });
             });
@@ -358,7 +376,7 @@ if(isset($_SESSION['success'])) {
                     $.ajax({  
                         url:"ajax_post/charges_search.php",  
                         method:"POST",
-                        data:{charge:charge},  
+                        data:{charge_name:charge},  
                         success:function(data)  
                         {  
                             $('#chargeList').fadeIn();  
@@ -370,10 +388,21 @@ if(isset($_SESSION['success'])) {
                     $('#chargeList').fadeOut();
                 }
             });
-
-            $(document).on('click', '.charge-list-item', function(){  
+            
+            $(document).on('click', '.charge-item', function(){  
                 $('#charge').val($(this).text());  
                 $('#chargeList').fadeOut();
+
+                var charge = $(this).text();
+                $.ajax({  
+                    url:"ajax_post/charges_search.php",  
+                    method:"POST",
+                    data:{charge_selected:charge},
+                    success:function(data)  
+                    {
+                        $('#charge_id').val(data);
+                    }
+                });
             });
 
             $('#item').focus(function() { 

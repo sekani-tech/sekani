@@ -12,21 +12,20 @@
     $quantity = trim($_POST['quantity']);
     $unit = trim($_POST['price']);
     $total = $_POST['total'];
-    $charge = trim($_POST['charge']);
+    $charge_id = $_POST['charge_id'];
+    $is_book = $_POST['is_book'];
 
     $query = "SELECT * FROM inventory WHERE item = '$item'";  
     $result = mysqli_query($connection, $query);
 
     if(mysqli_num_rows($result) < 1)  {
-        $query = "SELECT id FROM charge WHERE name = '{$charge}'";
+        $query = "SELECT name FROM charge WHERE id = '{$charge_id}'";
         $result = mysqli_query($connection, $query);
 
         if(mysqli_num_rows($result) == 1) {
-            $charge = mysqli_fetch_array($result);
-            $charge_id = $charge["id"];
 
-            $addInventoryQuery = "INSERT INTO inventory(int_id, branch_id, transaction_id, date, item, quantity, unit_price, total_price, charge_id)
-            VALUES('{$int_id}', '{$branch_id}', '{$transaction_id}', '{$date}', '{$item}', '{$quantity}', '{$unit}', '{$total}', '{$charge_id}') ";
+            $addInventoryQuery = "INSERT INTO inventory(int_id, branch_id, item, is_book, date, transaction_id, quantity, unit_price, total_price, charge_id)
+            VALUES('{$int_id}', '{$branch_id}', '{$item}', '{$is_book}', '{$date}', '{$transaction_id}', '{$quantity}', '{$unit}', '{$total}', '{$charge_id}') ";
             $addInventory = mysqli_query($connection, $addInventoryQuery);
 
             if($addInventory) {
@@ -50,22 +49,18 @@
                 $URL = "../inventory.php";
                 echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
             }
-
         } else {
-            $_SESSION['error'] = "Charge Type Does Not Exist";
+            $_SESSION['error'] = "Charge Does Not Exist";
             $URL = "../inventory.php";
             echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-        }      
+        }
         
     } else {
-        $query = "SELECT id FROM charge WHERE name = '{$charge}'";
+        $query = "SELECT name FROM charge WHERE id = '{$charge_id}'";
         $result = mysqli_query($connection, $query);
 
         if(mysqli_num_rows($result) == 1) {
-            $charge = mysqli_fetch_array($result);
-            $charge_id = $charge["id"];
-
-            $updateInventoryQuery = "UPDATE inventory SET quantity = '$quantity', unit_price = '$unit', 
+            $updateInventoryQuery = "UPDATE inventory SET is_book = '$is_book', quantity = '$quantity', unit_price = '$unit', 
                                     total_price = '$total', charge_id = '$charge_id' WHERE item = '$item'";
             $updateInventory = mysqli_query($connection, $updateInventoryQuery);
 
@@ -87,7 +82,7 @@
                 }
             }
         } else {
-            $_SESSION['error'] = "Charge Type Does Not Exist";
+            $_SESSION['error'] = "Charge Does Not Exist";
             $URL = "../inventory.php";
             echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
         }

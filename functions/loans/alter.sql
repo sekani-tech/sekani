@@ -108,3 +108,34 @@ COMMIT;
 ALTER TABLE `wallet_transaction_cache` ADD `description` LONGTEXT NOT NULL AFTER `wallet_type`;
 
 ALTER TABLE `asset_type` CHANGE `total_amount` `gl_code` BIGINT(20) NULL;
+
+-- change on inventory table
+ALTER TABLE `inventory` ADD `is_book` INT(1) NOT NULL AFTER `item`;
+
+-- drop chq_book table
+DROP TABLE `chq_book`;
+
+--
+-- Table structure for table `inventory_posting`
+--
+
+CREATE TABLE `inventory_posting` (
+  `id` int(100) NOT NULL,
+  `int_id` int(100) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `branch_id` int(20) NOT NULL,
+  `account_no` varchar(20) NOT NULL,
+  `book_type` varchar(60) NOT NULL,
+  `leaves_no` varchar(30) NOT NULL,
+  `range_amount` varchar(20) NOT NULL,
+  `charge_applied` int(60) NOT NULL,
+  `date` date NOT NULL,
+  `status` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `inventory_posting`
+  ADD PRIMARY KEY (`id`);
+  
+ALTER TABLE `inventory_posting`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
