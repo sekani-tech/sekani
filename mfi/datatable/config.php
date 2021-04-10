@@ -2,7 +2,7 @@
 
 $host = "localhost"; /* Host name */
 $user = "sekanisy"; /* User */
-$password = "4rWY#JP+rnl67"; /* Password */
+$password = "4r6WY#JP+rnl67"; /* Password */
 $dbname = "sekanisy_admin"; /* Database name */
 
 $con = mysqli_connect($host, $user, $password,$dbname);
