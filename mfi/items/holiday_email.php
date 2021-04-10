@@ -17,7 +17,7 @@
 	</style>
 </head>
 
-<form action="" id="holiday-email">
+<form action="Email_campaign_holiday" id="holiday-email">
 
   <div class="form-group">
     <label for="">Campaign Name</label>
@@ -29,9 +29,15 @@
       <div class="form-group">
         <label class="bmd-label-floating">Gender Group</label><br />
         <select name="gender" class="form-control" id="gender">
+<<<<<<< HEAD
+          <option value="">All</option>
+		  <option value="">Male</option>
+		  <option value="">Female</option>
+=======
           <option value="all">All</option>
 		  <option value="male">Male</option>
 		  <option value="male">Female</option>
+>>>>>>> bcbea98473ee5bf5566af9ead1558314dd8c1b51
         </select>
       </div>
     </div>
@@ -70,15 +76,18 @@
     <textarea id="textArea1" class="text-area"></textarea>
   </div>
 
-
-
-
   <!-- button to preview email -->
   <!-- <button type="button" id="preview" class="btn btn-primary">Preview</button> -->
 
   <!-- submit button -->
   <button type="submit" id="send-mail" class="btn btn-primary">Send</button>
 </form>
+
+<?php
+//include("email_campaign_holiday.php");
+?>
+
+
 
 
 <!-- Modal -->
