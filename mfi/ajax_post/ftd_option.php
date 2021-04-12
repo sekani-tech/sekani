@@ -31,7 +31,7 @@ if(isset($_POST['id'])){
       $inmul_term = "Years";
     }
 
-    if($autore == '2'){
+    if($autore == '0'){
       $dssdw = "No";
     }
     else if($autore == '1'){
@@ -168,8 +168,7 @@ if(isset($_POST['id'])){
         <div class="form-group">
           <label for="additionalCharges" >Auto Renew on maturity</label>
           <select class="form-control" name="auto_renew" required>
-            <option hidden value="'.$autore.'">No</option>
-            <option value="2">No</option>
+            <option value="0">No</option>
             <option value="1">Yes</option>
           </select>
         </div>
