@@ -2,28 +2,26 @@
 
 $page_title = "Fixed Deposits";
 $destination = "report_current.php";
-include("header.php");
+    include("header.php");
 
-function branch_opt($connection)
-{  
-    $br_id = $_SESSION["branch_id"];
-    $sint_id = $_SESSION["int_id"];
-    $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
-    $dof = mysqli_query($connection, $dff);
-    $out = '';
-    while ($row = mysqli_fetch_array($dof))
-    {
-      $do = $row['id'];
-      $out .= " OR client.branch_id ='$do'";
-    }
+  function branch_opt($connection)
+  {  
+      $br_id = $_SESSION["branch_id"];
+      $sint_id = $_SESSION["int_id"];
+      $dff = "SELECT * FROM branch WHERE int_id ='$sint_id' AND id = '$br_id' || parent_id = '$br_id'";
+      $dof = mysqli_query($connection, $dff);
+      $out = '';
+      while ($row = mysqli_fetch_array($dof))
+      {
+        $do = $row['id'];
+        $out .= " OR client.branch_id ='$do'";
+      }
+      return $out;
+  }
+  $br_id = $_SESSION["branch_id"];
+  $branches = branch_opt($connection);
 
-    return $out;
-}
-
-$br_id = $_SESSION["branch_id"];
-$branches = branch_opt($connection);
-
-if (isset($_GET["view31"])) {
+ if (isset($_GET["view31"])) {
 ?>
 <!-- Content added here -->
 <div class="content">
@@ -36,89 +34,84 @@ if (isset($_GET["view31"])) {
                   <h4 class="card-title ">Fixed Deposit Accounts</h4>
                   <!-- Insert number users institutions -->
                   <p class="card-category">
-                      <?php
-                        $querys = "SELECT * FROM `ftd_booking_account` WHERE int_id = '$sessint_id' AND status = 'Approved'";
-                        $result = mysqli_query($connection, $querys);
-                      if ($result) {
-                        $inr = mysqli_num_rows($result);
-                        echo $inr;
-                        }
-                      ?> FTD Account(s)
-                   </p>
+                    <?php
+                    $querys = "SELECT * FROM `ftd_booking_account` WHERE int_id = '$sessint_id' AND status = 'Approved'";
+                    $result = mysqli_query($connection, $querys);
+                    if ($result) {
+                      $inr = mysqli_num_rows($result);
+                      echo $inr;
+                    }
+                    ?> FTD Account(s)
+                  </p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                  <table id="ftd" class="table table-striped table-bordered" style="width:100%">
-                            <thead>
-                            <?php
+                    <table id="ftd" class="table table-striped table-bordered" style="width:100%">
+                      <thead>
+                        <?php
                         $getParentID = mysqli_query($connection, "SELECT parent_id FROM `branch` WHERE int_id = $sessint_id AND id = $br_id");
                         while ($result = mysqli_fetch_array($getParentID)) {
                             $parent_id = $result['parent_id'];
                         }
 
                         if ($parent_id == 0) {
-                            $query = "SELECT c.firstname, c.lastname, c.client_type, f.product_id, f.account_no, a.account_balance_derived FROM ftd_booking_account f JOIN client c ON f.client_id = c.id JOIN account a ON c.id = a.client_id WHERE f.int_id = '$sessint_id' AND f.status = 'Approved' ORDER BY c.firstname ASC";
+                            $query = "SELECT c.firstname, c.lastname, c.client_type, f.id, f.product_id, f.account_no, a.account_balance_derived FROM ftd_booking_account f JOIN client c ON f.client_id = c.id JOIN account a ON c.id = a.client_id WHERE f.int_id = '$sessint_id' AND f.status = 'Approved' ORDER BY c.firstname ASC";
                             $result = mysqli_query($connection, $query);
                         } else {
-                            $query = "SELECT c.firstname, c.lastname, c.client_type, f.product_id, f.account_no, a.account_balance_derived FROM ftd_booking_account f JOIN client c ON f.client_id = c.id JOIN account a ON c.id = a.client_id WHERE f.int_id = '$sessint_id' AND f.branch_id = '$br_id' AND f.status = 'Approved' ORDER BY c.firstname ASC";
+                            $query = "SELECT c.firstname, c.lastname, c.client_type, f.id, f.product_id, f.account_no, a.account_balance_derived FROM ftd_booking_account f JOIN client c ON f.client_id = c.id JOIN account a ON c.id = a.client_id WHERE f.int_id = '$sessint_id' AND f.branch_id = '$br_id' AND f.status = 'Approved' ORDER BY c.firstname ASC";
                             $result = mysqli_query($connection, $query);
                         }
                         ?>
-                                <tr>
-                                    <th>Display Name</th>
-                                    <th>Client Type</th>
-                                    <th>Account Type</th>
-                                    <th>Account Number</th>
-                                    <th>Account Balance</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <?php 
+                        <tr>
+                          <th>Display Name</th>
+                          <th>Client Type</th>
+                          <th>Account Type</th>
+                          <th>Account Number</th>
+                          <th>Account Balance</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php 
                         if (mysqli_num_rows($result) > 0) {
                           while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
-                            
-                                <td><?php echo $row["firstname"]; + $row["lastname"]; ?> </td>
-                                <td><?php echo strtoupper($row["client_type"])?></td>
-                                <?php
-                                $prod = $row["product_id"];
-                                $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$prod'");
-                                if (count([$spn])) {
-                                  $d = mysqli_fetch_array($spn);
-                                  $savings_product = $d["name"];
-                                }
-                              ?>
-                                <td><?php echo $savings_product; ?></td>
-                                <td><?php echo $row["account_no"]; ?></td>
-                                <td><?php echo $row["account_balance_derived"]; ?></td>
-                                <td> <a href="ftd_schedule.php"><button type="button" class="btn btn-info">View</button></a> </td>
-                              </tr> 
-                              <?php 
+                            <tr>
+                              <td><?php echo $row["firstname"] . " ". $row["lastname"]; ?></td>
+                              <td><?php echo strtoupper($row["client_type"])?></td>
+                              <?php
+                              $prod = $row["product_id"];
+                              $spn = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$prod'");
+                              if (count([$spn])) {
+                                $d = mysqli_fetch_array($spn);
+                                $savings_product = $d["name"];
+                              }
+                        ?>
+                              <td><?php echo $savings_product; ?></td>
+                              <td><?php echo $row["account_no"]; ?></td>
+                              <td><?php echo $row["account_balance_derived"]; ?></td>
+                              <td><a href="ftd_schedule.php?id=<?php echo $row['id']; ?>"><button type="button" class="btn btn-info">View</button></a></td>
+                            </tr> 
+                        <?php 
                           }
                         }
-                      ?>
-                            </tbody>
-                  </table>
+                        ?>
+                      </tbody>
+                    </table>
                   </div>
 
                   <div class="form-group mt-4">
-                    <form method = "POST" action = "../composer/ftd_account.php">
-                      <input hidden name ="id" type="text" value="<?php echo $id;?>"/>
+                    <form method="POST" action="../composer/ftd_account.php">
+                      <input hidden name="id" type="text" value="<?php echo $id;?>"/>
                       <button type="submit" class="btn btn-primary pull-left">Download PDF</button>
                     </form>
                   </div>
-
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <script>
-         $(document).ready(function() {
-        $('#ftd').DataTable();
-    });
-        </script>
+
 <?php
 }
  else if (isset($_GET["view42"])) {
@@ -128,7 +121,7 @@ if (isset($_GET["view31"])) {
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Current Accounts in Debit</h4>
@@ -148,7 +141,21 @@ if (isset($_GET["view31"])) {
               <input hidden name ="rer" type="text" value="sdsdsd"/>
               <input hidden name ="start" type="text" value="<?php echo $start;?>"/>
               <input hidden name ="end" type="text" value="<?php echo $end;?>"/>
-              <button type="submit" class="btn btn-primary pull-left">Download PDF</button>
+              <button type="submit" id="currentlist" class="btn btn-primary pull-left">Download PDF</button>
+              <script>
+              $(document).ready(function () {
+              $('#currentlist').on("click", function () {
+                swal({
+                    type: "success",
+                    title: "CURRENT ACCOUNT REPORT",
+                    text: "Printing Successful",
+                    showConfirmButton: false,
+                    timer: 5000
+                          
+                  })
+              });
+            });
+     </script>
             </form>
                 </div>
                   <div class="table-responsive">
