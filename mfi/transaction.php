@@ -160,6 +160,20 @@ include("header.php");
         <div class="card card-pricing bg-primary">
           <div class="card-body ">
 
+            <h4 class="card-title">GL Transactions</h4>
+            <p class="card-description">
+              Perform GL transactions - Income and Liabilty Posting
+            </p>
+            <a href="gl_postings.php" class="btn btn-white btn-round">View</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 ml-auto mr-auto">
+
+        <div class="card card-pricing bg-primary">
+          <div class="card-body ">
+
             <h4 class="card-title">Group Deposit</h4>
             <p class="card-description">
               Make deposits or withdrawal for group accounts
