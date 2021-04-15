@@ -725,7 +725,7 @@ if ($per_con == 1 || $per_con == "1") {
                                         <table class="rtable display nowrap" style="width:100%">
                                             <thead class=" text-primary">
                                                 <th>
-                                                    Id
+                                                    Shares Name
                                                 </th>
                                                 <th>
                                                     Available Shares
@@ -742,9 +742,16 @@ if ($per_con == 1 || $per_con == "1") {
                                                 <th>
                                                     GL Code
                                                 </th>
-                                                <th>View</th>
+                                                <th>Action</th>
                                             </thead>
                                             <tbody>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><button type="button" class="btn btn-info">View</button></td>
                                             </tbody>
                                         </table>
                                     </div>

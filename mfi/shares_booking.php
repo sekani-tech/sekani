@@ -23,7 +23,7 @@ include("header.php");
                                         <label class="bmd-label-floating">Shares Product:</label>
                                         <select name="s_product" id="sav_prod_id" class="form-control">
                                             <option value="">select an option</option>
-                                           
+
                                             <option value="">select an option</option>
                                         </select>
                                     </div>
@@ -35,9 +35,9 @@ include("header.php");
                                     </div>
                                 </div>
 
-                               
+
                                 <div class="row" id="ddjf"><br>
-                                   
+
 
                                     <div class="col-md-4">
                                         <div class="form-group">
@@ -60,7 +60,7 @@ include("header.php");
                                             <input type="date" id="repay" class="form-control" name="date">
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Linked Savings account:</label>
@@ -78,9 +78,12 @@ include("header.php");
                                                 <option value="106">PHILIP</option>
                                             </select>
                                         </div>
-                                    </div>                                  
+                                    </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary pull-right">Book Share</button>
+                                <div style="float:right;">
+                                    <button class="btn btn-primary pull-right" type="button" id="">Submit</button>
+
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -89,7 +92,7 @@ include("header.php");
         </div>
     </div>
 </div>
-</div>
+
 
 
 <?php
