@@ -18,8 +18,8 @@ if (isset($_GET["message"])) {
             type: "success",
             title: "Success",
             text: "Transaction Successful",
-            showConfirmButton: false,
-            timer: 2000
+            showConfirmButton: True,
+            timer: 7000
         })
     });
     </script>
@@ -34,11 +34,11 @@ if (isset($_GET["message"])) {
         echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
-          type: "success",
-          title: "Success",
-          text: "Awaiting Approval",
-          showConfirmButton: false,
-          timer: 2000
+          type: "error",
+          title: "Error",
+          text: "Transaction Successful - Error storing record for expense GL! Contact Support",
+          showConfirmButton: true,
+          timer: 7000
       })
   });
   </script>
@@ -55,36 +55,36 @@ if (isset($_GET["message"])) {
         swal({
             type: "error",
             title: "Error",
-            text: "Transaction Error",
-            showConfirmButton: false,
-            timer: 2000
+            text: "Transaction Successful - Error storing record for Income GL! Contact Support",
+            showConfirmButton: True,
+            timer: 7000
         })
     });
     </script>
     ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-} else if (isset($_GET["messagep"])) {
-    $key = $_GET["messagep"];
+} else if (isset($_GET["message3"])) {
+    $key = $_GET["messag3"];
     // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
     if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
         echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
-          type: "success",
-          title: "Deposit",
-          text: "Transaction Successful, Awaiting Approval",
-          showConfirmButton: false,
-          timer: 2000
+          type: "Error",
+          title: "Expense Error",
+          text: "Insufficient Fund in chossen Income GL",
+          showConfirmButton: true,
+          timer: 7000
       })
   });
   </script>
   ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-} else if (isset($_GET["messagex2"])) {
-    $key = $_GET["messagex2"];
+} else if (isset($_GET["message4"])) {
+    $key = $_GET["message4"];
     // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
     if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
@@ -93,17 +93,17 @@ if (isset($_GET["message"])) {
       swal({
           type: "error",
           title: "NOT AUTHURIZED",
-          text: "This is a Tellers Job",
-          showConfirmButton: false,
-          timer: 2000
+          text: "Kindly provide all Neccessary Information",
+          showConfirmButton: true,
+          timer: 7000
       })
   });
   </script>
   ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-} else if (isset($_GET["message3"])) {
-    $key = $_GET["message3"];
+} else if (isset($_GET["message3p"])) {
+    $key = $_GET["message3p"];
     // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
     if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
@@ -311,7 +311,7 @@ if (isset($_GET["message"])) {
   ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-}else if (isset($_GET["income5"])) {
+} else if (isset($_GET["income5"])) {
     $key = $_GET["income5"];
     // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
@@ -330,7 +330,7 @@ if (isset($_GET["message"])) {
   ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-}else if (isset($_GET["income6"])) {
+} else if (isset($_GET["income6"])) {
     $key = $_GET["income6"];
     // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
@@ -349,7 +349,7 @@ if (isset($_GET["message"])) {
   ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-}else if (isset($_GET["income7"])) {
+} else if (isset($_GET["income7"])) {
     $key = $_GET["income7"];
     // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
