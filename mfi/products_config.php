@@ -70,7 +70,7 @@ if (isset($_GET["message3"])) {
     }
 } else if (isset($_GET["message4"])) {
     $key = $_GET["message4"];
-// $out = $_SESSION["lack_of_intfund_$key"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
     if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
         echo '<script type="text/javascript">
@@ -220,7 +220,8 @@ $(document).ready(function(){
               ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-} if (isset($_GET["messageFTD3"])) {
+}
+if (isset($_GET["messageFTD3"])) {
     $key = $_GET["messageFTD3"];
     $tt = 0;
     if ($tt !== $key) {
@@ -252,7 +253,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $desc = $_POST['des'];
         $default = $_POST['default'];
         $gl_code = $_POST['gl_code'];
-
     }
     if (isset($_POST['is_bank'])) {
         $is_bank = 1;
@@ -306,7 +306,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // $role_id = $role['id'];
 
 if ($per_con == 1 || $per_con == "1") {
-    ?>
+?>
     <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -357,6 +357,12 @@ if ($per_con == 1 || $per_con == "1") {
                                             </a>
                                         </li>
                                         <li class="nav-item">
+                                            <a class="nav-link" href="#shares" data-toggle="tab">
+                                                <i class="material-icons">autorenew</i> Shares Product
+                                                <div class="ripple-container"></div>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
                                             <a class="nav-link" href="#credit" data-toggle="tab">
                                                 <i class="material-icons">find_in_page</i> Credit Check
                                                 <div class="ripple-container"></div>
@@ -398,40 +404,39 @@ if ($per_con == 1 || $per_con == "1") {
 
                                         <table class="rtable display nowrap" style="width:100%">
                                             <thead class=" text-primary">
-                                            <?php
-                                            $query = "SELECT * FROM product WHERE int_id ='$sessint_id'";
-                                            $result = mysqli_query($connection, $query);
-                                            ?>
-                                            <!-- <th>
+                                                <?php
+                                                $query = "SELECT * FROM product WHERE int_id ='$sessint_id'";
+                                                $result = mysqli_query($connection, $query);
+                                                ?>
+                                                <!-- <th>
                                               ID
                                             </th> -->
-                                            <th>Name</th>
-                                            <th>
-                                                Description
-                                            </th>
-                                            <th>
-                                                Product Group
-                                            </th>
-                                            <th>
-                                                Edit
-                                            </th>
+                                                <th>Name</th>
+                                                <th>
+                                                    Description
+                                                </th>
+                                                <th>
+                                                    Product Group
+                                                </th>
+                                                <th>
+                                                    Edit
+                                                </th>
                                             </thead>
                                             <tbody>
-                                            <?php if (mysqli_num_rows($result) > 0) {
-                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-                                                    <tr>
-                                                        <?php $row["id"]; ?>
-                                                        <th><?php echo $row["name"]; ?></th>
-                                                        <th><?php echo $row["description"]; ?></th>
-                                                        <th><?php echo $row["short_name"]; ?></th>
-                                                        <td><a href="update_product.php?edit=<?php echo $row["id"]; ?>"
-                                                               class="btn btn-info">Edit</a></td>
-                                                    </tr>
+                                                <?php if (mysqli_num_rows($result) > 0) {
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
+                                                        <tr>
+                                                            <?php $row["id"]; ?>
+                                                            <th><?php echo $row["name"]; ?></th>
+                                                            <th><?php echo $row["description"]; ?></th>
+                                                            <th><?php echo $row["short_name"]; ?></th>
+                                                            <td><a href="update_product.php?edit=<?php echo $row["id"]; ?>" class="btn btn-info">Edit</a></td>
+                                                        </tr>
                                                 <?php }
-                                            } else {
-                                                // echo "0 Document";
-                                            }
-                                            ?>
+                                                } else {
+                                                    // echo "0 Document";
+                                                }
+                                                ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -442,49 +447,49 @@ if ($per_con == 1 || $per_con == "1") {
 
                                         <table class="rtable display nowrap" style="width:100%">
                                             <thead class=" text-primary">
-                                            <?php
-                                            $query = "SELECT * FROM savings_product WHERE int_id ='$sessint_id' AND (accounting_type = '1' OR accounting_type = '2')";
-                                            $result = mysqli_query($connection, $query);
-                                            ?>
-                                            <!-- <th>
+                                                <?php
+                                                $query = "SELECT * FROM savings_product WHERE int_id ='$sessint_id' AND (accounting_type = '1' OR accounting_type = '2')";
+                                                $result = mysqli_query($connection, $query);
+                                                ?>
+                                                <!-- <th>
                                               ID
                                             </th> -->
-                                            <th>Name</th>
-                                            <th>
-                                                Description
-                                            </th>
-                                            <th>
-                                                Product Group
-                                            </th>
-                                            <th>
-                                                Edit
-                                            </th>
+                                                <th>Name</th>
+                                                <th>
+                                                    Description
+                                                </th>
+                                                <th>
+                                                    Product Group
+                                                </th>
+                                                <th>
+                                                    Edit
+                                                </th>
                                             </thead>
                                             <tbody>
-                                            <?php if (mysqli_num_rows($result) > 0) {
-                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-                                                    <tr>
-                                                        <?php $row["id"]; ?>
-                                                        <th><?php echo $row["name"]; ?></th>
-                                                        <th><?php echo $row["description"]; ?></th>
-                                                        <?php
-                                                        $fefo = $row["accounting_type"];
-                                                        if ($fefo == 1) {
-                                                            $dfo = "Current";
-                                                        } else if ($fefo == 2) {
-                                                            $dfo = "Savings";
-                                                        }
-                                                        ?>
-                                                        <th><?php echo $dfo; ?></th>
-                                                        <td>
-                                                            <a href="update_savings_product.php?edit=<?php echo $row["id"]; ?>"
-                                                               class="btn btn-info">Edit</a></td>
-                                                    </tr>
+                                                <?php if (mysqli_num_rows($result) > 0) {
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
+                                                        <tr>
+                                                            <?php $row["id"]; ?>
+                                                            <th><?php echo $row["name"]; ?></th>
+                                                            <th><?php echo $row["description"]; ?></th>
+                                                            <?php
+                                                            $fefo = $row["accounting_type"];
+                                                            if ($fefo == 1) {
+                                                                $dfo = "Current";
+                                                            } else if ($fefo == 2) {
+                                                                $dfo = "Savings";
+                                                            }
+                                                            ?>
+                                                            <th><?php echo $dfo; ?></th>
+                                                            <td>
+                                                                <a href="update_savings_product.php?edit=<?php echo $row["id"]; ?>" class="btn btn-info">Edit</a>
+                                                            </td>
+                                                        </tr>
                                                 <?php }
-                                            } else {
-                                                // echo "0 Document";
-                                            }
-                                            ?>
+                                                } else {
+                                                    // echo "0 Document";
+                                                }
+                                                ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -495,41 +500,41 @@ if ($per_con == 1 || $per_con == "1") {
 
                                         <table class="rtable display nowrap" style="width:100%">
                                             <thead class=" text-primary">
-                                            <?php
-                                            $query = "SELECT * FROM savings_product WHERE int_id ='$sessint_id' AND accounting_type = '3'";
-                                            $result = mysqli_query($connection, $query);
-                                            ?>
-                                            <!-- <th>
+                                                <?php
+                                                $query = "SELECT * FROM savings_product WHERE int_id ='$sessint_id' AND accounting_type = '3'";
+                                                $result = mysqli_query($connection, $query);
+                                                ?>
+                                                <!-- <th>
                                               ID
                                             </th> -->
-                                            <th>Name</th>
-                                            <th>
-                                                Description
-                                            </th>
-                                            <th>
-                                                Product Group
-                                            </th>
-                                            <th>
-                                                Edit
-                                            </th>
+                                                <th>Name</th>
+                                                <th>
+                                                    Description
+                                                </th>
+                                                <th>
+                                                    Product Group
+                                                </th>
+                                                <th>
+                                                    Edit
+                                                </th>
                                             </thead>
                                             <tbody>
-                                            <?php if (mysqli_num_rows($result) > 0) {
-                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-                                                    <tr>
-                                                        <?php $row["id"]; ?>
-                                                        <th><?php echo $row["name"]; ?></th>
-                                                        <th><?php echo $row["description"]; ?></th>
-                                                        <th><?php echo $row["short_name"]; ?></th>
-                                                        <td>
-                                                            <a href="update_ftd_product.php?edit=<?php echo $row["id"]; ?>"
-                                                               class="btn btn-info">Edit</a></td>
-                                                    </tr>
+                                                <?php if (mysqli_num_rows($result) > 0) {
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
+                                                        <tr>
+                                                            <?php $row["id"]; ?>
+                                                            <th><?php echo $row["name"]; ?></th>
+                                                            <th><?php echo $row["description"]; ?></th>
+                                                            <th><?php echo $row["short_name"]; ?></th>
+                                                            <td>
+                                                                <a href="update_ftd_product.php?edit=<?php echo $row["id"]; ?>" class="btn btn-info">Edit</a>
+                                                            </td>
+                                                        </tr>
                                                 <?php }
-                                            } else {
-                                                // echo "0 Document";
-                                            }
-                                            ?>
+                                                } else {
+                                                    // echo "0 Document";
+                                                }
+                                                ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -539,96 +544,95 @@ if ($per_con == 1 || $per_con == "1") {
                                     <a href="create_charge.php" class="btn btn-primary"> Add Charge</a>
                                     <table class="rtable display nowrap" style="width:100%">
                                         <thead class=" text-primary">
-                                        <?php
-                                        $query = "SELECT * FROM `charge` WHERE int_id = '$sessint_id'";
-                                        $result = mysqli_query($connection, $query);
-                                        ?>
-                                        <th>
-                                            Name
-                                        </th>
-                                        <th>
-                                            Product
-                                        </th>
-                                        <th>
-                                            Active
-                                        </th>
-                                        <th>
-                                            Charge Type
-                                        </th>
-                                        <th>
-                                            Amount
-                                        </th>
-                                        <th>View</th>
-                                        <th>Delete</th>
+                                            <?php
+                                            $query = "SELECT * FROM `charge` WHERE int_id = '$sessint_id'";
+                                            $result = mysqli_query($connection, $query);
+                                            ?>
+                                            <th>
+                                                Name
+                                            </th>
+                                            <th>
+                                                Product
+                                            </th>
+                                            <th>
+                                                Active
+                                            </th>
+                                            <th>
+                                                Charge Type
+                                            </th>
+                                            <th>
+                                                Amount
+                                            </th>
+                                            <th>View</th>
+                                            <th>Delete</th>
                                         </thead>
                                         <tbody>
-                                        <?php if (mysqli_num_rows($result) > 0) {
-                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-                                                <tr>
-                                                    <?php $row["id"]; ?>
-                                                    <th><?php echo $row["name"]; ?></th>
-                                                    <?php
-                                                    $me = "";
-                                                    if ($row["charge_applies_to_enum"] == 1) {
-                                                        $me = "Loan";
-                                                    } else if ($row["charge_applies_to_enum"] == 2) {
-                                                        $me = "Savings";
-                                                    } else if ($row["charge_applies_to_enum"] == 3) {
-                                                        $me = "Shares";
-                                                    } else if ($row["charge_applies_to_enum"] == 4) {
-                                                        $me = "Current";
-                                                    }
+                                            <?php if (mysqli_num_rows($result) > 0) {
+                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
+                                                    <tr>
+                                                        <?php $row["id"]; ?>
+                                                        <th><?php echo $row["name"]; ?></th>
+                                                        <?php
+                                                        $me = "";
+                                                        if ($row["charge_applies_to_enum"] == 1) {
+                                                            $me = "Loan";
+                                                        } else if ($row["charge_applies_to_enum"] == 2) {
+                                                            $me = "Savings";
+                                                        } else if ($row["charge_applies_to_enum"] == 3) {
+                                                            $me = "Shares";
+                                                        } else if ($row["charge_applies_to_enum"] == 4) {
+                                                            $me = "Current";
+                                                        }
 
-                                                    if ($row["is_active"] == 1) {
-                                                        $ead = "Active";
-                                                    } else {
-                                                        $ead = "Not Active";
-                                                    }
-                                                    ?>
-                                                    <th><?php echo $me; ?></th>
-                                                    <th><?php echo $ead; ?></th>
-                                                    <?php
-                                                    $xs = "";
-                                                    $me_amt = "";
-                                                    if ($row["charge_calculation_enum"] == 1) {
-                                                        $me_amt = '&#8358; ' . $row["amount"];
-                                                    } else {
-                                                        $me_amt = $row["amount"] . "%";
-                                                    }
-                                                    if ($row["charge_time_enum"] == 1) {
-                                                        $xs = "Disbursement";
-                                                    } else if ($row["charge_time_enum"] == 2) {
-                                                        $xs = "Manual Charge";
-                                                    } else if ($row["charge_time_enum"] == 3) {
-                                                        $xs = "Savings Activiation";
-                                                    } else if ($row["charge_time_enum"] == 5) {
-                                                        $xs = "Deposit Fee";
-                                                    } else if ($row["charge_time_enum"] == 6) {
-                                                        $xs = "Annual Fee";
-                                                    } else if ($row["charge_time_enum"] == 8) {
-                                                        $xs = "Installment Fees";
-                                                    } else if ($row["charge_time_enum"] == 9) {
-                                                        $xs = "Overdue Installment Fee";
-                                                    } else if ($row["charge_time_enum"] == 12) {
-                                                        $xs = "Disbursement - Paid With Repayment";
-                                                    } else if ($row["charge_time_enum"] == 13) {
-                                                        $xs = "Loan Rescheduling Fee";
-                                                    }
-                                                    ?>
-                                                    <th><?php echo $xs; ?></th>
-                                                    <th><?php echo $me_amt; ?></th>
-                                                    <td><a href="charge_edit.php?edit=<?php echo $row["id"]; ?>"
-                                                           class="btn btn-info">View</a></td>
-                                                    <td>
-                                                        <a href="../functions/charge_delete.php?delete=<?php echo $row["id"]; ?>"
-                                                           class="btn btn-danger">Delete</a></td>
-                                                </tr>
+                                                        if ($row["is_active"] == 1) {
+                                                            $ead = "Active";
+                                                        } else {
+                                                            $ead = "Not Active";
+                                                        }
+                                                        ?>
+                                                        <th><?php echo $me; ?></th>
+                                                        <th><?php echo $ead; ?></th>
+                                                        <?php
+                                                        $xs = "";
+                                                        $me_amt = "";
+                                                        if ($row["charge_calculation_enum"] == 1) {
+                                                            $me_amt = '&#8358; ' . $row["amount"];
+                                                        } else {
+                                                            $me_amt = $row["amount"] . "%";
+                                                        }
+                                                        if ($row["charge_time_enum"] == 1) {
+                                                            $xs = "Disbursement";
+                                                        } else if ($row["charge_time_enum"] == 2) {
+                                                            $xs = "Manual Charge";
+                                                        } else if ($row["charge_time_enum"] == 3) {
+                                                            $xs = "Savings Activiation";
+                                                        } else if ($row["charge_time_enum"] == 5) {
+                                                            $xs = "Deposit Fee";
+                                                        } else if ($row["charge_time_enum"] == 6) {
+                                                            $xs = "Annual Fee";
+                                                        } else if ($row["charge_time_enum"] == 8) {
+                                                            $xs = "Installment Fees";
+                                                        } else if ($row["charge_time_enum"] == 9) {
+                                                            $xs = "Overdue Installment Fee";
+                                                        } else if ($row["charge_time_enum"] == 12) {
+                                                            $xs = "Disbursement - Paid With Repayment";
+                                                        } else if ($row["charge_time_enum"] == 13) {
+                                                            $xs = "Loan Rescheduling Fee";
+                                                        }
+                                                        ?>
+                                                        <th><?php echo $xs; ?></th>
+                                                        <th><?php echo $me_amt; ?></th>
+                                                        <td><a href="charge_edit.php?edit=<?php echo $row["id"]; ?>" class="btn btn-info">View</a></td>
+                                                        <td>
+                                                            <a href="../functions/charge_delete.php?delete=<?php echo $row["id"]; ?>" class="btn btn-danger">Delete</a>
+                                                        </td>
+                                                    </tr>
                                             <?php }
-                                        } else {
-                                            // echo "0 Document";
-                                        }
-                                        ?>
-                                        <!-- <th></th> -->
+                                            } else {
+                                                // echo "0 Document";
+                                            }
+                                            ?>
+                                            <!-- <th></th> -->
                                         </tbody>
                                     </table>
                                 </div>
@@ -637,84 +641,124 @@ if ($per_con == 1 || $per_con == "1") {
                                     <a href="create_auto_charge.php" class="btn btn-primary">Create auto Charge</a>
                                     <table class="rtable display nowrap" style="width:100%">
                                         <thead class=" text-primary">
-                                        <?php
-                                        $query = "SELECT * FROM `auto_charge` WHERE int_id = '$sessint_id'";
-                                        $result = mysqli_query($connection, $query);
-                                        ?>
-                                        <th>
-                                            Name
-                                        </th>
-                                        <th>
-                                            Days
-                                        </th>
-                                        <th>
-                                            Charge Type
-                                        </th>
-                                        <th>
-                                            Amount
-                                        </th>
-                                        <th>
-                                            Status
-                                        </th>
-                                        <th>View</th>
-                                        <th>Delete</th>
+                                            <?php
+                                            $query = "SELECT * FROM `auto_charge` WHERE int_id = '$sessint_id'";
+                                            $result = mysqli_query($connection, $query);
+                                            ?>
+                                            <th>
+                                                Name
+                                            </th>
+                                            <th>
+                                                Days
+                                            </th>
+                                            <th>
+                                                Charge Type
+                                            </th>
+                                            <th>
+                                                Amount
+                                            </th>
+                                            <th>
+                                                Status
+                                            </th>
+                                            <th>View</th>
+                                            <th>Delete</th>
                                         </thead>
                                         <tbody>
-                                        <?php if (mysqli_num_rows($result) > 0) {
-                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-                                                <tr>
-                                                    <?php $row["id"]; ?>
-                                                    <th><?php echo $row["name"]; ?></th>
-                                                    <?php
-                                                    if ($row["is_active"] == 1) {
-                                                        $ead = "Active";
-                                                    } else {
-                                                        $ead = "Not Active";
-                                                    }
-                                                    ?>
-                                                    <th><?php echo $row["fee_on_day"]; ?></th>
-                                                    <?php
-                                                    $xs = "";
-                                                    $me_amt = "";
-                                                    if ($row["charge_cal"] == 1) {
-                                                        $me_amt = '&#8358; ' . $row["amount"];
-                                                    } else {
-                                                        $me_amt = $row["amount"] . "%";
-                                                    }
-                                                    if ($row["charge_type"] == 1) {
-                                                        $xs = "Disbursement";
-                                                    } else if ($row["charge_type"] == 2) {
-                                                        $xs = "Specified Due Date";
-                                                    } else if ($row["charge_type"] == 3) {
-                                                        $xs = "Installment Fees";
-                                                    } else if ($row["charge_type"] == 5) {
-                                                        $xs = "Overdue Installment Fees";
-                                                    } else if ($row["charge_type"] == 6) {
-                                                        $xs = "Disbursement - Paid with Repayment";
-                                                    } else if ($row["charge_type"] == 8) {
-                                                        $xs = "Loan Rescheduliing Fee";
-                                                    } else if ($row["charge_type"] == 9) {
-                                                        $xs = "Transaction";
-                                                    }
-                                                    ?>
-                                                    <th><?php echo $xs; ?></th>
-                                                    <th><?php echo $me_amt; ?></th>
-                                                    <th><?php echo $ead; ?></th>
-                                                    <td><a href="edit_auto_charge.php?edit=<?php echo $row["id"]; ?>"
-                                                           class="btn btn-info">View</a></td>
-                                                    <td>
-                                                        <a href="../functions/charge_delete.php?delete=<?php echo $row["id"]; ?>"
-                                                           class="btn btn-danger">Delete</a></td>
-                                                </tr>
+                                            <?php if (mysqli_num_rows($result) > 0) {
+                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
+                                                    <tr>
+                                                        <?php $row["id"]; ?>
+                                                        <th><?php echo $row["name"]; ?></th>
+                                                        <?php
+                                                        if ($row["is_active"] == 1) {
+                                                            $ead = "Active";
+                                                        } else {
+                                                            $ead = "Not Active";
+                                                        }
+                                                        ?>
+                                                        <th><?php echo $row["fee_on_day"]; ?></th>
+                                                        <?php
+                                                        $xs = "";
+                                                        $me_amt = "";
+                                                        if ($row["charge_cal"] == 1) {
+                                                            $me_amt = '&#8358; ' . $row["amount"];
+                                                        } else {
+                                                            $me_amt = $row["amount"] . "%";
+                                                        }
+                                                        if ($row["charge_type"] == 1) {
+                                                            $xs = "Disbursement";
+                                                        } else if ($row["charge_type"] == 2) {
+                                                            $xs = "Specified Due Date";
+                                                        } else if ($row["charge_type"] == 3) {
+                                                            $xs = "Installment Fees";
+                                                        } else if ($row["charge_type"] == 5) {
+                                                            $xs = "Overdue Installment Fees";
+                                                        } else if ($row["charge_type"] == 6) {
+                                                            $xs = "Disbursement - Paid with Repayment";
+                                                        } else if ($row["charge_type"] == 8) {
+                                                            $xs = "Loan Rescheduliing Fee";
+                                                        } else if ($row["charge_type"] == 9) {
+                                                            $xs = "Transaction";
+                                                        }
+                                                        ?>
+                                                        <th><?php echo $xs; ?></th>
+                                                        <th><?php echo $me_amt; ?></th>
+                                                        <th><?php echo $ead; ?></th>
+                                                        <td><a href="edit_auto_charge.php?edit=<?php echo $row["id"]; ?>" class="btn btn-info">View</a></td>
+                                                        <td>
+                                                            <a href="../functions/charge_delete.php?delete=<?php echo $row["id"]; ?>" class="btn btn-danger">Delete</a>
+                                                        </td>
+                                                    </tr>
                                             <?php }
-                                        } else {
-                                            // echo "0 Document";
-                                        }
-                                        ?>
-                                        <!-- <th></th> -->
+                                            } else {
+                                                // echo "0 Document";
+                                            }
+                                            ?>
+                                            <!-- <th></th> -->
                                         </tbody>
                                     </table>
                                 </div>
+                                <!-- Shares Product Begins -->
+                                <div class="tab-pane" id="shares">
+                                <a href="shares_product.php" class="btn btn-primary"> Create New Shares Product</a>
+                                    <div class="table-responsive mt-4">
+                                        <table class="rtable display nowrap" style="width:100%">
+                                            <thead class=" text-primary">
+                                                <th>
+                                                    Shares Name
+                                                </th>
+                                                <th>
+                                                    Available Shares
+                                                </th>
+                                                <th>
+                                                    Unit Price
+                                                </th>
+                                                <th>
+                                                    Minumum Amount
+                                                </th>
+                                                <th>
+                                                Maximum Amount
+                                                </th>
+                                                <th>
+                                                    GL Code
+                                                </th>
+                                                <th>Action</th>
+                                            </thead>
+                                            <tbody>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><button type="button" class="btn btn-info">View</button></td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                                <!-- Shares Product Ends -->
+
                                 <!-- credit checks -->
                                 <div class="tab-pane" id="credit">
 
@@ -722,79 +766,78 @@ if ($per_con == 1 || $per_con == "1") {
                                     <div class="table-responsive">
                                         <table class="rtable display nowrap" style="width:100%">
                                             <thead class=" text-primary">
-                                            <?php
-                                            $query = "SELECT * FROM credit_check WHERE int_id = '$sessint_id'";
-                                            $result = mysqli_query($connection, $query);
-                                            ?>
-                                            <th>
-                                                Id
-                                            </th>
-                                            <th>
-                                                Name
-                                            </th>
-                                            <th>
-                                                Entity Name
-                                            </th>
-                                            <th>
-                                                Severity Level
-                                            </th>
-                                            <th>
-                                                Rating Type
-                                            </th>
-                                            <th>
-                                                Value
-                                            </th>
-                                            <th>View</th>
+                                                <?php
+                                                $query = "SELECT * FROM credit_check WHERE int_id = '$sessint_id'";
+                                                $result = mysqli_query($connection, $query);
+                                                ?>
+                                                <th>
+                                                    Id
+                                                </th>
+                                                <th>
+                                                    Name
+                                                </th>
+                                                <th>
+                                                    Entity Name
+                                                </th>
+                                                <th>
+                                                    Severity Level
+                                                </th>
+                                                <th>
+                                                    Rating Type
+                                                </th>
+                                                <th>
+                                                    Value
+                                                </th>
+                                                <th>View</th>
                                             </thead>
                                             <tbody>
-                                            <?php if (mysqli_num_rows($result) > 0) {
-                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-                                                    <tr>
-                                                        <th><?php echo $row["id"]; ?></th>
-                                                        <th><?php echo $row["name"]; ?></th>
-                                                        <?php
-                                                        if ($row["related_entity_enum_value"] == 1) {
-                                                            $me = "Loan";
-                                                        }
-                                                        ?>
-                                                        <th><?php echo $me; ?></th>
-                                                        <?php
-                                                        if ($row["severity_level_enum_value"] == 1) {
-                                                            $xs = "Block Loan";
-                                                        } else if ($row["severity_level_enum_value"] == 2) {
-                                                            $xs = "Warning";
-                                                        } else if ($row["severity_level_enum_value"] == 3) {
-                                                            $xs = "Pass";
-                                                        }
-                                                        ?>
-                                                        <th><?php echo $xs; ?></th>
-                                                        <?php
-                                                        if ($row["rating_type"] == 1) {
-                                                            $rt = "Boolean";
-                                                        } else if ($row["rating_type"] == 2) {
-                                                            $rt = "Score";
-                                                        }
-                                                        ?>
-                                                        <th><?php echo $rt; ?></th>
-                                                        <?php
-                                                        if ($row["is_active"] == 1) {
-                                                            $isa = "Active";
-                                                        } else if ($row["is_active"] == 0) {
-                                                            $isa = "Not Active";
-                                                        }
-                                                        ?>
-                                                        <th><?php echo $isa; ?></th>
-                                                        <td>
-                                                            <a href="creditcheck_edit.php?edit=<?php echo $row["id"]; ?>"
-                                                               class="btn btn-info">Edit</a>
-                                                        </td>
-                                                    </tr>
+                                                <?php if (mysqli_num_rows($result) > 0) {
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
+                                                        <tr>
+                                                            <th><?php echo $row["id"]; ?></th>
+                                                            <th><?php echo $row["name"]; ?></th>
+                                                            <?php
+                                                            if ($row["related_entity_enum_value"] == 1) {
+                                                                $me = "Loan";
+                                                            }
+                                                            ?>
+                                                            <th><?php echo $me; ?></th>
+                                                            <?php
+                                                            if ($row["severity_level_enum_value"] == 1) {
+                                                                $xs = "Block Loan";
+                                                            } else if ($row["severity_level_enum_value"] == 2) {
+                                                                $xs = "Warning";
+                                                            } else if ($row["severity_level_enum_value"] == 3) {
+                                                                $xs = "Pass";
+                                                            }
+                                                            ?>
+                                                            <th><?php echo $xs; ?></th>
+                                                            <?php
+                                                            if ($row["rating_type"] == 1) {
+                                                                $rt = "Boolean";
+                                                            } else if ($row["rating_type"] == 2) {
+                                                                $rt = "Score";
+                                                            }
+                                                            ?>
+                                                            <th><?php echo $rt; ?></th>
+                                                            <?php
+                                                            if ($row["is_active"] == 1) {
+                                                                $isa = "Active";
+                                                            } else if ($row["is_active"] == 0) {
+                                                                $isa = "Not Active";
+                                                            }
+                                                            ?>
+                                                            <th><?php echo $isa; ?></th>
+                                                            <td>
+                                                                <a href="creditcheck_edit.php?edit=<?php echo $row["id"]; ?>" class="btn btn-info">Edit</a>
+                                                            </td>
+                                                        </tr>
                                                 <?php }
-                                            } else {
-                                                // echo "0 Document";
-                                            }
-                                            ?>
-                                            <!-- <th></th> -->
+                                                } else {
+                                                    // echo "0 Document";
+                                                }
+                                                ?>
+                                                <!-- <th></th> -->
                                             </tbody>
                                         </table>
                                     </div>
@@ -802,20 +845,17 @@ if ($per_con == 1 || $per_con == "1") {
                                 <!-- end of credit checkss -->
                                 <div class="tab-pane" id="cash">
                                     <div class="table-responsive">
-                                        <button data-toggle="modal" data-target="#exampleModal"
-                                                class="btn btn-primary pull-left">Add
+                                        <button data-toggle="modal" data-target="#exampleModal" class="btn btn-primary pull-left">Add
                                         </button>
                                         <!-- form of staff -->
                                         <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLabel">Add Payment
                                                             Type</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
@@ -826,15 +866,13 @@ if ($per_con == 1 || $per_con == "1") {
                                                                 <div class="col-md-12">
                                                                     <div class="form-group">
                                                                         <label class="bmd-label-floating">Name</label>
-                                                                        <input type="text" class="form-control"
-                                                                               name="nameo"/>
+                                                                        <input type="text" class="form-control" name="nameo" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12">
                                                                     <div class="form-group">
                                                                         <label class="bmd-label-floating">Description</label>
-                                                                        <input type="text" class="form-control"
-                                                                               name="des"/>
+                                                                        <input type="text" class="form-control" name="des" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
@@ -856,26 +894,24 @@ if ($per_con == 1 || $per_con == "1") {
                                                                     <div class="form-group">
                                                                         <label class="bmd-label-floating">GL
                                                                             Group</label>
-                                                                        <select name="gl_type" id="role"
-                                                                                class="form-control">
+                                                                        <select name="gl_type" id="role" class="form-control">
                                                                             <option value="0">choose a gl type</option>
                                                                             <?php echo fill_gl($connection); ?>
                                                                         </select>
-                                                                        <input type="text" id="int_id" hidden
-                                                                               value="<?php echo $sessint_id; ?>"
-                                                                               style="text-transform: uppercase;"
-                                                                               class="form-control">
+                                                                        <input type="text" id="int_id" hidden value="<?php echo $sessint_id; ?>" style="text-transform: uppercase;" class="form-control">
                                                                     </div>
                                                                 </div>
                                                                 <script>
-                                                                    $(document).ready(function () {
-                                                                        $('#role').on("change", function () {
+                                                                    $(document).ready(function() {
+                                                                        $('#role').on("change", function() {
                                                                             var ch = $('#role').val();
                                                                             $.ajax({
                                                                                 url: "ajax_post/glss.php",
                                                                                 method: "POST",
-                                                                                data: {ch: ch},
-                                                                                success: function (data) {
+                                                                                data: {
+                                                                                    ch: ch
+                                                                                },
+                                                                                success: function(data) {
                                                                                     $('#tit').html(data);
                                                                                 }
                                                                             })
@@ -886,8 +922,7 @@ if ($per_con == 1 || $per_con == "1") {
                                                                     <div class="form-group">
                                                                         <label class="bmd-label-floating">GL
                                                                             Account</label>
-                                                                        <select id="tit" class="form-control"
-                                                                                name="gl_code">
+                                                                        <select id="tit" class="form-control" name="gl_code">
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -903,26 +938,22 @@ if ($per_con == 1 || $per_con == "1") {
                                                                 <div class="col-md-6">
                                                                     <div class="form-check form-check-inline">
                                                                         <label class="form-check-label">
-                                                                            <input class="form-check-input"
-                                                                                   type="checkbox" value=""
-                                                                                   name="is_cash">
+                                                                            <input class="form-check-input" type="checkbox" value="" name="is_cash">
                                                                             Is Cash payment
                                                                             <span class="form-check-sign">
-                <span class="check"></span>
-                </span>
+                                                                                <span class="check"></span>
+                                                                            </span>
                                                                         </label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-check form-check-inline">
                                                                         <label class="form-check-label">
-                                                                            <input class="form-check-input"
-                                                                                   type="checkbox" value=""
-                                                                                   name="is_bank">
+                                                                            <input class="form-check-input" type="checkbox" value="" name="is_bank">
                                                                             Is Bank
                                                                             <span class="form-check-sign">
-                <span class="check"></span>
-                </span>
+                                                                                <span class="check"></span>
+                                                                            </span>
                                                                         </label>
                                                                     </div>
                                                                 </div>
@@ -930,17 +961,15 @@ if ($per_con == 1 || $per_con == "1") {
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
                                                                     <label class="bmd-label-floating"></label>
-                                                                    <input type="text" hidden class="form-control"/>
+                                                                    <input type="text" hidden class="form-control" />
                                                                 </div>
                                                             </div>
                                                             <!-- Next -->
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Close
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
                                                         </button>
-                                                        <button type="submit" name="submit" value="add_payment"
-                                                                type="button" class="btn btn-primary">Save changes
+                                                        <button type="submit" name="submit" value="add_payment" type="button" class="btn btn-primary">Save changes
                                                         </button>
                                                     </div>
                                                     </form>
@@ -951,58 +980,57 @@ if ($per_con == 1 || $per_con == "1") {
 
                                     <table class="rtable display nowrap" style="width:100%">
                                         <thead class=" text-primary">
-                                        <?php
-                                        $query = "SELECT * FROM payment_type WHERE int_id ='$sessint_id'";
-                                        $result = mysqli_query($connection, $query);
-                                        ?>
-                                        <!-- <th>
+                                            <?php
+                                            $query = "SELECT * FROM payment_type WHERE int_id ='$sessint_id'";
+                                            $result = mysqli_query($connection, $query);
+                                            ?>
+                                            <!-- <th>
                                           ID
                                         </th> -->
-                                        <th>Name</th>
-                                        <th>
-                                            Description
-                                        </th>
-                                        <th>
-                                            Default
-                                        </th>
-                                        <th>
-                                            Cash Payment
-                                        </th>
-                                        <th>
-                                            Edit
-                                        </th>
+                                            <th>Name</th>
+                                            <th>
+                                                Description
+                                            </th>
+                                            <th>
+                                                Default
+                                            </th>
+                                            <th>
+                                                Cash Payment
+                                            </th>
+                                            <th>
+                                                Edit
+                                            </th>
                                         </thead>
                                         <tbody>
-                                        <?php if (mysqli_num_rows($result) > 0) {
-                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-                                                <tr>
-                                                    <?php $dop = $row["id"]; ?>
-                                                    <th><?php echo $row["value"]; ?></th>
-                                                    <th><?php echo $row["description"]; ?></th>
-                                                    <?php
-                                                    if ($row["order_position"] == 1) {
-                                                        $def = "Yes";
-                                                    } else {
-                                                        $def = "No";
-                                                    }
-                                                    ?>
-                                                    <th><?php echo $def; ?></th>
-                                                    <?php
-                                                    if ($row["is_cash_payment"] == 1) {
-                                                        $cash = "Yes";
-                                                    } else {
-                                                        $cash = "No";
-                                                    }
-                                                    ?>
-                                                    <th><?php echo $cash; ?></th>
-                                                    <td><a href="editpay_type.php?edit=<?php echo $dop; ?>"
-                                                           class="btn btn-info">Edit</a></td>
-                                                </tr>
+                                            <?php if (mysqli_num_rows($result) > 0) {
+                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
+                                                    <tr>
+                                                        <?php $dop = $row["id"]; ?>
+                                                        <th><?php echo $row["value"]; ?></th>
+                                                        <th><?php echo $row["description"]; ?></th>
+                                                        <?php
+                                                        if ($row["order_position"] == 1) {
+                                                            $def = "Yes";
+                                                        } else {
+                                                            $def = "No";
+                                                        }
+                                                        ?>
+                                                        <th><?php echo $def; ?></th>
+                                                        <?php
+                                                        if ($row["is_cash_payment"] == 1) {
+                                                            $cash = "Yes";
+                                                        } else {
+                                                            $cash = "No";
+                                                        }
+                                                        ?>
+                                                        <th><?php echo $cash; ?></th>
+                                                        <td><a href="editpay_type.php?edit=<?php echo $dop; ?>" class="btn btn-info">Edit</a></td>
+                                                    </tr>
                                             <?php }
-                                        } else {
-                                            // echo "0 Document";
-                                        }
-                                        ?>
+                                            } else {
+                                                // echo "0 Document";
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -1021,7 +1049,7 @@ if ($per_con == 1 || $per_con == "1") {
     include("footer.php");
 
     ?>
-    <?php
+<?php
 } else {
     echo '<script type="text/javascript">
   $(document).ready(function(){

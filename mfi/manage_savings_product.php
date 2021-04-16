@@ -1159,7 +1159,7 @@ $dos = mysqli_query($connection, $fd);
         // add an "invalid" class to the field:
         y[i].className += " invalid";
         // and set the current valid status to false
-        valid = false; // This was change to true to disable the validation function. Should be reverted to FALSE after testing is complete
+        valid = true; // This was change to true to disable the validation function. Should be reverted to FALSE after testing is complete
       }
     }
     // If the valid status is true, mark the step as finished and valid:
