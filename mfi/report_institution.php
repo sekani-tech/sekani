@@ -107,6 +107,7 @@ $_SESSION["lack_of_intfund_$key"] = null;
                         $query = "SELECT * FROM reports WHERE category = 'institution'";
                         $result = mysqli_query($connection, $query);
                       ?>
+                        
                         <th>
                           Name
                         </th>

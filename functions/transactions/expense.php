@@ -13,14 +13,43 @@ $int_address = $_SESSION["int_address"];
 $sessint_id = $_SESSION["int_id"];
 $m_id = $_SESSION["user_id"];
 $branch_id = $_SESSION['branch_id'];
+$id = $_SESSION['id'];
+$gen_date = Date('Y-m-d H:i:s');
 $getacct1 = mysqli_query($connection, "SELECT * FROM staff WHERE user_id = '$m_id' && int_id = '$sessint_id'");
 if (count([$getacct1]) == 1) {
     $uw = mysqli_fetch_array($getacct1);
     $staff_id = $uw["id"];
     $staff_name = $uw['display_name'];
 }
-// $staff_name  = strtoupper($_SESSION["username"]);
-$gen_date = date('Y-m-d H:i:s');
+
+$year = getPieceOfDate($gen_date,'Y'); 
+    $month = getPieceOfDate($year,'m');
+$findEndYear = mysqli_query($connection, "SELECT * FROM endofyear_tb WHERE yearend = '$year'AND status ='0'");
+if(!$findEndYear){
+    $findEndMonth = mysqli_query($connection, "SELECT * FROM endofmonth_tb WHERE monthend = '$month' AND yearend ='$year'AND status ='0'");
+    if(!$findEndMonth){
+        $findEndDay = mysqli_query($connection, "SELECT * FROM endofday_tb WHERE dateclosed = '$gen_date' AND status ='1'");
+        if($findEndDay){
+            die("Day already closed");
+               // echo header("Location: ../../mfi/endofday.php?legal=$randms");
+        }
+    }else{
+        die("Month Already closed");
+   //echo header("Location: ../../mfi/endofmonth.php?legal=$randms"); 
+    }
+}else{
+    die("Year have already closed");
+   //echo header("Location: ../../mfi/endofmonth.php?legal=$randms");
+}
+
+$holiday = mysqli_query($connection,"SELECT * FROM holiday_tb WHERE marked_day = '$holiday'");
+    if($holiday){
+        
+        exit();
+    }
+
+
+
 ?>
 
 <?php
@@ -102,6 +131,7 @@ if ($isBank == 0) {
                             $trans_type2 = "Expense";
                             $irvs = 0;
                             $gen_date = date('Y-m-d H:i:s');
+
                             $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
                     teller_id, transaction_id, description, transaction_type, is_reversed,
                     transaction_date, amount, running_balance_derived, overdraft_amount_derived,

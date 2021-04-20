@@ -1,4 +1,5 @@
 <?php
+
 include('../connect.php');
 $hello = "SELECT * FROM loan_disbursement_cache WHERE status = 'Approved'";
 $query1 = mysqli_query($connection, $hello);
