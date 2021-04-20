@@ -68,7 +68,20 @@ if (isset($_POST['submitClient'])) {
 
                 foreach ($ourDataTables as $values => $data) {
                     $branch = $data['branch'];
-                    $digit = 8;
+                    $length = strlen($branch);
+                    if($length == 2){
+                        // if branch id is greater than one
+                        $digit = 7;
+                    }else if($length == 3){
+                        // greater than 2
+                        $digit = 6;
+                    }else if($length == 4){
+                        // greater than 3
+                        $digit = 5;
+                    }else{
+                        $digit = 8;
+                    }
+                    
                     $randms = str_pad(rand(0, pow(10, $digit) - 1), $digit, '0', STR_PAD_LEFT);
                     $account_no = $institutionId . "" .$branch. "" . $randms;
                     

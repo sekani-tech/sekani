@@ -161,7 +161,7 @@ if($ctype == 'INDIVIDUAL' || $ctype == 'GROUP'){
       $go = mysqli_query($connection, $accountins);
       if($go){
         $_SESSION["Lack_of_intfund_$randms"] = "Registration Successful!";
-        echo header ("Location: ../mfi/configuration.php?message1=$randms");
+        echo header ("Location: ../mfi/client.php?message1=$randms");
       }else{
         echo "Account Creation Failed";
       }

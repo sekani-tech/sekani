@@ -128,7 +128,7 @@ $(document).ready(function(){
                                 $inr = mysqli_fetch_array($result);
                                 echo $inr['COUNT(firstname)'];
                             }
-                            ?> registered clients || <a style="color: white;" href="manage_client.php">Create New client</a></p>
+                            ?> registered clients || <a style="color: white;" href="client_create.php">Create New client</a></p>
 
                     </div>
                     <div class="card-body">
