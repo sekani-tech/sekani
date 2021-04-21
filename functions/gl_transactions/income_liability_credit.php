@@ -86,7 +86,7 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
                     $updateGlDetails = [
                         'organization_running_balance_derived' => $newGlBalnce
                     ];
-                    $updateGlBalance = update('acc_gl_account', $glAccount, 'gl_code', $updateGlDetails);
+                    $updateGlBalance = update('acc_gl_account', $glId, 'id', $updateGlDetails);
                     if ($updateGlBalance) {
                         $glTransactionDetails = [
                             'int_id' => $institutionId,

@@ -13,11 +13,12 @@ try {
     $randms = str_pad(random_int(0, (10 ** $digit) - 1), 7, '0', STR_PAD_LEFT);
 } catch (Exception $e) {
 }
-if (isset($_POST['submitbranch'])) {
-    //    check for excel file submitted
-    if ($_FILES["file"]["branchData"] !== '') {
+if (isset($_POST['submit'])) {
+
+//  check for excel file submitted
+    if ($_FILES["file"]["name"] !== '') {
         $allowed_extension = array('xls', 'csv', 'xlsx');
-        $file_array = explode(".", $_FILES["file"]["branchData"]);
+        $file_array = explode(".", $_FILES["file"]["name"]);
         $file_extension = end($file_array);
 
         if (in_array($file_extension, $allowed_extension)) {

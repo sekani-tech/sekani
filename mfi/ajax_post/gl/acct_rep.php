@@ -11,7 +11,7 @@ if (isset($_POST["id"]))
       $int_id = $_POST['ist'];
       $out = '';
       function fill_acct($connection, $gl_code, $int_id, $out) {
-        $sql = "SELECT * FROM `acc_gl_account` WHERE gl_code LIKE '$gl_code%' && int_id='$int_id' && classification_enum LIKE '5%' &&	disabled = '0' && manual_journal_entries_allowed = '1' && parent_id IS NOT NULL";
+        $sql = "SELECT * FROM `acc_gl_account` WHERE gl_code LIKE '$gl_code%' && int_id='$int_id' && (classification_enum LIKE '5%' or classification_enum LIKE '2%') &&	disabled = '0' && manual_journal_entries_allowed = '1' && parent_id IS NOT NULL";
         $result = mysqli_query($connection, $sql);
         while ($row = mysqli_fetch_array($result))
           {

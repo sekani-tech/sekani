@@ -1,9 +1,31 @@
 <?php
 
-$page_title = "Loans data";
+$page_title = "General Ledger";
 $destination = "bulk_upload";
 include("header.php");
 
+
+$exp_error = "";
+if (isset($_GET["glaccount1"])) {
+    $key = $_GET["glaccount1"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "success",
+            title: "Success",
+            text: "General Ledger Sucessfully Updated",
+            showConfirmButton: true,
+            timer: 7000
+        })
+    });
+    </script>
+    ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+}
 ?>
 
 
@@ -53,7 +75,10 @@ include("header.php");
                                             </li>
                                         </ul>
                                         <div class="card-body text-center">
-                                            <a href='bulkWork/getFile.php?name=clientData&loc=2' class="btn btn-primary btn-lg">Download Data Sample</a>
+                                        <form action="../composer/gl_export.php" method="post">
+                                                <button class="btn btn-primary btn-lg" type="submit" name="exportGl">
+                                                    Download GL Data</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

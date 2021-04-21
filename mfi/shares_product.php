@@ -54,6 +54,12 @@ include("header.php");
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="aviashares">Availabe Shares <span style="color: red;">*</span></label>
+                                    <input type="number" class="form-control" name="availabe_shares" value="" placeholder="Define Availabe Shares..." required="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="glcode">GL Code <span style="color: red;">*</span></label>
                                     <input type="text" class="form-control" name="gl_code" value="" placeholder="Default" required="">
                                 </div>

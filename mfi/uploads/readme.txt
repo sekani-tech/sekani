@@ -1,0 +1,1 @@
+this folder is used for the management of client images

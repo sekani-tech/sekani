@@ -85,56 +85,68 @@ if (isset($_POST['btnUploadBankStatement'])) {
         if($numOfRecordsInSekaniBankStmt > 0 || $numOfRecordsInUploadedBankStmt > 0) {
         ?>
         <div class="row">
-        
-            <div class="col-md-6 ml-auto mr-auto">
-        <?php
-                while($row = mysqli_fetch_array($sekaniBankStmt)) {
-                    extract($row);
-        ?>
-                <div class="card card-pricing bg-success">
+            <div class="col-md-12 ml-auto mr-auto">
+                <div class="card card-pricing bg-primary">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title">Sekani Bank Statement</h4>
+                        <h4 class="card-title">All Transactions</h4>
                         <!-- <p class="category">Category subtitle</p> -->
                     </div>
                     <div class="card-body ">
-                        <p class="card-title">Transaction ID: <?php echo $transaction_id; ?></p>
-                        <p class="card-title">Amount: ₦<?php echo number_format($amount, 2); ?></p>
-                        <p class="card-title">Transaction Date:  <?php echo date('d-m-Y', strtotime($transaction_date)); ?></p>
-                        <p class="card-title">Description: <?php echo $description; ?></p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3 class="card-title">Transaction ID: </h3>
+                                <h3 class="card-title">Amount: </h3>
+                                <h3 class="card-title">Transaction Date: </h3>
+                                <h3 class="card-title">Deposited by: </h3>
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="card-title">Transaction ID: </h3>
+                                <h3 class="card-title">Amount: </h3>
+                                <h3 class="card-title">Transaction Date: </h3>
+                                <h3 class="card-title">Deposited by: </h3>
+
+                            </div>
+                        </div>
+
                     </div>
                 </div>
         <?php
                 }
-        ?>              
+        ?>
+
+        <div class="row">
+            <div class="col-md-6 ml-auto mr-auto">
+                <div class="card card-pricing bg-success">
+                    <div class="card-header card-header-success">
+                        <h4 class="card-title">Found</h4>
+                        <!-- <p class="category">Category subtitle</p> -->
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Transaction ID: </h3>
+                        <h3 class="card-title">Amount: </h3>
+                        <h3 class="card-title">Transaction Date: </h3>
+                        <h3 class="card-title">Deposited by: </h3>
+                    </div>
+                </div>
+
             </div>
 
             <div class="col-md-6 ml-auto mr-auto">
-        <?php
-                for ($i = 1; $i < $numOfRecordsInUploadedBankStmt; $i++) {
-        ?>
-                <div class="card card-pricing bg-success">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title">Uploaded Bank Statement</h4>
+                <div class="card card-pricing bg-danger">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Not Found</h4>
                         <!-- <p class="category">Category subtitle</p> -->
                     </div>
                     <div class="card-body ">
-                        <p class="card-title">Transaction ID: <?php echo $uploadedBankStmt[$i]['transaction_id']; ?></p>
-                        <p class="card-title">Amount: ₦<?php echo number_format($uploadedBankStmt[$i]['amount'], 2); ?></p>
-                        <p class="card-title">Transaction Date:  <?php echo date('d-m-Y', strtotime($uploadedBankStmt[$i]['date'])); ?></p>
-                        <p class="card-title">Description: <?php echo $uploadedBankStmt[$i]['description']; ?></p>
+                        <h3 class="card-title">Transaction ID: </h3>
+                        <h3 class="card-title">Amount: </h3>
+                        <h3 class="card-title">Transaction Date: </h3>
+                        <h3 class="card-title">Deposited by: </h3>
                     </div>
                 </div>
-        <?php
-                }
-
-        ?>
             </div>
 
         </div>
-        <?php
-        }
-        ?>
-
     </div>
 
 </div>

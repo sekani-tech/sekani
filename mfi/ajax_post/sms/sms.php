@@ -39,7 +39,7 @@ if ($send_id != "" && $phone != "" && $msg != "" && $int_id != "" && $branch_id 
         // make it possible
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://hordecall.net/sms/postSms.php",
+            CURLOPT_URL => "https://sms.vanso.com/rest/submit",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -47,7 +47,7 @@ if ($send_id != "" && $phone != "" && $msg != "" && $int_id != "" && $branch_id 
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "sender_id=$send_id&mobile=$phone&msg=$msg&msg_id=$randms&username=2348091141288&password=password@111",
+            CURLOPT_POSTFIELDS => "src=$send_id&dest=$phone&text=$msg&systemId=NG.102.0421&password=kwPPkiV4",
             CURLOPT_HTTPHEADER => array(
                 "Content-Type: application/x-www-form-urlencoded"
             ),

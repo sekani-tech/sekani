@@ -1,20 +1,3 @@
-<h2>Import Excel File into MySQL Database using PHP</h2>
-    
-    <div class="outer-container">
-        <form action="" method="post"
-
-            name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
-            <div>
-                <label>Choose Excel
-                    File</label> <input type="file" name="file"
-                    id="file" accept=".xls,.xlsx">
-                <button type="submit" id="submit" name="import"
-                    class="btn-submit">Import</button>
-            </div>
-        </form>
-        
-    </div>
-    <div id="response" class="<?php if(!empty($type)) { echo $type . " display-block"; } ?>"><?php if(!empty($message)) { echo $message; } ?></div>
 
 <?php
 include('../../functions/connect.php');
@@ -30,15 +13,14 @@ try {
     $randms = str_pad(random_int(0, (10 ** $digit) - 1), 7, '0', STR_PAD_LEFT);
 } catch (Exception $e) {
 }
-if (isset($_POST['import'])) {
-
-    
+if (isset($_POST['submitstaff'])) {
 
 
 //    check for excel file submitted
-    if ($_FILES["file"]["name"] !== '') {
+    if ($_FILES["file"]["staff
+    ata"] !== '') {
         $allowed_extension = array('xls', 'csv', 'xlsx');
-        $file_array = explode(".", $_FILES["file"]["name"]);
+        $file_array = explode(".", $_FILES["file"]["staffData"]);
         $file_extension = end($file_array);
 
         if (in_array($file_extension, $allowed_extension)) {
