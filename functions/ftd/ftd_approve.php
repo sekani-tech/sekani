@@ -209,7 +209,7 @@ if(!isset($_GET["approve"])){
                 if($recordTransaction){
                     $interestValue = ($intRate / 100) * $bookedAmount;
                     $ftdTermMonth = $ftdTerm / 30;
-                    $interestAmount =  $interestValue / $ftdTermMonth;
+                    $interestAmount =  $interestValue / 12;
                     $i = 1;
                     while ($i <= $ftdTermMonth) {
                         $maturity_date = date('Y-m-d', strtotime('+'. $i * 30 .' Days', strtotime($transaction_date)));

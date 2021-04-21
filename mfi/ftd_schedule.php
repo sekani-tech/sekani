@@ -8,7 +8,7 @@ $sessint_id = $_SESSION['int_id'];
 $sessbranch_id = $_SESSION['branch_id'];
 $ftd_booking_id = $_GET['id'];
 
-$q = "SELECT c.id as client_id, c.display_name, f.ftd_no, f.linked_savings_account, f.booked_date, f.term, f.int_rate, f.status 
+$q = "SELECT c.id as client_id, c.display_name, f.ftd_no, f.linked_savings_account, f.booked_date, f.term, f.int_rate, f.status, f.is_paid 
     FROM ftd_booking_account f 
     JOIN client c ON f.client_id = c.id 
     WHERE f.int_id = '$sessint_id' AND f.id = '$ftd_booking_id'";
@@ -22,6 +22,7 @@ $booked_date = $ftd_acc['booked_date'];
 $tenure = $ftd_acc['term'];
 $maturity_date = date('d-m-Y', strtotime('+'. $tenure .' Days', strtotime($booked_date)));
 $status = $ftd_acc['status'];
+$is_paid = $ftd_acc['is_paid'];
 
 $interest_query = mysqli_query($connection, "SELECT SUM(interest_amount) as interest_amount FROM `ftd_interest_schedule` WHERE int_id = {$sessint_id} AND client_id = {$ftd_acc['client_id']}");
 $interest = mysqli_fetch_array($interest_query)['interest_amount'];
@@ -67,7 +68,15 @@ $interest = mysqli_fetch_array($interest_query)['interest_amount'];
                                                 <li class="list-group-item"><b>Booking Date: </b><?php echo date('d-m-Y', strtotime($booked_date)); ?></li>
                                                 <li class="list-group-item"><b>Maturity Date: </b><?php echo $maturity_date; ?></li>
                                                 <li class="list-group-item"><b>Tenure: </b><?php echo $tenure; ?> Days</li>
-                                                <li class="list-group-item"><b>Status: </b><?php echo $status; ?></li>
+                                                <?php 
+                                                if($status == "Approved" && $is_paid == "0")
+                                                    $displayedStatus = "Active";
+                                                else if($status == "Approved" && $is_paid == "1")
+                                                    $displayedStatus = "Closed";
+                                                else
+                                                    $displayedStatus = "Terminated";
+                                                ?>
+                                                <li class="list-group-item"><b>Status: </b><?php echo $displayedStatus; ?></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -126,10 +135,10 @@ $interest = mysqli_fetch_array($interest_query)['interest_amount'];
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $principal_query = mysqli_query($connection, "SELECT account_balance_derived FROM `ftd_booking_account` WHERE int_id = {$sessint_id} AND client_id = {$ftd_acc['client_id']}");
+                                            $principal_query = mysqli_query($connection, "SELECT account_balance_derived FROM `ftd_booking_account` WHERE int_id = {$sessint_id} AND client_id = {$ftd_acc['client_id']} AND id = {$ftd_booking_id}");
                                             $principal = mysqli_fetch_array($principal_query)['account_balance_derived'];
 
-                                            $paid_principal_query = mysqli_query($connection, "SELECT is_paid FROM `ftd_booking_account` WHERE int_id = {$sessint_id} AND client_id = {$ftd_acc['client_id']}");
+                                            $paid_principal_query = mysqli_query($connection, "SELECT is_paid FROM `ftd_booking_account` WHERE int_id = {$sessint_id} AND client_id = {$ftd_acc['client_id']} AND id = {$ftd_booking_id}");
                                             $paid_principal = mysqli_fetch_array($paid_principal_query)['is_paid'];
                                             if($paid_principal == 1) {
                                                 $paid_principal = $principal;
@@ -139,7 +148,7 @@ $interest = mysqli_fetch_array($interest_query)['interest_amount'];
 
                                             $outstanding_principal = $principal - $paid_principal;
 
-                                            $paid_interest_query = mysqli_query($connection, "SELECT SUM(interest_amount) as interest_amount FROM `ftd_interest_schedule` WHERE int_id = {$sessint_id} AND client_id = {$ftd_acc['client_id']} AND interest_repayment = '1'");
+                                            $paid_interest_query = mysqli_query($connection, "SELECT SUM(interest_amount) as interest_amount FROM `ftd_interest_schedule` WHERE int_id = {$sessint_id} AND client_id = {$ftd_acc['client_id']}  AND ftd_id = {$ftd_booking_id} AND interest_repayment = '1'");
                                             $paid_interest = mysqli_fetch_array($paid_interest_query)['interest_amount'];
 
                                             $outstanding_interest = $interest - $paid_interest;
@@ -198,7 +207,7 @@ $interest = mysqli_fetch_array($interest_query)['interest_amount'];
                                             <tbody>
                                                 <?php
                                                 $i = 1;
-                                                $interest_schedule = mysqli_query($connection, "SELECT installment, interest_amount FROM `ftd_interest_schedule` WHERE int_id = {$sessint_id} AND client_id = {$ftd_acc['client_id']}");
+                                                $interest_schedule = mysqli_query($connection, "SELECT installment, interest_amount FROM `ftd_interest_schedule` WHERE int_id = {$sessint_id} AND client_id = {$ftd_acc['client_id']} AND ftd_id = {$ftd_booking_id}");
                                                 $num_of_rows = mysqli_num_rows($interest_schedule);
                                                 while($row = mysqli_fetch_array($interest_schedule)) {
                                                 ?>
