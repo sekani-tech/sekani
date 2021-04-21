@@ -186,9 +186,6 @@ class Loan{
     expected_firstrepaymenton_date = :expected_firstrepaymenton_date,
     disbursement_date = :disbursement_date,
     disbursedon_userid = :disbursedon_userid,
-    expected_disbursedon_date = :expected_disbursedon_date,
-    disbursement_date = :disbursement_date,
-    disbursedon_userid = :disbursedon_userid,
     repay_principal_every = :repay_principal_every,
     repay_interest_every = :repay_interest_every";
     
@@ -219,6 +216,7 @@ class Loan{
     $this->submittedon_date=htmlspecialchars(strip_tags($this->submittedon_date));
     $this->submittedon_userid=htmlspecialchars(strip_tags($this->submittedon_userid));
     $this->approvedon_date=htmlspecialchars(strip_tags($this->approvedon_date));
+    $this->approvedon_userid=htmlspecialchars(strip_tags($this->approvedon_userid));
     $this->expected_disbursedon_date=htmlspecialchars(strip_tags($this->expected_disbursedon_date));
     $this->expected_firstrepaymenton_date=htmlspecialchars(strip_tags($this->expected_firstrepaymenton_date));
     $this->disbursement_date=htmlspecialchars(strip_tags($this->disbursement_date));

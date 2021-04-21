@@ -1,11 +1,16 @@
 
 <?php
+
 // required headers
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Origin: *");   
+header("Content-Type: application/json; charset=UTF-8");    
+header("Access-Control-Allow-Methods: POST, DELETE, OPTIONS");    
+header("Access-Control-Max-Age: 3600");    
+header("Access-Control-Allow-Headers: Content-Type, origin");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {    
+   return 0;    
+}
  
 // get database connection
 include_once '../config/database.php';
@@ -20,21 +25,21 @@ $item = new Collateral($db);
  
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
-
  
 // make sure data is not empty
+ 
+
 if(
-    !empty($data->date) &&
     !empty($data->type) &&
     !empty($data->value) &&
     !empty($data->description) &&
     !empty($data->int_id) &&
     !empty($data->client_id) &&
-    !empty($data->status)
+    !empty($data->status) 
 ){
  
     // set property values
-    $item->date = $data->date;
+    $item->date = date('Y-m-d');
     $item->type = $data->type;
     $item->value = $data->value;
     $item->description = $data->description;

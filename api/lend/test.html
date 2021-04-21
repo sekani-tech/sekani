@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+	<title> test cors </title>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+
+<div id="app" @click="submitForm">
+  {{ message }}
+</div>
+
+
+
+<script type="text/javascript">
+var app = new Vue({
+
+  el: '#app',
+
+  data: {
+    message: 'Hello Vue!',
+    data : null,
+  },
+
+	methods: {
+		postsData(api) {
+			let api_url = "http://api.sekanisystems.com.ng/lend/list_product.php?int_id=" + 5
+			axios
+			.get(api_url).then((response) => {
+				this.data = response.data.data
+			})
+		},
+
+
+		submitForm() {
+			axios.post('http://localhost/sekani/api/lend/create_collateral.php', {
+				description: 'lgjjjgjhhjhjjhfhjfhfv',
+				value: 'yellow',
+				int_id : 7,
+				client_id : 7,
+				type : 50000,
+				status: true
+			}).then((response) => {
+    			console.log(response)
+			}).catch(error=>{
+              console.log(error)
+          })
+		}
+
+	}
+
+
+
+})
+</script>
+
+</body>
+
+</html>

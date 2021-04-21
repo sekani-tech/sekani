@@ -81,26 +81,6 @@
             return false;
         }
 
-
-        // READ single
-        public function getSingleClient(){
-            $sqlQuery = "SELECT *  FROM  {$this->db_table_client} WHERE id = ?";
-
-            $stmt = $this->conn->prepare($sqlQuery);
-
-            $stmt->bindParam(1, $this->id);
-
-            $stmt->execute();
-
-            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            $this->name = $dataRow['firstname'];
-            $this->email = $dataRow['email'];
-            $this->age = $dataRow['age'];
-            $this->designation = $dataRow['designation'];
-            $this->created = $dataRow['created'];
-        }    
-
     }
 
 ?>
