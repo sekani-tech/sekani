@@ -3,7 +3,61 @@
 $page_title = "Client data";
 $destination = "migrations";
 include("header.php");
+include("ajaxcall.php");
 
+// Account type
+$condition = ['int_id' => $_SESSION['int_id']];
+$accountType = selectAll("savings_product", $condition);
+
+// staff
+$staffCondition = ['int_id' => $_SESSION['int_id']];
+$staff = selectAll("staff", $condition);
+
+// branch
+$branchCondition = ['int_id' => $_SESSION['int_id']];
+$branch = selectAll("branch", $condition);
+
+// feedback
+$exp_error = "";
+if (isset($_GET["account1"])) {
+    $key = $_GET["account1"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "success",
+            title: "Success",
+            text: "Accounts created Successful",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["account2"])) {
+    $key = $_GET["account2"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "Error",
+            text: "No file Uploaded",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+}
 ?>
 
 
@@ -28,7 +82,94 @@ include("header.php");
                             <div class="col-md-6">
                                 <div class="card card-info">
                                     <div class="card-header">
-                                        <h4 class="card-title"><i class="material-icons">info</i> Requirements </h4>
+                                        <h4 class="card-title text-center">Select Branch</h4>
+
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class=" text-primary">
+                                                    <th>S/N</th>
+                                                    <th>Branch Name</th>
+                                                    <th>Branch ID</th>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach ($branch as $key => $type) { ?>
+                                                        <tr>
+                                                            <td><?php echo $key + 1 ?></td>
+                                                            <td><?php echo $type['name'] ?></td>
+                                                            <td><?php echo $type['id'] ?></td>
+                                                        </tr>
+                                                    <?php } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card card-info">
+                                    <div class="card-header">
+                                        <h4 class="card-title text-center">Select Account Type</h4>
+
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class=" text-primary">
+                                                    <th>S/N</th>
+                                                    <th>Account Type</th>
+                                                    <th>Product ID</th>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach ($accountType as $key => $type) { ?>
+                                                        <tr>
+                                                            <td><?php echo $key + 1 ?></td>
+                                                            <td><?php echo $type['name'] ?></td>
+                                                            <td><?php echo $type['id'] ?></td>
+                                                        </tr>
+                                                    <?php } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card card-info">
+                                    <div class="card-header">
+                                        <h4 class="card-title text-center">Select Client Officer</h4>
+
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class=" text-primary">
+                                                    <th>S/N</th>
+                                                    <th>Staff Name</th>
+                                                    <th>ID</th>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach ($staff as $key => $type) { ?>
+                                                        <tr>
+                                                            <td><?php echo $key + 1 ?></td>
+                                                            <td><?php echo $type['display_name'] ?></td>
+                                                            <td><?php echo $type['id'] ?></td>
+                                                        </tr>
+                                                    <?php } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card card-info">
+                                    <div class="card-header">
+                                        <h4 class="card-title"><i class="material-icons">info</i> Procedure </h4>
 
                                     </div>
                                     <div class="card-body">
@@ -60,24 +201,30 @@ include("header.php");
                             </div>
 
                             <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4 class="card-title">Upload CSV File(.csv)</h4>
-                                        <p class="category"></p>
-                                    </div>
-                                    <div class="card-body">
-                                        <form action="../functions/migrate/clients_and_accounts.php" method="post" enctype="multipart/form-data">
-                                            <div class="input-group">
-                                                <input type="file" name="clientData" class="form-control inputFileVisible">
-                                                <span class="input-group-btn">
-                                                    <button type="submit" name="submitClient" class="btn btn-fab btn-round btn-primary">
-                                                        <i class="material-icons">send</i>
-                                                    </button>
-                                                </span>
+                                <!-- UPLOAD SECTION BEGINS -->
+                                <form action="../functions/migrate/clients_accounts_create.php" method="post" enctype="multipart/form-data">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Upload Excel File</h4>
+                                            <p class="category"></p>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="input-group">
+                                                    <input type="file" name="clientData" class="form-control inputFileVisible" placeholder="Single File" required>
+                                                    <span class="input-group-btn">
+                                                        <button type="submit" name="submitClient" class="btn btn-fab btn-round btn-primary">
+                                                            <i class="material-icons">send</i>
+                                                        </button>
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </form>
+                                            <!-- UPLOAD SECTION ENDS -->
+
+                                        </div>
+
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
