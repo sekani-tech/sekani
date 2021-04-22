@@ -86,7 +86,7 @@ include("header.php");
                         <div style="float: right;">
                             <button type="button" class="btn btn-info">Discard</button>
                         </div>
-                    </div>
+                    </div>    
                     <div class="card-body">
                         <div class="col-md-12">
                             <table id="id1" class="table table-striped table-bordered" style="width:100%">
