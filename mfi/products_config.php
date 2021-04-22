@@ -734,10 +734,7 @@ if ($per_con == 1 || $per_con == "1") {
                                                     Unit Price
                                                 </th>
                                                 <th>
-                                                    Minumum Amount
-                                                </th>
-                                                <th>
-                                                Maximum Amount
+                                                Amount
                                                 </th>
                                                 <th>
                                                     GL Code
@@ -745,7 +742,6 @@ if ($per_con == 1 || $per_con == "1") {
                                                 <th>Action</th>
                                             </thead>
                                             <tbody>
-                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
