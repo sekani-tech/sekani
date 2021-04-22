@@ -104,7 +104,6 @@ if (isset($_POST['btnUploadBankStatement'])) {
                                 <h3 class="card-title">Amount: </h3>
                                 <h3 class="card-title">Transaction Date: </h3>
                                 <h3 class="card-title">Deposited by: </h3>
-
                             </div>
                         </div>
 
