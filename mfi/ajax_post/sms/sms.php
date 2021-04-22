@@ -1,12 +1,14 @@
 <?php
+
 // something
 include("../../../functions/connect.php");
 // Try the sms api
-$int_id = $_POST["int_id"];
-$branch_id = $_POST["branch_id"];
-$send_id = $_POST["sender_id"];
-$phone = $_POST["phone"];
-$msg = $_POST["msg"];
+session_start();
+$int_id = $_SESSION["int_id"];
+$branch_id = $_SESSION["branch_id"];
+$send_id = $_SESSION["sender_id"];
+$phone = "08149912983";
+$msg = "Test from sms ";
 $client_id = $_POST["client_id"];
 $account_no = $_POST["account_no"];
 // quick test
@@ -22,6 +24,10 @@ if ($send_id != "" && $phone != "" && $msg != "" && $int_id != "" && $branch_id 
 // MOVING TO THE NEXT
     $phone_length = strlen($phone);
 // CHECK
+    if($phone_length == 11){
+        $phone =  substr($phone, 1);
+        $phone = "234" . $phone;
+    }
     if ($phone_length == 10) {
 //    make phone have number
         $phone = "234" . $phone;
@@ -29,7 +35,7 @@ if ($send_id != "" && $phone != "" && $msg != "" && $int_id != "" && $branch_id 
     // sender ID
     $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$int_id'");
     $qw = mysqli_fetch_array($sql_fund);
-    $balance = $qw["sms_balance"];
+    $balance = 50;
     $total_with = $qw["total_withdrawal"];
     $total_int_profit = $qw["int_profit"];
     $total_sekani_charge = $qw["sekani_charge"];
@@ -37,23 +43,38 @@ if ($send_id != "" && $phone != "" && $msg != "" && $int_id != "" && $branch_id 
     if ($balance >= 4) {
         // start
         // make it possible
-        $curl = curl_init();
+       $curl = curl_init();
+
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://sms.vanso.com/rest/submit",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "src=$send_id&dest=$phone&text=$msg&systemId=NG.102.0421&password=kwPPkiV4",
+          CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{
+            "account": {
+                "password": "kwPPkiV4",
+                "systemId": "NG.102.0421"
+                },
+                "sms": {
+                    "dest":"'.$phone.'",
+                    "src": "'.$send_id.'",
+                    "text": "'.$msg.'",
+                    "unicode": true
+                }
+
+            }',
             CURLOPT_HTTPHEADER => array(
-                "Content-Type: application/x-www-form-urlencoded"
+                'Content-Type: application/json',
+                'Authorization: Basic TkcuMTAyLjA0MjE6a3dQUGtpVjQ='
             ),
         ));
-// checking up the control
-        $response = curl_exec($curl);
+
+         echo $response = curl_exec($curl);
+
 // success
         $err = curl_close($curl);
         if ($err) {

@@ -326,7 +326,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             // if 10 add country code
                             $phoneLength = strlen($client_phone);
                             if ($phoneLength == 10) {
-                              $client_phone = "234" . $client_phone;
+                              $clientPhone = "234" . $client_phone;
+                            }
+                            if ($phone_length == 11) {
+                              $phone =  substr($client_phone, 1);
+                              $clientPhone = "234" . $phone;
                             }
                             $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$sessint_id'");
                             $qw = mysqli_fetch_array($sql_fund);
@@ -338,21 +342,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             if ($smsBalance >= 4) {
 
                               $curl = curl_init();
-                              curl_setopt_array($curl, array(
-                                CURLOPT_URL => "https://hordecall.net/sms/postSms.php",
-                                CURLOPT_RETURNTRANSFER => true,
-                                CURLOPT_ENCODING => "",
-                                CURLOPT_MAXREDIRS => 10,
-                                CURLOPT_TIMEOUT => 0,
-                                CURLOPT_FOLLOWLOCATION => true,
-                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                                CURLOPT_CUSTOMREQUEST => "POST",
-                                CURLOPT_POSTFIELDS => "sender_id=$sender_id&mobile=$client_phone&msg=$msg&msg_id=$messageId&username=2348091141288&password=password@111",
-                                CURLOPT_HTTPHEADER => array(
-                                  "Content-Type: application/x-www-form-urlencoded"
-                                ),
-                              ));
-                              $response = curl_exec($curl);
+
+                                curl_setopt_array($curl, array(
+                                  CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
+                                  CURLOPT_RETURNTRANSFER => true,
+                                  CURLOPT_ENCODING => '',
+                                  CURLOPT_MAXREDIRS => 10,
+                                  CURLOPT_TIMEOUT => 0,
+                                  CURLOPT_FOLLOWLOCATION => true,
+                                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                  CURLOPT_CUSTOMREQUEST => 'POST',
+                                  CURLOPT_POSTFIELDS => '{
+                                      "account": {
+                                          "password": "kwPPkiV4",
+                                          "systemId": "NG.102.0421"
+                                          },
+                                          "sms": {
+                                              "dest":"' . $clientPhone . '",
+                                              "src": "' . $senderId . '",
+                                              "text": "' . $message . '",
+                                              "unicode": true
+                                          }
+
+                                      }',
+                                  CURLOPT_HTTPHEADER => array(
+                                    'Content-Type: application/json',
+                                    'Authorization: Basic TkcuMTAyLjA0MjE6a3dQUGtpVjQ='
+                                  ),
+                                ));
                               // success
                               $err = curl_close($curl);
                               if ($err) {
@@ -595,7 +612,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               // if 10 add country code
                               $phoneLength = strlen($client_phone);
                               if ($phoneLength == 10) {
-                                $client_phone = "234" . $client_phone;
+                                $clientPhone = "234" . $client_phone;
+                              }
+                              if ($phone_length == 11) {
+                                $phone =  substr($client_phone, 1);
+                                $clientPhone = "234" . $phone;
                               }
                               $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$sessint_id'");
                               $qw = mysqli_fetch_array($sql_fund);
@@ -607,20 +628,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               if ($smsBalance >= 4) {
 
                                 $curl = curl_init();
+
                                 curl_setopt_array($curl, array(
-                                  CURLOPT_URL => "https://hordecall.net/sms/postSms.php",
+                                  CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
                                   CURLOPT_RETURNTRANSFER => true,
-                                  CURLOPT_ENCODING => "",
+                                  CURLOPT_ENCODING => '',
                                   CURLOPT_MAXREDIRS => 10,
                                   CURLOPT_TIMEOUT => 0,
                                   CURLOPT_FOLLOWLOCATION => true,
                                   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                                  CURLOPT_CUSTOMREQUEST => "POST",
-                                  CURLOPT_POSTFIELDS => "sender_id=$sender_id&mobile=$client_phone&msg=$msg&msg_id=$messageId&username=2348091141288&password=password@111",
+                                  CURLOPT_CUSTOMREQUEST => 'POST',
+                                  CURLOPT_POSTFIELDS => '{
+                                      "account": {
+                                          "password": "kwPPkiV4",
+                                          "systemId": "NG.102.0421"
+                                          },
+                                          "sms": {
+                                              "dest":"' . $clientPhone . '",
+                                              "src": "' . $senderId . '",
+                                              "text": "' . $message . '",
+                                              "unicode": true
+                                          }
+
+                                      }',
                                   CURLOPT_HTTPHEADER => array(
-                                    "Content-Type: application/x-www-form-urlencoded"
+                                    'Content-Type: application/json',
+                                    'Authorization: Basic TkcuMTAyLjA0MjE6a3dQUGtpVjQ='
                                   ),
                                 ));
+
                                 $response = curl_exec($curl);
                                 // success
                                 $err = curl_close($curl);
@@ -1021,7 +1057,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       $v = "Verified";
                       $iupqx = "UPDATE transact_cache SET `status` = '$v' WHERE id = '$appod' && int_id = '$sessint_id'";
                       $res4 = mysqli_query($connection, $iupqx);
-                      if ($res4) { 
+                      if ($res4) {
                         // MAKING IT OUT
                         // SMS POSTING
                         // END THE TRANSACTION
@@ -1039,7 +1075,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             // if 10 add country code
                             $phoneLength = strlen($client_phone);
                             if ($phoneLength == 10) {
-                              $client_phone = "234" . $client_phone;
+                              $clientPhone = "234" . $client_phone;
+                            }
+                            if ($phone_length == 11) {
+                              $phone =  substr($client_phone, 1);
+                              $clientPhone = "234" . $phone;
                             }
                             $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$sessint_id'");
                             $qw = mysqli_fetch_array($sql_fund);
@@ -1051,21 +1091,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             if ($smsBalance >= 4) {
 
                               $curl = curl_init();
-                              curl_setopt_array($curl, array(
-                                CURLOPT_URL => "https://hordecall.net/sms/postSms.php",
-                                CURLOPT_RETURNTRANSFER => true,
-                                CURLOPT_ENCODING => "",
-                                CURLOPT_MAXREDIRS => 10,
-                                CURLOPT_TIMEOUT => 0,
-                                CURLOPT_FOLLOWLOCATION => true,
-                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                                CURLOPT_CUSTOMREQUEST => "POST",
-                                CURLOPT_POSTFIELDS => "sender_id=$sender_id&mobile=$client_phone&msg=$msg&msg_id=$messageId&username=2348091141288&password=password@111",
-                                CURLOPT_HTTPHEADER => array(
-                                  "Content-Type: application/x-www-form-urlencoded"
-                                ),
-                              ));
-                              $response = curl_exec($curl);
+
+                                curl_setopt_array($curl, array(
+                                  CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
+                                  CURLOPT_RETURNTRANSFER => true,
+                                  CURLOPT_ENCODING => '',
+                                  CURLOPT_MAXREDIRS => 10,
+                                  CURLOPT_TIMEOUT => 0,
+                                  CURLOPT_FOLLOWLOCATION => true,
+                                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                  CURLOPT_CUSTOMREQUEST => 'POST',
+                                  CURLOPT_POSTFIELDS => '{
+                                      "account": {
+                                          "password": "kwPPkiV4",
+                                          "systemId": "NG.102.0421"
+                                          },
+                                          "sms": {
+                                              "dest":"' . $clientPhone . '",
+                                              "src": "' . $senderId . '",
+                                              "text": "' . $message . '",
+                                              "unicode": true
+                                          }
+
+                                      }',
+                                  CURLOPT_HTTPHEADER => array(
+                                    'Content-Type: application/json',
+                                    'Authorization: Basic TkcuMTAyLjA0MjE6a3dQUGtpVjQ='
+                                  ),
+                                ));
                               // success
                               $err = curl_close($curl);
                               if ($err) {
@@ -1301,7 +1354,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               // if 10 add country code
                               $phoneLength = strlen($client_phone);
                               if ($phoneLength == 10) {
-                                $client_phone = "234" . $client_phone;
+                                $clientPhone = "234" . $client_phone;
+                              }
+                              if ($phone_length == 11) {
+                                $phone =  substr($client_phone, 1);
+                                $clientPhone = "234" . $phone;
                               }
                               $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$sessint_id'");
                               $qw = mysqli_fetch_array($sql_fund);
@@ -1313,21 +1370,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               if ($smsBalance >= 4) {
 
                                 $curl = curl_init();
+
                                 curl_setopt_array($curl, array(
-                                  CURLOPT_URL => "https://hordecall.net/sms/postSms.php",
+                                  CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
                                   CURLOPT_RETURNTRANSFER => true,
-                                  CURLOPT_ENCODING => "",
+                                  CURLOPT_ENCODING => '',
                                   CURLOPT_MAXREDIRS => 10,
                                   CURLOPT_TIMEOUT => 0,
                                   CURLOPT_FOLLOWLOCATION => true,
                                   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                                  CURLOPT_CUSTOMREQUEST => "POST",
-                                  CURLOPT_POSTFIELDS => "sender_id=$sender_id&mobile=$client_phone&msg=$msg&msg_id=$messageId&username=2348091141288&password=password@111",
+                                  CURLOPT_CUSTOMREQUEST => 'POST',
+                                  CURLOPT_POSTFIELDS => '{
+                                      "account": {
+                                          "password": "kwPPkiV4",
+                                          "systemId": "NG.102.0421"
+                                          },
+                                          "sms": {
+                                              "dest":"' . $clientPhone . '",
+                                              "src": "' . $senderId . '",
+                                              "text": "' . $message . '",
+                                              "unicode": true
+                                          }
+
+                                      }',
                                   CURLOPT_HTTPHEADER => array(
-                                    "Content-Type: application/x-www-form-urlencoded"
+                                    'Content-Type: application/json',
+                                    'Authorization: Basic TkcuMTAyLjA0MjE6a3dQUGtpVjQ='
                                   ),
                                 ));
-                                $response = curl_exec($curl);
                                 // success
                                 $err = curl_close($curl);
                                 if ($err) {
@@ -1410,7 +1480,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                            </script>
                            ';
                               }
-                              
                             }
                           } else if ($is_bank == 0) {
                             // institution account transaction
