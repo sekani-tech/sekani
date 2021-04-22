@@ -15,8 +15,6 @@ $destination = "../index.php";
   }
 
 </style>
-
-
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -68,8 +66,6 @@ $destination = "../index.php";
               </div>
             </div>   
 
-            
-
         </div>         
 
         <div class="row">
@@ -85,7 +81,6 @@ $destination = "../index.php";
               </div>
             </div>
             
-
             <div class="col-md-4 ml-auto mr-auto">
             <div class="card card-pricing bg-primary"><div class="card-body ">
                   
@@ -99,10 +94,8 @@ $destination = "../index.php";
             </div>   
 
             <div class="col-md-4 ml-auto mr-auto">
-
             <div class="card card-pricing bg-primary"><div class="card-body ">
-                  
-                  <h4 class="card-title">End of Day</h4>
+                  <h4 class="card-title">End of Business</h4>
                   <p class="card-description">
                   Closing of the Business Day
                   </p>

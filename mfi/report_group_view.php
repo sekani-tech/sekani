@@ -20,6 +20,7 @@ function branch_opt($connection)
 }
 
 $br_id = $_SESSION["branch_id"];
+
 $branches = branch_opt($connection);
 ?>
 <?php

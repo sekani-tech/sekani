@@ -69,9 +69,9 @@ include("header.php");
                                     <div class="card-body">
                                         <form action="bulkWork/upload/client.php" method="post" enctype="multipart/form-data">
                                             <div class="input-group">
-                                                <input type="file" name="clientData" class="form-control inputFileVisible">
+                                                <input type="file" name="staffData" class="form-control inputFileVisible">
                                                 <span class="input-group-btn">
-                                                    <button type="submit" name="submitClient" class="btn btn-fab btn-round btn-primary">
+                                                    <button type="submit" name="submitstaff" class="btn btn-fab btn-round btn-primary">
                                                         <i class="material-icons">send</i>
                                                     </button>
                                                 </span>

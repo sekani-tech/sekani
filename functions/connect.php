@@ -426,3 +426,11 @@ function insert($table, $record) {
 
     return mysqli_insert_id($connection);
 }
+
+function getPieceOfDate($date, $format){
+
+    $date = new DateTime($date);
+    $data = $date->format($format);
+
+    return $data; 
+}
