@@ -3,9 +3,26 @@
 $page_title = "Loans data";
 $destination = "bulk_upload";
 include("header.php");
+// include("../functions/connect.php");
+?>
+<?php
+  function glaccount_migrate($connection, $branch_id,$sessint_id)
+  {  
+    $br_id = $_SESSION["branch_id"];
+    $sint_id = $_SESSION["int_id"];
+
+    $dd = "SELECT * FROM acc_gl_account WHERE int_id = '$sint_id' AND gl_code = '$br_id'";
+    $dof = mysqli_query($connection, $dd);
+    $out = '';
+    while ($row = mysqli_fetch_array($dof))
+    {
+      $do = $row['id'];
+    $out .= " OR client.branch_id ='$do'";
+    }
+    return $out;
+  }
 
 ?>
-
 
 <div class="content">
     <div class="container-fluid">
@@ -53,7 +70,10 @@ include("header.php");
                                             </li>
                                         </ul>
                                         <div class="card-body text-center">
-                                            <a href='bulkWork/getFile.php?name=clientData&loc=2' class="btn btn-primary btn-lg">Download Data Sample</a>
+                                            <!-- <a href="../functions/migrate/gl_account_migration.php" class="btn btn-primary btn-lg">Export Excel</a> -->
+                                            <form action="../composer/gl_account_migration.php" method="post">
+                                                <button type="submit" name="exportPDF" class="btn btn-primary">Export Excel</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -66,11 +86,11 @@ include("header.php");
                                         <p class="category"></p>
                                     </div>
                                     <div class="card-body">
-                                        <form action="bulkWork/upload/client.php" method="post" enctype="multipart/form-data">
+                                        <form action="../functions/migrate/gl_account_migration.php" method="post" enctype="multipart/form-data">
                                             <div class="input-group">
                                                 <input type="file" name="clientData" class="form-control inputFileVisible">
                                                 <span class="input-group-btn">
-                                                    <button type="submit" name="submitClient" class="btn btn-fab btn-round btn-primary">
+                                                    <button type="submit" name="exportPDF" class="btn btn-fab btn-round btn-primary">
                                                         <i class="material-icons">send</i>
                                                     </button>
                                                 </span>
