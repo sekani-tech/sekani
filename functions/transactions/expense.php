@@ -21,35 +21,33 @@ if (count([$getacct1]) == 1) {
     $staff_id = $uw["id"];
     $staff_name = $uw['display_name'];
 }
-
+$holidaycheck = mysqli_query($connection, "SELECT * FROM holiday_tb WHERE  marked_day = '$gen_date'");
+// check if date is holiday
+// // if($holidaycheck){    
+// //     exit('today is a holiday and posting not allowed');
+// }
+// if yes exit telling the person today is a holiday and posting not allowed.
 $year = getPieceOfDate($gen_date,'Y'); 
     $month = getPieceOfDate($year,'m');
-$findEndYear = mysqli_query($connection, "SELECT * FROM endofyear_tb WHERE yearend = '$year'AND status ='0'");
+    $testQuery = "SELECT * FROM endofyear_tb WHERE yearend = '$year'AND status ='1'";
+    dd($testQuery);
+$findEndYear = mysqli_query($connection, "SELECT * FROM endofyear_tb WHERE yearend = '$year'AND status ='1'");
 if(!$findEndYear){
-    $findEndMonth = mysqli_query($connection, "SELECT * FROM endofmonth_tb WHERE monthend = '$month' AND yearend ='$year'AND status ='0'");
+    $findEndMonth = mysqli_query($connection, "SELECT * FROM endofmonth_tb WHERE monthend = '$month' AND yearend ='$year'AND status ='1'");
     if(!$findEndMonth){
         $findEndDay = mysqli_query($connection, "SELECT * FROM endofday_tb WHERE dateclosed = '$gen_date' AND status ='1'");
         if($findEndDay){
-            die("Day already closed");
+            exit('Day already closed');
                // echo header("Location: ../../mfi/endofday.php?legal=$randms");
         }
     }else{
-        die("Month Already closed");
+        exit("Month Already closed");
    //echo header("Location: ../../mfi/endofmonth.php?legal=$randms"); 
     }
 }else{
-    die("Year have already closed");
+    exit("Year have already closed");
    //echo header("Location: ../../mfi/endofmonth.php?legal=$randms");
 }
-
-$holiday = mysqli_query($connection,"SELECT * FROM holiday_tb WHERE marked_day = '$holiday'");
-    if($holiday){
-        
-        exit();
-    }
-
-
-
 ?>
 
 <?php

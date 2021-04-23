@@ -68,7 +68,7 @@ if (isset($_GET["message1"])) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                     <label><span style="color: red;"></span></label><br>
-                                        <button type="submit" name="endofday" class="btn btn-primary btn-round">End Day</button>
+                                        <button type="submit" name="endofmonth" class="btn btn-primary btn-round">End Month</button>
                                     </div>
                                     
                             </form>
@@ -157,7 +157,7 @@ if (isset($_GET["message1"])) {
                                         ?>
                                     </thead>
                                     <tbody>
-                                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+                                        <script>
                                         </script>
                                         <script>
                                             $(document).ready(function() {
@@ -184,7 +184,7 @@ if (isset($_GET["message1"])) {
                                         }
                                 ?>
                                 </table>
-                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+                                <script>
                                 </script>
 
                                 <script>

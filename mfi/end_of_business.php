@@ -23,7 +23,7 @@ $destination = "../index.php";
           <!-- your content here -->
           <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title text-center">End of Business</h4>
+                  <h4 class="card-title text-center">End of Period</h4>
                   <p class="card-category text-center"></p>
                 </div>
     </div>

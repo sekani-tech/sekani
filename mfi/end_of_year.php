@@ -27,8 +27,6 @@ function branch($connection)
 if (isset($_GET["message1"])) {
     $key = $_GET["message1"];
     $tt = 0;
-    // if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-    // $out = $_SESSION["lack_of_intfund_$key"];
     echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
@@ -70,7 +68,7 @@ if (isset($_GET["message1"])) {
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label><span style="color: red;"></span></label><br>
-                                    <button type="submit" name="endofday" class="btn btn-primary btn-round">End Day</button>
+                                    <button type="submit" name="endofyear" class="btn btn-primary btn-round">End Year</button>
                                 </div>
 
                                 </form>
@@ -156,7 +154,7 @@ if (isset($_GET["message1"])) {
                                         ?>
                                     </thead>
                                     <tbody>
-                                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+                                        <scrip>
                                         </script>
                                         <script>
                                             $(document).ready(function() {
@@ -185,7 +183,7 @@ if (isset($_GET["message1"])) {
                                         }
                                 ?>
                                 </table>
-                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+                                <script>
                                 </script>
 
                                 <script>
