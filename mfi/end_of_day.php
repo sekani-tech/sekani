@@ -160,7 +160,7 @@ if (isset($_GET["message1"])) {
                                         ?>
                                     </thead>
                                     <tbody>
-                                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+                                        <script>
                                         </script>
                                         <script>
                                             $(document).ready(function() {
@@ -185,7 +185,7 @@ if (isset($_GET["message1"])) {
                                         }
                                 ?>
                                 </table>
-                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+                                <script>
                                 </script>
 
                                 <script>

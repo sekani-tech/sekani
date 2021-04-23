@@ -4,7 +4,7 @@ $page_title = "Deposit/ Withdrawal";
 $yes = "true";
 $destination = "transaction.php";
 include("header.php");
-include("ajaxcall.php");
+include("ajaxcall.php");   
 ?>
 <?php
 $exp_error = "";
