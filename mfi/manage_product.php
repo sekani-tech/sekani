@@ -467,7 +467,7 @@ $dos = mysqli_query($connection, $fd);
                     <div class="tab">
                       <div class="row">
                         <!-- replace values with loan data -->
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                           <h5 class="card-title">Accounting Rules</h5>
                           <div class="position-relative form-group ">
                             <div>
@@ -487,7 +487,7 @@ $dos = mysqli_query($connection, $fd);
                           </div>
                         </div>
                         <div class="col-md-6">
-                          <br>
+                          <!-- <br> -->
                           <h5 class="card-title">Assets</h5>
                           <div class="position-relative form-group">
                             <div class="form-group">
@@ -565,64 +565,7 @@ $dos = mysqli_query($connection, $fd);
                           </div>
                       </div>                  -->
                         </div>
-                        <div class="col-md-6">
-                          <p>
-                            <b style="font-size: 20px">
-                              Accounting Instruction
-                            </b>
-                          </p>
-                          <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal"><i class="material-icons">add</i></button>
-                          <span>
-                            Configure Fund sources for payment channels
-                          </span>
-                          <div id="acct_int">
-                            <div class="table-responsive">
-                              <table id="tabledat" class="table" cellspacing="0" style="width:100%">
-                                <thead>
-                                  <th> <b> Payment Type </b></th>
-                                  <th> <b>Assets Account <b></th>
-                                </thead>
-                              </table>
-                            </div>
-                          </div>
-                          <div id="show_payment"></div>
-                          <!-- <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal2"><i class="material-icons">add</i></button> -->
-                          <!-- <span>
-                            Map Fees to Specific Income accounts
-                            </span> -->
-                          <div id="acct_2" hidden>
-                            <div class="table-responsive">
-                              <table id="tabledat" class="table" cellspacing="0" style="width:100%">
-                                <thead>
-                                  <th> <b> Fee </b></th>
-                                  <th> <b>Income Account <b></th>
-                                </thead>
-                              </table>
-                            </div>
-                          </div>
-                          <div id="show_payment2"></div>
-                          <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal3"><i class="material-icons">add</i></button>
-                          <span>
-                            Map Penalties to Specific income accounts
-                          </span>
-                          <div id="acct_3">
-                            <div class="table-responsive">
-                              <table id="tabledat" class="table" cellspacing="0" style="width:100%">
-                                <thead>
-                                  <th> <b> Penalty </b></th>
-                                  <th> <b> Income Account <b></th>
-                                </thead>
-                                <!-- <tbody>
-           <tr>
-             <th> <h5> Eco Bank </h5></th>
-             <th> <h5>GL </h5></th>
-           </tr>
-         </tbody> -->
-                              </table>
-                            </div>
-                          </div>
-                          <div id="show_payment3"></div>
-                        </div>
+
                         <!-- <div class="col-md-8"> -->
                         <!-- </div> -->
                       </div>
@@ -689,324 +632,46 @@ $dos = mysqli_query($connection, $fd);
                           </div> -->
                           </div>
                           <!-- next -->
-                          <h5 class="card-title">Expenses</h5>
-                          <div class="position-relative form-group">
-                            <?php
-                            function fill_exp($connection)
-                            {
-                              $sint_id = $_SESSION["int_id"];
-                              $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '5' ORDER BY name ASC";
-                              $res = mysqli_query($connection, $org);
-                              $output = '';
-                              while ($row = mysqli_fetch_array($res)) {
-                                $output .= '<option value = "' . $row["gl_code"] . '"> ' . $row["name"] . ' </option>';
+                          
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="card-title">Expenses</h5>
+                            <div class="position-relative form-group">
+                              <?php
+                              function fill_exp($connection)
+                              {
+                                $sint_id = $_SESSION["int_id"];
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '5' ORDER BY name ASC";
+                                $res = mysqli_query($connection, $org);
+                                $output = '';
+                                while ($row = mysqli_fetch_array($res)) {
+                                  $output .= '<option value = "' . $row["gl_code"] . '"> ' . $row["name"] . ' </option>';
+                                }
+                                return $output;
                               }
-                              return $output;
-                            }
-                            ?>
-                            <div class="form-group">
-                              <div class="col-md-8">
-                                <label for="charge" class="form-align ">Losses Written Off</label>
-                                <select class="form-control form-control-sm" name="exp_loss_written_off">
-                                  <option value="">--</option>
-                                  <?php echo fill_exp($connection) ?>
-                                </select>
+                              ?>
+                              <div class="form-group">
+                                <div class="col-md-8">
+                                  <label for="charge" class="form-align ">Losses Written Off</label>
+                                  <select class="form-control form-control-sm" name="exp_loss_written_off">
+                                    <option value="">--</option>
+                                    <?php echo fill_exp($connection) ?>
+                                  </select>
+                                </div>
                               </div>
-                            </div>
-                            <div class="form-group">
-                              <div class="col-md-8">
-                                <label for="charge" class="form-align ">Interest Written Off</label>
-                                <select class="form-control form-control-sm" name="exp_interest_written_off">
-                                  <option value="">--</option>
-                                  <?php echo fill_exp($connection) ?>
-                                </select>
+                              <div class="form-group">
+                                <div class="col-md-8">
+                                  <label for="charge" class="form-align ">Interest Written Off</label>
+                                  <select class="form-control form-control-sm" name="exp_interest_written_off">
+                                    <option value="">--</option>
+                                    <?php echo fill_exp($connection) ?>
+                                  </select>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
                       </div>
-                      <!-- <div class="row"> -->
 
-                      <!-- Modal -->
-                      <?php
-                      function fill_all($connection)
-                      {
-                        $sint_id = $_SESSION["int_id"];
-                        $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' ORDER BY name ASC";
-                        $res = mysqli_query($connection, $org);
-                        $output = '';
-                        while ($row = mysqli_fetch_array($res)) {
-                          $output .= '<option value = "' . $row["gl_code"] . '"> ' . $row["name"] . ' </option>';
-                        }
-                        return $output;
-                      }
-                      ?>
-                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Add Accounting Instruction</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <?php
-                                    function fill_payment($connection)
-                                    {
-                                      $sint_id = $_SESSION["int_id"];
-                                      $getacct = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE name LIKE '%due from bank%' && int_id = '$sint_id'");
-                                      $cx = mysqli_fetch_array($getacct);
-                                      $dfb = $cx["id"];
-
-                                      $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '1' && parent_id = '$dfb' ORDER BY name ASC";
-                                      $res = mysqli_query($connection, $org);
-                                      $output = '';
-                                      while ($row = mysqli_fetch_array($res)) {
-                                        $output .= '<option value = "' . $row["gl_code"] . '"> ' . $row["name"] . ' </option>';
-                                      }
-                                      return $output;
-                                    }
-                                    ?>
-                                    <label for="charge" class="form-align ">Payment</label>
-                                    <script>
-                                      $(document).ready(function() {
-                                        $('#run_pay').on("change keyup paste click", function() {
-                                          var id = $('#payment_id').val();
-                                          var int_id = $('#int_id').val();
-                                          var main_p = $('#main_p').val();
-                                          var idx = $('#payment_id_x').val();
-                                          //  new
-                                          if (idx != '' && id != '') {
-                                            $.ajax({
-                                              url: "ajax_post/payment_product.php",
-                                              method: "POST",
-                                              data: {
-                                                id: id,
-                                                int_id: int_id,
-                                                main_p: main_p,
-                                                idx: idx
-                                              },
-                                              success: function(data) {
-                                                $('#show_payment').html(data);
-                                                document.getElementById("ipayment_id").setAttribute("hidden", "");
-                                                document.getElementById("real_payment").removeAttribute("hidden");
-                                              }
-                                            })
-                                          } else {
-                                            //  poor the internet
-                                          }
-                                        });
-                                      });
-                                    </script>
-                                    <div id="real_payment" hidden></div>
-                                    <div id="ipayment_id">
-                                      <select id="payment_id" class="form-control form-control-sm" name="">
-                                        <option value="">--</option>
-                                        <?php echo fill_payment($connection) ?>
-                                      </select>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label for="charge" class="form-align">Asset Account</label>
-                                    <select class="form-control form-control-sm" name="" id="payment_id_x">
-                                      <option value="">--</option>
-                                      <?php echo fill_asset($connection) ?>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="button" class="btn btn-primary" id="run_pay">Save changes</button>
-                              <button type="button" class="btn btn-primary" id="run_pay2" hidden>Save changes</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- Modal2 -->
-                      <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel2">Add Fee To Income Account Rule</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <?php
-                                    function fill_fee($connection)
-                                    {
-                                      $sint_id = $_SESSION["int_id"];
-                                      $getacct = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE name LIKE '%FEE%' && parent_id = '0' && int_id = '$sint_id'");
-                                      $cx = mysqli_fetch_array($getacct);
-                                      $dfb = $cx["id"];
-
-                                      $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && parent_id = '$dfb' ORDER BY name ASC";
-                                      $res = mysqli_query($connection, $org);
-                                      $output = '';
-                                      while ($row = mysqli_fetch_array($res)) {
-                                        $output .= '<option value = "' . $row["gl_code"] . '"> ' . $row["name"] . ' </option>';
-                                      }
-                                      return $output;
-                                    }
-                                    ?>
-                                    <label for="charge" class="form-align ">Fee</label>
-                                    <script>
-                                      $(document).ready(function() {
-                                        $('#run_pay3').on("change keyup paste click", function() {
-                                          var id2 = $('#payment_id2').val();
-                                          var int_id = $('#int_id').val();
-                                          var main_p = $('#main_p').val();
-                                          var idx2 = $('#payment_id_x2').val();
-                                          //  new
-                                          if (idx2 != '' && id2 != '') {
-                                            $.ajax({
-                                              url: "ajax_post/payment_fee.php",
-                                              method: "POST",
-                                              data: {
-                                                id2: id2,
-                                                int_id: int_id,
-                                                main_p: main_p,
-                                                idx2: idx2
-                                              },
-                                              success: function(data) {
-                                                $('#show_payment2').html(data);
-                                                document.getElementById("ipayment_id2").setAttribute("hidden", "");
-                                                document.getElementById("real_payment2").removeAttribute("hidden");
-                                              }
-                                            })
-                                          } else {
-                                            //  poor the internet
-                                          }
-                                        });
-                                      });
-                                    </script>
-                                    <div id="real_payment2" hidden></div>
-                                    <div id="ipayment_id2">
-                                      <select class="form-control form-control-sm" name="" id="payment_id2">
-                                        <option value="">--</option>
-                                        <?php echo fill_fee($connection) ?>
-                                      </select>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label for="charge" class="form-align ">Income Account</label>
-                                    <select class="form-control form-control-sm" name="" id="payment_id_x2">
-                                      <option value="">--</option>
-                                      <?php echo fill_in($connection) ?>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="button" class="btn btn-primary" id="run_pay3">Save changes</button>
-                              <button type="button" class="btn btn-primary" id="run_pay4" hidden>Save changes</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- Modal3 -->
-                      <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Add Penalty To Income Account Rule</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <?php
-                                    function fill_pen($connection)
-                                    {
-                                      $sint_id = $_SESSION["int_id"];
-                                      $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && name LIKE '%penalty%' ORDER BY name ASC";
-                                      $res = mysqli_query($connection, $org);
-                                      $output = '';
-                                      while ($row = mysqli_fetch_array($res)) {
-                                        $output .= '<option value = "' . $row["gl_code"] . '"> ' . $row["name"] . ' </option>';
-                                      }
-                                      return $output;
-                                    }
-                                    ?>
-                                    <label for="charge" class="form-align ">Penalty</label>
-                                    <script>
-                                      $(document).ready(function() {
-                                        $('#run_pay5').on("change keyup paste click", function() {
-                                          var id2 = $('#payment_id3').val();
-                                          var int_id = $('#int_id').val();
-                                          var main_p = $('#main_p').val();
-                                          var idx2 = $('#payment_id_x3').val();
-                                          //  new
-                                          if (idx2 != '' && id2 != '') {
-                                            $.ajax({
-                                              url: "ajax_post/payment_pen.php",
-                                              method: "POST",
-                                              data: {
-                                                id2: id2,
-                                                int_id: int_id,
-                                                main_p: main_p,
-                                                idx2: idx2
-                                              },
-                                              success: function(data) {
-                                                $('#show_payment3').html(data);
-                                                document.getElementById("ipayment_id3").setAttribute("hidden", "");
-                                                document.getElementById("real_payment3").removeAttribute("hidden");
-                                              }
-                                            })
-                                          } else {
-                                            //  poor the internet
-                                          }
-                                        });
-                                      });
-                                    </script>
-                                    <div id="real_payment3"></div>
-                                    <div id="ipayment_id3">
-                                      <select class="form-control form-control-sm" name="" id="payment_id3">
-                                        <option value="">--</option>
-                                        <?php echo fill_pen($connection) ?>
-                                      </select>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label for="charge" class="form-align ">Income Account</label>
-                                    <select class="form-control form-control-sm" name="" id="payment_id_x3">
-                                      <option value="">--</option>
-                                      <?php echo fill_in($connection) ?>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="button" class="btn btn-primary" id="run_pay5">Save changes</button>
-                              <button type="button" class="btn btn-primary" id="run_pay6" hidden>Save changes</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- </div> -->
                     </div>
                   </div>
                   <!-- Fourth Tab -->

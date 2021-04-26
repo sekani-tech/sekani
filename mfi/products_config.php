@@ -319,12 +319,7 @@ if ($per_con == 1 || $per_con == "1") {
                                 <div class="nav-tabs-wrapper">
                                     <!-- <span class="nav-tabs-title">Configuration:</span> -->
                                     <ul class="nav nav-tabs" data-tabs="tabs">
-                                        <!-- <li class="nav-item">
-                                          <a class="nav-link active" href="#profile" data-toggle="tab">
-                                            <i class="material-icons">bug_report</i> Password Settings
-                                            <div class="ripple-container"></div>
-                                          </a>
-                                        </li> -->
+                                        
                                         <li class="nav-item">
                                             <a class="nav-link active" href="#products" data-toggle="tab">
                                                 <!-- visibility -->
@@ -582,6 +577,9 @@ if ($per_con == 1 || $per_con == "1") {
                                                             $me = "Shares";
                                                         } else if ($row["charge_applies_to_enum"] == 4) {
                                                             $me = "Current";
+                                                        }
+                                                        else if ($row["charge_applies_to_enum"] == 5) {
+                                                            $me = "FTD";
                                                         }
 
                                                         if ($row["is_active"] == 1) {

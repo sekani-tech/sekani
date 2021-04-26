@@ -7,8 +7,8 @@ session_start();
 $int_id = $_SESSION["int_id"];
 $branch_id = $_SESSION["branch_id"];
 $send_id = $_SESSION["sender_id"];
-$phone = "08149912983";
-$msg = "Test from sms ";
+$phone = "07059658235";
+$msg = "This Should be Final tests";
 $client_id = $_POST["client_id"];
 $account_no = $_POST["account_no"];
 // quick test

@@ -1,10 +1,12 @@
 <?php
 
 $page_title = "Deposit/ Withdrawal";
-$yes = "true";
+$today = Date('Y-m-d');
+$minDate = date("Y-m-d", strtotime("-3 year"));
 $destination = "transaction.php";
 include("header.php");
 include("ajaxcall.php");
+
 ?>
 <?php
 $exp_error = "";
@@ -496,7 +498,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Amount</label>
-                                            <input type="number" step="any" class="form-control" name="amount" value="">
+                                            <input type="number" step="100" class="form-control" name="amount" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -551,8 +553,8 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Repayment Date</label>
-                                            <input type="date" name="transDate" class="form-control" required/>
+                                            <label>Transaction Date</label>
+                                            <input type="date" name="transDate" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" class="form-control" required/>
                                         </div>
                                     </div>
                                 </div>
@@ -632,8 +634,8 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Repayment Date</label>
-                                            <input type="date" name="transDate" class="form-control" required/>
+                                            <label>Transaction Date</label>
+                                            <input type="date" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" name="transDate" class="form-control" required/>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -761,8 +763,8 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Repayment Date</label>
-                                            <input type="date" name="transDate" class="form-control" required/>
+                                            <label>Transaction Date</label>
+                                            <input type="date" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" name="transDate" class="form-control" required/>
                                         </div>
                                     </div>
                                 </div>

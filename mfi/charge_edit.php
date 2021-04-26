@@ -43,6 +43,9 @@ if(isset($_GET['edit'])){
     else if($product == 4){
         $productb = 'Current'; 
     }
+    else if($product == 5){
+        $productb = 'FTD'; 
+    }
     
     // Query for Charge type
     if($charge_type == 1){
@@ -228,6 +231,7 @@ if(isset($_GET['edit'])){
                               <option value="2">Savings</option>
                               <option value="3">Shares</option>
                               <option value="4">Current </option>
+                              <option value="5">FTD </option>
                           </select>
                         </div>
                       </div>

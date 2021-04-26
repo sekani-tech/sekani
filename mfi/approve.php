@@ -245,7 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               // damn with
                               $insert_loan_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
                    `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
-                  VALUES ('{$int_id}', '{$branch_id}', '{$loan_port}', '{$transid}', 'Loan Repayment Principal / {$clientt_name}', 'Loan Repayment Principal', '0', '0', '{$transaction_date}',
+                  VALUES ('{$sessint_id}', '{$branch_id}', '{$loan_port}', '{$transid}', 'Loan Repayment Principal / {$cn}', 'Loan Repayment Principal', '0', '0', '{$transaction_date}',
                    '{$collection_principal}', '{$updated_loan_port}', '{$updated_loan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_principal}', '0.00')");
                               if ($insert_loan_port) {
                                 //  go for the interest
@@ -253,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 if ($update_the_int_loan) {
                                   $insert_i_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
                `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
-              VALUES ('{$int_id}', '{$branch_id}', '{$int_loan_port}', '{$transid}', 'Loan Repayment Interest / {$clientt_name}', 'Loan Repayment Interest', '0', '0', '{$transaction_date}',
+              VALUES ('{$sessint_id}', '{$branch_id}', '{$int_loan_port}', '{$transid}', 'Loan Repayment Interest / {$cn}', 'Loan Repayment Interest', '0', '0', '{$transaction_date}',
                '{$collection_interest}', '{$intloan_port}', '{$intloan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_interest}', '0.00')");
                                   // done
                                 } else {
@@ -286,7 +286,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               // damn with
                               $insert_loan_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
                    `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
-                  VALUES ('{$int_id}', '{$branch_id}', '{$loan_port}', '{$transid}', 'Loan Repayment Principal / {$clientt_name}', 'Loan Repayment Principal', '0', '0', '{$transaction_date}',
+                  VALUES ('{$sessint_id}', '{$branch_id}', '{$loan_port}', '{$transid}', 'Loan Repayment Principal / {$cn}', 'Loan Repayment Principal', '0', '0', '{$transaction_date}',
                    '{$collection_principal}', '{$updated_loan_port}', '{$updated_loan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_principal}', '0.00')");
                               if ($insert_loan_port) {
                                 //  go for the interest
@@ -294,7 +294,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 if ($update_the_int_loan) {
                                   $insert_i_port = mysqli_query($connection, "INSERT INTO `gl_account_transaction` (`int_id`, `branch_id`, `gl_code`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`,
                `amount`, `gl_account_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`) 
-              VALUES ('{$int_id}', '{$branch_id}', '{$int_loan_port}', '{$transid}', 'Loan Repayment Interest / {$clientt_name}', 'Loan Repayment Interest', '0', '0', '{$transaction_date}',
+              VALUES ('{$sessint_id}', '{$branch_id}', '{$int_loan_port}', '{$transid}', 'Loan Repayment Interest / {$cn}', 'Loan Repayment Interest', '0', '0', '{$transaction_date}',
                '{$collection_interest}', '{$intloan_port}', '{$intloan_port}', '{$gen_date}', '0', '0', '{$gen_date}', '0', '{$collection_interest}', '0.00')");
                                   // done
                                 } else {
@@ -328,10 +328,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             if ($phoneLength == 10) {
                               $clientPhone = "234" . $client_phone;
                             }
-                            if ($phone_length == 11) {
+                            if ($phoneLength == 11) {
                               $phone =  substr($client_phone, 1);
                               $clientPhone = "234" . $phone;
                             }
+                            $testData = [
+                              'int_id' => $sessint_id,
+                              'texts' => $clientPhone,
+                              'number' => $client_phone
+                            ];
+                            $insertTest = insert('test_data', $testData);
                             $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$sessint_id'");
                             $qw = mysqli_fetch_array($sql_fund);
                             $smsBalance = $qw["sms_balance"];
@@ -343,33 +349,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                               $curl = curl_init();
 
-                                curl_setopt_array($curl, array(
-                                  CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
-                                  CURLOPT_RETURNTRANSFER => true,
-                                  CURLOPT_ENCODING => '',
-                                  CURLOPT_MAXREDIRS => 10,
-                                  CURLOPT_TIMEOUT => 0,
-                                  CURLOPT_FOLLOWLOCATION => true,
-                                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                                  CURLOPT_CUSTOMREQUEST => 'POST',
-                                  CURLOPT_POSTFIELDS => '{
-                                      "account": {
-                                          "password": "kwPPkiV4",
-                                          "systemId": "NG.102.0421"
-                                          },
-                                          "sms": {
-                                              "dest":"' . $clientPhone . '",
-                                              "src": "' . $senderId . '",
-                                              "text": "' . $message . '",
-                                              "unicode": true
-                                          }
+                              curl_setopt_array($curl, array(
+                                CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
+                                CURLOPT_RETURNTRANSFER => true,
+                                CURLOPT_ENCODING => '',
+                                CURLOPT_MAXREDIRS => 10,
+                                CURLOPT_TIMEOUT => 0,
+                                CURLOPT_FOLLOWLOCATION => true,
+                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                CURLOPT_CUSTOMREQUEST => 'POST',
+                                CURLOPT_POSTFIELDS => '{
+                                          "account": {
+                                              "password": "kwPPkiV4",
+                                              "systemId": "NG.102.0421"
+                                              },
+                                              "sms": {
+                                                  "dest":"' . $clientPhone . '",
+                                                  "src": "' . $sender_id . '",
+                                                  "text": "' . $msg . '",
+                                                  "unicode": true
+                                              }
 
-                                      }',
-                                  CURLOPT_HTTPHEADER => array(
-                                    'Content-Type: application/json',
-                                    'Authorization: Basic TkcuMTAyLjA0MjE6a3dQUGtpVjQ='
-                                  ),
-                                ));
+                                          }',
+                                CURLOPT_HTTPHEADER => array(
+                                  'Content-Type: application/json',
+                                  'Authorization: Basic TkcuMTAyLjA0MjE6a3dQUGtpVjQ='
+                                ),
+                              ));
+
+
+                              $response = curl_exec($curl);
+                              dd($response);
                               // success
                               $err = curl_close($curl);
                               if ($err) {
@@ -436,7 +446,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                       });
                                       </script>
                                       ';
-                              $URL = "transact_approval.php";
+                              $URL = "transact_approval.php?get='.$clientPhone.'";
                               echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                             } else {
                               echo "Error in Bank Transaction";
@@ -1081,6 +1091,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               $phone =  substr($client_phone, 1);
                               $clientPhone = "234" . $phone;
                             }
+                            $testData = [
+                              'int_id' => $sessint_id,
+                              'texts' => $clientPhone
+                            ];
+                            $insertTest = insert('test_data', $testData);
                             $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$sessint_id'");
                             $qw = mysqli_fetch_array($sql_fund);
                             $smsBalance = $qw["sms_balance"];
@@ -1092,16 +1107,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                               $curl = curl_init();
 
-                                curl_setopt_array($curl, array(
-                                  CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
-                                  CURLOPT_RETURNTRANSFER => true,
-                                  CURLOPT_ENCODING => '',
-                                  CURLOPT_MAXREDIRS => 10,
-                                  CURLOPT_TIMEOUT => 0,
-                                  CURLOPT_FOLLOWLOCATION => true,
-                                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                                  CURLOPT_CUSTOMREQUEST => 'POST',
-                                  CURLOPT_POSTFIELDS => '{
+                              curl_setopt_array($curl, array(
+                                CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
+                                CURLOPT_RETURNTRANSFER => true,
+                                CURLOPT_ENCODING => '',
+                                CURLOPT_MAXREDIRS => 10,
+                                CURLOPT_TIMEOUT => 0,
+                                CURLOPT_FOLLOWLOCATION => true,
+                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                CURLOPT_CUSTOMREQUEST => 'POST',
+                                CURLOPT_POSTFIELDS => '{
                                       "account": {
                                           "password": "kwPPkiV4",
                                           "systemId": "NG.102.0421"
@@ -1114,11 +1129,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                           }
 
                                       }',
-                                  CURLOPT_HTTPHEADER => array(
-                                    'Content-Type: application/json',
-                                    'Authorization: Basic TkcuMTAyLjA0MjE6a3dQUGtpVjQ='
-                                  ),
-                                ));
+                                CURLOPT_HTTPHEADER => array(
+                                  'Content-Type: application/json',
+                                  'Authorization: Basic TkcuMTAyLjA0MjE6a3dQUGtpVjQ='
+                                ),
+                              ));
+
+                              $response = curl_exec($curl);
                               // success
                               $err = curl_close($curl);
                               if ($err) {

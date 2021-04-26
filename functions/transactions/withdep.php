@@ -723,7 +723,7 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                           if ($phoneLength == 10) {
                             $clientPhone = "234" . $client_phone;
                           }
-                          if ($phone_length == 11) {
+                          if ($phoneLength == 11) {
                             $phone =  substr($client_phone, 1);
                             $clientPhone = "234" . $phone;
                           }

@@ -173,10 +173,6 @@ $rezz = mysqli_query($connection, $activeq);
     <!-- END CHART.JS -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> -->
     <script src="../datatable/sweetalert.min.js"></script>
-    <!-- <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css"> -->
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="../datatable/jquery-3.3.1.min.js"></script>
-    <script src="../datatable/jquery-3.3.2.js"></script> -->
     <!-- DataTables -->
     <link rel="stylesheet" href="../datatable/jquery.dataTables.min.css">
     <link rel="stylesheet" href="../datatable/rowReorder.dataTables.min.css">

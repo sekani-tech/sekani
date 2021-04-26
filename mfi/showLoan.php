@@ -1862,7 +1862,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="bmd-label-floating">Loan Sector</label>
-                    <input type="text" class="form-control" name="phone" value="<?php echo strtoupper($me); ?>" readonly>
+                    <input type="text" class="form-control" name="phone" value="<?php echo strtoupper($loan_sec); ?>" readonly>
                   </div>
                 </div>
                 <div class="col-md-4">
