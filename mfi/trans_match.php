@@ -125,6 +125,9 @@ if (isset($_POST['btnUploadBankStatement'])) {
                             <div class="card-header card-header-primary">
                                 <h4 class="card-title">Bank Reconciliation Matching</h4>
                                 <!-- <p class="category">Category subtitle</p> -->
+                                <div style="float: right;">
+                                <button type="button" class="btn btn-success">Reconcile</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -168,9 +171,7 @@ if (isset($_POST['btnUploadBankStatement'])) {
                             <div class="card-header card-header-primary">
                                 <h4 class="card-title">Matching Transactions</h4>
                                 <!-- <p class="category">Category subtitle</p> -->
-                                <div style="float: right;">
-                                <button type="button" class="btn btn-success">Reconcile</button>
-                                </div>
+                                
                             </div>
                             <div class="card-body">
                                 <div class="row">
