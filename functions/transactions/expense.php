@@ -29,24 +29,26 @@ $holidaycheck = mysqli_query($connection, "SELECT * FROM holiday_tb WHERE  marke
 // if yes exit telling the person today is a holiday and posting not allowed.
 $year = getPieceOfDate($gen_date,'Y'); 
     $month = getPieceOfDate($year,'m');
-    $testQuery = "SELECT * FROM endofyear_tb WHERE yearend = '$year'AND status ='1'";
-    dd($testQuery);
+    // $testQuery = "SELECT * FROM endofyear_tb WHERE yearend = '$year'AND status ='1'";
 $findEndYear = mysqli_query($connection, "SELECT * FROM endofyear_tb WHERE yearend = '$year'AND status ='1'");
 if(!$findEndYear){
     $findEndMonth = mysqli_query($connection, "SELECT * FROM endofmonth_tb WHERE monthend = '$month' AND yearend ='$year'AND status ='1'");
     if(!$findEndMonth){
         $findEndDay = mysqli_query($connection, "SELECT * FROM endofday_tb WHERE dateclosed = '$gen_date' AND status ='1'");
         if($findEndDay){
-            exit('Day already closed');
-               // echo header("Location: ../../mfi/endofday.php?legal=$randms");
+            die("error in institution account transaction");
+            $_SESSION["Lack_of_intfund_$randms"] = "Day already closed";
+            echo header("Location: ../../mfi/transact.php?legal=$randms");
         }
     }else{
-        exit("Month Already closed");
-   //echo header("Location: ../../mfi/endofmonth.php?legal=$randms"); 
+        die("error in institution account transaction");
+        $_SESSION["Lack_of_intfund_$randms"] = "Month already closed";
+        echo header("Location: ../../mfi/transact.php?legal=$randms");
     }
 }else{
-    exit("Year have already closed");
-   //echo header("Location: ../../mfi/endofmonth.php?legal=$randms");
+    die("error in institution account transaction");
+    $_SESSION["Lack_of_intfund_$randms"] = "Year already closed";
+    echo header("Location: ../../mfi/transact.php?legal=$randms");
 }
 ?>
 
@@ -63,6 +65,27 @@ $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
 $findIsBank = selectOne("payment_type", ['id' => $pym]);
 $isBank = $findIsBank['is_bank'];
 $bankGlCode = $findIsBank['gl_code'];
+
+$EndYear = mysqli_query($connection, "SELECT * FROM endofyear_tb WHERE yearend = '$year'AND status ='1'");
+if(!$EndYear){
+    $EndMonth = mysqli_query($connection, "SELECT * FROM endofmonth_tb WHERE monthend = '$month' AND yearend ='$year'AND status ='1'");
+    if(!$EndMonth){
+        $EndDay = mysqli_query($connection, "SELECT * FROM endofday_tb WHERE dateclosed = '$gen_date' AND status ='1'");
+        if($EndDay){
+            die("error in institution account transaction");
+            $_SESSION["Lack_of_intfund_$randms"] = "Day already closed";
+            echo header("Location: ../../mfi/transact.php?legal=$randms");
+        }
+    }else{
+        die("error in institution account transaction");
+        $_SESSION["Lack_of_intfund_$randms"] = "Month already closed";
+        echo header("Location: ../../mfi/transact.php?legal=$randms");
+    }
+}else{
+    die("error in institution account transaction");
+    $_SESSION["Lack_of_intfund_$randms"] = "Year already closed";
+    echo header("Location: ../../mfi/transact.php?legal=$randms");
+}
 ?>
 
 <?php
@@ -95,6 +118,28 @@ if ($isBank == 0) {
             // $tbd = $x['total_deposits_derived'] + $amt;
             $tbd2 = $x['total_withdrawals_derived'] + $gl_amt;
             $new_int_bal2 = $int_acct_bal - $gl_amt;
+
+            $expenseYear = mysqli_query($connection, "SELECT * FROM endofyear_tb WHERE yearend = '$year'AND status ='1'");
+            if(!$expenseYear){
+                $expenseMonth = mysqli_query($connection, "SELECT * FROM endofmonth_tb WHERE monthend = '$month' AND yearend ='$year'AND status ='1'");
+                if(!$expenseMonth){
+                    $expenseDay = mysqli_query($connection, "SELECT * FROM endofday_tb WHERE dateclosed = '$gen_date' AND status ='1'");
+                    if($expenseDay){
+                        die("error in institution account transaction");
+                        $_SESSION["Lack_of_intfund_$randms"] = "Day already closed";
+                        echo header("Location: ../../mfi/transact.php?legal=$randms");
+                    }
+                }else{
+                    die("error in institution account transaction");
+                    $_SESSION["Lack_of_intfund_$randms"] = "month already closed";
+                    echo header("Location: ../../mfi/transact.php?legal=$randms");
+                }
+            }else{
+                die("error in institution account transaction");
+                $_SESSION["Lack_of_intfund_$randms"] = "Year has closed";
+                echo header("Location: ../../mfi/transact.php?legal=$randms");
+            }
+
         }
     }
 
@@ -267,6 +312,28 @@ if ($isBank == 0) {
                         $bankParentId = $findBankgl['parent_id'];
                         $runningBalance = $findBankgl['organization_running_balance_derived'];
                         $newBalance = $runningBalance - $gl_amt;
+
+                        $chargeYear = mysqli_query($connection, "SELECT * FROM endofyear_tb WHERE yearend = '$year'AND status ='1'");
+                        if(!$chargeYear){
+                            $chargeMonth = mysqli_query($connection, "SELECT * FROM endofmonth_tb WHERE monthend = '$month' AND yearend ='$year'AND status ='1'");
+                            if(!$chargeMonth){
+                                $chargeDay = mysqli_query($connection, "SELECT * FROM endofday_tb WHERE dateclosed = '$gen_date' AND status ='1'");
+                                if($chargeDay){
+                                    die("error in institution account transaction");
+                                    $_SESSION["Lack_of_intfund_$randms"] = "Day already closed";
+                                    echo header("Location: ../../mfi/transact.php?legal=$randms");
+                                }
+                            }else{
+                                die("error in institution account transaction");
+                                $_SESSION["Lack_of_intfund_$randms"] = "Month already closed";
+                                echo header("Location: ../../mfi/transact.php?legal=$randms");
+                            }
+                        }else{
+                            die("error in institution account transaction");
+                            $_SESSION["Lack_of_intfund_$randms"] = "Year already closed";
+                            echo header("Location: ../../mfi/transact.php?legal=$randms");
+                        }
+
                         // now update gl balance
                         $updateGlBalance = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$newBalance' WHERE int_id = '$sessint_id' && gl_code = '$bankGlCode'";
                         $updated = mysqli_query($connection, $updateGlBalance);

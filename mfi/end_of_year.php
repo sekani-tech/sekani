@@ -1,15 +1,9 @@
 <?php
-
 $page_title = "End Of Year";
 $destination = "";
 include("header.php");
 ?>
 <?php
-if (isset($_POST['status']) && isset($_POST['id'])) {
-    $status = $_POST['status'];
-    $id = $_POST['id'];
-    $query = mysqli_query($connection, "UPDATE endofyear_tb SET status=$status WHERE id=$id");
-}
 function branch($connection)
 {
     $sint_id = $_SESSION["int_id"];
@@ -87,6 +81,9 @@ if (isset($_GET["message1"])) {
                     <div class="card-header card-header-primary">
                         <h4 class="card-title">End of Year Report</h4>
                         <p class="category">Generate End of Year Report</p>
+                
+                               
+                        
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -95,98 +92,57 @@ if (isset($_GET["message1"])) {
                                     <div class="row">
                                         <div class="form-group col-md-4">
                                             <label for="">Start Date</label>
-                                            <input type="date" name="" id="" class="form-control">
+                                            <input type="date" name="" id="start" class="form-control">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="">End Date</label>
-                                            <input type="date" name="" id="" class="form-control">
+                                            <input type="date" name="" id="end" class="form-control">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="">Branch</label>
                                             <select name="" id="" class="form-control">
-                                                <?php echo branch($connection); ?>
+                                            <?php echo branch($connection); ?>
+                                       
                                             </select>
                                         </div>
                                     </div>
-                                    <script>
-                                        $(document).ready(function() {
-                                            $('#generateDLAR').on("click", function() {
-                                                var start = $('#start').val();
-                                                var end = $('#end').val();
-                                                var branch_id = $('#branch_id').val();
-
-                                                $.ajax({
-                                                    url: "ajax_post/end_of_year.php",
-                                                    method: "POST",
-                                                    data: {
-                                                        start: start,
-                                                        end: end,
-                                                        branch_id: branch_id
-                                                    },
-                                                    success: function(data) {
-                                                        $('#showDisbursedLoans').html(data);
-                                                    }
-                                                })
-                                            });
-                                        });
-                                    </script>
+                                  
                                     <button type="reset" class="btn btn-danger">Reset</button>
-                                    <span id="runperform" type="submit" class="btn btn-primary">Generate Report</span>
+                                    <span id="runyear" type="submit" class="btn btn-primary">Generate Report</span>
                                 </form>
                             </div>
                         </div>
-                        <div class="row mt-4">
-                            <div class="col-md-12">
-                                <?php
-                                $result = mysqli_query($connection, "SELECT * FROM endofyear_tb")
-                                ?>
-                                <table id="eoyr" class="display" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Date</th>
-                                            <th>Closed By</th>
-                                            <th>Closed Year</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        <?php
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                        ?>
-                                    </thead>
-                                    <tbody>
-                                        <scrip>
-                                        </script>
-                                        <script>
-                                            $(document).ready(function() {
-                                                $('.btn').click(function() {
-
-                                                    $('.btn').hide();
-                                                    $(this).attr('id') === 'open' ? $('#close').show() : $('#open').show()
-                                                })
-                                            })
-                                        </script>
-                                        <tr>
-                                            <input type="hidden" id="toggleID" value="<?php echo $row['id']; ?>">
-                                            <td><?php echo $row['id']; ?> </td>
-                                            <td><?php echo $row['dateclosed']; ?></td>
-                                            <td><?php echo $row['closed_by']; ?></td>
-                                            <td><?php echo $row['yearend']; ?></td>
+                        <div id="endyear"></div>
 
 
-                                            <td></td>
-                                            <td><input type="checkbox" checked data-toggle="toggle" data-on="Open" data-off="Closed" data-onstyle="success" data-offstyle="danger">
-                                            </td>
-                                        </tr>
 
-                                    </tbody>
-                                <?php
-                                        }
-                                ?>
-                                </table>
-                                <script>
-                                </script>
 
-                                <script>
+                        <script>
+    $(document).ready(function() {
+        $('#runyear').on("click", function() {
+            var start = $('#start').val();
+            var end = $('#end').val();
+            var branch_id = $('#branch_id').val();
+            
+            $.ajax({
+                url: "ajax_post/endofperiod/endofyear.php",
+                method: "POST",
+                data: {
+                    start: start,
+                    end: end,
+                    branch_id: branch_id,
+                },
+                success: function(data) {
+                    $('#endyear').html(data);
+                }
+            })
+        });
+    });
+</script>
+<div id="endyear" class="row">
+</div> 
+
+                                <!-- <script>
                                     $(document).ready(function() {
                                         $('#open').click(function() {
                                             const status = 1;
@@ -228,18 +184,14 @@ if (isset($_GET["message1"])) {
                                             });
                                         });
                                     });
-                                </script>
-                                </script>
-                                <script>
+                                </script> -->
+                            
+                                 <!-- <script>
                                     $(document).ready(function() {
                                         $('#eodr').DataTable();
                                     });
-                                </script>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('#eoyr').DataTable();
-                                    });
-                                </script>
+                                </script>  -->
+                               
                             </div>
                         </div>
                     </div>
@@ -250,6 +202,7 @@ if (isset($_GET["message1"])) {
 </div>
 </div>
 </div>
+
 <?php
 include("footer.php");
 ?>

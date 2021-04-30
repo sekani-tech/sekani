@@ -1,31 +1,25 @@
 <?php
-
-$page_title = "End Of Month";
-$destination = "";
-include("header.php");
+$page_title = 'End Of Month';
+$destination = '';
+include 'header.php';
 ?>
 <?php
-if (isset($_POST['status']) && isset($_POST['id'])) {
-    $status = $_POST['status'];
-    $id = $_POST['id'];
-    $query = mysqli_query($connection, "UPDATE endofmonth_tb SET status=$status WHERE id=$id");
-}
 function branch($connection)
 {
-    $sint_id = $_SESSION["int_id"];
+    $sint_id = $_SESSION['int_id'];
     $guuy = $_SESSION['branch_id'];
     $org = "SELECT * FROM branch WHERE int_id = '$sint_id' AND (id = '$guuy' OR parent_id = '$guuy')";
     $res = mysqli_query($connection, $org);
     $out = '';
     while ($row = mysqli_fetch_array($res)) {
-        $out .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
+        $out .=
+            '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';
     }
     return $out;
 }
 ?>
-<?php
-if (isset($_GET["message1"])) {
-    $key = $_GET["message1"];
+<?php if (isset($_GET['message1'])) {
+    $key = $_GET['message1'];
     $tt = 0;
     echo '<script type="text/javascript">
   $(document).ready(function(){
@@ -39,10 +33,9 @@ if (isset($_GET["message1"])) {
   });
   </script>
   ';
-}
-?>
+} ?>
 <script src="../assets/js/bootstrap4-toggle.min.js"></script>
-<link href = "../assets/css/bootstrap4-toggle.min.css"   rel ="stylesheet">
+<link href = "../assets/css/bootstrap4-toggle.min.css" rel ="stylesheet">
 <div class="content">
     <div class="container-fluid">
         <div class="row">
@@ -79,8 +72,6 @@ if (isset($_GET["message1"])) {
                 </div>
             </div>
         </div>
-
-
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -88,6 +79,9 @@ if (isset($_GET["message1"])) {
                         <h4 class="card-title">End of Month Report</h4>
                         <p class="category">Generate End of Month Report</p>
                     </div>
+
+
+
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
@@ -95,103 +89,62 @@ if (isset($_GET["message1"])) {
                                     <div class="row">
                                     <div class="form-group col-md-4">
                                             <label for="">Start Date</label>
-                                            <input type="date" name="" id="" class="form-control">
+                                            <input type="date" name="" id="start" class="form-control">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="">End Date</label>
-                                            <input type="date" name="" id="" class="form-control">
+                                            <input type="date" name="" id="end" class="form-control">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="">Branch</label>
                                             <select name="" id="" class="form-control">
-                                                <?php echo branch($connection); ?>
+                                                <?php echo branch(
+                                                    $connection
+                                                ); ?>
 
                                             </select>
                                         </div>
                                     </div>
-
-                                    <script>
-                                        $(document).ready(function() {
-                                            $('#generateDLAR').on("click", function() {
-                                                var start = $('#start').val();
-                                                var end = $('#end').val();
-                                                var branch_id = $('#branch_id').val();
-
-                                                $.ajax({
-                                                    url: "ajax_post/end_of_day.php",
-                                                    method: "POST",
-                                                    data: {
-                                                        start: start,
-                                                        end: end,
-                                                        branch_id: branch_id
-                                                    },
-                                                    success: function(data) {
-                                                        $('#showDisbursedLoans').html(data);
-                                                    }
-                                                })
-                                            });
-                                        });
-                                    </script>
                                     <button type="reset" class="btn btn-danger">Reset</button>
-                                    <span id="runperform" type="submit" class="btn btn-primary">Generate Report</span>
+                                    <span id="runmonth" type="submit" class="btn btn-primary">Generate Report</span>
                                 </form>
                             </div>
                         </div>
-                        <div class="row mt-4">
-                            <div class="col-md-12">
-                                <?php
-                                $result = mysqli_query($connection, "SELECT * FROM endofmonth_tb")
-                                ?>
-                                <table id="eomr" class="display" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Date</th>
-                                            <th>Closed By</th>
-                                            <th>Month</th>
-                                            <th>Year</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        <?php
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                        ?>
-                                    </thead>
-                                    <tbody>
-                                        <script>
-                                        </script>
-                                        <script>
-                                            $(document).ready(function() {
-                                                $('.btn').click(function() {
+                        <div id="endmonth"></div> 
+                        <script>
+    $(document).ready(function() {
+        $('#runmonth').on("click", function() {
+            var start = $('#start').val();
+            var end = $('#end').val();
+            var branch_id = $('#branch_id').val();
+            
+            $.ajax({
+                url: "ajax_post/endofperiod/endofmonth.php",
+                method: "POST",
+                data: {
+                    start: start,
+                    end: end,
+                    branch_id: branch_id,
+                },
+                success: function(data) {
+                    $('#endmonth').html(data);
+                }
+            })
+        });
+    });
+</script>
+<div id="endmonth" class="row">
+</div> 
 
-                                                    $('.btn').hide();
-                                                    $(this).attr('id') === 'open' ? $('#close').show() : $('#open').show()
-                                                })
-                                            })
-                                        </script>
-                                        <tr>
-                                            <input type="hidden" id="toggleID" value="<?php echo $row['id']; ?>">
-                                            <td><?php echo $row['id']; ?> </td>
-                                            <td><?php echo $row['dateclosed']; ?></td>
-                                            <td><?php echo $row['closed_by']; ?></td>
-                                            <td><?php echo $row['monthend']; ?></td>
-                                            <td><?php echo $row['yearclosed']; ?></td>
-                                            <td><input type="checkbox" checked data-toggle="toggle" data-on="Open" data-off="Closed" data-onstyle="success" data-offstyle="danger">
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
-                                <?php
-                                        }
-                                ?>
-                                </table>
-                                <script>
-                                </script>
-
-                                <script>
-                                    $(document).ready(function() {
-                                        $('#open').click(function() {
+                                <!-- <script>
+                                    $(function() {
+                                        $("#" + <?php echo $row[
+                                            'id'
+                                        ]; ?>).change(function() {
+                                            console.log("#dfghjk")
                                             const status = 1;
-                                            const id = $('#toggleID').val();
+                                            const id = $("#" + uniqueID).val();
+                                            console.log(id, "na here")
                                             $.ajax({
                                                 type: 'POST',
                                                 url: 'end_of_month.php',
@@ -208,7 +161,8 @@ if (isset($_GET["message1"])) {
 
                                             });
                                         });
-                                    });
+                                    })
+
                                     $(document).ready(function() {
                                         $('#close').click(function() {
                                             const status = 0;
@@ -229,30 +183,23 @@ if (isset($_GET["message1"])) {
                                             });
                                         });
                                     });
+                                </script> -->
                                 </script>
-                                </script>
-                                <script>
+                                <!-- <script>
                                     $(document).ready(function() {
                                         $('#eomr').DataTable();
                                     });
-                                </script>
+                                </script> -->
 
                             </div>
                         </div>
-
+            
                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
-
-
     </div>
-
 </div>
 </div>
 </div>
-
-
-<?php
-include("footer.php");
-?>
+<?php include 'footer.php'; ?>

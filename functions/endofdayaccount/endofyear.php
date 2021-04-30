@@ -1,14 +1,17 @@
 <?php
 include('../connect.php');
 session_start();
-//Convert date to month here
+// initializing the needed session variable
+$institutionId = $_SESSION['int_id'];
+$branchId  = $_SESSION['branch_id'];
+$staffId = $_SESSION['staff_id'];
 
 if (isset($_POST['endofyear'])) {
      $data = [
         'dateclosed' => $_POST['dateclosed'],
-        'closed_by' => $_SESSION['staff_id'],
-        'int_id' => $_SESSION['int_id'],
-        'branch_id' => $_SESSION['branch_id'],
+        'closed_by' => $staffId,
+        'int_id' => $institutionId,
+        'branch_id' => $branchId,
         'yearend' => getPieceOfDate($_POST['dateclosed'], "Y"),
         'status' =>"",
     ];

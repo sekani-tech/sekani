@@ -3,9 +3,6 @@
 $page_title = "Rent Repayment";
 $destination = "";
 include("header.php");
-// include("repay.php");
-
-// include("../functions/connect.php");
 $output = '';
 ?>
 <?php
@@ -17,7 +14,7 @@ if (isset($_GET["message1"])) {
       swal({
           type: "success",
           title: "Rent Repayment succesfully added",
-          text: "Rent Repayment succesfully added",
+          text: "Go ahead and view your loan schedules",
           showConfirmButton: false,
           timer: 60000
       })
@@ -67,7 +64,7 @@ if (isset($_GET["message1"])) {
                                                         <div class="form-group">
                                                         <form action="rentrepayment.php" method="POST">
                                                             <label>Select Year<span style="color: red;">*</span>:</label>
-                                                            <select class="form-control" name="startyear">
+                                                            <select class="form-control" name="year">
                                                                 <?php
                                                                 for ($year = (int)date('Y'); 1900 <= $year; $year--) : ?>
                                                                     <option value="<?= $year; ?>"><?= $year; ?></option>
