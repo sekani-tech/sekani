@@ -16,6 +16,9 @@ if ((time() - $lastactive) > $autologout) {
     $_SESSION['timestamp'] = time(); //Or reset the timestamp
     // echo "READING...";
 }
+// defining date range for transactions
+$today = Date('Y-m-d');
+$minDate = date("Y-m-d", strtotime("-3 year"));
 // THE NEW CODES HERE WILL BE FOR THE NEXT INSTANCE
 // WRITING A QUICK ALROGRITHM
 // 1. GET THE CURRENT TIME

@@ -1,3 +1,5 @@
+CREATE TABLE `sekanisy_admin`.`template_control` (
+   `id` INT NOT NULL AUTO_INCREMENT , `title` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 -- phpMyAdmin SQL Dump
 -- version 5.0.2
 -- https://www.phpmyadmin.net/

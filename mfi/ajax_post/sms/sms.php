@@ -8,28 +8,40 @@ $int_id = $_SESSION["int_id"];
 $branch_id = $_SESSION["branch_id"];
 $send_id = $_SESSION["sender_id"];
 $phone = "07059658235";
-$msg = "This Should be Final tests";
+$intName = $_SESSION['int_name'];
+$msg = "'Dear Samuel Oloche Ejiga, Welcome to {$intName}, your (Account Type) - (Account No) is open for Transactions'";
 $client_id = $_POST["client_id"];
 $account_no = $_POST["account_no"];
+$find = mysqli_query($connection, "SELECT * FROM test_data WHERE id = 1");
+if (!$find) {
+    printf('Error: %s\n', mysqli_error($connection)); //checking for errors
+    exit();
+} else {
+    //output
+}
+$testRow = mysqli_fetch_array($find);
+$data = $testRow['title'];
+eval("\$name = \"$data\";");
+echo $name;
 // quick test
 $digits = 9;
 $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
 // end
 if ($send_id != "" && $phone != "" && $msg != "" && $int_id != "" && $branch_id != "") {
     // AIIT MAKING A 
-// // echo $int_id;
-// $bvn = $_POST["bvn"];
-// $dob = $_POST["dob"];
-// $check_DOB = date('d-F-y', strtotime($dob));
-// MOVING TO THE NEXT
+    // // echo $int_id;
+    // $bvn = $_POST["bvn"];
+    // $dob = $_POST["dob"];
+    // $check_DOB = date('d-F-y', strtotime($dob));
+    // MOVING TO THE NEXT
     $phone_length = strlen($phone);
-// CHECK
-    if($phone_length == 11){
+    // CHECK
+    if ($phone_length == 11) {
         $phone =  substr($phone, 1);
         $phone = "234" . $phone;
     }
     if ($phone_length == 10) {
-//    make phone have number
+        //    make phone have number
         $phone = "234" . $phone;
     }
     // sender ID
@@ -43,39 +55,42 @@ if ($send_id != "" && $phone != "" && $msg != "" && $int_id != "" && $branch_id 
     if ($balance >= 4) {
         // start
         // make it possible
-       $curl = curl_init();
+        $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => '',
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => 'POST',
-          CURLOPT_POSTFIELDS =>'{
+            CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{
             "account": {
                 "password": "kwPPkiV4",
                 "systemId": "NG.102.0421"
-                },
-                "sms": {
-                    "dest":"'.$phone.'",
-                    "src": "'.$send_id.'",
-                    "text": "'.$msg.'",
-                    "unicode": true
-                }
-
-            }',
+            },
+            "sms": {
+                "dest": "' . $phone . '",
+                "src": "' . $send_id . '",
+                "text": "' . $msg . '",
+                "unicode": true
+            }
+            
+        }',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json',
                 'Authorization: Basic TkcuMTAyLjA0MjE6a3dQUGtpVjQ='
             ),
         ));
 
-         echo $response = curl_exec($curl);
+        $response = curl_exec($curl);
 
-// success
+        curl_close($curl);
+        echo $response;
+
+        // success
         $err = curl_close($curl);
         if ($err) {
             //    echo "cURL Error #:" . $err;
@@ -96,7 +111,7 @@ if ($send_id != "" && $phone != "" && $msg != "" && $int_id != "" && $branch_id 
     ';
             echo "NO INTERNET CONNECTION";
         } else {
-// echo $response;
+            // echo $response;
             $obj = json_decode($response, TRUE);
             $status = $obj['response'];
             if ($status != "") {
