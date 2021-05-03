@@ -20,7 +20,7 @@ if (isset($_GET["message0"])) {
             type: "success",
             title: "Success",
             text: feedback,
-            showConfirmButton: True,
+            showConfirmButton: true,
             timer: 7000
         })
     });
@@ -34,12 +34,13 @@ if (isset($_GET["message0"])) {
   if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
     echo '<script type="text/javascript">
     $(document).ready(function(){
+      let feedback =  document.getElementById("feedback").value;
         swal({
-            type: "error",
+            type: "success",
             title: "Error",
-            text: "Not enough Money in this Account",
-            showConfirmButton: false,
-            timer: 2000
+            text: feedback,
+            showConfirmButton: true,
+            timer: 7000
         })
     });
     </script>
@@ -52,12 +53,213 @@ if (isset($_GET["message0"])) {
   if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
     echo '<script type="text/javascript">
     $(document).ready(function(){
+      let feedback =  document.getElementById("feedback").value;
+        swal({
+            type: "error",
+            title: "Error",
+            text: feedback,
+            showConfirmButton: true,
+            timer: 7000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+}
+else if (isset($_GET["message3"])) {
+  $key = $_GET["message3"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+      let feedback =  document.getElementById("feedback").value;
+        swal({
+            type: "error",
+            title: "Error",
+            text: feedback,
+            showConfirmButton: true,
+            timer: 7000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+}
+else if (isset($_GET["message4"])) {
+  $key = $_GET["message4"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+      let feedback =  document.getElementById("feedback").value;
+        swal({
+            type: "error",
+            title: "Error",
+            text: feedback,
+            showConfirmButton: true,
+            timer: 7000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+}
+else if (isset($_GET["message5"])) {
+  $key = $_GET["message5"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+      let feedback =  document.getElementById("feedback").value;
+        swal({
+            type: "error",
+            title: "Error",
+            text: feedback,
+            showConfirmButton: true,
+            timer: 7000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+}
+else if (isset($_GET["message6"])) {
+  $key = $_GET["message6"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+      let feedback =  document.getElementById("feedback").value;
+        swal({
+            type: "error",
+            title: "Error",
+            text: feedback,
+            showConfirmButton: true,
+            timer: 7000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+}
+else if (isset($_GET["message7"])) {
+  $key = $_GET["message7"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+      let feedback =  document.getElementById("feedback").value;
+        swal({
+            type: "error",
+            title: "Error",
+            text: feedback,
+            showConfirmButton: true,
+            timer: 7000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+}
+else if (isset($_GET["message8"])) {
+  $key = $_GET["message8"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+      let feedback =  document.getElementById("feedback").value;
+        swal({
+            type: "error",
+            title: "Error",
+            text: feedback,
+            showConfirmButton: true,
+            timer: 7000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+}
+else if (isset($_GET["message9"])) {
+  $key = $_GET["message9"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+      let feedback =  document.getElementById("feedback").value;
+        swal({
+            type: "error",
+            title: "Error",
+            text: feedback,
+            showConfirmButton: true,
+            timer: 7000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+}
+else if (isset($_GET["message10"])) {
+  $key = $_GET["message10"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+      let feedback =  document.getElementById("feedback").value;
+        swal({
+            type: "error",
+            title: "Error",
+            text: feedback,
+            showConfirmButton: true,
+            timer: 7000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+}
+else if (isset($_GET["message11"])) {
+  $key = $_GET["message11"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+      let feedback =  document.getElementById("feedback").value;
+        swal({
+            type: "error",
+            title: "Error",
+            text: feedback,
+            showConfirmButton: true,
+            timer: 7000
+        })
+    });
+    </script>
+    ';
+    $_SESSION["lack_of_intfund_$key"] = 0;
+  }
+}
+else if (isset($_GET["message12"])) {
+  $key = $_GET["message12"];
+  $tt = 0;
+  if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+      let feedback =  document.getElementById("feedback").value;
         swal({
             type: "success",
             title: "Success",
-            text: "Transfer Successful, Awaiting Approval",
-            showConfirmButton: false,
-            timer: 2000
+            text: feedback,
+            showConfirmButton: true,
+            timer: 7000
         })
     });
     </script>
@@ -103,7 +305,7 @@ function fill_client($connection)
             <!-- <p class="card-category">Fill in all important data</p> -->
           </div>
           <div class="card-body">
-            <form action="../functions/trans_cache.php" method="POST">
+            <form action="../functions/transactions/transfer/trans_cache.php" method="POST">
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
