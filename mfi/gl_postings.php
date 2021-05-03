@@ -570,6 +570,12 @@ if ($trans_post == 1 || $trans_post == "1") {
                                             <input type="text" value="" name="description" class="form-control" required>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Transaction Date</label>
+                                            <input type="date" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" name="transDate" class="form-control" required />
+                                        </div>
+                                    </div>
                                 </div>
                                 <button type="reset" class="btn btn-danger">Reset</button>
                                 <button type="submit" class="btn btn-primary pull-right">Submit</button>
@@ -583,7 +589,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Income To Liabilities/Expense</h4>
+                            <h4 class="card-title">GL TO GL Posting</h4>
                             <!-- <p class="card-category">Fill in all important data</p> -->
                         </div>
                         <div class="card-body">
@@ -611,7 +617,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                                             });
                                         </script>
                                         <div class="form-group">
-                                            <label for="">INCOME GL:</label>
+                                            <label for="">DEBIT:</label>
                                             <input type="text" class="form-control" name="income_gl" id="gl_income" required>
                                             <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id">
                                         </div>
@@ -640,7 +646,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                                         </script>
 
                                         <div class="form-group">
-                                            <label for="">Expense GL:</label>
+                                            <label for="">CREDIT:</label>
                                             <input type="text" class="form-control" name="expense_gl" id="gl_expense" required>
                                             <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id">
                                         </div>
@@ -680,6 +686,12 @@ if ($trans_post == 1 || $trans_post == "1") {
                                         <div class="form-group">
                                             <label for="">Description:</label>
                                             <input type="text" value="" name="description" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Transaction Date</label>
+                                            <input type="date" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" name="transDate" class="form-control" required />
                                         </div>
                                     </div>
                                 </div>
@@ -759,6 +771,12 @@ if ($trans_post == 1 || $trans_post == "1") {
                                         <div class="form-group">
                                             <label for="">Description</label>
                                             <input type="text" value="" name="descrip" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Transaction Date</label>
+                                            <input type="date" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" name="transDate" class="form-control" required />
                                         </div>
                                     </div>
                                 </div>

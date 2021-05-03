@@ -4,7 +4,7 @@ include("../connect.php");
 session_start();
 $institutionId = $_SESSION['int_id'];
 $branchId = $_SESSION['branch_id'];
-$today = date("Y-m-d");
+// $today = date("Y-m-d");
 $user = $_SESSION['user_id'];
 $digits = 7;
 $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
@@ -15,6 +15,7 @@ if (isset($_POST['amount']) && isset($_POST['income_gl']) && isset($_POST['expen
     $amount = $_POST['amount'];
     $transactionId = $_POST['transid'];
     $description = $_POST['description'];
+    $today = $_POST['transDate'];
 
     $incomeConditions = [
         'gl_code' => $incomeGl,

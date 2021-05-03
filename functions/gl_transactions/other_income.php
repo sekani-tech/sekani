@@ -4,7 +4,7 @@ include("../connect.php");
 session_start();
 $institutionId = $_SESSION['int_id'];
 $branchId = $_SESSION['branch_id'];
-$today = date("Y-m-d");
+// $today = date("Y-m-d");
 $user = $_SESSION['user_id'];
 $digits = 7;
 $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
@@ -14,6 +14,7 @@ $incomeGl = $_POST['acct_gl'];
 $amount = floatval(preg_replace('/[^\d.]/', '', $_POST['amount']));
 $description = $_POST['descrip'];
 $transactionId = $_POST['transid'];
+$today = $_POST['transDate'];
 
 
 // collect gl account data
