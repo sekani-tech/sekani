@@ -34,6 +34,7 @@ $destination = "products_config.php";
                               <option value="2">Savings</option>
                               <option value="3">Shares</option>
                               <option value="4">Current</option>
+                              <option value="5">FTD</option>
                           </select>
                         </div>
                       </div>

@@ -257,7 +257,7 @@ if ($view_dashboard == 1) {
                             $get_qtr = mysqli_query($connection, "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND ((duedate >= '$qtr_date') AND (duedate <= '$current_date')) AND installment = '0' ORDER BY id DESC LIMIT 20");
                             while ($row = mysqli_fetch_array($get_qtr)) {
                                 $total_amount = $row["principal_amount"] + $row["interest_amount"];
-                                $getall[] = array($total_amount);
+                                $getall = array($total_amount);
                             }
                             $remodel = str_replace("" . '"' . "", "", json_encode($getall));
                             $final_l = str_replace("[", "", $remodel);
@@ -306,7 +306,7 @@ if ($view_dashboard == 1) {
                         <div class="card-body">
                             <h4 class="card-title">Monthly Loan Collection</h4>
                             <p class="card-category">
-                                <span class="text-success"><i class="fa fa-long-arrow-up"></i> 54% </span> increase in
+                                <span class="text-success"><i class="fa fa-long-arrow-up"></i> </span> increase in
                                 loan collections</p>
                         </div>
                         <div class="card-footer">

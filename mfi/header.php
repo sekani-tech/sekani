@@ -16,6 +16,9 @@ if ((time() - $lastactive) > $autologout) {
     $_SESSION['timestamp'] = time(); //Or reset the timestamp
     // echo "READING...";
 }
+// defining date range for transactions
+$today = Date('Y-m-d');
+$minDate = date("Y-m-d", strtotime("-3 year"));
 // THE NEW CODES HERE WILL BE FOR THE NEXT INSTANCE
 // WRITING A QUICK ALROGRITHM
 // 1. GET THE CURRENT TIME
@@ -173,10 +176,6 @@ $rezz = mysqli_query($connection, $activeq);
     <!-- END CHART.JS -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> -->
     <script src="../datatable/sweetalert.min.js"></script>
-    <!-- <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css"> -->
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="../datatable/jquery-3.3.1.min.js"></script>
-    <script src="../datatable/jquery-3.3.2.js"></script> -->
     <!-- DataTables -->
     <link rel="stylesheet" href="../datatable/jquery.dataTables.min.css">
     <link rel="stylesheet" href="../datatable/rowReorder.dataTables.min.css">

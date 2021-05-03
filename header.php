@@ -73,22 +73,25 @@ if (mysqli_num_rows($getip) === 1) {
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <!--     Fonts and icons     -->
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="assets/css/material_icons.css">
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+  <!-- <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" /> -->
   <link rel="stylesheet" href="assets/css/all.css">
   <!-- Material Kit CSS -->
   <link href="assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
   <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <!-- DataTables -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css">
-  <!-- DataTables scripts -->
-  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js"></script>
-  <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+  <script src="datatable/sweetalert.min.js"></script>
+    <!-- DataTables -->
+    <link rel="stylesheet" href="datatable/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="datatable/rowReorder.dataTables.min.css">
+    <link rel="stylesheet" href="datatable/responsive.dataTables.min.css">
+    
+    <!-- DATATABLE CODE -->
+    <script src="datatable/jquery.dataTables.min.js"></script>
+    <script src="datatable/dataTables.rowReorder.min.js"></script>
+    <script src="datatable/dataTables.responsive.min.js"></script>
   <script src="datatable/DropdownSelect.js"></script>
   <script src="datatable/stepper.js"></script>
 </head>

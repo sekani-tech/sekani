@@ -9,7 +9,7 @@ function fill_charges()
     $sint_id = $_SESSION["int_id"];
     $main_p = $_SESSION["product_temp"];
 
-    return selectAll('charge', ['int_id' => $sint_id, 'charge_applies_to_enum' => '1', 'is_active' => '1']);
+    return selectAll('charge', ['int_id' => $sint_id, 'charge_applies_to_enum' => '5', 'is_active' => '1']);
 }
 
 // show charge missing information
@@ -72,7 +72,7 @@ $sint_id = $_SESSION['int_id'];
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="shortLoanName">Short Loan Name <span
+                                                            <label for="shortLoanName">Short Product Name <span
                                                                         style="color: red;">*</span> </label>
                                                             <input type="text" class="form-control" name="shortName"
                                                                    value="" id="shortName" placeholder="Short Name..."
@@ -206,7 +206,7 @@ $sint_id = $_SESSION['int_id'];
                                                             <div class="row">
                                                                 <div class="col-md-4">
                                                                     <input type="number" class="form-control"
-                                                                           name="lockPerFreq" id="lockPerFreq" value=""
+                                                                           name="lockPerFreq" id="lockPerFreq" value="1"
                                                                            placeholder="Default" required>
                                                                 </div>
                                                                 <div class="col-md-8">

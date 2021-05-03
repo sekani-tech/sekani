@@ -1,5 +1,6 @@
 <?php
 include("../functions/connect.php");
+set_time_limit(120);
 
 // Check Clients Whose loan Outstanding balance: are greater than zero
 $select_loan_client = mysqli_query($connection, "SELECT * FROM `loan` WHERE total_outstanding_derived > 0");

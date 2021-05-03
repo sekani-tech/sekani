@@ -368,27 +368,27 @@ if (isset($_GET["message"])) {
   ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-} else if (isset($_GET["legal"])) {
-    $key = $_GET["legal"];
+} else if (isset($_GET["other_income"])) {
+    $key = $_GET["other_income"];
     // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
     if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
         echo '<script type="text/javascript">
         $(document).ready(function(){
             swal({
-                type: "error",
-                title: "System Error",
-                text: "Call Us",
-                showConfirmButton: false,
-                timer: 3000
+                type: "success",
+                title: "Transaction Successul",
+                text: "Income Posted Successfilly",
+                showConfirmButton: true,
+                timer: 7000
             })
         });
   </script>
   ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-} else if (isset($_GET["legalq"])) {
-    $key = $_GET["legalq"];
+} else if (isset($_GET["other_income2"])) {
+    $key = $_GET["other_income2"];
     // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
     if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
@@ -396,46 +396,46 @@ if (isset($_GET["message"])) {
   $(document).ready(function(){
       swal({
           type: "error",
-          title: "Transaction Has Been Posted",
-          text: "You Have Made This Transaction Before",
-          showConfirmButton: false,
-          timer: 3000
+          title: "Account Funded Transaction Error",
+          text: "Error storing Transaction record income GL",
+          showConfirmButton: true,
+          timer: 7000
       })
   });
   </script>
   ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-} else if (isset($_GET["message0"])) {
-    $key = $_GET["message0"];
+} else if (isset($_GET["other_income3"])) {
+    $key = $_GET["other_income3"];
     // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
     if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
         echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
-          type: "success",
-          title: "Success",
-          text: "Transaction Successful, Email not sent",
-          showConfirmButton: false,
-          timer: 3000
+          type: "error",
+          title: "Transaction Error",
+          text: "Error Funding GL!",
+          showConfirmButton: true,
+          timer: 7000
       })
   });
   </script>
   ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-} else if (isset($_GET["message123"])) {
-    $key = $_GET["message123"];
+} else if (isset($_GET["other_income4"])) {
+    $key = $_GET["other_income4"];
     // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
     if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
         echo '<script type="text/javascript">
   $(document).ready(function(){
       swal({
-          type: "info",
-          title: "Notice Report to the Technical Department",
-          text: "This Client is not Available",
+          type: "error",
+          title: "GL Error",
+          text: "GL not Found or GL does not exist!",
           showConfirmButton: false,
           timer: 3000
       })
@@ -461,6 +461,7 @@ if ($trans_post == 1 || $trans_post == "1") {
     $transid1 = $randms1;
     $transid2 = $randms2;
     ?>
+
     <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
@@ -498,10 +499,27 @@ if ($trans_post == 1 || $trans_post == "1") {
 
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Amount</label>
-                                            <input type="number" step="any" class="form-control" name="amount" value="" required>
+                                            <input type="text" class="form-control" id="amount3" name="amount" value="" required>
                                         </div>
 
                                         <div id="acct_name"></div>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#amount3').on("change blur", function() {
+                                                    var amount = $(this).val();
+                                                    $.ajax({
+                                                        url: "ajax_post/function/converter.php",
+                                                        method: "POST",
+                                                        data: {
+                                                            amount: amount
+                                                        },
+                                                        success: function(data) {
+                                                            $('#amount3').val(data);
+                                                        }
+                                                    })
+                                                });
+                                            });
+                                        </script>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
@@ -631,11 +649,27 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Amount:</label>
-                                            <input type="number" step="any" name="amount" id="" value="" class="form-control" required>
+                                            <input type="text" name="amount" id="amount1" value="" class="form-control" required>
                                             <span class="help-block" style="color: red;"><?php echo $exp_error; ?></span>
                                         </div>
                                     </div>
-
+                                    <script>
+                                        $(document).ready(function() {
+                                            $('#amount1').on("change blur", function() {
+                                                var amount = $(this).val();
+                                                $.ajax({
+                                                    url: "ajax_post/function/converter.php",
+                                                    method: "POST",
+                                                    data: {
+                                                        amount: amount
+                                                    },
+                                                    success: function(data) {
+                                                        $('#amount1').val(data);
+                                                    }
+                                                })
+                                            });
+                                        });
+                                    </script>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Transaction ID:</label>
@@ -694,11 +728,27 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Amount:</label>
-                                            <input type="number" step="any" name="amount" id="" value="" class="form-control">
+                                            <input type="text" name="amount" id="amount" value="" class="form-control">
                                             <span class="help-block" style="color: red;"><?php echo $exp_error; ?></span>
                                         </div>
                                     </div>
-
+                                    <script>
+                                        $(document).ready(function() {
+                                            $('#amount').on("blur change", function() {
+                                                var amount = $(this).val();
+                                                $.ajax({
+                                                    url: "ajax_post/function/converter.php",
+                                                    method: "POST",
+                                                    data: {
+                                                        amount: amount
+                                                    },
+                                                    success: function(data) {
+                                                        $('#amount').val(data);
+                                                    }
+                                                })
+                                            });
+                                        });
+                                    </script>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Transaction ID:</label>

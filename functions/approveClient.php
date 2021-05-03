@@ -38,7 +38,7 @@ if ($senderId != "" && $mobileNo != "" && $message != "" && $intId != "") {
   if ($phoneLength == 10) {
     $clientPhone = "234" . $mobileNo;
   }
-  if ($phone_length == 11) {
+  if ($phoneLength == 11) {
     $phone =  substr($mobileNo, 1);
     $clientPhone = "234" . $phone;
   }

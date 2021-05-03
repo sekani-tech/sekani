@@ -14,7 +14,19 @@ $sessint_id = $_SESSION["int_id"];
 $m_id = $_SESSION["user_id"];
 $branch_id = $_SESSION['branch_id'];
 $id = $_SESSION['id'];
-$gen_date = Date('Y-m-d H:i:s');
+// allow for date selection if back date is marked as available
+$backDateCondition = [
+    'int_id' => $sessint_id,
+    'title' => "BACK DATING"
+];
+$findBackDate = selectOne('administrative_control', $backDateCondition);
+$backDating = $findBackDate['function_status'];
+if($backDating = 1){
+    $gen_date = $_POST['transDate'];
+}else{
+    $gen_date = Date('Y-m-d H:i:s');
+}
+
 $getacct1 = mysqli_query($connection, "SELECT * FROM staff WHERE user_id = '$m_id' && int_id = '$sessint_id'");
 if (count([$getacct1]) == 1) {
     $uw = mysqli_fetch_array($getacct1);

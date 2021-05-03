@@ -78,7 +78,7 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
                 $glParent = $findGl['parent_id'];
 
                 if ($findGl) {
-                    $newGlBalnce =  $glBalance - $amount;
+                    $newGlBalnce =  $glBalance + $amount;
                     $conditionsGlUpdate = [
                         'int_id' => $institutionId,
                         'gl_code' => $glAccount
@@ -86,7 +86,7 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
                     $updateGlDetails = [
                         'organization_running_balance_derived' => $newGlBalnce
                     ];
-                    $updateGlBalance = update('acc_gl_account', $glId, 'id', $updateGlDetails);
+                    $updateGlBalance = update('acc_gl_account', $glID, 'id', $updateGlDetails);
                     if ($updateGlBalance) {
                         $glTransactionDetails = [
                             'int_id' => $institutionId,
