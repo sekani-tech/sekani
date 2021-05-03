@@ -23,7 +23,7 @@ function fill_banks($connection)
             <div class="col-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title">Bank Reconciliaition Form</h4>
+                        <h4 class="card-title">Bank Reconciliation Form</h4>
                     </div>
                     <div class="card-body">
                         <form action="trans_match.php" method="post" enctype="multipart/form-data">

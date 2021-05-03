@@ -5,6 +5,7 @@ $destination = "";
 include("header.php");
 
 $sessint_id = $_SESSION['int_id'];
+$sessuser_id = $_SESSION['user_id'];
 
 include('vendor/autoload.php');
 
@@ -74,8 +75,6 @@ if(isset($_SESSION["delete_failed"])) {
     unset($_SESSION["delete_failed"]);
 }
 
-
-
 if (isset($_POST['btnUploadBankStatement'])) {
     // check for excel file submitted
     if ($_FILES["bankStatementData"]["name"] !== '') {
@@ -119,19 +118,14 @@ if (isset($_POST['btnUploadBankStatement'])) {
             <div class="container-fluid">
 
                 <div class="row">
-
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header card-header-primary">
+                            <div class="card-header card-header-primary mb-3">
                                 <h4 class="card-title">Bank Reconciliation Matching</h4>
                                 <!-- <p class="category">Category subtitle</p> -->
-                                <div style="float: right;">
-                                <button type="button" class="btn btn-success">Reconcile</button>
-                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <?php
@@ -356,13 +350,13 @@ if (isset($_POST['btnUploadBankStatement'])) {
                     <div class="col-md-6 ml-auto mr-auto">
                         <div class="card card-pricing">
                             <div class="card-header card-header-warning">
-                                <h4 class="card-title">Uploaded Excel (Not Found)</h4>
+                                <h4 class="card-title">Uploaded Excel (Not Posted to Sekani)</h4>
                                 <!-- <p class="category">Category subtitle</p> -->
                                 <div style="float: right;">
                                     <form>
                                         <input type="hidden" id="inUploadedNotInSekani" value="<?php echo htmlentities(serialize($inUploadedNotInSekaniArray)); ?>" />
                                         <input type="hidden" id="gl_code" value="<?php echo $gl_code; ?>" />
-                                        <span id="btnUpload" class="btn btn-success" onclick="return confirm('Are you sure you want to upload these records to your database?');">Upload</span>
+                                        <!-- <span id="btnUpload" class="btn btn-success" onclick="return confirm('Are you sure you want to upload these records to your database?');">Upload</span> -->
                                     </form>
                                 </div>
                                 <script>
@@ -398,8 +392,18 @@ if (isset($_POST['btnUploadBankStatement'])) {
                                     </thead>
                                     <tbody>
                                         <?php
+                                        $bankAmount = 0;
                                         foreach($inUploadedNotInSekaniArray as $inUploadedNotInSekani) {
                                             extract($inUploadedNotInSekani);
+
+                                            $nonFormattedAmount = (int) str_replace(',', '', $uploadedAmount);
+
+                                            if(strtolower($uploadedType) == 'credit') {
+                                                $bankAmount += $nonFormattedAmount;
+                                            }
+                                            if(strtolower($uploadedType) == 'debit') {
+                                                $bankAmount -= $nonFormattedAmount;
+                                            }
                                         ?>
                                         <tr>
                                             <td><b>Transaction ID [ <?php echo $uploadedTransID; ?> ]</b></td>
@@ -412,6 +416,18 @@ if (isset($_POST['btnUploadBankStatement'])) {
                                         ?>
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body ml-auto">
+                                <form method="POST" action="../functions/bank_reconciliation/reconcile.php">
+                                    <input type="hidden" name="gl_code" value="<?php echo $_POST['gl_code']; ?>" />
+                                    <input type="hidden" name="bank_amount" value="<?php echo $bankAmount; ?>" />
+                                    <button type="submit" name="btnBankReconciliation" class="btn btn-primary btn-lg" onclick="return confirm('Are you ready to complete reconciliation?');">Reconcile</button>
+                                </form>
                             </div>
                         </div>
                     </div>

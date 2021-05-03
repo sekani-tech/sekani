@@ -3,12 +3,43 @@
 $page_title = "Bank Reconciliation";
 $destination = "";
 include("header.php");
+
+if(isset($_SESSION["reconciled"])) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "success",
+            title: "Success",
+            text: "Bank Reconciliation Completed!",
+            showConfirmButton: false,
+            timer: 3000
+        })
+    });
+    </script>
+    ';
+    unset($_SESSION["reconciled"]);
+}
+
+if(isset($_SESSION["deletedReconcData"])) {
+    echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "success",
+            title: "Success",
+            text: "Reconciliation Data Deleted Successfully!",
+            showConfirmButton: false,
+            timer: 3000
+        })
+    });
+    </script>
+    ';
+    unset($_SESSION["deletedReconcData"]);
+}
 ?>
 
 
 <div class="content">
     <div class="container-fluid">
-
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -28,73 +59,55 @@ include("header.php");
                                     <th>Bank</th>
                                     <th>Date</th>
                                     <th>Staff</th>
-                                    <th>System Amount</th>
-                                    <th>Bank Amount</th>
-                                    <th>Actions</th>
+                                    <th>Bank Balance (Reconciled)</th>
+                                    <th>Excel Amount (Not Reconciled)</th>
+                                    <!-- <th class="text-center">Delete</th> -->
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php
+                                $getBankReconcData = mysqli_query($connection, "SELECT * FROM `bank_reconciliation` WHERE int_id = {$sessint_id}");
+                                while($bankReconc = mysqli_fetch_array($getBankReconcData)) {
+                                    extract($bankReconc);
+                                ?>
                                 <tr>
-                                    <td>Zenith Bank</td>
-                                    <td>10-12-2021</td>
-                                    <td>John Doe</td>
-                                    <td>₦500,000</td>
-                                    <td>₦500,000</td>
-                                    <td><button class="btn btn-warning btn-fab btn-fab-mini btn-round">
-                                            <i class="material-icons">create</i>
-                                        </button>
-                                        <button class="btn btn-success btn-fab btn-fab-mini btn-round">
-                                            <i class="material-icons">done</i>
-                                        </button>
-                                        <button class="btn btn-danger btn-fab btn-fab-mini btn-round">
+                                    <td><?php echo $bank; ?></td>
+                                    <td><?php echo $date; ?></td>
+                                    <td><?php echo $staff; ?></td>
+                                    <td><?php echo $system_amount; ?></td>
+                                    <td><?php echo $bank_amount; ?></td>
+                                    <!-- <td class="text-center">
+                                        <button id="delete<?php echo $id; ?>" class="btn btn-danger btn-fab btn-fab-mini btn-round">
                                             <i class="material-icons">clear</i>
                                         </button>
-                                    </td>
+                                    </td> -->
                                 </tr>
-                                <tr>
-                                    <td>Zenith Bank</td>
-                                    <td>10-12-2021</td>
-                                    <td>John Doe</td>
-                                    <td>₦500,000</td>
-                                    <td>₦500,000</td>
-                                    <td><button class="btn btn-warning btn-fab btn-fab-mini btn-round">
-                                            <i class="material-icons">create</i>
-                                        </button>
-                                        <button class="btn btn-success btn-fab btn-fab-mini btn-round">
-                                            <i class="material-icons">done</i>
-                                        </button>
-                                        <button class="btn btn-danger btn-fab btn-fab-mini btn-round">
-                                            <i class="material-icons">clear</i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Zenith Bank</td>
-                                    <td>10-12-2021</td>
-                                    <td>John Doe</td>
-                                    <td>₦500,000</td>
-                                    <td>₦500,000</td>
-                                    <td><button class="btn btn-warning btn-fab btn-fab-mini btn-round">
-                                            <i class="material-icons">create</i>
-                                        </button>
-                                        <button class="btn btn-success btn-fab btn-fab-mini btn-round">
-                                            <i class="material-icons">done</i>
-                                        </button>
-                                        <button class="btn btn-danger btn-fab btn-fab-mini btn-round">
-                                            <i class="material-icons">clear</i>
-                                        </button>
-                                    </td>
-                                </tr>
-                               
+                                <!-- <script>
+                                    $('#delete<?php echo $id; ?>').on("click", function() {
+                                        var id = <?php echo $id; ?>;
+
+                                        $.ajax({
+                                            url: "../functions/bank_reconciliation/delete_reconc_record.php",
+                                            method: "POST",
+                                            data: {
+                                                id: id
+                                            },
+                                            success: function(data) {
+                                                location.reload();
+                                            }
+                                        })
+                                    });
+                                </script> -->
+                                <?php
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-
 </div>
 
 <script>

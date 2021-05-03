@@ -143,7 +143,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
               <th></th>
               <th>'.number_format($tcp, 2).'</th>
                <th>'.number_format($tdp, 2).'</th>
-               <th></th>
+               <th>'.number_format($tcp - $tdp, 2).'</th>
             <th></th>
               </tr>
                 </tbody>
