@@ -56,7 +56,7 @@ if (isset($_GET["message0"])) {
 ?>
 
 
-<div class="content">
+<div class="content"> 
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -198,6 +198,7 @@ if (isset($_GET["message0"])) {
                                                     <button type="submit" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </div>
+ 
                                         </div>
                                     </div>
                                 </form>
