@@ -288,13 +288,61 @@ $sint_id = $_SESSION['int_id'];
                                                     </div>
 
                                                     <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>GL Codes <span style="color: red">*</span></label>
-                                                            <input type="text" class="form-control" name="glCode"
-                                                                   id="glCode" value=""
-                                                                   placeholder="GL Codes" required>
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    $('#gl_income').on("change keyup paste", function() {
+                                                                        var id = $(this).val();
+                                                                        var ist = $('#int_id').val();
+                                                                        $.ajax({
+                                                                            url: "ajax_post/gl/find_income_gl.php",
+                                                                            method: "POST",
+                                                                            data: {
+                                                                                id: id,
+                                                                                ist: ist
+                                                                            },
+                                                                            success: function(data) {
+                                                                                $('#income').html(data);
+                                                                            }
+                                                                        })
+                                                                    });
+                                                                });
+                                                            </script>
+                                                            <div class="form-group">
+                                                                <label for="shortSharesName">FTD Journal<span style="color: red;">*</span></label>
+                                                                <input type="text" class="form-control" name="glCode" id="gl_income" required>
+                                                                <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id">
+                                                            </div>
+                                                            <div id="income"></div>
                                                         </div>
-                                                    </div>
+
+                                                        <div class="col-md-6">
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    $('#gl_expense').on("change keyup paste", function() {
+                                                                        var id = $(this).val();
+                                                                        var ist = $('#int_id').val();
+                                                                        $.ajax({
+                                                                            url: "ajax_post/gl/acct_rep.php",
+                                                                            method: "POST",
+                                                                            data: {
+                                                                                id: id,
+                                                                                ist: ist
+                                                                            },
+                                                                            success: function(data) {
+                                                                                $('#expense').html(data);
+                                                                            }
+                                                                        })
+                                                                    });
+                                                                });
+                                                            </script>
+
+                                                            <div class="form-group">
+                                                                <label for="shortSharesName">Income Expense Journal <span style="color: red;">*</span></label>
+                                                                <input type="text" class="form-control" name="expense_gl" id="gl_expense" required>
+                                                                <!-- <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id"> -->
+                                                            </div>
+                                                            <div id="expense"></div>
+                                                        </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="principal">In Multiples of Deposit Term <span

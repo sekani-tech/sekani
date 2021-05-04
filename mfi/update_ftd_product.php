@@ -36,6 +36,8 @@ if (isset($_GET["edit"])) {
     $in_multiples_deposit_term = $n['in_multiples_deposit_term'];
     $auto_renew = $n['auto_renew_on_closure'];
     $in_multiples_deposit_term_time = $n['in_multiples_deposit_term_time'];
+    $glCode = $n['gl_Code'];
+    $expenseGl =$n['expense_glcode'];
 
     if ($auto_renew == "1") {
       $auto_ren = "Yes";
@@ -418,10 +420,66 @@ if (isset($_GET["edit"])) {
                             </div>
                           </div>
                         </div>
+                        <div class="col-md-6">
+                          <script>
+                            $(document).ready(function() {
+                              $('#gl_income').on("change keyup paste", function() {
+                                var id = $(this).val();
+                                var ist = $('#int_id').val();
+                                $.ajax({
+                                  url: "ajax_post/gl/find_income_gl.php",
+                                  method: "POST",
+                                  data: {
+                                    id: id,
+                                    ist: ist
+                                  },
+                                  success: function(data) {
+                                    $('#income').html(data);
+                                  }
+                                })
+                              });
+                            });
+                          </script>
+                          <div class="form-group">
+                            <label for="shortSharesName">FTD Journal<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" name="glCode" value ="<?php echo $glCode ?>" id="gl_income" required>
+                            <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id">
+                          </div>
+                          <div id="income"></div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <script>
+                            $(document).ready(function() {
+                              $('#gl_expense').on("change keyup paste", function() {
+                                var id = $(this).val();
+                                var ist = $('#int_id').val();
+                                $.ajax({
+                                  url: "ajax_post/gl/acct_rep.php",
+                                  method: "POST",
+                                  data: {
+                                    id: id,
+                                    ist: ist
+                                  },
+                                  success: function(data) {
+                                    $('#expense').html(data);
+                                  }
+                                })
+                              });
+                            });
+                          </script>
+
+                          <div class="form-group">
+                            <label for="shortSharesName">Income Expense Journal <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" value="<?php echo $expenseGl ?>" name="expense_gl" id="gl_expense" required>
+                            <!-- <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id"> -->
+                          </div>
+                          <div id="expense"></div>
+                        </div>
                       </div>
                     </div>
                     <!-- First tab -->
-                    
+
                     <!-- Third tab -->
                     <div class="tab">
                       <?php
@@ -539,7 +597,7 @@ if (isset($_GET["edit"])) {
                     </div>
                     <!-- Third tab -->
                     <!-- Fourth tab -->
-                    
+
                   </div>
                   <!-- Fourth tab -->
                   <div style="overflow:auto;">

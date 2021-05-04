@@ -1,3 +1,14 @@
+CREATE TABLE `sekanisy_admin`.`prepayment_account` ( `id` INT NOT NULL AUTO_INCREMENT , `int_id` INT NOT NULL , 
+`branch_id` INT NOT NULL , `year` YEAR NOT NULL , `amount` DECIMAL(19,2) NOT NULL , `gl_code` VARCHAR(20) NOT NULL , 
+`expense_gl_code` VARCHAR(20) NOT NULL , `prepayment_made` DECIMAL(19,2) NOT NULL , `start_date` DATE NOT NULL , 
+`end_date` DATE NOT NULL , `created_by` INT NOT NULL , `created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
+PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+CREATE TABLE `sekanisy_admin`.`prepayment_schedule` ( `id` INT NOT NULL AUTO_INCREMENT , `int_id` INT NOT NULL , 
+`branch_id` INT NOT NULL , `prepayment_account_id` INT NOT NULL , `expense_date` DATE NOT NULL , 
+`expense_amount` DECIMAL(19,2) NOT NULL , 
+`expended` INT NOT NULL DEFAULT '0' , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
 CREATE TABLE `sekanisy_admin`.`template_control` (
    `id` INT NOT NULL AUTO_INCREMENT , `title` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 -- phpMyAdmin SQL Dump

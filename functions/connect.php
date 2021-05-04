@@ -427,10 +427,34 @@ function insert($table, $record) {
     return mysqli_insert_id($connection);
 }
 
-function getPieceOfDate($date, $format){
+// date functions to find individual components of date 
+// and add or subtract from date
+function getYear($date){
+    $date = DateTime::createFromFormat("Y-m-d", $date);
+    return $date->format("Y");
+}
 
-    $date = new DateTime($date);
-    $data = $date->format($format);
+function getMonth($date){
+    $date = DateTime::createFromFormat("Y-m-d", $date);
+    return $date->format("m");
+}
 
-    return $data; 
+function getDay($date){
+    $date = DateTime::createFromFormat("Y-m-d", $date);
+    return $date->format("d");
+}
+
+function addYear($date, $period){
+    $valueDate = date("Y-m-d", strtotime($date. "+$period year"));
+    return $valueDate;
+}
+
+function addMonth($date, $period){
+    $valueDate = date("Y-m-d", strtotime($date. "+$period month"));
+    return $valueDate;
+}
+
+function addDay($date, $period){
+    $valueDate = date("Y-m-d", strtotime($date. "+$period day"));
+    return $valueDate;
 }

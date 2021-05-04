@@ -3,6 +3,15 @@
 $page_title = "Rent Repayment View";
 $destination = "";
 include("header.php");
+
+$prepaymentId = $_GET['view'];
+$yearSearchConditions = [
+    'int_id' => $sessint_id,
+    'id' => $prepaymentId
+];
+$yearSearch = selectOne("prepayment_account", $yearSearchConditions);
+$amount = $yearSearch['amount'];
+$year = $yearSearch['year'];
 ?>
 
 
@@ -21,8 +30,8 @@ include("header.php");
                         <div class="row">
                             <div class="card card-profile ml-auto mr-auto" style="max-width: 370px; max-height: 360px">
                                 <div class="card-body ">
-                                    <h4 class="card-title"><b>₦200,000</b></h4>
-                                    <h6 class="card-category text-gray">YEAR: 2021</h6>
+                                    <h4 class="card-title"><b>₦ <?php echo number_format($amount, 2) ?></b></h4>
+                                    <h6 class="card-category text-gray">YEAR: <?php echo $year ?></h6>
                                 </div>
                             </div>
                         </div>
@@ -32,18 +41,30 @@ include("header.php");
                                 <table id="rent" class="table table-striped table-bordered" style="width:100%">
                                     <thead>
                                         <tr>
-                                            
+
                                             <th>Month</th>
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            
-                                            <td>June</td>
-                                            <td>₦300,000</td>
-                                        </tr>
-                                        
+                                        <?php
+                                        $searchConditions = [
+                                            'int_id' => $sessint_id,
+                                            'branch_id' => $branch_id,
+                                            'prepayment_account_id' => $prepaymentId
+                                        ];
+                                        $schedule = selectAllWithOrder("prepayment_schedule", $searchConditions, "expense_date", "ASC");
+                                        foreach ($schedule as $keys => $rows) {
+                                        ?>
+                                            <tr>
+
+                                                <td><?php echo $rows['expense_date'] ?></td>
+                                                <!-- <td>date("F", strtotime($rows['expense_date']))</td> -->
+                                                <td><?php echo number_format($rows['expense_amount'], 2) ?></td>
+                                            </tr>
+                                        <?php
+                                        }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
