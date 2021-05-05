@@ -18,16 +18,18 @@ if(isset($_GET["delete"])) {
     $account_no = $n['account_no'];
     $client_id = $n['client_id'];
     $prod_id = $n['product_id'];
-    $ftd_id = $n['ftd_id'];
+    $ftd_no = $n['ftd_no'];
     $amount = $n['account_balance_derived'];
     $term = $n['term'];
     $int_rate = $n['int_rate'];
     $l_saa = $n['linked_savings_account'];
-    $value_date = $n['submittedon_date'];
+    $booked_date = $n['booked_date'];
     $int_repay = $n['interest_repayment'];
     $auto_renew = $n['auto_renew_on_closure'];
     $staff = $n['field_officer_id'];
-    $matdate = $n['maturedon_date'];
+    // $matdate = $n['maturedon_date'];
+    $booked_date = $n['booked_date'];
+    $matdate = date('Y-m-d', strtotime('+'. $term .' Days', strtotime($booked_date)));
 
   }
   if($int_repay == 1){
@@ -39,10 +41,11 @@ if(isset($_GET["delete"])) {
   if($auto_renew == 1){
     $auto_re = "Yes";
   }
-  else if($auto_renew == 2){
+  else if($auto_renew == 0){
     $auto_re = "No";
   }
 }
+
 ?>
 <?php
 $fweip = mysqli_query($connection, "SELECT * FROM account WHERE id = '$l_saa'");
@@ -60,18 +63,19 @@ $l_account = $fdio['account_no'];
         function fill_account($connection, $c_id, $int_id) {
             $id = $_GET["delete"];
             $int_id = $_SESSION['int_id'];
-             $pen = "SELECT * FROM account WHERE client_id = '$c_id'";
+            $pen = "SELECT * FROM account WHERE client_id = '$c_id'";
             $res = mysqli_query($connection, $pen);
             $out = '';
             while ($row = mysqli_fetch_array($res))
             {
               $product_type = $row["product_id"];
               $get_product = mysqli_query($connection, "SELECT * FROM savings_product WHERE id = '$product_type' AND int_id = '$int_id'");
-             while ($mer = mysqli_fetch_array($get_product)) {
-               $p_n = $mer["name"];
-               $out .= '<option value="'.$row["id"].'">'.$row["account_no"].' - '.$p_n.'</option>';
-             }
+              while ($mer = mysqli_fetch_array($get_product)) {
+                $p_n = $mer["name"];
+                $out .= '<option value="'.$row["account_no"].'">'.$row["account_no"].' - '.$p_n.'</option>';
+              }
             }
+            
             return $out;
           }
           function fill_officer($connection)
@@ -92,58 +96,12 @@ $l_account = $fdio['account_no'];
         $we = mysqli_fetch_array($sddio);
         $dis_name = $we['display_name'];
 ?>
-                  <script>
-                    $(document).ready(function() {
-                      $('#static').on("change", function(){
-                        var id = $(this).val();
-                        $.ajax({
-                          url:"ajax_post/lga.php",
-                          method:"POST",
-                          data:{id:id},
-                          success:function(data){
-                            $('#showme').html(data);
-                          }
-                        })
-                      });
-                    });
-                </script>
-                <script>
-    $(document).ready(function () {
-    $('#lterm').on("change keyup paste click", function () {
-        var term = $(this).val();
-        var repay = $('#repay').val();
-        $.ajax({
-        url: "ajax_post/sub_ajax/ftd_date_calc.php", 
-        method: "POST",
-        data:{term:term, repay:repay},
-        success: function (data) {
-            $('#matdate').html(data);
-        }
-        })
-    });
-    });
-
-    $(document).ready(function () {
-    $('#repay').on("change keyup paste click", function () {
-        var term = $('#lterm').val();
-        var repay = $(this).val();
-        $.ajax({
-        url: "ajax_post/sub_ajax/ftd_date_calc.php", 
-        method: "POST",
-        data:{term:term, repay:repay},
-        success: function (data) {
-            $('#matdate').html(data);
-        }
-        })
-    });
-    });
-</script>
 <!-- Content added here -->
     <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Edit FTD Account</h4>
@@ -161,14 +119,14 @@ $l_account = $fdio['account_no'];
                     <div class="col-md-4">
                         <div class="form-group">
                         <label class="bmd-label-floating">FTD Number</label>
-                        <input type="text" readonly  value="<?php echo $ftd_id;?>" class="form-control" name="ftd_no">
-                        <input type="text" hidden  value="<?php echo $id;?>" class="form-control" name="id">
+                        <input type="text" readonly  value="<?php echo $ftd_no;?>" class="form-control" name="ftd_no">
+                        <input type="text" hidden  value="<?php echo $id;?>" class="form-control" name="ftd_id">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                        <label class="bmd-label-floating">Value Date</label>
-                        <input type="date" id="repay" value="<?php echo $value_date;?>" class="form-control" name="date">
+                        <label class="bmd-label-floating">Booked Date</label>
+                        <input type="date" id="booked_date" value="<?php echo $booked_date;?>" class="form-control" name="booked_date">
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -180,12 +138,7 @@ $l_account = $fdio['account_no'];
                           <option value="60">60</option>
                           <option value="90">90</option>
                           <option value="120">120</option>
-                        </select>                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group" id ="matdate" >
-                        <label class="bmd-label-floating">Maturity Date</label>
-                        <input type="date" value="<?php echo $matdate;?>" class="form-control" name="mat_date">
+                        </select>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -197,9 +150,7 @@ $l_account = $fdio['account_no'];
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="bmd-label-floating">Linked Savings account:</label>
-                            <select class="form-control" name="linked">
-                            <option hidden value="<?php echo $l_saa;?>"><?php echo $l_account;?></option>
-                            <?php echo fill_account($connection, $c_id, $int_id);?>
+                            <input type="text" value="<?php echo $l_saa;?>" class="form-control" name="linked" readonly>
                             </select>
                         </div>
                     </div>
@@ -227,7 +178,7 @@ $l_account = $fdio['account_no'];
                             <label for="additionalCharges" >Auto Renew on maturity</label>
                             <select class="form-control" name="auto_renew" required>
                                 <option hidden value="<?php echo $auto_renew;?>"><?php echo $auto_re;?></option>
-                                <option value="2">No</option>
+                                <option value="0">No</option>
                                 <option value="1">Yes</option>
                             </select>
                             </div>

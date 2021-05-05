@@ -24,25 +24,20 @@ if(isset($_POST['ftd_no'])){
         $currency_code = 'NGN';
         $tday = date('Y-m-d');
         $dating = date('Y-m-d h:i:sa');
-        if(isset($_POST['auto_renew'])){
-            $auto_renew = '1';
-        }
-        else{
-            $auto_renew = '0';
-        }
-
+        $auto_renew = $_POST['auto_renew'];
+        
         // Finding branch id
         $findBranch = mysqli_query($connection, "SELECT branch_id FROM client WHERE id = '$client'");
         $row = mysqli_fetch_array($findBranch);
         $branch_id = $row['branch_id'];
         if(!$findBranch) {
-                    printf('Error: %s\n', mysqli_error($connection));//checking for errors
-                    exit();
-                }else{
-                    //output
-                    $branch_id = $row['branch_id'];
-                }
-                // dd($findBranch);
+            printf('Error: %s\n', mysqli_error($connection));//checking for errors
+            exit();
+        }else{
+            //output
+            $branch_id = $row['branch_id'];
+        }
+        // dd($findBranch);
         if($findBranch){
             // Find needed ftd product data
             $findSavingsProduct = mysqli_query($connection, "SELECT name, accounting_type FROM savings_product WHERE id = '$sproduct_id'");
@@ -76,17 +71,17 @@ if(isset($_POST['ftd_no'])){
                 // clients money is enough
                 // For future development currency code would be gotten from product definition
                 $ftdData = [
-                    'int_id' => $sint_id, 
+                    'int_id' => $sint_id,
                     'branch_id' => $branch_id, 
-                    'ftd_id' => $ftd_no, 
+                    'ftd_no' => $ftd_no,
                     'account_no' => $account_no,
-                    'product_id' => $prod_id, 
+                    'product_id' => $sproduct_id, 
                     'client_id' => $client, 
                     'field_officer_id' => $acc_off, 
                     'submittedon_userid' => $user_id,
                     'currency_code' => 'NGN', 
                     'account_balance_derived' => $amount, 
-                    'term' => $l_term, 
+                    'term' => $l_term,
                     'int_rate' => $int_rate, 
                     'booked_date' => $booked_date, 
                     'linked_savings_account' => $linkedAccount, 
@@ -114,9 +109,9 @@ if(isset($_POST['ftd_no'])){
                 $ftdData = [
                     'int_id' => $sint_id, 
                     'branch_id' => $branch_id, 
-                    'ftd_id' => $ftd_no, 
+                    'ftd_no' => $ftd_no, 
                     'account_no' => $account_no,
-                    'product_id' => $prod_id, 
+                    'product_id' => $sproduct_id, 
                     'client_id' => $client, 
                     'field_officer_id' => $acc_off, 
                     'submittedon_userid' => $user_id,
@@ -126,9 +121,9 @@ if(isset($_POST['ftd_no'])){
                     'int_rate' => $int_rate, 
                     'booked_date' => $booked_date, 
                     'linked_savings_account' => $linkedAccount, 
-                    'last_deposit' => $anount, 
+                    'last_deposit' => $amount, 
                     'auto_renew_on_closure' => $auto_renew, 
-                    'interest_posting_period_enum' => $int_post,
+                    // 'interest_posting_period_enum' => $int_post,
                     'interest_repayment' => $int_repay, 
                     'status' => 'Pending'
                 ];
