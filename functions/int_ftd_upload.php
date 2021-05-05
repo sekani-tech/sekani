@@ -36,6 +36,7 @@ $lockPerFreq = $_POST['lockPerFreq'];
 $lockPerFreqTime = $_POST['lockPerFreqTime'];
 $prematureClosingPenalty = $_POST['prematureClosingPenalty'];
 $glCode = $_POST['glCode'];
+$expenseGl = $_POST['expense_gl'];
 
 // Query to Input data into table
 if (isset($glCode)) {
@@ -64,9 +65,11 @@ if (isset($glCode)) {
         'in_multiples_deposit_term' => $inMultiplesDepTerm,
         'in_multiples_deposit_term_time' => $inMultiplesDepTermTime,
         'allow_overdraft' => $prematureClosingPenalty,
-        'auto_renew_on_closure' => $autoRenew
+        'auto_renew_on_closure' => $autoRenew,
+        'expense_glcode' => $expenseGl,
+        'gl_Code' => $glCode
     ];
-    $createProduct = create('savings_product', $createProductCon);
+    $createProduct = insert('savings_product', $createProductCon);
     if ($createProduct) {
         // query to add charges
         $name = $longName . ' ' . $shortName;
@@ -89,7 +92,7 @@ if (isset($glCode)) {
             $ftdId = $ftdIdDetails['id'];
             $chargeId = $charge['charge_id'];
             $ftdChargeCon = ['int_id' => $sessint_id, 'ftd_id' => $ftdId, 'charge_id' => $chargeId];
-            $ftdCharge = create('ftd_product_charge', $ftdChargeCon);
+            $ftdCharge = insert('ftd_product_charge', $ftdChargeCon);
             if ($ftdCharge) {
                 $deleteCharge = delete('charges_cache', $id, 'id');
             }

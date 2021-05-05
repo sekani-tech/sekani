@@ -50,12 +50,6 @@ include("header.php");
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="bmd-label-floating">Shares Number</label>
-                                            <input type="text" readonly="" value="" class="form-control" name="ftd_no">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
                                             <label class="bmd-label-floating">Value Date</label>
                                             <input type="date" id="repay" class="form-control" name="date">
                                         </div>

@@ -39,6 +39,19 @@ include("header.php");
                 </div>
             </div>
 
+            <div class="col-md-4 ml-auto mr-auto">
+                <div class="card card-pricing bg-primary" style="height: auto;">
+                    <div class="card-body ">
+
+                        <h4 class="card-title">Inventory Schedule</h4>
+                        <p class="card-description">
+                            Setup Inventory Schedule for your institution
+                        </p>
+                        <a href="inventory_schedule.php" class="btn btn-white btn-round">View</a>
+                    </div>
+                </div>
+            </div>
+
 
     
 

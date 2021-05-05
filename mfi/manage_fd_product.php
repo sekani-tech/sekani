@@ -9,7 +9,7 @@ function fill_charges()
     $sint_id = $_SESSION["int_id"];
     $main_p = $_SESSION["product_temp"];
 
-    return selectAll('charge', ['int_id' => $sint_id, 'charge_applies_to_enum' => '1', 'is_active' => '1']);
+    return selectAll('charge', ['int_id' => $sint_id, 'charge_applies_to_enum' => '5', 'is_active' => '1']);
 }
 
 // show charge missing information
@@ -72,7 +72,7 @@ $sint_id = $_SESSION['int_id'];
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="shortLoanName">Short Loan Name <span
+                                                            <label for="shortLoanName">Short Product Name <span
                                                                         style="color: red;">*</span> </label>
                                                             <input type="text" class="form-control" name="shortName"
                                                                    value="" id="shortName" placeholder="Short Name..."
@@ -206,7 +206,7 @@ $sint_id = $_SESSION['int_id'];
                                                             <div class="row">
                                                                 <div class="col-md-4">
                                                                     <input type="number" class="form-control"
-                                                                           name="lockPerFreq" id="lockPerFreq" value=""
+                                                                           name="lockPerFreq" id="lockPerFreq" value="1"
                                                                            placeholder="Default" required>
                                                                 </div>
                                                                 <div class="col-md-8">
@@ -288,13 +288,61 @@ $sint_id = $_SESSION['int_id'];
                                                     </div>
 
                                                     <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>GL Codes <span style="color: red">*</span></label>
-                                                            <input type="text" class="form-control" name="glCode"
-                                                                   id="glCode" value=""
-                                                                   placeholder="GL Codes" required>
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    $('#gl_income').on("change keyup paste", function() {
+                                                                        var id = $(this).val();
+                                                                        var ist = $('#int_id').val();
+                                                                        $.ajax({
+                                                                            url: "ajax_post/gl/find_income_gl.php",
+                                                                            method: "POST",
+                                                                            data: {
+                                                                                id: id,
+                                                                                ist: ist
+                                                                            },
+                                                                            success: function(data) {
+                                                                                $('#income').html(data);
+                                                                            }
+                                                                        })
+                                                                    });
+                                                                });
+                                                            </script>
+                                                            <div class="form-group">
+                                                                <label for="shortSharesName">FTD Journal<span style="color: red;">*</span></label>
+                                                                <input type="text" class="form-control" name="glCode" id="gl_income" required>
+                                                                <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id">
+                                                            </div>
+                                                            <div id="income"></div>
                                                         </div>
-                                                    </div>
+
+                                                        <div class="col-md-6">
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    $('#gl_expense').on("change keyup paste", function() {
+                                                                        var id = $(this).val();
+                                                                        var ist = $('#int_id').val();
+                                                                        $.ajax({
+                                                                            url: "ajax_post/gl/acct_rep.php",
+                                                                            method: "POST",
+                                                                            data: {
+                                                                                id: id,
+                                                                                ist: ist
+                                                                            },
+                                                                            success: function(data) {
+                                                                                $('#expense').html(data);
+                                                                            }
+                                                                        })
+                                                                    });
+                                                                });
+                                                            </script>
+
+                                                            <div class="form-group">
+                                                                <label for="shortSharesName">Income Expense Journal <span style="color: red;">*</span></label>
+                                                                <input type="text" class="form-control" name="expense_gl" id="gl_expense" required>
+                                                                <!-- <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id"> -->
+                                                            </div>
+                                                            <div id="expense"></div>
+                                                        </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="principal">In Multiples of Deposit Term <span
@@ -627,7 +675,7 @@ $sint_id = $_SESSION['int_id'];
                     // add an "invalid" class to the field:
                     y[i].className += " invalid";
                     // and set the current valid status to false
-                    valid = false; // This was change to true to disable the validation function. Should be reverted to FALSE after testing is complete
+                    valid = true; // This was change to true to disable the validation function. Should be reverted to FALSE after testing is complete
                 }
             }
             // If the valid status is true, mark the step as finished and valid:

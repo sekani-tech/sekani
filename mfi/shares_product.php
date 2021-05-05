@@ -38,18 +38,8 @@ include("header.php");
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="principal">Amounts <span style="color: red;">*</span></label>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <input type="text" class="form-control" name="Default_amount" value="" placeholder="Default" required="">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input type="text" class="form-control" name="Minimum_amount" value="" placeholder="Min" required="">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input type="text" class="form-control" name="Maximum_amount" value="" placeholder="Max" required="">
-                                        </div>
-                                    </div>
+                                    <label for="principal">Amount<span style="color: red;">*</span></label>
+                                    <input type="text" class="form-control" name="Default_amount" value="" placeholder="Default" required="">
                                 </div>
                             </div>
                             <div class="col-md-6">

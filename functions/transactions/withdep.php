@@ -358,7 +358,11 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                         // if 10 add country code
                         $phoneLength = strlen($client_phone);
                         if ($phoneLength == 10) {
-                          $client_phone = "234" . $client_phone;
+                          $clientPhone = "234" . $client_phone;
+                        }
+                        if ($phone_length == 11) {
+                          $phone =  substr($client_phone, 1);
+                          $clientPhone = "234" . $phone;
                         }
                         $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$sessint_id'");
                         $qw = mysqli_fetch_array($sql_fund);
@@ -370,20 +374,35 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                         if ($smsBalance >= 4) {
 
                           $curl = curl_init();
+
                           curl_setopt_array($curl, array(
-                            CURLOPT_URL => "https://hordecall.net/sms/postSms.php",
+                            CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
                             CURLOPT_RETURNTRANSFER => true,
-                            CURLOPT_ENCODING => "",
+                            CURLOPT_ENCODING => '',
                             CURLOPT_MAXREDIRS => 10,
                             CURLOPT_TIMEOUT => 0,
                             CURLOPT_FOLLOWLOCATION => true,
                             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                            CURLOPT_CUSTOMREQUEST => "POST",
-                            CURLOPT_POSTFIELDS => "sender_id=$sender_id&mobile=$client_phone&msg=$msg&msg_id=$messageId&username=2348091141288&password=password@111",
+                            CURLOPT_CUSTOMREQUEST => 'POST',
+                            CURLOPT_POSTFIELDS => '{
+                                                "account": {
+                                                    "password": "kwPPkiV4",
+                                                    "systemId": "NG.102.0421"
+                                                    },
+                                                    "sms": {
+                                                        "dest":"' . $clientPhone . '",
+                                                        "src": "' . $sender_id . '",
+                                                        "text": "' . $msg . '",
+                                                        "unicode": true
+                                                    }
+
+                                                }',
                             CURLOPT_HTTPHEADER => array(
-                              "Content-Type: application/x-www-form-urlencoded"
+                              'Content-Type: application/json',
+                              'Authorization: Basic TkcuMTAyLjA0MjE6a3dQUGtpVjQ='
                             ),
                           ));
+
                           $response = curl_exec($curl);
                           // success
                           $err = curl_close($curl);
@@ -424,7 +443,7 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                         }
                       }
     ?>
-                      
+
                       <?php
                     }
                     // aomkjjkk
@@ -674,7 +693,7 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
             '{$gen_date}', '{$appuser_id}', '{$amt}')";
                         $res4 = mysqli_query($connection, $iat2);
                       }
-                    }else if($isbank == 2){
+                    } else if ($isbank == 2) {
                       $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal2' WHERE int_id = '$sessint_id' && gl_code = '$glcode'";
                       $dbgl = mysqli_query($connection, $upglacct);
                       if ($dbgl) {
@@ -702,7 +721,11 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                           // if 10 add country code
                           $phoneLength = strlen($client_phone);
                           if ($phoneLength == 10) {
-                            $client_phone = "234" . $client_phone;
+                            $clientPhone = "234" . $client_phone;
+                          }
+                          if ($phoneLength == 11) {
+                            $phone =  substr($client_phone, 1);
+                            $clientPhone = "234" . $phone;
                           }
                           $sql_fund = mysqli_query($connection, "SELECT * FROM sekani_wallet WHERE int_id = '$sessint_id'");
                           $qw = mysqli_fetch_array($sql_fund);
@@ -714,21 +737,36 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                           if ($smsBalance >= 4) {
 
                             $curl = curl_init();
-                            curl_setopt_array($curl, array(
-                              CURLOPT_URL => "https://hordecall.net/sms/postSms.php",
-                              CURLOPT_RETURNTRANSFER => true,
-                              CURLOPT_ENCODING => "",
-                              CURLOPT_MAXREDIRS => 10,
-                              CURLOPT_TIMEOUT => 0,
-                              CURLOPT_FOLLOWLOCATION => true,
-                              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                              CURLOPT_CUSTOMREQUEST => "POST",
-                              CURLOPT_POSTFIELDS => "sender_id=$sender_id&mobile=$client_phone&msg=$msg&msg_id=$messageId&username=2348091141288&password=password@111",
-                              CURLOPT_HTTPHEADER => array(
-                                "Content-Type: application/x-www-form-urlencoded"
-                              ),
-                            ));
-                            $response = curl_exec($curl);
+
+                          curl_setopt_array($curl, array(
+                            CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
+                            CURLOPT_RETURNTRANSFER => true,
+                            CURLOPT_ENCODING => '',
+                            CURLOPT_MAXREDIRS => 10,
+                            CURLOPT_TIMEOUT => 0,
+                            CURLOPT_FOLLOWLOCATION => true,
+                            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                            CURLOPT_CUSTOMREQUEST => 'POST',
+                            CURLOPT_POSTFIELDS => '{
+                                                "account": {
+                                                    "password": "kwPPkiV4",
+                                                    "systemId": "NG.102.0421"
+                                                    },
+                                                    "sms": {
+                                                        "dest":"' . $clientPhone . '",
+                                                        "src": "' . $sender_id . '",
+                                                        "text": "' . $msg . '",
+                                                        "unicode": true
+                                                    }
+
+                                                }',
+                            CURLOPT_HTTPHEADER => array(
+                              'Content-Type: application/json',
+                              'Authorization: Basic TkcuMTAyLjA0MjE6a3dQUGtpVjQ='
+                            ),
+                          ));
+
+                          $response = curl_exec($curl);
                             // success
                             $err = curl_close($curl);
                             if ($err) {
@@ -768,7 +806,7 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                           }
                         }
                       ?>
-                        
+
 <?php
                       }
                       // check the type of that account number product and get the name

@@ -8,6 +8,7 @@ if (isset($_POST['endofyear'])) {
         'dateclosed' => $_POST['dateclosed'],
         'closed_by' => $_SESSION['staff_id'],
         'int_id' => $_SESSION['int_id'],
+        'branch_id' => $_SESSION['branch_id'],
         'yearend' => getPieceOfDate($_POST['dateclosed'], "Y"),
         'status' =>"",
     ];

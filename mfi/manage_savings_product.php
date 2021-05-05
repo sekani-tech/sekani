@@ -436,7 +436,7 @@ $dos = mysqli_query($connection, $fd);
                     <div class="tab">
                       <div class="row">
                         <!-- replace values with loan data -->
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                           <h5 class="card-title">Accounting Rules</h5>
                           <div class="position-relative form-group ">
                             <div>
@@ -456,7 +456,7 @@ $dos = mysqli_query($connection, $fd);
                           </div>
                         </div>
                         <div class="col-md-6">
-                          <br>
+                          <!-- <br> -->
                           <h5 class="card-title">Assets</h5>
                           <div class="position-relative form-group">
                             <div class="form-group">
@@ -513,89 +513,13 @@ $dos = mysqli_query($connection, $fd);
                             return $output;
                           }
                           ?>
-                          <!-- <div class="position-relative form-group">
-                        <div class="form-group">
-                        <div class="col-md-8">
-                            <label for="charge" class="form-align ">Overpayments</label>
-                            <select class="form-control form-control-sm" name="li_overpayment">
-                              <option value="">--</option>
-                              <?php echo fill_lia($connection) ?>
-                            </select>
+
                         </div>
-                          </div>
-                          <div class="form-group">
-                          <div class="col-md-8">
-                            <label for="charge" class="form-align ">Suspended Income</label>
-                            <select class="form-control form-control-sm" name="li_suspended_income">
-                              <option value="">--</option>
-                              <?php echo fill_lia($connection) ?>
-                            </select>
-                          </div>
-                          </div>
-                      </div>                  -->
-                        </div>
-                        <div class="col-md-6">
-                          <p>
-                            <b style="font-size: 20px">
-                              Accounting Instruction
-                            </b>
-                          </p>
-                          <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal"><i class="material-icons">add</i></button>
-                          <span>
-                            Configure Fund sources for payment channels
-                          </span>
-                          <div id="acct_int">
-                            <div class="table-responsive">
-                              <table id="tabledat" class="table" cellspacing="0" style="width:100%">
-                                <thead>
-                                  <th> <b> Payment Type </b></th>
-                                  <th> <b>Assets Account <b></th>
-                                </thead>
-                              </table>
-                            </div>
-                          </div>
-                          <div id="show_payment"></div>
-                          <!-- <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal2"><i class="material-icons">add</i></button> -->
-                          <!-- <span>
-                            Map Fees to Specific Income accounts
-                            </span> -->
-                          <div id="acct_2" hidden>
-                            <div class="table-responsive">
-                              <table id="tabledat" class="table" cellspacing="0" style="width:100%">
-                                <thead>
-                                  <th> <b> Fee </b></th>
-                                  <th> <b>Income Account <b></th>
-                                </thead>
-                              </table>
-                            </div>
-                          </div>
-                          <div id="show_payment2"></div>
-                          <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal3"><i class="material-icons">add</i></button>
-                          <span>
-                            Map Penalties to Specific income accounts
-                          </span>
-                          <div id="acct_3">
-                            <div class="table-responsive">
-                              <table id="tabledat" class="table" cellspacing="0" style="width:100%">
-                                <thead>
-                                  <th> <b> Penalty </b></th>
-                                  <th> <b> Income Account <b></th>
-                                </thead>
-                                <!-- <tbody>
-           <tr>
-             <th> <h5> Eco Bank </h5></th>
-             <th> <h5>GL </h5></th>
-           </tr>
-         </tbody> -->
-                              </table>
-                            </div>
-                          </div>
-                          <div id="show_payment3"></div>
-                        </div>
+
                         <!-- <div class="col-md-8"> -->
                         <!-- </div> -->
-                      </div>
-                      <div class="row">
+                        <!-- </div>
+                      <div class="row"> -->
                         <div class="col-md-6">
                           <h5 class="card-title">Income</h5>
                           <div class="position-relative form-group">
@@ -613,7 +537,7 @@ $dos = mysqli_query($connection, $fd);
                                 return $output;
                               }
                               ?>
-                              <div class="col-md-8">
+                              <div class="col-md-6">
                                 <label for="charge" class="form-align ">Income for Interest</label>
                                 <select class="form-control form-control-sm" name="inc_interest">
                                   <option value="">--</option>
@@ -622,7 +546,7 @@ $dos = mysqli_query($connection, $fd);
                               </div>
                             </div>
                             <div class="form-group">
-                              <div class="col-md-8">
+                              <div class="col-md-6">
                                 <label for="charge" class="form-align ">Income from Fees</label>
                                 <select class="form-control form-control-sm" name="inc_fees">
                                   <option value="">--</option>
@@ -631,7 +555,7 @@ $dos = mysqli_query($connection, $fd);
                               </div>
                             </div>
                             <div class="form-group">
-                              <div class="col-md-8">
+                              <div class="col-md-6">
                                 <label for="charge" class="form-align ">Income from Penalties</label>
                                 <select class="form-control form-control-sm" name="inc_penalties">
                                   <option value="">--</option>
@@ -640,7 +564,7 @@ $dos = mysqli_query($connection, $fd);
                               </div>
                             </div>
                             <div class="form-group">
-                              <div class="col-md-8">
+                              <div class="col-md-6">
                                 <label for="charge" class="form-align ">Income from Recovery</label>
                                 <select class="form-control form-control-sm" name="inc_recovery">
                                   <option value="">--</option>
@@ -649,7 +573,7 @@ $dos = mysqli_query($connection, $fd);
                               </div>
                             </div>
                             <div class="form-group">
-                              <div class="col-md-8">
+                              <div class="col-md-6">
                                 <label for="charge" class="form-align ">BVN Income</label>
                                 <select class="form-control form-control-sm" name="bvn_income">
                                   <option value="">--</option>
@@ -658,16 +582,12 @@ $dos = mysqli_query($connection, $fd);
                               </div>
                             </div>
 
-                            <!-- <div class="form-group">
-                          <div class="col-md-8">
-                              <label for="charge" class="form-align ">Income from Recovery</label>
-                              <select class="form-control form-control-sm" name="">
-                                <option value="">--</option>
-                              </select>
-                          </div>
-                          </div> -->
                           </div>
                           <!-- next -->
+
+
+                        </div>
+                        <div class="col-md-6">
                           <h5 class="card-title">Expenses</h5>
                           <div class="position-relative form-group">
                             <?php
@@ -684,7 +604,7 @@ $dos = mysqli_query($connection, $fd);
                             }
                             ?>
                             <div class="form-group">
-                              <div class="col-md-8">
+                              <div class="col-md-6">
                                 <label for="charge" class="form-align ">Losses Written Off</label>
                                 <select class="form-control form-control-sm" name="exp_loss_written_off">
                                   <option value="">--</option>
@@ -693,7 +613,7 @@ $dos = mysqli_query($connection, $fd);
                               </div>
                             </div>
                             <div class="form-group">
-                              <div class="col-md-8">
+                              <div class="col-md-6">
                                 <label for="charge" class="form-align ">Interest Written Off</label>
                                 <select class="form-control form-control-sm" name="exp_interest_written_off">
                                   <option value="">--</option>
@@ -702,7 +622,7 @@ $dos = mysqli_query($connection, $fd);
                               </div>
                             </div>
                             <div class="form-group">
-                              <div class="col-md-8">
+                              <div class="col-md-6">
                                 <label for="charge" class="form-align ">BVN Expense</label>
                                 <select class="form-control form-control-sm" name="bvn_expense">
                                   <option value="">--</option>
@@ -729,7 +649,7 @@ $dos = mysqli_query($connection, $fd);
                         return $output;
                       }
                       ?>
-                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+                      <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -817,9 +737,9 @@ $dos = mysqli_query($connection, $fd);
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                       <!-- Modal2 -->
-                      <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+                      <!-- <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -907,9 +827,9 @@ $dos = mysqli_query($connection, $fd);
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                       <!-- Modal3 -->
-                      <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+                      <!-- <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -993,7 +913,7 @@ $dos = mysqli_query($connection, $fd);
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                       <!-- </div> -->
                     </div>
                   </div>

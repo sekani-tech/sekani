@@ -1,10 +1,14 @@
 <?php
 
 $page_title = "Deposit/ Withdrawal";
-$yes = "true";
 $destination = "transaction.php";
 include("header.php");
+<<<<<<< HEAD
+include("ajaxcall.php");   
+=======
 include("ajaxcall.php");
+
+>>>>>>> 79d85e569e8e70a5518683b72388ae5ab2c597b0
 ?>
 <?php
 $exp_error = "";
@@ -27,8 +31,7 @@ if (isset($_GET["message"])) {
     ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-}
-else if (isset($_GET["message1"])) {
+} else if (isset($_GET["message1"])) {
     $key = $_GET["message1"];
     // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
@@ -47,8 +50,7 @@ else if (isset($_GET["message1"])) {
   ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-}
-else if (isset($_GET["message2"])) {
+} else if (isset($_GET["message2"])) {
     $key = $_GET["message2"];
     // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
@@ -397,7 +399,7 @@ else if (isset($_GET["message2"])) {
 <?php
 
 if ($trans_post == 1 || $trans_post == "1") {
-    ?>
+?>
     <?php
     $digits = 6;
     $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
@@ -423,15 +425,18 @@ if ($trans_post == 1 || $trans_post == "1") {
                                 <div class="row">
                                     <div class="col-md-4">
                                         <script>
-                                            $(document).ready(function () {
-                                                $('#act').on("change keyup paste", function () {
+                                            $(document).ready(function() {
+                                                $('#act').on("change keyup paste", function() {
                                                     var id = $(this).val();
                                                     var ist = $('#int_id').val();
                                                     $.ajax({
                                                         url: "acct_name.php",
                                                         method: "POST",
-                                                        data: {id: id, ist: ist},
-                                                        success: function (data) {
+                                                        data: {
+                                                            id: id,
+                                                            ist: ist
+                                                        },
+                                                        success: function(data) {
                                                             $('#accname').html(data);
                                                         }
                                                     })
@@ -470,8 +475,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Account Number</label>
                                             <input type="text" class="form-control" name="account_no" id="act">
-                                            <input type="text" class="form-control" hidden name=""
-                                                   value="<?php echo $sessint_id; ?>" id="int_id">
+                                            <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id">
                                         </div>
                                         <div id="accname"></div>
                                     </div>
@@ -496,22 +500,25 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Amount</label>
-                                            <input type="number" step="any" class="form-control" name="amount" value="">
+                                            <input type="number" step="100" class="form-control" name="amount" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <script>
-                                                $(document).ready(function () {
-                                                    $('#opo').change(function () {
+                                                $(document).ready(function() {
+                                                    $('#opo').on("change click", function() {
                                                         var id = $(this).val();
-                                                        if (id == "Cheque") {
-                                                            document.getElementById('ti').readOnly = false;
-                                                            $("#ti").val("");
-                                                        } else {
-                                                            document.getElementById('ti').readOnly = true;
-                                                            $("#ti").val(Math.floor(100000 + Math.random() * 900000));
-                                                        }
+                                                        $.ajax({
+                                                            url: "ajax_post/transactions/transaction_id.php",
+                                                            method: "POST",
+                                                            data: {
+                                                                id: id
+                                                            },
+                                                            success: function(data) {
+                                                                $('#transaction_id').html(data);
+                                                            }
+                                                        })
                                                     });
                                                 });
                                             </script>
@@ -537,22 +544,18 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     </div>
                                     <div id="rd"></div>
                                     <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="">Transaction ID(Cheque no, Transfer Id, Deposit Id):</label>
-                                            <input type="text" value="<?php echo $transid1; ?>" name="transid"
-                                                   class="form-control" id="ti" readonly>
-                                        </div>
+                                        <div id="transaction_id"></div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Description</label>
-                                            <input type="text" value="" name="description" class="form-control" id="ti">
+                                            <input type="text" value="" name="description" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Repayment Date</label>
-                                            <input type="date" name="transDate" class="form-control" required/>
+                                            <label>Transaction Date</label>
+                                            <input type="date" name="transDate" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" class="form-control" required />
                                         </div>
                                     </div>
                                 </div>
@@ -574,15 +577,18 @@ if ($trans_post == 1 || $trans_post == "1") {
                                 <div class="row">
                                     <div class="col-md-4">
                                         <script>
-                                            $(document).ready(function () {
-                                                $('#acct').on("change keyup paste", function () {
+                                            $(document).ready(function() {
+                                                $('#acct').on("change keyup paste", function() {
                                                     var id = $(this).val();
                                                     var ist = $('#int_id').val();
                                                     $.ajax({
                                                         url: "acct_rep.php",
                                                         method: "POST",
-                                                        data: {id: id, ist: ist},
-                                                        success: function (data) {
+                                                        data: {
+                                                            id: id,
+                                                            ist: ist
+                                                        },
+                                                        success: function(data) {
                                                             $('#accrep').html(data);
                                                         }
                                                     })
@@ -592,33 +598,33 @@ if ($trans_post == 1 || $trans_post == "1") {
                                         <div class="form-group">
                                             <label for="">GL Number</label>
                                             <input type="text" class="form-control" name="acct_gl" id="acct">
-                                            <input type="text" class="form-control" hidden name=""
-                                                   value="<?php echo $sessint_id; ?>" id="int_id">
+                                            <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Amount:</label>
-                                            <input type="number" step="any" name="amount" id="" value=""
-                                                   class="form-control">
-                                            <span class="help-block"
-                                                  style="color: red;"><?php echo $exp_error; ?></span>
+                                            <input type="number" step="any" name="amount" id="" value="" class="form-control">
+                                            <span class="help-block" style="color: red;"><?php echo $exp_error; ?></span>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Payment Method:</label>
                                             <script>
-                                                $(document).ready(function () {
-                                                    $('#poo').change(function () {
+                                                $(document).ready(function() {
+                                                    $('#poo').on("change click", function() {
                                                         var id = $(this).val();
-                                                        if (id == "Cheque") {
-                                                            document.getElementById('tit').readOnly = false;
-                                                            $("#tit").val("");
-                                                        } else {
-                                                            document.getElementById('tit').readOnly = true;
-                                                            $("#tit").val(Math.floor(100000 + Math.random() * 900000));
-                                                        }
+                                                        $.ajax({
+                                                            url: "ajax_post/transactions/transaction_id.php",
+                                                            method: "POST",
+                                                            data: {
+                                                                id: id
+                                                            },
+                                                            success: function(data) {
+                                                                $('#transaction_id2').html(data);
+                                                            }
+                                                        })
                                                     });
                                                 });
                                             </script>
@@ -632,16 +638,12 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Repayment Date</label>
-                                            <input type="date" name="transDate" class="form-control" required/>
+                                            <label>Transaction Date</label>
+                                            <input type="date" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" name="transDate" class="form-control" required />
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="">Transaction ID:</label>
-                                            <input type="text" readonly value="<?php echo $transid; ?>" name="transid"
-                                                   class="form-control" id="tit">
-                                        </div>
+                                        <div id="transaction_id2"></div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
@@ -700,8 +702,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                                                 <option></option>
                                                 <?php echo fill_charges($connection); ?>
                                             </select>
-                                            <input type="text" class="form-control" hidden name=""
-                                                   value="<?php echo $sessint_id; ?>" id="int_id">
+                                            <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -709,7 +710,7 @@ if ($trans_post == 1 || $trans_post == "1") {
 
                                             <script>
                                                 // In your Javascript (external .js resource or <script> tag)
-                                                $(document).ready(function () {
+                                                $(document).ready(function() {
                                                     $('.js-example-basic-single').select2();
                                                 });
                                             </script>
@@ -719,15 +720,13 @@ if ($trans_post == 1 || $trans_post == "1") {
                                                 <option value="000">All</option>
                                                 <?php echo fill_client($connection); ?>
                                             </select>
-                                            <input type="text" class="form-control" hidden name=""
-                                                   value="<?php echo $sessint_id; ?>" id="int_id">
+                                            <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Transaction ID</label>
-                                            <input type="text" readonly value="<?php echo $transid2; ?>" name="transid"
-                                                   class="form-control" id="tsit">
+                                            <input type="text" readonly value="<?php echo $transid2; ?>" name="transid" class="form-control" id="tsit">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -736,17 +735,20 @@ if ($trans_post == 1 || $trans_post == "1") {
                                             <input type="text" value="" name="descrip" class="form-control">
                                         </div>
                                     </div>
-                                    
+
                                     <script>
-                                        $(document).ready(function () {
-                                            $('#sddxx').on("change", function () {
+                                        $(document).ready(function() {
+                                            $('#sddxx').on("change", function() {
                                                 var id = $(this).val();
                                                 var ist = $('#int_id').val();
                                                 $.ajax({
                                                     url: "ajax_post/choose_acc.php",
                                                     method: "POST",
-                                                    data: {id: id, ist: ist},
-                                                    success: function (data) {
+                                                    data: {
+                                                        id: id,
+                                                        ist: ist
+                                                    },
+                                                    success: function(data) {
                                                         $('#showacc').html(data);
                                                     }
                                                 })
@@ -761,8 +763,8 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Repayment Date</label>
-                                            <input type="date" name="transDate" class="form-control" required/>
+                                            <label>Transaction Date</label>
+                                            <input type="date" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" name="transDate" class="form-control" required />
                                         </div>
                                     </div>
                                 </div>
@@ -777,7 +779,7 @@ if ($trans_post == 1 || $trans_post == "1") {
     <?php
     include("footer.php");
     ?>
-    <?php
+<?php
 } else {
     echo '<script type="text/javascript">
   $(document).ready(function(){
