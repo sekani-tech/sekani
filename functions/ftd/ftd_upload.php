@@ -31,13 +31,13 @@ if(isset($_POST['ftd_no'])){
         $row = mysqli_fetch_array($findBranch);
         $branch_id = $row['branch_id'];
         if(!$findBranch) {
-                    printf('Error: %s\n', mysqli_error($connection));//checking for errors
-                    exit();
-                }else{
-                    //output
-                    $branch_id = $row['branch_id'];
-                }
-                // dd($findBranch);
+            printf('Error: %s\n', mysqli_error($connection));//checking for errors
+            exit();
+        }else{
+            //output
+            $branch_id = $row['branch_id'];
+        }
+        // dd($findBranch);
         if($findBranch){
             // Find needed ftd product data
             $findSavingsProduct = mysqli_query($connection, "SELECT name, accounting_type FROM savings_product WHERE id = '$sproduct_id'");
@@ -75,7 +75,7 @@ if(isset($_POST['ftd_no'])){
                     'branch_id' => $branch_id, 
                     'ftd_no' => $ftd_no,
                     'account_no' => $account_no,
-                    'product_id' => $prod_id, 
+                    'product_id' => $sproduct_id, 
                     'client_id' => $client, 
                     'field_officer_id' => $acc_off, 
                     'submittedon_userid' => $user_id,
@@ -111,7 +111,7 @@ if(isset($_POST['ftd_no'])){
                     'branch_id' => $branch_id, 
                     'ftd_no' => $ftd_no, 
                     'account_no' => $account_no,
-                    'product_id' => $prod_id, 
+                    'product_id' => $sproduct_id, 
                     'client_id' => $client, 
                     'field_officer_id' => $acc_off, 
                     'submittedon_userid' => $user_id,

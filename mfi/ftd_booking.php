@@ -70,9 +70,9 @@ $(document).ready(function(){
         swal({
             type: "success",
             title: "Success",
-            text: "FTD Booked Successfully and Awaiting Approval",
-            showConfirmButton: false,
-            timer: 3000
+            text: "Successful and Awaiting Approval",
+            showConfirmButton: true,
+            timer: 7000
         })
     });
     </script>
@@ -92,7 +92,7 @@ else if (isset($_GET["message5"])) {
             title: "Success",
             text: "FTD Booked Successfully and Awaiting Approval. This account is not sufficiently funded. Kindly fund before attempting to approve",
             showConfirmButton: false,
-            timer: 3000
+            timer: 7000
         })
     });
     </script>

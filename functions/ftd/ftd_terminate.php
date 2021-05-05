@@ -5,7 +5,7 @@ $sessuser_id = $_SESSION['user_id'];
 $sessint_id = $_SESSION['int_id'];
 $sessbranch_id = $_SESSION['branch_id'];
 
-$getParentID = mysqli_query($connection, "SELECT parent_id FROM `branch` WHERE int_id = $sessint_id AND id = $sessbranch_id");
+$getParentID = mysqli_query($connection, "SELECT parent_id FROM `branch` WHERE int_id = {$sessint_id} AND id = {$sessbranch_id}");
 $parent_id = mysqli_fetch_array($getParentID)['parent_id'];
                         
 $terminationDate = date('Y-m-d');
@@ -47,7 +47,7 @@ if(isset($_POST['ftd_id'])) {
             'is_reversed' => 0,
             'transaction_date' => date('Y-m-d'),
             'amount' => $principal,
-            'overdraft_amount_derived' => '',
+            'overdraft_amount_derived' => $principal,
             'balance_end_date_derived' => '',
             'balance_number_of_days_derived' => '',
             'running_balance_derived' => $newAccountBalance,
@@ -58,22 +58,70 @@ if(isset($_POST['ftd_id'])) {
             'manually_adjusted_or_reversed' => 0,
             'credit' => $principal
         ];
-        
+
         $insertAccountTransaction = insert('account_transaction', $newAccountTransactionData);
 
         if($insertAccountTransaction) {
-            
+
+            $getGLCode = mysqli_query($connection, "SELECT gl_code FROM `savings_product` where int_id = {$sessint_id} and id = {$savingsProductID}");
+            $GLCode = mysqli_fetch_array($getGLCode)['gl_code'];
+
+            $getParentID = mysqli_query($connection, "SELECT parent_id FROM `branch` WHERE int_id = {$sessint_id} AND id = {$sessbranch_id}");
+            $parent_id = mysqli_fetch_array($getParentID)['parent_id'];
+
+            // deduct principal amount from 'organization_running_balance_derived' for the selected 'gl_code' in the `acc_gl_account` table
+            $getOrganizationRunningBalance = mysqli_query($connection, "SELECT organization_running_balance_derived FROM `acc_gl_account` WHERE int_id = {$sessint_id} AND gl_code = {$GLCode}");
+            $currentOrganizationRunningBalance = mysqli_fetch_array($getOrganizationRunningBalance)['organization_running_balance_derived'];
+
+            $newOrganizationRunningBalance = $currentOrganizationRunningBalance - $principal;
+            $updateOrganizationRunningBalance = mysqli_query($connection, "UPDATE `acc_gl_account` SET organization_running_balance_derived = {$newOrganizationRunningBalance} WHERE int_id = {$sessint_id} AND gl_code = {$GLCode}");
+
+            if($updateOrganizationRunningBalance) {
+
+                $newGLAccountTransactionData = [
+                    'int_id' => $sessint_id,
+                    'branch_id' => $sessbranch_id,
+                    'gl_code' => $GLCode,
+                    'parent_id' => $parent_id,
+                    'transaction_id' => $ftdNo,
+                    'description' => 'FTD_LIABILITY_EXPENSE',
+                    'transaction_type' => 'debit',
+                    'teller_id' => $sessuser_id,
+                    'is_reversed' => 0,
+                    'transaction_date' => date('Y-m-d'),
+                    'amount' => $principal,
+                    'gl_account_balance_derived' => $newOrganizationRunningBalance,
+                    'branch_balance_derived' => '',
+                    'overdraft_amount_derived' => $principal,
+                    'balance_end_date_derived' => date('Y-m-d'),
+                    'balance_number_of_days_derived' => '',
+                    'cumulative_balance_derived' => $newOrganizationRunningBalance,
+                    'created_date' => date('Y-m-d H:i:s'),
+                    'manually_adjusted_or_reversed' => 0,
+                    'debit' => $principal
+                ];
+                
+                $insertGLAccountTransaction = insert('gl_account_transaction', $newGLAccountTransactionData);
+            }
+
+
             if($terminationDate < $maturityDate) {
                 // check if there is a termination charge
                 $getChargeID = mysqli_query($connection, "SELECT charge_id FROM `savings_product_charge` WHERE int_id = {$sessint_id} AND savings_id = {$savingsProductID}");
                 $chargeID = mysqli_fetch_array($getChargeID)['charge_id'];
-        
+
                 if(!empty($chargeID)) {
-                    $getChargeInfo = mysqli_query($connection, "SELECT amount, gl_code FROM `charge` WHERE int_id = {$sessint_id} AND id = {$chargeID}");
+                    $getChargeInfo = mysqli_query($connection, "SELECT amount, charge_calculation_enum, gl_code FROM `charge` WHERE int_id = {$sessint_id} AND id = {$chargeID}");
                     $chargeInfo = mysqli_fetch_array($getChargeInfo);
                     $chargeAmount = $chargeInfo['amount'];
+                    $chargeCalcEnum = $chargeInfo['charge_calculation_enum'];
                     $GLCode = $chargeInfo['gl_code'];
-        
+
+                    // check if it is a percentage charge
+                    if ($chargeCalcEnum == 7) {
+                        $chargeAmount = $principal * ($chargeAmount / 100);
+                    }
+
                     // deduct charge from customers account balance
                     $getAccountInfo = mysqli_query($connection, "SELECT account_balance_derived FROM `account` WHERE int_id = {$sessint_id} AND account_no = {$savingsAccount}");
                     $accountInfo = mysqli_fetch_array($getAccountInfo);
@@ -98,7 +146,7 @@ if(isset($_POST['ftd_id'])) {
                             'is_reversed' => 0,
                             'transaction_date' => date('Y-m-d'),
                             'amount' => $chargeAmount,
-                            'overdraft_amount_derived' => '',
+                            'overdraft_amount_derived' => $chargeAmount,
                             'balance_end_date_derived' => '',
                             'balance_number_of_days_derived' => '',
                             'running_balance_derived' => $newAccountBalance,
@@ -113,7 +161,7 @@ if(isset($_POST['ftd_id'])) {
                         $insertAccountTransaction = insert('account_transaction', $newAccountTransactionData);
         
                         if($insertAccountTransaction) {
-        
+
                             if(!empty($GLCode)) {
                                 // add charge to 'organization_running_balance_derived' for the selected 'gl_code' in the `acc_gl_account` table
                                 $getOrganizationRunningBalance = mysqli_query($connection, "SELECT organization_running_balance_derived FROM `acc_gl_account` WHERE int_id = {$sessint_id} AND gl_code = {$GLCode}");
@@ -138,7 +186,7 @@ if(isset($_POST['ftd_id'])) {
                                         'amount' => $chargeAmount,
                                         'gl_account_balance_derived' => $newOrganizationRunningBalance,
                                         'branch_balance_derived' => '',
-                                        'overdraft_amount_derived' => '',
+                                        'overdraft_amount_derived' => $chargeAmount,
                                         'balance_end_date_derived' => date('Y-m-d'),
                                         'balance_number_of_days_derived' => '',
                                         'cumulative_balance_derived' => $newOrganizationRunningBalance,
@@ -146,12 +194,11 @@ if(isset($_POST['ftd_id'])) {
                                         'manually_adjusted_or_reversed' => 0,
                                         'credit' => $chargeAmount
                                     ];
-                                    
                                     $insertGLAccountTransaction = insert('gl_account_transaction', $newGLAccountTransactionData);
                 
                                     if($insertGLAccountTransaction) {
                                         // 'is_paid' value is updated to 2 in the `ftd_booking_account` table to indicate that the FTD is terminated
-                                        $updateFTD = mysqli_query($connection, "UPDATE `ftd_booking_account` SET is_paid = '2' WHERE id = {$ftd_id}");
+                                        $updateFTD = mysqli_query($connection, "UPDATE `ftd_booking_account` SET is_paid = '2' WHERE int_id = {$sessint_id} AND id = {$ftd_id}");
                 
                                         if($updateFTD) {
                                             echo header("Location: ../../mfi/ftd_schedule.php?id=$ftd_id");
@@ -161,6 +208,14 @@ if(isset($_POST['ftd_id'])) {
                             }
                         }
                     }
+                }
+
+            } else {
+                // 'is_paid' value is updated to 2 in the `ftd_booking_account` table to indicate that the FTD is terminated
+                $updateFTD = mysqli_query($connection, "UPDATE `ftd_booking_account` SET is_paid = '2' WHERE int_id = {$sessint_id} AND id = {$ftd_id}");
+
+                if($updateFTD) {
+                    echo header("Location: ../../mfi/ftd_schedule.php?id=$ftd_id");
                 }
             }
         }

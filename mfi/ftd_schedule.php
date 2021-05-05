@@ -24,7 +24,7 @@ $maturity_date = date('d-m-Y', strtotime('+'. $tenure .' Days', strtotime($booke
 $status = $ftd_acc['status'];
 $is_paid = $ftd_acc['is_paid'];
 
-$interest_query = mysqli_query($connection, "SELECT SUM(interest_amount) as interest_amount FROM `ftd_interest_schedule` WHERE int_id = {$sessint_id} AND client_id = {$ftd_acc['client_id']}");
+$interest_query = mysqli_query($connection, "SELECT SUM(interest_amount) as interest_amount FROM `ftd_interest_schedule` WHERE int_id = {$sessint_id} AND client_id = {$ftd_acc['client_id']} AND ftd_id = {$ftd_booking_id}");
 $interest = mysqli_fetch_array($interest_query)['interest_amount'];
 
 ?>
@@ -138,9 +138,9 @@ $interest = mysqli_fetch_array($interest_query)['interest_amount'];
                                             $principal_query = mysqli_query($connection, "SELECT account_balance_derived FROM `ftd_booking_account` WHERE int_id = {$sessint_id} AND client_id = {$ftd_acc['client_id']} AND id = {$ftd_booking_id}");
                                             $principal = mysqli_fetch_array($principal_query)['account_balance_derived'];
 
-                                            $paid_principal_query = mysqli_query($connection, "SELECT is_paid FROM `ftd_booking_account` WHERE int_id = {$sessint_id} AND client_id = {$ftd_acc['client_id']} AND id = {$ftd_booking_id}");
-                                            $paid_principal = mysqli_fetch_array($paid_principal_query)['is_paid'];
-                                            if($paid_principal == 1) {
+                                            $is_paid_query = mysqli_query($connection, "SELECT is_paid FROM `ftd_booking_account` WHERE int_id = {$sessint_id} AND client_id = {$ftd_acc['client_id']} AND id = {$ftd_booking_id}");
+                                            $is_paid = mysqli_fetch_array($is_paid_query)['is_paid'];
+                                            if($is_paid == 1 || $is_paid == 2) {
                                                 $paid_principal = $principal;
                                             } else {
                                                 $paid_principal = 0;
@@ -164,7 +164,15 @@ $interest = mysqli_fetch_array($interest_query)['interest_amount'];
                                                 <th>Interest</th>
                                                 <th><?php echo '₦ '. number_format($interest, 2); ?></th>
                                                 <th><?php echo '₦ '. number_format($paid_interest, 2); ?></th>
-                                                <th><?php echo '₦ '. number_format($outstanding_interest, 2); ?></th>
+                                                <th>
+                                                    <?php
+                                                    if($is_paid == 2) {
+                                                        echo '₦ 0.00';
+                                                    } else {
+                                                        echo '₦ '. number_format($outstanding_interest, 2); 
+                                                    }
+                                                    ?>
+                                                </th>
                                             </tr>
                                             <tr>
                                                 <th>Fees</th>
@@ -199,6 +207,7 @@ $interest = mysqli_fetch_array($interest_query)['interest_amount'];
                                             <thead class="text-primary">
                                                 <tr>
                                                     <th>Term</th>
+                                                    <th>Maturity Date</th>
                                                     <th>Principal</th>
                                                     <th>Interest</th>
                                                     <th>Total</th>
@@ -207,12 +216,13 @@ $interest = mysqli_fetch_array($interest_query)['interest_amount'];
                                             <tbody>
                                                 <?php
                                                 $i = 1;
-                                                $interest_schedule = mysqli_query($connection, "SELECT installment, interest_amount FROM `ftd_interest_schedule` WHERE int_id = {$sessint_id} AND client_id = {$ftd_acc['client_id']} AND ftd_id = {$ftd_booking_id}");
+                                                $interest_schedule = mysqli_query($connection, "SELECT installment, interest_amount, maturity_date FROM `ftd_interest_schedule` WHERE int_id = {$sessint_id} AND client_id = {$ftd_acc['client_id']} AND ftd_id = {$ftd_booking_id}");
                                                 $num_of_rows = mysqli_num_rows($interest_schedule);
                                                 while($row = mysqli_fetch_array($interest_schedule)) {
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $i; ?></td>
+                                                    <td><?php echo date('d-m-Y', strtotime($row['maturity_date'])); ?></td>
                                                     <?php
                                                         $principal = ($i == $num_of_rows) ? $row['installment'] : 0;
                                                     ?>

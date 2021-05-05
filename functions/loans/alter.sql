@@ -7,6 +7,7 @@ ALTER TABLE `loan_repayment_schedule` ADD `amount_collected` DECIMAL(19,2) NOT N
 ALTER TABLE `charges_cache` CHANGE `cache_prod_id` `cache_prod_id` VARCHAR(255) NULL;
 ALTER TABLE `charges_cache` CHANGE `is_status` `is_status` INT(3) NOT NULL;
 ALTER TABLE `savings_product` ADD `gl_Code` INT NOT NULL AFTER `validate_period`;
+ALTER TABLE `savings_product` ADD `expense_glcode` VARCHAR(60) NOT NULL AFTER `gl_Code`;
 
 -- for groups
 ALTER TABLE `groups` CHANGE `id` `id` INT(100) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`id`);
@@ -138,4 +139,69 @@ ALTER TABLE `inventory_posting`
   
 ALTER TABLE `inventory_posting`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+
+--
+-- Table structure for table `budget`
+--
+
+CREATE TABLE `budget` ( 
+  `id` INT(100) NOT NULL AUTO_INCREMENT , 
+  `int_id` INT(100) NOT NULL , 
+  `branch_id` INT(100) NOT NULL , 
+  `title` VARCHAR(100) NOT NULL , 
+  `year` INT(4) NOT NULL , 
+  `total_expenses` DECIMAL(19,2) NOT NULL , 
+  `total_income` DECIMAL(19,2) NOT NULL , 
+  PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+
+--
+-- Table structure for table `budget_details`
+--
+
+CREATE TABLE `budget_details` ( 
+  `id` INT(100) NOT NULL AUTO_INCREMENT , 
+  `int_id` INT(100) NOT NULL , 
+  `branch_id` INT(100) NOT NULL , 
+  `budget_id` INT(100) NOT NULL , 
+  `gl_name` VARCHAR(200) NOT NULL , 
+  `gl_code` VARCHAR(45) NOT NULL , 
+  `year` INT(4) NOT NULL , 
+  `budgeted_amount` DECIMAL(19,2) NOT NULL , 
+  `end_of_year_amount` DECIMAL(19,2) NOT NULL , 
+  PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+
+--
+-- Table structure for table `budget_adjustment`
+--
+
+CREATE TABLE `budget_adjustment` ( 
+  `id` INT(100) NOT NULL AUTO_INCREMENT , 
+  `int_id` INT(100) NOT NULL , 
+  `branch_id` INT(100) NOT NULL , 
+  `budget_id` INT(100) NOT NULL , 
+  `gl_code` VARCHAR(45) NOT NULL , 
+  `original_amount` DECIMAL(19,2) NOT NULL , 
+  `adjusted_amount` DECIMAL(19,2) NOT NULL , 
+  `reason` TEXT NOT NULL , 
+  PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+
+--
+-- Table structure for table `bank_reconciliation`
+--
+
+CREATE TABLE `bank_reconciliation` ( 
+  `id` INT(100) NOT NULL AUTO_INCREMENT , 
+  `int_id` INT(100) NOT NULL , 
+  `branch_id` INT(100) NOT NULL , 
+  `bank` VARCHAR(100) NOT NULL ,
+  `date` DATE NOT NULL , 
+  `staff` VARCHAR(100) NOT NULL ,
+  `system_amount` DECIMAL(19,2) NOT NULL , 
+  `bank_amount` DECIMAL(19,2) NOT NULL ,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+  PRIMARY KEY (`id`)) ENGINE = InnoDB;
 

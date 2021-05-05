@@ -55,10 +55,10 @@ $destination = "report_current.php";
                         }
 
                         if ($parent_id == 0) {
-                            $query = "SELECT c.firstname, c.lastname, c.client_type, f.id, f.product_id, f.account_no, a.account_balance_derived FROM ftd_booking_account f JOIN client c ON f.client_id = c.id JOIN account a ON c.id = a.client_id WHERE f.int_id = '$sessint_id' AND f.status = 'Approved' ORDER BY c.firstname ASC";
+                            $query = "SELECT c.firstname, c.lastname, c.client_type, f.id, f.product_id, f.account_no, f.account_balance_derived, f.is_paid FROM ftd_booking_account f JOIN client c ON f.client_id = c.id JOIN account a ON c.id = a.client_id WHERE f.int_id = '$sessint_id' AND f.status = 'Approved' ORDER BY c.firstname ASC";
                             $result = mysqli_query($connection, $query);
                         } else {
-                            $query = "SELECT c.firstname, c.lastname, c.client_type, f.id, f.product_id, f.account_no, a.account_balance_derived FROM ftd_booking_account f JOIN client c ON f.client_id = c.id JOIN account a ON c.id = a.client_id WHERE f.int_id = '$sessint_id' AND f.branch_id = '$br_id' AND f.status = 'Approved' ORDER BY c.firstname ASC";
+                            $query = "SELECT c.firstname, c.lastname, c.client_type, f.id, f.product_id, f.account_no, f.account_balance_derived, f.is_paid FROM ftd_booking_account f JOIN client c ON f.client_id = c.id JOIN account a ON c.id = a.client_id WHERE f.int_id = '$sessint_id' AND f.branch_id = '$br_id' AND f.status = 'Approved' ORDER BY c.firstname ASC";
                             $result = mysqli_query($connection, $query);
                         }
                         ?>
@@ -68,6 +68,7 @@ $destination = "report_current.php";
                           <th>Account Type</th>
                           <th>Account Number</th>
                           <th>Account Balance</th>
+                          <th>Status</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -88,7 +89,26 @@ $destination = "report_current.php";
                         ?>
                               <td><?php echo $savings_product; ?></td>
                               <td><?php echo $row["account_no"]; ?></td>
-                              <td><?php echo $row["account_balance_derived"]; ?></td>
+                              <td>
+                                <?php
+                                  if($row["is_paid"] == 1 || $row["is_paid"] == 2) {
+                                      echo '0.00';
+                                  } else {
+                                      echo $row["account_balance_derived"]; 
+                                  }
+                                ?>
+                              </td>
+                              <td>
+                                <?php 
+                                if($row["is_paid"] == 0) {
+                                    echo "Active";
+                                } elseif($row["is_paid"] == 1) {
+                                    echo "Completed";
+                                } else {
+                                    echo "Terminated";
+                                }
+                                ?>
+                              </td>
                               <td><a href="ftd_schedule.php?id=<?php echo $row['id']; ?>"><button type="button" class="btn btn-info">View</button></a></td>
                             </tr> 
                         <?php 
