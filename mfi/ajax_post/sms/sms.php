@@ -6,10 +6,10 @@ include("../../../functions/connect.php");
 session_start();
 $int_id = $_SESSION["int_id"];
 $branch_id = $_SESSION["branch_id"];
-$send_id = $_SESSION["sender_id"];
-$phone = "07059658235";
-$intName = $_SESSION['int_name'];
-$msg = "'Dear Samuel Oloche Ejiga, Welcome to {$intName}, your (Account Type) - (Account No) is open for Transactions'";
+$send_id = "MEGA MFB";
+$phone = "07057463781";
+$intName = "MEGA MFB";
+echo $msg = "'Dear Samuel Oloche Ejiga, Welcome to {$intName}, your (Account Type) - (Account No) is open for Transactions'";
 $client_id = $_POST["client_id"];
 $account_no = $_POST["account_no"];
 $find = mysqli_query($connection, "SELECT * FROM test_data WHERE id = 1");
@@ -58,7 +58,7 @@ if ($send_id != "" && $phone != "" && $msg != "" && $int_id != "" && $branch_id 
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
+            CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit/long',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,

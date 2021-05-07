@@ -1,0 +1,1 @@
+ALTER TABLE `assets` ADD `gl_code` VARCHAR(60) NOT NULL AFTER `appuser_id`;
