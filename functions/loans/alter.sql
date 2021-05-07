@@ -7,6 +7,7 @@ ALTER TABLE `loan_repayment_schedule` ADD `amount_collected` DECIMAL(19,2) NOT N
 ALTER TABLE `charges_cache` CHANGE `cache_prod_id` `cache_prod_id` VARCHAR(255) NULL;
 ALTER TABLE `charges_cache` CHANGE `is_status` `is_status` INT(3) NOT NULL;
 ALTER TABLE `savings_product` ADD `gl_Code` INT NOT NULL AFTER `validate_period`;
+ALTER TABLE `savings_product` ADD `expense_glcode` VARCHAR(60) NOT NULL AFTER `gl_Code`;
 
 -- for groups
 ALTER TABLE `groups` CHANGE `id` `id` INT(100) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`id`);
@@ -108,3 +109,99 @@ COMMIT;
 ALTER TABLE `wallet_transaction_cache` ADD `description` LONGTEXT NOT NULL AFTER `wallet_type`;
 
 ALTER TABLE `asset_type` CHANGE `total_amount` `gl_code` BIGINT(20) NULL;
+
+-- change on inventory table
+ALTER TABLE `inventory` ADD `is_book` INT(1) NOT NULL AFTER `item`;
+
+-- drop chq_book table
+DROP TABLE `chq_book`;
+
+--
+-- Table structure for table `inventory_posting`
+--
+
+CREATE TABLE `inventory_posting` (
+  `id` int(100) NOT NULL,
+  `int_id` int(100) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `branch_id` int(20) NOT NULL,
+  `account_no` varchar(20) NOT NULL,
+  `book_type` varchar(60) NOT NULL,
+  `leaves_no` varchar(30) NOT NULL,
+  `range_amount` varchar(20) NOT NULL,
+  `charge_applied` int(60) NOT NULL,
+  `date` date NOT NULL,
+  `status` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `inventory_posting`
+  ADD PRIMARY KEY (`id`);
+  
+ALTER TABLE `inventory_posting`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+
+--
+-- Table structure for table `budget`
+--
+
+CREATE TABLE `budget` ( 
+  `id` INT(100) NOT NULL AUTO_INCREMENT , 
+  `int_id` INT(100) NOT NULL , 
+  `branch_id` INT(100) NOT NULL , 
+  `title` VARCHAR(100) NOT NULL , 
+  `year` INT(4) NOT NULL , 
+  `total_expenses` DECIMAL(19,2) NOT NULL , 
+  `total_income` DECIMAL(19,2) NOT NULL , 
+  PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+
+--
+-- Table structure for table `budget_details`
+--
+
+CREATE TABLE `budget_details` ( 
+  `id` INT(100) NOT NULL AUTO_INCREMENT , 
+  `int_id` INT(100) NOT NULL , 
+  `branch_id` INT(100) NOT NULL , 
+  `budget_id` INT(100) NOT NULL , 
+  `gl_name` VARCHAR(200) NOT NULL , 
+  `gl_code` VARCHAR(45) NOT NULL , 
+  `year` INT(4) NOT NULL , 
+  `budgeted_amount` DECIMAL(19,2) NOT NULL , 
+  `end_of_year_amount` DECIMAL(19,2) NOT NULL , 
+  PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+
+--
+-- Table structure for table `budget_adjustment`
+--
+
+CREATE TABLE `budget_adjustment` ( 
+  `id` INT(100) NOT NULL AUTO_INCREMENT , 
+  `int_id` INT(100) NOT NULL , 
+  `branch_id` INT(100) NOT NULL , 
+  `budget_id` INT(100) NOT NULL , 
+  `gl_code` VARCHAR(45) NOT NULL , 
+  `original_amount` DECIMAL(19,2) NOT NULL , 
+  `adjusted_amount` DECIMAL(19,2) NOT NULL , 
+  `reason` TEXT NOT NULL , 
+  PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+
+--
+-- Table structure for table `bank_reconciliation`
+--
+
+CREATE TABLE `bank_reconciliation` ( 
+  `id` INT(100) NOT NULL AUTO_INCREMENT , 
+  `int_id` INT(100) NOT NULL , 
+  `branch_id` INT(100) NOT NULL , 
+  `bank` VARCHAR(100) NOT NULL ,
+  `date` DATE NOT NULL , 
+  `staff` VARCHAR(100) NOT NULL ,
+  `system_amount` DECIMAL(19,2) NOT NULL , 
+  `bank_amount` DECIMAL(19,2) NOT NULL ,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+  PRIMARY KEY (`id`)) ENGINE = InnoDB;
+

@@ -24,7 +24,7 @@ if(($leaves_no =="0" || $leaves_no =="") && ($book == "2")){
   echo header ("Location: ../mfi/cheque_book_posting.php?message3=$randms");
 }
 else{
-  $query ="INSERT INTO chq_book(int_id, name, branch_id, account_no, book_type, leaves_no, range_amount, charge_applied, date, status)
+  $query ="INSERT INTO inventory_posting (int_id, name, branch_id, account_no, book_type, leaves_no, range_amount, charge_applied, date, status)
   VALUES ('{$sessint_id}', '{$name}','{$branch}', '{$account_no}', '{$book}', '{$leaves_no}', '{$range}', '{$charge_app}', '{$date}', 'Pending')";
   
   $res = mysqli_query($connection, $query);

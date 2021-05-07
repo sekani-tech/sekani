@@ -14,7 +14,7 @@ if (isset($_GET["message1"])) {
           title: "Success",
           text: "FTD Successfully Approved",
           showConfirmButton: false,
-          timer: 2000
+          timer: 3000
       })
   });
   </script>
@@ -32,7 +32,7 @@ if (isset($_GET["message1"])) {
           title: "Error",
           text: "Something is wrong with this FTD booking!",
           showConfirmButton: true,
-          timer: 2000
+          timer: 3000
       })
   });
   </script>
@@ -50,7 +50,7 @@ if (isset($_GET["message1"])) {
           title: "Insufficient Balance",
           text: "Please re-adjust data",
           showConfirmButton: false,
-          timer: 2000
+          timer: 3000
       })
   });
   </script>
@@ -69,7 +69,7 @@ else if (isset($_GET["message4"])) {
           title: "Money not deducted from account",
           text: "Please re-adjust data",
           showConfirmButton: false,
-          timer: 2000
+          timer: 3000
       })
   });
   </script>
@@ -88,7 +88,7 @@ else if (isset($_GET["message5"])) {
           title: "Money deducted but record of transaction not stored",
           text: "Please re-adjust data",
           showConfirmButton: false,
-          timer: 2000
+          timer: 3000
       })
   });
   </script>
@@ -106,7 +106,7 @@ else if (isset($_GET["message5"])) {
           title: "Error",
           text: "Money deducted but record of transaction not stored",
           showConfirmButton: false,
-          timer: 2000
+          timer: 3000
       })
   });
   </script>
@@ -125,7 +125,7 @@ else if (isset($_GET["message7"])) {
           title: "Error",
           text: "Something is wrong! FTD status not changed",
           showConfirmButton: false,
-          timer: 2000
+          timer: 3000
       })
   });
   </script>
@@ -145,7 +145,7 @@ else if (isset($_GET["message9"])) {
           title: "Error",
           text: "Something is wrong unable to Approve FTD!",
           showConfirmButton: false,
-          timer: 2000
+          timer: 3000
       })
   });
   </script>

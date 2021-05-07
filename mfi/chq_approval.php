@@ -96,7 +96,7 @@ if (isset($_GET["message1"])) {
           $r = mysqli_fetch_array($e);
           $staff_id = $r['id'];
 
-        $ioio = "SELECT * FROM chq_book WHERE int_id = '$sessint_id' AND id = '$chq_id'";
+        $ioio = "SELECT * FROM inventory_posting WHERE int_id = '$sessint_id' AND id = '$chq_id'";
         $ererr = mysqli_query($connection, $ioio);
         $fdm = mysqli_fetch_array($ererr);
         $client = $fdm['name'];
@@ -248,59 +248,60 @@ if ($can_transact == 1 || $can_transact == "1") {
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">CHQ Book Approval</h4>
-                  
+                  <h4 class="card-title ">Cheque/Pass Book Approval</h4>
                   <!-- Insert number users institutions -->
                   <p class="card-category"><?php
-                   $query = "SELECT * FROM chq_book WHERE int_id = '$sessint_id' && status = 'Pending' && (branch_id ='$br_id' $branches)";
+                   $query = "SELECT * FROM inventory_posting WHERE int_id = '$sessint_id' && (branch_id ='$br_id' $branches) && book_type = ('chq' || 'pas') && status = 'Pending'";
                    $result = mysqli_query($connection, $query);
                    if ($result) {
                      $inr = mysqli_num_rows($result);
                      if($inr == '0'){ 
-                        echo 'No Cheque Books Issued';
+                        echo 'No Chq/Pass Book Issued';
                       }else{
-                        echo ''.$inr.' Cheque book on the platform';
+                        echo ''.$inr.' Chq/Pass Book on the platform';
                       }
                    }
-                   ?>  || Approve CHQ Book</p>
+                   ?></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="rtable display nowrap" style="width:100%">
-                      <thead class=" text-primary">
+                      <thead class="text-primary">
                       <?php
-                        $query = "SELECT * FROM chq_book WHERE int_id = '$sessint_id' AND status = 'Pending' && (branch_id ='$br_id' $branches)";
+                        $query = "SELECT * FROM inventory_posting WHERE int_id = '$sessint_id' && (branch_id ='$br_id' $branches) AND book_type = ('chq' || 'pas') AND status = 'Pending'";
                         $result = mysqli_query($connection, $query);
                       ?>
-                        <!-- <th>
-                          ID
-                        </th> -->
                         <tr>
-                          <th>sn</th>
-                        <th class="th-sm">
-                          Date
-                        </th>
-                        <th class="th-sm">
-                         Client Name
-                        </th>
-                        <th class="th-sm">
-                         Branch
-                        </th>
-                        <th class="th-sm">
-                         Book Type
-                        </th>
-                        <th class="th-sm">
-                          no of leaves
-                        </th>
-                        <th class="th-sm">
-                          Charges Applied
-                        </th>
-                        <th class="th-sm">
-                          Range Number
-                        </th>
-                        <th class="th-sm">Status</th>
-                        <th>Approval</th>
-                        <th>Decline</th>
+                          <th class="th-sm">
+                            Date
+                          </th>
+                          <th class="th-sm">
+                            Client Name
+                          </th>
+                          <th class="th-sm">
+                            Branch
+                          </th>
+                          <th class="th-sm">
+                            Book Type
+                          </th>
+                          <th class="th-sm">
+                            No. of leaves
+                          </th>
+                          <th class="th-sm">
+                            Charges Applied
+                          </th>
+                          <th class="th-sm">
+                            Range No.
+                          </th>
+                          <th class="th-sm">
+                            Status
+                          </th>
+                          <th>
+                            Approval
+                          </th>
+                          <th>
+                            Decline
+                          </th>
                         </tr>
                         <!-- <th>Phone</th> -->
                       </thead>
@@ -308,15 +309,9 @@ if ($can_transact == 1 || $can_transact == "1") {
                       <?php if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {?>
                         <tr>
-                          <th></th>
-                        <?php $row["id"]; ?>
                           <th><?php echo $row["date"]; ?></th>
                           <?php
-                          $idd = $row["name"];
-                            $query = "SELECT * FROM client WHERE int_id = '$sessint_id' AND id = '$idd'";
-                            $resi = mysqli_query($connection, $query);
-                            $c = mysqli_fetch_array($resi);
-                            $client_name = $c['display_name'];
+                            $client_name = $row["name"];
                           ?>
                           <th><?php echo $client_name; ?></th>
                           <?php
@@ -329,11 +324,11 @@ if ($can_transact == 1 || $can_transact == "1") {
                           <th><?php echo $sgger; ?></th>
                           <?php 
                             $ir = $row["book_type"];
-                            if($ir == "1"){
-                              $ror = "Pass Book";
-                            }
-                            else if($ir == "2"){
+                            if($ir == "chq"){
                               $ror = "Cheque Book";
+                            }
+                            else if($ir == "pas"){
+                              $ror = "Pass Book";
                             }
                           ?>
                           <th><?php echo $ror; ?></th>

@@ -15,10 +15,7 @@ try {
 }
 if (isset($_POST['submit'])) {
 
-    
-
-
-//    check for excel file submitted
+//  check for excel file submitted
     if ($_FILES["file"]["name"] !== '') {
         $allowed_extension = array('xls', 'csv', 'xlsx');
         $file_array = explode(".", $_FILES["file"]["name"]);

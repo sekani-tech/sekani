@@ -135,12 +135,12 @@ if (isset($_GET["view15"])) { ?>
                             <div class="card card-profile ml-auto mr-auto" style="max-width: 370px; max-height: 360px">
                                 <div class="card-body ">
                                     <?php
-                                        $accountquery = "SELECT total_outstanding_derived FROM loan l JOIN client c ON l.client_id = c.id WHERE l.int_id = $sessint_id";
+                                        $accountquery = "SELECT SUM(principal_amount) AS outstanding_principal, SUM(interest_amount) AS outstanding_interest FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id'";
                                         $result = mysqli_query($connection, $accountquery);
                                         
                                         $cumulativeTotalOutstandingLoans = 0;
                                         while ($loan = mysqli_fetch_array($result)) {
-                                            $total_outstanding_bal = $loan['total_outstanding_derived'];
+                                            $total_outstanding_bal = $loan['outstanding_principal'] + $loan['outstanding_interest'];
                                             $cumulativeTotalOutstandingLoans += $total_outstanding_bal;
                                         }
                                     ?>
@@ -184,7 +184,7 @@ if (isset($_GET["view15"])) { ?>
                                         ?>
                                                 <tr>
                                                     <?php 
-                                                    $fi =  $row["id"];
+                                                    $loan_id =  $row["id"];
                                                     $name = $row['client_id'];
                                                     $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
                                                     $f = mysqli_fetch_array($anam);
@@ -207,24 +207,24 @@ if (isset($_GET["view15"])) { ?>
                                                     </th>
                                                     <?php
                                                     // repayment
-                                                    // $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                                                    // $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$loan_id'";
                                                     // $sdoi = mysqli_query($connection, $dd);
                                                     // $e = mysqli_fetch_array($sdoi);
                                                     // $interest = $e['interest_amount'];
 
-                                                    // $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                                                    // $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$loan_id'";
                                                     // $sdswe = mysqli_query($connection, $dfdf);
                                                     // $u = mysqli_fetch_array($sdswe);
                                                     // $prin = $u['principal_amount'];
 
                                                     // $outstanding = $prin + $interest;
                                                     // Arrears
-                                                    // $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                                                    // $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$loan_id'";
                                                     // $fosdi = mysqli_query($connection, $ldfkl);
                                                     // $l = mysqli_fetch_array($fosdi);
                                                     // $interesttwo = $l['interest_amount'];
 
-                                                    // $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$fi'";
+                                                    // $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id' AND loan_id = '$loan_id'";
                                                     // $sodi = mysqli_query($connection, $sdospd);
                                                     // $s = mysqli_fetch_array($sodi);
                                                     // $printwo = $s['principal_amount'];
@@ -238,8 +238,13 @@ if (isset($_GET["view15"])) { ?>
                                                         // $ttloutstanding = $outstanding + $outstandingtwo;
                                                         // $ttloutbalance = 0;
                                                         // $ttloutbalance += $total_outstanding_bal;
-                                                        $outstandingBalance = $row['total_outstanding_derived'];
-                                                        echo number_format(round($outstandingBalance), 2);
+                                                        $query_outstanding = mysqli_query($connection, "SELECT SUM(principal_amount) AS outstanding_principal, SUM(interest_amount) AS outstanding_interest FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$loan_id'");
+                                                        $desx = mysqli_fetch_array($query_outstanding);
+                                                        $outstanding_principal = $desx["outstanding_principal"];
+                                                        $outstanding_interest = $desx["outstanding_interest"];
+                                                        $outstanding_balance = $outstanding_principal + $outstanding_interest;
+                                                        
+                                                        echo number_format(round($outstanding_balance), 2);
                                                         ?>
                                                     </th>
                                                     <th><a href="loan_report_view.php?edit=<?php echo $row["id"]; ?>" class="btn btn-info">View</a></th>

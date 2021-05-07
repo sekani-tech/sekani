@@ -84,18 +84,18 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
       $acc_id = $b['id'];
     }
 
-    $totald = mysqli_query($connection, "SELECT SUM(debit)  AS debit FROM account_transaction WHERE  (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
+    $totald = mysqli_query($connection, "SELECT SUM(debit)  AS debit FROM account_transaction WHERE  (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id ASC");
     $deb = mysqli_fetch_array($totald);
     $tdp = $deb['debit'];
     $totaldb = number_format($tdp, 2);
 
-    $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date ASC");
+    $totalc = mysqli_query($connection, "SELECT SUM(credit)  AS credit FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id ASC");
     $cred = mysqli_fetch_array($totalc);
     $tcp = $cred['credit'];
     $totalcd = number_format($tcp, 2);
 
     // Closing Balance
-    $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY transaction_date  DESC LIMIT 1");
+    $result = mysqli_query($connection, "SELECT * FROM account_transaction WHERE (account_no = '$acc_no' && int_id = '$sessint_id' && branch_id = '$branch') && (transaction_date BETWEEN '$std' AND '$endx') ORDER BY id  DESC LIMIT 1");
     $rerc = mysqli_fetch_array($result);
     $closing_bal = $rerc['running_balance_derived'];
   }
@@ -144,7 +144,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
                           <div class="col-md-6">
                             <h4>Currency: <?php echo $currtype; ?></h4>
                             <h4>Account number: <?php echo $acc_no; ?></h4>
-                            <h4>Statement period: <?php echo $std, ' - ', $endx; ?></h4>
+                            <h4>Statement period: <?php echo $std, ' to ', $endx; ?></h4>
                             <h4>Closing Balance: &#8358;<?php echo number_format($closing_bal, 2); ?></h4>
                           </div>
                           <div class="col-md-6">
@@ -179,7 +179,7 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["account_id"]
                             ?>
                             <tr class="table100-head">
                               <!-- <th>sn</th> -->
-                              <th class="column1">Transaction-Date</th>
+                              <th class="column1">Transaction Date</th>
                               <th class="column2">Value Date</th>
                               <th class="column3">Reference</th>
                               <th class="column4">Debits(&#8358;)</th>

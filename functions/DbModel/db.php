@@ -1,6 +1,4 @@
 <?php
-/* Database credentials. Assuming you are running MySQL
-server with default setting (user 'root' with no pssword) */
 define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'sekanisy');
 define('DB_PASSWORD', '4r6WY#JP+rnl67');
@@ -14,5 +12,5 @@ if (!$connection) {
 }
 $dbselect = mysqli_select_db($connection, DB_NAME);
 if (!$dbselect) {
-    echo "Failed to Select database" . die(mysqli_error($connection));
+    echo "Failed to select database" . die(mysqli_error($connection));
 }
