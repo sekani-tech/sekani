@@ -3,12 +3,7 @@
 $page_title = "Deposit/ Withdrawal";
 $destination = "transaction.php";
 include("header.php");
-<<<<<<< HEAD
 include("ajaxcall.php");   
-=======
-include("ajaxcall.php");
-
->>>>>>> 79d85e569e8e70a5518683b72388ae5ab2c597b0
 ?>
 <?php
 $exp_error = "";
