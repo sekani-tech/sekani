@@ -350,7 +350,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               $curl = curl_init();
 
                               curl_setopt_array($curl, array(
-                                CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
+                                CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit/long',
                                 CURLOPT_RETURNTRANSFER => true,
                                 CURLOPT_ENCODING => '',
                                 CURLOPT_MAXREDIRS => 10,
@@ -640,7 +640,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $curl = curl_init();
 
                                 curl_setopt_array($curl, array(
-                                  CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
+                                  CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit/long',
                                   CURLOPT_RETURNTRANSFER => true,
                                   CURLOPT_ENCODING => '',
                                   CURLOPT_MAXREDIRS => 10,
@@ -1108,7 +1108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               $curl = curl_init();
 
                               curl_setopt_array($curl, array(
-                                CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
+                                CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit/long',
                                 CURLOPT_RETURNTRANSFER => true,
                                 CURLOPT_ENCODING => '',
                                 CURLOPT_MAXREDIRS => 10,
@@ -1389,7 +1389,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $curl = curl_init();
 
                                 curl_setopt_array($curl, array(
-                                  CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
+                                  CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit/long',
                                   CURLOPT_RETURNTRANSFER => true,
                                   CURLOPT_ENCODING => '',
                                   CURLOPT_MAXREDIRS => 10,

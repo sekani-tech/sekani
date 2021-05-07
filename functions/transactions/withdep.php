@@ -376,7 +376,7 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                           $curl = curl_init();
 
                           curl_setopt_array($curl, array(
-                            CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
+                            CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit/long',
                             CURLOPT_RETURNTRANSFER => true,
                             CURLOPT_ENCODING => '',
                             CURLOPT_MAXREDIRS => 10,
@@ -739,7 +739,7 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                             $curl = curl_init();
 
                           curl_setopt_array($curl, array(
-                            CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit',
+                            CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit/long',
                             CURLOPT_RETURNTRANSFER => true,
                             CURLOPT_ENCODING => '',
                             CURLOPT_MAXREDIRS => 10,
