@@ -74,12 +74,13 @@ include("header.php")
 
 
 
-                        <table id="is" class="display" style="width:100%">
+                        <table id="is" class="table table-striped table-bordered" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>S/N</th>
                                     <th>Item</th>
-                                    <th>Units</th>
+                                    <th>Debit</th>
+                                    <th>Credit</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -87,6 +88,7 @@ include("header.php")
                                 <tr>
                                     <td>01</td>
                                     <td>Desk</td>
+                                    <td>6</td>
                                     <td>6</td>
                                     <td>
                                         <a href="inventory_schedule_view.php" class="btn btn-info">View</a>
