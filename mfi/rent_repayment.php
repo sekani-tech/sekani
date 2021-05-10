@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Rent Repayment";
+$page_title = "Prepayment";
 $destination = "";
 include("header.php");
 

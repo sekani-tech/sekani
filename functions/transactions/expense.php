@@ -15,17 +15,18 @@ $m_id = $_SESSION["user_id"];
 $branch_id = $_SESSION['branch_id'];
 $id = $_SESSION['id'];
 // allow for date selection if back date is marked as available
-$backDateCondition = [
-    'int_id' => $sessint_id,
-    'title' => "BACK DATING"
-];
-$findBackDate = selectOne('administrative_control', $backDateCondition);
-$backDating = $findBackDate['function_status'];
-if($backDating = 1){
-    $gen_date = $_POST['transDate'];
-}else{
-    $gen_date = Date('Y-m-d H:i:s');
-}
+// FUTURE FEATURE
+// $backDateCondition = [
+//     'int_id' => $sessint_id,
+//     'title' => "BACK DATING"
+// ];
+// $findBackDate = selectOne('administrative_control', $backDateCondition);
+// $backDating = $findBackDate['function_status'];
+// if($backDating = 1){
+//     $gen_date = $_POST['transDate'];
+// }else{
+//     $gen_date = Date('Y-m-d H:i:s');
+// }
 
 $getacct1 = mysqli_query($connection, "SELECT * FROM staff WHERE user_id = '$m_id' && int_id = '$sessint_id'");
 if (count([$getacct1]) == 1) {
@@ -33,33 +34,7 @@ if (count([$getacct1]) == 1) {
     $staff_id = $uw["id"];
     $staff_name = $uw['display_name'];
 }
-$holidaycheck = mysqli_query($connection, "SELECT * FROM holiday_tb WHERE  marked_day = '$gen_date'");
-// check if date is holiday
-// // if($holidaycheck){    
-// //     exit('today is a holiday and posting not allowed');
-// }
-// if yes exit telling the person today is a holiday and posting not allowed.
-$year = getPieceOfDate($gen_date,'Y'); 
-    $month = getPieceOfDate($year,'m');
-    $testQuery = "SELECT * FROM endofyear_tb WHERE yearend = '$year'AND status ='1'";
-    dd($testQuery);
-$findEndYear = mysqli_query($connection, "SELECT * FROM endofyear_tb WHERE yearend = '$year'AND status ='1'");
-if(!$findEndYear){
-    $findEndMonth = mysqli_query($connection, "SELECT * FROM endofmonth_tb WHERE monthend = '$month' AND yearend ='$year'AND status ='1'");
-    if(!$findEndMonth){
-        $findEndDay = mysqli_query($connection, "SELECT * FROM endofday_tb WHERE dateclosed = '$gen_date' AND status ='1'");
-        if($findEndDay){
-            exit('Day already closed');
-               // echo header("Location: ../../mfi/endofday.php?legal=$randms");
-        }
-    }else{
-        exit("Month Already closed");
-   //echo header("Location: ../../mfi/endofmonth.php?legal=$randms"); 
-    }
-}else{
-    exit("Year have already closed");
-   //echo header("Location: ../../mfi/endofmonth.php?legal=$randms");
-}
+
 ?>
 
 <?php

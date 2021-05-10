@@ -6,23 +6,30 @@ include("../../../functions/connect.php");
 session_start();
 $int_id = $_SESSION["int_id"];
 $branch_id = $_SESSION["branch_id"];
-$send_id = "MEGA MFB";
-$phone = "07057463781";
-$intName = "MEGA MFB";
-echo $msg = "'Dear Samuel Oloche Ejiga, Welcome to {$intName}, your (Account Type) - (Account No) is open for Transactions'";
+$send_id = $_SESSION['sender_id'];
+$phone = "8096419724";
+$intName = $_SESSION['int_name'];
+$trans_type = "Credit";
+$balance = number_format(50000, 2);
+$pint = date('Y-m-d h:i:sa');
+$amount = 2000;
+$description = "dance";
+$acct_no = "0219823183";
+echo $msg = "Acct: " . '******' . substr($acct_no, 6) . "\nAmt: NGN " . $amount . " " . $trans_type . "\nDesc: " . $description . "\nAvail Bal: " . $balance . "\nDate: " . $pint;
+// echo $msg = "'Dear Samuel Oloche Ejiga, Welcome to {$intName}, your (Account Type) - (Account No) is open for Transactions'";
 $client_id = $_POST["client_id"];
 $account_no = $_POST["account_no"];
-$find = mysqli_query($connection, "SELECT * FROM test_data WHERE id = 1");
-if (!$find) {
-    printf('Error: %s\n', mysqli_error($connection)); //checking for errors
-    exit();
-} else {
-    //output
-}
-$testRow = mysqli_fetch_array($find);
-$data = $testRow['title'];
-eval("\$name = \"$data\";");
-echo $name;
+// $find = mysqli_query($connection, "SELECT * FROM test_data WHERE id = 1");
+// if (!$find) {
+//     printf('Error: %s\n', mysqli_error($connection)); //checking for errors
+//     exit();
+// } else {
+//     //output
+// }
+// $testRow = mysqli_fetch_array($find);
+// $data = $testRow['title'];
+// eval("\$name = \"$data\";");
+// echo $name;
 // quick test
 $digits = 9;
 $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
@@ -56,6 +63,7 @@ if ($send_id != "" && $phone != "" && $msg != "" && $int_id != "" && $branch_id 
         // start
         // make it possible
         $curl = curl_init();
+        echo $escape = mysqli_real_escape_string($connection, $msg);
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit/long',
@@ -74,7 +82,7 @@ if ($send_id != "" && $phone != "" && $msg != "" && $int_id != "" && $branch_id 
             "sms": {
                 "dest": "' . $phone . '",
                 "src": "' . $send_id . '",
-                "text": "' . $msg . '",
+                "text": "' . $escape . '",
                 "unicode": true
             }
             
@@ -87,12 +95,29 @@ if ($send_id != "" && $phone != "" && $msg != "" && $int_id != "" && $branch_id 
 
         $response = curl_exec($curl);
 
-        curl_close($curl);
-        echo $response;
+        echo $response . "For real tho\n";
 
         // success
         $err = curl_close($curl);
         if ($err) {
+            echo "Connection Error";
+            $obj = json_decode($response, true);
+            $status = $obj['messageParts'][0]['status'];
+            $ticketId = $obj['messageParts'][0]['ticketId'];
+            $errorMessage = $obj['messageParts'][0]['errorMessage'];
+            $errorCode = $obj['messageParts'][0]['errorCode'];
+            $smsData = [
+                'int_id' => $institutionId,
+                'branch_id' => $branch_id,
+                'mobile_no' => $clientPhone,
+                'message' => $escape,
+                'transaction_date' => $today,
+                'status' => $status,
+                'ticket_id' => $ticketId,
+                'error_message' => $errorMessage,
+                'error_code' => $errorCode
+            ];
+            $insertSms = insert('sms_record', $smsData);
             //    echo "cURL Error #:" . $err;
             echo '<script type="text/javascript">
     $(document).ready(function(){
@@ -112,9 +137,29 @@ if ($send_id != "" && $phone != "" && $msg != "" && $int_id != "" && $branch_id 
             echo "NO INTERNET CONNECTION";
         } else {
             // echo $response;
-            $obj = json_decode($response, TRUE);
-            $status = $obj['response'];
+            echo "<br>";
+            $obj = json_decode($response, true);
+            // // the given response is stdClass
+            // // to convert it to an array we encode it and
+            // $tmp = json_encode($obj);
+            // $objToArray = json_decode($tmp, true);
+            $status = $obj['messageParts'][0]['status'];
+            $ticketId = $obj['messageParts'][0]['ticketId'];
+            $errorMessage = $obj['messageParts'][0]['errorMessage'];
+            $errorCode = $obj['messageParts'][0]['errorCode'];
             if ($status != "") {
+                $smsData = [
+                    'int_id' => $institutionId,
+                    'branch_id' => $branch_id,
+                    'mobile_no' => $clientPhone,
+                    'message' => $escape,
+                    'transaction_date' => $today,
+                    'status' => $status,
+                    'ticket_id' => $ticketId,
+                    'error_message' => $errorMessage,
+                    'error_code' => $errorCode
+                ];
+                echo $insertSms = insert('sms_record', $smsData);
                 // make a post online
                 $cal_bal = $balance - 4;
                 $cal_with = $total_with + 4;

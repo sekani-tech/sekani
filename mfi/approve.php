@@ -315,7 +315,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         if ($client_sms == "1") {
                           $trans_type = "Credit";
                           $balance = number_format($comp, 2);
-                          $msg = "$int_name $trans_type \n Amt: NGN {$amount} \n Acct: {$acct_no}\nDesc: {$description} \nBal: {$balance} \nAvail: {$balance}\nDate: {$pint}\nThanks!";
+                          $msg = "Acct: " . appendAccountNo($acct_no, 6) . "\nAmt: NGN " . number_format($amount, 2) . " " . $trans_type . "\nDesc: " . $description . "\nAvail Bal: " . $balance . "\nDate: " . $pint;
                           // creating unique message ID
                           $digits = 9;
                           $messageId = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
@@ -348,6 +348,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             if ($smsBalance >= 4) {
 
                               $curl = curl_init();
+                              $escape = mysqli_real_escape_string($connection, $msg);
 
                               curl_setopt_array($curl, array(
                                 CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit/long',
@@ -366,7 +367,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                               "sms": {
                                                   "dest":"' . $clientPhone . '",
                                                   "src": "' . $sender_id . '",
-                                                  "text": "' . $msg . '",
+                                                  "text": "' . $escape . '",
                                                   "unicode": true
                                               }
 
@@ -379,16 +380,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
                               $response = curl_exec($curl);
-                              dd($response);
+                              // dd($response);
                               // success
                               $err = curl_close($curl);
                               if ($err) {
                                 echo "Connection Error";
+                                $obj = json_decode($response, TRUE);
+                                $status = $obj['messageParts'][0]['status'];
+                                $errorMessage = $obj['messageParts'][0]['errorMessage'];
+                                $errorCode = $obj['messageParts'][0]['errorCode'];
+                                $smsData = [
+                                  'int_id' => $sessint_id,
+                                  'branch_id' => $branch_id,
+                                  'mobile_no' => $clientPhone,
+                                  'message' => $escape,
+                                  'status' => $status,
+                                  'ticket_id' => $ticketId,
+                                  'error_message' => $errorMessage,
+                                  'error_code' => $errorCode
+                                ];
+                                $insertSms = insert('sms_record', $smsData);
                               } else {
                                 $obj = json_decode($response, TRUE);
-                                $status = $obj['response'];
+                                $status = $obj['messageParts'][0]['status'];
+                                $ticketId = $obj['messageParts'][0]['ticketId'];
+                                $errorMessage = $obj['messageParts'][0]['errorMessage'];
+                                $errorCode = $obj['messageParts'][0]['errorCode'];
                                 // check for success response
                                 if ($status != "") {
+                                  $smsData = [
+                                    'int_id' => $sessint_id,
+                                    'branch_id' => $branch_id,
+                                    'mobile_no' => $clientPhone,
+                                    'message' => $escape,
+                                    'transaction_date' => $today,
+                                    'status' => $status,
+                                    'ticket_id' => $ticketId,
+                                    'error_message' => $errorMessage,
+                                    'error_code' => $errorCode
+                                  ];
+                                  $insertSms = insert('sms_record', $smsData);
                                   // Declare variables needed to keep record of the transaction
                                   $cal_bal = $smsBalance - 4;
                                   $cal_with = $total_with + 4;
@@ -611,7 +642,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           if ($client_sms == "1") {
                             $trans_type = "Debit";
                             $balance = number_format($comp2, 2);
-                            $msg = "$int_name $trans_type \n Amt: NGN {$amount} \n Acct: {$acct_no}\nDesc: {$description} \nBal: {$balance} \nAvail: {$balance}\nDate: {$pint}\nThanks!";
+                            $msg = "Acct: " . appendAccountNo($acct_no, 6) . "\nAmt: NGN " . number_format($amount, 2) . " " . $trans_type . "\nDesc: " . $description . "\nAvail Bal: " . $balance . "\nDate: " . $pint;
                             // creating unique message ID
                             $digits = 9;
                             $messageId = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
@@ -638,6 +669,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               if ($smsBalance >= 4) {
 
                                 $curl = curl_init();
+                                $escape = mysqli_real_escape_string($connection, $msg);
 
                                 curl_setopt_array($curl, array(
                                   CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit/long',
@@ -656,7 +688,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                           "sms": {
                                               "dest":"' . $clientPhone . '",
                                               "src": "' . $senderId . '",
-                                              "text": "' . $message . '",
+                                              "text": "' . $escape . '",
                                               "unicode": true
                                           }
 
@@ -672,11 +704,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $err = curl_close($curl);
                                 if ($err) {
                                   echo "Connection Error";
+                                  $obj = json_decode($response, TRUE);
+                                  $status = $obj['messageParts'][0]['status'];
+                                  $errorMessage = $obj['messageParts'][0]['errorMessage'];
+                                  $errorCode = $obj['messageParts'][0]['errorCode'];
+                                  $smsData = [
+                                    'int_id' => $sessint_id,
+                                    'branch_id' => $branch_id,
+                                    'mobile_no' => $clientPhone,
+                                    'message' => $escape,
+                                    'status' => $status,
+                                    'ticket_id' => $ticketId,
+                                    'error_message' => $errorMessage,
+                                    'error_code' => $errorCode
+                                  ];
+                                  $insertSms = insert('sms_record', $smsData);
                                 } else {
                                   $obj = json_decode($response, TRUE);
-                                  $status = $obj['response'];
-                                  // check for success response
-                                  if ($status != "") {
+                                $status = $obj['messageParts'][0]['status'];
+                                $ticketId = $obj['messageParts'][0]['ticketId'];
+                                $errorMessage = $obj['messageParts'][0]['errorMessage'];
+                                $errorCode = $obj['messageParts'][0]['errorCode'];
+                                // check for success response
+                                if ($status != "") {
+                                  $smsData = [
+                                    'int_id' => $sessint_id,
+                                    'branch_id' => $branch_id,
+                                    'mobile_no' => $clientPhone,
+                                    'message' => $escape,
+                                    'transaction_date' => $today,
+                                    'status' => $status,
+                                    'ticket_id' => $ticketId,
+                                    'error_message' => $errorMessage,
+                                    'error_code' => $errorCode
+                                  ];
+                                  $insertSms = insert('sms_record', $smsData);
                                     // Declare variables needed to keep record of the transaction
                                     $cal_bal = $smsBalance - 4;
                                     $cal_with = $total_with + 4;
@@ -1074,7 +1136,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         if ($client_sms == "1") {
                           $trans_type = "Credit";
                           $balance = number_format($comp, 2);
-                          $msg = "$int_name $trans_type \n Amt: NGN {$amount} \n Acct: {$acct_no}\nDesc: {$description} \nBal: {$balance} \nAvail: {$balance}\nDate: {$pint}\nThanks!";
+                          $msg = "Acct: " . appendAccountNo($acct_no, 6) . "\nAmt: NGN " . number_format($amount, 2) . " " . $trans_type . "\nDesc: " . $description . "\nAvail Bal: " . $balance . "\nDate: " . $pint;
                           // creating unique message ID
                           $digits = 9;
                           $messageId = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
@@ -1106,6 +1168,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             if ($smsBalance >= 4) {
 
                               $curl = curl_init();
+                              $escape = mysqli_real_escape_string($connection, $msg);
 
                               curl_setopt_array($curl, array(
                                 CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit/long',
@@ -1140,11 +1203,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               $err = curl_close($curl);
                               if ($err) {
                                 echo "Connection Error";
+                                $obj = json_decode($response, TRUE);
+                                $status = $obj['messageParts'][0]['status'];
+                                $errorMessage = $obj['messageParts'][0]['errorMessage'];
+                                $errorCode = $obj['messageParts'][0]['errorCode'];
+                                $smsData = [
+                                  'int_id' => $sessint_id,
+                                  'branch_id' => $branch_id,
+                                  'mobile_no' => $clientPhone,
+                                  'message' => $escape,
+                                  'status' => $status,
+                                  'ticket_id' => $ticketId,
+                                  'error_message' => $errorMessage,
+                                  'error_code' => $errorCode
+                                ];
+                                $insertSms = insert('sms_record', $smsData);
                               } else {
                                 $obj = json_decode($response, TRUE);
-                                $status = $obj['response'];
+                                $status = $obj['messageParts'][0]['status'];
+                                $ticketId = $obj['messageParts'][0]['ticketId'];
+                                $errorMessage = $obj['messageParts'][0]['errorMessage'];
+                                $errorCode = $obj['messageParts'][0]['errorCode'];
                                 // check for success response
                                 if ($status != "") {
+                                  $smsData = [
+                                    'int_id' => $sessint_id,
+                                    'branch_id' => $branch_id,
+                                    'mobile_no' => $clientPhone,
+                                    'message' => $escape,
+                                    'transaction_date' => $today,
+                                    'status' => $status,
+                                    'ticket_id' => $ticketId,
+                                    'error_message' => $errorMessage,
+                                    'error_code' => $errorCode
+                                  ];
+                                  $insertSms = insert('sms_record', $smsData);
                                   // Declare variables needed to keep record of the transaction
                                   $cal_bal = $smsBalance - 4;
                                   $cal_with = $total_with + 4;
@@ -1360,7 +1453,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           if ($client_sms == "1") {
                             $trans_type = "Debit";
                             $balance = number_format($comp2, 2);
-                            $msg = "$int_name $trans_type \n Amt: NGN {$amount} \n Acct: {$acct_no}\nDesc: {$description} \nBal: {$balance} \nAvail: {$balance}\nDate: {$pint}\nThanks!";
+                            $msg = "Acct: " . appendAccountNo($acct_no, 6) . "\nAmt: NGN " . number_format($amount, 2) . " " . $trans_type . "\nDesc: " . $description . "\nAvail Bal: " . $balance . "\nDate: " . $pint;
                             // creating unique message ID
                             $digits = 9;
                             $messageId = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
@@ -1387,6 +1480,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               if ($smsBalance >= 4) {
 
                                 $curl = curl_init();
+                                $escape = mysqli_real_escape_string($connection, $msg);
 
                                 curl_setopt_array($curl, array(
                                   CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit/long',
@@ -1405,7 +1499,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                           "sms": {
                                               "dest":"' . $clientPhone . '",
                                               "src": "' . $senderId . '",
-                                              "text": "' . $message . '",
+                                              "text": "' . $escape . '",
                                               "unicode": true
                                           }
 
@@ -1419,11 +1513,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $err = curl_close($curl);
                                 if ($err) {
                                   echo "Connection Error";
+                                  $obj = json_decode($response, TRUE);
+                                  $status = $obj['messageParts'][0]['status'];
+                                  $errorMessage = $obj['messageParts'][0]['errorMessage'];
+                                  $errorCode = $obj['messageParts'][0]['errorCode'];
+                                  $smsData = [
+                                    'int_id' => $sessint_id,
+                                    'branch_id' => $branch_id,
+                                    'mobile_no' => $clientPhone,
+                                    'message' => $escape,
+                                    'status' => $status,
+                                    'ticket_id' => $ticketId,
+                                    'error_message' => $errorMessage,
+                                    'error_code' => $errorCode
+                                  ];
+                                  $insertSms = insert('sms_record', $smsData);
                                 } else {
                                   $obj = json_decode($response, TRUE);
-                                  $status = $obj['response'];
+                                  $status = $obj['messageParts'][0]['status'];
+                                  $ticketId = $obj['messageParts'][0]['ticketId'];
+                                  $errorMessage = $obj['messageParts'][0]['errorMessage'];
+                                  $errorCode = $obj['messageParts'][0]['errorCode'];
                                   // check for success response
                                   if ($status != "") {
+                                    $smsData = [
+                                      'int_id' => $sessint_id,
+                                      'branch_id' => $branch_id,
+                                      'mobile_no' => $clientPhone,
+                                      'message' => $escape,
+                                      'transaction_date' => $today,
+                                      'status' => $status,
+                                      'ticket_id' => $ticketId,
+                                      'error_message' => $errorMessage,
+                                      'error_code' => $errorCode
+                                    ];
+                                    $insertSms = insert('sms_record', $smsData);
                                     // Declare variables needed to keep record of the transaction
                                     $cal_bal = $smsBalance - 4;
                                     $cal_with = $total_with + 4;

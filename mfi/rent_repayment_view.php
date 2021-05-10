@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Rent Repayment View";
+$page_title = "Prepayment View";
 $destination = "";
 include("header.php");
 
@@ -23,7 +23,7 @@ $year = $yearSearch['year'];
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title">Rent Repayment</h4>
+                        <h4 class="card-title">Prepayment</h4>
                         <!-- <p class="category">Category subtitle</p> -->
                     </div>
                     <div class="card-body">
