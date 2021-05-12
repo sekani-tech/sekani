@@ -495,7 +495,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Amount</label>
-                                            <input type="number" step="100" class="form-control" name="amount" value="">
+                                            <input type="number" class="form-control" name="amount" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
