@@ -38,13 +38,13 @@ include("header.php");
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="principal">Amount<span style="color: red;">*</span></label>
+                                    <label for="principal">Shares Value<span style="color: red;">*</span></label>
                                     <input type="text" class="form-control" name="Default_amount" value="" placeholder="Default" required="">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="aviashares">Availabe Shares <span style="color: red;">*</span></label>
+                                    <label for="aviashares">Authorised Shares <span style="color: red;">*</span></label>
                                     <input type="number" class="form-control" name="availabe_shares" value="" placeholder="Define Availabe Shares..." required="">
                                 </div>
                             </div>

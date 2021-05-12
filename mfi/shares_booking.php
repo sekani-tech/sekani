@@ -41,7 +41,7 @@ include("header.php");
 
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="bmd-label-floating">Shares Amount </label>
+                                            <label class="bmd-label-floating">Number of Shares</label>
                                             <div id="verrify"></div>
                                             <input type="number" id="dep" value="" class="form-control" name="amount">
                                             <input type="number" id="min" hidden="" value="100000" class="form-control" name="">
