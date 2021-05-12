@@ -12,7 +12,7 @@ $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
 if (isset($_POST['amount']) && isset($_POST['income_gl']) && isset($_POST['expense_gl'])) {
     $incomeGl = $_POST['income_gl'];
     $expenseGl = $_POST['expense_gl'];
-    $amount = $_POST['amount'];
+    $amount = floatval(preg_replace('/[^\d.]/', '', $_POST['amount']));
     $transactionId = $_POST['transid'];
     $description = $_POST['description'];
     $today = $_POST['transDate'];
