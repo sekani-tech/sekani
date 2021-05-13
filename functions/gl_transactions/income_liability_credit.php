@@ -64,7 +64,8 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
                 'running_balance_derived' => $newBalance,
                 'cumulative_balance_derived' => $newBalance,
                 'appuser_id' => $user,
-                'debit' => $amount
+                'debit' => $amount,
+                'created_date' => $today
             ];
             $storeTransaction = insert('account_transaction', $transactionDetails);
             if ($storeTransaction) {

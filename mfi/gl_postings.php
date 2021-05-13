@@ -561,7 +561,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Transaction ID:</label>
-                                            <input type="text" value="<?php echo "INCOME_" . $transid1; ?>" name="transid" class="form-control" id="ti" readonly>
+                                            <input type="text" value="<?php echo "INCOME_" . $transid1; ?>" name="transid" class="form-control" id="transid" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -575,6 +575,47 @@ if ($trans_post == 1 || $trans_post == "1") {
                                             <label>Transaction Date</label>
                                             <input type="date" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" name="transDate" class="form-control" required />
                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#recovery').on("change", function() {
+                                                    var recover = $(this).val();
+                                                    $.ajax({
+                                                        url: "ajax_post/function/recovery_id.php",
+                                                        method: "POST",
+                                                        data: {
+                                                            recover: recover
+                                                        },
+                                                        success: function(data) {
+                                                            $('#transid').val(data);
+                                                        }
+                                                    })
+                                                });
+                                                $('input[type="checkbox"]').click(function() {
+                                                    if ($(this).is(":checked")) {
+                                                        var value = 1;
+                                                        $('#recovery').val(value);
+                                                        console.log("Checkbox is checked.");
+                                                    } else if ($(this).is(":not(:checked)")) {
+                                                        var value = 0;
+                                                        $('#recovery').val(value);
+                                                        console.log("Checkbox is unchecked.");
+                                                    }
+                                                });
+                                            });
+                                        </script>
+                                        <!-- <div class="form-group"> -->
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" value="1" id="recovery">
+                                                Mark as Loan Recovery
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <!-- </div> -->
                                     </div>
                                 </div>
                                 <button type="reset" class="btn btn-danger">Reset</button>
