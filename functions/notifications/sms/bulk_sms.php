@@ -12,7 +12,7 @@ $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
 // first find if the user is given the autorithy to do this
 
 if (isset($_POST['message'])) {
-    $message = $_POST['message'];
+    $message = mysqli_real_escape_string($connection, $_POST['message']);
     $customerDataCondition = [
         'int_id' => $institutionId
     ];

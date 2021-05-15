@@ -381,112 +381,7 @@ if ($acc_update == 1 || $acc_update == "1") {
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <!-- <style>
-                        input[type="file"]{
-                          display: none;
-                        }
-                        .custom-file-upload{
-                          border: 1px solid #ccc;
-                          display: inline-block;
-                          padding: 6px 12px;
-                          cursor: pointer;
-                        }
-                      </style> -->
 
-                    <style>
-                      .fileinput .thumbnail {
-                        display: inline-block;
-                        margin-bottom: 10px;
-                        overflow: hidden;
-                        text-align: center;
-                        vertical-align: middle;
-                        max-width: 250px;
-                        box-shadow: 0 10px 30px -12px rgba(0, 0, 0, .42), 0 4px 25px 0 rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .2);
-                      }
-
-                      .thumbnail {
-                        border: 0 none;
-                        border-radius: 4px;
-                        padding: 0;
-                      }
-
-                      .btn {
-                        padding: 10px 10px;
-                      }
-
-                      .fileinput .thumbnail>img {
-                        max-height: 100%;
-                        width: 100%;
-                      }
-
-                      html * {
-                        -webkit-font-smoothing: antialiased;
-                        -moz-osx-font-smoothing: grayscale;
-                      }
-
-                      img {
-                        vertical-align: middle;
-                        border-style: none;
-                      }
-                    </style>
-
-
-                    <div class="col-md-4">
-                      <label id="upload-a"> Update Passport</label>
-                      <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-
-                        <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
-                        <div>
-                          <button class="btn btn-primary btn-round">
-                            <input type="file" name="..." />
-                          </button>
-
-                          <a href="#pablo" class="btn btn-danger btn-fab btn-fab-mini btn-round fileinput-exists" data-dismiss="fileinput"> <i class="material-icons">clear</i></a>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-md-4">
-                      <label id="upload-a"> Update Signature</label>
-                      <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-
-                        <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
-                        <div>
-                          <button class="btn btn-primary btn-round">
-                            <input type="file" name="..." />
-                          </button>
-
-                          <a href="#pablo" class="btn btn-danger btn-fab btn-fab-mini btn-round fileinput-exists" data-dismiss="fileinput"> <i class="material-icons">clear</i></a>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-md-4">
-                      <label id="upload-a"> Update Identification</label>
-                      <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-
-                        <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
-                        <div>
-                          <button class="btn btn-primary btn-round">
-                            <input type="file" name="..." />
-                          </button>
-
-                          <a href="#pablo" class="btn btn-danger btn-fab btn-fab-mini btn-round fileinput-exists" data-dismiss="fileinput"> <i class="material-icons">clear</i></a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <label for="">Select ID</label>
-                      <select class="form-control" name="id_card">
-                        <option value="<?php echo $id_card ?>"><?php echo $id_card ?></option>
-                        <option value="National ID">National ID</option>
-                        <option value="Voters ID">Voters ID</option>
-                        <option value="International Passport">International Passport</option>
-                        <option value="Drivers Liscense">Drivers Liscense</option>
-                      </select>
-                    </div>
-                  </div>
                   <a href="client.php" class="btn btn-danger">Back</a>
                   <button type="submit" class="btn btn-primary pull-right">Update Client</button>
                   <div class="clearfix"></div>
@@ -496,17 +391,33 @@ if ($acc_update == 1 || $acc_update == "1") {
           </div>
           <div class="col-md-4">
             <!-- Dialog box for signature -->
+            <style>
+              .fluidImage {
+                max-width: 100%;
+                max-height: auto;
+              }
+            </style>
             <div id="sig" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title"><?php echo $first_name; ?></h5>
+
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
                   <div class="modal-body">
-                    <img src="../functions/clients/sign/<?php echo $signature; ?>" />
+                    <img src="../functions/clients/sign/<?php echo $signature; ?>" class="fluidImage" />
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong-sig">
+                      Update
+                    </button>
+
+
                   </div>
                 </div>
               </div>
@@ -523,7 +434,16 @@ if ($acc_update == 1 || $acc_update == "1") {
                     </button>
                   </div>
                   <div class="modal-body">
-                    <img class="img-fluid" src="../functions/clients/passport/<?php echo $passport; ?>" />
+                    <img src="../functions/clients/passport/<?php echo $passport; ?>" class="fluidImage" />
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong-pas">
+                      Update
+                    </button>
+
+
                   </div>
                 </div>
               </div>
@@ -540,12 +460,230 @@ if ($acc_update == 1 || $acc_update == "1") {
                     </button>
                   </div>
                   <div class="modal-body">
-                    <img src="../functions/clients/id/<?php echo $id_img_url; ?>" />
+                    <img src="../functions/clients/id/<?php echo $id_img_url; ?>" class="fluidImage" />
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">
+                      Update
+                    </button>
+
+
                   </div>
                 </div>
               </div>
             </div>
             <!-- dialog ends -->
+
+            <!-- Modal ID update -->
+            <form action="../functions/clients/mandate_update.php" method="post" autocomplete="off" enctype="multipart/form-data">
+              <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" data-bs-backdrop="static" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div id="uploadModal"></div>
+                      <h5 class="modal-title" id="exampleModalLongTitle">Update ID </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        <style>
+                          input.prev[type="file"] {
+                            display: none;
+                          }
+
+                          .custom-file-upload {
+                            border: 1px solid #ccc;
+                            display: inline-block;
+                            padding: 6px 12px;
+                            cursor: pointer;
+                          }
+
+                          .fileinput .thumbnail {
+                            display: inline-block;
+                            margin-bottom: 10px;
+                            overflow: hidden;
+                            text-align: center;
+                            vertical-align: middle;
+                            max-width: 250px;
+                            box-shadow: 0 10px 30px -12px rgba(0, 0, 0, .42), 0 4px 25px 0 rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .2);
+                          }
+
+                          .thumbnail {
+                            border: 0 none;
+                            border-radius: 4px;
+                            padding: 0;
+                          }
+
+                          .btn {
+                            padding: 10px 10px;
+                          }
+
+                          .fileinput .thumbnail>img {
+                            max-height: 100%;
+                            width: 100%;
+                          }
+
+                          html * {
+                            -webkit-font-smoothing: antialiased;
+                            -moz-osx-font-smoothing: grayscale;
+                          }
+
+                          img {
+                            vertical-align: middle;
+                            border-style: none;
+                          }
+                        </style>
+
+                        <div class="col-md-4">
+                          <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                            <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                            <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                            <input id="file-upload" name="id_card" type="file" class="inputFileHidden prev" required />
+                            <label id="upload"> Select ID</label>
+                            <div id="upload"></div>
+                            <a href="#pablo" class="btn btn-danger btn-fab btn-fab-mini btn-round fileinput-exists" data-dismiss="fileinput"> <i class="material-icons">clear</i></a>
+                          </div>
+                        </div>
+                        <input type="text" value="<?php echo $id; ?>" name="client_id" hidden>
+
+                        <script>
+                          var changeq = document.getElementById('file-upload');
+                          var check2 = document.getElementById('upload');
+                          changeq.addEventListener('change', showme);
+
+                          function showme(event) {
+                            var one = event.srcElement;
+                            var fname = one.files[0].name;
+                            check2.textContent = 'ID: ' + fname;
+                          }
+                        </script>
+
+                        <div class="col-md-4">
+                          <label for="">Select ID</label>
+                          <select class="form-control" name="id_type">
+                            <option value="<?php echo $id_card ?>"><?php echo $id_card ?></option>
+                            <option value="National ID">National ID</option>
+                            <option value="Voters ID">Voters ID</option>
+                            <option value="International Passport">International Passport</option>
+                            <option value="Drivers Liscense">Drivers Liscense</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </form>
+            <!-- upload modal -->
+            <!-- signature -->
+            <form action="../functions/clients/mandate_update.php" method="post" autocomplete="off" enctype="multipart/form-data">
+              <div class="modal fade" id="exampleModalLong-sig" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" data-bs-backdrop="static" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Update Signature </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+
+                        <div class="col-md-4">
+                          <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                            <label for="file-upload-sig" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                            <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                            <input id="file-upload-sig" name="signature" type="file" class="inputFileHidden prev" required />
+                            <label id="upload-sig"> Select Signature</label>
+                            <div id="upload-sig"></div>
+                            <a href="#pablo" class="btn btn-danger btn-fab btn-fab-mini btn-round fileinput-exists" data-dismiss="fileinput"> <i class="material-icons">clear</i></a>
+                          </div>
+                        </div>
+                        <input type="text" value="<?php echo $id; ?>" name="client_id" hidden>
+
+                        <script>
+                          var changeq = document.getElementById('file-upload-sig');
+                          var check2 = document.getElementById('upload-sig');
+                          changeq.addEventListener('change', showme);
+
+                          function showme(event) {
+                            var one = event.srcElement;
+                            var fname = one.files[0].name;
+                            check2.textContent = 'Signature: ' + fname;
+                          }
+                        </script>
+
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </form>
+            <!-- /signature -->
+            <!-- passport update -->
+            <form action="../functions/clients/mandate_update.php" method="post" autocomplete="off" enctype="multipart/form-data">
+              <div class="modal fade" id="exampleModalLong-pas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" data-bs-backdrop="static" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Update Passport </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+
+                        <div class="col-md-4">
+                          <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                            <label for="file-upload-pas" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                            <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                            <input id="file-upload-pas" name="passport" type="file" class="inputFileHidden prev" required />
+                            <label id="upload-pas"> Select Passport</label>
+                            <div id="upload-pas"></div>
+                            <a href="#pablo" class="btn btn-danger btn-fab btn-fab-mini btn-round fileinput-exists" data-dismiss="fileinput"> <i class="material-icons">clear</i></a>
+                          </div>
+                        </div>
+                        <input type="text" value="<?php echo $id; ?>" name="client_id" hidden>
+
+                        <script>
+                          var changeq = document.getElementById('file-upload-pas');
+                          var check2 = document.getElementById('upload-pas');
+                          changeq.addEventListener('change', showme);
+
+                          function showme(event) {
+                            var one = event.srcElement;
+                            var fname = one.files[0].name;
+                            check2.textContent = 'Passport: ' + fname;
+                          }
+                        </script>
+
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </form>
+            <!-- /passport -->
             <div class="card card-profile">
               <div class="card-avatar">
                 <a data-toggle="modal" data-target="#pas">

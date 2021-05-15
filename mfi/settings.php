@@ -2,34 +2,34 @@
 
 $page_title = "Settings";
 $destination = "../index.php";
-    include("header.php");
-    require_once "../bat/phpmailer/PHPMailerAutoload.php";
-    // include("../../functions/connect.php");
+include("header.php");
+require_once "../bat/phpmailer/PHPMailerAutoload.php";
+// include("../../functions/connect.php");
 
 ?>
 
 
 <?php
- if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-   $old = $_POST["oldpasskey"];
-   $new = password_hash($_POST["newpasskey"], PASSWORD_DEFAULT);
-   $user_email = $_SESSION["email"];
-  //  select the db
-  $username = $_SESSION["username"];
-  // check
-  $intemail = $_SESSION["sek_email"];
-  $intname = $_SESSION["sek_name"];
-  $query_pass = mysqli_query($connection, "SELECT * FROM users WHERE username = '$username'");
-  if (mysqli_num_rows($query_pass) >= 1) {
-    $x = mysqli_fetch_array($query_pass);
-    $id_user = $x["id"];
-    $user_pass = $x["password"];
-    // making a change
-    if (password_verify($old, $user_pass)) {
-      // new password
-      $update_query = mysqli_query($connection, "UPDATE `users` SET `password` = '$new' WHERE `users`.`id` = '$id_user'");
-      if ($update_query) {
-        echo '<script type="text/javascript">
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $old = $_POST["oldpasskey"];
+    $new = password_hash($_POST["newpasskey"], PASSWORD_DEFAULT);
+    $user_email = $_SESSION["email"];
+    //  select the db
+    $username = $_SESSION["username"];
+    // check
+    $intemail = $_SESSION["sek_email"];
+    $intname = $_SESSION["sek_name"];
+    $query_pass = mysqli_query($connection, "SELECT * FROM users WHERE username = '$username'");
+    if (mysqli_num_rows($query_pass) >= 1) {
+        $x = mysqli_fetch_array($query_pass);
+        $id_user = $x["id"];
+        $user_pass = $x["password"];
+        // making a change
+        if (password_verify($old, $user_pass)) {
+            // new password
+            $update_query = mysqli_query($connection, "UPDATE `users` SET `password` = '$new' WHERE `users`.`id` = '$id_user'");
+            if ($update_query) {
+                echo '<script type="text/javascript">
                     $(document).ready(function(){
                         swal({
                             type: "success",
@@ -41,8 +41,8 @@ $destination = "../index.php";
                     });
                     </script>
         ';
-      } else {
-        echo '<script type="text/javascript">
+            } else {
+                echo '<script type="text/javascript">
         $(document).ready(function(){
             swal({
                 type: "error",
@@ -54,9 +54,9 @@ $destination = "../index.php";
         });
         </script>
 ';
-      }
-    } else {
-      echo '<script type="text/javascript">
+            }
+        } else {
+            echo '<script type="text/javascript">
                     $(document).ready(function(){
                         swal({
                             type: "error",
@@ -68,25 +68,25 @@ $destination = "../index.php";
                     });
                     </script>
         ';
-        // check new
-        $mail = new PHPMailer;
-        // from email addreess and name
-        $mail->From = $intemail;
-        $mail->FromName = $intname;
-        // to adress and name
-        $mail->addAddress($user_email, $username);
-        // reply address
-        //Address to which recipient will reply
-        // progressive html images
-        $mail->addReplyTo($intemail, "Reply");
-        // CC and BCC
-        //CC and BCC
-        // $mail->addCC("cc@example.com");
-        // $mail->addBCC("bcc@example.com");
-        // Send HTML or Plain Text Email
-        $mail->isHTML(true);
-        $mail->Subject = "CHANGING PASSWORD?";
-        $mail->Body = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional //EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+            // check new
+            $mail = new PHPMailer;
+            // from email addreess and name
+            $mail->From = $intemail;
+            $mail->FromName = $intname;
+            // to adress and name
+            $mail->addAddress($user_email, $username);
+            // reply address
+            //Address to which recipient will reply
+            // progressive html images
+            $mail->addReplyTo($intemail, "Reply");
+            // CC and BCC
+            //CC and BCC
+            // $mail->addCC("cc@example.com");
+            // $mail->addBCC("bcc@example.com");
+            // Send HTML or Plain Text Email
+            $mail->isHTML(true);
+            $mail->Subject = "CHANGING PASSWORD?";
+            $mail->Body = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional //EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
         <html xmlns='http://www.w3.org/1999/xhtml' xmlns:v='urn:schemas-microsoft-com:vml' xmlns:o='urn:schemas-microsoft-com:office:office'>
         
         <head>
@@ -266,108 +266,127 @@ $destination = "../index.php";
         
         </html>
         ";
-        $mail->AltBody = "This is the plain text version of the email content";
-        // mail system
-        if(!$mail->send()) 
-        {
-            echo "Mailer Error: " . $mail->ErrorInfo;
-        } else
-        {
-            echo "Message has been sent successfully";
+            $mail->AltBody = "This is the plain text version of the email content";
+            // mail system
+            if (!$mail->send()) {
+                echo "Mailer Error: " . $mail->ErrorInfo;
+            } else {
+                echo "Message has been sent successfully";
+            }
         }
     }
-  }
- }
+}
 ?>
 <!-- Content added here -->
-    <div class="content">
-        <div class="container-fluid">
-          <!-- your content here -->
-          <div class="row">
+<div class="content">
+    <div class="container-fluid">
+        <!-- your content here -->
+        <div class="row">
             <div class="col-md-12">
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Settings</h4>
-                  
-                  <!-- Insert number users institutions -->
-                </div>
-                <div class="card-body">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title ">Settings</h4>
 
-                <!-- change password -->
-                    <div class="card">
-                        <!-- <div class="card-header card-header-primary">
+                        <!-- Insert number users institutions -->
+                    </div>
+                    <div class="card-body">
+
+                        <!-- change password -->
+                        <div class="card">
+                            <!-- <div class="card-header card-header-primary">
                             <h4 class="card-title ">Change Password</h4>
                     
                         </div> -->
-                        <div class="card-body">
-                            <div class="mt-3">
-                                <form method="post">
-                                    <legend>Change Password:</legend>
-                                    <div class="row">
-                                        <div class=" col-md-6 form-group">
-                                            <label class = "bmd-label-floating">Old Password</label>
-                                            <input type="password" value="" name="oldpasskey" class="form-control" required>
+                            <div class="card-body">
+                                <div class="mt-3">
+                                    <form method="post">
+                                        <legend>Change Password:</legend>
+                                        <div class="row">
+                                            <div class=" col-md-6 form-group">
+                                                <label class="bmd-label-floating">Old Password</label>
+                                                <input type="password" value="" name="oldpasskey" class="form-control" required>
+                                            </div>
+                                            <div class=" col-md-6 form-group">
+                                                <label class="bmd-label-floating">New Password</label>
+                                                <input type="password" id="newpasskey" name="newpasskey" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" class="form-control" required>
+
+                                                <div class="form-check form-check-inline">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox" onclick="show()">
+                                                        Show Password
+                                                        <span class="form-check-sign">
+                                                            <span class="check"></span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <script>
+                                                    function show() {
+                                                        var x = document.getElementById("newpasskey");
+                                                        if (x.type === "password") {
+                                                            x.type = "text";
+                                                        } else {
+                                                            x.type = "password";
+                                                        }
+                                                    }
+                                                </script>
+                                            </div>
+                                            
                                         </div>
-                                        <div class=" col-md-6 form-group">
-                                            <label class = "bmd-label-floating">New Password</label>
-                                            <input type="password" value="" name="newpasskey" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <input type="submit" value="Change" name="submit" id="submit" class="btn btn-primary"/>
-                                    <input type="reset" value="Reset" name="reset" id="reset" class="btn btn-danger"/>
-                                    <?php
-                                    if ($per_bills == 1 || $per_bills == "1") {
+                                        <input type="submit" value="Change" name="submit" id="submit" class="btn btn-primary" />
+                                        <input type="reset" value="Reset" name="reset" id="reset" class="btn btn-danger" />
+                                        <?php
+                                        if ($per_bills == 1 || $per_bills == "1") {
                                         ?>
-                                    <a href="bill_pin.php" class="btn btn-warning">change transaction password</a>
-                                    <?php
-                                    }
-                                    ?>
-                                    <div class="clearfix"></div>
-                                </form>
+                                            <a href="bill_pin.php" class="btn btn-warning">change transaction password</a>
+                                        <?php
+                                        }
+                                        ?>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
 
-                 <div class="card">
-                    <!-- <div class="card-header card-header-primary">
+                        <div class="card">
+                            <!-- <div class="card-header card-header-primary">
                         <h4 class="card-title ">Feedback</h4>
                   
                     </div> -->
-                    <div class="card-body">
-                        <div class="mt-3">
-                          <form method="post">
-                            <legend>Feedback:</legend>
-                            
+                            <div class="card-body">
                                 <div class="mt-3">
-                                    <label class = "bmd-label-floating">Complaint Type</label>
-                                    <select name="religion" class="form-control" id="religion">
-                                        <option value=""></option>
-                                    </select>
-                                </div>
-                                <div class="mt-3">
-                                    <label class = "bmd-label-floating">Complaint Message</label>
-                                    <textarea value="" name="" class="form-control" required></textarea>
-                                </div>
-                           
-                            <input type="submit" value="Submit" name="submit" id="submit" class="btn btn-primary mt-3"/>
-                           
-                            <!-- <div class="clearfix"></div> -->
-                          </form>
-                        </div>
-                    </div>
-                 </div>
+                                    <form method="post">
+                                        <legend>Feedback:</legend>
 
+                                        <div class="mt-3">
+                                            <label class="bmd-label-floating">Complaint Type</label>
+                                            <select name="religion" class="form-control" id="religion">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                        <div class="mt-3">
+                                            <label class="bmd-label-floating">Complaint Message</label>
+                                            <textarea value="" name="" class="form-control" required></textarea>
+                                        </div>
+
+                                        <input type="submit" value="Submit" name="submit" id="submit" class="btn btn-primary mt-3" />
+
+                                        <!-- <div class="clearfix"></div> -->
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-          <!-- make a new settings -->
         </div>
-      </div>
+        <!-- make a new settings -->
+    </div>
+</div>
 
 <?php
 
-    include("footer.php");
+include("footer.php");
 
 ?>
