@@ -480,153 +480,33 @@ input[type=text] {
                                         </div>
                                         <!-- Third Tab Ends -->
                                         <!-- Fourth Tab Begins -->
-                                        <div class="tab"><h3> Collateral:</h3>
-                                            <div class="form-group">
-                                                <button type="button" class="btn btn-primary" name="button"
-                                                        onclick="showDialog()"><i class="fa fa-plus"></i> Add
-                                                </button>
-                                            </div>
-                                            <div class="form-group">
-                                                <script>
-                                                    $(document).ready(function () {
-                                                        $('#clickit').on("click", function () {
-                                                            var id = $(this).val();
-                                                            var client_id = $('#client_id').val();
-                                                            var colname = $('#colname').val();
-                                                            var colval = $('#col_val').val();
-                                                            var coldes = $('#col_descr').val();
-                                                            $.ajax({
-                                                                url: "collateral_upload.php",
-                                                                method: "POST",
-                                                                data: {
-                                                                    id: id,
-                                                                    client_id: client_id,
-                                                                    colval: colval,
-                                                                    colname: colname,
-                                                                    coldes: coldes
-                                                                },
-                                                                success: function (data) {
-                                                                    $('#coll').html(data);
-                                                                }
-                                                            })
-                                                        });
-                                                    });
-                                                    setInterval(function () {
-                                                        // auto run the col.
-                                                        var client_id = $('#client_id').val();
-                                                        if (client_id != "") {
-                                                            $.ajax({
-                                                                url: "collateral_upload_check.php",
-                                                                method: "POST",
-                                                                data: {client_id: client_id},
-                                                                success: function (data) {
-                                                                    $('#collx').html(data);
-                                                                }
-                                                            })
-                                                        }
-                                                    }, 1000);
-                                                </script>
-                                                <!-- <button class="btn btn-primary pull-right" id="clickit">Add</button> -->
-                                                <div id="off_me">
-                                                    <table class="rtable display nowrap" style="width:100%"
-                                                           id="checking_up">
-                                                        <thead>
-                                                        <tr>
-                                                            <td>Name/Type</td>
-                                                            <td>Value</td>
-                                                            <td>Description</td>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody id="collx">
-                                                        </tbody>
-                                                        <tbody>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div id="coll"></div>
-                                            </div>
-                                            <!-- dialog box -->
-                                            <div class="form-group">
-                                                <div id="background">
-                                                </div>
-                                                <div id="diallbox">
-                                                    <!-- <form method="POST" action="lend.php" > -->
-                                                    <h3>Add Collateral</h3>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label class="bmd-label-floating" class="md-3 form-align "
-                                                                   for=""> Name:</label>
-                                                            <input type="text" name="col_name" id="colname"
-                                                                   class="form-control">
+                                        <div class="tab">
+                                            <h3> Collateral:</h3>
+                                            
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <form action="" method="post" autocomplete="off">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating">Name</label>
+                                                                    <input type="text" class="form-control" id="colname" name="col_name" value="" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating">Value(&#x20a6;)</label>
+                                                                    <input type="number" class="form-control" name="col_value" id="col_val" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label for="">Description</label>
+                                                                    <input type="text" class="form-control" name="col_description" id="col_descr" required>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label class="bmd-label-floating" for="">
-                                                                Value(&#x20a6;):</label>
-                                                            <input type="number" name="col_value" id="col_val"
-                                                                   class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label class="bmd-label-floating"
-                                                                   for="">Description:</label>
-                                                            <input type="text" name="col_description" id="col_descr"
-                                                                   class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div style="float:right;">
-                                                        <span class="btn btn-primary pull-right" id="clickit"
-                                                              onclick="AddDlg()">Add</span>
-                                                        <span class="btn btn-primary pull-right" onclick="AddDlg()">Cancel</span>
-                                                    </div>
-                                                    <!-- </form> -->
-                                                    <script>
-                                                        function AddDlg() {
-                                                            var bg = document.getElementById("background");
-                                                            var dlg = document.getElementById("diallbox");
-                                                            bg.style.display = "none";
-                                                            dlg.style.display = "none";
-                                                        }
-
-                                                        function showDialog() {
-                                                            var bg = document.getElementById("background");
-                                                            var dlg = document.getElementById("diallbox");
-                                                            bg.style.display = "block";
-                                                            dlg.style.display = "block";
-
-                                                            var winWidth = window.innerWidth;
-                                                            var winHeight = window.innerHeight;
-
-                                                            dlg.style.left = (winWidth / 2) - 480 / 2 + "px";
-                                                            dlg.style.top = "150px";
-                                                        }
-                                                    </script>
-                                                    <style>
-                                                        #background {
-                                                            display: none;
-                                                            width: 100%;
-                                                            height: 100%;
-                                                            position: fixed;
-                                                            top: 0px;
-                                                            left: 0px;
-                                                            background-color: black;
-                                                            opacity: 0.7;
-                                                            z-index: 9999;
-                                                        }
-
-                                                        #diallbox {
-                                                            /*initially dialog box is hidden*/
-                                                            display: none;
-                                                            position: fixed;
-                                                            width: 480px;
-                                                            z-index: 9999;
-                                                            border-radius: 10px;
-                                                            padding: 20px;
-                                                            background-color: #ffffff;
-                                                        }
-                                                    </style>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>

@@ -74,6 +74,13 @@ if (isset($_POST["id"])) {
     }
 
     while ($row = mysqli_fetch_array($result)) {
+        if($row["repayment_frequency"] != 1) {
+            // ex. instead of having "30 day" it will be "30 days"
+            $repayment_every_x = $row["repayment_every"] . "s";
+        } else {
+            $repayment_every_x = $row["repayment_every"];
+        }
+
         $output = '
         <div class="form-group">
           <div class="row">
@@ -114,7 +121,7 @@ if (isset($_POST["id"])) {
             </div>
             <div class="col-md-6">
               <select id="repay" name="repay_eve" class="form-control">
-                <option hidden value ="' . $row["repayment_every"] . '">' . ucfirst($row["repayment_every"]) . '(s)'. '</option>
+                <option hidden value ="' . $row["repayment_every"] . '">' . ucfirst($row["repayment_every"]) . '(s)</option>
                 <option value ="day">Day(s)</option>
                 <option value ="week">Week(s)</option>
                 <option value ="month">Month(s)</option>
@@ -145,15 +152,9 @@ if (isset($_POST["id"])) {
       <div class="col-md-4">
         <div class="form-group">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-12">
               <label>Repayment Every:</label>
-              <input type="number" value="' . $row["repayment_frequency"] . '" name="repay_every_no" class="form-control" id="rapno" readonly/>
-            </div>
-            <div class="col-md-6">
-                <label> </label></br>
-                <label> </label></br>
-                <div id="change_term">
-                </div>
+              <input type="text" value="' . $row["repayment_frequency"] . ' '.  ucfirst($repayment_every_x) .'" name="repay_every_no" class="form-control" id="rapno" readonly/>
             </div>
           </div>
         </div>
@@ -546,15 +547,6 @@ if (isset($_POST["id"])) {
         }
     }, 1000);
     $(document).ready(function () {
-        var id = $('#repay').val();
-        $.ajax({
-            url: "ajax_post/change_term.php",
-            method: "POST",
-            data: {id: id},
-            success: function (data) {
-                $('#change_term').html(data);
-            }
-        });
         $('#repay').on("change keyup paste click", function () {
             var id = $(this).val();
             var ist = $('#int_id').val();
@@ -610,28 +602,47 @@ if (isset($_POST["id"])) {
     });
     $(document).ready(function () {
         var disb = $('#disb_date').val();
+        var loant = $('#loan_term').val();
         var repay = $('#repay').val();
         var repayno = $('#rapno').val();
-        var grace_prin = $('#grace_prin').val();
+        
         $.ajax({
             url: "ajax_post/repayment_calc.php",
             method: "POST",
-            data: {disb: disb, repay: repay, repayno: repayno, grace_prin: grace_prin},
+            data: {loant: loant, disb: disb, repay: repay, repayno: repayno},
             success: function (data) {
                 $('#rep_start').html(data);
             }
         })
     });
     $(document).ready(function () {
-        $('#disb_date').on("change keyup paste click", function () {
-            var disb = $(this).val();
+        $('#loan_term').on("change keyup paste click", function () {
+            var disb = $('#disb_date').val();
+            var loant = $(this).val();
             var repay = $('#repay').val();
             var repayno = $('#rapno').val();
-            var grace_prin = $('#grace_prin').val();
+            
             $.ajax({
                 url: "ajax_post/repayment_calc.php",
                 method: "POST",
-                data: {disb: disb, repay: repay, repayno: repayno, grace_prin: grace_prin},
+                data: {loant: loant, disb: disb, repay: repay, repayno: repayno},
+                success: function (data) {
+                    $('#rep_start').html(data);
+                }
+            })
+        });
+    });
+    $(document).ready(function () {
+        $('#disb_date').on("change keyup paste click", function () {
+            var disb = $(this).val();
+            var loant = $('#loan_term').val();
+            var repay = $('#repay').val();
+            var repayno = $('#rapno').val();
+            
+            $.ajax({
+                url: "ajax_post/repayment_calc.php",
+                method: "POST",
+                data: {loant: loant, disb: disb, repay: repay, repayno: repayno},
                 success: function (data) {
                     $('#rep_start').html(data);
                 }
@@ -642,36 +653,20 @@ if (isset($_POST["id"])) {
     $(document).ready(function () {
         $('#repay').on("change keyup paste click", function () {
             var disb = $('#disb_date').val();
+            var loant = $('#loan_term').val();
             var repay = $(this).val();
             var repayno = $('#rapno').val();
-            var grace_prin = $('#grace_prin').val();
+            
             $.ajax({
                 url: "ajax_post/repayment_calc.php",
                 method: "POST",
-                data: {disb: disb, repay: repay, repayno: repayno, grace_prin: grace_prin},
+                data: {loant: loant, disb: disb, repay: repay, repayno: repayno},
                 success: function (data) {
                     $('#rep_start').html(data);
                 }
             })
         });
     });
-
-    // $(document).ready(function () {
-    //     $('#rapno').on("change keyup paste click", function () {
-    //         var disb = $('#disb_date').val();
-    //         var repay = $('#repay').val();
-    //         var repayno = $(this).val();
-    //         var grace_prin = $('#grace_prin').val();
-    //         $.ajax({
-    //             url: "ajax_post/repayment_calc.php",
-    //             method: "POST",
-    //             data: {disb: disb, repay: repay, repayno: repayno, grace_prin: grace_prin},
-    //             success: function (data) {
-    //                 $('#rep_start').html(data);
-    //             }
-    //         })
-    //     });
-    // });
 </script>
 <script>
     $(document).ready(function () {
