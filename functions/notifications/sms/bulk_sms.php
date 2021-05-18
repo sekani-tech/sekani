@@ -14,7 +14,8 @@ $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
 if (isset($_POST['message'])) {
     $message = mysqli_real_escape_string($connection, $_POST['message']);
     $customerDataCondition = [
-        'int_id' => $institutionId
+        'int_id' => $institutionId,
+        'status' => "Approved"
     ];
     $picked = [
         'mobile_no'

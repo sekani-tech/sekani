@@ -11,7 +11,7 @@ if (isset($_POST['type'])) {
         $balance = $stateg['balance'];
         if ($balance) { ?>
             <div class="form-group">
-                <label class="bmd-label-floating">Current Balance</label>
+                <label class="bmd-label-floating">Current Vault Balance</label>
                 <!-- populate available balance -->
                 <input type="text" value="<?php echo $balance ?>" name="balance" class="form-control" readonly>
             </div>
@@ -26,7 +26,7 @@ if (isset($_POST['type'])) {
         $balance = $stateg['balance'];
         if ($balance) { ?>
             <div class="form-group">
-                <label class="bmd-label-floating">Current Balance</label>
+                <label class="bmd-label-floating">Current Vault Balance</label>
                 <!-- populate available balance -->
                 <input type="text" value="<?php echo $balance ?>" name="balance" class="form-control" readonly>
             </div>

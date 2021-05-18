@@ -1,3 +1,8 @@
+
+-- 15th may 2021
+ALTER TABLE `sms_record` CHANGE `message` `message` LONGTEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+
+-- /
 CREATE TABLE `sms_record` ( `id` INT NOT NULL , `int_id` INT NOT NULL , 
 `branch_id` INT NOT NULL , 
 `mobile_no` VARCHAR(40) NOT NULL , `transaction_date` DATE NOT NULL , `message` TEXT NOT NULL , 

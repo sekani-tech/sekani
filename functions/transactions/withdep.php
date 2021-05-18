@@ -73,7 +73,8 @@ if (count([$getacct]) == 1) {
   // $space = 10;
   // $randms2 = str_pad(rand(0, pow(10, $space)-1), $space, '0', STR_PAD_LEFT);
   // $transid = $randms2;
-  $gen_date = date('Y-m-d H:i:s');
+  // $gen_date = date('Y-m-d H:i:s');
+  $gen_date = $_POST['transDate'];
   $pint = date('Y-m-d H:i:s');
   $gends = date('Y-m-d h:i:sa');
   // we will call the institution account
@@ -647,6 +648,7 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
           } else if ($isbank == 0) {
             $int_acct_bal = $int_acct_bal;
           }
+          // dd($int_acct_bal);
           if ($int_acct_bal >= $amt2) {
             // check if client has cash
             if ($client_acct_bal >=  $amt2) {
@@ -674,9 +676,9 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                       $dbgl = mysqli_query($connection, $upglacct);
                       if ($dbgl) {
                         $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
-                    transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
-                      created_date, debit) VALUES ('{$sessint_id}', '{$branch_id}', '{$glcode}', '{$parent}','{$transid}', '{$description}', '{$trans_type}', '{$staff_id}',
-                       '{$gen_date}', '{$amt}', '{$new_gl_bal2}', '{$amt}', '{$gen_date}', '{$amt}')";
+                                  transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
+                                    created_date, debit) VALUES ('{$sessint_id}', '{$branch_id}', '{$glcode}', '{$parent}','{$transid}', '{$description}', '{$trans_type}', '{$staff_id}',
+                                    '{$gen_date}', '{$amt}', '{$new_gl_bal2}', '{$amt}', '{$gen_date}', '{$amt}')";
                         $res4 = mysqli_query($connection, $gl_acc);
                       }
                     } else if ($isbank == 0) {
@@ -685,12 +687,12 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                       $iupqres2 = mysqli_query($connection, $iupq2);
                       if ($iupqres2) {
                         $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
-            client_id, transaction_id, description, transaction_type, teller_id, is_reversed,
-            transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-            created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
-            '{$client_id}', '{$transid}','{$description}', '{$trans_type}', '{$staff_id}', '{$irvs}',
-            '{$gen_date}', '{$amt}', '{$new_int_bal}', '{$amt}',
-            '{$gen_date}', '{$appuser_id}', '{$amt}')";
+                        client_id, transaction_id, description, transaction_type, teller_id, is_reversed,
+                        transaction_date, amount, running_balance_derived, overdraft_amount_derived,
+                        created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
+                        '{$client_id}', '{$transid}','{$description}', '{$trans_type}', '{$staff_id}', '{$irvs}',
+                        '{$gen_date}', '{$amt}', '{$new_int_bal}', '{$amt}',
+                        '{$gen_date}', '{$appuser_id}', '{$amt}')";
                         $res4 = mysqli_query($connection, $iat2);
                       }
                     } else if ($isbank == 2) {
@@ -698,9 +700,9 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                       $dbgl = mysqli_query($connection, $upglacct);
                       if ($dbgl) {
                         $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
-                    transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
-                      created_date, debit) VALUES ('{$sessint_id}', '{$branch_id}', '{$glcode}', '{$parent}','{$transid}', '{$description}', '{$trans_type}', '{$staff_id}',
-                       '{$gen_date}', '{$amt}', '{$new_gl_bal2}', '{$amt}', '{$gen_date}', '{$amt}')";
+                                  transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
+                                    created_date, debit) VALUES ('{$sessint_id}', '{$branch_id}', '{$glcode}', '{$parent}','{$transid}', '{$description}', '{$trans_type}', '{$staff_id}',
+                                    '{$gen_date}', '{$amt}', '{$new_gl_bal2}', '{$amt}', '{$gen_date}', '{$amt}')";
                         $res4 = mysqli_query($connection, $gl_acc);
                       }
                     }
@@ -738,16 +740,16 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
 
                             $curl = curl_init();
 
-                          curl_setopt_array($curl, array(
-                            CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit/long',
-                            CURLOPT_RETURNTRANSFER => true,
-                            CURLOPT_ENCODING => '',
-                            CURLOPT_MAXREDIRS => 10,
-                            CURLOPT_TIMEOUT => 0,
-                            CURLOPT_FOLLOWLOCATION => true,
-                            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                            CURLOPT_CUSTOMREQUEST => 'POST',
-                            CURLOPT_POSTFIELDS => '{
+                            curl_setopt_array($curl, array(
+                              CURLOPT_URL => 'https://sms.vanso.com//rest/sms/submit/long',
+                              CURLOPT_RETURNTRANSFER => true,
+                              CURLOPT_ENCODING => '',
+                              CURLOPT_MAXREDIRS => 10,
+                              CURLOPT_TIMEOUT => 0,
+                              CURLOPT_FOLLOWLOCATION => true,
+                              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                              CURLOPT_CUSTOMREQUEST => 'POST',
+                              CURLOPT_POSTFIELDS => '{
                                                 "account": {
                                                     "password": "kwPPkiV4",
                                                     "systemId": "NG.102.0421"
@@ -760,13 +762,13 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                                                     }
 
                                                 }',
-                            CURLOPT_HTTPHEADER => array(
-                              'Content-Type: application/json',
-                              'Authorization: Basic TkcuMTAyLjA0MjE6a3dQUGtpVjQ='
-                            ),
-                          ));
+                              CURLOPT_HTTPHEADER => array(
+                                'Content-Type: application/json',
+                                'Authorization: Basic TkcuMTAyLjA0MjE6a3dQUGtpVjQ='
+                              ),
+                            ));
 
-                          $response = curl_exec($curl);
+                            $response = curl_exec($curl);
                             // success
                             $err = curl_close($curl);
                             if ($err) {
@@ -820,113 +822,113 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                       $mail->isHTML(true);
                       $mail->Subject = "Transaction Alert from $int_name";
                       $mail->Body = "<!DOCTYPE html>
-            <html>
-                <head>
-                <style>
-                .lon{
-                  height: 100%;
-                    background-color: #eceff3;
-                    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                }
-                .main{
-                    margin-right: auto;
-                    margin-left: auto;
-                    width: 550px;
-                    height: auto;
-                    background-color: white;
-    
-                }
-                .header{
-                    margin-right: auto;
-                    margin-left: auto;
-                    width: 550px;
-                    height: auto;
-                    background-color: white;
-                }
-                .logo{
-                    margin-right:auto;
-                    margin-left: auto;
-                    width:auto;
-                    height: auto;
-                    background-color: white;
-    
-                }
-                .text{
-                    padding: 20px;
-                    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                }
-                table{
-                    padding:30px;
-                    width: 100%;
-                }
-                table td{
-                    font-size: 15px;
-                    color:rgb(65, 65, 65);
-                }
-            </style>
-                </head>
-                <body>
-                  <div class='lon'>
-                    <div class='header'>
-                      <div class='logo'>
-                      <img  style='margin-left: 200px; margin-right: auto; height:150px; width:150px;'class='img' src='$int_logo'/>
-                  </div>
-              </div>
-                  <div class='main'>
-                      <div class='text'>
-                          Dear $clientt_name,
-                          <h2 style='text-align:center;'>Notification of Debit Alert</h2>
-                          this is to notify you of an incoming debit to your account $acct_no,
-                           Kindly confirm with your bank.<br/><br/>
-                           Please see the details below
-                      </div>
-                      <table>
-                          <tbody>
-                              <div>
-                            <tr>
-                              <td> <b >Account Number</b></td>
-                              <td >$account_display</td>
-                            </tr>
-                            <tr>
-                              <td > <b>Account Name</b></td>
-                              <td >$clientt_name</td>
-                            </tr>
-                            <tr>
-                              <td > <b>Reference</b></td>
-                              <td >$description</td>
-                            </tr>
-                            <tr>
-                              <td > <b>Reference Id</b></td>
-                              <td >$transid</td>
-                            </tr>
-                            <tr>
-                              <td > <b>Transaction Amount</b></td>
-                              <td >$amt</td>
-                            </tr>
-                            <tr>
-                              <td > <b>Transaction Date/Time</b></td>
-                              <td >$gen_date</td>
-                            </tr>
-                            <tr>
-                              <td > <b>Value Date</b></td>
-                              <td >$gends</td>
-                            </tr>
-                            <tr>
-                              <td > <b>Account Balance</b></td>
-                              <td >&#8358; $numberacct</td>
-                            </tr>
-                          </tbody>
-                          <!-- Optional JavaScript -->
-                          <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-                          <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
-                          <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous'></script>
-                          <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
-                        </body>
-                      </table>
-                  </div>
-                  </div>
-                </body>
-            </html>";
+                        <html>
+                            <head>
+                            <style>
+                            .lon{
+                              height: 100%;
+                                background-color: #eceff3;
+                                font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                            }
+                            .main{
+                                margin-right: auto;
+                                margin-left: auto;
+                                width: 550px;
+                                height: auto;
+                                background-color: white;
+                
+                            }
+                            .header{
+                                margin-right: auto;
+                                margin-left: auto;
+                                width: 550px;
+                                height: auto;
+                                background-color: white;
+                            }
+                            .logo{
+                                margin-right:auto;
+                                margin-left: auto;
+                                width:auto;
+                                height: auto;
+                                background-color: white;
+                
+                            }
+                            .text{
+                                padding: 20px;
+                                font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                            }
+                            table{
+                                padding:30px;
+                                width: 100%;
+                            }
+                            table td{
+                                font-size: 15px;
+                                color:rgb(65, 65, 65);
+                            }
+                        </style>
+                            </head>
+                            <body>
+                              <div class='lon'>
+                                <div class='header'>
+                                  <div class='logo'>
+                                  <img  style='margin-left: 200px; margin-right: auto; height:150px; width:150px;'class='img' src='$int_logo'/>
+                              </div>
+                          </div>
+                              <div class='main'>
+                                  <div class='text'>
+                                      Dear $clientt_name,
+                                      <h2 style='text-align:center;'>Notification of Debit Alert</h2>
+                                      this is to notify you of an incoming debit to your account $acct_no,
+                                      Kindly confirm with your bank.<br/><br/>
+                                      Please see the details below
+                                  </div>
+                                  <table>
+                                      <tbody>
+                                          <div>
+                                        <tr>
+                                          <td> <b >Account Number</b></td>
+                                          <td >$account_display</td>
+                                        </tr>
+                                        <tr>
+                                          <td > <b>Account Name</b></td>
+                                          <td >$clientt_name</td>
+                                        </tr>
+                                        <tr>
+                                          <td > <b>Reference</b></td>
+                                          <td >$description</td>
+                                        </tr>
+                                        <tr>
+                                          <td > <b>Reference Id</b></td>
+                                          <td >$transid</td>
+                                        </tr>
+                                        <tr>
+                                          <td > <b>Transaction Amount</b></td>
+                                          <td >$amt</td>
+                                        </tr>
+                                        <tr>
+                                          <td > <b>Transaction Date/Time</b></td>
+                                          <td >$gen_date</td>
+                                        </tr>
+                                        <tr>
+                                          <td > <b>Value Date</b></td>
+                                          <td >$gends</td>
+                                        </tr>
+                                        <tr>
+                                          <td > <b>Account Balance</b></td>
+                                          <td >&#8358; $numberacct</td>
+                                        </tr>
+                                      </tbody>
+                                      <!-- Optional JavaScript -->
+                                      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                                      <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous'></script>
+                                      <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous'></script>
+                                      <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
+                                    </body>
+                                  </table>
+                              </div>
+                              </div>
+                            </body>
+                        </html>";
                       $mail->AltBody = "This is the plain text version of the email content";
                       // mail system
                       if (!$mail->send()) {
@@ -988,7 +990,7 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                         }
                       } else {
                         $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";
-                        header("Location: ../../mfi/transact.php?message5=$randms");
+                        header("Location: ../../mfi/transact.php?message5=1");
                       }
                     } else {
                       echo "Test is Empty";
@@ -1000,7 +1002,7 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                 }
               } else {
                 $_SESSION["Lack_of_intfund_$randms"] = "Account not Found";
-                echo header("Location: ../../mfi/transact.php?message5=$randms");
+                echo header("Location: ../../mfi/transact.php?message5=2");
               }
             } else {
               // echo error client has insufficient fund
@@ -1009,11 +1011,11 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
             }
           } else {
             $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";
-            header("Location: ../../mfi/transact.php?message5=$randms");
+            header("Location: ../../mfi/transact.php?message5=3");
           }
         } else {
           $_SESSION["Lack_of_intfund_$randms"] = "Failed - Insufficient Fund";
-          header("Location: ../../mfi/transact.php?message5=$randms");
+          header("Location: ../../mfi/transact.php?message5=4");
         }
       } else {
         // echo this teller is not authorized

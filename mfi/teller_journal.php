@@ -86,7 +86,7 @@ if (isset($_GET["message3"])) {
     }
 } else if (isset($_GET["message4"])) {
     $key = $_GET["message4"];
-// $out = $_SESSION["lack_of_intfund_$key"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
     if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
         echo '<script type="text/javascript">
@@ -188,13 +188,13 @@ $(document).ready(function(){
 if ($valut == 1 || $valut == "1") {
     $bch_id = $_SESSION['branch_id'];
     $sint_id = $_SESSION['int_id'];
-// output the branch name
+    // output the branch name
     $bch_name = selectOne('branch', ['id' => $bch_id, 'int_id' => $sint_id]);
     $get_b_r_n = $bch_name['id'];
     $bname = $bch_name['name'];
-// Ending branch_name
+    // Ending branch_name
 
-// check the current balance
+    // check the current balance
     $int_balance = selectOne('int_vault', ['branch_id' => $bch_id, 'int_id' => $sessint_id]);
     $g_i_t_b = $int_balance['balance'];
     $vault_limit = $int_balance['movable_amount'];
@@ -210,14 +210,14 @@ if ($valut == 1 || $valut == "1") {
     }
 
 
-// For the Transaction ID auto generated
+    // For the Transaction ID auto generated
     $digits = 10;
     $transaction_id = str_pad(rand(0, pow(10, 7) - 1), 7, '0', STR_PAD_LEFT);
-// check if every data is active
-// then we will do the transaction - stored 
-// then if will reflect inside of int_transaction for the teller that will be picked
-// then you can display a message that the transaction is successful.
-// remember to add code of making institution branch add a vualt and also Super Admin
+    // check if every data is active
+    // then we will do the transaction - stored 
+    // then if will reflect inside of int_transaction for the teller that will be picked
+    // then you can display a message that the transaction is successful.
+    // remember to add code of making institution branch add a vualt and also Super Admin
 ?>
     <div class="content">
         <div class="container-fluid">
@@ -248,10 +248,10 @@ if ($valut == 1 || $valut == "1") {
                                         <div class="form-group">
                                             <label class="">Branch:</label>
                                             <select class="form-control" id="bid" name="branch_id">
+                                                <option value="">.......</option>
                                                 <?php $branchResults = branch_option($connection);
                                                 foreach ($branchResults as $branchResult) {
-                                                    ?>
-                                                    <option value="">.......</option>
+                                                ?>
                                                     <option value="<?php echo $branchResult['id'] ?>"><?php echo $branchResult['name'] ?>
                                                     </option>
                                                 <?php } ?>
@@ -265,8 +265,7 @@ if ($valut == 1 || $valut == "1") {
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Amount</label>
                                             <input type="number" name="amount" id="" class="form-control">
-                                            <input type="text" hidden name="int" id="intt"
-                                                   value="<?php echo $sint_id; ?>" class="form-control">
+                                            <input type="text" hidden name="int" id="intt" value="<?php echo $sint_id; ?>" class="form-control">
                                         </div>
                                     </div>
                                     <div id="show_branch_balance" class="col-md-4">
@@ -276,8 +275,7 @@ if ($valut == 1 || $valut == "1") {
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Transaction id</label>
                                             <!-- populate available balance -->
-                                            <input type="text" value="<?php echo $transaction_id; ?>" name="transact_id"
-                                                   id="" class="form-control" readonly>
+                                            <input type="text" value="<?php echo $transaction_id; ?>" name="transact_id" id="" class="form-control" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -317,10 +315,11 @@ if ($valut == 1 || $valut == "1") {
                                         <div class="form-group">
                                             <label class="">Branch:</label>
                                             <select class="form-control" id="bankBalance" name="branch_id">
+                                                <option value="">.......</option>
                                                 <?php $branchResults = branch_option($connection);
                                                 foreach ($branchResults as $branchResult) {
-                                                    ?>
-                                                    <option value="">.......</option>
+                                                ?>
+
                                                     <option value="<?php echo $branchResult['id'] ?>"><?php echo $branchResult['name'] ?>
                                                     </option>
                                                 <?php } ?>
@@ -334,8 +333,7 @@ if ($valut == 1 || $valut == "1") {
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Amount</label>
                                             <input type="number" name="amount" id="" class="form-control">
-                                            <input type="text" hidden name="int" id="intt"
-                                                   value="<?php echo $sint_id; ?>" class="form-control">
+                                            <input type="text" hidden name="int" id="intt" value="<?php echo $sint_id; ?>" class="form-control">
                                         </div>
                                     </div>
                                     <div id="show_bank_balance" class="col-md-4">
@@ -347,8 +345,7 @@ if ($valut == 1 || $valut == "1") {
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Transaction id</label>
                                             <!-- populate available balance -->
-                                            <input type="text" value="<?php echo $transaction_id; ?>" name="transact_id"
-                                                   id="" class="form-control" readonly>
+                                            <input type="text" value="<?php echo $transaction_id; ?>" name="transact_id" id="" class="form-control" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -366,14 +363,16 @@ if ($valut == 1 || $valut == "1") {
     </div>
     <script>
         // display list of tellers
-        $(document).ready(function () {
-            $('#selctttype').change(function () {
+        $(document).ready(function() {
+            $('#selctttype').change(function() {
                 var id = $(this).val();
                 $.ajax({
                     url: "ajax_post/vault_options.php",
                     method: "POST",
-                    data: {id: id},
-                    success: function (data) {
+                    data: {
+                        id: id
+                    },
+                    success: function(data) {
                         $('#sw').html(data);
                     }
                 })
@@ -381,14 +380,16 @@ if ($valut == 1 || $valut == "1") {
         })
 
         // display list of bancks
-        $(document).ready(function () {
-            $('#selctttypeBank').change(function () {
+        $(document).ready(function() {
+            $('#selctttypeBank').change(function() {
                 var id = $(this).val();
                 $.ajax({
                     url: "ajax_post/vault_options.php",
                     method: "POST",
-                    data: {id: id},
-                    success: function (data) {
+                    data: {
+                        id: id
+                    },
+                    success: function(data) {
                         $('#bankResult').html(data);
                     }
                 })
@@ -396,25 +397,30 @@ if ($valut == 1 || $valut == "1") {
         })
 
         // show branch balance
-        $(document).ready(function () {
-            $('#bid').change(function () {
+        $(document).ready(function() {
+            $('#bid').change(function() {
                 var name = 'vault';
                 var id = $(this).val();
                 var int = $('#intt').val();
+                var teller = $('#tell').val();
 
                 $.ajax({
                     url: "ajax_post/vault_balance.php",
                     method: "POST",
-                    data: {type: name, id: id, int: int},
-                    success: function (data) {
+                    data: {
+                        type: name,
+                        id: id,
+                        int: int
+                    },
+                    success: function(data) {
                         $('#show_branch_balance').html(data);
                     }
                 })
             });
         })
         // show bank balance
-        $(document).ready(function () {
-            $('#bankBalance').change(function () {
+        $(document).ready(function() {
+            $('#bankBalance').change(function() {
                 var name = 'bank';
                 var id = $(this).val();
                 var int = $('#intt').val();
@@ -422,15 +428,19 @@ if ($valut == 1 || $valut == "1") {
                 $.ajax({
                     url: "ajax_post/vault_balance.php",
                     method: "POST",
-                    data: {type: name, id: id, int: int},
-                    success: function (data) {
+                    data: {
+                        type: name,
+                        id: id,
+                        int: int
+                    },
+                    success: function(data) {
                         $('#show_bank_balance').html(data);
                     }
                 })
             });
         })
     </script>
-    <?php
+<?php
     include("footer.php");
 } else {
     echo '<script type="text/javascript">
