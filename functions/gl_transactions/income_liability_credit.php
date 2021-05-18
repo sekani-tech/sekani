@@ -15,7 +15,7 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
     $glAccount = $_POST['acct_gl'];
     $transacionId = $_POST['transid'];
     $description = $_POST['description'];
-    $amount = $_POST['amount'];
+    $amount = floatval(preg_replace('/[^\d.]/', '', $_POST['amount']));
     $today = $_POST['transDate'];
 
     // first check if client has sufficient balance
@@ -64,7 +64,8 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
                 'running_balance_derived' => $newBalance,
                 'cumulative_balance_derived' => $newBalance,
                 'appuser_id' => $user,
-                'debit' => $amount
+                'debit' => $amount,
+                'created_date' => $today
             ];
             $storeTransaction = insert('account_transaction', $transactionDetails);
             if ($storeTransaction) {

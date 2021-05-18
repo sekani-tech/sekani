@@ -13,53 +13,14 @@ $int_address = $_SESSION["int_address"];
 $sessint_id = $_SESSION["int_id"];
 $m_id = $_SESSION["user_id"];
 $branch_id = $_SESSION['branch_id'];
-$id = $_SESSION['id'];
-// allow for date selection if back date is marked as available
-$backDateCondition = [
-    'int_id' => $sessint_id,
-    'title' => "BACK DATING"
-];
-$findBackDate = selectOne('administrative_control', $backDateCondition);
-$backDating = $findBackDate['function_status'];
-if($backDating = 1){
-    $gen_date = $_POST['transDate'];
-}else{
-    $gen_date = Date('Y-m-d H:i:s');
-}
-
 $getacct1 = mysqli_query($connection, "SELECT * FROM staff WHERE user_id = '$m_id' && int_id = '$sessint_id'");
 if (count([$getacct1]) == 1) {
     $uw = mysqli_fetch_array($getacct1);
     $staff_id = $uw["id"];
     $staff_name = $uw['display_name'];
 }
-$holidaycheck = mysqli_query($connection, "SELECT * FROM holiday_tb WHERE  marked_day = '$gen_date'");
-// check if date is holiday
-// // if($holidaycheck){    
-// //     exit('today is a holiday and posting not allowed');
-// }
-// if yes exit telling the person today is a holiday and posting not allowed.
-$year = getPieceOfDate($gen_date,'Y'); 
-    $month = getPieceOfDate($year,'m');
-    $testQuery = "SELECT * FROM endofyear_tb WHERE yearend = '$year'AND status ='1'";
-    dd($testQuery);
-$findEndYear = mysqli_query($connection, "SELECT * FROM endofyear_tb WHERE yearend = '$year'AND status ='1'");
-if(!$findEndYear){
-    $findEndMonth = mysqli_query($connection, "SELECT * FROM endofmonth_tb WHERE monthend = '$month' AND yearend ='$year'AND status ='1'");
-    if(!$findEndMonth){
-        $findEndDay = mysqli_query($connection, "SELECT * FROM endofday_tb WHERE dateclosed = '$gen_date' AND status ='1'");
-        if($findEndDay){
-            exit('Day already closed');
-               // echo header("Location: ../../mfi/endofday.php?legal=$randms");
-        }
-    }else{
-        exit("Month Already closed");
-   //echo header("Location: ../../mfi/endofmonth.php?legal=$randms"); 
-    }
-}else{
-    exit("Year have already closed");
-   //echo header("Location: ../../mfi/endofmonth.php?legal=$randms");
-}
+// $staff_name  = strtoupper($_SESSION["username"]);
+$gen_date = date('Y-m-d H:i:s');
 ?>
 
 <?php
@@ -141,7 +102,6 @@ if ($isBank == 0) {
                             $trans_type2 = "Expense";
                             $irvs = 0;
                             $gen_date = date('Y-m-d H:i:s');
-
                             $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
                     teller_id, transaction_id, description, transaction_type, is_reversed,
                     transaction_date, amount, running_balance_derived, overdraft_amount_derived,
@@ -215,6 +175,9 @@ if ($isBank == 0) {
         echo header("Location: ../../mfi/transact.php?loan2c=$randms");
     }
 } else {
+    // get all important things first
+    $taketeller = "SELECT * FROM tellers WHERE name = '$staff_id' && int_id = '$sessint_id'";
+    $check_me_men = mysqli_query($connection, $taketeller);
     // Find the needed GL
     $gl_man = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$gl_codex' && int_id = '$sessint_id'");
     $gl = mysqli_fetch_array($gl_man);
@@ -222,6 +185,13 @@ if ($isBank == 0) {
     $l_acct_bal = $gl["organization_running_balance_derived"];
     $parent_id = $gl["parent_id"];
     $new_gl_bal = $l_acct_bal + $gl_amt;
+    $ex = mysqli_fetch_array($check_me_men);
+    $is_del = $ex["is_deleted"];
+    $branch_id = $ex['branch_id'];
+    $till = $ex["till"];
+    $post_limit = $ex["post_limit"];
+    $gl_code = $ex["till"];
+    $till_no = $ex["till_no"];
     // Find the bank in the institution_account
     // $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' AND (branch_id = $branch_id) AND gl_code = '$gl_codex'");
     // if (count([$damn]) == 1) {
@@ -231,95 +201,113 @@ if ($isBank == 0) {
     //     $tbd2 = $x['total_withdrawals_derived'] + $gl_amt;
     //     $new_int_bal2 = $int_acct_bal - $gl_amt;
     // }
-    if ($new_gl_bal == true) {
-        $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_codex'";
-        $dbgl = mysqli_query($connection, $upglacct);
-        if (!$dbgl) {
-            printf("Error: %s\n", mysqli_error($connection)); //checking for errors
-            exit();
-        } else {
-
-            $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
-                    transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
-                    created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$gl_codex}', '{$parent_id}', '{$trans_id}', '{$desc}', 'Credit', '{$bankGlCode}',
-                    '{$gen_date}', '{$gl_amt}', '{$new_gl_bal}', '{$gl_amt}', '{$gen_date}', '{$gl_amt}')";
-            $res4 = mysqli_query($connection, $gl_acc);
-            if (!$res4) {
+    if ($gl_amt <= $post_limit) {
+        if ($new_gl_bal == true) {
+            $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_codex'";
+            $dbgl = mysqli_query($connection, $upglacct);
+            if (!$dbgl) {
                 printf("Error: %s\n", mysqli_error($connection)); //checking for errors
                 exit();
             } else {
 
-                $upinta = "UPDATE institution_account SET account_balance_derived = '$new_gl_bal' WHERE int_id = '$sessint_id' AND branch_id = '$branch_id'  AND gl_code = '$bankGlCode' ";
-                $res1 = mysqli_query($connection, $upinta);
-                if (!$res1) {
+                $gl_acc = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, parent_id, transaction_id, description,
+                        transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
+                        created_date, credit) VALUES ('{$sessint_id}', '{$branch_id}', '{$gl_codex}', '{$parent_id}', '{$trans_id}', '{$desc}', 'Credit', '{$bankGlCode}',
+                        '{$gen_date}', '{$gl_amt}', '{$new_gl_bal}', '{$gl_amt}', '{$gen_date}', '{$gl_amt}')";
+                $res4 = mysqli_query($connection, $gl_acc);
+                if (!$res4) {
                     printf("Error: %s\n", mysqli_error($connection)); //checking for errors
                     exit();
                 } else {
 
-                    $trans_type2 = "Expense";
-                    $irvs = 0;
-                    $gen_date = date('Y-m-d H:i:s');
-                    $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
-                                    teller_id, transaction_id, description, transaction_type, is_reversed,
-                                    transaction_date, amount, running_balance_derived, overdraft_amount_derived,
-                                    created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
-                                    '{$bankGlCode}', '{$trans_id}', '{$desc}', 'Debit', '{$irvs}',
-                                    '{$gen_date}', '{$gl_amt}', '{$new_gl_bal}', '{$gl_amt}',
-                                    '{$gen_date}', '{$staff_id}', '{$gl_amt}')";
-
-                    $res5 = mysqli_query($connection, $iat2);
-                    if (!$res5) {
+                    $upinta = "UPDATE institution_account SET account_balance_derived = '$new_gl_bal' WHERE int_id = '$sessint_id' AND branch_id = '$branch_id'  AND gl_code = '$bankGlCode' ";
+                    $res1 = mysqli_query($connection, $upinta);
+                    if (!$res1) {
                         printf("Error: %s\n", mysqli_error($connection)); //checking for errors
                         exit();
                     } else {
 
-                        // make deduction from bank
-                        $glQuery = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$bankGlCode' && int_id = '$sessint_id'");
-                        $findBankgl = mysqli_fetch_array($glQuery);// dd($findBankgl);
-                        $bankParentId = $findBankgl['parent_id'];
-                        $runningBalance = $findBankgl['organization_running_balance_derived'];
-                        $newBalance = $runningBalance - $gl_amt;
-                        // now update gl balance
-                        $updateGlBalance = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$newBalance' WHERE int_id = '$sessint_id' && gl_code = '$bankGlCode'";
-                        $updated = mysqli_query($connection, $updateGlBalance);
-                        if (!$updated) {
-                            printf("Error: %s\n", mysqli_error($connection));
+                        $trans_type2 = "Expense";
+                        $irvs = 0;
+                        $gen_date = date('Y-m-d H:i:s');
+                        $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
+                                        teller_id, transaction_id, description, transaction_type, is_reversed,
+                                        transaction_date, amount, running_balance_derived, overdraft_amount_derived,
+                                        created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_id}',
+                                        '{$bankGlCode}', '{$trans_id}', '{$desc}', 'Debit', '{$irvs}',
+                                        '{$gen_date}', '{$gl_amt}', '{$new_gl_bal}', '{$gl_amt}',
+                                        '{$gen_date}', '{$staff_id}', '{$gl_amt}')";
+
+                        $res5 = mysqli_query($connection, $iat2);
+                        if (!$res5) {
+                            printf("Error: %s\n", mysqli_error($connection)); //checking for errors
                             exit();
                         } else {
-                            $transactionHistory = [
-                                'int_id' => $sessint_id,
-                                'branch_id' => $branch_id,
-                                'gl_code' => $bankGlCode,
-                                'parent_id' => $bankParentId,
-                                'description' => $desc,
-                                'transaction_id' => $trans_id,
-                                'transaction_type' => 'Debit',
-                                'transaction_date' => $gen_date,
-                                'amount' => $gl_amt,
-                                'debit' => $gl_amt,
-                                'gl_account_balance_derived' => $newBalance
-                            ];
-                            $transactionDetail = insert('gl_account_transaction', $transactionHistory);
-                            // dd($transactionDetail);
-                            var_dump($transactionDetail);
-                            if ($transactionDetail) {
-                                // now we will send a mail
-                                $_SESSION["Lack_of_intfund_$randms"] = "Expense Successful";
-                                echo header("Location: ../../mfi/transact.php?loan1=$randms");
-                            } else {
+
+                            // make deduction from bank
+                            $glQuery = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$bankGlCode' && int_id = '$sessint_id'");
+                            $findBankgl = mysqli_fetch_array($glQuery); // dd($findBankgl);
+                            $bankParentId = $findBankgl['parent_id'];
+                            $runningBalance = $findBankgl['organization_running_balance_derived'];
+                            $newBalance = $runningBalance - $gl_amt;
+                            // now update gl balance
+                            $updateGlBalance = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$newBalance' WHERE int_id = '$sessint_id' && gl_code = '$bankGlCode'";
+                            $updated = mysqli_query($connection, $updateGlBalance);
+                            if (!$updated) {
                                 printf("Error: %s\n", mysqli_error($connection));
                                 exit();
+                            } else {
+                                $transactionHistory = [
+                                    'int_id' => $sessint_id,
+                                    'branch_id' => $branch_id,
+                                    'gl_code' => $bankGlCode,
+                                    'parent_id' => $bankParentId,
+                                    'description' => $desc,
+                                    'transaction_id' => $trans_id,
+                                    'transaction_type' => 'Debit',
+                                    'transaction_date' => $gen_date,
+                                    'amount' => $gl_amt,
+                                    'debit' => $gl_amt,
+                                    'gl_account_balance_derived' => $newBalance
+                                ];
+                                $transactionDetail = insert('gl_account_transaction', $transactionHistory);
+                                // dd($transactionDetail);
+                                var_dump($transactionDetail);
+                                if ($transactionDetail) {
+                                    // now we will send a mail
+                                    $_SESSION["Lack_of_intfund_$randms"] = "Expense Successful";
+                                    echo header("Location: ../../mfi/transact.php?loan1=$randms");
+                                } else {
+                                    printf("Error: %s\n", mysqli_error($connection));
+                                    exit();
+                                }
                             }
                         }
                     }
                 }
             }
+        } else {
+            // error in institution account transaction
+            die("error in institution account transaction");
+            $_SESSION["Lack_of_intfund_$randms"] = "Expense Failed";
+            echo header("Location: ../../mfi/transact.php?legal=$randms");
         }
     } else {
-        // error in institution account transaction
-        die("error in institution account transaction");
-        $_SESSION["Lack_of_intfund_$randms"] = "Expense Failed";
-        echo header("Location: ../../mfi/transact.php?legal=$randms");
+        // run the expense for approval
+        $trancache = "INSERT INTO transact_cache (int_id, branch_id, transact_id, description, account_no,
+        client_name, staff_id, account_off_name,
+        amount, pay_type, transact_type, status, date) VALUES
+        ('{$sessint_id}', '{$branch_id}', '{$trans_id}', '{$desc}', '{$gl_codex}', '{$gl_name}',
+        '{$staff_id}', '{$staff_name}', '{$gl_amt}', '{$pym}',
+        'Expense', 'Pending', '{$gen_date}') ";
+        $go = mysqli_query($connection, $trancache);
+        if ($go) {
+            $_SESSION["Lack_of_intfund_$randms"] = "Expense Successful!";
+            echo header("Location: ../../mfi/transact.php?loan2=$randms");
+        } else {
+            $_SESSION["Lack_of_intfund_$randms"] = "Expense Failed";
+            echo header("Location: ../../mfi/transact.php?loan4=$randms");
+        }
     }
 }
 

@@ -1,9 +1,9 @@
 <?php
 define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'sekanisy');
-define('DB_PASSWORD', '4rWY#JP+rnl67');
+define('DB_PASSWORD', '4r6WY#JP+rnl67');
 define('DB_CHARSET', 'utf-8');
-define('DB_NAME', 'sekanisy_demo');
+define('DB_NAME', 'sekanisy_admin');
 // connect to the database with the defined values
 $connection = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 // if there's an error

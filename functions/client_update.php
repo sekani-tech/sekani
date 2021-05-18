@@ -52,59 +52,12 @@ if($ctype == 'INDIVIDUAL' || $ctype == 'GROUP')
         } else { 
             $email_active = 0;
         }    
-        $id_card = $_POST['id_card'];
         // a new stuff for data upload
         $digits = 10;
     
-        if($_FILES['signature']['name']) {
-            $temp = explode(".", $_FILES['signature']['name']);
-            $randmst = str_pad(rand(0, pow(10, 7)-1), 10, '0', STR_PAD_LEFT);
-            $img1 = $randmst. '.' .end($temp);
-            if (move_uploaded_file($_FILES['signature']['tmp_name'], "clients/sign/" . $img1)) {
-                $msg = "Image uploaded successfully";
-            } else {
-                $msg = "Image Failed";
-            }  
-        } else {
-            $img1 = $_POST['sign'];
-        }
         
-        // }
-        // else {
-        //     $image1 = $_POST['sign'];
-        // }
-    // $image2 = $_FILES['idimg']['name'];
-    // $target2 = "clients/".basename($image2);
     
-    // if ID image has value, code should run and save normally
-        if($_FILES['id_img_url']['name']) {
-            $temp2 = explode(".", $_FILES['id_img_url']['name']);
-            $randms2 = str_pad(rand(0, pow(10, 9)-1), 10, '0', STR_PAD_LEFT);
-            $img2 = $randms2. '.' .end($temp2);
-            if (move_uploaded_file($_FILES['id_img_url']['tmp_name'], "clients/id/" . $img2)) {
-                $msg = "Image uploaded successfully";
-            } else {
-                $msg = "Image Failed";
-            }
-        }
-        else {
-            $img2 = $_POST['idimg'];
-        }
     
-    // if passport has value, code should run and save normally
-        if($_FILES['passport']['name']) {
-            $temp3 = explode(".", $_FILES['passport']['name']);
-            $randms3 = str_pad(rand(0, pow(10, 8)-1), 10, '0', STR_PAD_LEFT);
-            $img3 = $randms3. '.' .end($temp3);
-            if (move_uploaded_file($_FILES['passport']['tmp_name'], "clients/passport/" . $img3)) {
-                $msg = "Image uploaded successfully";
-            } else {
-                $msg = "Image Failed";
-            }
-        }
-        else {
-            $img3 = $_POST['passportbk'];
-        }
     $updated_by = $_SESSION["user_id"];
     $updated_on = date("Y-m-d");
     $queryx = "UPDATE client SET loan_officer_id = '$acct_off', client_type = '$ctype', account_type = '$acct_type', display_name = '$display_name',
@@ -112,8 +65,7 @@ if($ctype == 'INDIVIDUAL' || $ctype == 'GROUP')
     mobile_no = '$phone', mobile_no_2 = '$phone2', occupation = '$occupation', ADDRESS = '$address', gender = '$gender',
     date_of_birth = '$date_of_birth',email_address = '$email', branch_id = '$branch', COUNTRY = '$country', STATE_OF_ORIGIN = '$state',
     LGA = '$lga', BVN = '$bvn', SMS_ACTIVE = '$sms_active',
-    EMAIL_ACTIVE = '$email_active', id_card = '$id_card', updated_by = '$updated_by', updated_on = '$updated_on',
-    id_img_url = '$img2', passport = '$img3', signature = '$img1', status = 'Not Approved' WHERE id = '$id'";
+    EMAIL_ACTIVE = '$email_active', updated_by = '$updated_by', updated_on = '$updated_on', status = 'Not Approved' WHERE id = '$id'";
     
     $result = mysqli_query($connection, $queryx);
     if($result) {

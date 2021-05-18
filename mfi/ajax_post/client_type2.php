@@ -4,17 +4,16 @@ $output1 = '';
 $output2 = '';
 $output3 = '';
 session_start();
-if(isset($_POST['id'])){
+if (isset($_POST['id'])) {
     function branch_option($connection)
-    {  
+    {
         $br_id = $_SESSION["branch_id"];
         $sint_id = $_SESSION["int_id"];
         $fod = "SELECT * FROM branch WHERE int_id = '$sint_id' AND parent_id='$br_id' || id = '$br_id'";
         $dof = mysqli_query($connection, $fod);
         $out = '';
-        while ($row = mysqli_fetch_array($dof))
-        {
-        $out .= '<option value="'.$row["id"].'">' .$row["name"]. '</option>';
+        while ($row = mysqli_fetch_array($dof)) {
+            $out .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
         }
         return $out;
     }
@@ -25,9 +24,8 @@ if(isset($_POST['id'])){
         $org = "SELECT * FROM staff WHERE int_id = '$sint_id' AND employee_status = 'Employed' ORDER BY staff.display_name ASC";
         $res = mysqli_query($connection, $org);
         $out = '';
-        while ($row = mysqli_fetch_array($res))
-        {
-            $out .= '<option value="'.$row["id"].'">' .$row["display_name"]. '</option>';
+        while ($row = mysqli_fetch_array($res)) {
+            $out .= '<option value="' . $row["id"] . '">' . $row["display_name"] . '</option>';
         }
         return $out;
     }
@@ -37,16 +35,15 @@ if(isset($_POST['id'])){
         $org = "SELECT * FROM states";
         $res = mysqli_query($connection, $org);
         $out = '';
-        while ($row = mysqli_fetch_array($res))
-        {
-            $out .= '<option value="'.$row["name"].'">' .$row["name"]. '</option>';
+        while ($row = mysqli_fetch_array($res)) {
+            $out .= '<option value="' . $row["name"] . '">' . $row["name"] . '</option>';
         }
         return $out;
     }
 
     //  Data for Corporate
-    if($_POST['id'] == 'Corporate'){
-        $output1 ='
+    if ($_POST['id'] == 'Corporate') {
+        $output1 = '
         <div class="row">
         <div class="col-md-4">
             <div class="row">
@@ -90,7 +87,7 @@ if(isset($_POST['id'])){
         <div class="form-group">
             <label class="">Branch:</label>
             <select class="form-control" name="branch">
-            '.branch_option($connection).'
+            ' . branch_option($connection) . '
             </select>
         </div>
         </div>
@@ -101,7 +98,7 @@ if(isset($_POST['id'])){
                 <label for="">Account Officer:</label>
                 <select name="acct_ofa" class="form-control" id="">
                 <option value="">select account officer</option>
-                '.fill_officer($connection).'
+                ' . fill_officer($connection) . '
                 </select>
             </div>
             </div>
@@ -144,7 +141,7 @@ if(isset($_POST['id'])){
             <div class="form-group">
               <label for="">State:</label>
               <select id="sig_one" class="form-control" style="text-transform: uppercase;" name="sig_state_one">
-              '.fill_state($connection).'
+              ' . fill_state($connection) . '
               </select>
             </div>
           </div>
@@ -258,7 +255,7 @@ if(isset($_POST['id'])){
             <div class="form-group">
               <label for="">State:</label>
               <select id="sig_two" class="form-control" style="text-transform: uppercase;" name="sig_state_two">
-              '.fill_state($connection).'
+              ' . fill_state($connection) . '
               </select>
             </div>
           </div>
@@ -373,7 +370,7 @@ if(isset($_POST['id'])){
             <div class="form-group">
               <label for="">State:</label>
               <select id="sig_three" class="form-control" style="text-transform: uppercase;" name="sig_state_three">
-              '.fill_state($connection).'
+              ' . fill_state($connection) . '
               </select>
             </div>
           </div>
@@ -461,15 +458,15 @@ if(isset($_POST['id'])){
     </div>
 </div>
         ';
-            echo $output1;
+        echo $output1;
     }
     // Data for Joint Account
-    elseif($_POST['id'] == 'Joint'){
+    elseif ($_POST['id'] == 'Joint') {
         // MAKING 
     }
     // Data for Individual Account
-    elseif($_POST['id'] == 'Individual' || $_POST['id'] == 'Group'){
-        $output3 ='<div class="row">
+    elseif ($_POST['id'] == 'Individual' || $_POST['id'] == 'Group') {
+        $output3 = '<div class="row">
         <div class="col-md-4">
             <div class="form-group">
                 <label >Display name</label>
@@ -537,7 +534,7 @@ if(isset($_POST['id'])){
             <div class="form-group">
                 <label class="">Branch:</label>
                 <select class="form-control" name="branch">
-                '.branch_option($connection).'
+                ' . branch_option($connection) . '
                 </select>
             </div>
             </div>
@@ -551,7 +548,7 @@ if(isset($_POST['id'])){
             <div class="form-group">
               <label for="">State:</label>
               <select id="static" class="form-control" style="text-transform: uppercase;" name="stated">
-              '.fill_state($connection).'
+              ' . fill_state($connection) . '
               </select>
             </div>
           </div>
@@ -609,24 +606,24 @@ if(isset($_POST['id'])){
                 }
                 </style>
                 
-                <div class="col-md-4">
-            <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
-            <input id ="file-upload" name="passport" type="file" class="inputFileHidden"/>
-            <label id="upload"> Select Passport</label>
-            <div id="upload"></div>
-                </div>
-            
             <div class="col-md-4">
-            <label for="file-insert" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
-            <input id ="file-insert" name="signature" type="file" class="inputFileHidden"/>
-            <label id="iup"> Select Signature</label>
-            <div id="iup"></div>
+                <label for="file-upload" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                <input id ="file-upload" name="passport" type="file" class="inputFileHidden"/>
+                <label id="upload"> Select Passport</label>
+                <div id="upload"></div>
             </div>
             
             <div class="col-md-4">
-            <label for="file-enter" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
-            <input id ="file-enter" type="file" name="id_img_url" class="inputFileHidden"/>
-            <label id="rated"> Select ID</label>
+                <label for="file-insert" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                <input id ="file-insert" name="signature" type="file" class="inputFileHidden"/>
+                <label id="iup"> Select Signature</label>
+                <div id="iup"></div>
+            </div>
+            
+            <div class="col-md-4">
+                <label for="file-enter" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
+                <input id ="file-enter" type="file" name="id_img_url" class="inputFileHidden"/>
+                <label id="rated"> Select ID</label>
             <div id="rated"></div>
             
             </div>
@@ -635,7 +632,7 @@ if(isset($_POST['id'])){
             <div class="form-group">
                 <label for="">Loan Officer:</label>
                 <select  name="acct_of" class="form-control" id="">
-                '.fill_officer($connection).'
+                ' . fill_officer($connection) . '
                 </select>
             </div>
             </div>
@@ -648,199 +645,217 @@ if(isset($_POST['id'])){
                 <option value="Drivers Liscense">Drivers Liscense</option>
             </select>
             </div>
-            <input id="int_id" hidden value = '.$_SESSION["int_id"].' hidden></input>
-            <input id="branch_id" hidden value = '.$_SESSION["branch_id"].' hidden></input>
+            <input id="int_id" hidden value = ' . $_SESSION["int_id"] . ' hidden></input>
+            <input id="branch_id" hidden value = ' . $_SESSION["branch_id"] . ' hidden></input>
             </div>';
-            echo $output3;
+        echo $output3;
     }
-             
-        
 }
 ?>
 
 <script>
     $(document).ready(function() {
-        $('#static').on("change", function(){
-        var id = $(this).val();
-        $.ajax({
-            url:"ajax_post/lga.php",
-            method:"POST",
-            data:{id:id},
-            success:function(data){
-            $('#showme').html(data);
-            }
-        })
+        $('#static').on("change", function() {
+            var id = $(this).val();
+            $.ajax({
+                url: "ajax_post/lga.php",
+                method: "POST",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('#showme').html(data);
+                }
+            })
         });
     });
 </script>
 <script>
     $(document).ready(function() {
-        $('#sig_one').on("change keyup paste click", function(){
-        var id = $(this).val();
-        $.ajax({
-            url:"ajax_post/lga.php",
-            method:"POST",
-            data:{id:id},
-            success:function(data){
-            $('#sigone').html(data);
-            }
-        })
+        $('#sig_one').on("change keyup paste click", function() {
+            var id = $(this).val();
+            $.ajax({
+                url: "ajax_post/lga.php",
+                method: "POST",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('#sigone').html(data);
+                }
+            })
         });
     });
 </script>
 <script>
     $(document).ready(function() {
-        $('#sig_two').on("change keyup paste click", function(){
-        var id = $(this).val();
-        $.ajax({
-            url:"ajax_post/lga.php",
-            method:"POST",
-            data:{id:id},
-            success:function(data){
-            $('#sigtwo').html(data);
-            }
-        })
+        $('#sig_two').on("change keyup paste click", function() {
+            var id = $(this).val();
+            $.ajax({
+                url: "ajax_post/lga.php",
+                method: "POST",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('#sigtwo').html(data);
+                }
+            })
         });
     });
 </script>
 <script>
     $(document).ready(function() {
-        $('#sig_three').on("change keyup paste click", function(){
-        var id = $(this).val();
-        $.ajax({
-            url:"ajax_post/lga.php",
-            method:"POST",
-            data:{id:id},
-            success:function(data){
-            $('#sigthree').html(data);
-            }
-        })
+        $('#sig_three').on("change keyup paste click", function() {
+            var id = $(this).val();
+            $.ajax({
+                url: "ajax_post/lga.php",
+                method: "POST",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('#sigthree').html(data);
+                }
+            })
         });
     });
 </script>
 <script>
-    var changeq = document.getElementById( 'file-upload' );
-    var check2 = document.getElementById( 'upload' );
-    changeq.addEventListener( 'change', showme );
-    function showme( event ) {
-    var one = event.srcElement;
-    var fname = one.files[0].name;
-    check2.textContent = 'Passport: ' + fname;
+    var changeq = document.getElementById('file-upload');
+    var check2 = document.getElementById('upload');
+    changeq.addEventListener('change', showme);
+
+    function showme(event) {
+        var one = event.srcElement;
+        var fname = one.files[0].name;
+        check2.textContent = 'Passport: ' + fname;
     }
 </script>
 <script>
-    var changeq = document.getElementById( 'file-insert' );
-    var check = document.getElementById( 'iup' );
-    changeq.addEventListener( 'change', showme );
-    function showme( event ) {
-    var one = event.srcElement;
-    var fname = one.files[0].name;
-    check.textContent = 'Signature: ' + fname;
+    var changeq = document.getElementById('file-insert');
+    var check = document.getElementById('iup');
+    changeq.addEventListener('change', showme);
+
+    function showme(event) {
+        var one = event.srcElement;
+        var fname = one.files[0].name;
+        check.textContent = 'Signature: ' + fname;
     }
 </script>
-    <script>
-    var changeq1 = document.getElementById( 'file-enter' );
-    var check1 = document.getElementById( 'rated' );
-    changeq1.addEventListener( 'change', showme1 );
-    function showme1( event ) {
-    var one1 = event.srcElement;
-    var fname1 = one1.files[0].name;
-    check1.textContent = 'ID : ' + fname1;
+<script>
+    var changeq1 = document.getElementById('file-enter');
+    var check1 = document.getElementById('rated');
+    changeq1.addEventListener('change', showme1);
+
+    function showme1(event) {
+        var one1 = event.srcElement;
+        var fname1 = one1.files[0].name;
+        check1.textContent = 'ID : ' + fname1;
     }
 </script>
 
 
 <script>
-    var changeqa1 = document.getElementById( 'file-upload-a' );
-    var checka1 = document.getElementById( 'upload-a' );
-    changeqa1.addEventListener( 'change', showmea1 );
-    function showmea1( event ) {
-    var onea1 = event.srcElement;
-    var fnamea1 = onea1.files[0].name;
-    checka1.textContent = 'Passport: ' + fnamea1;
+    var changeqa1 = document.getElementById('file-upload-a');
+    var checka1 = document.getElementById('upload-a');
+    changeqa1.addEventListener('change', showmea1);
+
+    function showmea1(event) {
+        var onea1 = event.srcElement;
+        var fnamea1 = onea1.files[0].name;
+        checka1.textContent = 'Passport: ' + fnamea1;
     }
 </script>
 <script>
-    var changeqa2 = document.getElementById( 'file-insert-a' );
-    var checka2 = document.getElementById( 'iup-a' );
-    changeqa2.addEventListener( 'change', showmea2 );
-    function showmea2( event ) {
-    var onea2 = event.srcElement;
-    var fnamea2 = onea2.files[0].name;
-    checka2.textContent = 'Signature: ' + fnamea2;
+    var changeqa2 = document.getElementById('file-insert-a');
+    var checka2 = document.getElementById('iup-a');
+    changeqa2.addEventListener('change', showmea2);
+
+    function showmea2(event) {
+        var onea2 = event.srcElement;
+        var fnamea2 = onea2.files[0].name;
+        checka2.textContent = 'Signature: ' + fnamea2;
     }
 </script>
-    <script>
-    var changeqa3 = document.getElementById( 'file-enter-a' );
-    var checka3= document.getElementById( 'rated-a' );
-    changeqa3.addEventListener( 'change', showmea3 );
-    function showmea3( event ) {
-    var onea3 = event.srcElement;
-    var fnamea3 = onea3.files[0].name;
-    checka3.textContent = 'ID : ' + fnamea3;
+<script>
+    var changeqa3 = document.getElementById('file-enter-a');
+    var checka3 = document.getElementById('rated-a');
+    changeqa3.addEventListener('change', showmea3);
+
+    function showmea3(event) {
+        var onea3 = event.srcElement;
+        var fnamea3 = onea3.files[0].name;
+        checka3.textContent = 'ID : ' + fnamea3;
     }
 </script>
 
 
 <script>
-    var changeqb1 = document.getElementById( 'file-upload-b' );
-    var checkb1 = document.getElementById( 'upload-b' );
-    changeqb1.addEventListener( 'change', showmeb1 );
-    function showmeb1( event ) {
-    var oneb1 = event.srcElement;
-    var fnameb1 = oneb1.files[0].name;
-    checkb1.textContent = 'Passport: ' + fnameb1;
+    var changeqb1 = document.getElementById('file-upload-b');
+    var checkb1 = document.getElementById('upload-b');
+    changeqb1.addEventListener('change', showmeb1);
+
+    function showmeb1(event) {
+        var oneb1 = event.srcElement;
+        var fnameb1 = oneb1.files[0].name;
+        checkb1.textContent = 'Passport: ' + fnameb1;
     }
 </script>
 <script>
-    var changeqb2 = document.getElementById( 'file-insert-b' );
-    var checkb2 = document.getElementById( 'iup-b' );
-    changeqb2.addEventListener( 'change', showmeb2 );
-    function showmeb2( event ) {
-    var oneb2 = event.srcElement;
-    var fnameb2 = oneb2.files[0].name;
-    checkb2.textContent = 'Signature: ' + fnameb2;
+    var changeqb2 = document.getElementById('file-insert-b');
+    var checkb2 = document.getElementById('iup-b');
+    changeqb2.addEventListener('change', showmeb2);
+
+    function showmeb2(event) {
+        var oneb2 = event.srcElement;
+        var fnameb2 = oneb2.files[0].name;
+        checkb2.textContent = 'Signature: ' + fnameb2;
     }
 </script>
-    <script>
-    var changeqb3 = document.getElementById( 'file-enter-b' );
-    var checkb3= document.getElementById( 'rated-b' );
-    changeqb3.addEventListener( 'change', showmeb3 );
-    function showmeb3( event ) {
-    var oneb3 = event.srcElement;
-    var fnameb3 = oneb3.files[0].name;
-    checkb3.textContent = 'ID : ' + fnameb3;
+<script>
+    var changeqb3 = document.getElementById('file-enter-b');
+    var checkb3 = document.getElementById('rated-b');
+    changeqb3.addEventListener('change', showmeb3);
+
+    function showmeb3(event) {
+        var oneb3 = event.srcElement;
+        var fnameb3 = oneb3.files[0].name;
+        checkb3.textContent = 'ID : ' + fnameb3;
     }
 </script>
 
 
 <script>
-    var changeqc1 = document.getElementById( 'file-upload-c' );
-    var checkc1 = document.getElementById( 'upload-c' );
-    changeqc1.addEventListener( 'change', showmec1 );
-    function showmec1( event ) {
-    var onec1 = event.srcElement;
-    var fnamec1 = onec1.files[0].name;
-    checkc1.textContent = 'Passport: ' + fnamec1;
+    var changeqc1 = document.getElementById('file-upload-c');
+    var checkc1 = document.getElementById('upload-c');
+    changeqc1.addEventListener('change', showmec1);
+
+    function showmec1(event) {
+        var onec1 = event.srcElement;
+        var fnamec1 = onec1.files[0].name;
+        checkc1.textContent = 'Passport: ' + fnamec1;
     }
 </script>
 <script>
-    var changeqc2 = document.getElementById( 'file-insert-c' );
-    var checkc2 = document.getElementById( 'iup-c' );
-    changeqc2.addEventListener( 'change', showmec2 );
-    function showmec2( event ) {
-    var onec2 = event.srcElement;
-    var fnamec2 = onec2.files[0].name;
-    checkc2.textContent = 'Signature: ' + fnamec2;
+    var changeqc2 = document.getElementById('file-insert-c');
+    var checkc2 = document.getElementById('iup-c');
+    changeqc2.addEventListener('change', showmec2);
+
+    function showmec2(event) {
+        var onec2 = event.srcElement;
+        var fnamec2 = onec2.files[0].name;
+        checkc2.textContent = 'Signature: ' + fnamec2;
     }
 </script>
-    <script>
-    var changeqc3 = document.getElementById( 'file-enter-c' );
-    var checkc3= document.getElementById( 'rated-c' );
-    changeqc3.addEventListener( 'change', showmec3 );
-    function showmec3( event ) {
-    var onec3 = event.srcElement;
-    var fnamec3 = onec3.files[0].name;
-    checkc3.textContent = 'ID : ' + fnamec3;
+<script>
+    var changeqc3 = document.getElementById('file-enter-c');
+    var checkc3 = document.getElementById('rated-c');
+    changeqc3.addEventListener('change', showmec3);
+
+    function showmec3(event) {
+        var onec3 = event.srcElement;
+        var fnamec3 = onec3.files[0].name;
+        checkc3.textContent = 'ID : ' + fnamec3;
     }
 </script>

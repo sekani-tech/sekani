@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Rent Prepayment";
+$page_title = "Prepayment";
 $destination = "";
 include("header.php");
 ?>
@@ -13,7 +13,7 @@ include("header.php");
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title">Rent Repayment</h4>
+                        <h4 class="card-title">Prepayment</h4>
                         <!-- <p class="category">Category subtitle</p> -->
                     </div>
                     <div class="card-body">

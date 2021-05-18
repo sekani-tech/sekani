@@ -454,7 +454,17 @@ function addMonth($date, $period){
     return $valueDate;
 }
 
+function addWeek($date, $period){
+    $valueDate = date("Y-m-d", strtotime($date. "+$period week"));
+    return $valueDate;
+}
+
 function addDay($date, $period){
     $valueDate = date("Y-m-d", strtotime($date. "+$period day"));
     return $valueDate;
+}
+
+function appendAccountNo($accountNo, $length){
+    $appendedAccount = '******'.substr($accountNo, $length);
+    return $appendedAccount;
 }

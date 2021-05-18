@@ -1,15 +1,16 @@
 <?php
 
-$page_title = "Rent Repayment";
+$page_title = "Prepayment";
 $destination = "";
 include("header.php");
 
 $exp_error = "";
 $message = $_SESSION['feedback'];
+if($message != ""){
 ?>
 <input type="text" value="<?php echo $message?>" id="feedback" hidden>
 <?php
-
+}
 // feedback messages 0 for success and 1 for errors
 
 if (isset($_GET["message0"])) {
@@ -62,7 +63,7 @@ if (isset($_GET["message0"])) {
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title">Rent Repayment</h4>
+                        <h4 class="card-title">Prepayment</h4>
                         <!-- <p class="category">Category subtitle</p> -->
                     </div>
                     <div class="card-body">
@@ -81,7 +82,7 @@ if (isset($_GET["message0"])) {
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLongTitle">Rent Repayment Form </h5>
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">Prepayment Creation </h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -206,7 +207,7 @@ if (isset($_GET["message0"])) {
                             </div>
                         </div>
 
-                        
+                    
                         <div class="row">
                         <?php
                         $yearSearchConditions = [

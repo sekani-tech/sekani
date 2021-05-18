@@ -97,7 +97,7 @@ if (isset($_POST['id']) && isset($_POST['account_number'])) {
                             if ($reversal) {
                                 
                                 if ($transactionType == "credit") {
-                                    $describe = $description+"_CREDIT_REVERSAL";
+                                    $describe = $description."_CREDIT_REVERSAL";
                                     $query = "INSERT INTO institution_account_transaction (int_id, branch_id, client_id, transaction_id, description, transaction_type, 
                                     teller_id, is_vault, is_reversed, transaction_date, amount, running_balance_derived, overdraft_amount_derived, balance_end_date_derived,
                                     balance_number_of_days_derived, cumulative_balance_derived, created_date, appuser_id, manually_adjusted_or_reversed, debit)
@@ -106,11 +106,11 @@ if (isset($_POST['id']) && isset($_POST['account_number'])) {
                                     '$balanceNoOfDaysDerived', '$newInstitutionBalance', '$createdDate', '$appUserId', 1, '$amount')";
                                     
                                 } else if ($transactionType == "debit") {
-                                    $describe = $description+"_DEBIT_REVERSAL";
+                                    $describe = $description."_DEBIT_REVERSAL";
                                     $query = "INSERT INTO institution_account_transaction (int_id, branch_id, client_id, transaction_id, description, transaction_type, 
                                     teller_id, is_vault, is_reversed, transaction_date, amount, running_balance_derived, overdraft_amount_derived, balance_end_date_derived,
                                     balance_number_of_days_derived, cumulative_balance_derived, created_date, appuser_id, manually_adjusted_or_reversed, credit)
-                                    VALUES ('$institutionID', '$branchId', '$clientId', '$transactionId', '$description', 'credit',
+                                    VALUES ('$institutionID', '$branchId', '$clientId', '$transactionId', '$describe', 'credit',
                                     '$tellerId', 0, 0, '$transactionDate', '$amount', '$newInstitutionBalance', '$overdraftAmountDerived', '$balanceEndDateDerived',
                                     '$balanceNoOfDaysDerived', '$newInstitutionBalance', '$createdDate', '$appUserId', 1, '$amount')";
                                 }
@@ -119,19 +119,21 @@ if (isset($_POST['id']) && isset($_POST['account_number'])) {
 
                                 if ($newInstitutionAccountTransaction) {
                                     if ($transactionType == "credit") {
+                                        $describe = $description."_CREDIT_REVERSAL";
                                         $query = "INSERT INTO account_transaction (int_id, branch_id, product_id, account_id, account_no, client_id, teller_id, transaction_id,
                                         description, transaction_type, is_reversed, transaction_date, amount, overdraft_amount_derived, balance_end_date_derived, balance_number_of_days_derived,
                                         running_balance_derived, cumulative_balance_derived, created_date, chooseDate, appuser_id, manually_adjusted_or_reversed, debit)
                                         VALUES ('$institutionID', '$branchId', '$productId', '$accountId', '$accountNumber', '$clientId', '$tellerId', '$transactionId',
-                                        'CREDIT_REVERSAL', 'debit', 0, '$transactionDate', '$amount', '$overdraftAmountDerived', '$balanceEndDateDerived', '$balanceNoOfDaysDerived',
+                                        '$describe', 'debit', 0, '$transactionDate', '$amount', '$overdraftAmountDerived', '$balanceEndDateDerived', '$balanceNoOfDaysDerived',
                                         '$reversedAccountBalance', '$reversedAccountBalance', '$createdDate', '', '$appUserId', 1, '$amount')";
                                     
                                     } else if ($transactionType == "debit") {
+                                        $describe = $description."_DEBIT_REVERSAL";
                                         $query = "INSERT INTO account_transaction (int_id, branch_id, product_id, account_id, account_no, client_id, teller_id, transaction_id,
                                         description, transaction_type, is_reversed, transaction_date, amount, overdraft_amount_derived, balance_end_date_derived, balance_number_of_days_derived,
                                         running_balance_derived, cumulative_balance_derived, created_date, chooseDate, appuser_id, manually_adjusted_or_reversed, credit)
                                         VALUES ('$institutionID', '$branchId', '$productId', '$accountId', '$accountNumber', '$clientId', '$tellerId', '$transactionId',
-                                        'DEBIT_REVERSAL', 'credit', 0, '$transactionDate', '$amount', '$overdraftAmountDerived', '$balanceEndDateDerived', '$balanceNoOfDaysDerived',
+                                        '$describe', 'credit', 0, '$transactionDate', '$amount', '$overdraftAmountDerived', '$balanceEndDateDerived', '$balanceNoOfDaysDerived',
                                         '$reversedAccountBalance', '$reversedAccountBalance', '$createdDate', '', '$appUserId', 1, '$amount')";
                                     }
 

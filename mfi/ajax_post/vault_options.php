@@ -58,7 +58,7 @@ if ($val == 'vault_in' || $val == 'vault_out') {
     function fill_payment($connection)
     {
         $sint_id = $_SESSION["int_id"];
-        return selectAll('payment_type', ['int_id' => $sint_id]);
+        return selectAll('payment_type', ['int_id' => $sint_id, 'is_bank' => 1]);
     } ?>
     <div class="row">
         <div class="col-md-6">

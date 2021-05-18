@@ -2,196 +2,190 @@
 
 $page_title = "SMS";
 $destination = "../../index.php";
-    include("header.php");
+include("header.php");
+
+$message = $_SESSION['feedback'];
+if($message != ""){
+?>
+<input type="text" value="<?php echo $message?>" id="feedback" hidden>
+<?php
+}
+// feedback messages 0 for success and 1 for errors
+
+if (isset($_GET["message0"])) {
+    $key = $_GET["message0"];
+    $tt = 0;
+  
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+      echo '<script type="text/javascript">
+      $(document).ready(function(){
+        let feedback =  document.getElementById("feedback").value;
+          swal({
+              type: "success",
+              title: "Success",
+              text: feedback,
+              showConfirmButton: true,
+              timer: 7000
+          })
+      });
+      </script>
+      ';
+      $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+  } else if (isset($_GET["message1"])) {
+    $key = $_GET["message1"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+      echo '<script type="text/javascript">
+      $(document).ready(function(){
+        let feedback =  document.getElementById("feedback").value;
+          swal({
+              type: "error",
+              title: "Error",
+              text: feedback,
+              showConfirmButton: true,
+              timer: 7000
+          })
+      });
+      </script>
+      ';
+      $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+  }
 
 ?>
+
 <!-- Content added here -->
 <div class="content">
-        <div class="container-fluid">
-          <!-- your content here -->
-          <div class="row">
-            <div class="col-lg-12 col-md-12">
-              <div class="card">
-                <div class="card-header card-header-tabs card-header-primary">
-                  <div class="nav-tabs-navigation">
-                    <div class="nav-tabs-wrapper">
-                      <!-- <span class="nav-tabs-title">Configuration:</span> -->
-                      <ul class="nav nav-tabs" data-tabs="tabs">
-                        <!-- <li class="nav-item">
+  <div class="container-fluid">
+    <!-- your content here -->
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-tabs card-header-primary">
+            <div class="nav-tabs-navigation">
+              <div class="nav-tabs-wrapper">
+                <!-- <span class="nav-tabs-title">Configuration:</span> -->
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                  <!-- <li class="nav-item">
                           <a class="nav-link active" href="#profile" data-toggle="tab">
                             <i class="material-icons">bug_report</i> Password Settings
                             <div class="ripple-container"></div>
                           </a>
                         </li> -->
-                        <li class="nav-item">
-                          <a class="nav-link active" href="#products" data-toggle="tab">
-                          <!-- visibility -->
-                            <i class="material-icons">attach_money</i> Campaign
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#messages" data-toggle="tab">
-                            <i class="material-icons">supervisor_account</i> Pending SMS
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#perform" data-toggle="tab">
-                            <i class="material-icons">supervisor_account</i> Sent SMS
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#analysis" data-toggle="tab">
-                            <i class="material-icons">supervisor_account</i> Delivered SMS
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#structure" data-toggle="tab">
-                            <i class="material-icons">supervisor_account</i> Fixed SMS
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="tab-content">
-                    <div class="tab-pane active" id="products">
-                    <div id="coll"></div>
-                    <button type="button" class="btn btn-primary" name="button" onclick="showDialog()"> <i class="fa fa-plus"></i> Create SMS</button>
-                      <?php include("items/campaign.php"); ?>
-                      <!-- items report -->
-                    </div>
-                    <!-- test SMS -->
-                    <div class="form-group">
-                      <div id="background">
-                      </div>
-                      <div id="diallbox">
-                        <!-- <form method="POST" action="lend.php" > -->
-                <h3>Send SMS</h3>
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label class = "bmd-label-floating" class="md-3 form-align " for="">Sender ID:</label>
-                        <input type="text" name="col_name" id="send_id" class="form-control">
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label class = "bmd-label-floating" for=""> Phone</label>
-                        <input type="text" name="col_value" id="phone" class="form-control">
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label class = "bmd-label-floating" for=""> Message (160 characters):</label>
-                        <textarea name="msg" id="message" cols="30" rows="5" class="form-control"></textarea>
-                      </div>
-                    </div>
-                  <div style="float:right;">
-                        <span class="btn btn-primary pull-right" id="clickit" onclick="AddDlg()">Add</span>
-                        <span class="btn btn-primary pull-right" onclick="AddDlg()">Cancel</span>
-                      </div>
-                        <!-- </form> -->
-                        <script>
-                              $(document).ready(function() {
-                                $('#clickit').on("change keyup paste click", function() {
-                                  var sender_id = $('#send_id').val();
-                                  var phone = $('#phone').val();
-                                  var msg = $('#message').val();
-                                  $.ajax({
-                                    url:"ajax_post/sms/sms.php",
-                                    method:"POST",
-                                    data:{sender_id:sender_id, phone:phone, msg:msg},
-                                    success:function(data){
-                                      $('#coll').html(data);
-                                    }
-                                  })
-                                });
-                              });
-                            </script>
-                        <!-- end script -->
-<script>
-    function AddDlg(){
-        var bg = document.getElementById("background");
-        var dlg = document.getElementById("diallbox");
-        bg.style.display = "none";
-        dlg.style.display = "none";
-    }
-    
-    function showDialog(){
-        var bg = document.getElementById("background");
-        var dlg = document.getElementById("diallbox");
-        bg.style.display = "block";
-        dlg.style.display = "block";
-        
-        var winWidth = window.innerWidth;
-        var winHeight = window.innerHeight;
-        
-        dlg.style.left = (winWidth/2) - 480/2 + "px";
-        dlg.style.top = "150px";
-    }
-</script>
-<style>
-    #background{
-        display: none;
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        top: 0px;
-        left: 0px;
-        background-color: black;
-        opacity: 0.7;
-        z-index: 9999;
-    }
-    
-    #diallbox{
-        /*initially dialog box is hidden*/
-        display: none;
-        position: fixed;
-        width: 480px;
-        z-index: 9999;
-        border-radius: 10px;
-        padding:20px;
-        background-color: #ffffff;
-    }
-</style>
-                      </div>
-                    </div>
-                    <!-- ebd SMS test -->
-                    <!-- /items report-->
-                    <div class="tab-pane" id="messages">
-                    <!-- <a href="create_charge.php" class="btn btn-primary"> Schedule of Deposit Structure and Maturity Profile</a> -->
-                      <?php include("items/pending_sms.php"); ?>
-                    </div>
-                    <div class="tab-pane" id="perform">
-                    <!-- <a href="create_charge.php" class="btn btn-primary"> Schedule of Deposit Structure and Maturity Profile</a> -->
-                      <?php include("items/sent_sms.php"); ?>
-                    </div>
-                    <div class="tab-pane" id="analysis">
-                    <!-- <a href="create_charge.php" class="btn btn-primary"> Schedule of Deposit Structure and Maturity Profile</a> -->
-                      <?php include("items/delivered_sms.php"); ?>
-                    </div>
-                    <div class="tab-pane" id="structure">
-                    <!-- <a href="create_charge.php" class="btn btn-primary"> Schedule of Deposit Structure and Maturity Profile</a> -->
-                      <?php include("items/failed_sms.php"); ?>
-                    </div>
-                    <!-- nxt -->
-                    <!-- /maturity profile -->
-                  </div>
-                </div>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#products" data-toggle="tab">
+                      <!-- visibility -->
+                      <i class="material-icons">attach_money</i> Campaign
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#messages" data-toggle="tab">
+                      <i class="material-icons">supervisor_account</i> Pending SMS
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#perform" data-toggle="tab">
+                      <i class="material-icons">supervisor_account</i> Sent SMS
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#analysis" data-toggle="tab">
+                      <i class="material-icons">supervisor_account</i> Delivered SMS
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#structure" data-toggle="tab">
+                      <i class="material-icons">supervisor_account</i> Fixed SMS
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
-          <!-- / -->
+          <div class="card-body">
+            <div class="tab-content">
+              <div class="tab-pane active" id="products">
+                <div id="coll"></div>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">
+                  Send Bulk SMS
+                </button>
+                <?php include("items/campaign.php"); ?>
+                <!-- items report -->
+              </div>
+              <!-- bul sms -->
+
+
+              <!-- Modal -->
+              <form action="../functions/notifications/sms/bulk_sms.php" method="post" autocomplete="off">
+                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">BULK SMS </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row">
+                         
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="shortSharesName">Message <span style="color: red;">*</span></label>
+                              <textarea name="message" id="message" cols="30" rows="5" class="form-control" required></textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </form>
+              <!-- test SMS -->
+
+              <!-- ebd SMS test -->
+              <!-- /items report-->
+              <div class="tab-pane" id="messages">
+                <!-- <a href="create_charge.php" class="btn btn-primary"> Schedule of Deposit Structure and Maturity Profile</a> -->
+                <?php include("items/pending_sms.php"); ?>
+              </div>
+              <div class="tab-pane" id="perform">
+                <!-- <a href="create_charge.php" class="btn btn-primary"> Schedule of Deposit Structure and Maturity Profile</a> -->
+                <?php include("items/sent_sms.php"); ?>
+              </div>
+              <div class="tab-pane" id="analysis">
+                <!-- <a href="create_charge.php" class="btn btn-primary"> Schedule of Deposit Structure and Maturity Profile</a> -->
+                <?php include("items/delivered_sms.php"); ?>
+              </div>
+              <div class="tab-pane" id="structure">
+                <!-- <a href="create_charge.php" class="btn btn-primary"> Schedule of Deposit Structure and Maturity Profile</a> -->
+                <?php include("items/failed_sms.php"); ?>
+              </div>
+              <!-- nxt -->
+              <!-- /maturity profile -->
+            </div>
+          </div>
         </div>
       </div>
+    </div>
+    <!-- / -->
+  </div>
+</div>
 
 <?php
 
-    include("footer.php");
+include("footer.php");
 
 ?>
