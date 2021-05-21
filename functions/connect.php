@@ -25,13 +25,16 @@ function ddA($value)
 function executeQuery($sql, $data = [])
 {
     global $connection;
-    $stmt = $connection->prepare($sql);
-    if (!empty($data)) {
-        $values = array_values($data);
-        $types = str_repeat('s', count($values));
-        $stmt->bind_param($types, ...$values);
+    if($stmt = $connection->prepare($sql)){
+        if (!empty($data)) {
+            $values = array_values($data);
+            $types = str_repeat('s', count($values));
+            $stmt->bind_param($types, ...$values);
+        }
+        $stmt->execute();
+    }else{
+        $stmt = var_dump($connection->error);
     }
-    $stmt->execute();
     return $stmt;
 }
 
@@ -467,4 +470,88 @@ function addDay($date, $period){
 function appendAccountNo($accountNo, $length){
     $appendedAccount = '******'.substr($accountNo, $length);
     return $appendedAccount;
+}
+
+// select data that is equal  and less than
+function checkLoanDebtor($table, $conditions, $dateConditions)
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $i++;
+    }
+
+    $s = 0;
+    foreach ($dateConditions as $keys => $value) {
+        if ($s === 0) {
+            $sql = $sql . " AND ( $keys<=?";
+        }else{
+            $sql = $sql . " AND $keys<=?";
+        }
+        $s++;
+    }
+    $sql = $sql. ")";
+    $sql = $sql . " AND installment >= '0' ORDER BY id ASC LIMIT 1";
+    $stmt = executeQuery($sql, array_merge($conditions, $dateConditions));
+    return $stmt->get_result()->fetch_assoc();
+}
+
+function selectAllGreater($table, $conditions = [])
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+    if (empty($conditions)) {
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $i = 0;
+        foreach ($conditions as $key => $value) {
+            if ($i === 0) {
+                $sql = $sql . " WHERE $key>=?";
+            } else {
+                $sql = $sql . " AND $key>=?";
+            }
+            $i++;
+        }
+
+        $stmt = executeQuery($sql, $conditions);
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+}
+
+
+function checkAccount($table, $conditions, $scaleConditions)
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+    # CHECK CUSTOMERS ACCOUNT BALANCE
+    # IF VALUE IS GREATER THAN ZERO
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $i++;
+    }
+
+    $s = 0;
+    foreach ($scaleConditions as $key => $value) {
+        if ($s === 0) {
+            $sql = $sql . " AND $key>=?";
+        } 
+        $s++;
+    }
+
+    $stmt = executeQuery($sql, array_merge($conditions, $scaleConditions));
+    return $stmt->get_result()->fetch_assoc();
 }
