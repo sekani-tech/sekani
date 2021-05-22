@@ -479,11 +479,51 @@ input[type=text] {
                       </div> -->
                                         </div>
                                         <!-- Third Tab Ends -->
+
                                         <!-- Fourth Tab Begins -->
                                         <div class="tab">
+
                                             <h3> Collateral:</h3>
+
+                                            <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                    &nbsp;Add Collateral
+                                                    <input class="form-check-input" type="checkbox" id="addCollateral">
+                                                    <span class="form-check-sign">
+                                                        <span class="check"></span>
+                                                    </span>
+                                                </label>
+                                            </div>
                                             
-                                            <div class="card">
+                                            <script>
+                                                $(document).ready(function() {
+                                                    if ($('#addCollateral').is(":checked")) {
+                                                        $('#collateral-form').show();
+                                                    } else if ($('#addCollateral').is(":not(:checked)")) {
+                                                        $('#collateral-form').hide();
+                                                        $('#colname').val('no collateral');
+                                                        $('#col_val').val('0');
+                                                        $('#col_descr').val('no collateral');
+                                                    }
+
+                                                    $('#addCollateral').click(function() {
+                                                        if ($(this).is(":checked")) {
+                                                            $('#collateral-form').show();
+                                                            $('#colname').val('');
+                                                            $('#col_val').val('');
+                                                            $('#col_descr').val('');
+                                                        } else if ($(this).is(":not(:checked)")) {
+                                                            $('#collateral-form').hide();
+                                                            $('#collateral-form').hide();
+                                                            $('#colname').val('no collateral');
+                                                            $('#col_val').val('0');
+                                                            $('#col_descr').val('no collateral');
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                            
+                                            <div class="card" id="collateral-form">
                                                 <div class="card-body">
                                                     <form action="" method="post" autocomplete="off">
                                                         <div class="row">
@@ -509,205 +549,158 @@ input[type=text] {
                                                     </form>
                                                 </div>
                                             </div>
+
+                                            <script>
+                                                $(document).ready(function () {
+                                                    $('#clickit').on("click", function () {
+                                                        var id = $(this).val();
+                                                        var client_id = $('#client_id').val();
+                                                        var colname = $('#colname').val();
+                                                        var colval = $('#col_val').val();
+                                                        var coldes = $('#col_descr').val();
+                                                        $.ajax({
+                                                            url: "collateral_upload.php",
+                                                            method: "POST",
+                                                            data: {
+                                                                id: id,
+                                                                client_id: client_id,
+                                                                colval: colval,
+                                                                colname: colname,
+                                                                coldes: coldes
+                                                            },
+                                                            success: function (data) {
+                                                                $('#coll').html(data);
+                                                            }
+                                                        })
+                                                    });
+                                                });
+                                                setInterval(function () {
+                                                    // auto run the col.
+                                                    var client_id = $('#client_id').val();
+                                                    if (client_id != "") {
+                                                        $.ajax({
+                                                            url: "collateral_upload_check.php",
+                                                            method: "POST",
+                                                            data: {client_id: client_id},
+                                                            success: function (data) {
+                                                                $('#collx').html(data);
+                                                            }
+                                                        })
+                                                    }
+                                                }, 1000);
+                                            </script>
                                         </div>
                                         <!-- Fourth Tab Ends -->
+                                        
                                         <!-- Fifth Tab Begins -->
-                                        <div class="tab"><h3> Guarantors:</h3>
-                                            <div class="form-group">
-                                                <button type="button" class="btn btn-primary" name="button"
-                                                        onclick="DisplayDialog()"><i class="fa fa-plus"></i> Add
-                                                </button>
-                                            </div>
-                                            <div class="form-group">
-                                                <table class="rtable display nowrap" style="width:100%" id="check_in">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Name</th>
-                                                        <th>Guarantor Phone</th>
-                                                        <th>Email</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody id="disgau">
-                                                    </tbody>
-                                                    <div id="disgaux"></div>
-                                                </table>
-                                            </div>
-                                            <!-- dialog box -->
-                                            <div class="form-group">
-                                                <div id="backg">
+                                        <div class="tab">
+
+                                            <h3> Guarantor:</h3>
+                                            
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <form action="" method="post" autocomplete="off">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">First Name:</label>
+                                                                    <input type="text" name="gau_first_name" id="gau_first_name" class="form-control" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">Last Name:</label>
+                                                                    <input type="text" name="gau_last_name" id="gau_last_name" class="form-control" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">Phone:</label>
+                                                                    <input type="text" name="gau_phone" id="gau_phone" class="form-control" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">Phone 2:</label>
+                                                                    <input type="text" name="gau_phone2" id="gau_phone2" class="form-control">
+                                                                </div>             
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">Home Address:</label>
+                                                                    <input type="text" name="home_address" id="home_address" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">Office Address:</label>
+                                                                    <input type="text" name="office_address" id="office_address" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">Email:</label>
+                                                                    <input type="email" name="gau_email" id="gau_email" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
-                                                <div id="dlbox">
-                                                    <h3>Add Guarantor</h3>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label class="bmd-label-floating"
-                                                                       class="md-3 form-align " for=""> First
-                                                                    Name:</label>
-                                                                <input type="text" name="gau_first_name"
-                                                                       id="gau_first_name" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label class="bmd-label-floating" for=""> Last
-                                                                    Name:</label>
-                                                                <input type="text" name="gau_last_name"
-                                                                       id="gau_last_name" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label class="bmd-label-floating" for="">Phone:</label>
-                                                                <input type="text" name="gau_phone" id="gau_phone"
-                                                                       class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label class="bmd-label-floating" for="">Phone
-                                                                    2:</label>
-                                                                <input type="text" name="gau_phone2" id="gau_phone2"
-                                                                       class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label class="bmd-label-floating" for="">Home
-                                                                    Address:</label>
-                                                                <input type="text" name="home_address" id="home_address"
-                                                                       class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label class="bmd-label-floating" for="">Office
-                                                                    Address:</label>
-                                                                <input type="text" name="office_address"
-                                                                       id="office_address" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <!-- <div class="col-md-4">
-                                                          <div class="form-group">
-                                                              <label class = "bmd-label-floating" for="">Position Held:</label>
-                                                              <input type="text" name="position_held" id="position_held" class="form-control">
-                                                          </div>
-                                                        </div> -->
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label class="bmd-label-floating"
-                                                                       class="bmd-label-floating">Email:</label>
-                                                                <input type="text" name="gau_email" id="gau_email"
-                                                                       class="form-control">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div style="float:right;">
-                                                        <span class="btn btn-primary pull-right" onclick="DlgAdd()"
-                                                              type="button" id="gau">Add</span>
-                                                        <button class="btn btn-primary pull-right" onclick="DlgAdd()"
-                                                                type="button" id="">Cancel
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <script>
-                                                    $(document).ready(function () {
-                                                        $('#gau').on("click", function () {
-                                                            var id = $(this).val();
-                                                            var client_id = $('#client_id').val();
-                                                            var firstname = $('#gau_first_name').val();
-                                                            var lastname = $('#gau_last_name').val();
-                                                            var phone = $('#gau_phone').val();
-                                                            var phone_b = $('#gau_phone2').val();
-                                                            var h_address = $('#home_address').val();
-                                                            var o_address = $('#office_address').val();
-                                                            var position = $('#position_held').val();
-                                                            var email = $('#gau_email').val();
-                                                            $.ajax({
-                                                                url: "guarantor_upload.php",
-                                                                method: "POST",
-                                                                data: {
-                                                                    id: id,
-                                                                    client_id: client_id,
-                                                                    firstname: firstname,
-                                                                    lastname: lastname,
-                                                                    phone: phone,
-                                                                    phone_b: phone_b,
-                                                                    h_address: h_address,
-                                                                    o_address: o_address,
-                                                                    position: position,
-                                                                    email: email
-                                                                },
-                                                                success: function (data) {
-                                                                    $('#disgaux').html(data);
-                                                                }
-                                                            })
-                                                        });
-                                                    });
-                                                    setInterval(function () {
-                                                        // auto run the col.
+                                            </div>
+                                                    
+                                            <script>
+                                                $(document).ready(function () {
+                                                    $('#gau').on("click", function () {
+                                                        var id = $(this).val();
                                                         var client_id = $('#client_id').val();
-                                                        if (client_id != "") {
-                                                            $.ajax({
-                                                                url: "guarantor_upload_check.php",
-                                                                method: "POST",
-                                                                data: {client_id: client_id},
-                                                                success: function (data) {
-                                                                    $('#disgau').html(data);
-                                                                }
-                                                            })
-                                                        }
-                                                    }, 1000);
-                                                </script>
-                                                <script>
-                                                    function DlgAdd() {
-                                                        var bg = document.getElementById("backg");
-                                                        var dlg = document.getElementById("dlbox");
-                                                        bg.style.display = "none";
-                                                        dlg.style.display = "none";
+                                                        var firstname = $('#gau_first_name').val();
+                                                        var lastname = $('#gau_last_name').val();
+                                                        var phone = $('#gau_phone').val();
+                                                        var phone_b = $('#gau_phone2').val();
+                                                        var h_address = $('#home_address').val();
+                                                        var o_address = $('#office_address').val();
+                                                        var position = $('#position_held').val();
+                                                        var email = $('#gau_email').val();
+                                                        $.ajax({
+                                                            url: "guarantor_upload.php",
+                                                            method: "POST",
+                                                            data: {
+                                                                id: id,
+                                                                client_id: client_id,
+                                                                firstname: firstname,
+                                                                lastname: lastname,
+                                                                phone: phone,
+                                                                phone_b: phone_b,
+                                                                h_address: h_address,
+                                                                o_address: o_address,
+                                                                position: position,
+                                                                email: email
+                                                            },
+                                                            success: function (data) {
+                                                                $('#disgaux').html(data);
+                                                            }
+                                                        })
+                                                    });
+                                                });
+                                                setInterval(function () {
+                                                    // auto run the col.
+                                                    var client_id = $('#client_id').val();
+                                                    if (client_id != "") {
+                                                        $.ajax({
+                                                            url: "guarantor_upload_check.php",
+                                                            method: "POST",
+                                                            data: {client_id: client_id},
+                                                            success: function (data) {
+                                                                $('#disgau').html(data);
+                                                            }
+                                                        })
                                                     }
-
-                                                    function DisplayDialog() {
-                                                        var bg = document.getElementById("backg");
-                                                        var dlg = document.getElementById("dlbox");
-                                                        bg.style.display = "block";
-                                                        dlg.style.display = "block";
-
-                                                        var winWidth = window.innerWidth;
-                                                        var winHeight = window.innerHeight;
-
-                                                        dlg.style.left = (winWidth / 2) - 480 / 2 + "px";
-                                                        dlg.style.top = "150px";
-                                                    }
-                                                </script>
-                                                <style>
-                                                    #backg {
-                                                        display: none;
-                                                        width: 100%;
-                                                        height: 100%;
-                                                        position: fixed;
-                                                        top: 0px;
-                                                        left: 0px;
-                                                        background-color: black;
-                                                        opacity: 0.7;
-                                                        z-index: 9999;
-                                                    }
-
-                                                    #dlbox {
-                                                        /*initially dialog box is hidden*/
-                                                        display: none;
-                                                        position: fixed;
-                                                        width: 480px;
-                                                        z-index: 9999;
-                                                        border-radius: 10px;
-                                                        padding: 20px;
-                                                        background-color: #ffffff;
-                                                    }
-                                                </style>
-                                            </div>
+                                                }, 1000);
+                                            </script>
                                         </div>
                                         <!-- Fifth Tab Ends -->
-                                        <div class="tab"><h3>KYC:</h3>
+                                        <div class="tab">
+                                            <h3>KYC:</h3>
                                             <p>Personal Information</p>
                                             <br>
                                             <div class="row">
