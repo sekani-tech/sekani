@@ -13,6 +13,7 @@ $rst_stt = strtotime('+'. $repay_every, $disb_stt);
 $lt_stt = strtotime('+'. $loan_term, $disb_stt);
 
 if($lt_stt >= $rst_stt) {
+    
     $rst = date('Y-m-d', $rst_stt);
 
     echo '
