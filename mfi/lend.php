@@ -74,6 +74,7 @@ include("ajaxcallx.php");
         <?php
         if (isset($_GET["message"])) {
             $key = $_GET["message"];
+            $_SESSION["lack_of_intfund_$key"] = $key;
             $tt = 0;
             if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
                 echo '<script type="text/javascript">
@@ -83,7 +84,7 @@ include("ajaxcallx.php");
                             title: "Success",
                             text: "Loan Submitted Successfully, Awaiting Approval",
                             showConfirmButton: false,
-                            timer: 2000
+                            timer: 3000
                         })
                     });
                     </script>
@@ -92,8 +93,9 @@ include("ajaxcallx.php");
             }
         } else if (isset($_GET["message2"])) {
             $key = $_GET["message2"];
+            $_SESSION["lack_of_intfund_".$key] = $key;
             $tt = 0;
-            if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+            if ($tt !== $_SESSION["lack_of_intfund_".$key]) {
                 echo '<script type="text/javascript">
                 $(document).ready(function(){
                     swal({
@@ -101,12 +103,12 @@ include("ajaxcallx.php");
                         title: "Error",
                         text: "Error in Posting For Approval",
                         showConfirmButton: false,
-                        timer: 2000
+                        timer: 3000
                     })
                 });
                 </script>
                 ';
-                $_SESSION["lack_of_intfund_$key"] = 0;
+                $_SESSION["lack_of_intfund_".$key] = 0;
             }
         } else if (isset($_GET["message3"])) {
             $key = $_GET["message3"];
@@ -119,7 +121,7 @@ include("ajaxcallx.php");
                         title: "Error",
                         text: "This Client Has Been Given Loan Before",
                         showConfirmButton: false,
-                        timer: 2000
+                        timer: 3000
                     })
                 });
                 </script>
@@ -137,7 +139,7 @@ include("ajaxcallx.php");
                       title: "Error",
                       text: "Insufficent Fund From Institution Account!",
                       showConfirmButton: false,
-                      timer: 2000
+                      timer: 3000
                   })
               });
               </script>
@@ -241,20 +243,6 @@ include("ajaxcallx.php");
 
                                                     return $out;
                                                 }
-
-                                                // a function for collateral
-                                                function fill_collateral($connection)
-                                                {
-                                                    $sint_id = $_SESSION["int_id"];
-                                                    $org = "SELECT * FROM collateral WHERE int_id = '$sint_id'";
-                                                    $res = mysqli_query($connection, $org);
-                                                    $out = '';
-                                                    while ($row = mysqli_fetch_array($res)) {
-                                                        $out .= '<option value="' . $row["id"] . '">' . $row["type"] . '</option>';
-                                                    }
-                                                    return $out;
-                                                }
-
 
                                                 // Function for charges
                                                 function fill_charges($connection)
@@ -445,7 +433,6 @@ include("ajaxcallx.php");
                                                         autocomplete(document.getElementById("client_name"), clientObject);
                                                     })
 
-
                                                     $('#client_name').change(function() {
                                                         var id = $(this).val();
                                                         var client_id = $('#client_id').val();
@@ -467,7 +454,8 @@ include("ajaxcallx.php");
                                                     
                                                     <script>
                                                         $(document).ready(function() {
-                                                            $('#act').on("change keyup paste", function() {
+
+                                                            $('#act_no').on("change keyup paste", function() {
                                                                 var id = $(this).val();
                                                                 var ist = $('#int_id').val();
                                                                 $.ajax({
@@ -478,7 +466,7 @@ include("ajaxcallx.php");
                                                                         ist: ist
                                                                     },
                                                                     success: function(data) {
-                                                                        $('#accname').html(data);
+                                                                        $('#accinfo').html(data);
                                                                     }
                                                                 })
                                                             });
@@ -487,10 +475,10 @@ include("ajaxcallx.php");
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="bmd-label-floating">Account Number</label>
-                                                            <input type="text" class="form-control" name="account_no" id="act" required>
-                                                            <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id">
+                                                            <input type="number" class="form-control" name="account_no" id="act_no">
+                                                            <input type="hidden" id="int_id" value="<?php echo $sessint_id; ?>">
                                                         </div>
-                                                        <div id="accname"></div>
+                                                        <div id="accinfo"></div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="bmd-label-floating">Product *:</label>
@@ -500,21 +488,22 @@ include("ajaxcallx.php");
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12" id="show_product"></div>
+                                                <div class="col-12" id="show_product"></div>
                                             </div>
+
                                             <!-- charge -->
                                             <div class="tab">
                                                 <h3> Charges:</h3>
                                                 <div id="lend_charge">
                                                 </div>
                                                 <!-- <div class="col-md-6">
-                        <label class = "bmd-label-floating" for="charge" class="form-align mr-3">Charges</label>
-                          <select class="form-control" name="charge"> 
-                            <option>select charge to add</option>
-<?php echo fill_charges($connection); ?>
-                          </select>
-                          <button type="button" class="btn btn-primary" name="button" onclick="displayCharge()"> <i class="fa fa-plus"></i> Add To Product </button>
-                      </div> -->
+                                                    <label class = "bmd-label-floating" for="charge" class="form-align mr-3">Charges</label>
+                                                    <select class="form-control" name="charge"> 
+                                                        <option>select charge to add</option>
+                                                        <?php echo fill_charges($connection); ?>
+                                                    </select>
+                                                    <button type="button" class="btn btn-primary" name="button" onclick="displayCharge()"> <i class="fa fa-plus"></i> Add To Product </button>
+                                                </div> -->
                                             </div>
                                             <!-- Third Tab Ends -->
 
@@ -540,22 +529,21 @@ include("ajaxcallx.php");
                                                         } else if ($('#addCollateral').is(":not(:checked)")) {
                                                             $('#collateral-form').hide();
                                                             $('#colname').val('no collateral');
-                                                            $('#col_val').val('0');
-                                                            $('#col_descr').val('no collateral');
+                                                            $('#colval').val('0');
+                                                            $('#coldes').val('no collateral');
                                                         }
 
                                                         $('#addCollateral').click(function() {
                                                             if ($(this).is(":checked")) {
                                                                 $('#collateral-form').show();
                                                                 $('#colname').val('');
-                                                                $('#col_val').val('');
-                                                                $('#col_descr').val('');
+                                                                $('#colval').val('');
+                                                                $('#coldes').val('');
                                                             } else if ($(this).is(":not(:checked)")) {
                                                                 $('#collateral-form').hide();
-                                                                $('#collateral-form').hide();
                                                                 $('#colname').val('no collateral');
-                                                                $('#col_val').val('0');
-                                                                $('#col_descr').val('no collateral');
+                                                                $('#colval').val('0');
+                                                                $('#coldes').val('no collateral');
                                                             }
                                                         });
                                                     });
@@ -563,72 +551,29 @@ include("ajaxcallx.php");
 
                                                 <div class="card" id="collateral-form">
                                                     <div class="card-body">
-                                                        <form action="" method="post" autocomplete="off">
-                                                            <div class="row">
-                                                                <div class="col-md-3">
-                                                                    <div class="form-group">
-                                                                        <label class="bmd-label-floating">Name</label>
-                                                                        <input type="text" class="form-control" id="colname" name="col_name" value="" required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <div class="form-group">
-                                                                        <label class="bmd-label-floating">Value(&#x20a6;)</label>
-                                                                        <input type="number" class="form-control" name="col_value" id="col_val" required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label for="">Description</label>
-                                                                        <input type="text" class="form-control" name="col_description" id="col_descr" required>
-                                                                    </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating">Name</label>
+                                                                    <input type="text" class="form-control" name="colname" id="colname" required>
                                                                 </div>
                                                             </div>
-                                                        </form>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating">Value(&#x20a6;)</label>
+                                                                    <input type="number" class="form-control" name="colval" id="colval" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label for="">Description</label>
+                                                                    <input type="text" class="form-control" name="coldes" id="coldes" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <script>
-                                                    $(document).ready(function() {
-                                                        $('#clickit').on("click", function() {
-                                                            var id = $(this).val();
-                                                            var client_id = $('#client_id').val();
-                                                            var colname = $('#colname').val();
-                                                            var colval = $('#col_val').val();
-                                                            var coldes = $('#col_descr').val();
-                                                            $.ajax({
-                                                                url: "collateral_upload.php",
-                                                                method: "POST",
-                                                                data: {
-                                                                    id: id,
-                                                                    client_id: client_id,
-                                                                    colval: colval,
-                                                                    colname: colname,
-                                                                    coldes: coldes
-                                                                },
-                                                                success: function(data) {
-                                                                    $('#coll').html(data);
-                                                                }
-                                                            })
-                                                        });
-                                                    });
-                                                    setInterval(function() {
-                                                        // auto run the col.
-                                                        var client_id = $('#client_id').val();
-                                                        if (client_id != "") {
-                                                            $.ajax({
-                                                                url: "collateral_upload_check.php",
-                                                                method: "POST",
-                                                                data: {
-                                                                    client_id: client_id
-                                                                },
-                                                                success: function(data) {
-                                                                    $('#collx').html(data);
-                                                                }
-                                                            })
-                                                        }
-                                                    }, 1000);
-                                                </script>
                                             </div>
                                             <!-- Fourth Tab Ends -->
 
@@ -639,52 +584,50 @@ include("ajaxcallx.php");
 
                                                 <div class="card">
                                                     <div class="card-body">
-                                                        <form action="" method="post" autocomplete="off">
-                                                            <div class="row">
-                                                                <div class="col-md-3">
-                                                                    <div class="form-group">
-                                                                        <label class="bmd-label-floating" for="">First Name:</label>
-                                                                        <input type="text" name="gau_first_name" id="gau_first_name" class="form-control" required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <div class="form-group">
-                                                                        <label class="bmd-label-floating" for="">Last Name:</label>
-                                                                        <input type="text" name="gau_last_name" id="gau_last_name" class="form-control" required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <div class="form-group">
-                                                                        <label class="bmd-label-floating" for="">Phone:</label>
-                                                                        <input type="text" name="gau_phone" id="gau_phone" class="form-control" required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <div class="form-group">
-                                                                        <label class="bmd-label-floating" for="">Phone 2:</label>
-                                                                        <input type="text" name="gau_phone2" id="gau_phone2" class="form-control">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <div class="form-group">
-                                                                        <label class="bmd-label-floating" for="">Home Address:</label>
-                                                                        <input type="text" name="home_address" id="home_address" class="form-control">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <div class="form-group">
-                                                                        <label class="bmd-label-floating" for="">Office Address:</label>
-                                                                        <input type="text" name="office_address" id="office_address" class="form-control">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <div class="form-group">
-                                                                        <label class="bmd-label-floating" for="">Email:</label>
-                                                                        <input type="email" name="gau_email" id="gau_email" class="form-control">
-                                                                    </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">First Name:</label>
+                                                                    <input type="text" name="gau_first_name" id="gau_first_name" class="form-control" required>
                                                                 </div>
                                                             </div>
-                                                        </form>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">Last Name:</label>
+                                                                    <input type="text" name="gau_last_name" id="gau_last_name" class="form-control" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">Phone:</label>
+                                                                    <input type="text" name="gau_phone" id="gau_phone" class="form-control" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">Phone 2:</label>
+                                                                    <input type="text" name="gau_phone2" id="gau_phone2" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">Home Address:</label>
+                                                                    <input type="text" name="gau_home_address" id="gau_home_address" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">Office Address:</label>
+                                                                    <input type="text" name="gau_office_address" id="gau_office_address" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating" for="">Email:</label>
+                                                                    <input type="email" name="gau_email" id="gau_email" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -722,22 +665,6 @@ include("ajaxcallx.php");
                                                             })
                                                         });
                                                     });
-                                                    setInterval(function() {
-                                                        // auto run the col.
-                                                        var client_id = $('#client_id').val();
-                                                        if (client_id != "") {
-                                                            $.ajax({
-                                                                url: "guarantor_upload_check.php",
-                                                                method: "POST",
-                                                                data: {
-                                                                    client_id: client_id
-                                                                },
-                                                                success: function(data) {
-                                                                    $('#disgau').html(data);
-                                                                }
-                                                            })
-                                                        }
-                                                    }, 1000);
                                                 </script>
                                             </div>
                                             <!-- Fifth Tab Ends -->
@@ -966,11 +893,6 @@ include("ajaxcallx.php");
                                                         <label class="bmd-label-floating">Repayment Start Date:</label>
                                                         <input readonly type="date" name="repay" class="form-control" id="rsd">
                                                     </div>
-                                                    <!-- <div class="col-md-6 form-group">
-                                <label class = "bmd-label-floating">Loan End Date:</label>
-                                <input readonly type="sc" value="<?php $actualend_date ?>" name="repay_start" id="end" class="form-control">
-                              </div> -->
-                                                    <!-- </div> -->
                                                 </div>
                                             </div>
                                             <!-- Seventh Tab Ends -->
@@ -1000,8 +922,6 @@ include("ajaxcallx.php");
                                 </div>
                             </form>
                         </div>
-
-
                         <!-- /stepper  -->
                     </div>
                 </div>
@@ -1107,6 +1027,7 @@ include("ajaxcallx.php");
         background-color: #9e38b5;
     }
 </style>
+
 <script>
     var currentTab = 0; // Current tab is set to be the first tab (0)
     showTab(currentTab); // Display the current tab
@@ -1181,31 +1102,28 @@ include("ajaxcallx.php");
         x[n].className += " active";
     }
 </script>
-<?php
 
-            include("footer.php");
-
-?>
 <?php
-        } else {
-            echo '<script type="text/javascript">
-  $(document).ready(function(){
-   swal({
-    type: "error",
-    title: "Authorization Denied",
-    text: "You Dont Have permission to Book a loan",
-   showConfirmButton: false,
-    timer: 2000
-    }).then(
-    function (result) {
-      history.go(-1);
+        include("footer.php");
+
+    } else {
+        echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Authorization Denied",
+                        text: "You Dont Have permission to Book a loan",
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(
+                        function (result) {
+                            history.go(-1);
+                        }
+                    )
+                });
+            </script>
+        ';
+        // $URL="transact.php";
+        // echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
     }
-    )
-    });
-   </script>
-  ';
-            // $URL="transact.php";
-            // echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-        }
-
 ?>

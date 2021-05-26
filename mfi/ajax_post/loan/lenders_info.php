@@ -51,7 +51,8 @@ if (isset($_POST["id"])) {
             while ($row = mysqli_fetch_array($findGroup)) {
               $output = '<div class="form-group">
                 <label>Account Name:</label>
-                <input type="text" value="' . strtoupper($row["g_name"]) . '" name="principal_amoun" class="form-control" readonly required id="principal_amount">
+
+                <input type="text" value="' . strtoupper($row["g_name"]) . '" name="" id="" class="form-control" readonly required>
                 <input type="text" id="client_id" name="client_id" value="' . $row["id"] . '" hidden>
               </div>
               ';
@@ -62,7 +63,7 @@ if (isset($_POST["id"])) {
       while ($row = mysqli_fetch_array($result)) {
         $output = '<div class="form-group">
           <label>Account Name:</label>
-          <input type="text" value="' . strtoupper($row["firstname"]) . ' ' . strtoupper($row["middlename"]) . ' ' . strtoupper($row["lastname"]) . '" name="principal_amoun" class="form-control" readonly required id="principal_amount">
+          <input type="text" value="' . strtoupper($row["firstname"]) . ' ' . strtoupper($row["middlename"]) . ' ' . strtoupper($row["lastname"]) . '" id="" name="" class="form-control" readonly required>
           <input type="text" id="client_id" name="client_id" value="' . $row["id"] . '" hidden>
         </div>
         ';
@@ -77,7 +78,7 @@ if (isset($_POST["id"])) {
         while ($row = mysqli_fetch_array($result)) {
             $output2 = '<div class="form-group">
               <label>Loan Details:</label>
-              <input type="text" value="Existing Loan - ' . $row["total_outstanding_derived"] . ' - ' . $row["name"] . '" name="principal_amoun" class="form-control" readonly required id="principal_amount">
+              <input type="text" value="Existing Loan - ' . $row["total_outstanding_derived"] . ' - ' . $row["name"] . '" id="" name="principal_amoun" class="form-control" readonly required>
             </div>
             ';
           }
@@ -85,7 +86,7 @@ if (isset($_POST["id"])) {
     } else {
         $output2 = '<div class="form-group">
         <label>Account Balance:</label>
-        <input type="text" value="No Loan" name="principal_amoun" class="form-control" readonly required id="principal_amount">
+        <input type="text" value="No Loan" id="" name="" class="form-control" readonly required>
       </div>
       ';
     }
@@ -94,7 +95,3 @@ if (isset($_POST["id"])) {
   echo $output2;
   
 }
-// session_start();
-//    $_SESSION['load_term'] = "batman";
-//    $_SESSION['interest_rate'] = "batman";
-//    $_SESSION['disbursment_date'] = "batman";

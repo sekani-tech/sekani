@@ -1,3 +1,9 @@
+-- for loan disbursement
+ALTER TABLE `collateral` ADD `loan_id` INT(100) NULL DEFAULT NULL AFTER `int_id`;
+ALTER TABLE `collateral` CHANGE `type` `type` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL, CHANGE `value` `value` DECIMAL(19,2) NULL DEFAULT '0.00';
+
+-----------------------------------------------------------------------------------------------------------
+
 ALTER TABLE `loan_arrear` ADD `amount_collected` DECIMAL(19,2) NOT NULL AFTER `completed_derived`;
 ALTER TABLE `loan_repayment_schedule` ADD `amount_collected` DECIMAL(19,2) NOT NULL AFTER `completed_derived`;
 
