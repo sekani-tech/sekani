@@ -422,67 +422,142 @@ function fill_accounting($connection)
                     <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $acc_off; ?>" readonly>
                   </div>
                 </div>
-                <div class="col-md-12">
+                <script>
+                    $(document).ready(function() {
+                      $('#account').on("change", function() {
+                        var id = $(this).val();
+                        $.ajax({
+                          url: "ajax_post/client_view_acc.php",
+                          method: "POST",
+                          data: {
+                            id: id
+                          },
+                          success: function(data) {
+                            $('#soe').html(data);
+                          }
+                        })
+                      });
+                    });
+                  </script>
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label for="">Registered Address:</label>
-                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $address; ?>" readonly>
+                    <label for="">Last Deposit:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php if ($tdd == "") {
+                                                                                                                      echo $migrate['last_depost'];
+                                                                                                                    } else {
+                                                                                                                      echo $tdd;
+                                                                                                                    } ?>" readonly>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label for="">Name of Signatries NO1:</label>
-                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_one; ?>" readonly>
+                    <label for="">Avaliable Balance:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php if ($abd == "") {
+                                                                                                                      echo $migrate['available_balance'];
+                                                                                                                    } else {
+                                                                                                                      echo $abd;
+                                                                                                                    } ?>" readonly>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label for="">Name of Signatries NO2:</label>
-                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_two; ?>" readonly>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="">Name of Signatries NO3:</label>
-                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_three; ?>" readonly>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="">Phone No:</label>
-                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_phone_one; ?>" readonly>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="">Phone No:</label>
-                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_phone_two; ?>" readonly>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="">Phone No:</label>
-                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_phone_three; ?>" readonly>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="">BVN:</label>
-                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_one; ?>" readonly>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="">BVN:</label>
-                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_two; ?>" readonly>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="">BVN:</label>
-                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_three; ?>" readonly>
+                    <label for="">Last Withdrawal:</label>
+                    <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $twd; ?>" readonly>
                   </div>
                 </div>
                 <a href="update_client.php?edit=<?php echo $id; ?>" class="btn btn-primary">Edit CLient</a>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#clientDetails">
+                  View Info 
+                </button>
+                <!-- Modal ID update -->
+
+                <div class="modal fade" id="clientDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" data-bs-backdrop="static" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <div id="uploadModal"></div>
+                        <h5 class="modal-title" id="exampleModalLongTitle"> CORPORATE DETAILS </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row">
+
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="">Registered Address:</label>
+                              <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $address; ?>" readonly>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="">Name of Signatries NO1:</label>
+                              <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_one; ?>" readonly>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="">Name of Signatries NO2:</label>
+                              <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_two; ?>" readonly>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="">Name of Signatries NO3:</label>
+                              <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_three; ?>" readonly>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="">Phone No:</label>
+                              <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_phone_one; ?>" readonly>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="">Phone No:</label>
+                              <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_phone_two; ?>" readonly>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="">Phone No:</label>
+                              <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_phone_three; ?>" readonly>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="">BVN:</label>
+                              <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_one; ?>" readonly>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="">BVN:</label>
+                              <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_two; ?>" readonly>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="">BVN:</label>
+                              <input type="text" name="" style="text-transform: uppercase;" id="" class="form-control" value="<?php echo $sig_bvn_three; ?>" readonly>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- upload modal -->
               </div>
             </div>
           <?php

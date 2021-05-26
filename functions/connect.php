@@ -37,6 +37,21 @@ function executeQuery($sql, $data = [])
     }
     return $stmt;
 }
+function executeQuery2($sql, $data = [])
+{
+    global $connection;
+    if($stmt = $connection->prepare($sql)){
+        if (!empty($data)) {
+            $values = array_values($data);
+            $types = str_repeat('s', count($values)+1);
+            $stmt->bind_param($types, ...$values);
+        }
+        $stmt->execute();
+    }else{
+        $stmt = var_dump($connection->error);
+    }
+    return $stmt;
+}
 
 /**
  * @param $table
@@ -553,5 +568,129 @@ function checkAccount($table, $conditions, $scaleConditions)
     }
 
     $stmt = executeQuery($sql, array_merge($conditions, $scaleConditions));
+    return $stmt->get_result()->fetch_assoc();
+}
+
+// find out values that do not exist on tables
+function findNotIn($table, $conditions, $notIn, $table2, $sort, $conditions2)
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $i++;
+    }
+
+    $sql = $sql . " AND $notIn NOT IN (";
+    $sql = $sql . "SELECT $sort FROM $table2";
+    $s = 0;
+    foreach ($conditions2 as $key => $value) {
+        if ($s === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $s++;
+    }
+    $sql = $sql . ")";
+    $stmt = executeQuery2($sql, array_merge($conditions, $conditions2));
+    return $stmt->get_result()->fetch_assoc();
+}
+
+
+// find out values that exist on tables
+function findIn($table, $conditions, $notIn, $table2, $sort, $conditions2)
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $i++;
+    }
+
+    $sql = $sql . " AND $notIn IN(";
+    $sql = $sql . "SELECT $sort FROM $table2";
+    $s = 0;
+    foreach ($conditions2 as $key => $value) {
+        if ($s === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $s++;
+    }
+    $sql = $sql . ")";
+    $stmt = executeQuery2($sql, array_merge($conditions, $conditions2));
+    return $stmt->get_result()->fetch_assoc();
+}
+
+
+function sumNotIn($sum, $table, $conditions, $notIn, $table2, $sort, $conditions2)
+{
+    global $connection;
+    $sql = "SELECT SUM($sum) FROM $table";
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $i++;
+    }
+
+    $sql = $sql . " AND $notIn NOT IN(";
+    $sql = $sql . "SELECT $sort FROM $table2";
+    $s = 0;
+    foreach ($conditions2 as $key => $value) {
+        if ($s === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $s++;
+    }
+    $sql = $sql . ")";
+    $stmt = executeQuery2($sql, array_merge($conditions, $conditions2));
+    return $stmt->get_result()->fetch_assoc();
+}
+
+function sumIn($sum, $table, $conditions, $notIn, $table2, $sort, $conditions2)
+{
+    global $connection;
+    $sql = "SELECT SUM($sum) FROM $table";
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $i++;
+    }
+
+    $sql = $sql . " AND $notIn IN(";
+    $sql = $sql . "SELECT $sort FROM $table2";
+    $s = 0;
+    foreach ($conditions2 as $key => $value) {
+        if ($s === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $s++;
+    }
+    $sql = $sql . ")";
+    $stmt = executeQuery2($sql, array_merge($conditions, $conditions2));
     return $stmt->get_result()->fetch_assoc();
 }
