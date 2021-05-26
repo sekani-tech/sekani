@@ -41,6 +41,9 @@ if (isset($_POST["id"])) {
         </thead>
         <tbody>
         <?php if (mysqli_num_rows($result) > 0) {
+
+            $total_charge_amount = 0;
+
             while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
                 <tr>
                 <?php
@@ -66,21 +69,17 @@ if (isset($_POST["id"])) {
                     if ($values == 1) {
                         $xs = "Disbursement";
                     } else if ($values == 2) {
-                        $xs = "Manual Charge";
+                        $xs = "Specified Due Date";
                     } else if ($values == 3) {
-                        $xs = "Savings Activiation";
-                    } else if ($values == 5) {
-                        $xs = "Deposit Fee";
-                    } else if ($values == 6) {
-                        $xs = "Annual Fee";
-                    } else if ($values == 8) {
                         $xs = "Installment Fees";
-                    } else if ($values == 9) {
-                        $xs = "Overdue Installment Fee";
-                    } else if ($values == 12) {
-                        $xs = "Disbursement - Paid With Repayment";
-                    } else if ($values == 13) {
+                    } else if ($values == 4) {
+                        $xs = "Overdue Installment Fees";
+                    } else if ($values == 5) {
+                        $xs = "Disbursement - Paid with Repayment";
+                    } else if ($values == 6) {
                         $xs = "Loan Rescheduling Fee";
+                    } else if ($values == 7) {
+                        $xs = "Transaction";
                     }
                     ?>
                     <td><?php echo $nameofc;?></td>
@@ -93,23 +92,28 @@ if (isset($_POST["id"])) {
                         </div>
                     </td>
                     </tr>
-                    <?php
+                <?php
+                    $total_charge_amount += $amt . "" . $amt2;
                 }
-                ?>
-            <?php }
+            }
+            ?>
+
+            <input type="hidden" id="total_charge_amount" value="<?php echo $total_charge_amount; ?>" />
+
+        <?php
         } else {
             // echo "0 Document";
         }
         ?>
         </tbody>
     </table>
-    <?php
+<?php
 }
 ?>
 <script>
     $(document).ready(function () {
 
-// Delete 
+        // Delete 
         $('.test').click(function () {
             var el = this;
 
@@ -138,5 +142,6 @@ if (isset($_POST["id"])) {
                 });
             }
         });
+
     });
 </script>
