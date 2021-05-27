@@ -433,7 +433,6 @@ include("ajaxcallx.php");
                                                         autocomplete(document.getElementById("client_name"), clientObject);
                                                     })
 
-
                                                     $('#client_name').change(function() {
                                                         var id = $(this).val();
                                                         var client_id = $('#client_id').val();
@@ -455,6 +454,7 @@ include("ajaxcallx.php");
                                                     
                                                     <script>
                                                         $(document).ready(function() {
+
                                                             $('#act_no').on("change keyup paste", function() {
                                                                 var id = $(this).val();
                                                                 var ist = $('#int_id').val();
@@ -922,7 +922,6 @@ include("ajaxcallx.php");
                                 </div>
                             </form>
                         </div>
-
                         <!-- /stepper  -->
                     </div>
                 </div>
@@ -1028,6 +1027,7 @@ include("ajaxcallx.php");
         background-color: #9e38b5;
     }
 </style>
+
 <script>
     var currentTab = 0; // Current tab is set to be the first tab (0)
     showTab(currentTab); // Display the current tab

@@ -51,6 +51,7 @@ if (isset($_POST["id"])) {
             while ($row = mysqli_fetch_array($findGroup)) {
               $output = '<div class="form-group">
                 <label>Account Name:</label>
+
                 <input type="text" value="' . strtoupper($row["g_name"]) . '" name="" id="" class="form-control" readonly required>
                 <input type="text" id="client_id" name="client_id" value="' . $row["id"] . '" hidden>
               </div>
