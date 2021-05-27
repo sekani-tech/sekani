@@ -79,21 +79,21 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
     $prin_amt = $x["approved_principal"];
     $loan_term = $x["loan_term"];
     $repay_eve = $x["repay_every"];
-    $no_repayment = $x["number_of_repayments"];
+    $no_repayments = $x["number_of_repayments"];
     $disburse_date = $x["disbursement_date"];
     $repayment_date = $x["repayment_date"];
     $term_frequency = $x["term_frequency"];
     $date = date('d, D, F, Y', strtotime($disburse_date));
     $date2 = date('d, D, F, Y', strtotime($repayment_date));
     // calculation
-    if ($repay_eve == "month") {
+    if (strtolower($repay_eve) == "month") {
       $tot_int = ((($interest / 100) * $prin_amt) * $loan_term);
       $prin_due = $tot_int + $prin_amt;
-    } else if ($repay_eve == "week") {
+    } else if (strtolower($repay_eve) == "week") {
       $term = $loan_term / 4;
       $tot_int = ((($interest / 100) * $prin_amt) * $term);
       $prin_due = $tot_int + $prin_amt;
-    } else if ($repay_eve == "day") {
+    } else if (strtolower($repay_eve) == "day") {
       $term = $loan_term / 30;
       $tot_int = ((($interest / 100) * $prin_amt) * $term);
       $prin_due = $tot_int + $prin_amt;
@@ -135,6 +135,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
     $ln_prod =  mysqli_query($connection, "SELECT * FROM product WHERE id = '$loan_product' && int_id = '$sessint_id'");
     $pd = mysqli_fetch_array($ln_prod);
     $ln_prod_name = $pd["name"];
+    $ln_prod_repay_frequency = $pd["repayment_frequency"];
     // app staff id.
     $check_users = mysqli_query($connection, "SELECT * FROM users WHERE id = '$sub_user_id' && int_id = '$sessint_id'");
     $mx = mysqli_fetch_array($check_users);
@@ -174,7 +175,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
     $cm = mysqli_fetch_assoc($kyc_col);
     $kq = mysqli_fetch_assoc($kyc_query);
     $kq1 = mysqli_fetch_assoc($kyc_query1);
-    $col_va = $cm["type"];
+    $col_va = $cm["value"];
     $agex = $kq1["date_of_birth"];
     $age = (date('Y') - date('Y', strtotime($agex)));
 
@@ -250,10 +251,12 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
     $total_early = 100 + 30;
     $total_imm = 100 + 30;
     $total_bad = 100 + 30;
+    
     // GENERAL critarial - BASED ON BIG 100
-    $mxx = ($early_rep / $gen1) * 100;
-    $mxx1 = ($imm_rep / $gen1) * 100;
-    $mxx2 = ($late_rep / $gen1) * 100;
+    $mxx = $early_rep != 0 ? ($early_rep / $gen1) * 100 : 0;
+    $mxx1 = $imm_rep != 0 ? ($imm_rep / $gen1) * 100 : 0;
+    $mxx2 = $late_rep != 0 ? ($late_rep / $gen1) * 100 : 0;
+
     if ($mxx >= 0 && $mxx <= 30) {
       $total_early -= 40;
       $total_imm -= 10;
@@ -805,7 +808,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </tr>
                                     <tr>
                                       <td > <b>Reference Id</b></td>
-                                      <td >$transid</td>
+                                      <td >$trans_id</td>
                                     </tr>
                                     <tr>
                                       <td> <b>Transaction Amount</b></td>
@@ -1065,7 +1068,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </tr>
                                     <tr>
                                       <td > <b>Reference Id</b></td>
-                                      <td >$transid</td>
+                                      <td >$trans_id</td>
                                     </tr>
                                     <tr>
                                       <td> <b>Transaction Amount</b></td>
@@ -1367,7 +1370,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </tr>
                                     <tr>
                                       <td > <b>Reference Id</b></td>
-                                      <td >$transid</td>
+                                      <td >$trans_id</td>
                                     </tr>
                                     <tr>
                                       <td> <b>Transaction Amount</b></td>
@@ -1533,7 +1536,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             '0', '0', '0',
             '0', '0', '1',
             '0', '{$term_frequency}', '2', '{$repay_eve}',
-            '0', '{$no_repayment}',
+            '0', '{$no_repayments}',
             '0', '0', '0', '0', '0',
             '{$sub_user_date}', '{$sub_user_id}', '{$gends}', '{$app_user}', '{$disburse_date}',
             '{$repayment_date}', '0', '{$disburse_date}', '{$sub_user_id}',
@@ -1548,25 +1551,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             '0', '1', '1', NULL, NULL, '0.00')";
                     $loan_disb = mysqli_query($connection, $l_d_m);
                     if ($loan_disb) {
+
                       $update_loan_cache = mysqli_query($connection, "UPDATE loan_disbursement_cache SET status = 'Approved' WHERE id = '$appod' AND int_id = '$sessint_id'");
 
                       $dfofi = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND account_no = '$acct_no' AND client_id = '$client_id'");
                       $fdo = mysqli_fetch_array($dfofi);
                       $loan_id = $fdo['id'];
-                      $dfei = mysqli_query($connection, "UPDATE loan_charge SET loan_id = '$loan_id', loan_cache_id = '0' WHERE client_id = '$client_id'");
+                      $dfei = mysqli_query($connection, "UPDATE loan_charge SET loan_id = '$loan_id', loan_cache_id = '0' WHERE int_id = '$sessint_id' AND client_id = '$client_id' ORDER BY id DESC LIMIT 1");
+
+
+                      /**
+                       * Update loan id for collateral
+                       */
+                      $update_coll_loan_id = mysqli_query($connection, "UPDATE collateral SET loan_id = '$loan_id' WHERE int_id = '$sessint_id' AND client_id = '$client_id' ORDER BY id DESC LIMIT 1");
+
+                      /**
+                       * Update loan id for guarantor
+                       */
+                      $update_gua_loan_id = mysqli_query($connection, "UPDATE loan_gaurantor SET loan_id = '$loan_id' WHERE int_id = '$sessint_id' AND client_id = '$client_id' ORDER BY id DESC LIMIT 1");
+
+
                       if ($update_loan_cache) {
+                        include '../functions/loans/schedule.php';
+
                         echo '<script type="text/javascript">
-                $(document).ready(function(){
-                    swal({
-                        type: "success",
-                        title: "Loan Disbursed Successfully",
-                        text: "Approved",
-                        showConfirmButton: false,
-                        timer: 4000
-                    })
-                });
-                </script>
-                ';
+                                $(document).ready(function(){
+                                    swal({
+                                        type: "success",
+                                        title: "Loan Disbursed Successfully",
+                                        text: "Approved",
+                                        showConfirmButton: false,
+                                        timer: 4000
+                                    })
+                                });
+                                </script>
+                        ';
                         $URL = "disbursement_approval.php";
                         echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                       } else {
@@ -1882,7 +1901,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mer = mysqli_fetch_array($get_product);
                     $p_n = $mer["name"];
                     ?>
-                    <input type="text" class="form-control" name="phone" value="<?php echo $acct_no . " " . $p_n; ?>" readonly>
+                    <input type="text" class="form-control" name="phone" value="<?php echo $acct_no . " - " . $p_n; ?>" readonly>
                   </div>
                 </div>
               </div>
@@ -1930,12 +1949,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="col-md-2">
                   <div class="form-group">
                     <label class="bmd-label-floating">Repayment Every</label>
-                    <input type="text" class="form-control" name="transidddd" value="<?php echo $no_repayment . " Time(s) Every " . $repay_eve; ?>" readonly>
+                    <input type="text" class="form-control" name="transidddd" value="<?php echo $ln_prod_repay_frequency . " Time(s) Every " . $repay_eve; ?>" readonly>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="bmd-label-floating">Repayment Date</label>
+                    <label class="bmd-label-floating">1st Repayment Date</label>
                     <input type="text" class="form-control" name="transidddd" value="<?php echo $date2; ?>" readonly>
                   </div>
                 </div>

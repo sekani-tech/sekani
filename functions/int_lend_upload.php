@@ -7,7 +7,7 @@ $userid = $_SESSION["user_id"];
 $client_id = $_POST["client_id"];
 
 // remove cached charges from loan
-$fdo = mysqli_query($connection, "DELETE FROM loan_charge WHERE client_id = '$client_id'");
+// $fdo = mysqli_query($connection, "DELETE FROM loan_charge WHERE client_id = '$client_id'");
 // $goacctn = mysqli_query($connection, "SELECT account_no FROM client WHERE id = '$client_id' ");
 // if (count([$goacctn]) == 1) {
 //     $a = mysqli_fetch_array($goacctn);
@@ -30,6 +30,8 @@ $loan_officer = $_POST['loan_officer'];
 $loan_purpose = preg_replace('/[^\w]/', '', $_POST['loan_purpose']);
 // $standing_instruction = $_POST['standing_instruction'];
 $acct_no = $_POST['account_no'];
+$total_outstanding_derived = $_POST['total_outstanding_loan'];
+
 
 if ($repay_start == NULL || $repay_start == "" || $disbursement_date == "" || $loan_term == "") {
     $_SESSION["Lack_of_intfund_$randms"] = "Please fill some field";
@@ -40,18 +42,6 @@ if ($repay_start == NULL || $repay_start == "" || $disbursement_date == "" || $l
     $repay_st1 =  $_POST["repay_start"];
     $date = str_replace('/', '-', $repay_st1);
     $repay_st =  date('Y-m-d h:i:sa', strtotime($date));
-    // echo "Repayement Datw".$repay_st;
-    // echo "XDisgb Datw".$disbursement_date;
-
-    // Part for Charges
-    // $charges = $_POST['charge'];
-    
-    // date of submitted
-    // lc
-    $r = $interest_rate;
-    $prina = $principal_amount;
-    $gi = $r * $prina;
-    $pd = $gi + $prina;
 
     // term frequency
     $fund_id = 0;
@@ -126,22 +116,22 @@ if ($repay_start == NULL || $repay_start == "" || $disbursement_date == "" || $l
                         $get_col_id = mysqli_query($connection, "SELECT id FROM collateral WHERE int_id = '$sessint_id' AND loan_id = '$tempLoanId'");
                         $col_id = mysqli_fetch_array($get_col_id)['id'];
 
-                        $query = "INSERT INTO loan_disbursement_cache (int_id, account_no, client_id, display_name, 
+                        $query = "INSERT INTO loan_disbursement_cache (int_id, branch_id, account_no, client_id, display_name, 
                         product_id, fund_id, col_id, col_name, col_description,
                         loan_officer, loan_purpose, currency_code, currency_digits, 
                         principal_amount_proposed, principal_amount, loan_term, interest_rate, 
                         approved_principal, repayment_date, term_frequency, repay_every, number_of_repayments, 
                         submittedon_date, submittedon_userid, approvedon_date, approvedon_userid,
                         expected_disbursedon_date, expected_firstrepaymenton_date, disbursement_date, disbursedon_userid, 
-                        repay_principal_every, repay_interest_every, status, loan_sub_status_id, expected_maturedon_date) 
-                        VALUES ('{$sessint_id}', '{$acct_no}', '{$client_id}', '{$cdn}', 
+                        repay_principal_every, repay_interest_every, status, loan_sub_status_id, expected_maturedon_date, total_outstanding_derived) 
+                        VALUES ('{$sessint_id}', '{$branch_id}', '{$acct_no}', '{$client_id}', '{$cdn}', 
                         '{$product_id}', '{$fund_id}', '{$col_id}', '{$colname}', '{$coldes}',
                         '{$loan_officer}', '{$loan_purpose}', '{$currency}', '{$cd}', 
-                        '{$principal_amount}', '{$pd}', '{$loan_term}', '{$interest_rate}', 
+                        '{$principal_amount}', '{$principal_amount}', '{$loan_term}', '{$interest_rate}', 
                         '{$principal_amount}', '{$repay_st}', '{$repay_frequency}', '{$repay_every}', '{$no_of_repay}', 
                         '{$submitted_on}', '{$userid}', '{$submitted_on}', '{$userid}',
                         '{$disbursement_date}', '{$repay_st}', '{$disbursement_date}', '{$userid}', 
-                        '{$loan_term}', '{$loan_term}', '{$stt}', '{$loan_sector}', '{$matured_loan_date}')";
+                        '{$repay_frequency}', '{$repay_frequency}', '{$stt}', '{$loan_sector}', '{$matured_loan_date}', '{$total_outstanding_derived}')";
 
                         $res = mysqli_query($connection, $query);
         

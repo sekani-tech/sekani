@@ -84,7 +84,7 @@ if (isset($_POST["id"])) {
         
     } else {
         $output2 = '<div class="form-group">
-        <label>Account Balance:</label>
+        <label>Loan Details:</label>
         <input type="text" value="No Loan" id="" name="" class="form-control" readonly required>
       </div>
       ';
