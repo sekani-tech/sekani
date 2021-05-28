@@ -143,6 +143,6 @@ echo '
         <td><b><b><b>'.number_format($total_due_total).'</b></b></b></td>
     </tr>
 
-    <input class="form-control" type="date" value="'.$actualend_date.'"/>
+    <input type="hidden" name="total_outstanding_loan" value="'.$total_due_total.'"/>
 ';
 ?>

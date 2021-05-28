@@ -51,29 +51,11 @@ if ($view_dashboard == 1) {
                             <!-- Populate with the total value of outstanding loans -->
 
                             <?php
-
-                            $prin_query = "SELECT SUM(principal_amount) AS total_out_prin FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND installment >= 1";
-                            $int_query = "SELECT SUM(interest_amount) AS total_int_prin FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND installment >= 1";
-                            // LOAN ARREARS
-                            $arr_query1 = mysqli_query($connection, "SELECT SUM(principal_amount) AS arr_out_prin FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= 1");
-                            $arr_query2 = mysqli_query($connection, "SELECT SUM(interest_amount) AS arr_out_int FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= 1");
-                            // check the arrears
-                            $ar = mysqli_fetch_array($arr_query1);
-                            $arx = mysqli_fetch_array($arr_query2);
-                            $arr_p = $ar["arr_out_prin"];
-                            $arr_i = $arx["arr_out_int"];
-                            $pq = mysqli_query($connection, $prin_query);
-                            $iq = mysqli_query($connection, $int_query);
-                            $pqx = mysqli_fetch_array($pq);
-                            $iqx = mysqli_fetch_array($iq);
-                            // check feedback
-                            $print = $pqx['total_out_prin'];
-                            $intet = $iqx['total_int_prin'];
-                            // $fde = ($print + $intet) + ($arr_p + $arr_i);
-                            $fde = $print + $intet;
-                            // DGMFB
+                            $accountquery = "SELECT SUM(total_outstanding_derived) AS total_outstanding_derived FROM `loan` WHERE int_id = '$sessint_id'";
+                            $result = mysqli_query($connection, $accountquery);
+                            $totalOutstandingLoans = mysqli_fetch_array($result)['total_outstanding_derived'];
                             ?>
-                            <h2 class="card-title">₦<?php echo number_format(round($fde), 2); ?></h2>
+                            <h2 class="card-title">₦<?php echo number_format(round($totalOutstandingLoans), 2); ?></h2>
 
                         </div>
                         <div class="card-footer">

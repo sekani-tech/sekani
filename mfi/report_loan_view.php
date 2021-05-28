@@ -135,16 +135,11 @@ if (isset($_GET["view15"])) { ?>
                             <div class="card card-profile ml-auto mr-auto" style="max-width: 370px; max-height: 360px">
                                 <div class="card-body ">
                                     <?php
-                                        $accountquery = "SELECT SUM(principal_amount) AS outstanding_principal, SUM(interest_amount) AS outstanding_interest FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id'";
+                                        $accountquery = "SELECT SUM(total_outstanding_derived) AS total_outstanding_derived FROM `loan` WHERE int_id = '$sessint_id'";
                                         $result = mysqli_query($connection, $accountquery);
-                                        
-                                        $cumulativeTotalOutstandingLoans = 0;
-                                        while ($loan = mysqli_fetch_array($result)) {
-                                            $total_outstanding_bal = $loan['outstanding_principal'] + $loan['outstanding_interest'];
-                                            $cumulativeTotalOutstandingLoans += $total_outstanding_bal;
-                                        }
+                                        $totalOutstandingLoans = mysqli_fetch_array($result)['total_outstanding_derived']
                                     ?>
-                                    <h4 class="card-title">Total Outstanding Loans: <b>&#8358;<?php echo number_format(round($cumulativeTotalOutstandingLoans), 2); ?></b></h4>
+                                    <h4 class="card-title">Total Outstanding Loans: <b>&#8358;<?php echo number_format(round($totalOutstandingLoans), 2); ?></b></h4>
                                     <!-- <h6 class="card-category text-gray">Head Office</h6> -->
                                 </div>
                             </div>
@@ -238,11 +233,9 @@ if (isset($_GET["view15"])) { ?>
                                                         // $ttloutstanding = $outstanding + $outstandingtwo;
                                                         // $ttloutbalance = 0;
                                                         // $ttloutbalance += $total_outstanding_bal;
-                                                        $query_outstanding = mysqli_query($connection, "SELECT SUM(principal_amount) AS outstanding_principal, SUM(interest_amount) AS outstanding_interest FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$loan_id'");
+                                                        $query_outstanding = mysqli_query($connection, "SELECT total_outstanding_derived FROM `loan` WHERE int_id = '$sessint_id' AND id = '$loan_id'");
                                                         $desx = mysqli_fetch_array($query_outstanding);
-                                                        $outstanding_principal = $desx["outstanding_principal"];
-                                                        $outstanding_interest = $desx["outstanding_interest"];
-                                                        $outstanding_balance = $outstanding_principal + $outstanding_interest;
+                                                        $outstanding_balance = $desx['total_outstanding_derived'];
                                                         
                                                         echo number_format(round($outstanding_balance), 2);
                                                         ?>

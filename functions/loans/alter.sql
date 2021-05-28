@@ -1,3 +1,12 @@
+ALTER TABLE `loan_repayment_schedule` CHANGE `principal_completed_derived` `principal_completed_derived` DECIMAL(19,2) NOT NULL DEFAULT '0.00';
+ALTER TABLE `loan_repayment_schedule` CHANGE `interest_completed_derived` `interest_completed_derived` DECIMAL(19,2) NOT NULL DEFAULT '0.00';
+ALTER TABLE `loan_repayment_schedule` CHANGE `fee_charges_completed_derived` `fee_charges_completed_derived` DECIMAL(19,2) NOT NULL DEFAULT '0.00';
+ALTER TABLE `loan_repayment_schedule` CHANGE `penalty_charges_completed_derived` `penalty_charges_completed_derived` DECIMAL(19,2) NOT NULL DEFAULT '0.00';
+
+-----------------------------------------------------------------------------------------------------------
+
+ALTER TABLE `loan_disbursement_cache` ADD `branch_id` INT(100) NOT NULL AFTER `int_id`;
+
 -- for loan disbursement
 ALTER TABLE `collateral` ADD `loan_id` INT(100) NULL DEFAULT NULL AFTER `int_id`;
 ALTER TABLE `collateral` CHANGE `type` `type` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL, CHANGE `value` `value` DECIMAL(19,2) NULL DEFAULT '0.00';
