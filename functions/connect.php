@@ -527,6 +527,58 @@ function selectAllGreater($table, $conditions = [])
     }
 }
 
+function selectAllLess($table, $conditions = [])
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+    if (empty($conditions)) {
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $i = 0;
+        foreach ($conditions as $key => $value) {
+            if ($i === 0) {
+                $sql = $sql . " WHERE $key>=?";
+            } else {
+                $sql = $sql . " AND $key<=?";
+            }
+            $i++;
+        }
+
+        $stmt = executeQuery($sql, $conditions);
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+}
+
+
+function selectAllLessEq($table, $conditions, $dateConditions)
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $i++;
+    }
+
+    $s = 0;
+    foreach ($dateConditions as $keys => $value) {
+        if ($s === 0) {
+            $sql = $sql . " AND $keys<=?";
+        }else{
+            $sql = $sql . " AND $keys<=?";
+        }
+        $s++;
+    }
+    $stmt = executeQuery($sql, array_merge($conditions, $dateConditions));
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+}
 
 function checkAccount($table, $conditions, $scaleConditions)
 {
