@@ -10,40 +10,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $update_int = $_POST["interest"];
     $rep_id = $_POST["rep_id"];
     $update_rep = mysqli_query($connection, "UPDATE `loan_repayment_schedule` SET principal_amount = '$update_prin', interest_amount = '$update_int' WHERE id = '$rep_id' AND int_id = '$sessint_id'");
+    
+    $get_loan_id = mysqli_query($connection, "SELECT loan_id FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND id = '$rep_id'");
+    $loan_id = mysqli_fetch_array($get_loan_id)['loan_id'];
+
     if ($update_rep) {
-      echo '<script type="text/javascript">
-      $(document).ready(function(){
-       swal({
-        type: "success",
-        title: "Successfully Updated Repayment",
-        text: "Thank you for Updating",
-       showConfirmButton: false,
-        timer: 2000
-        }).then(
-        function (result) {
-          history.go(-1);
-        }
-        )
-        });
-       </script>
-      ';
+      $_SESSION['repayment_updated'] = 1;
+      header('Location: loan_report_view.php?edit='. $loan_id);
     } else {
-      echo '<script type="text/javascript">
-      $(document).ready(function(){
-       swal({
-        type: "error",
-        title: "Error in Updating Repayment",
-        text: "Check your Input",
-       showConfirmButton: false,
-        timer: 2000
-        })
-        });
-       </script>
-      ';
+      $_SESSION['repayment_not_updated'] = 1;
+      header('Location: loan_report_view.php?edit='. $loan_id);
     }
-  }
-  ?>
-<?php
+}
+
 if (isset($_GET["id"]) AND $_GET["id"] != "") {
   // move
   $rep_id = $_GET["id"];
@@ -89,14 +68,14 @@ if (isset($_GET["id"]) AND $_GET["id"] != "") {
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Interest Amount</label>
-                          <input type="decimal" name="interest" value="<?php echo $row["interest_amount"] ?>" class="form-control">
+                          <label class="bmd-label-floating">Principal Amount</label>
+                          <input type="decimal" name="principal" value="<?php echo $row["principal_amount"] ?>" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Principal Amount</label>
-                          <input type="decimal" name="principal" value="<?php echo $row["principal_amount"] ?>" class="form-control">
+                          <label class="bmd-label-floating">Interest Amount</label>
+                          <input type="decimal" name="interest" value="<?php echo $row["interest_amount"] ?>" class="form-control">
                         </div>
                       </div>
                     </div>

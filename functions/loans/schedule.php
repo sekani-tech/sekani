@@ -99,7 +99,8 @@ if (mysqli_num_rows($query1) > 0) {
                             $repay = date('Y-m-d', strtotime($disburse_date . ' + ' . $i . ' ' . $rep_every));
                             echo $repay . '</br>';
                             $insert_repay = mysqli_query($connection, "INSERT INTO `loan_repayment_schedule` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, 
-                        `principal_amount`, `interest_amount`, `created_date`, `amount_collected`, `lastmodified_date`) VALUES('$sessint_id', '$loan_id', '$client_id', '$disburse_date', '$repay', '1', '$period_loan', '$interest_amount', '$sch_date', '0', '$sch_date')");
+                                                                    `principal_amount`, `interest_amount`, `created_date`, `amount_collected`, `lastmodified_date`, `createdby_id`, `lastmodifiedby_id`) 
+                                                                    VALUES('$sessint_id', '$loan_id', '$client_id', '$disburse_date', '$repay', '1', '$period_loan', '$interest_amount', '$sch_date', '0', '$sch_date', '$sessuser_id', '$sessuser_id')");
                             if ($insert_repay) {
                                 echo 'Inserted for Interval =' . $i . '/<br>';
                             }
@@ -111,7 +112,8 @@ if (mysqli_num_rows($query1) > 0) {
                             $repay = date('Y-m-d', strtotime($disburse_date . ' + ' . $i . ' ' . $rep_every));
                             echo $repay . '</br>';
                             $insert_repay = mysqli_query($connection, "INSERT INTO `loan_repayment_schedule` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, 
-                        `principal_amount`, `interest_amount`, `created_date`, `amount_collected`, `lastmodified_date`) VALUES('$sessint_id', '$loan_id', '$client_id', '$disburse_date', '$repay', '1', '$period_loan', '$interest_amount', '$sch_date', '0', '$sch_date')");
+                                                                    `principal_amount`, `interest_amount`, `created_date`, `amount_collected`, `lastmodified_date`, `createdby_id`, `lastmodifiedby_id`) 
+                                                                    VALUES('$sessint_id', '$loan_id', '$client_id', '$disburse_date', '$repay', '1', '$period_loan', '$interest_amount', '$sch_date', '0', '$sch_date', '$sessuser_id', '$sessuser_id')");
                             if ($insert_repay) {
                                 echo 'Inserted for Interval =' . $i . '/<br>';
                             }
@@ -123,7 +125,8 @@ if (mysqli_num_rows($query1) > 0) {
                             $repay = date('Y-m-d', strtotime($disburse_date . ' + ' . $i . ' ' . $rep_every));
                             echo $repay . '</br>';
                             $insert_repay = mysqli_query($connection, "INSERT INTO `loan_repayment_schedule` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, 
-                        `principal_amount`, `interest_amount`, `created_date`, `amount_collected`, `lastmodified_date`) VALUES('$sessint_id', '$loan_id', '$client_id', '$disburse_date', '$repay', '1', '$period_loan', '$interest_amount', '$sch_date', '0', '$sch_date')");
+                                                                    `principal_amount`, `interest_amount`, `created_date`, `amount_collected`, `lastmodified_date`, `createdby_id`, `lastmodifiedby_id`) 
+                                                                    VALUES('$sessint_id', '$loan_id', '$client_id', '$disburse_date', '$repay', '1', '$period_loan', '$interest_amount', '$sch_date', '0', '$sch_date', '$sessuser_id', '$sessuser_id')");
                             if ($insert_repay) {
                                 echo 'Inserted for Interval =' . $i . '/<br>';
                             }
@@ -135,7 +138,8 @@ if (mysqli_num_rows($query1) > 0) {
                             $repay = date('Y-m-d', strtotime($disburse_date . ' + ' . $i . ' ' . $rep_every));
                             echo $repay . '</br>';
                             $insert_repay = mysqli_query($connection, "INSERT INTO `loan_repayment_schedule` (`int_id`, `loan_id`, `client_id`, `fromdate`, `duedate`, `installment`, 
-                        `principal_amount`, `interest_amount`, `created_date`, `amount_collected`, `lastmodified_date`) VALUES('$sessint_id', '$loan_id', '$client_id', '$disburse_date', '$repay', '1', '$period_loan', '$interest_amount', '$sch_date', '0', '$sch_date')");
+                                                                    `principal_amount`, `interest_amount`, `created_date`, `amount_collected`, `lastmodified_date`, `createdby_id`, `lastmodifiedby_id`) 
+                                                                    VALUES('$sessint_id', '$loan_id', '$client_id', '$disburse_date', '$repay', '1', '$period_loan', '$interest_amount', '$sch_date', '0', '$sch_date', '$sessuser_id', '$sessuser_id')");
                             if ($insert_repay) {
                                 echo 'Inserted for Interval =' . $i . '/<br>';
                             }
