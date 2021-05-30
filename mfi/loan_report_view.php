@@ -4,6 +4,38 @@ $page_title = "Loan Report";
 $destination = "report_loan_view.php?view16";
 include("header.php");
 
+if(isset($_SESSION["repayment_updated"])) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+    swal({
+      type: "success",
+      title: "Successfully Updated Repayment",
+      text: "Thank you for Updating",
+      showConfirmButton: false,
+      timer: 3000
+    })
+  });
+  </script>
+  ';
+  unset($_SESSION["repayment_updated"]);
+}
+
+if(isset($_SESSION["repayment_not_updated"])) {
+  echo '<script type="text/javascript">
+  $(document).ready(function(){
+    swal({
+      type: "error",
+      title: "Error in Updating Repayment",
+      text: "Check your Input",
+      showConfirmButton: false,
+      timer: 3000
+    })
+  });
+  </script>
+  ';
+  unset($_SESSION["repayment_not_updated"]);
+}
+
 $sint_id = $_SESSION['int_id'];
 $id = $_GET['edit'];
 $data = mysqli_query($connection, "SELECT * FROM loan WHERE id = '$id ' AND int_id = '$sint_id'");
@@ -501,7 +533,7 @@ $overdue_interest = $wtyx["overdue_interest"];
                       <table class="table table-bordered">
                         <thead>
                         <!-- <?php
-                        $query = "SELECT * FROM collateral WHERE int_id = '$sessint_id' AND client_id = '$id'";
+                        $query = "SELECT * FROM collateral WHERE int_id = '$sessint_id' AND loan_id = '$loan_id'";
                         $result = mysqli_query($connection, $query);
                       ?> -->
                             <tr>
@@ -589,8 +621,8 @@ $overdue_interest = $wtyx["overdue_interest"];
                           while ($row = mysqli_fetch_array($query_loan)) {
                       ?>
                         <tr>
-                          <td><?php echo $row["fromdate"] ?></td>
-                          <td> <b> <?php echo $row["duedate"] ?> </b></td>
+                          <td><?php echo $row["fromdate"]; ?></td>
+                          <td> <b> <?php echo $row["duedate"]; ?> </b></td>
                           <td><?php echo "₦ ".number_format($row["principal_amount"], 2); ?></td>
                           <td><?php echo "₦ ".number_format($row["interest_amount"], 2); ?></td>
                           <?php
@@ -620,8 +652,8 @@ $overdue_interest = $wtyx["overdue_interest"];
                           <td><?php echo $inst; ?></td>
 
                           <?php
-                          $query_principal_due = mysqli_query($connection, "SELECT principal_amount, principal_completed_derived FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND loan_id = '$loan_id'");
-                          $query_interest_due = mysqli_query($connection, "SELECT interest_amount, interest_completed_derived FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND loan_id = '$loan_id'");
+                          $query_principal_due = mysqli_query($connection, "SELECT principal_amount, principal_completed_derived FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND loan_id = '$loan_id' AND id = {$row['id']}");
+                          $query_interest_due = mysqli_query($connection, "SELECT interest_amount, interest_completed_derived FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND loan_id = '$loan_id' AND id = {$row['id']}");
                           $fetch_principal_val = mysqli_fetch_array($query_principal_due);
                           $fetch_interest_val = mysqli_fetch_array($query_interest_due);
                           $principal_due = $fetch_principal_val["principal_amount"] - $fetch_principal_val["principal_completed_derived"];
@@ -639,13 +671,13 @@ $overdue_interest = $wtyx["overdue_interest"];
                                   $option = "";
                               }
                               ?>
-                              <button <?php echo $option; ?> onclick="location.href='loan_single_repayment.php?id=<?php echo $row['id'] ?>'" class="btn btn-secondary">Edit</button>
-                              <button type="button" <?php echo $option; ?> class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <button <?php echo $option; ?> onclick="location.href='loan_single_repayment.php?id=<?php echo $row['id'] ?>'" class="btn btn-default">Edit</button>
+                              <!-- <button type="button" <?php echo $option; ?> class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="sr-only">Toggle Dropdown</span>
                               </button>
                               <div class="dropdown-menu">
                                 <a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg">Delete</a>
-                              </div>
+                              </div> -->
                             </div> 
                           </td>                         
                         </tr>
