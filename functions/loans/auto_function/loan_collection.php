@@ -283,7 +283,7 @@ foreach ($debtorsData as $key => $debtors) {
                                         } else {
                                             // loan schedule data to update
                                             $loanScheduleDetails = [
-                                                'installment' => 1,
+                                                'installment' => 0,
                                                 'amount_collected' => $amountDue,
                                                 'completed_derived' => 1,
                                                 'obligations_met_on_date' => $today,
@@ -526,7 +526,7 @@ foreach ($debtorsData as $key => $debtors) {
                         } else {
                             // loan schedule data to update
                             $loanScheduleDetails = [
-                                'installment' => 1,
+                                'installment' => 0,
                                 'amount_collected' => $finalBalance,
                                 'completed_derived' => 1,
                                 'obligations_met_on_date' => $today,
