@@ -316,7 +316,7 @@ foreach ($debtorsData as $key => $debtors) {
                     }
                     #account transction stored
                 }
-            } else {
+            } else if ($accountBalance > 0 && $accountBalance >=  1000) {
                 // mark loan as partially paid
                 $newBalance = 0;
                 if ($accountBalance > $interestAmount) {
@@ -550,6 +550,8 @@ foreach ($debtorsData as $key => $debtors) {
                         }
                     }
                 }
+            }else{
+                include("../arrears.php");
             }
         }
     }

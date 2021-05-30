@@ -513,9 +513,9 @@ function checkLoanDebtor($table, $conditions, $dateConditions)
         $s++;
     }
     $sql = $sql. ")";
-    $sql = $sql . " AND installment >= '0' ORDER BY id ASC LIMIT 1";
+    $sql = $sql . " AND installment >= '1' ORDER BY id ASC LIMIT 1";
     $stmt = executeQuery($sql, array_merge($conditions, $dateConditions));
-    return $stmt->get_result()->fetch_assoc();
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
 function selectAllGreater($table, $conditions = [])
