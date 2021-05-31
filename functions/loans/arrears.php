@@ -2,8 +2,8 @@
 include('../connect.php');
 session_start();
 $sessint_id = $_SESSION['int_id'];
-$date = date('Y-m-d');
-$datetime = date('Y-m-d H:i:s');
+$currentdate = date('Y-m-d');
+$currentdate_time = date('Y-m-d H:i:s');
 
 // count it
 // check it check if installment is 0 or 1.
@@ -12,7 +12,7 @@ $conditions = [
     'installment' => 1
 ];
 $dateConditions = [
-    'duedate' => $date
+    'duedate' => $currentdate
 ];
 
 $select_arrears = selectAllLessEq('loan_repayment_schedule', $conditions, $dateConditions);
@@ -59,13 +59,14 @@ if ($select_arrears) {
                     'principal_completed_derived' => $lr_principal_completed_derived,
                     'interest_amount' => $lr_interest_amount,
                     'interest_completed_derived' => $lr_interest_completed_derived,
-                    'created_date' => $datetime,
+                    'created_date' => $currentdate_time,
+                    'lastmodified_date' => $currentdate_time,
                     'completed_derived' => 1        // value as 1 means it has not been paid off
                 ];
     
                 $insertArrears = insert('loan_arrear', $arrearData);
                 if (!$insertArrears) {
-                    printf('3-Error: %s\n', mysqli_error($connection));
+                    printf('1-Error: %s\n', mysqli_error($connection));
                     exit();
     
                 } else {
@@ -76,6 +77,7 @@ if ($select_arrears) {
         } else {
 
             $currentdate = date('Y-m-d');
+            $currentdate_time = date('Y-m-d H:i:s');
             $cal_start = strtotime($lr_duedate);
             $cal_end = strtotime($currentdate);
             $days_between = ceil(abs($cal_end - $cal_start) / 86400);
@@ -103,9 +105,9 @@ if ($select_arrears) {
             $par = ($bnk_prov/$prin) * 100;
             
             $arrear_update = mysqli_query($connection, "UPDATE loan_arrear SET principal_amount = {$lr_principal_amount}, interest_amount = {$lr_interest_amount}, counter = {$days_between}, 
-            par = {$par}, bank_provision = {$bnk_prov} WHERE int_id = '$sessint_id' AND loan_id = '$lr_loan_id' AND loan_schedule_id = '$lr_schedule_id'");
+            par = {$par}, bank_provision = {$bnk_prov}, lastmodified_date = '$currentdate_time' WHERE int_id = {$sessint_id} AND loan_id = {$lr_loan_id} AND loan_schedule_id = {$lr_schedule_id}");
             if (!$arrear_update) {
-                printf('5-Error: %s\n', mysqli_error($connection)); //checking for errors
+                printf('2-Error: %s\n', mysqli_error($connection)); //checking for errors
                 exit();
             } else {
                 echo 'UPDATED SUCCESSFULLY - Loan ID: ' . $lr_loan_id . '<br>';
@@ -114,7 +116,7 @@ if ($select_arrears) {
     } 
 
 } else {
-    printf('1-Error: %s\n', mysqli_error($connection));
+    printf('3-Error: %s\n', mysqli_error($connection));
     exit();
 }
 
