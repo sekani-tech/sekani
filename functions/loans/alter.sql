@@ -1,3 +1,7 @@
+ALTER TABLE `loan_arrear` ADD `loan_schedule_id` BIGINT(20) NOT NULL AFTER `loan_id`;
+
+-----------------------------------------------------------------------------------------------------------
+
 ALTER TABLE `loan_repayment_schedule` CHANGE `principal_completed_derived` `principal_completed_derived` DECIMAL(19,2) NOT NULL DEFAULT '0.00';
 ALTER TABLE `loan_repayment_schedule` CHANGE `interest_completed_derived` `interest_completed_derived` DECIMAL(19,2) NOT NULL DEFAULT '0.00';
 ALTER TABLE `loan_repayment_schedule` CHANGE `fee_charges_completed_derived` `fee_charges_completed_derived` DECIMAL(19,2) NOT NULL DEFAULT '0.00';
