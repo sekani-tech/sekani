@@ -12,6 +12,7 @@ $debtorsCondition = [
 ];
 
 $debtorsData =  selectAllGreater('loan', $debtorsCondition);
+// dd($debtorsData);
 if (!$debtorsData) {
     printf('1-Error: %s\n', mysqli_error($connection)); //checking for errors
     exit();
@@ -526,7 +527,7 @@ foreach ($debtorsData as $key => $debtors) {
                             } else {
                                 // loan schedule data to update
                                 $loanScheduleDetails = [
-                                    'installment' => 0,
+                                    
                                     'amount_collected' => $finalBalance,
                                     'completed_derived' => 1,
                                     'obligations_met_on_date' => $today,

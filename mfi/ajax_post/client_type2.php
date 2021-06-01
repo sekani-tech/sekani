@@ -86,7 +86,7 @@ if (isset($_POST['id'])) {
         <div class="col-md-4">
         <div class="form-group">
             <label class="">Branch:</label>
-            <select class="form-control" name="branch">
+            <select class="form-control" name="branch" required>
             ' . branch_option($connection) . '
             </select>
         </div>
@@ -96,7 +96,7 @@ if (isset($_POST['id'])) {
             <div class="form-group">
                 <div class="form-group">
                 <label for="">Account Officer:</label>
-                <select name="acct_ofa" class="form-control" id="">
+                <select name="acct_ofa" class="form-control" id="" required>
                 <option value="">select account officer</option>
                 ' . fill_officer($connection) . '
                 </select>
@@ -470,7 +470,7 @@ if (isset($_POST['id'])) {
         <div class="col-md-4">
             <div class="form-group">
                 <label >Display name</label>
-                <input  type="text"  style="text-transform: uppercase;" class="form-control" name="display_name">
+                <input  type="text"  style="text-transform: uppercase;" class="form-control" name="display_name" required>
             </div>
             </div>
             <div class="col-md-4">
@@ -494,7 +494,7 @@ if (isset($_POST['id'])) {
             <div class="col-md-4">
             <div class="form-group">
                 <label >Phone No</label>
-                <input  type="tel" class="form-control" id="phone" name="phone">
+                <input  type="tel" class="form-control" id="phone" name="phone" required>
             </div>
             </div>
             <div class="col-md-4">
@@ -518,7 +518,7 @@ if (isset($_POST['id'])) {
             <div class="col-md-4">
             <div class="form-group">
                 <label >Gender:</label>
-                <select  class="form-control" name="gender" id="">
+                <select  class="form-control" name="gender" id="" required>
                 <option value="MALE">MALE</option>
                 <option value="FEMALE">FEMALE</option>
                 </select>
@@ -533,7 +533,7 @@ if (isset($_POST['id'])) {
             <div class="col-md-4">
             <div class="form-group">
                 <label class="">Branch:</label>
-                <select class="form-control" name="branch">
+                <select class="form-control" name="branch" required>
                 ' . branch_option($connection) . '
                 </select>
             </div>
@@ -631,7 +631,7 @@ if (isset($_POST['id'])) {
             
             <div class="form-group">
                 <label for="">Loan Officer:</label>
-                <select  name="acct_of" class="form-control" id="">
+                <select  name="acct_of" class="form-control" id="" required>
                 ' . fill_officer($connection) . '
                 </select>
             </div>
