@@ -41,6 +41,7 @@ if ($parent_id == 0) {
                         }
                     ?>
                     <h4 class="card-title">Matured Loans: <b><?php echo $maturedLoans; ?></b></h4>
+                    
                     <h6 class="card-category text-gray">
                         <?php
                             $getBranchName = mysqli_query($connection, "SELECT name FROM `branch` WHERE int_id = $sessint_id AND id = $branch_id");
@@ -50,6 +51,12 @@ if ($parent_id == 0) {
                             echo $branchName;
                         ?>
                     </h6>
+                    <?php
+                        $accountquery = "SELECT SUM(total_outstanding_derived) AS total_outstanding_derived FROM `loan` WHERE int_id = '$sessint_id'";
+                        $result = mysqli_query($connection, $accountquery);
+                        $totalOutstandingLoans = mysqli_fetch_array($result)['total_outstanding_derived']
+                    ?>
+                    <h4 class="card-title">Total Outstanding Loans: <b>&#8358;<?php echo number_format(round($totalOutstandingLoans), 2); ?></b></h4>
                 </div>
             </div>
 
@@ -88,7 +95,7 @@ if ($parent_id == 0) {
                                 ?>
                                     <td><?php echo $name; ?></td>
                                     <td><?php echo number_format($row["principal_amount"], 2); ?></td>
-                                    <td><?php echo $row["loan_term"]; ?></td>
+                                    <td><?php echo $row["loan_term"] . " " . $row['repay_every']; ?></td>
                                     <td><?php echo $row["disbursement_date"]; ?></td>
                                     <td><?php echo $row["maturedon_date"]; ?></td>
                                     <td><?php echo number_format(round($row["total_outstanding_derived"]), 2); ?></td>
