@@ -827,12 +827,12 @@ else if (isset($_GET["view19"])) {
                                                     <?php
                                                     $get_loan = mysqli_query($connection, "SELECT loan_term, total_outstanding_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
                                                     $mik = mysqli_fetch_array($get_loan);
-                                                    $l_n = $mik["loan_term"];
+                                                    $loan_term = $mik["loan_term"];
                                                     $t_o = $mik['total_outstanding_derived'];
                                                     ?>
                                                     <th>NGN <?php echo number_format($row["principal_amount"], 2); ?></th>
                                                     <th>NGN <?php echo number_format($row["interest_amount"], 2); ?></th>
-                                                    <th><?php echo $l_n; ?></th>
+                                                    <th><?php echo $loan_term; ?></th>
                                                     <th><?php echo $row["fromdate"]; ?></th>
                                                     <th>NGN <?php echo number_format($t_o, 2); ?></th>
                                                 </tr>
@@ -964,12 +964,12 @@ else if (isset($_GET["view19"])) {
                                                     <?php
                                                     $get_loan = mysqli_query($connection, "SELECT loan_term, total_outstanding_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
                                                     $mik = mysqli_fetch_array($get_loan);
-                                                    $l_n = $mik["loan_term"];
+                                                    $loan_term = $mik["loan_term"];
                                                     $t_o = $mik["total_outstanding_derived"];
                                                     ?>
                                                     <th>NGN <?php echo number_format($row["principal_amount"], 2); ?></th>
                                                     <th>NGN <?php echo number_format($row["interest_amount"], 2); ?></th>
-                                                    <th><?php echo $l_n; ?></th>
+                                                    <th><?php echo $loan_term; ?></th>
                                                     <th><?php echo $row["fromdate"]; ?></th>
                                                     <th>NGN <?php echo number_format($t_o, 2); ?></th>
                                                     <?php
@@ -1153,6 +1153,7 @@ else if (isset($_GET["view19"])) {
 <?php
 } else if (isset($_GET["view45"])) {
 ?>
+    <!-- if a customer's loan in arrears has a value of 0.00, it should no longer be displayed -->
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -1167,7 +1168,7 @@ else if (isset($_GET["view19"])) {
                                 if ($result) {
                                     $inr = mysqli_num_rows($result);
                                     echo $inr;
-                                } ?> loans past due date</p>
+                                } ?> loan(s) past due date</p>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -1186,66 +1187,63 @@ else if (isset($_GET["view19"])) {
                                                     Principal Due
                                                 </th>
                                                 <th>
-                                                    Days in Arrears
+                                                    Interest Due
                                                 </th>
                                                 <th>
-                                                    Interest Due
+                                                    Days in Arrears
                                                 </th>
                                                 <th>
                                                     Loan Term
                                                 </th>
                                                 <th>
-                                                    Disbursement Date
+                                                    Maturity Date
+                                                    <!-- the due date for a customer to make last repayment of a loan based on disbursement date and loan term values -->
                                                 </th>
                                                 <th>
-                                                    Repayment Date
+                                                    Last Repayment Date
+                                                    <!-- the date when a customer made his last repayment -->
                                                 </th>
                                                 <th>
-                                                    Outstanding Loan Balance
-                                                </th>
-                                                <th>
-                                                    Status
+                                                    Amount in Arrears
                                                 </th>
                                             </thead>
                                             <tbody>
                                                 <?php if (mysqli_num_rows($result) > 0) {
                                                     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
                                                         <tr>
-                                                            <?php $std = date("Y-m-d");
-                                                            ?>
-                                                            <?php $row["id"];
+                                                            <?php 
+                                                            $std = date("Y-m-d");
                                                             $loan_id = $row["loan_id"];
-                                                            $install = $row["installment"];
-                                                            if ($install == 0) {
-                                                                $install = "Paid";
-                                                            } else {
-                                                                $install = "Pending";
-                                                            }
-                                                            ?>
-                                                            <?php
                                                             $name = $row['client_id'];
                                                             $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
                                                             $f = mysqli_fetch_array($anam);
                                                             $nae = strtoupper($f["firstname"] . " " . $f["lastname"]);
                                                             ?>
                                                             <th><?php echo $nae; ?></th>
+
                                                             <?php
-                                                            $get_loan = mysqli_query($connection, "SELECT loan_term, total_outstanding_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
+                                                            $get_loan = mysqli_query($connection, "SELECT loan_term, repay_every, maturedon_date, total_outstanding_derived FROM loan WHERE id = '$loan_id' AND int_id = '$sessint_id'");
                                                             $mik = mysqli_fetch_array($get_loan);
-                                                            $l_n = $mik["loan_term"];
-                                                            $eos = $row["installment"];
-                                                            if ($eos == 1) {
-                                                                $eod = "Not Paid";
-                                                            } elseif ($eos == 0) {
-                                                                $eod = "Paid";
+                                                            $loan_term = $mik["loan_term"];
+                                                            $repay_every = $mik['repay_every'];
+                                                            $maturity_date = $mik['maturedon_date'];
+                                                            ?>
+                                                            <th><?php echo number_format(round($row["principal_amount"]), 2); ?></th>
+                                                            <th><?php echo number_format(round($row["interest_amount"]), 2); ?></th>
+                                                            <th><?php echo $row["counter"]; ?></th>
+                                                            <th><?php echo $loan_term . " " . $repay_every; ?></th>
+                                                            <th><?php echo $maturity_date; ?></th>
+
+                                                            <?php
+                                                            $get_last_repay_date = mysqli_query($connection, "SELECT transaction_date FROM `loan_transaction` WHERE int_id = '$sessint_id' AND loan_id = '$loan_id' ORDER BY transaction_date DESC LIMIT 1");
+                                                            if(mysqli_num_rows($get_last_repay_date) == 1) {
+                                                                $last_repay_date = mysqli_fetch_array($get_last_repay_date)['transaction_date'];
+                                                            } else {
+                                                                $last_repay_date = 'NIL';
                                                             }
                                                             ?>
-                                                            <th><?php echo number_format($row["principal_amount"], 2); ?></th>
-                                                            <th><?php echo $row["counter"]; ?></th>
-                                                            <th><?php echo number_format($row["interest_amount"], 2); ?></th>
-                                                            <th><?php echo $l_n; ?></th>
-                                                            <th><?php echo $row["fromdate"]; ?></th>
-                                                            <th><?php echo $row["duedate"]; ?></th>
+                                                            <th><?php echo $last_repay_date; ?></th>
+
                                                             <?php
                                                             $cli_id = $row["client_id"];
                                                             $sf = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND id = '$loan_id' AND client_id = '$cli_id'";
@@ -1255,7 +1253,6 @@ else if (isset($_GET["view19"])) {
                                                             }
                                                             ?>
                                                             <th><?php echo number_format(round($outbalance), 2); ?></th>
-                                                            <th><?php echo $eod; ?></th>
 
                                                             <?php
 

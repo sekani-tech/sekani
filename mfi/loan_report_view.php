@@ -132,36 +132,17 @@ $contract_principal = number_format($qpo["principal_amount_proposed"], 2);
 
 $query_sum_interest =  mysqli_query($connection, "SELECT SUM(interest_amount) AS contract_interest FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id'");
 $qpox = mysqli_fetch_array($query_sum_interest);
-$contract_interest = number_format($qpox["contract_interest"], 2);
+$contract_interest = number_format(round($qpox["contract_interest"]), 2);
 
 
 /* paid */
-$query_principal_paid = mysqli_query($connection, "SELECT * FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id' AND installment = 0");
-if (mysqli_num_rows($query_principal_paid) > 0) {
-  while ($qps = mysqli_fetch_array($query_principal_paid)) {
-    // make an arrears search
-    $pd_loan_id = $qps["id"];
-    $query_arrears_loan  = mysqli_query($connection, "SELECT * FROM `loan_arrear` WHERE loan_id = '$pd_loan_id' AND int_id = '$sessint_id'");
+$query_paid_principal = mysqli_query($connection, "SELECT SUM(principal_completed_derived) AS principal_completed FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id'");
+$mmx = mysqli_fetch_array($query_paid_principal);
+$paid_principal = number_format(round($mmx["principal_completed"]), 2);
 
-    if (mysqli_num_rows($query_arrears_loan) > 0) {
-      echo "x";
-      
-    } else {
-      $query_paid_principal = mysqli_query($connection, "SELECT SUM(principal_amount) as principal_amount, SUM(principal_completed_derived) AS principal_outstanding FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id'");
-      $mmx = mysqli_fetch_array($query_paid_principal);
-      $paid_principal = $mmx["principal_amount"] - $mmx["principal_outstanding"];
-      $paid_principal = number_format($paid_principal, 2);
-
-      $query_paid_interest = mysqli_query($connection, "SELECT SUM(interest_amount) as interest_amount, SUM(interest_completed_derived) AS interest_outstanding FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id'");
-      $mmxx = mysqli_fetch_array($query_paid_interest);
-      $paid_interest = $mmxx["interest_amount"] - $mmxx["interest_outstanding"];
-      $paid_interest = number_format($paid_interest, 2);
-    }
-  }
-} else {
-  $paid_principal = "0.00";
-  $paid_interest = "0.00";
-}
+$query_paid_interest = mysqli_query($connection, "SELECT SUM(interest_completed_derived) AS interest_completed FROM `loan_repayment_schedule` WHERE int_id = '$sessint_id' AND loan_id = '$id'");
+$mmxx = mysqli_fetch_array($query_paid_interest);
+$paid_interest = number_format(round($mmxx["interest_completed"]), 2);
 
 /* outstanding */
 $date_new = date('Y-m-d');
@@ -418,7 +399,7 @@ $overdue_interest = $wtyx["overdue_interest"];
                           </div>
                           <div class="col-md-3">
                             <?php
-                              $daysInArrears = mysqli_query($connection, "SELECT counter FROM loan_arrear WHERE loan_id = '$id'");
+                              $daysInArrears = mysqli_query($connection, "SELECT counter FROM loan_arrear WHERE int_id = '$sessint_id' AND loan_id = '$id' AND completed_derived = '1'");
                               if(mysqli_num_rows($daysInArrears) > 0) {
                                 $daysInArrears = mysqli_fetch_array($daysInArrears);
                                 echo $daysInArrears["counter"];
@@ -630,7 +611,7 @@ $overdue_interest = $wtyx["overdue_interest"];
                           $current_date = date('Y-m-d');
                           $due_d = $row["duedate"];
                           
-                          $query_arrears = mysqli_query($connection, "SELECT * FROM `loan_arrear` WHERE ((loan_id = '$loan_id' AND duedate = '$due_d') AND installment > 0) ORDER BY id DESC LIMIT 1");
+                          $query_arrears = mysqli_query($connection, "SELECT * FROM `loan_arrear` WHERE loan_id = '$loan_id' AND duedate = '$due_d' AND loan_schedule_id = {$row['id']} AND completed_derived = 1");
                           if (mysqli_num_rows($query_arrears) > 0) {
                               $mxv = mysqli_fetch_array($query_arrears);
                               $pina = $mxv["principal_amount"];
