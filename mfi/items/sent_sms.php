@@ -21,6 +21,7 @@
                       <th>Transaction Date</th>
                       <th>Sent Time</th>
                       <th>Mobile No</th>
+                      <th>Status</th>
                       <th>Message</th>
                     </thead>
                     <tbody>

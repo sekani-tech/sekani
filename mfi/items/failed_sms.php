@@ -7,7 +7,7 @@
                   <h4 class="card-title">Failed SMS</h4>
                 </div>
                 <div class="card-body">
-                <?php
+                  <?php
 
                   $smsSearchConditions = [
                     'int_id' => $sessint_id,
@@ -57,6 +57,6 @@
 
           <script>
             $(document).ready(function() {
-    $('#sent').DataTable();
-} );
+              $('#sent').DataTable();
+            });
           </script>

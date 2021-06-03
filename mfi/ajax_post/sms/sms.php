@@ -6,10 +6,10 @@ include("../../../functions/connect.php");
 session_start();
 $institutionId = $_SESSION["int_id"];
 $branchId = $_SESSION["branch_id"];
-$senderId = $_SESSION['sender_id'];
-
+$senderId = $_SESSION["sender_id"];
+$today = date('Y-m-d');
 // collect clien Post data
-$mobileNo = $_POST['phone'];
+$mobileNo = $_POST["phone"];
 $clientId = $_POST["client_id"];
 $accountNo = $_POST["account_no"];
 $msg = $_POST['msg'];
@@ -33,19 +33,19 @@ if ($senderId != "" && $mobileNo != "" && $msg != "" && $senderId != "" && $bran
     ];
     $insertTest = insert('test_data', $testData);
     $condition = [
-        'int_id' => $senderId
+        'int_id' => $institutionId
     ];
     $walletData = selectOne('sekani_wallet', $condition);
     if(!$walletData) {
        printf("Error: \n", mysqli_error($connection));//checking for errors
        exit();
     }
-    $walletId = $walletDatas["id"];
+    $walletId = $walletData["id"];
     $smsBalance = $walletData["sms_balance"];
     $total_with = $walletData["total_withdrawal"];
     $total_int_profit = $walletData["int_profit"];
     $total_sekani_charge = $walletData["sekani_charge"];
-    $total_merchant_charge = $walletDatas["merchant_charge"];
+    $total_merchant_charge = $walletData["merchant_charge"];
     if ($smsBalance >= 4) {
 
       $curl = curl_init();
@@ -168,14 +168,11 @@ if ($senderId != "" && $mobileNo != "" && $msg != "" && $senderId != "" && $bran
                 `merchant_charge` => $cal_mch
             ];
             $insert_transaction = insert('sekani_wallet_transaction', $transactionData);
-            // $insert_transaction = mysqli_query($connection, "INSERT INTO `sekani_wallet_transaction` (`int_id`, `branch_id`, `transaction_id`, `description`, `transaction_type`, `teller_id`, `is_reversed`, `transaction_date`, `amount`, `wallet_balance_derived`, `overdraft_amount_derived`, `balance_end_date_derived`, 
-            // `balance_number_of_days_derived`, `cumulative_balance_derived`, `created_date`, `manually_adjusted_or_reversed`, `credit`, `debit`,
-            // `int_profit`, `sekani_charge`, `merchant_charge`)
-            // VALUES ('{$senderId}', '{$branchId}', '{$trans}', 'SMS charge', 'sms', NULL, '0', '{$date}', '4', '{$cal_bal}', '{$cal_bal}', {$date}, 
-            // NULL, NULL, '{$date2}', '0', '0.00', '4.00', '{$cal_int_prof}', '{$cal_sek}', '{$cal_mch}')");
+            
             if ($insert_transaction) {
               // store SMS charge
               $insert_qualif = mysqli_query($connection, "INSERT INTO `sms_charge` (`int_id`, `branch_id`, `trans_id`, `client_id`, `account_no`, `amount`, `charge_date`) VALUES ('{$senderId}', '{$branchId}', '{$trans}', '{$client_id}', '{$acct_no}', '4', '{$date}')");
+              echo "Successful";
             }else {
                 printf("'Error: \n'", mysqli_error($connection));//checking for errors
             exit();

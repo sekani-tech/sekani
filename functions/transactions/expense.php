@@ -272,7 +272,7 @@ if ($isBank == 0) {
                                 ];
                                 $transactionDetail = insert('gl_account_transaction', $transactionHistory);
                                 // dd($transactionDetail);
-                                var_dump($transactionDetail);
+                                // var_dump($transactionDetail);
                                 if ($transactionDetail) {
                                     // now we will send a mail
                                     $_SESSION["Lack_of_intfund_$randms"] = "Expense Successful";
