@@ -16,7 +16,7 @@
                   $findSMS = selectAllWithOrder('sms_record', $smsSearchConditions, "action_stamp", "ASC");
 
                   ?>
-                  <table class="table">
+                  <table id="tablee" class="table table-striped table-bordered">
                     <thead>
                       <th>Transaction Date</th>
                       <th>Sent Time</th>
@@ -54,3 +54,9 @@
               </div> -->
             </div>
           </div>
+
+          <script>
+          $(document).ready(function() {
+    $('#tablee').DataTable();
+} );
+          </script>

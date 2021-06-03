@@ -17,12 +17,12 @@
                   $findSMS = selectAllWithOrder('sms_record', $smsSearchConditions, "action_stamp", "ASC");
 
                   ?>
-                  <table class="table">
+                  <table id="sent" class="table table-striped table-bordered">
                     <thead>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
+                      <th>Transaction Date</th>
+                      <th>Time Sent</th>
+                      <th>Mobile Number</th>
+                      <th>Message</th>
                     </thead>
                     <tbody>
                       <?php
@@ -54,3 +54,9 @@
               </div> -->
             </div>
           </div>
+
+          <script>
+            $(document).ready(function() {
+    $('#sent').DataTable();
+} );
+          </script>
