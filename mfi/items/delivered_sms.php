@@ -1,57 +1,56 @@
           <!-- your content here -->
           <div class="row">
             <div class="col-md-12">
-            <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title">Delivered SMS</h4>
-                </div>
-                <div class="card-body">
-                  <form action="">
-                    <div class="row">
-                      <div class="form-group col-md-3">
-                        <label for="">From:</label>
-                        <input type="text" name="" id="" class="form-control">
-                      </div>
-                      <div class="form-group col-md-3">
-                        <label for="">To:</label>
-                        <input type="text" name="" id="" class="form-control">
-                      </div>
-                    </div>
-                    <button type="reset" class="btn btn-danger">Reset</button>
-                    <button type="submit" class="btn btn-primary">Filter</button>
-                  </form>
-                </div>
-              </div>
-              
+
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Requested Delivered SMS</h4>
+                  <h4 class="card-title"> Delivered SMS</h4>
                 </div>
                 <div class="card-body">
+                  <?php
+
+                  $smsSearchConditions = [
+                    'int_id' => $sessint_id,
+                    'branch_id' => $branch_id,
+                    'status' => "ACCEPTED"
+                  ];
+                  $findSMS = selectAllWithOrder('sms_record', $smsSearchConditions, "action_stamp", "ASC");
+
+                  ?>
                   <table class="table">
                     <thead>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                      <th>Transaction Date</th>
+                      <th>Sent Time</th>
+                      <th>Mobile No</th>
+                      <th>Message</th>
                     </thead>
                     <tbody>
+                      <?php
+
+                      foreach ($findSMS as $keys => $rows) {
+
+                      ?>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                          <td> <?php echo $rows['transaction_date'] ?> </td>
+                          <td> <?php echo $rows['action_stamp'] ?> </td>
+                          <td> <?php echo $rows['mobile_no'] ?> </td>
+                          <td> <?php echo $rows["message"] ?> </td>
                         </tr>
+                      <?php
+
+                      }
+
+                      ?>
                     </tbody>
                   </table>
                 </div>
               </div>
               <!--//report ends here -->
-              <div class="card">
-                 <div class="card-body">
+              <!-- <div class="card">
+                <div class="card-body">
                   <a href="" class="btn btn-primary">Back</a>
                   <a href="" class="btn btn-success btn-left">Print</a>
-                 </div>
-               </div> 
+                </div>
+              </div> -->
             </div>
           </div>

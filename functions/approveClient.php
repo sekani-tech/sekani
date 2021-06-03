@@ -9,6 +9,7 @@ if (isset($_GET["edit"])) {
 $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
 $date = date('Y-m-d h:m:s');
+$today = date('Y-m-d');
 
 $appclient = "UPDATE client SET status = 'Approved', activation_date = '$date'  WHERE id = '$id'";
 $intName = $_SESSION["int_name"];
@@ -26,8 +27,8 @@ $updatedOn =  $clientDetails['updated_on'];
 $queryd = mysqli_query($connection, "SELECT * FROM savings_product WHERE id='$acctType'");
 $res = mysqli_fetch_array($queryd);
 $acctName = $res['name'];
-$message = "Dear {$clientName}, \n Welcome to {$intName}, your {$acctName} - ({$accountNo}) is open for Transactions.";
-echo $msg = mysqli_real_escape_string($connection, $message);
+$msg = "Dear {$clientName},\n Welcome to {$intName}, your {$acctName} - ({$accountNo}) is open for Transactions.";
+// echo $msg = mysqli_real_escape_string($connection, $message);
 // creating unique message ID
 $digit = 9;
 $messageId = str_pad(rand(0, pow(10, $digit) - 1), $digit, '0', STR_PAD_LEFT);

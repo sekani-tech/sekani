@@ -100,7 +100,7 @@ if (isset($_GET["message0"])) {
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#structure" data-toggle="tab">
-                      <i class="material-icons">supervisor_account</i> Fixed SMS
+                      <i class="material-icons">supervisor_account</i> Failed SMS
                       <div class="ripple-container"></div>
                     </a>
                   </li>
