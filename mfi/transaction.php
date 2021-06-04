@@ -77,7 +77,8 @@ include("header.php");
             <p class="card-description">
               Issue Check/Pass books to clients
             </p>
-            <a href="cheque_book_posting.php" class="btn btn-white btn-round">View</a>
+            <!-- <a href="cheque_book_posting.php" class="btn btn-white btn-round">View</a> -->
+            <a href="#" class="btn btn-white btn-round">View</a>
           </div>
         </div>
 
@@ -120,7 +121,8 @@ include("header.php");
             <p class="card-description">
               Disburse Loans to registered Groups
             </p>
-            <a href="group_loan.php" class="btn btn-white btn-round">View</a>
+            <!-- <a href="group_loan.php" class="btn btn-white btn-round">View</a> -->
+            <a href="#" class="btn btn-white btn-round">View</a>
           </div>
         </div>
       </div>
@@ -178,7 +180,8 @@ include("header.php");
             <p class="card-description">
               Make deposits or withdrawal for group accounts
             </p>
-            <a href="grouptrans.php" class="btn btn-white btn-round">View</a>
+            <!-- <a href="grouptrans.php" class="btn btn-white btn-round">View</a> -->
+            <a href="#" class="btn btn-white btn-round">View</a>
           </div>
         </div>
       </div>
@@ -192,7 +195,8 @@ include("header.php");
             <p class="card-description">
               Book Shares
             </p>
-            <a href="shares_booking.php" class="btn btn-white btn-round">View</a>
+            <!-- <a href="shares_booking.php" class="btn btn-white btn-round">View</a> -->
+            <a href="#" class="btn btn-white btn-round">View</a>
           </div>
         </div>
       </div>

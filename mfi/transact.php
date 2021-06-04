@@ -480,9 +480,9 @@ if ($trans_post == 1 || $trans_post == "1") {
                                             <div id="acWrapXXX" class="acWrap">
                                                 <input type="text" class="form-control actName" id="actName">
                                                 <input type="text" class="form-control" hidden name=""
-                                                   value="<?php echo $sessint_id; ?>" id="int_id">
+                                                   value="<?php // echo $sessint_id; ?>" id="int_id">
                                                 <input type="text" class="form-control" hidden id="branch_id"
-                                                   value="<?php echo $branch_id ?>">
+                                                   value="<?php // echo $branch_id ?>">
                                                 <div id="acBoxXXX" class="acBox">
                                                     <div>Option A</div>
                                                     <div>Option B</div>

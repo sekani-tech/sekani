@@ -471,7 +471,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">Income and Liabilities</h4>
-                            <!-- <p class="card-category">Fill in all important data</p> -->
+                            <p class="card-category">Make deductions from clients accounts and fund your Gl (<i>Applies to loan recovery, charges and other similar transactions</i>) </p>
                         </div>
                         <div class="card-body">
                             <form action="../functions/gl_transactions/income_liability_credit.php" method="post" autocomplete="off">
@@ -616,6 +616,48 @@ if ($trans_post == 1 || $trans_post == "1") {
                                             </label>
                                         </div>
                                         <!-- </div> -->
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#charge').on("change", function() {
+                                                    var charge = $(this).val();
+                                                    $.ajax({
+                                                        url: "ajax_post/function/charge_id.php",
+                                                        method: "POST",
+                                                        data: {
+                                                            charge: charge
+                                                        },
+                                                        success: function(data) {
+                                                            $('#transid').val(data);
+                                                        }
+                                                    })
+                                                });
+                                                $('input[type="checkbox"]').click(function() {
+                                                    if ($(this).is(":checked")) {
+                                                        var value = 1;
+                                                        $('#charge').val(value);
+                                                        console.log("Checkbox is checked.");
+                                                    } else if ($(this).is(":not(:checked)")) {
+                                                        var value = 0;
+                                                        $('#charge').val(value);
+                                                        console.log("Checkbox is unchecked.");
+                                                    }
+                                                });
+                                            });
+                                        </script>
+                                        <!-- <div class="form-group"> -->
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" value="1" id="charge">
+                                                Mark as Charge
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <!-- </div> -->
+                                    </div>
+                                    <div class="col-md-6">
+                                        
                                     </div>
                                 </div>
                                 <button type="reset" class="btn btn-danger">Reset</button>

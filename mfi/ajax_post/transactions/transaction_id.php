@@ -13,14 +13,14 @@ if ($isBank == 1) {
 ?>
     <div class="form-group">
         <label for="">Transaction ID (Insert Bank's Deposit slip ID or Transaction ID):</label>
-        <input type="text" name="transid" class="form-control">
+        <input type="text" name="transid" class="form-control" required>
     </div>
 <?php
 } else {
 ?>
     <div class="form-group">
         <label for="">Transaction ID(Cheque no, Transfer Id, Deposit Id):</label>
-        <input type="text" value="<?php echo $randms; ?>" name="transid" class="form-control" readonly>
+        <input type="text" value="<?php echo $randms; ?>" name="transid" class="form-control" required readonly>
     </div>
 <?php
 }
