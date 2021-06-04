@@ -157,4 +157,5 @@ $mpdf->WriteHTML('<link rel="stylesheet" media="print" href="pdf/style.css" medi
 
 $file_name = 'client-list-report-'.$date.'.pdf';
 $mpdf->Output($file_name, 'D');
+
 ?>
