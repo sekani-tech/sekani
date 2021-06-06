@@ -70,6 +70,51 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
             $storeTransaction = insert('account_transaction', $transactionDetails);
             if ($storeTransaction) {
                 // update gl and record history of transaction
+                // updating savings portfolio
+                $findSavingsGl = selectOne('savings_acct_rule', ['savings_product_id' => $productId, 'int_id' => $institutionId]);
+                $savingsGlcode = $findSavingsGl['asst_loan_port'];
+                $savingsGlConditions = [
+                    'int_id' => $institutionId,
+                    'gl_code' => $savingsGlcode
+                ];
+                $findGl = selectOne('acc_gl_account', $savingsGlConditions);
+                $glBalance = $findGl['organization_running_balance_derived'];
+                $glSavingsID = $findGl['id'];
+                $glSavingsParent = $findGl['parent_id'];
+                // $conditionsGlUpdate = [
+                //     'int_id' => $institutionId,
+                //     'gl_code' => $savingsGlcode
+                // ];
+                $newGlBalnce = $glBalance - $amount;
+                $updateSavingsGlDetails = [
+                    'organization_running_balance_derived' => $newGlBalnce
+                ];
+                $updateSavingsGlBalance = update('acc_gl_account', $glSavingsID, 'id', $updateSavingsGlDetails);
+                if ($updateSavingsGlBalance) {
+                    $glSavingsTransactionDetails = [
+                        'int_id' => $institutionId,
+                        'branch_id' => $branchId,
+                        'gl_code' => $savingsGlcode,
+                        'parent_id' => $glSavingsParent,
+                        'transaction_id' => $transacionId,
+                        'description' => $description,
+                        'transaction_type' => "debit",
+                        'transaction_date' => $today,
+                        'amount' => $amount,
+                        'gl_account_balance_derived' => $newGlBalnce,
+                        'overdraft_amount_derived' => $amount,
+                        'cumulative_balance_derived' => $newGlBalnce,
+                        'debit' => $amount
+                    ];
+                    $storeSavingsGlTransaction = insert('gl_account_transaction', $glSavingsTransactionDetails);
+                    if (!$storeSavingsGlTransaction) {
+                        printf("<br>1-Error: \n", mysqli_error($connection)); //checking for errors
+                        exit();
+                    } else {
+                        echo "Debit Success <br>";
+                    }
+                }
+                // credit gl
                 $glConditions = [
                     'int_id' => $institutionId,
                     'gl_code' => $glAccount
