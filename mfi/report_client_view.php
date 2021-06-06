@@ -389,7 +389,6 @@ if (isset($_GET["view1"])) {
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Clients</h4>
-
                             <!-- Insert number users institutions -->
                             <p class="card-category">
                                 <?php
