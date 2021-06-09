@@ -7,13 +7,17 @@ if (isset($_POST['id'])) {
     $id = $_POST['id'];
     if ($id > 0) {
         // Check record exists
-        $findRecord = selectAll('account_transaction', ['id' => $id]);
+        $recordCondition = [
+            'id' => $id
+        ];
+        $findRecord = selectOne('account_transaction', $recordCondition);
         $transactionId = $findRecord['transaction_id'];
         $accountNo = $findRecord['account_no'];
+        $institutionId = $findRecord['int_id'];
         $credit = $findRecord['credit'];
         $debit = $findRecord['debit'];
-        if($credit > 0){
-            $findAccount = selectAll('account', ['account_no' => $accountNo]);
+        if ($credit > 0) {
+            $findAccount = selectOne('account', ['account_no' => $accountNo]);
             $accountBalance = $findAccount['account_balance_derived'];
             $accountId = $findAccount['id'];
             $productId = $findAccount['product_id'];
@@ -40,8 +44,8 @@ if (isset($_POST['id'])) {
                 'organization_running_balance_derived' => $newGlBalnce
             ];
             $updateGlBalance = update('acc_gl_account', $glID, 'id', $updateGlDetails);
-        }else{
-            $findAccount = selectAll('account', ['account_no' => $accountNo]);
+        } else {
+            $findAccount = selectOne('account', ['account_no' => $accountNo]);
             $accountBalance = $findAccount['account_balance_derived'];
             $accountId = $findAccount['id'];
             $productId = $findAccount['product_id'];
@@ -72,6 +76,10 @@ if (isset($_POST['id'])) {
         $deleteTellerRecord = delete('institution_account_transaction', $transactionId, 'transaction_id');
         $deleteGlRecord = delete('gl_account_transaction', $transactionId, 'transaction_id');
         $deleteRecord = delete('account_transaction', $id, 'id');
+        if (!$deleteRecord) {
+            printf("Error: \n", mysqli_error($connection)); //checking for errors
+            exit();
+        }
         if ($deleteRecord) {
             echo 1;
             exit;

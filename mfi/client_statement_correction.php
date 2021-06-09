@@ -48,10 +48,14 @@ include("header.php");
                                         <div id="accname"></div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label><span style="color: red;"></span></label><br>
+                                        <!-- <div class="form-group"> -->
+                                            <!-- <label><span style="color: red;"></span></label><br> -->
                                             <button type="button" name="display" id ="display" class="btn btn-primary btn-round">Show Statement</button>
-                                        </div>
+                                        <!-- </div> -->
+                                        <!-- <div class="form-group"> -->
+                                            <!-- <label><span style="color: red;"></span></label><br> -->
+                                            <button type="button" name="correctFlow" id ="correctFlow" class="btn btn-primary btn-round">Correct Statement</button>
+                                        <!-- </div> -->
                                     </div>
                                 
                                 </div>
@@ -125,11 +129,30 @@ include("header.php");
                         }
                     })
                 });
+                $('#correctFlow').on("click", function() {
+                    var account_no = $('#account_no').val();
+                    // var end = $('#end').val();
+                    var int_id = $('#int_id').val();
+
+                    $.ajax({
+                        url: "ajax_post/support/correct_statement.php",
+                        method: "POST",
+                        data: {
+                            account_no: account_no,
+                            // end: end,
+                            int_id: int_id
+                        },
+                        success: function(data) {
+                            $('#showStatement').html(data);
+                        }
+                    })
+                });
+                $('#dope').DataTable({
+                    serverSide: true,
+                    // ajax: 'ajax_post/support/account_statement.php'
+                });
             });
-            $('#dope').DataTable({
-                serverSide: true,
-                // ajax: 'ajax_post/support/account_statement.php'
-            });
+            
         </script>
 
 
