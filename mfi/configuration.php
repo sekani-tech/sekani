@@ -286,9 +286,9 @@ $(document).ready(function(){
                     <div class="card card-pricing bg-primary">
                         <div class="card-body ">
 
-                            <h4 class="card-title">Create client</h4>
+                            <h4 class="card-title">Support</h4>
                             <p class="card-description">
-                                Create client with BVN
+                                Support functions
                             </p>
                             <a href="client_create.php" class="btn btn-white btn-round">View</a>
                         </div>

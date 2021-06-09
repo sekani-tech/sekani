@@ -20,7 +20,8 @@ if (count([$getacct1]) == 1) {
     $staff_name = $uw['display_name'];
 }
 // $staff_name  = strtoupper($_SESSION["username"]);
-$gen_date = date('Y-m-d H:i:s');
+$gen_date = $_POST['transDate'];
+// $gen_date = date('Y-m-d H:i:s');
 ?>
 
 <?php
