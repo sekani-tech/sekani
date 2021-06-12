@@ -778,27 +778,25 @@ function endOfMonth($closedDate,$connection) {
         //Insert into the endofmonth table if it is set
         $endofthemonth = insert('endofmonth_tb',$data);
 
-        // check if day has ended, if not mark the day as ended
-        $day = getDay($closedDate);
-        //1. from victor...
-
+        //1. check if day has ended, if not mark the day as ended
+        // $day = getDay($closedDate);
+        // from victor...
 
         // run asset depreciation
         include('../asset_depreciation.php');   
         asset_depreciation($connection);
 
-        // update balance sheet
-        //2. from victor...
+        //2. update balance sheet
+        // from victor...
 
         //3. ALSO, WHAT HAPPENS TO THIS CLOSED ACTION BUTTON IN FRONT-END : should it be deleted & immediately dissapear
         // from victor...
 
         //4. run charge collection (charges that are meant to be collected at the end of the month)
-        // not written.../couldn't find // no context to write
+        // no functions found...
 
         //5. run prepayment function
-        // not written.../couldn't find // no context to write
-        // include('../../script/GL/UGLB.php')
+        // no functions found...
 
         //Send report header on succesful closing of the month
         return 0;
