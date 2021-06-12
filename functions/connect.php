@@ -434,6 +434,8 @@ function searchGroup($table1, $int_id, $term)
 // from an associative array and completely SQL-injection safe
 
 function insert($table, $record) {
+
+
     global $connection;
     $cols = array();
     $vals = array();
@@ -746,3 +748,60 @@ function sumIn($sum, $table, $conditions, $notIn, $table2, $sort, $conditions2)
     $stmt = executeQuery2($sql, array_merge($conditions, $conditions2));
     return $stmt->get_result()->fetch_assoc();
 }
+
+function getMonthName($monthNum) {
+    $dateObj = DateTime::createFromFormat('!m', $monthNum);
+    return $dateObj->format('F');
+}
+
+function endOfMonth($closedDate,$connection) {
+    $month = getMonthName((int)getMonth($closedDate));
+    $year = getYear($closedDate);
+
+    $data = [
+        'int_id' => $_SESSION['int_id'],
+        'branch_id' => $_SESSION['branch_id'],
+        'staff_id' => $_SESSION['staff_id'],
+        'manual_posted' => 1,
+        'closed_date' => $closedDate,
+        'month' => $month,
+        'year' => $year
+    ];
+
+    // Check if the month & same year has been ended if not perform below
+    $existingClosedMonth = selectAll('endofmonth_tb', ['month'=>$month,'year'=>$year]);
+
+    if(count($existingClosedMonth) > 0) {
+        // Month already exists
+        return "Ended Month already exists.";
+    } else {
+        //Insert into the endofmonth table if it is set
+        $endofthemonth = insert('endofmonth_tb',$data);
+
+        // check if day has ended, if not mark the day as ended
+        $day = getDay($closedDate);
+        //1. from victor...
+
+
+        // run asset depreciation
+        include('../asset_depreciation.php');   
+        asset_depreciation($connection);
+
+        // update balance sheet
+        //2. from victor...
+
+        //3. ALSO, WHAT HAPPENS TO THIS CLOSED ACTION BUTTON IN FRONT-END : should it be deleted & immediately dissapear
+        // from victor...
+
+        //4. run charge collection (charges that are meant to be collected at the end of the month)
+        // not written.../couldn't find // no context to write
+
+        //5. run prepayment function
+        // not written.../couldn't find // no context to write
+        // include('../../script/GL/UGLB.php')
+
+        //Send report header on succesful closing of the month
+        return 0;
+    }
+}
+

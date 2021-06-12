@@ -1,6 +1,7 @@
 <?php
 /////////////////////// AUTO CODE TO CALCULATE THE DEPRECIATION OF ALL ASSETS IN AN INSTITUTION ///////////////////////
-$sessint_id = $_SESSION['int_id'];
+function asset_depreciation($connection) {
+    $sessint_id = $_SESSION['int_id'];
 
 // Pull all assets
 $ifdo = mysqli_query($connection, "SELECT * FROM assets WHERE int_id = {$sessint_id}");
@@ -51,4 +52,5 @@ while($pd = mysqli_fetch_array($ifdo)){
     if($dos){
         echo 'Depreciation Value for '.$asset_name.' with int_id '.$int_id.' was calculated</br>';
     }
+}
 }
