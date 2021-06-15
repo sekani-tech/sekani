@@ -6,7 +6,7 @@ include("../ajax/ajaxcall.php");
 session_start();
 $today = date("Y-m-d");
 $institutionId =  $_SESSION['int_id'];
-$senderId = $_SESSION['int_id'];
+$senderId = $_SESSION['sender_id'];
 $branchId = $_SESSION['branch_id'];
 $userId = $_SESSION['user_id'];
 if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
@@ -14,7 +14,9 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
     $amount = $_POST["amount"];
     $manualPaymentDate = $_POST["payment_date"];
     $manualPaymentType = $_POST["payment_type"];
-
+    $digits = 10;
+    $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+    $transactionId = "Loan_" . $randms;
     $scheduleId = $_POST["out_id"];
     // loan details
     $loanScheduleDetails = selectOne("loan_repayment_schedule", ['id' => $scheduleId]);
@@ -38,13 +40,21 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
             $principalAmount = $expectedPrincipal;
             $interestAmount = $expectedInterest;
         } else if ($amount < $totaldue) {
-            $interestAmount = $expectedInterest;
-            $principalAmount = $amount - $interestAmount;
-            if ($principalAmount < 0) {
-                $_SESSION["feedback"] = "Amount inputted not is insuffcient - Principal can not be deducted";
+            $expectedInterestAmount = $expectedInterest - $loanScheduleDetails['interest_completed_derived'];
+            $expectedPrincipalAmount = $amount - $expectedInterestAmount;
+            if ($expectedPrincipalAmount < 0) {
+                $_SESSION["feedback"] = "Amount inputted is insuffcient - Principal can not be deducted";
                 $_SESSION["Lack_of_intfund_$randms"] = "10";
                 echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
+                exit();
             }
+            $interestAmount = $loanScheduleDetails['interest_completed_derived'] + $expectedInterestAmount;
+            $principalAmount = $loanScheduleDetails['principal_completed_derived'] + $expectedPrincipalAmount;
+        } else {
+            $_SESSION["feedback"] = "Amount inputted is greater than value owed";
+            $_SESSION["Lack_of_intfund_$randms"] = "10";
+            echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
+            exit();
         }
     }
 
@@ -58,6 +68,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
         $_SESSION["feedback"] = "Something went wrong, can't find loan product details - $error";
         $_SESSION["Lack_of_intfund_$randms"] = "10";
         echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
+        exit();
     }
     $loanPortfolio = $loanGl['asst_loan_port'];
     $loanInterestPortfolio = $loanGl['inc_interest'];
@@ -76,9 +87,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
         exit();
         // send them back
     }
-    $digits = 10;
-    $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
-    $transactionId = $clientId . "_" . $randms . "_" . $branchId;
+    
     $accountBalance = $accountDetails['account_balance_derived'];
     if ($accountBalance >= $amount) {
         #process begins
@@ -370,6 +379,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                     $_SESSION["feedback"] = "Something went wrong, While Storing Transaction details - $error";
                     $_SESSION["Lack_of_intfund_$randms"] = "10";
                     echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
+                    exit();
                 } else {
                     $totalOutstandingBalance = $findLoan["total_outstanding_derived"] - $amount;
                     $totalRepayment = $findLoan['total_repayment_derived'] + $amount;
@@ -387,6 +397,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                         $_SESSION["feedback"] = "Something went wrong, while updating loan data - $error";
                         $_SESSION["Lack_of_intfund_$randms"] = "10";
                         echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
+                        exit();
                     } else {
                         // firstly store loan collection transaction
                         $collectionTransactionDetails = [
@@ -427,6 +438,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                             $_SESSION["feedback"] = "Something went wrong, could not store Loan Transaction - $error";
                             $_SESSION["Lack_of_intfund_$randms"] = "10";
                             echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
+                            exit();
                         } else {
                             // loan schedule data to update
                             if ($amountCollected == $totaldue) {
@@ -448,6 +460,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                                 $_SESSION["feedback"] = "Something went wrong, could not update schedule details - $error";
                                 $_SESSION["Lack_of_intfund_$randms"] = "10";
                                 echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
+                                exit();
                             } else {
                                 if ($totalOutstandingBalance == 0) {
                                     // mark loan obligation as met
@@ -455,11 +468,13 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                                     $_SESSION["feedback"] = "Transaction Successful - Loan obligation Has been met";
                                     $_SESSION["Lack_of_intfund_$randms"] = "10";
                                     echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message0=$randms");
+                                    exit();
                                 } else {
                                     echo "Expecting next repayment From " . $accountNo . "<br>";
                                     $_SESSION["feedback"] = "Transaction Successful";
                                     $_SESSION["Lack_of_intfund_$randms"] = "10";
                                     echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message0=$randms");
+                                    exit();
                                 }
                             }
                         }
@@ -480,6 +495,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                 $_SESSION["feedback"] = "Something went wrong, can't access GL account - $error";
                 $_SESSION["Lack_of_intfund_$randms"] = "10";
                 echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
+                exit();
             }
             $portfolioBalance = $findLoanPortfolio['organization_running_balance_derived'] - $principalAmount;
             $portfolioId = $findLoanPortfolio['id'];
@@ -490,6 +506,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                 $_SESSION["feedback"] = "Something went wrong, could not update loan portfolio - $error";
                 $_SESSION["Lack_of_intfund_$randms"] = "10";
                 echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
+                exit();
             } else {
                 // then we store the loan portfolio data
                 $portfolioTransactionDetails = [
@@ -525,6 +542,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                         $_SESSION["feedback"] = "Something went wrong, could not update loan record - $error";
                         $_SESSION["Lack_of_intfund_$randms"] = "10";
                         echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
+                        exit();
                     } else {
                         // firstly store loan collection transaction
                         $collectionTransactionDetails = [
@@ -565,6 +583,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                             $_SESSION["feedback"] = "Something went wrong, could not store loan transaction - $error";
                             $_SESSION["Lack_of_intfund_$randms"] = "10";
                             echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
+                            exit();
                         } else {
                             // loan schedule data to update
                             if ($amountCollected == $totaldue) {
@@ -585,6 +604,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                                 $_SESSION["feedback"] = "Something went wrong, could not update schedule record - $error";
                                 $_SESSION["Lack_of_intfund_$randms"] = "10";
                                 echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
+                                exit();
                             } else {
                                 if ($totalOutstandingBalance == 0) {
                                     // mark loan obligation as met
@@ -592,11 +612,13 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                                     $_SESSION["feedback"] = "Transaction Successful - Loan obligation Has been met";
                                     $_SESSION["Lack_of_intfund_$randms"] = "10";
                                     echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message0=$randms");
+                                    exit();
                                 } else {
                                     echo "Expecting next repayment From " . $accountNo . "<br>";
                                     $_SESSION["feedback"] = "Transaction Successful";
                                     $_SESSION["Lack_of_intfund_$randms"] = "10";
                                     echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message0=$randms");
+                                    exit();
                                 }
                             }
                         }
@@ -746,6 +768,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                     $_SESSION["feedback"] = "Something went wrong, could not store loan transaction record - $error";
                     $_SESSION["Lack_of_intfund_$randms"] = "10";
                     echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
+                    exit();
                 } else {
                     // loan schedule data to update
 
@@ -768,6 +791,7 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                         $_SESSION["feedback"] = "Something went wrong, could not update schedule record - $error";
                         $_SESSION["Lack_of_intfund_$randms"] = "10";
                         echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
+                        exit();
                     } else {
                         echo "Current Schedule successfully cleared for " . $accountNo . "<br>";
                         if ($totalOutstandingBalance == 0) {
@@ -776,11 +800,13 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                             $_SESSION["feedback"] = "Transaction Successful - Loan obligation Has been met";
                             $_SESSION["Lack_of_intfund_$randms"] = "10";
                             echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message0=$randms");
+                            exit();
                         } else {
                             echo "Expecting next repayment From " . $accountNo . "<br>";
                             $_SESSION["feedback"] = "Transaction Successful";
                             $_SESSION["Lack_of_intfund_$randms"] = "10";
                             echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message0=$randms");
+                            exit();
                         }
                     }
                 }
