@@ -449,9 +449,18 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                                 $_SESSION["Lack_of_intfund_$randms"] = "10";
                                 echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
                             } else {
-                                $_SESSION["feedback"] = "Transaction Successful";
-                                $_SESSION["Lack_of_intfund_$randms"] = "10";
-                                echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message0=$randms");
+                                if ($totalOutstandingBalance == 0) {
+                                    // mark loan obligation as met
+                                    echo $accountNo . " Has met their loan obligation ";
+                                    $_SESSION["feedback"] = "Transaction Successful - Loan obligation Has been met";
+                                    $_SESSION["Lack_of_intfund_$randms"] = "10";
+                                    echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message0=$randms");
+                                } else {
+                                    echo "Expecting next repayment From " . $accountNo . "<br>";
+                                    $_SESSION["feedback"] = "Transaction Successful";
+                                    $_SESSION["Lack_of_intfund_$randms"] = "10";
+                                    echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message0=$randms");
+                                }
                             }
                         }
                     }
@@ -577,9 +586,18 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                                 $_SESSION["Lack_of_intfund_$randms"] = "10";
                                 echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
                             } else {
-                                $_SESSION["feedback"] = "Transction Successful";
-                                $_SESSION["Lack_of_intfund_$randms"] = "10";
-                                echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message0=$randms");
+                                if ($totalOutstandingBalance == 0) {
+                                    // mark loan obligation as met
+                                    echo $accountNo . " Has met their loan obligation ";
+                                    $_SESSION["feedback"] = "Transaction Successful - Loan obligation Has been met";
+                                    $_SESSION["Lack_of_intfund_$randms"] = "10";
+                                    echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message0=$randms");
+                                } else {
+                                    echo "Expecting next repayment From " . $accountNo . "<br>";
+                                    $_SESSION["feedback"] = "Transaction Successful";
+                                    $_SESSION["Lack_of_intfund_$randms"] = "10";
+                                    echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message0=$randms");
+                                }
                             }
                         }
                     }
@@ -755,12 +773,15 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
                         if ($totalOutstandingBalance == 0) {
                             // mark loan obligation as met
                             echo $accountNo . " Has met their loan obligation ";
+                            $_SESSION["feedback"] = "Transaction Successful - Loan obligation Has been met";
+                            $_SESSION["Lack_of_intfund_$randms"] = "10";
+                            echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message0=$randms");
                         } else {
                             echo "Expecting next repayment From " . $accountNo . "<br>";
+                            $_SESSION["feedback"] = "Transaction Successful";
+                            $_SESSION["Lack_of_intfund_$randms"] = "10";
+                            echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message0=$randms");
                         }
-                        $_SESSION["feedback"] = "Transaction Successful";
-                        $_SESSION["Lack_of_intfund_$randms"] = "10";
-                        echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message0=$randms");
                     }
                 }
             }

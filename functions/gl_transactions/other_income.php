@@ -55,21 +55,25 @@ if ($findIncomeGl) {
 
         $storeIncomeTransaction = insert('gl_account_transaction', $incomeTransactionDetails);
         if ($storeIncomeTransaction) {
-            $_SESSION["Lack_of_intfund_$randms"] = "Transaction Successful!";
-            echo header("Location: ../../mfi/gl_postings.php?other_income=$randms");
-        }else{
+            $_SESSION["feedback"] = "Transaction Successful!";
+            $_SESSION["Lack_of_intfund_$randms"] = "10";
+            echo header("Location: ../../mfi/gl_postings.php?message0=$randms");
+        } else {
             // income transaction not stored for some weird reason
-        $_SESSION["Lack_of_intfund_$randms"] = "Error storing Transaction record income GL!";
-        echo header("Location: ../../mfi/gl_postings.php?other_income2=$randms");
+            $_SESSION["feedback"] = "Error storing Transaction record income GL!";
+            $_SESSION["Lack_of_intfund_$randms"] = "10";
+            echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
         }
     } else {
-            // income transaction not stored for some weird reason
-            $_SESSION["Lack_of_intfund_$randms"] = "Error Funding GL!";
-            echo header("Location: ../../mfi/gl_postings.php?other_income3=$randms");
+        // income transaction not stored for some weird reason
+        $_SESSION["feedback"] = "Error Funding GL!";
+        $_SESSION["Lack_of_intfund_$randms"] = "10";
+        echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
     }
 } else {
     // can't find gl
-        // income transaction not stored for some weird reason
-        $_SESSION["Lack_of_intfund_$randms"] = "Can't find GL or GL does not exist!";
-        echo header("Location: ../../mfi/gl_postings.php?other_income4=$randms");
+    // income transaction not stored for some weird reason
+    $_SESSION["feedback"] = "Can't find GL or GL does not exist!";
+    $_SESSION["Lack_of_intfund_$randms"] = "10";
+    echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
 }

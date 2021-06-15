@@ -29,14 +29,27 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
     $accountId = $checkAccount['id'];
     $productID = $checkAccount['product_id'];
     $clientId = $checkAccount['client_id'];
-    if ($clientBalance >= $amount) {
-        // take the money from clients account
+
+    $checkGlConditions = [
+        'int_id' => $institutionId,
+        'gl_code' => $glAccount
+    ];
+    $checkGl = selectOne('acc_gl_account', $checkGlConditions);
+    if (!$queryVariable) {
+        $error = "Error: \n" . mysqli_error($connection); //checking for errors
+        $_SESSION["feedback"] = "Sorry could not Find Chosen GL! - $error";
+        $_SESSION["Lack_of_intfund_$randms"] = "10";
+        echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
+    } 
+    $glBalance = $checkGl['organization_running_balance_derived'];
+    if ($glBalance >= $amount) {
+        // credit the money from clients account
         // then update te clients current account balance 
         // finally insert transaction history to complete clients debiting process
-        $newBalance = $clientBalance - $amount;
+        $newBalance = $clientBalance + $amount;
         $updateDetails = [
             'account_balance_derived' => $newBalance,
-            'last_withdrawal' => $amount,
+            'last_deposit' => $amount,
             'last_activity_date' => $today,
         ];
         $updateCondition = [
@@ -58,13 +71,13 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
                 'account_no' => $clientAccount,
                 'product_id' => $productID,
                 'client_id' => $clientId,
-                'transaction_type' => "debit",
+                'transaction_type' => "credit",
                 'transaction_date' => $today,
                 'overdraft_amount_derived' => $amount,
                 'running_balance_derived' => $newBalance,
                 'cumulative_balance_derived' => $newBalance,
                 'appuser_id' => $user,
-                'debit' => $amount,
+                'credit' => $amount,
                 'created_date' => $today
             ];
             $storeTransaction = insert('account_transaction', $transactionDetails);
@@ -85,7 +98,7 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
                 //     'int_id' => $institutionId,
                 //     'gl_code' => $savingsGlcode
                 // ];
-                $newGlBalnce = $glBalance - $amount;
+                $newGlBalnce = $glBalance + $amount;
                 $updateSavingsGlDetails = [
                     'organization_running_balance_derived' => $newGlBalnce
                 ];
@@ -98,13 +111,13 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
                         'parent_id' => $glSavingsParent,
                         'transaction_id' => $transacionId,
                         'description' => $description,
-                        'transaction_type' => "debit",
+                        'transaction_type' => "credit",
                         'transaction_date' => $today,
                         'amount' => $amount,
                         'gl_account_balance_derived' => $newGlBalnce,
                         'overdraft_amount_derived' => $amount,
                         'cumulative_balance_derived' => $newGlBalnce,
-                        'debit' => $amount
+                        'credit' => $amount
                     ];
                     $storeSavingsGlTransaction = insert('gl_account_transaction', $glSavingsTransactionDetails);
                     if (!$storeSavingsGlTransaction) {
@@ -125,7 +138,7 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
                 $glParent = $findGl['parent_id'];
 
                 if ($findGl) {
-                    $newGlBalnce =  $glBalance + $amount;
+                    $newGlBalnce =  $glBalance - $amount;
                     $conditionsGlUpdate = [
                         'int_id' => $institutionId,
                         'gl_code' => $glAccount
@@ -142,23 +155,24 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
                             'parent_id' => $glParent,
                             'transaction_id' => $transacionId,
                             'description' => $description,
-                            'transaction_type' => "credit",
+                            'transaction_type' => "debit",
                             'transaction_date' => $today,
                             'amount' => $amount,
                             'gl_account_balance_derived' => $newGlBalnce,
                             'overdraft_amount_derived' => $amount,
                             'cumulative_balance_derived' => $newGlBalnce,
-                            'credit' => $amount
+                            'debit' => $amount
                         ];
                         $storeGlTransaction = insert('gl_account_transaction', $glTransactionDetails);
                         if ($storeGlTransaction) {
                             // Everything went fine
                             // Sucess feedback
-                            $_SESSION["feedback"] = "Income Transaction Successful!";
+                            $_SESSION["feedback"] = "Expense Income Transaction Successful!";
                             $_SESSION["Lack_of_intfund_$randms"] = "10";
                             echo header("Location: ../../mfi/gl_postings.php?message0=$randms");
                         } else {
                             // Transaction successful but GL record not saved
+
                             $_SESSION["feedback"] = "Transaction successful but GL record not saved!";
                             $_SESSION["Lack_of_intfund_$randms"] = "10";
                             echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
@@ -166,29 +180,31 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
                     }
                 } else {
                     // something is wrong with gl account
+
                     $_SESSION["feedback"] = "Sorry could not Find Chosen GL!";
                     $_SESSION["Lack_of_intfund_$randms"] = "10";
                     echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
                 }
             } else {
                 // client transaction not saved
-                $_SESSION["feedback"] = "There was an error Storing Customer's Transaction \n Kindly contact Support!";
+                $_SESSION["feedback"] = "There was an error Storing Customer's Transaction -  Kindly contact Support!";
                 $_SESSION["Lack_of_intfund_$randms"] = "10";
                 echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
             }
         } else {
-            // customer not deducted
-            $_SESSION["feedback"] = "Could not deduct money from customer!";
+            // customer not be funded
+            $_SESSION["feedback"] = "Could not credit money from customer!";
             $_SESSION["Lack_of_intfund_$randms"] = "10";
             echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
         }
     } else {
         // insufficient account balance
-        $_SESSION["feedback"] = "Insufficient Balance in Customers Account!";
+        $_SESSION["feedback"] = "Insufficient Balance in GL Account!";
         $_SESSION["Lack_of_intfund_$randms"] = "10";
         echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
     }
 } else {
+
     $_SESSION["feedback"] = "Provide the Necessary Information!";
     $_SESSION["Lack_of_intfund_$randms"] = "10";
     echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
