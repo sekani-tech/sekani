@@ -24,22 +24,58 @@ if (isset($_GET["view"]) && $_GET["view"] != "") {
     $outt = $stt["int_sum"];
     $duebalance = $outp + $outt;
 
-    if(isset($_SESSION["reversal"]) && $_SESSION["reversal"] == 1) {
-        echo '<script type="text/javascript">
-        $(document).ready(function(){
-            swal({
-                type: "success",
-                title: "Reversal Transaction",
-                text: "Transaction Successful",
-                showConfirmButton: false,
-                timer: 2000
-            })
-        });
-        </script>
-        ';
-        unset($_SESSION["reversal"]);
+    
+    $exp_error = "";
+    $message = $_SESSION['feedback'];
+    if($message != ""){
+    ?>
+    <input type="text" value="<?php echo $message?>" id="feedback" hidden>
+    <?php
+    }
+    // feedback messages 0 for success and 1 for errors
+    
+    if (isset($_GET["message0"])) {
+        $key = $_GET["message0"];
+        $tt = 0;
+      
+        if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+          echo '<script type="text/javascript">
+          $(document).ready(function(){
+            let feedback =  document.getElementById("feedback").value;
+              swal({
+                  type: "success",
+                  title: "Success",
+                  text: feedback,
+                  showConfirmButton: true,
+                  timer: 7000
+              })
+          });
+          </script>
+          ';
+          $_SESSION["lack_of_intfund_$key"] = 0;
+        }
+      } else if (isset($_GET["message1"])) {
+        $key = $_GET["message1"];
+        $tt = 0;
+        if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+          echo '<script type="text/javascript">
+          $(document).ready(function(){
+            let feedback =  document.getElementById("feedback").value;
+              swal({
+                  type: "error",
+                  title: "Error",
+                  text: feedback,
+                  showConfirmButton: true,
+                  timer: 7000
+              })
+          });
+          </script>
+          ';
+          $_SESSION["lack_of_intfund_$key"] = 0;
+        }
       }
-?>
+    
+    ?>
     <!-- do your front end -->
     <div class="content">
         <div class="container-fluid">
@@ -75,6 +111,7 @@ if (isset($_GET["view"]) && $_GET["view"] != "") {
                                         <th>Due Date</th>
                                         <th>Principal Amount</th>
                                         <th>Interest Amount</th>
+                                        <th>Amount Repaid</th>
                                         <th>Payment Status</th>
                                         <th>Total Due</th>
                                         <th>Action</th>
@@ -90,6 +127,7 @@ if (isset($_GET["view"]) && $_GET["view"] != "") {
                                                     <td> <b> <?php echo $row["duedate"] ?> </b></td>
                                                     <td><?php echo "₦ " . number_format($row["principal_amount"], 2); ?></td>
                                                     <td><?php echo "₦ " . number_format($row["interest_amount"], 2); ?></td>
+                                                    <td><?php echo "₦ " . number_format($row["amount_collected"], 2); ?></td>
                                                     <?php
                                                     $inst = $row["installment"];
                                                     $current_date = date('Y-m-d');
@@ -114,7 +152,9 @@ if (isset($_GET["view"]) && $_GET["view"] != "") {
 
                                                     ?>
                                                     <td><?php echo $inst; ?></td>
-                                                    <td><?php echo "₦ " . number_format($duebalance, 2); ?></td>
+                                                    <td><?php 
+                                                        $completedDerived = ($row["principal_amount"] + $row["interest_amount"]) - ($row["principal_completed_derived"] + $row["interest_completed_derived"]);
+                                                        echo "₦ " . number_format($completedDerived, 2); ?></td>
                                                     <td>
                                                         <div class="btn-group">
                                                             <?php
@@ -196,9 +236,9 @@ if (isset($_GET["view"]) && $_GET["view"] != "") {
                                                                                         <div class="input-group-prepend">
                                                                                         </div>
                                                                                         <select style="color:black;" name="payment_type" class="form-control">
-                                                                                            <option value="1">Pay Interest Amount</option>
-                                                                                            <option value="2">Pay Principal Amount </option>
-                                                                                            <option value="3">Pay Principal and Interest Amount</option>
+                                                                                            <option value="Pay Interest Amount">Pay Interest Amount</option>
+                                                                                            <option value="Pay Principal Amount">Pay Principal Amount </option>
+                                                                                            <option value="Pay Principal and Interest Amount">Pay Principal and Interest Amount</option>
                                                                                         </select>
                                                                                     </div>
                                                                                 </div>

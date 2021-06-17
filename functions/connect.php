@@ -25,14 +25,29 @@ function ddA($value)
 function executeQuery($sql, $data = [])
 {
     global $connection;
-    if($stmt = $connection->prepare($sql)){
+    if ($stmt = $connection->prepare($sql)) {
         if (!empty($data)) {
             $values = array_values($data);
             $types = str_repeat('s', count($values));
             $stmt->bind_param($types, ...$values);
         }
         $stmt->execute();
-    }else{
+    } else {
+        $stmt = var_dump($connection->error);
+    }
+    return $stmt;
+}
+function executeQuery2($sql, $data = [])
+{
+    global $connection;
+    if ($stmt = $connection->prepare($sql)) {
+        if (!empty($data)) {
+            $values = array_values($data);
+            $types = str_repeat('s', count($values) + 1);
+            $stmt->bind_param($types, ...$values);
+        }
+        $stmt->execute();
+    } else {
         $stmt = var_dump($connection->error);
     }
     return $stmt;
@@ -382,7 +397,7 @@ function searchClient($table1, $int_id, $branch_id, $term)
             WHERE c.int_id=?
             AND c.branch_id=? AND (c.firstname LIKE ? OR c.lastname LIKE ? OR c.display_name LIKE ?)";
 
-//    dd($sql);
+    //    dd($sql);
     $stmt = executeQuery($sql, [
         'int_id' => $int_id,
         'branch_id' => $branch_id,
@@ -407,7 +422,7 @@ function searchGroup($table1, $int_id, $term)
             FROM $table1 AS g 
             WHERE g.int_id=? AND g.g_name LIKE ?";
 
-//    dd($sql);
+    //    dd($sql);
     $stmt = executeQuery($sql, [
         'int_id' => $int_id,
         'g_name' => $match
@@ -418,7 +433,8 @@ function searchGroup($table1, $int_id, $term)
 // function to insert a new row into an arbitrary table, with the columns filled with the values 
 // from an associative array and completely SQL-injection safe
 
-function insert($table, $record) {
+function insert($table, $record)
+{
     global $connection;
     $cols = array();
     $vals = array();
@@ -432,43 +448,51 @@ function insert($table, $record) {
 
 // date functions to find individual components of date 
 // and add or subtract from date
-function getYear($date){
+function getYear($date)
+{
     $date = DateTime::createFromFormat("Y-m-d", $date);
     return $date->format("Y");
 }
 
-function getMonth($date){
+function getMonth($date)
+{
     $date = DateTime::createFromFormat("Y-m-d", $date);
     return $date->format("m");
 }
 
-function getDay($date){
+function getDay($date)
+{
     $date = DateTime::createFromFormat("Y-m-d", $date);
     return $date->format("d");
 }
 
-function addYear($date, $period){
-    $valueDate = date("Y-m-d", strtotime($date. "+$period year"));
+function addYear($date, $period)
+{
+    $valueDate = date("Y-m-d", strtotime($date . "+$period year"));
     return $valueDate;
 }
 
-function addMonth($date, $period){
-    $valueDate = date("Y-m-d", strtotime($date. "+$period month"));
+function addMonth($date, $period)
+{
+    $valueDate = date("Y-m-d", strtotime($date . "+$period month"));
     return $valueDate;
 }
 
-function addWeek($date, $period){
-    $valueDate = date("Y-m-d", strtotime($date. "+$period week"));
+function addWeek($date, $period)
+{
+    $valueDate = date("Y-m-d", strtotime($date . "+$period week"));
     return $valueDate;
 }
 
-function addDay($date, $period){
-    $valueDate = date("Y-m-d", strtotime($date. "+$period day"));
+function addDay($date, $period)
+{
+    $valueDate = date("Y-m-d", strtotime($date . "+$period day"));
     return $valueDate;
 }
 
-function appendAccountNo($accountNo, $length){
-    $appendedAccount = '******'.substr($accountNo, $length);
+function appendAccountNo($accountNo, $length)
+{
+    $appendedAccount = '******' . substr($accountNo, $length);
     return $appendedAccount;
 }
 
@@ -492,15 +516,15 @@ function checkLoanDebtor($table, $conditions, $dateConditions)
     foreach ($dateConditions as $keys => $value) {
         if ($s === 0) {
             $sql = $sql . " AND ( $keys<=?";
-        }else{
+        } else {
             $sql = $sql . " AND $keys<=?";
         }
         $s++;
     }
-    $sql = $sql. ")";
-    $sql = $sql . " AND installment >= '0' ORDER BY id ASC LIMIT 1";
+    $sql = $sql . ")";
+    $sql = $sql . " AND installment >= '1' ORDER BY id ASC LIMIT 1";
     $stmt = executeQuery($sql, array_merge($conditions, $dateConditions));
-    return $stmt->get_result()->fetch_assoc();
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
 function selectAllGreater($table, $conditions = [])
@@ -571,7 +595,7 @@ function selectAllLessEq($table, $conditions, $dateConditions)
     foreach ($dateConditions as $keys => $value) {
         if ($s === 0) {
             $sql = $sql . " AND $keys<=?";
-        }else{
+        } else {
             $sql = $sql . " AND $keys<=?";
         }
         $s++;
@@ -600,10 +624,196 @@ function checkAccount($table, $conditions, $scaleConditions)
     foreach ($scaleConditions as $key => $value) {
         if ($s === 0) {
             $sql = $sql . " AND $key>=?";
-        } 
+        }
         $s++;
     }
 
     $stmt = executeQuery($sql, array_merge($conditions, $scaleConditions));
     return $stmt->get_result()->fetch_assoc();
+}
+
+// find out values that do not exist on tables
+function findNotIn($table, $conditions, $notIn, $table2, $sort, $conditions2)
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $i++;
+    }
+
+    $sql = $sql . " AND $notIn NOT IN (";
+    $sql = $sql . "SELECT $sort FROM $table2";
+    $s = 0;
+    foreach ($conditions2 as $key => $value) {
+        if ($s === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $s++;
+    }
+    $sql = $sql . ")";
+    $stmt = executeQuery2($sql, array_merge($conditions, $conditions2));
+    return $stmt->get_result()->fetch_assoc();
+}
+
+
+// find out values that exist on tables
+function findIn($table, $conditions, $notIn, $table2, $sort, $conditions2)
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $i++;
+    }
+
+    $sql = $sql . " AND $notIn IN(";
+    $sql = $sql . "SELECT $sort FROM $table2";
+    $s = 0;
+    foreach ($conditions2 as $key => $value) {
+        if ($s === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $s++;
+    }
+    $sql = $sql . ")";
+    $stmt = executeQuery2($sql, array_merge($conditions, $conditions2));
+    return $stmt->get_result()->fetch_assoc();
+}
+
+
+function sumNotIn($sum, $table, $conditions, $notIn, $table2, $sort, $conditions2)
+{
+    global $connection;
+    $sql = "SELECT SUM($sum) FROM $table";
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $i++;
+    }
+
+    $sql = $sql . " AND $notIn NOT IN(";
+    $sql = $sql . "SELECT $sort FROM $table2";
+    $s = 0;
+    foreach ($conditions2 as $key => $value) {
+        if ($s === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $s++;
+    }
+    $sql = $sql . ")";
+    $stmt = executeQuery2($sql, array_merge($conditions, $conditions2));
+    return $stmt->get_result()->fetch_assoc();
+}
+
+function sumIn($sum, $table, $conditions, $notIn, $table2, $sort, $conditions2)
+{
+    global $connection;
+    $sql = "SELECT SUM($sum) FROM $table";
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $i++;
+    }
+
+    $sql = $sql . " AND $notIn IN(";
+    $sql = $sql . "SELECT $sort FROM $table2";
+    $s = 0;
+    foreach ($conditions2 as $key => $value) {
+        if ($s === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $s++;
+    }
+    $sql = $sql . ")";
+    $stmt = executeQuery2($sql, array_merge($conditions, $conditions2));
+    return $stmt->get_result()->fetch_assoc();
+}
+
+function selectAllandNot($table, $conditions = [], $notConditions)
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+    if (empty($conditions)) {
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $i = 0;
+        foreach ($conditions as $key => $value) {
+            if ($i === 0) {
+                $sql = $sql . " WHERE $key=?";
+            } else {
+                $sql = $sql . " AND $key=?";
+            }
+            $i++;
+        }
+
+        $sql = $sql . " AND (";
+        $s = 0;
+        foreach ($notConditions as $key => $value) {
+            if ($s === 0) {
+                $sql = $sql . " $key!=?";
+            } else {
+                $sql = $sql . " AND $key!=?";
+            }
+            $s++;
+        }
+        $sql = $sql . " )";
+        $stmt = executeQuery($sql, array_merge($conditions, $notConditions));
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+}
+
+
+function selectOneWithOr($table, $conditions = [], $orField, $orValue)
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+    if (empty($conditions)) {
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $i = 0;
+        foreach ($conditions as $key => $value) {
+            if ($i === 0) {
+                $sql = $sql . " WHERE $key=?";
+            } else {
+                $sql = $sql . " AND $key=?";
+            }
+            $i++;
+        }
+
+        $sql = $sql . " OR " . $orField . "=" . $orValue;
+
+        $stmt = executeQuery($sql, $conditions);
+        return $stmt->get_result()->fetch_assoc();;
+    }
 }

@@ -115,7 +115,7 @@ else if($ctype == 'CORPORATE'){
         $regaddress = $_POST['addressa'];
         $bran = $_POST['brancha'];
         $acc_of = $_POST['acct_ofa'];
-        $account_officer = $_POST['loan_officer_id'];
+        $account_officer = $_POST['acct_ofa'];
         $checkl = "SELECT * FROM staff WHERE user_id = '$account_officer'";
         $resxx = mysqli_query($connection, $checkl);
         $xf = mysqli_fetch_array($resxx);

@@ -674,7 +674,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   if ($client_sms == "1") {
   ?>
                     <input type="text" id="s_int_name" value="<?php echo $int_name; ?>" hidden>
-                    <input type="text" id="s_acct_no" value="<?php echo $account_display; ?>" hidden>
+                    <input type="text" id="s_acct_no" value="<?php echo appendAccountNo($acct_no, 6); ?>" hidden>
                     <input type="text" id="s_amount" value="<?php echo number_format($loan_amount, 2); ?>" hidden>
                     <input type="text" id="s_desc" value="<?php echo "Loan Disbursement"; ?>" hidden>
                     <input type="text" id="s_date" value="<?php echo $pint; ?>" hidden>
@@ -696,7 +696,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         var date = $('#s_date').val();
                         var balance = $('#s_balance').val();
                         // now we work on the body.
-                        var msg = int_name + " " + trans_type + " \n" + "Amt: NGN " + amount + " \n Acct: " + acct_no + "\nDesc: " + desc + " \nBal: " + balance + " \nAvail: " + balance + "\nDate: " + date + "\nThank you for Banking with Us!";
+                        // var msg = int_name + " " + trans_type + " \n" + "Amt: NGN " + amount + " \n Acct: " + acct_no + "\nDesc: " + desc + " \nBal: " + balance + " \nAvail: " + balance + "\nDate: " + date + "\nThank you for Banking with Us!";
+                        var msg = "Acct: " + acct_no + "\nAmt: NGN " + amount + " Credit \nDesc: " + desc + "\nAvail Bal: " + balance + "\nDate: " + date;
                         $.ajax({
                           url: "ajax_post/sms/sms.php",
                           method: "POST",
@@ -711,6 +712,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           },
                           success: function(data) {
                             $('#make_display').html(data);
+                          }
+                        });
+                      });
+                    </script>
+                    <script>
+                    $(document).ready(function() {
+                        var int_id = $('#s_int_id').val();
+                        var branch_id = $('#s_branch_id').val();
+                        var sender_id = $('#s_sender_id').val();
+                        var phone = $('#s_phone').val();
+                        var client_id = $('#s_client_id').val();
+                        var account_no = $('#s_acct_nox').val();
+                        // function
+                        var amount = $('#s_amount').val();
+                        var acct_no = $('#s_acct_no').val();
+                        var int_name = $('#s_int_name').val();
+                        var trans_type = "Credit";
+                        var desc = $('#s_desc').val();
+                        var date = $('#s_date').val();
+                        var balance = $('#s_balance').val();
+                        // now we work on the body.
+                        var msg = "Dear Customer,\nYour loan applcation of NGN"+ amount +" was successful and has been deposited in your account.\nRemember, early repayment brings great credit scores!";
+                        $.ajax({
+                          url: "ajax_post/sms/sms.php",
+                          method: "POST",
+                          data: {
+                            int_id: int_id,
+                            branch_id: branch_id,
+                            sender_id: sender_id,
+                            phone: phone,
+                            msg: msg,
+                            client_id: client_id,
+                            account_no: account_no
+                          },
+                          success: function(data) {
+                            $('#make_display2').html(data);
                           }
                         });
                       });

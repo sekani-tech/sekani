@@ -344,6 +344,49 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
                     }
                   }
                   if ($res4) {
+                    $findSavingsGl = selectOne('savings_acct_rule', ['savings_product_id' => $sproduct_id, 'int_id' => $sessint_id]);
+                    $savingsGlcode = $findSavingsGl['asst_loan_port'];
+                    $savingsGlConditions = [
+                      'int_id' => $sessint_id,
+                      'gl_code' => $savingsGlcode
+                    ];
+                    $findGl = selectOne('acc_gl_account', $savingsGlConditions);
+                    $glBalance = $findGl['organization_running_balance_derived'];
+                    $glSavingsID = $findGl['id'];
+                    $glSavingsParent = $findGl['parent_id'];
+                    // $conditionsGlUpdate = [
+                    //     'int_id' => $institutionId,
+                    //     'gl_code' => $savingsGlcode
+                    // ];
+                    $newGlBalnce = $glBalance + $amt;
+                    $updateSavingsGlDetails = [
+                      'organization_running_balance_derived' => $newGlBalnce
+                    ];
+                    $updateSavingsGlBalance = update('acc_gl_account', $glSavingsID, 'id', $updateSavingsGlDetails);
+                    if ($updateSavingsGlBalance) {
+                      $glSavingsTransactionDetails = [
+                        'int_id' => $sessint_id,
+                        'branch_id' => $branch_id,
+                        'gl_code' => $savingsGlcode,
+                        'parent_id' => $glSavingsParent,
+                        'transaction_id' => $transid,
+                        'description' => $description,
+                        'transaction_type' => "credit",
+                        'transaction_date' => $gen_date,
+                        'amount' => $amt,
+                        'gl_account_balance_derived' => $newGlBalnce,
+                        'overdraft_amount_derived' => $amt,
+                        'cumulative_balance_derived' => $newGlBalnce,
+                        'credit' => $amt
+                      ];
+                      $storeSavingsGlTransaction = insert('gl_account_transaction', $glSavingsTransactionDetails);
+                      if (!$storeSavingsGlTransaction) {
+                        printf("<br>1-Error: \n", mysqli_error($connection)); //checking for errors
+                        exit();
+                      } else {
+                        echo "Credit Success <br>";
+                      }
+                    }
                     if ($client_sms == "1") {
                       // message to be sent
                       $trans_type = "Credit";
@@ -709,7 +752,93 @@ if ($client_id != "" && $acct_no != "" || $acct_no2 != "" && $staff_id != "") {
 
                     if ($res4) {
                       // DO THE ACCOUNT CHARGE
+                      $findSavingsGl = selectOne('savings_acct_rule', ['savings_product_id' => $sproduct_id, 'int_id' => $sessint_id]);
+                        $savingsGlcode = $findSavingsGl['asst_loan_port'];
+                        $savingsGlConditions = [
+                          'int_id' => $sessint_id,
+                          'gl_code' => $savingsGlcode
+                        ];
+                        $findGl = selectOne('acc_gl_account', $savingsGlConditions);
+                        $glBalance = $findGl['organization_running_balance_derived'];
+                        $glSavingsID = $findGl['id'];
+                        $glSavingsParent = $findGl['parent_id'];
+                        // $conditionsGlUpdate = [
+                        //     'int_id' => $institutionId,
+                        //     'gl_code' => $savingsGlcode
+                        // ];
+                        $newGlBalnce = $glBalance - $amt;
+                        $updateSavingsGlDetails = [
+                          'organization_running_balance_derived' => $newGlBalnce
+                        ];
+                        $updateSavingsGlBalance = update('acc_gl_account', $glSavingsID, 'id', $updateSavingsGlDetails);
+                        if ($updateSavingsGlBalance) {
+                          $glSavingsTransactionDetails = [
+                            'int_id' => $sessint_id,
+                            'branch_id' => $branch_id,
+                            'gl_code' => $savingsGlcode,
+                            'parent_id' => $glSavingsParent,
+                            'transaction_id' => $transid,
+                            'description' => $description,
+                            'transaction_type' => "debit",
+                            'transaction_date' => $gen_date,
+                            'amount' => $amt,
+                            'gl_account_balance_derived' => $newGlBalnce,
+                            'overdraft_amount_derived' => $amt,
+                            'cumulative_balance_derived' => $newGlBalnce,
+                            'debit' => $amt
+                          ];
+                          $storeSavingsGlTransaction = insert('gl_account_transaction', $glSavingsTransactionDetails);
+                          if (!$storeSavingsGlTransaction) {
+                            printf("<br>1-Error: \n", mysqli_error($connection)); //checking for errors
+                            exit();
+                          } else {
+                            echo "Debit Success <br>";
+                          }
+                        }
                       if ($client_sms == "1") {
+                        $findSavingsGl = selectOne('savings_acct_rule', ['savings_product_id' => $sproduct_id, 'int_id' => $sessint_id]);
+                        $savingsGlcode = $findSavingsGl['asst_loan_port'];
+                        $savingsGlConditions = [
+                          'int_id' => $sessint_id,
+                          'gl_code' => $savingsGlcode
+                        ];
+                        $findGl = selectOne('acc_gl_account', $savingsGlConditions);
+                        $glBalance = $findGl['organization_running_balance_derived'];
+                        $glSavingsID = $findGl['id'];
+                        $glSavingsParent = $findGl['parent_id'];
+                        // $conditionsGlUpdate = [
+                        //     'int_id' => $institutionId,
+                        //     'gl_code' => $savingsGlcode
+                        // ];
+                        $newGlBalnce = $glBalance - $amt;
+                        $updateSavingsGlDetails = [
+                          'organization_running_balance_derived' => $newGlBalnce
+                        ];
+                        $updateSavingsGlBalance = update('acc_gl_account', $glSavingsID, 'id', $updateSavingsGlDetails);
+                        if ($updateSavingsGlBalance) {
+                          $glSavingsTransactionDetails = [
+                            'int_id' => $sessint_id,
+                            'branch_id' => $branch_id,
+                            'gl_code' => $savingsGlcode,
+                            'parent_id' => $glSavingsParent,
+                            'transaction_id' => $transid,
+                            'description' => $description,
+                            'transaction_type' => "debit",
+                            'transaction_date' => $gen_date,
+                            'amount' => $amt,
+                            'gl_account_balance_derived' => $newGlBalnce,
+                            'overdraft_amount_derived' => $amt,
+                            'cumulative_balance_derived' => $newGlBalnce,
+                            'debit' => $amt
+                          ];
+                          $storeSavingsGlTransaction = insert('gl_account_transaction', $glSavingsTransactionDetails);
+                          if (!$storeSavingsGlTransaction) {
+                            printf("<br>1-Error: \n", mysqli_error($connection)); //checking for errors
+                            exit();
+                          } else {
+                            echo "Credit Success <br>";
+                          }
+                        }
                         $trans_type = "Debit";
                         $balance = number_format($comp2, 2);
                         $msg = "$int_name $trans_type \n Amt: NGN {$amt} \n Acct: {$acct_no}\nDesc: {$description} \nBal: {$balance} \nAvail: {$balance}\nDate: {$pint}\nThanks!";
