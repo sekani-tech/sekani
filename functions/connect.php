@@ -1,4 +1,7 @@
 <?php
+
+use Mpdf\Tag\P;
+
 include "DbModel/db.php";
 
 //session_start();
@@ -754,6 +757,46 @@ function getMonthName($monthNum) {
     return $dateObj->format('F');
 }
 
+function getCharges($connection) {
+    $sint_id = $_SESSION["int_id"];
+    $org = "SELECT * FROM charge WHERE int_id = '$sint_id'";
+    $res = mysqli_query($connection, $org);
+    $out = [];
+    $i = 0;
+    while ($row = mysqli_fetch_array($res)) {
+        $out[$i] = $row['id'];
+        $i++;
+    }
+    return $out;
+}
+
+function getClients($connection) {
+    $sint_id = $_SESSION["int_id"];
+    $branc = $_SESSION["branch_id"];
+    $org = "SELECT client.id, client.firstname, client.lastname, client.middlename FROM client JOIN branch ON client.branch_id = branch.id WHERE client.int_id = '$sint_id' AND (branch.id = '$branc' OR branch.parent_id = '$branc') AND status = 'Approved' ORDER BY firstname ASC";
+    $res = mysqli_query($connection, $org);
+    $out = [];
+    $i = 0;
+    while ($row = mysqli_fetch_array($res)) {
+        $out[$i] = $row['id'];
+        $i++;
+    }
+    return $out;
+}
+
+function getAccNumbers($connection, $client_id) {
+    $pen = "SELECT * FROM account WHERE client_id = '$client_id'";
+    $res = mysqli_query($connection, $pen);
+    $out = [];
+    $i = 0;
+    while ($row = mysqli_fetch_array($res))
+    {
+        $out[$i] = $row['account_no'];
+        $i++;
+    }
+    return $out;
+}
+
 function endOfMonth($closedDate,$connection) {
     $month = getMonthName((int)getMonth($closedDate));
     $year = getYear($closedDate);
@@ -778,28 +821,26 @@ function endOfMonth($closedDate,$connection) {
         //Insert into the endofmonth table if it is set
         $endofthemonth = insert('endofmonth_tb',$data);
 
-        //1. check if day has ended, if not mark the day as ended
+        // check if day has ended, if not mark the day as ended [X]
         // $day = getDay($closedDate);
         // from victor...
 
-        // run asset depreciation
+        // update balance sheet [X]
+        
+
+        // run asset depreciation 
         include('../asset_depreciation.php');   
         asset_depreciation($connection);
 
-        //2. update balance sheet
-        // from victor...
+        // update balance sheet[X]
 
-        //3. ALSO, WHAT HAPPENS TO THIS CLOSED ACTION BUTTON IN FRONT-END : should it be deleted & immediately dissapear
-        // from victor...
+        //run charge collection (charges that are meant to be collected at the end of the month)
+        include('../charge_collection.php');
+        charge_collection($connection);
 
-        //4. run charge collection (charges that are meant to be collected at the end of the month)
-        // no functions found...
-
-        //5. run prepayment function
-        // no functions found...
+        //5. run prepayment function [X]
 
         //Send report header on succesful closing of the month
         return 0;
     }
 }
-

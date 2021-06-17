@@ -10,8 +10,7 @@ if (isset($_POST['endofmonth'])) {
     
     $closedDate = $_POST['closedDate'];
     
-    // PUT IN A FUNCTION ... will be used for end of year
-    $endOfMonthResp = endOfMonth($closedDate,$connection);
+   $endOfMonthResp =  endOfMonth($closedDate,$connection);
     if($endOfMonthResp == 0) {
         header("Location: ../../mfi/end_of_month.php?message1=$randms");
     } else {

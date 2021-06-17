@@ -2,6 +2,9 @@
 
 include("../connect.php");
 session_start();
+
+
+
 // collect session data
 $institutionId = $_SESSION['int_id'];
 $branchId = $_SESSION['branch_id'];

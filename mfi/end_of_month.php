@@ -24,7 +24,7 @@ include("header.php");
                                 <form action="../functions/endofdayaccount/endofmonth.php" method="POST">
                                     <div class="form-group">
                                         <label>Select Date<span style="color: red;">*</span>:</label>
-                                        <input type="date" name="closedDate" id="" class="form-control" required>
+                                        <input type="date" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" name="closedDate" id="" class="form-control" required>
                                     </div>
                             </div>
 
@@ -115,7 +115,7 @@ include("header.php");
                                             <th>Closed By</th>
                                             <th>Month</th>
                                             <th>Year</th>
-                                            <th>Action</th>
+                                            <!-- <th>Action</th> -->
                                         </tr>
 
                                     </thead>
@@ -159,7 +159,7 @@ include("header.php");
                                                     <td><?=$row['staff_name'];?></td>
                                                     <td><?=$row['month'];?></td>
                                                     <td><?=$row['year'];?></td>
-                                                    <td><input onclick="action" class="action" data-id="<?=$row['id']?>" type="checkbox" checked="" data-toggle="toggle" data-on="Closed" data-off="Open" data-onstyle="danger" data-offstyle="success"></td>
+                                                    <!-- <td><input onclick="action" class="action" data-id="<?=$row['id']?>" type="checkbox" checked="" data-toggle="toggle" data-on="Closed" data-off="Open" data-onstyle="danger" data-offstyle="success"></td> -->
                                                 </tr>
                                                 <?php
                                             }
@@ -168,7 +168,7 @@ include("header.php");
                                                 $(function(){
                                                     $('html,body').animate({
                                                         scrollTop: $("#toShow").offset().top
-                                                    }, 2000);
+                                                    },1000);
                                                 })
                                                 </script>
                                             <?php
@@ -185,10 +185,10 @@ include("header.php");
                                         var btn = $("#runperform");
                                         var rst = $("#reset");
                                         var dbody = $("#eomr>tbody");
-                                        rst.click(function(){
-                                            dbody.hide();
+                                        // rst.click(function(){
+                                        //     // dbody.hide();
 
-                                        })
+                                        // })
                                     });
                                     
                                 </script>
