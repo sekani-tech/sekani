@@ -102,7 +102,7 @@ if ($select_arrears) {
             }
 
             $prin = $select_arrears[$i]['principal_amount'];
-            $par = ($bnk_prov/$prin) * 100;
+            $par = $prin != 0 ? ($bnk_prov/$prin) * 100 : 0;
             
             $arrear_update = mysqli_query($connection, "UPDATE loan_arrear SET principal_amount = {$lr_principal_amount}, interest_amount = {$lr_interest_amount}, counter = {$days_between}, 
             par = {$par}, bank_provision = {$bnk_prov}, lastmodified_date = '$currentdate_time' WHERE int_id = {$sessint_id} AND loan_id = {$lr_loan_id} AND loan_schedule_id = {$lr_schedule_id}");

@@ -641,7 +641,7 @@ $overdue_interest = $wtyx["overdue_interest"];
                           $interest_due = $fetch_interest_val["interest_amount"] - $fetch_interest_val["interest_completed_derived"];
                           $total_due = $principal_due + $interest_due;
                           ?>
-                          <td><?php echo "₦ ".number_format(round($total_due), 2); ?></td>
+                          <td><?php echo "₦ ".number_format($total_due, 2); ?></td>
                           <td>
                             <div class="btn-group">
                               <?php

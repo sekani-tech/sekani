@@ -140,12 +140,12 @@ if(!empty($_POST['date'])) {
 
 
   if ($parent_id == 0) {
-    $current_liabilities_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND classification_enum = '2' AND parent_id IN (SELECT id FROM `acc_gl_account` WHERE name = 'current liability')");
-    $non_current_liabilities_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND classification_enum = '2' AND parent_id IN (SELECT id FROM `acc_gl_account` WHERE name = 'non-current liability' || 'non current liability')");
+    $current_liabilities_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND classification_enum = '2' AND parent_id IN (SELECT id FROM `acc_gl_account` WHERE name = 'current liability' || name = 'CURRENT LIABILITY')");
+    $non_current_liabilities_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND classification_enum = '2' AND parent_id IN (SELECT id FROM `acc_gl_account` WHERE name = 'non-current liability' || name = 'NON CURRENT LIABILITY')");
     $equity_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND parent_id <> '0' AND classification_enum = '3'");
   } else {
-    $current_liabilities_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND branch_id = '$branch_id' AND classification_enum = '2' AND parent_id IN (SELECT id FROM `acc_gl_account` WHERE name = 'current liability')");
-    $non_current_liabilities_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND branch_id = '$branch_id' AND classification_enum = '2' AND parent_id IN (SELECT id FROM `acc_gl_account` WHERE name = 'non-current liability' || 'non current liability')");
+    $current_liabilities_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND branch_id = '$branch_id' AND classification_enum = '2' AND parent_id IN (SELECT id FROM `acc_gl_account` WHERE name = 'current liability' || name = 'CURRENT LIABILITY')");
+    $non_current_liabilities_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND branch_id = '$branch_id' AND classification_enum = '2' AND parent_id IN (SELECT id FROM `acc_gl_account` WHERE name = 'non-current liability' || name = 'NON CURRENT LIABILITY')");
     $equity_list = mysqli_query($connection, "SELECT * FROM `acc_gl_account` WHERE int_id = '$sessint_id' AND branch_id = '$branch_id' AND parent_id <> '0' AND classification_enum = '3'");
   }
 

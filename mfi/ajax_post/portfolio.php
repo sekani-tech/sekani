@@ -16,9 +16,9 @@ if(!empty($_POST['branch_id']) && !empty($_POST['date'])) {
 
     // Disbursed Loans
     if($parent_id == 0) {
-        $result = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND disbursement_date >= '$date'");
+        $result = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND disbursement_date <= '$date'");
     } else {
-        $result = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND disbursement_date >= '$date' AND client_id IN (SELECT id FROM client WHERE branch_id = '$branch_id')");
+        $result = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND disbursement_date <= '$date' AND client_id IN (SELECT id FROM client WHERE branch_id = '$branch_id')");
     }
 
     $no_of_disbursed_loans = mysqli_num_rows($result);
@@ -31,9 +31,9 @@ if(!empty($_POST['branch_id']) && !empty($_POST['date'])) {
 
     // Outstanding Loans, BOP
     if($parent_id == 0) {
-        $result = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND disbursement_date >= '$thirtydaysbefore' AND (total_outstanding_derived <> 0)");
+        $result = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND disbursement_date <= '$thirtydaysbefore' AND (total_outstanding_derived <> 0)");
     } else {
-        $result = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND disbursement_date >= '$thirtydaysbefore' AND client_id IN (SELECT id FROM client WHERE branch_id = '$branch_id') AND (total_outstanding_derived <> 0)");
+        $result = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND disbursement_date <= '$thirtydaysbefore' AND client_id IN (SELECT id FROM client WHERE branch_id = '$branch_id') AND (total_outstanding_derived <> 0)");
     }
 
     $no_of_outstanding_loans_bop = mysqli_num_rows($result);
@@ -41,9 +41,9 @@ if(!empty($_POST['branch_id']) && !empty($_POST['date'])) {
 
     // Outstanding Loans, EOP
     if($parent_id == 0) {
-        $result = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND disbursement_date >= '$date' AND (total_outstanding_derived <> 0)");
+        $result = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND disbursement_date <= '$date' AND (total_outstanding_derived <> 0)");
     } else {
-        $result = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND disbursement_date >= '$date' AND client_id IN (SELECT id FROM client WHERE branch_id = '$branch_id') AND (total_outstanding_derived <> 0)");
+        $result = mysqli_query($connection, "SELECT * FROM loan WHERE int_id = '$sessint_id' AND disbursement_date <= '$date' AND client_id IN (SELECT id FROM client WHERE branch_id = '$branch_id') AND (total_outstanding_derived <> 0)");
     }
 
     $no_of_outstanding_loans = mysqli_num_rows($result);

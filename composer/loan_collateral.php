@@ -44,7 +44,7 @@ if(isset($_POST["downloadPDF"])) {
     
         while ($q = mysqli_fetch_array($result, MYSQLI_ASSOC))
         {
-          $date = $q["date"];
+          $date = date('d-m-Y', strtotime($q["date"]));
           $name = $q['client_id'];
           $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
           $f = mysqli_fetch_array($anam);
@@ -56,8 +56,8 @@ if(isset($_POST["downloadPDF"])) {
             <tr>
               <th style="font-size: 60px;" class="column1">'.$date.'</th>
               <th style="font-size: 60px;" class="column1">'.$nae.'</th>
-              <th style="font-size: 60px;" class="column1">'.$value.'</th>
               <th style="font-size: 60px;" class="column1">'.$type.'</th>
+              <th style="font-size: 60px;" class="column1">'.$value.'</th>
               <th style="font-size: 60px;" class="column1">'.$desc.'</th>
             </tr>
           ';
@@ -153,7 +153,7 @@ if(isset($_POST["downloadExcel"])) {
 
     while ($q = mysqli_fetch_array($result, MYSQLI_ASSOC))
     {
-      $date = $q["date"];
+      $date = date('d-m-Y', strtotime($q["date"]));
       $name = $q['client_id'];
       $anam = mysqli_query($connection, "SELECT firstname, lastname FROM client WHERE id = '$name'");
       $f = mysqli_fetch_array($anam);
@@ -164,8 +164,8 @@ if(isset($_POST["downloadExcel"])) {
 
       $active_sheet->setCellValue('A' . $count, $date);
       $active_sheet->setCellValue('B' . $count, $nae);
-      $active_sheet->setCellValue('C' . $count, $value);
-      $active_sheet->setCellValue('D' . $count, $type);
+      $active_sheet->setCellValue('C' . $count, $type);
+      $active_sheet->setCellValue('D' . $count, $value);
       $active_sheet->setCellValue('E' . $count, $desc);
 
       $count++;

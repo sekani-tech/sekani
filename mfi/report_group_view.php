@@ -199,31 +199,17 @@ if (isset($_GET["view1"])) {
                             <h4 class="card-title ">General Group Report</h4>
 
                             <!-- Insert number users institutions -->
-                            <p class="card-category"><?php
-                                                        $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved' && (branch_id ='$br_id' $branches)";
-                                                        $result = mysqli_query($connection, $query);
-                                                        if ($result) {
-                                                            $inr = mysqli_num_rows($result);
-                                                            echo $inr;
-                                                        } ?> registered groups
+                            <p class="card-category">
+                                <?php
+                                $query = "SELECT * FROM groups WHERE int_id = '$sessint_id' && status = 'Approved' && (branch_id ='$br_id' $branches)";
+                                $result = mysqli_query($connection, $query);
+                                if ($result) {
+                                    $inr = mysqli_num_rows($result);
+                                    echo $inr;
+                                } ?> registered groups
+                            </p>
                         </div>
                         <div class="card-body">
-                            <div class="form-group">
-                                <form method="POST" action="../composer/group_list.php">
-                                    <input hidden name="id" type="text" value="<?php echo $id; ?>" />
-                                    <input hidden name="start" type="text" value="<?php echo $start; ?>" />
-                                    <input hidden name="end" type="text" value="<?php echo $end; ?>" />
-                                    <input type="hidden" name="file_content" id="file_content" />
-                                    <button type="submit" id="clientlist" class="btn btn-primary pull-left">Download
-                                        PDF
-                                    </button>
-                                    <button type="button" name="convert" id="convertExcel" class="btn btn-success">
-                                        Download Excel
-                                    </button>
-
-                                </form>
-                            </div>
-
                             <table id="reportgroup" class="display" style="width:100%">
                                 <thead>
                                     <?php
@@ -231,7 +217,7 @@ if (isset($_GET["view1"])) {
                                     $result = mysqli_query($connection, $query);
                                     ?>
                                     <tr>
-                                        <th> Group Name</th>
+                                        <th>Group Name</th>
                                         <th>Reg Type</th>
                                         <th>Meeting Day</th>
                                         <th>Meeting Frequency</th>
@@ -240,10 +226,10 @@ if (isset($_GET["view1"])) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php if (mysqli_num_rows($result) > 0) {
+                                    <?php 
+                                    if (mysqli_num_rows($result) > 0) {
                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
                                             <tr>
-                                                <?php $row["id"]; ?>
                                                 <td><?php echo $row["g_name"]; ?></td>
                                                 <td><?php echo $row["reg_type"]; ?></td>
                                                 <td><?php echo $row["meeting_day"]; ?></td>
@@ -251,25 +237,24 @@ if (isset($_GET["view1"])) {
                                                 <td><?php echo $row["meeting_time"]; ?></td>
                                                 <td><?php echo $row["meeting_location"]; ?></td>
                                             </tr>
-                                    <?php }
+                                    <?php 
+                                        }
                                     } else {
                                         // echo "0 Document";
                                     }
                                     ?>
-
-
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th> Group Name</th>
-                                        <th>Reg Type</th>
-                                        <th>Meeting Day</th>
-                                        <th>Meeting Frequency</th>
-                                        <th>Meeting Time</th>
-                                        <th>Meeting Location</th>
-                                    </tr>
-                                </tfoot>
                             </table>
+                            <div class="form-group">
+                                <form method="POST" action="../composer/group_list.php">
+                                    <button type="submit" id="downloadPDF" class="btn btn-primary pull-left">
+                                        Download PDF
+                                    </button>
+                                    <button type="submit" name="downloadExcel" class="btn btn-success">
+                                        Download Excel
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -278,30 +263,6 @@ if (isset($_GET["view1"])) {
             <script>
                 $(document).ready(function() {
                     $('#reportgroup').DataTable();
-                });
-            </script>
-
-            <script>
-                $(document).ready(function() {
-                    $('#clientbalance').on("click", function() {
-                        swal({
-                            type: "success",
-                            title: "CLIENT BALANCE REPORT",
-                            text: "From " + start1 + " to " + end1 + "Loading...",
-                            showConfirmButton: false,
-                            timer: 5000
-
-                        })
-                    });
-                });
-                $(document).ready(function() {
-                    $('#convertExcel').click(function() {
-                        var table_content = '<table>';
-                        table_content += $('#table_content').html();
-                        table_content += '</table>';
-                        $('#file_content').val(table_content);
-                        $('#convert_form').submit();
-                    });
                 });
             </script>
         </div>

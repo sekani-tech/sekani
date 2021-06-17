@@ -155,17 +155,17 @@
     $ttlsector = $sector1 + $sector2 + $sector3 + $sector4 + $sector5 + $sector6 + $sector7 + $sector8 + $sector9 + $sector10 + $sector11;
     $ttunt = $amount1 + $amount2 + $amount3 + $amount4 + $amount5 + $amount6 + $amount7 + $amount8 + $amount9 + $amount10 + $amount11;
 
-    $percentAmount1 = !empty($amount1) ? $amount1 / $ttunt * 100 : '';
-    $percentAmount2 = !empty($amount2) ? $amount2 / $ttunt * 100 : '';
-    $percentAmount3 = !empty($amount3) ? $amount3 / $ttunt * 100 : '';
-    $percentAmount4 = !empty($amount4) ? $amount4 / $ttunt * 100 : '';
-    $percentAmount5 = !empty($amount5) ? $amount5 / $ttunt * 100 : '';
-    $percentAmount6 = !empty($amount6) ? $amount6 / $ttunt * 100 : '';
-    $percentAmount7 = !empty($amount7) ? $amount7 / $ttunt * 100 : '';
-    $percentAmount8 = !empty($amount8) ? $amount8 / $ttunt * 100 : '';
-    $percentAmount9 = !empty($amount9) ? $amount9 / $ttunt * 100 : '';
-    $percentAmount10 = !empty($amount10) ? $amount10 / $ttunt * 100 : '';
-    $percentAmount11 = !empty($amount11) ? $amount11 / $ttunt * 100 : '';
+    $percentAmount1 = !empty($amount1) ? round(($amount1 / $ttunt * 100), 2) : '';
+    $percentAmount2 = !empty($amount2) ? round(($amount2 / $ttunt * 100), 2) : '';
+    $percentAmount3 = !empty($amount3) ? round(($amount3 / $ttunt * 100), 2) : '';
+    $percentAmount4 = !empty($amount4) ? round(($amount4 / $ttunt * 100), 2) : '';
+    $percentAmount5 = !empty($amount5) ? round(($amount5 / $ttunt * 100), 2) : '';
+    $percentAmount6 = !empty($amount6) ? round(($amount6 / $ttunt * 100), 2) : '';
+    $percentAmount7 = !empty($amount7) ? round(($amount7 / $ttunt * 100), 2) : '';
+    $percentAmount8 = !empty($amount8) ? round(($amount8 / $ttunt * 100), 2) : '';
+    $percentAmount9 = !empty($amount9) ? round(($amount9 / $ttunt * 100), 2) : '';
+    $percentAmount10 = !empty($amount10) ? round(($amount10 / $ttunt * 100), 2) : '';
+    $percentAmount11 = !empty($amount11) ? round(($amount11 / $ttunt * 100), 2) : '';
 
     $ttlamount = number_format($ttunt, 2);
 

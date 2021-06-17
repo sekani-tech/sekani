@@ -57,10 +57,10 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
                                         $f = mysqli_fetch_array($anam);
                                         $nae = strtoupper($f["firstname"] . " " . $f["lastname"]);
                                         ?>
-                                        <td><?php echo $row["date"]; ?></td>
+                                        <td><?php echo date('d-m-Y', strtotime($row["date"])); ?></td>
                                         <td><?php echo $nae; ?></td>
-                                        <td><?php echo $row["value"]; ?></td>
                                         <td><?php echo $row["type"]; ?></td>
+                                        <td><?php echo $row["value"]; ?></td>
                                         <td><?php echo $row["description"]; ?></td>
                                     </tr>
                             <?php }
