@@ -206,7 +206,7 @@ $dos = mysqli_query($connection, $fd);
                         $digits = 6;
                         $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
                         $_SESSION["savings_temp"] = $randms;
-                        $main_p = $_SESSION["savings_temp"];
+                        $tempId = $_SESSION["savings_temp"];
                         $_SESSION["stemp"] = $_SESSION["savings_temp"];
                         $dbcache = $_SESSION["stemp"];
                         $_SESSION["product_temp"] = $randms;
@@ -351,84 +351,113 @@ $dos = mysqli_query($connection, $fd);
                     <!-- Third Tab -->
                     <div class="tab">
                       <h3>Charges</h3>
-                      <input type="text" hidden readonly id="int_id" value="<?php echo $sessint_id; ?>">
-                      <input type="text" hidden readonly id="branch_id" value="<?php echo $branch_id; ?>">
-                      <script>
-                        $(document).ready(function() {
-                          $('#charges').change(function() {
-                            var id = $(this).val();
-                            var int_id = $('#int_id').val();
-                            var branch_id = $('#branch_id').val();
-                            var main_p = $('#main_p').val();
-                            $.ajax({
-                              url: "savings_charges.php",
-                              method: "POST",
-                              data: {
-                                id: id,
-                                int_id: int_id,
-                                branch_id: branch_id,
-                                main_p: main_p
-                              },
-                              success: function(data) {
-                                $('#show_charges').html(data);
-                                document.getElementById("takeme").setAttribute("hidden", "");
-                                document.getElementById("damn_men").removeAttribute("hidden");
-                              }
-                            })
-                          });
-                        })
-                      </script>
-                      <div class="form-group">
+                      <div class="col-md-2" align="right">
+                        <a href="#addEmp" data-toggle="modal" type="button" name="add" class="btn btn-success">Add Charge</a>
                       </div>
-                      <div class="form-group">
-                        <div class="row">
-                          <div class="col-md-4">
-                            <label>Charges:</label>
-                            <input type="text" hidden value="<?php echo $main_p; ?>" id="main_p">
-                            <select name="charge_id" class="form-control" id="charges">
-                              <option value="">select an option</option>
-                              <?php echo fill_charges($connection); ?>
-                            </select>
+                      <table id="empList" class="display table-bordered table-striped" style="width:100%">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Charge</th>
+                            <th>Collected On</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody id="showCharge">
 
-                          </div>
-                          <div class="col-md-6">
-                            <div id="show_charges">
+                        </tbody>
+                      </table>
+
+                      <script>
+                        empRecords = $('#empList').DataTable({
+                          bFilter: false
+                        });
+                      </script>
+                      <div class="modal fade" id="addEmp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                              <center>
+                                <h4 class="modal-title" id="myModalLabel">Add New</h4>
+                              </center>
+                            </div>
+                            <div class="modal-body">
+                              <div class="container-fluid">
+                                <form method="POST">
+                                  <input type="text" hidden value="<?php echo $tempId; ?>" id="tempId">
+                                  <div class="form-group" <label for="name" class="control-label">Charge</label>
+                                    <input type="text" hidden value="<?php echo $tempId; ?>" id="main_p">
+                                    <select name="charge_id" class="form-control" id="charge_id">
+                                      <option value="">select an option</option>
+                                      <?php echo fill_charges($connection); ?>
+                                    </select>
+                                  </div>
+                                  <?php
+                                  // load user role data
+                                  function fill_charges($connection)
+                                  {
+                                    $sint_id = $_SESSION["int_id"];
+                                    $tempId = $_SESSION["product_temp"];
+                                    $org = "SELECT * FROM charge WHERE int_id = '$sint_id' AND is_active = '1'";
+                                    $res = mysqli_query($connection, $org);
+                                    $output = '';
+                                    while ($row = mysqli_fetch_array($res)) {
+                                      $output .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
+                                    }
+                                    return $output;
+                                  }
+                                  ?>
+                                  <input type="text" hidden id="int_id" value="<?php echo $sint_id ?>">
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                                    <button type="submit" id="addCharge" name="add" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
+                                  </div>
+                                </form>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <?php
-                      // load user role data
-                      function fill_charges($connection)
-                      {
-                        $sint_id = $_SESSION["int_id"];
-                        $main_p  = $_SESSION["product_temp"];
-                        $org = "SELECT * FROM charge WHERE int_id = '$sint_id' && is_active = '1'";
-                        $res = mysqli_query($connection, $org);
-                        $output = '';
-                        while ($row = mysqli_fetch_array($res)) {
-                          $output .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
-                        }
-                        return $output;
-                      }
-                      ?>
-                      <script>
-                        $(document).ready(function() {
-                          $('#credit').on("change keyup paste click", function() {
-                            var id = $(this).val();
-                            $.ajax({
-                              url: "credit_check.php",
-                              method: "POST",
-                              data: {
-                                id: id
-                              },
-                              success: function(data) {
-                                $('#show_credit').html(data);
-                              }
-                            })
+                        <script>
+                          $(document).ready(function() {
+                            $('#addCharge').on("click", function() {
+                              var id = $(this).val();
+                              var int_id = $('#int_id').val();
+                              var charge_id = $('#charge_id').val();
+                              var tempId = $('#tempId').val();
+                              $.ajax({
+                                url: "ajax_post/products/addCharge.php",
+                                method: "POST",
+                                data: {
+                                  // id: id,
+                                  charge_id: charge_id,
+                                  tempId: tempId
+                                },
+                                success: function(data) {
+                                  var output = data;
+                                  if (output = "Success") {
+                                    $.ajax({
+                                      url: "ajax_post/products/charge_table.php",
+                                      method: "POST",
+                                      data: {
+                                        int_id: int_id,
+                                        // end: end,
+                                        tempId: tempId
+                                      },
+                                      success: function(data) {
+                                        $('#showCharge').html(data);
+                                        alert("Charge Successfully added");
+                                      }
+                                    })
+                                  } else {
+                                    alert("Error adding Charge");
+                                  }
+                                }
+                              })
+                            });
                           });
-                        });
-                      </script>
+                        </script>
+                      </div>
                     </div>
 
                     <!-- Third Tab -->

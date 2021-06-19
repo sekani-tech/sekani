@@ -1,6 +1,7 @@
 <?php
 
 include("../connect.php");
+include("../ajax/ajaxcall.php");
 session_start();
 $institutionId = $_SESSION['int_id'];
 $branchId = $_SESSION['branch_id'];
@@ -40,7 +41,7 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
         $_SESSION["feedback"] = "Sorry could not Find Chosen GL! - $error";
         $_SESSION["Lack_of_intfund_$randms"] = "10";
         echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
-    } 
+    }
     $glBalance = $checkGl['organization_running_balance_derived'];
     if ($glBalance >= $amount) {
         // credit the money from clients account
@@ -82,6 +83,55 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
             ];
             $storeTransaction = insert('account_transaction', $transactionDetails);
             if ($storeTransaction) {
+                $findSmsDetails = selectOne('client', ['id' => $clientId]);
+                $mobileNo = $findSmsDetails['mobile_no'];
+                $smsActive = $findSmsDetails['SMS_ACTIVE'];
+                if ($smsActive == 1) {
+?>
+                    <input type="text" id="s_int_id" value="<?php echo $institutionId; ?>" hidden>
+                    <input type="text" id="s_branch_id" value="<?php echo $branchId; ?>" hidden>
+                    <input type="text" id="s_client_id" value="<?php echo $clientId; ?>" hidden>
+                    <input type="text" id="s_phone" value="<?php echo $mobileNo; ?>" hidden>
+                    <input type="text" id="s_acct_no" value="<?php echo appendAccountNo($clientAccount, 6); ?>" hidden>
+                    <input type="text" id="s_amount" value="<?php echo number_format($amount, 2); ?>" hidden>
+                    <input type="text" id="s_desc" value="<?php echo $description; ?>" hidden>
+                    <input type="text" id="s_date" value="<?php echo $today; ?>" hidden>
+                    <input type="text" id="s_balance" value="<?php echo number_format($newBalance, 2); ?>" hidden>
+                    <script>
+                        $(document).ready(function() {
+                            var int_id = $('#s_int_id').val();
+                            var branch_id = $('#s_branch_id').val();
+                            var phone = $('#s_phone').val();
+                            var client_id = $('#s_client_id').val();
+                            // function
+                            var amount = $('#s_amount').val();
+                            var acct_no = $('#s_acct_no').val();
+                            var desc = $('#s_desc').val();
+                            var date = $('#s_date').val();
+                            var balance = $('#s_balance').val();
+                            // now we work on the body.
+                            // var msg = int_name + " " + trans_type + " \n" + "Amt: NGN " + amount + " \n Acct: " + acct_no + "\nDesc: " + desc + " \nBal: " + balance + " \nAvail: " + balance + "\nDate: " + date + "\nThank you for Banking with Us!";
+                            var msg = "Acct: " + acct_no + "\nAmt: NGN " + amount + " Credit \nDesc: " + desc + "\nAvail Bal: " + balance + "\nDate: " + date;
+                            $.ajax({
+                                url: "../../mfi/ajax_post/sms/sms.php",
+                                method: "POST",
+                                data: {
+                                    int_id: int_id,
+                                    branch_id: branch_id,
+                                    sender_id: sender_id,
+                                    phone: phone,
+                                    msg: msg,
+                                    client_id: client_id,
+                                    account_no: account_no
+                                },
+                                success: function(data) {
+                                    $('#make_display').html(data);
+                                }
+                            });
+                        });
+                    </script>
+<?php
+                }
                 // update gl and record history of transaction
                 // updating savings portfolio
                 $findSavingsGl = selectOne('savings_acct_rule', ['savings_product_id' => $productId, 'int_id' => $institutionId]);

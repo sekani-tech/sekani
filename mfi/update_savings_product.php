@@ -574,98 +574,121 @@ if (isset($_GET["edit"])) {
                       <h3>Charges</h3>
                       <div class="form-group">
                         <div class="row">
-                          <div class="col-md-4">
+                          <div class="col-md-12">
                             <label>Charges:</label>
                             <input id="sde" type="text" value="<?php echo $user_id; ?>" hidden />
-                            <select name="charge_id" class="form-control" id="charges">
-                              <option value="">select an option</option>
-                              <?php echo fill_charges($connection); ?>
-                            </select>
-                          </div>
-                          <script>
-                            $(document).ready(function() {
-                              $('#charges').on("change", function() {
-                                var id = $(this).val();
-                                var user = $('#sav_id').val();
-                                $.ajax({
-                                  url: "ajax_post/update_savings_product_table.php",
-                                  method: "POST",
-                                  data: {
-                                    id: id,
-                                    user: user
-                                  },
-                                  success: function(data) {
-                                    $('#idd').html(data);
-                                  }
-                                })
-                              });
-                            });
-                          </script>
-                          <div id="idd" class="col-md-12">
-                            <table id="tabledat4" class="table" style="width: 100%;">
-                              <thead class=" text-primary">
-                                <?php
-                                $query = "SELECT * FROM savings_product_charge WHERE int_id ='$sessint_id' AND savings_id = '$user_id'";
-                                $result = mysqli_query($connection, $query);
-                                ?>
-                                <th>Name</th>
-                                <th>Charge</th>
-                                <th>Collected On</th>
-                                <th>Delete</th>
+                            <div class="col-md-2" align="right">
+                              <a href="#addEmp" data-toggle="modal" type="button" name="add" class="btn btn-success">Add Charge</a>
+                            </div>
+                            <table id="empList" class="display table-bordered table-striped" style="width:100%">
+                              <thead>
+                                <tr>
+                                  <th>Name</th>
+                                  <th>Charge</th>
+                                  <th>Collected On</th>
+                                  <th></th>
+                                </tr>
                               </thead>
-                              <tbody>
-                                <?php if (mysqli_num_rows($result) > 0) {
-                                  while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-                                    <tr>
-                                      <?php
-                                      $did = $row['id'];
-                                      $charge_id = $row['charge_id'];
-                                      $fid = "SELECT * FROM charge WHERE int_id = '$sessint_id' AND id ='$charge_id'";
-                                      $dfdf = mysqli_query($connection, $fid);
-                                      $d = mysqli_fetch_array($dfdf);
-                                      $name = $d['name'];
-                                      $amt = $d['amount'];
-                                      $ds = $d['charge_calculation_enum'];
-                                      $values = $d["charge_time_enum"];
-                                      if ($ds == 1) {
-                                        $chg = $amt . " Flat";
-                                      } else {
-                                        $chg = $amt . "% of Loan Principal";
-                                      }
-                                      if ($values == 1) {
-                                        $xs = "Disbursement";
-                                      } else if ($values == 2) {
-                                        $xs = "Manual Charge";
-                                      } else if ($values == 3) {
-                                        $xs = "Savings Activiation";
-                                      } else if ($values == 5) {
-                                        $xs = "Deposit Fee";
-                                      } else if ($values == 6) {
-                                        $xs = "Annual Fee";
-                                      } else if ($values == 8) {
-                                        $xs = "Installment Fees";
-                                      } else if ($values == 9) {
-                                        $xs = "Overdue Installment Fee";
-                                      } else if ($values == 12) {
-                                        $xs = "Disbursement - Paid With Repayment";
-                                      } else if ($values == 13) {
-                                        $xs = "Loan Rescheduling Fee";
-                                      }
-                                      ?>
-                                      <th><?php echo $name; ?></th>
-                                      <th><?php echo $chg; ?></th>
-                                      <th><?php echo $xs; ?></th>
-                                      <td>
-                                        <div data-id='<?= $did; ?>' class="test"><a class="btn btn-danger">Delete</a></div>
-                                      </td>
-                                    </tr>
-                                <?php }
-                                } else {
-                                  // echo "0 Document";
-                                }
-                                ?>
+                              <tbody id="showCharge">
+
                               </tbody>
                             </table>
+
+                            <script>
+                              $('#empList').DataTable({
+                                bFilter: false
+                                // serverSide: true,
+                                // ajax: 'ajax_post/support/account_statement.php'
+                              });
+                            </script>
+                            <div class="modal fade" id="addEmp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                                    <!-- <center> -->
+                                    <h4 class="modal-title" id="myModalLabel">Add New</h4>
+                                    <!-- </center> -->
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="container-fluid">
+                                      <form>
+
+                                        <div class="form-group"> <label for="name" class="control-label">Charge</label>
+                                          <input type="text" hidden value="<?php echo $user_id; ?>" id="product">
+                                          <select name="charge_id" class="form-control" id="charge_id">
+                                            <option value="">select an option</option>
+                                            <?php echo fill_charges($connection); ?>
+                                          </select>
+                                        </div>
+
+
+                                        <input type="text" hidden id="int_id" value="<?php echo $sint_id ?>">
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                                          <button type="button" id="addCharge" name="add" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <script>
+                                $(document).ready(function() {
+                                  var product = $('#product').val();
+                                  $('#product').val(function() {
+                                    // var product = $(this).val();
+                                    $.ajax({
+                                      url: "ajax_post/products/savings_product_charge.php",
+                                      method: "POST",
+                                      data: {
+                                        product: product
+                                        // end: end,
+                                        // tempId: tempId
+                                      },
+                                      success: function(data) {
+                                        $('#showCharge').html(data);
+                                      }
+                                    })
+                                  });
+                                  $('#addCharge').on("click", function() {
+                                    var id = $(this).val();
+                                    var int_id = $('#int_id').val();
+                                    var charge_id = $('#charge_id').val();
+                                    
+                                    $.ajax({
+                                      url: "ajax_post/products/add_savings_product_charge.php",
+                                      method: "POST",
+                                      data: {
+                                        // id: id,
+                                        charge_id: charge_id,
+                                        product: product
+                                      },
+                                      success: function(data) {
+                                        var output = data;
+                                        if (output = "Success") {
+                                          $.ajax({
+                                            url: "ajax_post/products/savings_product_charge.php",
+                                            method: "POST",
+                                            data: {
+                                              int_id: int_id,
+                                              // end: end,
+                                              product: product
+                                            },
+                                            success: function(data) {
+                                              $('#showCharge').html(data);
+                                              alert("Charge Successfully Added");
+                                            }
+                                          })
+                                        } else {
+                                          alert("Error adding Charge");
+                                        }
+                                      }
+                                    })
+                                  });
+                                });
+                              </script>
+                            </div>
                           </div>
                         </div>
                       </div>
