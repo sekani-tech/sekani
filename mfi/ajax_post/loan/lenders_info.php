@@ -77,7 +77,7 @@ if (isset($_POST["id"])) {
     if (mysqli_num_rows($result) == 1) {
         while ($row = mysqli_fetch_array($result)) {
             $output2 = '<div class="form-group">
-              <label>Loan Details:</label>
+              <label>Active Loan Status:</label>
               <input type="text" value="Existing Loan - ' . $row["total_outstanding_derived"] . ' - ' . $row["name"] . '" id="" name="principal_amoun" class="form-control" readonly required>
             </div>
             ';
@@ -85,7 +85,7 @@ if (isset($_POST["id"])) {
         
     } else {
         $output2 = '<div class="form-group">
-        <label>Loan Details:</label>
+        <label>Active Loan Status:</label>
         <input type="text" value="No Loan" id="" name="" class="form-control" readonly required>
       </div>
       ';

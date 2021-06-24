@@ -156,7 +156,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
             <th style="font-weight:bold;">LENDING MODEL</th>
             <th style="font-weight:bold; text-align: center;">NUMBER</th>
             <th style="font-weight:bold; text-align: center;">AMOUNT (&#x20A6;)</th>
-            <th style="font-weight:bold; text-align: center;">% <br> (per lending model)</th>
+            <th style="font-weight:bold; text-align: center;">% <br> (PER LENDING MODEL)</th>
           </thead>
           <tbody>
             <?php if(!($zerobalances_hide == 'yes' && $individualCount == 0)) {?>
@@ -164,7 +164,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
                 <td>Individual Account</td>
                 <td class="text-center"><?php echo $individualCount; ?></td>
                 <td class="text-center"><?php echo number_format(round($individualAmount), 2); ?></td>
-                <td class="text-center" style="background-color:bisque;"><?php echo $individualPercentage; ?></td>
+                <td class="text-center" style="background-color:bisque;"><?php echo round($individualPercentage, 2); ?></td>
             </tr>
             <?php } ?>
 
@@ -173,7 +173,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
                 <td>Joint Account</td>
                 <td class="text-center"><?php echo $jointCount; ?></td>
                 <td class="text-center"><?php echo number_format(round($jointAmount), 2); ?></td>
-                <td class="text-center" style="background-color:bisque;"><?php echo $jointPercentage; ?></td>
+                <td class="text-center" style="background-color:bisque;"><?php echo round($jointPercentage, 2); ?></td>
             </tr>
             <?php } ?>
 
@@ -182,7 +182,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
                 <td>Corporate Account</td>
                 <td class="text-center"><?php echo $corporateCount; ?></td>
                 <td class="text-center"><?php echo number_format(round($corporateAmount), 2); ?></td>
-                <td class="text-center" style="background-color:bisque;"><?php echo $corporatePercentage; ?></td>
+                <td class="text-center" style="background-color:bisque;"><?php echo round($corporatePercentage, 2); ?></td>
             </tr>
             <?php } ?>
 
@@ -191,7 +191,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
                 <td>Group Account</td>
                 <td class="text-center"><?php echo $groupCount; ?></td>
                 <td class="text-center"><?php echo number_format(round($groupAmount), 2); ?></td>
-                <td class="text-center" style="background-color:bisque;"><?php echo $groupPercentage; ?></td>
+                <td class="text-center" style="background-color:bisque;"><?php echo round($groupPercentage, 2); ?></td>
             </tr>
             <?php } ?>
 
@@ -200,7 +200,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
                 <td>Staff Account</td>
                 <td class="text-center"><?php echo $staffCount; ?></td>
                 <td class="text-center"><?php echo number_format(round($staffAmount), 2); ?></td>
-                <td class="text-center" style="background-color:bisque;"><?php echo $staffPercentage; ?></td>
+                <td class="text-center" style="background-color:bisque;"><?php echo round($staffPercentage, 2); ?></td>
             </tr>
             <?php } ?>
 

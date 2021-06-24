@@ -600,13 +600,13 @@ include("ajaxcallx.php");
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label class="bmd-label-floating" for="">Phone:</label>
-                                                                    <input type="text" name="gau_phone" id="gau_phone" class="form-control" required>
+                                                                    <input type="number" name="gau_phone" id="gau_phone" class="form-control" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label class="bmd-label-floating" for="">Phone 2:</label>
-                                                                    <input type="text" name="gau_phone2" id="gau_phone2" class="form-control">
+                                                                    <input type="number" name="gau_phone2" id="gau_phone2" class="form-control">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">

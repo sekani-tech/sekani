@@ -1163,7 +1163,7 @@ else if (isset($_GET["view19"])) {
                             <h4 class="card-title ">Loans in Arrears</h4>
                             <p class="card-category">
                                 <?php
-                                $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= '1'";
+                                $query = "SELECT DISTINCT loan_id FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= '1'";
                                 $result = mysqli_query($connection, $query);
                                 if ($result) {
                                     $inr = mysqli_num_rows($result);
@@ -1177,7 +1177,7 @@ else if (isset($_GET["view19"])) {
                                         <table id="areas" class="rtable display nowrap" style="width:100%">
                                             <thead class="text-primary">
                                                 <?php
-                                                $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= '1'";
+                                                $query = "SELECT client_id, loan_id, SUM(principal_amount) AS principal_amount, SUM(interest_amount) AS interest_amount, counter FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= '1' GROUP BY loan_id ORDER BY loan_id";
                                                 $result = mysqli_query($connection, $query);
                                                 ?>
                                                 <th>
@@ -1245,14 +1245,9 @@ else if (isset($_GET["view19"])) {
                                                             <th><?php echo $last_repay_date; ?></th>
 
                                                             <?php
-                                                            $cli_id = $row["client_id"];
-                                                            $sf = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND id = '$loan_id' AND client_id = '$cli_id'";
-                                                            $do = mysqli_query($connection, $sf);
-                                                            while ($sd = mysqli_fetch_array($do)) {
-                                                                $outbalance = $sd['total_outstanding_derived'];
-                                                            }
+                                                            
                                                             ?>
-                                                            <th><?php echo number_format(round($outbalance), 2); ?></th>
+                                                            <th><?php echo number_format(round($row["principal_amount"] + $row["interest_amount"]), 2); ?></th>
 
                                                             <?php
 

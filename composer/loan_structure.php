@@ -162,31 +162,31 @@ if(isset($_POST["downloadPDF"])) {
                     <td style = "font-size:14px;">Individual Account</td>
                     <td style = "font-size:14px;">'.$individualCount.'</td>
                     <td style = "font-size:14px;">'.number_format(round($individualAmount), 2).'</td>
-                    <td style = "font-size:14px;">'.$individualPercentage.'</td>
+                    <td style = "font-size:14px;">'.round($individualPercentage, 2).'</td>
                 </tr>
                 <tr>
                     <td style = "font-size:14px;">Joint Account</td>
                     <td style = "font-size:14px;">'.$jointCount.'</td>
                     <td style = "font-size:14px;">'.number_format(round($jointAmount), 2).'</td>
-                    <td style = "font-size:14px;">'.$jointPercentage.'</td>
+                    <td style = "font-size:14px;">'.round($jointPercentage, 2).'</td>
                 </tr>
                 <tr>
                     <td style = "font-size:14px;">Corporate Account</td>
                     <td style = "font-size:14px;">'.$corporateCount.'</td>
                     <td style = "font-size:14px;">'.number_format(round($corporateAmount), 2).'</td>
-                    <td style = "font-size:14px;">'.$corporatePercentage.'</td>
+                    <td style = "font-size:14px;">'.round($corporatePercentage, 2).'</td>
                 </tr>
                 <tr>
                     <td style = "font-size:14px;">Group Account</td>
                     <td style = "font-size:14px;">'.$groupCount.'</td>
                     <td style = "font-size:14px;">'.number_format(round($groupAmount), 2).'</td>
-                    <td style = "font-size:14px;">'.$groupPercentage.'</td>
+                    <td style = "font-size:14px;">'.round($groupPercentage, 2).'</td>
                 </tr>
                 <tr>
                     <td style = "font-size:14px;">Staff Account</td>
                     <td style = "font-size:14px;">'.$staffCount.'</td>
                     <td style = "font-size:14px;">'.number_format(round($staffAmount), 2).'</td>
-                    <td style = "font-size:14px;">'.$staffPercentage.'</td>
+                    <td style = "font-size:14px;">'.round($staffPercentage, 2).'</td>
                 </tr>
                 <tr>
                     <td style = "font-size:14px;">Total</td>

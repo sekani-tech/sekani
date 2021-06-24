@@ -69,54 +69,37 @@ if ($view_dashboard == 1) {
                 </div>
 
                 <!-- Portfolio at risk -->
-                <!-- not in use yet -->
                 <?php
-                $dd = "SELECT SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
-                $sdoi = mysqli_query($connection, $dd);
-                $e = mysqli_fetch_array($sdoi);
-                $interest = $e['interest_amount'];
+                $allpar = mysqli_query($connection, "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= '1' GROUP BY loan_id ORDER BY loan_id");
 
-                $dfdf = "SELECT SUM(principal_amount) AS principal_amount FROM loan_repayment_schedule WHERE installment >= '1' AND int_id = '$sessint_id'";
-                $sdswe = mysqli_query($connection, $dfdf);
-                $u = mysqli_fetch_array($sdswe);
-                $prin = $u['principal_amount'];
+                $valueofpar31to60 = 0;
+                $par31to60_percentage = 0;
+                $valueofpar61to90 = 0;
+                $par61to90_percentage = 0;
 
-                $outstanding = $prin + $interest;
-
-                // Arrears
-                $ldfkl = "SELECT SUM(interest_amount) AS interest_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id'";
-                $fosdi = mysqli_query($connection, $ldfkl);
-                $l = mysqli_fetch_array($fosdi);
-                $interesttwo = $l['interest_amount'];
-
-                $sdospd = "SELECT SUM(principal_amount) AS principal_amount FROM loan_arrear WHERE installment >= '1' AND int_id = '$sessint_id'";
-                $sodi = mysqli_query($connection, $sdospd);
-                $s = mysqli_fetch_array($sodi);
-                $printwo = $s['principal_amount'];
-
-                $outstandingtwo = $printwo + $interesttwo;
-                $ttout = $outstanding + $outstandingtwo;
-
-                //  30 days in arrears
-                $dewe = "SELECT SUM(bank_provision) AS bank_provision FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1' AND counter < '30'";
-                $sdd = mysqli_query($connection, $dewe);
-                if (!$sdd) {
-                    printf("Error: %s\n", mysqli_error($connection));//checking for errors
-                    exit();
-                }else{
-                    $sdt = mysqli_fetch_array($sdd);
-                    $bnk_provsix = $sdt['bank_provision'];
+                while($eachpar = mysqli_fetch_array($allpar)) {
+                    if($eachpar['counter'] >= '31' && $eachpar['counter'] <= '60') {
+                        /*  31 to 60 days in arrears */
+                        $loan_id = $eachpar['loan_id'];
+                        $getpar31to60 = mysqli_query($connection, "SELECT SUM(principal_amount) AS principal_amount, SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND loan_id = '$loan_id' AND installment >= '1'");
+                        $par31to60 = mysqli_fetch_array($getpar31to60);
+                        $principal = $par31to60['principal_amount'];
+                        $interest = $par31to60['interest_amount'];
+                        $valueofpar31to60 += $principal + $interest;
+                        $par31to60_percentage = ($valueofpar31to60/$totalOutstandingLoans) * 100;
+            
+                    } else if ($eachpar['counter'] >= '61' && $eachpar['counter'] <= '90') {
+                        /* 61 to 90 days in arrears */
+                        $loan_id = $eachpar['loan_id'];
+                        $getpar61to90 = mysqli_query($connection, "SELECT SUM(principal_amount) AS principal_amount, SUM(interest_amount) AS interest_amount FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND loan_id = '$loan_id' AND installment >= '1'");
+                        $par61to90 = mysqli_fetch_array($getpar61to90);
+                        $principal = $par61to90['principal_amount'];
+                        $interest = $par61to90['interest_amount'];
+                        $valueofpar61to90 += $principal + $interest;
+                        $par61to90_percentage = ($valueofpar61to90/$totalOutstandingLoans) * 100;
+                    }
                 }
                 
-
-                // 60 days in arrears
-                $dewe = "SELECT SUM(bank_provision) AS bank_provision FROM loan_arrear WHERE int_id = '$sessint_id' AND installment = '1' AND counter < '60' AND counter > 30";
-                $sdd = mysqli_query($connection, $dewe);
-                $sdt = mysqli_fetch_array($sdd);
-                $bnk_provthree = $sdt['bank_provision'];
-
-                $pfarthree = ($bnk_provthree / $ttout) * 100;
-                $pfarsix = ($bnk_provsix / $ttout) * 100;
                 ?>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="card card-stats">
@@ -125,18 +108,8 @@ if ($view_dashboard == 1) {
                                 <i class="material-icons">info_outline</i>
                             </div>
                             <p class="card-category"><b>PAR</b></p>
-                            <?php if ($bnk_provthree > 0 || $bnk_provsix > 0) {
-                                ?>
-                                <h4 class="card-title">30 days - <?php echo number_format($pfarthree, 2); ?>%</h4>
-                                <h4 class="card-title">60 days - <?php echo number_format($pfarsix, 2); ?>%</h4>
-                                <?php
-                            } else {
-                                ?>
-                                <h4 class="card-title">30 days - 0%</h4>
-                                <h4 class="card-title">60 days - 0%</h4>
-                                <?php
-                            }
-                            ?>
+                            <h4 class="card-title">60 days - <?php echo number_format($par31to60_percentage, 2); ?>%</h4>
+                            <h4 class="card-title">90 days - <?php echo number_format($par61to90_percentage, 2); ?>%</h4>
                         </div>
                         <div class="card-footer">
                             <div class="stats">
