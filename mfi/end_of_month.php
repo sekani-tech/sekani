@@ -4,6 +4,44 @@ $page_title = "End Of Month";
 $destination = "";
 include("header.php");
 ?>
+<?php
+    $exp_error = "";
+    if(isset($_GET['message'])) {
+        $key = $_GET['message'];
+        $tt = 0;
+        // $out = $_SESSION['end_of_month_$key'];
+        echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "success",
+                        title: "Success",
+                        text: "'.$_SESSION['feedback'].'",
+                        showConfirmButton: true,
+                        timer: 7000
+                    })
+                });
+                </script>
+        ';
+        $_SESSION['end_of_month_$key'] = 0;
+    } else if(isset($_GET['message1'])) {
+        $key = $_GET['message1'];
+        $tt = 0;
+        // $out = $_SESSION['end_of_month_$key'];
+        echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "error",
+                        title: "Error",
+                        text: "'.$_SESSION['feedback'].'",
+                        showConfirmButton: true,
+                        timer: 7000
+                    })
+                });
+                </script>
+        ';
+        $_SESSION['end_of_month_$key'] = 0;
+    }
+?>
 
 <script src="../assets/js/bootstrap4-toggle.min.js"></script>
 <link href="../assets/css/bootstrap4-toggle.min.css" rel="stylesheet">
@@ -42,8 +80,7 @@ include("header.php");
 
                         </div>
                         
-                        <?=isset($_GET['message1']) ? '<p style = "color:green">Month successfully ended</p>' : '';?>
-                        <p style = "color:red"><?=isset($_GET['error']) ? $_GET['error'] : '';?></p>
+                     
 
                     </div>
                 </div>
@@ -61,22 +98,21 @@ include("header.php");
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <form action="<?=$_SERVER['PHP_SELF'];?>" method="POST">
+                                <form>
                                     <div class="row">
                                         <div class="form-group col-md-4">
                                             <label for="">Start Date</label>
-                                            <input type="date" name="startDate" value = "<?=isset($_POST['startDate']) ? $_POST['startDate'] : ''; ?>" id="startDate" class="form-control" required>
+                                            <input type="date" name="startDate" id="startDate" class="form-control" required>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="">End Date</label>
-                                            <input type="date" name="endDate" value = "<?=isset($_POST['endDate']) ? $_POST['endDate'] : ''; ?>" id="endDate" class="form-control" required>
+                                            <input type="date" name="endDate" id="endDate" class="form-control" required>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="">Branch</label>
                                             <select name="branch" id="branch" class="form-control" required>
                                             <option disabled="" selected value="">Choose branch</option>
                                             
-                                            <!-- Get branches they can choose from -->
                                             <?php
                                                 $branches = selectAll('branch',['int_id'=>$_SESSION['int_id']]);
                                                 foreach($branches as $branch) {
@@ -104,10 +140,10 @@ include("header.php");
                                 </form>
                             </div>
                         </div>
-                        <div class="row mt-4">
+                        <div class="row mt-4" id = "toShow">
                             <div class="col-md-12">
 
-                                <table id="eomr" class="display" style="width:100%">
+                                <table id="eodr" class="display" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -119,79 +155,20 @@ include("header.php");
                                         </tr>
 
                                     </thead>
-                                    <tbody>
-                                    <?php
-                                        if(isset($_POST['generateReport'])) {
-                                                // Generate End of Month Report
-                                            $startDate = $_POST['startDate'];
-                                            $endDate = $_POST['endDate'];
-                                            $branch = $_POST['branch'];
-
-                                            // convert to timestamp
-                                            $startDate_timestamp = strtotime($startDate.' 00:00:00');
-                                            $endDate_timestamp = strtotime($endDate.' 24:00:00');
-
-                                            // if(trim($branch) !== "") {
-                                            $result = selectAll('endofmonth_tb',['branch_id'=>$branch]);
-                                            // } else {
-                                            //     $result = selectAll('endofmonth_tb');
-                                            // }
-
-                                            // $generated_data = [];
-                                            $generatedData = [];
-
-                                            foreach($result as $r) {
-                                                $created_on = strtotime($r['created_on']);
-                                                if($created_on >= $startDate_timestamp && $created_on <= $endDate_timestamp) {
-                                                    // Get staff name
-                                                    $staff = selectAll('staff', ['id'=>$r['staff_id']]);
-                                                    $r['staff_name'] = $staff[0]['display_name'];
-                                                    // push data
-                                                    array_push($generatedData, $r);
-                                                }
-                                            }
-                                            foreach($generatedData as $row) {
-                                                ?>
-                                                <tr>
-                                                    <td><?=$row['id']?></td>
-                                                    <td><?=explode(' ',$row['created_on'])[0];
-                                                    ?></td>
-                                                    <td><?=$row['staff_name'];?></td>
-                                                    <td><?=$row['month'];?></td>
-                                                    <td><?=$row['year'];?></td>
-                                                    <!-- <td><input onclick="action" class="action" data-id="<?=$row['id']?>" type="checkbox" checked="" data-toggle="toggle" data-on="Closed" data-off="Open" data-onstyle="danger" data-offstyle="success"></td> -->
-                                                </tr>
-                                                <?php
-                                            }
-                                            ?>
-                                                <script>
-                                                $(function(){
-                                                    $('html,body').animate({
-                                                        scrollTop: $("#toShow").offset().top
-                                                    },1000);
-                                                })
-                                                </script>
-                                            <?php
-                                        } 
-                                    ?>
-
+                                    <tbody id = "eod_set">
+                                        <!-- <tr>
+                                            <input type="hidden" id="toggleID" value="">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> -->
                                     </tbody>
+
 
                                 </table>
 
-                                <script>
-                                    $(document).ready(function() {
-                                        $('#eomr').DataTable();
-                                        var btn = $("#runperform");
-                                        var rst = $("#reset");
-                                        var dbody = $("#eomr>tbody");
-                                        // rst.click(function(){
-                                        //     // dbody.hide();
-
-                                        // })
-                                    });
-                                    
-                                </script>
 
                             </div>
                         </div>
@@ -205,6 +182,71 @@ include("header.php");
     </div>
 
 </div>
+<script>
+    $(document).ready(function() {
+        $('#eodr').DataTable();
+
+        $("#reset").click(function(){
+            $("#runperform").show();
+            $("#eod_set").children().remove();
+        })
+
+        $("#runperform").click(function(e){
+            e.preventDefault();
+
+            
+            var startDate = $("#startDate").val();
+            var endDate =  $("#endDate").val();
+            var branch = $("#branch").val();
+
+            if(startDate.trim() == '' || endDate.trim() == '' || branch.trim() == '') {
+                alert("Start date, end date and branch required!");
+            } else {
+                    $.ajax({
+                    url:'../functions/endofdayaccount/endofmonth.php',
+                    method: 'POST',
+                    data: {startDate,endDate, branch},
+                    dataType: 'json',
+                    cache: false,
+                    success: function(res) {
+                        $('.odd').hide();
+                        $('#runperform').hide();
+                        res.forEach(({id,created_on,staff_name,month,year})=>{
+                            $("#eod_set").append(`
+                                <tr>
+                                    <input type="hidden" id="toggleID" value="">
+                                    <td>${id}</td>
+                                    <td>${created_on}</td>
+                                    <td>${staff_name}</td>
+                                    <td>${month}</td>
+                                    <td>${year}</td>
+                                </tr>
+                            `)
+                            
+                        $('#eodr').DataTable();
+
+                        
+                        })
+                        $('html,body').animate({
+                            scrollTop: $("#toShow").offset().top
+                        },500);
+                    },  
+                    error: function(err) {
+                        swal({
+                            type: "error",
+                            title: "Error",
+                            text: "An error occurred while generating report",
+                            showConfirmButton: true,
+                            timer: 7000
+                        })
+                    }
+                })
+            }
+            
+ 
+        })
+    });
+    </script>
 
 
 <?php

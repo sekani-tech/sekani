@@ -1,6 +1,8 @@
 <?php
 /////////////////////// AUTO CODE TO CALCULATE THE DEPRECIATION OF ALL ASSETS IN AN INSTITUTION ///////////////////////
-function asset_depreciation($connection) {
+function asset_depreciation($arr, $_cb, $cb) {
+
+    $connection = $arr['connection'];
     $sessint_id = $_SESSION['int_id'];
 
 // Pull all assets
@@ -50,7 +52,12 @@ while($pd = mysqli_fetch_array($ifdo)){
     $idof = "UPDATE assets SET current_year_depreciation = '$currentyear', current_month_depreciation = '$current_month' WHERE int_id = '$int_id' AND id = '$aorp'";
     $dos = mysqli_query($connection, $idof);
     if($dos){
-        echo 'Depreciation Value for '.$asset_name.' with int_id '.$int_id.' was calculated</br>';
+        // $cb('Asset Depreciation successful');
+        $arr['response'] = 0;
+        if(is_callable($cb)) {
+            call_user_func($cb,$_cb,$arr);
+        }
+        // echo 'Depreciation Value for '.$asset_name.' with int_id '.$int_id.' was calculated</br>';
     }
 }
 }

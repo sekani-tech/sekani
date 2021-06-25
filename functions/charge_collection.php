@@ -1,8 +1,11 @@
 <?php
-    function charge_collection($connection) {
+    function charge_collection($arr,$_cb,$cb) {
+
+        $connection = $arr['connection'];
         // due date
 $charge_query = mysqli_query($connection, "SELECT * FROM auto_charge WHERE is_active = '1'");
 // end date
+// dd($charge_query);
 if (mysqli_num_rows($charge_query) >= 1) {
     while ($bx = mysqli_fetch_array($charge_query)) {
     $c_id = $bx["id"];
@@ -44,7 +47,7 @@ if (mysqli_num_rows($charge_query) >= 1) {
                 $current_day = date('Y-m-d');
                 $date_time = date('Y-m-d H:i:s');
                 $last_month_day = date("Y-m-t");
-                if ($current_day == $last_month_day) {
+                // if ($current_day == $last_month_day) {
                     // make an echo.
                     $digits = 5;
                     $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
@@ -78,32 +81,46 @@ if (mysqli_num_rows($charge_query) >= 1) {
                                             //  next code
                                              $update_sms = mysqli_query($connection, "UPDATE sms_charge SET paid = '1' WHERE client_id = '$s_client_id' AND account_no = '$s_account'");
                     if ($update_sms) {
-                        echo "SMS CHARGE SUCCESS";
+                        $arr['response']=0;
+                        // echo "SMS CHARGE SUCCESS";
                     } else {
-                        echo "SMS CHARGE BAD";
+                        $arr['response']='SMS CHARGE BAD';
+                        // echo "SMS CHARGE BAD";
                     }
                                          } else {
-                                             echo "Error at GL insert";
+                                            $arr['response']='Error at GL insert';
+                                            //  $cb("Error at GL insert");
+                                            //  echo "Error at GL insert";
                                          }
                     } else {
-                        echo "error at gl update";
+                        $arr['response']='error at gl update';
+                        // echo "error at gl update";
                     }
                 } else {
-                    echo "SYSTEM ERROR - INSERT ACCOUNT";
+                    $arr['response']='SYSTEM ERROR - INSERT ACCOUNT';
+                    // echo "SYSTEM ERROR - INSERT ACCOUNT";
                 }
         } else {
-            echo "SYSTEM ERROR - UPDATE ACCOUNT";
+            $arr['response']='SYSTEM ERROR - UPDATE ACCOUNT';
+            // echo "SYSTEM ERROR - UPDATE ACCOUNT";
         }
-                } else {
-                    // not yet ending
-                }
+                // } else {
+                //     // not yet ending
+                //     echo 3;
+                // }
         } else {
-            echo "No SMS Charge";
+            $arr['response']='No SMS Charge';
+            // echo "No SMS Charge";
         }
       } else if ($c_type == "") {
         //   make something for something else
+        // echo 2;
       }
 }
+}
+
+if(is_callable($cb)) {
+    call_user_func($cb,$_cb,$arr);
 }
     }
 ?>

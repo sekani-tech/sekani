@@ -757,47 +757,7 @@ function getMonthName($monthNum) {
     return $dateObj->format('F');
 }
 
-function getCharges($connection) {
-    $sint_id = $_SESSION["int_id"];
-    $org = "SELECT * FROM charge WHERE int_id = '$sint_id'";
-    $res = mysqli_query($connection, $org);
-    $out = [];
-    $i = 0;
-    while ($row = mysqli_fetch_array($res)) {
-        $out[$i] = $row['id'];
-        $i++;
-    }
-    return $out;
-}
-
-function getClients($connection) {
-    $sint_id = $_SESSION["int_id"];
-    $branc = $_SESSION["branch_id"];
-    $org = "SELECT client.id, client.firstname, client.lastname, client.middlename FROM client JOIN branch ON client.branch_id = branch.id WHERE client.int_id = '$sint_id' AND (branch.id = '$branc' OR branch.parent_id = '$branc') AND status = 'Approved' ORDER BY firstname ASC";
-    $res = mysqli_query($connection, $org);
-    $out = [];
-    $i = 0;
-    while ($row = mysqli_fetch_array($res)) {
-        $out[$i] = $row['id'];
-        $i++;
-    }
-    return $out;
-}
-
-function getAccNumbers($connection, $client_id) {
-    $pen = "SELECT * FROM account WHERE client_id = '$client_id'";
-    $res = mysqli_query($connection, $pen);
-    $out = [];
-    $i = 0;
-    while ($row = mysqli_fetch_array($res))
-    {
-        $out[$i] = $row['account_no'];
-        $i++;
-    }
-    return $out;
-}
-
-function endOfMonth($closedDate,$connection) {
+function endOfMonth($closedDate,$connection,$_cb) {
     $month = getMonthName((int)getMonth($closedDate));
     $year = getYear($closedDate);
 
@@ -811,36 +771,92 @@ function endOfMonth($closedDate,$connection) {
         'year' => $year
     ];
 
-    // Check if the month & same year has been ended if not perform below
-    $existingClosedMonth = selectAll('endofmonth_tb', ['month'=>$month,'year'=>$year]);
+    // rewrite to SQL mega command
+    $existingClosedMonth = selectAll('endofmonth_tb', ['month'=>$month,'year'=>$year,'int_id'=>$_SESSION['int_id']]); // select a specific month & year in SQL
+
+    $arr = array(
+        'connection'=>$connection,
+        'data'=>$data
+    );
 
     if(count($existingClosedMonth) > 0) {
-        // Month already exists
-        return "Ended Month already exists.";
+        call_user_func($_cb,'End of Month already exists!',1);
     } else {
-        //Insert into the endofmonth table if it is set
-        $endofthemonth = insert('endofmonth_tb',$data);
 
-        // check if day has ended, if not mark the day as ended [X]
-        // $day = getDay($closedDate);
-        // from victor...
+        // check if end of day exists (using day,month&year)
+        $existingClosedDay = selectAll('endofday_tb', ['transaction_date'=>$closedDate,'int_id'=>$_SESSION['int_id']]);
 
-        // update balance sheet [X]
+        if(count($existingClosedDay) < 1) {
+            // redirect to end the day
+
+            $digits = 7;
+            $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+
+            $_SESSION['feedback'] = "Please perform the end of day for {$month}, {$year}";
+            header("Location: ../../mfi/end_of_day.php?message1=$randms");
+
+        } else {
+            include('../asset_depreciation.php');
+            include('../charge_collection.php');
+
+            asset_depreciation($arr, $_cb, function($_cb,$arr){
+                if($arr['response']==0) {
+                    charge_collection($arr, $_cb, function($_cb,$arr){
+                        if($arr['response']==0) {
+                            insert('endofmonth_tb',$arr['data']);
+                            call_user_func($_cb,'Asset Depreciation Successful, Charge Collection Successful, Month sucessfully ended', 0);
+                        } else {
+                            call_user_func($_cb,"{$arr['response']}!",1);
+                        }       
+                    });
+                } else {
+                    call_user_func($_cb,"{$arr['response']}!",1);
+                }
+            });
+        }
         
-
-        // run asset depreciation 
-        include('../asset_depreciation.php');   
-        asset_depreciation($connection);
-
-        // update balance sheet[X]
-
-        //run charge collection (charges that are meant to be collected at the end of the month)
-        include('../charge_collection.php');
-        charge_collection($connection);
-
-        //5. run prepayment function [X]
-
-        //Send report header on succesful closing of the month
-        return 0;
+        
+       
     }
+    
+}
+
+
+function endOfYear($closedDate) {
+    $year = getYear($closedDate);
+    $month = getMonthName((int)getMonth($closedDate));
+    
+    $data = [
+        'int_id' => $_SESSION['int_id'],
+        'branch_id' => $_SESSION['branch_id'],
+        'staff_id' => $_SESSION['staff_id'],
+        'manual_posted' => 1,
+        'closed_date' => $closedDate,
+        'year' => $year 
+    ];
+
+    $existingClosedYear = selectAll('endofyear_tb', ['year'=>$year,'int_id'=>$_SESSION['int_id']]);
+
+    if(count($existingClosedYear) > 0) {
+        return "End of Year already exists";
+    } else {
+
+    // rewrite to SQL mega command (2)
+        // Check if the month has already ended
+        $existingClosedMonth = selectAll('endofmonth_tb', ['month'=>$month,'year'=>$year,'int_id'=>$_SESSION['int_id']]);
+
+        $digits = 7;
+        $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+
+        if(count($existingClosedMonth) < 1) {
+            $_SESSION['feedback'] = "Please perform the end of month for year {$year}";
+            header("Location: ../../mfi/end_of_month.php?message1=$randms");
+        } else {
+            insert('endofyear_tb',$data);
+            $_SESSION['feedback'] = 'Year sucessfully ended';
+            header("Location: ../../mfi/end_of_year.php?message=$randms");
+        }
+    }
+
+
 }

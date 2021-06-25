@@ -2,6 +2,24 @@
 $page_title = "End Of Day";
 $destination = "";
 include("header.php");
+
+if(isset($_GET['message1'])) {
+    $key = $_GET['message1'];
+    $tt = 0;
+    // $out = $_SESSION['end_of_month_$key'];
+    echo '<script type="text/javascript">
+            $(document).ready(function(){
+                swal({
+                    type: "error",
+                    title: "Error",
+                    text: "'.$_SESSION['feedback'].'",
+                    showConfirmButton: true,
+                    timer: 7000
+                })
+            });
+            </script>
+    ';
+}
 ?>
 <script src="../assets/js/bootstrap4-toggle.min.js"></script>
 <link href = "../assets/css/bootstrap4-toggle.min.css"   rel ="stylesheet">
