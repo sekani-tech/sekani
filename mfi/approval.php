@@ -87,6 +87,13 @@ include("header.php");
         </div>
       </div>
 
+
+
+    </div>
+
+
+    <div class="row">
+
       <div class="col-md-6 ml-auto mr-auto">
 
         <div class="card card-pricing bg-primary">
@@ -100,11 +107,20 @@ include("header.php");
           </div>
         </div>
       </div>
+      <div class="col-md-6 ml-auto mr-auto">
 
+        <div class="card card-pricing bg-primary">
+          <div class="card-body ">
+
+            <h4 class="card-title">CHQ/Pass Book</h4>
+            <p class="card-description">
+              Approve all the issued Cheque/pass books
+            </p>
+            <a href="chq_approval.php" class="btn btn-white btn-round">View</a>
+          </div>
+        </div>
+      </div>
     </div>
-
-
-
 
 
     <div class="row">
@@ -138,34 +154,35 @@ include("header.php");
     </div>
 
     <div class="row">
-      <div class="col-md-6 ml-auto mr-auto">
 
-        <div class="card card-pricing bg-primary">
-          <div class="card-body ">
-
-            <h4 class="card-title">CHQ/Pass Book</h4>
-            <p class="card-description">
-              Approve all the issued Cheque/pass books
-            </p>
-            <a href="chq_approval.php" class="btn btn-white btn-round">View</a>
-          </div>
-        </div>
-      </div>
 
       <div class="col-md-6 ml-auto mr-auto">
 
         <div class="card card-pricing bg-primary">
           <div class="card-body ">
 
-            <h4 class="card-title">Loan Disbursement</h4>
+            <h4 class="card-title">Individual Loan Disbursement</h4>
             <p class="card-description">
-              View and approve all the Disbursed Loan
+              View and approve all the Disbursed Individual Loan
             </p>
             <a href="disbursement_approval.php" class="btn btn-white btn-round">View</a>
           </div>
         </div>
       </div>
 
+      <div class="col-md-6 ml-auto mr-auto">
+
+        <div class="card card-pricing bg-primary">
+          <div class="card-body ">
+
+            <h4 class="card-title">Group Loan Disbursement</h4>
+            <p class="card-description">
+            View and approve all the Disbursed Group Loan
+            </p>
+            <a href="group_loan_approval.php" class="btn btn-white btn-round">View</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
