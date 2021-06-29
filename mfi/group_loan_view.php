@@ -47,6 +47,7 @@ include('header.php');
                                                     <th>Full Name</th>
                                                     <th>Account Type</th>
                                                     <th>Account Number</th>
+                                                    <th>Allocated Amount</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -54,6 +55,7 @@ include('header.php');
                                                     <td>Tiger Nixon</td>
                                                     <td>Saving Account</td>
                                                     <td>0012376345</td>
+                                                    <td><input type="text" class="form-control" name="" value="" readonly=""></td>
                                                 </tr>
 
                                             </tbody>
