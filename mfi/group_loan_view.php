@@ -98,7 +98,7 @@ include('header.php');
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating">Principal Amount (0.00)</label>
+                                        <label class="bmd-label-floating">Principal Amount</label>
                                         <input type="text" class="form-control" name="location" value="" readonly="">
                                     </div>
                                 </div>
@@ -125,13 +125,13 @@ include('header.php');
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating">Total Interest (0.00)</label>
+                                        <label class="bmd-label-floating">Total Interest </label>
                                         <input type="text" class="form-control" name="phone" value="" readonly="">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating">Total Repayment Due (0.00)</label>
+                                        <label class="bmd-label-floating">Total Repayment Due </label>
                                         <input type="text" class="form-control" name="location" value="" readonly="">
                                     </div>
                                 </div>
