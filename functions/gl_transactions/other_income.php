@@ -24,6 +24,12 @@ $incomeGlConditions = [
     'gl_code' => $incomeGl
 ];
 $findIncomeGl = selectOne("acc_gl_account", $incomeGlConditions);
+if($findIncomeGl['manual_journal_entries_allowed'] != 1){
+    $_SESSION["feedback"] = "Can't post in this GL, Manual entry not allowed!!";
+    $_SESSION["Lack_of_intfund_$randms"] = "10";
+    echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
+    exit();
+}
 $currentIncomeBalance = $findIncomeGl['organization_running_balance_derived'];
 $incomeParentId = $findIncomeGl['parent_id'];
 $incomeGlId = $findIncomeGl['id'];

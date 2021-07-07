@@ -392,6 +392,126 @@ if ($trans_post == 1 || $trans_post == "1") {
                     </div>
                 </div>
                 <!-- gl to client ends here -->
+                <!-- gl to client -->
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Expense to Client</h4>
+                            <p class="card-category">Make deductions from Expense GL accounts and fund a Client (<i>Applies to expense gls only</i>) </p>
+                        </div>
+                        <div class="card-body">
+                            <form action="../functions/gl_transactions/expensegl_to_client.php" method="post" autocomplete="off">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#accctn').on("change keyup paste", function() {
+                                                    var id = $(this).val();
+                                                    var ist = $('#int_id').val();
+                                                    $.ajax({
+                                                        url: "acct_name.php",
+                                                        method: "POST",
+                                                        data: {
+                                                            id: id,
+                                                            ist: ist
+                                                        },
+                                                        success: function(data) {
+                                                            $('#acountNamen').html(data);
+                                                        }
+                                                    })
+                                                });
+                                            });
+                                        </script>
+
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Amount</label>
+                                            <input type="text" class="form-control" id="amount4" name="amount" value="" required>
+                                        </div>
+
+                                        <div id="acct_name"></div>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#amount4').on("change blur", function() {
+                                                    var amount = $(this).val();
+                                                    $.ajax({
+                                                        url: "ajax_post/function/converter.php",
+                                                        method: "POST",
+                                                        data: {
+                                                            amount: amount
+                                                        },
+                                                        success: function(data) {
+                                                            $('#amount4').val(data);
+                                                        }
+                                                    })
+                                                });
+                                            });
+                                        </script>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Account Number</label>
+                                            <input type="text" class="form-control" name="account_no" id="accctn" required>
+                                            <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id">
+                                        </div>
+                                        <div id="acountNamen"></div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#gl_accountsn').on("change keyup paste", function() {
+                                                    var id = $(this).val();
+                                                    var ist = $('#int_id').val();
+                                                    $.ajax({
+                                                        url: "ajax_post/gl/find_income_gl.php",
+                                                        method: "POST",
+                                                        data: {
+                                                            id: id,
+                                                            ist: ist
+                                                        },
+                                                        success: function(data) {
+                                                            $('#accrexsn').html(data);
+                                                        }
+                                                    })
+                                                });
+                                            });
+                                        </script>
+                                        <div class="form-group">
+                                            <label for="">GL Number</label>
+                                            <input type="text" class="form-control" name="acct_gl" id="gl_accountsn" required>
+                                            <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id">
+                                        </div>
+                                        <div id="accrexsn"></div>
+                                    </div>
+                                    <!-- <div id="rd"></div> -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="">Transaction ID:</label>
+                                            <input type="text" value="<?php echo "INCOME_" . $transid1; ?>" name="transid" class="form-control" id="transid" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="">Description</label>
+                                            <input type="text" value="" name="description" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Transaction Date</label>
+                                            <input type="date" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" name="transDate" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- gl to client ends here -->
                 <!-- Income To Liabilities/Expense -->
                 <div class="col-md-12">
                     <div class="card">

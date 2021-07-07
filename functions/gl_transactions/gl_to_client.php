@@ -42,6 +42,12 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
         $_SESSION["Lack_of_intfund_$randms"] = "10";
         echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
     }
+    if($checkGl['manual_journal_entries_allowed'] != 1){
+        $_SESSION["feedback"] = "Can't post in this GL, Manual entry not allowed!!";
+        $_SESSION["Lack_of_intfund_$randms"] = "10";
+        echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
+        exit();
+    }
     $glBalance = $checkGl['organization_running_balance_derived'];
     if ($glBalance >= $amount) {
         // credit the money from clients account

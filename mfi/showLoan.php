@@ -251,7 +251,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
     $total_early = 100 + 30;
     $total_imm = 100 + 30;
     $total_bad = 100 + 30;
-    
+
     // GENERAL critarial - BASED ON BIG 100
     $mxx = $early_rep != 0 ? ($early_rep / $gen1) * 100 : 0;
     $mxx1 = $imm_rep != 0 ? ($imm_rep / $gen1) * 100 : 0;
@@ -717,7 +717,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       });
                     </script>
                     <script>
-                    $(document).ready(function() {
+                      $(document).ready(function() {
                         var int_id = $('#s_int_id').val();
                         var branch_id = $('#s_branch_id').val();
                         var sender_id = $('#s_sender_id').val();
@@ -733,7 +733,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         var date = $('#s_date').val();
                         var balance = $('#s_balance').val();
                         // now we work on the body.
-                        var msg = "Dear Customer,\nYour loan applcation of NGN"+ amount +" was successful and has been deposited in your account.\nRemember, early repayment brings great credit scores!";
+                        var msg = "Dear Customer,\nYour loan applcation of NGN" + amount + " was successful and has been deposited in your account.\nRemember, early repayment brings great credit scores!";
                         $.ajax({
                           url: "ajax_post/sms/sms.php",
                           method: "POST",
@@ -2133,7 +2133,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <br>
                 <!-- never be -->
                 <!-- saving -->
-                
+
                 <!-- saving -->
                 <div class="col-md-6">
                   <div class="card card-pricing bg-warning">

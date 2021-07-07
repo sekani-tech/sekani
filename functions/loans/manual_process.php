@@ -813,7 +813,11 @@ if (isset($_POST["amount"]) && isset($_POST["payment_date"])) {
             }
         }
     } else {
-        // inssufient amount
+        // Insufficient amount
+        $_SESSION["feedback"] = "Insufficient amount in Linked Account";
+        $_SESSION["Lack_of_intfund_$randms"] = "10";
+        echo header("Location: ../../mfi/manual_recollection.php?view=$loanId&message1=$randms");
+        exit();
     }
 }
     // END OUTTA HERE

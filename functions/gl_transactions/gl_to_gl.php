@@ -23,6 +23,12 @@ if (isset($_POST['amount']) && isset($_POST['income_gl']) && isset($_POST['expen
         'branch_id' => $branchId
     ];
     $findIncomeGl = selectOne('acc_gl_account', $incomeConditions);
+    if($findIncomeGl['manual_journal_entries_allowed'] != 1){
+        $_SESSION["feedback"] = "Can't post in $incomeGl GL, Manual entry not allowed!!";
+        $_SESSION["Lack_of_intfund_$randms"] = "10";
+        echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
+        exit();
+    }
     $currentIncomeBalance = $findIncomeGl['organization_running_balance_derived'];
     $incomeParentId = $findIncomeGl['parent_id'];
     $incomeGlId = $findIncomeGl['id'];
@@ -35,6 +41,12 @@ if (isset($_POST['amount']) && isset($_POST['income_gl']) && isset($_POST['expen
             'branch_id' => $branchId,
         ];
         $findExpenseGl = selectOne('acc_gl_account', $expenseConditions);
+        if($findExpenseGl['manual_journal_entries_allowed'] != 1){
+            $_SESSION["feedback"] = "Can't post in $incomeGl GL, Manual entry not allowed!!";
+            $_SESSION["Lack_of_intfund_$randms"] = "10";
+            echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
+            exit();
+        }
         $currentExpenseBalance = $findExpenseGl['organization_running_balance_derived'];
         $expenseParentId = $findExpenseGl['parent_id'];
         $expenseGlId = $findExpenseGl['id'];
