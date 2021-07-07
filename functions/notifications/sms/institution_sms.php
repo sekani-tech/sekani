@@ -1,4 +1,5 @@
 <?php
+
 include("../../connect.php");
 session_start();
 echo $today = Date('Y-m-d H.i.s');
@@ -11,29 +12,10 @@ $digits = 6;
 $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
 // first find if the user is given the autorithy to do this
 
-if (isset($_POST['message'])) {
+if (isset($_POST['message']) && isset($_POST['phone_no'])) {
     $message = mysqli_real_escape_string($connection, $_POST['message']);
-    $customerDataCondition = [
-        'int_id' => $institutionId,
-        'status' => "Approved"
-    ];
-    $picked = [
-        'mobile_no'
-    ];
-    $customersData = selectAllSpecificData('client', $picked, $customerDataCondition);
-    if (!$customersData) {
-        $error = "Error: %s\n" . mysqli_error($connection); //checking for errors
-        $_SESSION["feedback"] = "Sorry can't access customers data or No existing customers" . $error;
-        $_SESSION["Lack_of_intfund_$randms"] = "9";
-        echo header("Location: ../../../mfi/alerts_sms.php?message1=$randms");
-        exit();
-        // send feedback of inability to find clients
-    }
 
-
-    $lastcustomersData = end($customersData);
-
-    foreach ($customersData as $key => $phoneNumbers) {
+    
         // concatenate customers phone numbers
         $phone_length = strlen($phoneNumbers['mobile_no']);
         // CHECK
@@ -160,28 +142,11 @@ if (isset($_POST['message'])) {
                 }
             }
         }
-        $key++;
-    }
-
-    # loop ends here
-    if ($phoneNumbers == $lastcustomersData) {
-        // echo "Success";
-        $_SESSION["feedback"] = "Message Successfully sent to all customers";
-        $_SESSION["Lack_of_intfund_$randms"] = "1";
-        echo header("Location: ../../../mfi/alerts_sms.php?message0=$randms");
-        exit();
-        // send feedback of inability to find clients
-    } else {
-        $_SESSION["feedback"] = "Could not send to message to all customers";
-        $_SESSION["Lack_of_intfund_$randms"] = "1";
-        echo header("Location: ../../../mfi/alerts_sms.php?message1=$randms");
-        exit();
-        // could not send to message to all customers
-    }
+        
 } else {
     $_SESSION["feedback"] = "Message can not be empty";
     $_SESSION["Lack_of_intfund_$randms"] = "1";
-    echo header("Location: ../../../mfi/alerts_sms.php?message1=$randms");
+    // echo header("Location: ../../../mfi/alerts_sms.php?message1=$randms");
     exit();
     // no data was posted
 }
