@@ -1,0 +1,339 @@
+8<!DOCTYPE html>
+<html>
+<head>
+<style>
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 98%;
+  margin-left: 20px;
+  margin-bottom: 20px;
+
+}
+
+tr.customer td {
+  border: none;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #972fb0;
+  color: white;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0;
+  width: 110px;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 200px; /* Should be removed. Only for demonstration */
+  margin-bottom: 15px;
+ 
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+</head>
+<body>
+    <img class="center" src="se.png" alt="" width="80px">
+    <div style="background-color:  #972fb0; text-align: center; height: 50px; margin-bottom: 3px;">
+      <h1 style="color:white; text-align: center;">LOAN REPAYMENT SCHEDULE</h1>
+    </div>
+    <div class="row">
+      <div class="column"  style="height: 50px">
+        <div class="column" style="height: 50px;">
+          <h3 style="text-align: left; margin-bottom: 0;">Sekani Systems</h3>
+        <address style="text-align: left;">
+          9 Ndjamena Crescent<br> Wuse II, Abuja
+        </address>
+        </div>
+
+      </div>
+      <div class="column" style="height: 50px;">
+        <h3 style="text-align: right; margin-bottom: 0;" >Sekani Systems</h3>
+      <address style="text-align: right;">
+        9 Ndjamena Crescent<br> Wuse II, Abuja
+      </address>
+      </div>
+    </div>
+    
+        <h2 style="text-align: center;">Loan Terms</h2>
+  
+    
+
+    <div class="row">
+      <div class="column" style="background-color:white; border: 3px solid #972fb0; color:black">
+        <table style="width: 100%; height: 180px; font-weight: 100; ">
+            <tr>
+                <td style="float: left;  font-weight:bold;">Loan</td>
+                <td style="float: right;  font-weight:bold;">300-0000021</td>
+             </tr>
+             <tr>
+                <td style="float: left;font-weight:bold;">Released Date</td>
+                <td style="float: right;font-weight:bold;">31/08/2020</td>
+             </tr>
+             <tr>
+                <td style="float: left;font-weight:bold;">Maturity Date</td>
+                <td style="float: right;font-weight:bold;">31/08/2020</td>
+             </tr>
+             <tr>
+                <td style="float: left;font-weight:bold;">Repayment Cycle</td>
+                <td style="float: right;font-weight:bold;">Monthly</td>
+             </tr>
+             <tr>
+                <td style="float: left;font-weight:bold;">Interest Rate</td>
+                <td style="float: right;font-weight:bold;">2.5%Month</td>
+             </tr>
+             <tr>
+                <td style="float: left;font-weight:bold;">Principal Amount</td>
+                <td style="float: right;font-weight:bold;">1,270,025.40</td>
+             </tr>
+             <tr>
+                <td style="float: left;font-weight:bold;">Dedutable Fees</td>
+                <td style="float: right;font-weight:bold;">0</td>
+             </tr>
+        </table>
+      </div>
+      <div class="column" style="background-color:white; border: 3px solid #972fb0; color:black">
+        <table style="width: 100%; height: 180px;">
+            <tr>
+                <td style="float: left;font-weight:bold;">Non Dedutable Fees</td>
+                <td style="float: right;font-weight:bold;">0</td>
+             </tr>
+             <tr>
+                <td style="float: left;font-weight:bold;">Principal Released after Deductable Fees</td>
+                <td style="float: right;font-weight:bold;">1,270.025.40</td>
+             </tr>
+             <tr>
+                <td style="float: left;font-weight:bold;">Penalty Amount</td>
+                <td style="float: right;font-weight:bold;">0</td>
+             </tr>
+             <tr>
+                <td style="float: left;font-weight:bold;">Total Due Amount</td>
+                <td style="float: right;font-weight:bold;">1,487,700.00</td>
+             </tr>
+             <tr>
+                <td style="float: left;font-weight:bold;">Paid Amount</td>
+                <td style="float: right;font-weight:bold;">0</td>
+             </tr>
+             <tr>
+                <td style="float: left;font-weight:bold;">Balance Amount</td>
+                <td style="float: right;font-weight:bold;">1,487,700.00</td>
+             </tr>
+        </table>
+      </div>
+    </div>
+
+    <div>
+        <h2 style="text-align: center;"> Loan Schedule</h2>
+    </div>
+    
+
+
+<table id="customers">
+  <tr>
+    <th>#</th>
+    <th>Date</th>
+    <th>Description</th>
+    <th>Principal</th>
+    <th>Interest</th>
+    <th>Fees</th>
+    <th>Penalty</th>
+    <th>Due</th>
+    <th>Total Due</th>
+    <th>Principal Balance</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>31/08/2020</td>
+    <td>Repayment</td>
+    <td>92,000.00</td>
+    <td>31,000.00</td>
+    <td>0</td>
+    <td>0</td>
+    <td>123,000.00</td>
+    <td>1,000,000</td>
+    <td>92,000,000.00</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>31/08/2020</td>
+    <td>Repayment</td>
+    <td>92,000.00</td>
+    <td>31,000.00</td>
+    <td>0</td>
+    <td>0</td>
+    <td>123,000.00</td>
+    <td>1,000,000</td>
+    <td>92,000,000.00</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>31/08/2020</td>
+    <td>Repayment</td>
+    <td>92,000.00</td>
+    <td>31,000.00</td>
+    <td>0</td>
+    <td>0</td>
+    <td>123,000.00</td>
+    <td>1,000,000</td>
+    <td>92,000,000.00</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>31/08/2020</td>
+    <td>Repayment</td>
+    <td>92,000.00</td>
+    <td>31,000.00</td>
+    <td>0</td>
+    <td>0</td>
+    <td>123,000.00</td>
+    <td>1,000,000</td>
+    <td>92,000,000.00</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>31/08/2020</td>
+    <td>Repayment</td>
+    <td>92,000.00</td>
+    <td>31,000.00</td>
+    <td>0</td>
+    <td>0</td>
+    <td>123,000.00</td>
+    <td>1,000,000</td>
+    <td>92,000,000.00</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>31/08/2020</td>
+    <td>Repayment</td>
+    <td>92,000.00</td>
+    <td>31,000.00</td>
+    <td>0</td>
+    <td>0</td>
+    <td>123,000.00</td>
+    <td>1,000,000</td>
+    <td>92,000,000.00</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>31/08/2020</td>
+    <td>Repayment</td>
+    <td>92,000.00</td>
+    <td>31,000.00</td>
+    <td>0</td>
+    <td>0</td>
+    <td>123,000.00</td>
+    <td>1,000,000</td>
+    <td>92,000,000.00</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>31/08/2020</td>
+    <td>Repayment</td>
+    <td>92,000.00</td>
+    <td>31,000.00</td>
+    <td>0</td>
+    <td>0</td>
+    <td>123,000.00</td>
+    <td>1,000,000</td>
+    <td>92,000,000.00</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>31/08/2020</td>
+    <td>Repayment</td>
+    <td>92,000.00</td>
+    <td>31,000.00</td>
+    <td>0</td>
+    <td>0</td>
+    <td>123,000.00</td>
+    <td>1,000,000</td>
+    <td>92,000,000.00</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>31/08/2020</td>
+    <td>Repayment</td>
+    <td>92,000.00</td>
+    <td>31,000.00</td>
+    <td>0</td>
+    <td>0</td>
+    <td>123,000.00</td>
+    <td>1,000,000</td>
+    <td>92,000,000.00</td>
+  </tr>
+ 
+    <tr   style="background-color: #972fb0; ">
+        <td></td>
+        <td></td>
+        <td>Total Due</td>
+        <td>31,000.00</td>
+        <td>31,000.00</td>
+        <td></td>
+        <td>0</td>
+        <td>123,000.00</td>
+        <td><td>
+        
+      </tr>
+     
+      
+</table>
+<div style="background-color:#d48ce2;">
+  <div class="block-grid " style="Margin: 0 auto; min-width: 320px; max-width: 670px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: transparent;">
+    <div style="border-collapse: collapse;display: table;width: 100%;background-color:transparent;">
+      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#d48ce2;"><tr><td align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:670px"><tr class="layout-full-width" style="background-color:transparent"><![endif]-->
+      <!--[if (mso)|(IE)]><td align="center" width="670" style="background-color:transparent;width:670px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;"><![endif]-->
+      <div class="col num12" style="min-width: 320px; max-width: 670px; display: table-cell; vertical-align: top; width: 670px;">
+        <div style="width:100% !important;">
+          <!--[if (!mso)&(!IE)]><!-->
+          <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
+            <!--<![endif]-->
+            <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Tahoma, sans-serif"><![endif]-->
+            <div style="color: white;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;line-height:1.2;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
+              <div style="line-height: 1.2; font-size: 12px; color: white; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; mso-line-height-alt: 14px;">
+                <p style="line-height: 1.2; word-break: break-word; text-align: center; font-size: 13px; mso-line-height-alt: 16px; mso-ansi-font-size: 14px; margin: 0;"><span style="font-size: 13px; mso-ansi-font-size: 14px;"><strong>Copyright <span id="autocomplete" style><span id="autocomplete-delimiter" style>@</span><span id="autocomplete-searchtext" style><span style> Sekani Systems 2020</span></span></span></strong></span></p>
+              </div>
+            </div>
+            <!--[if mso]></td></tr></table><![endif]-->
+            <!--[if (!mso)&(!IE)]><!-->
+          </div>
+          <!--<![endif]-->
+        </div>
+      </div>
+      <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+      <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+    </div>
+  </div>
+</div>
+</body>
+</html>

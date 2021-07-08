@@ -1,0 +1,147 @@
+<?php
+include("../../functions/connect.php");
+session_start();
+$sessint_id = $_SESSION["int_id"];
+if (isset($_POST["id"])) {
+    ?>
+    <table class="table table-bordered">
+        <?php
+        $p_id = $_POST["id"];
+        // $rand = $_POST["rand"];
+        $client = $_POST["client_id"];
+        $digit = 6;
+        $rand = str_pad(rand(0, pow(10, $digit) - 1), $digit, '0', STR_PAD_LEFT);
+        // dd($client);
+        // remove previous charges with this loan
+        $fdo = mysqli_query($connection, "DELETE FROM loan_charge WHERE int_id = '$sessint_id'");
+
+        // put it temporarily in loan_charge table
+        $query = "SELECT * FROM product_loan_charge WHERE product_loan_id = '$p_id' && int_id = '$sessint_id'";
+        $resd = mysqli_query($connection, $query);
+        while ($rot = mysqli_fetch_array($resd)) {
+            $prod_id = $rot['product_loan_id'];
+            $charge_oi = $rot['charge_id'];
+            $dof = mysqli_query($connection, "INSERT INTO `loan_charge` (`int_id`, `charge_id`, `client_id`, `product_loan_id`, `loan_cache_id`) VALUES ('$sessint_id', '$charge_oi', '$client', '$prod_id', '$rand')");
+        }
+        if ($dof) {
+            $query = "SELECT * FROM loan_charge WHERE product_loan_id = '$p_id' && int_id = '$sessint_id'";
+            $result = mysqli_query($connection, $query);
+        }
+        ?>
+        <input type="text" hidden value="<?php echo $p_id; ?>" id="mrome"/>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Charge</th>
+            <th>Amount</th>
+            <th>Collected On</th>
+            <th>Delete</th>
+            <!-- <th>Date</th> -->
+        </tr>
+        </thead>
+        <tbody>
+        <?php if (mysqli_num_rows($result) > 0) {
+
+            $total_charge_amount = 0;
+
+            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
+                <tr>
+                <?php
+                $c_id = $row["charge_id"];
+                $edd = $row["id"];
+                $select_chg = mysqli_query($connection, "SELECT * FROM charge WHERE id = '$c_id' && int_id = '$sessint_id'");
+                while ($xm = mysqli_fetch_array($select_chg)) {
+                    $values = $xm["charge_time_enum"];
+                    $nameofc = $xm["name"];
+                    $amt = '';
+                    $amt2 = '';
+                    $forp = $xm["charge_calculation_enum"];
+                    $rmt = $_POST["prin"];
+                    $amt_2 = $xm["amount"];
+                    if ($forp == 1) {
+                        $amt = number_format($xm["amount"], 2);
+                        $chg2 = $amt . " Flat";
+                    } else {
+                        $chg2 = $amt_2 . "% of Loan Principal";
+                        $calc = ($amt_2 / 100) * $rmt;
+                        $amt2 = number_format($calc, 2);
+                    }
+                    if ($values == 1) {
+                        $xs = "Disbursement";
+                    } else if ($values == 2) {
+                        $xs = "Specified Due Date";
+                    } else if ($values == 3) {
+                        $xs = "Installment Fees";
+                    } else if ($values == 4) {
+                        $xs = "Overdue Installment Fees";
+                    } else if ($values == 5) {
+                        $xs = "Disbursement - Paid with Repayment";
+                    } else if ($values == 6) {
+                        $xs = "Loan Rescheduling Fee";
+                    } else if ($values == 7) {
+                        $xs = "Transaction";
+                    }
+                    ?>
+                    <td><?php echo $nameofc;?></td>
+                    <td><?php echo $chg2; ?></td>
+                    <td><?php echo $amt . "" . $amt2; ?></td>
+                    <td><?php echo $xs; ?></td>
+                    <td>
+                        <div class="test" data-id='<?= $edd; ?>'>
+                            <span class="btn btn-danger">Delete</span>
+                        </div>
+                    </td>
+                    </tr>
+                <?php
+                    $total_charge_amount += $amt . "" . $amt2;
+                }
+            }
+            ?>
+
+            <input type="hidden" id="total_charge_amount" value="<?php echo $total_charge_amount; ?>" />
+
+        <?php
+        } else {
+            // echo "0 Document";
+        }
+        ?>
+        </tbody>
+    </table>
+<?php
+}
+?>
+<script>
+    $(document).ready(function () {
+
+        // Delete 
+        $('.test').click(function () {
+            var el = this;
+
+            // Delete id
+            var id = $(this).data('id');
+
+            var confirmalert = confirm("Delete this charge?");
+            if (confirmalert == true) {
+                // AJAX Request
+                $.ajax({
+                    url: 'ajax_post/ajax_delete/delete_charge.php',
+                    type: 'POST',
+                    data: {id: id},
+                    success: function (response) {
+
+                        if (response == 1) {
+                            // Remove row from HTML Table
+                            $(el).closest('tr').css('background', 'tomato');
+                            $(el).closest('tr').fadeOut(700, function () {
+                                $(this).remove();
+                            });
+                        } else {
+                            alert('Invalid ID.');
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+</script>
