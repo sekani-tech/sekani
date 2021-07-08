@@ -109,10 +109,12 @@ if (mysqli_num_rows($charge_query) >= 1) {
                 //     echo 3;
                 // }
         } else {
-            $arr['response']='No SMS Charge';
+            $arr['response']=0;
+            // $arr['info']='No SMS Charge';
             // echo "No SMS Charge";
         }
       } else if ($c_type == "") {
+        $arr['response']=0;
         //   make something for something else
         // echo 2;
       }

@@ -8,7 +8,7 @@ if (isset($_POST['endofyear'])) {
     // Perform End of Month
    $closedDate = $_POST['closedDate'];
     
-    endOfYear($closedDate);
+    endOfYear($closedDate,$connection);
 } else {
     // Generate End Of Month Report
     $startDate = $_POST['startDate'];

@@ -40,7 +40,24 @@ include("header.php");
                 </script>
         ';
         $_SESSION['end_of_month_$key'] = 0;
-    }
+    }  else if(isset($_GET['message2'])) {
+        $key = $_GET['message2'];
+        $tt = 0;
+        // $out = $_SESSION['end_of_month_$key'];
+        echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    swal({
+                        type: "warning",
+                        title: "Warning",
+                        text: "'.$_SESSION['feedback'].'",
+                        showConfirmButton: true,
+                        timer: 7000
+                    })
+                });
+                </script>
+        ';
+        $_SESSION['end_of_month_$key'] = 0;
+            }
 ?>
 
 <script src="../assets/js/bootstrap4-toggle.min.js"></script>

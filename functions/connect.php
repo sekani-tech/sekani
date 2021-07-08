@@ -771,8 +771,7 @@ function endOfMonth($closedDate,$connection,$_cb) {
         'year' => $year
     ];
 
-    // rewrite to SQL mega command
-    $existingClosedMonth = selectAll('endofmonth_tb', ['month'=>$month,'year'=>$year,'int_id'=>$_SESSION['int_id']]); // select a specific month & year in SQL
+    $existingClosedMonth = selectAll('endofmonth_tb', ['month'=>$month,'year'=>$year,'int_id'=>$_SESSION['int_id']]);
 
     $arr = array(
         'connection'=>$connection,
@@ -781,52 +780,52 @@ function endOfMonth($closedDate,$connection,$_cb) {
 
     if(count($existingClosedMonth) > 0) {
         call_user_func($_cb,'End of Month already exists!',1);
+        exit();
     } else {
 
-        // check if end of day exists (using day,month&year)
         $existingClosedDay = selectAll('endofday_tb', ['transaction_date'=>$closedDate,'int_id'=>$_SESSION['int_id']]);
 
-        if(count($existingClosedDay) < 1) {
-            // redirect to end the day
+        // if(count($existingClosedDay) < 1) {
+            // $digits = 7;
+            // $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
 
-            $digits = 7;
-            $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+            // $_SESSION['feedback'] = "Please perform the end of day for {$month}, {$year}";
+            // header("Location: ../../mfi/end_of_day.php?message1=$randms");
 
-            $_SESSION['feedback'] = "Please perform the end of day for {$month}, {$year}";
-            header("Location: ../../mfi/end_of_day.php?message1=$randms");
-
-        } else {
+        // } else {
             include('../asset_depreciation.php');
             include('../charge_collection.php');
-
+            include("../loans/auto_function/loan_collection.php");
             asset_depreciation($arr, $_cb, function($_cb,$arr){
                 if($arr['response']==0) {
                     charge_collection($arr, $_cb, function($_cb,$arr){
                         if($arr['response']==0) {
-                            insert('endofmonth_tb',$arr['data']);
-                            call_user_func($_cb,'Asset Depreciation Successful, Charge Collection Successful, Month sucessfully ended', 0);
+                                insert('endofmonth_tb',$arr['data']);
+                                loan_collection($arr['connection']);
+                                call_user_func($_cb,"Asset Depreciation Successful, Charge Collection Successful, Loan Collection Successful, Month sucessfully ended", 0);
+                                exit();
                         } else {
                             call_user_func($_cb,"{$arr['response']}!",1);
+                            exit();
                         }       
                     });
                 } else {
                     call_user_func($_cb,"{$arr['response']}!",1);
+                    exit();
                 }
             });
-        }
-        
-        
+        // }
        
     }
     
 }
 
 
-function endOfYear($closedDate) {
+function endOfYear($closedDate,$connection) {
     $year = getYear($closedDate);
     $month = getMonthName((int)getMonth($closedDate));
     
-    $data = [
+    $endofyearData = [
         'int_id' => $_SESSION['int_id'],
         'branch_id' => $_SESSION['branch_id'],
         'staff_id' => $_SESSION['staff_id'],
@@ -837,26 +836,194 @@ function endOfYear($closedDate) {
 
     $existingClosedYear = selectAll('endofyear_tb', ['year'=>$year,'int_id'=>$_SESSION['int_id']]);
 
+    $digits = 7;
+    $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+
     if(count($existingClosedYear) > 0) {
-        return "End of Year already exists";
+        $_SESSION['feedback'] = 'End of Year already exists!';
+        header("Location: ../../mfi/end_of_year.php?message1=$randms");
     } else {
 
-    // rewrite to SQL mega command (2)
-        // Check if the month has already ended
         $existingClosedMonth = selectAll('endofmonth_tb', ['month'=>$month,'year'=>$year,'int_id'=>$_SESSION['int_id']]);
 
-        $digits = 7;
-        $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
 
-        if(count($existingClosedMonth) < 1) {
-            $_SESSION['feedback'] = "Please perform the end of month for year {$year}";
-            header("Location: ../../mfi/end_of_month.php?message1=$randms");
-        } else {
-            insert('endofyear_tb',$data);
+
+        // if(count($existingClosedMonth) < 1) {
+        //     $_SESSION['feedback'] = "Please perform the end of month for year {$year}";
+        //     header("Location: ../../mfi/end_of_month.php?message1=$randms");
+        // } else {
+
+               // Get total balance here
+                $balances = selectAll('institution_account ', ['int_id'=>$_SESSION['int_id'], 'branch_id'=>$_SESSION['branch_id']]);
+
+                $total_account_balance_derived = 0;
+
+                foreach($balances as $balance) {
+                    $total_account_balance_derived += $balance["account_balance_derived"];   
+                }
+                insert('budget', [
+                    'int_id'=>$_SESSION['int_id'],
+                    'branch_id'=>$_SESSION['branch_id'],
+                    'title'=>'End of year',
+                    'year'=>$year,
+                    'total_expenses'=>0,
+                    'total_income'=>$total_account_balance_derived
+                ]);
+
+                // Gl Transactions
+                $int_id = $_SESSION['int_id'];
+                $branch_id = $_SESSION['branch_id'];
+                $condition = [
+                    'int_id' => $_SESSION['int_id'],
+                ];
+                $data = [
+                'transaction_date' => $closedDate,
+                'branch_id' => $_SESSION['branch_id'],
+                'int_id' => $_SESSION['int_id'],
+                'manual_posted' => 1
+            ];
+            $rand = 7;
+            $randstring = str_pad(rand(0, pow(10, $rand) - 1), $rand, '0', STR_PAD_LEFT);
+            $today = $closedDate;
+
+                $findTeller = selectAll('institution_account', $condition);
+                foreach($findTeller as $teller_data){
+                $amount = $teller_data['account_balance_derived'];
+                $tellerId = $teller_data['teller_id'];
+                $tellerGlCode = $teller_data['gl_code'];
+                
+                $check_vault_amount = selectOne('int_vault',$condition);
+                            $vault_amount = $check_vault_amount['balance'];
+                            $vault_gl = $check_vault_amount['gl_code'];
+                            $newBalance = $vault_amount + $amount;
+                     $update_vault_amount = mysqli_query($connection, "UPDATE int_vault SET balance = '$newBalance' WHERE int_id = '$int_id' ");
+                     if($update_vault_amount){
+                        $glConditions = [
+                                        'int_id' => $int_id,
+                                        'branch_id' => $branch_id,
+                                        'gl_code' => $vault_gl
+                                    ];
+                        $findGl = selectOne('acc_gl_account', $glConditions);
+                                $glBalance = $findGl['organization_running_balance_derived'];
+                                $glID = $findGl['id'];
+                                $glParent = $findGl['parent_id'];
+                                $glAccount = $findGl['gl_code'];
+                
+                                if ($findGl) {
+                                    $newGlBalnce =  $glBalance + $newBalance;
+                                    $conditionsGlUpdate = [
+                                        'int_id' => $int_id,
+                                        'gl_code' => $glAccount
+                                    ];
+                                    $updateGlDetails = [
+                                        'organization_running_balance_derived' => $newGlBalnce
+                                    ];
+                                    $updateGlBalance = update('acc_gl_account', $glID, 'id', $updateGlDetails);
+                                    if ($updateGlBalance) {
+                                        $glTransactionDetails = [
+                                            'int_id' => $int_id,
+                                            'branch_id' => $branch_id,
+                                            'gl_code' => $glAccount,
+                                            'parent_id' => $glParent,
+                                            'transaction_id' => $randstring,
+                                            'description' => 'Vault Transaction - ROLLOVER(Year)',
+                                            'transaction_type' => "credit",
+                                            'transaction_date' => $today,
+                                            'amount' => $newBalance,
+                                            'gl_account_balance_derived' => $newGlBalnce,
+                                            'overdraft_amount_derived' => $newBalance,
+                                            'cumulative_balance_derived' => $newGlBalnce,
+                                            'credit' => $newBalance
+                                        ];
+                                        $storeVaultTransaction = insert('gl_account_transaction', $glTransactionDetails);
+                                            if($storeVaultTransaction){
+                
+                                            $glConditions = [
+                                        'int_id' => $int_id,
+                                        'branch_id' => $branch_id,
+                                        'gl_code' => $tellerGlCode
+                                    ];
+                        $findGl = selectOne('acc_gl_account', $glConditions);
+                                $glBalance = $findGl['organization_running_balance_derived'];
+                                $glID = $findGl['id'];
+                                $glParent = $findGl['parent_id'];
+                                $glAccount = $findGl['gl_code'];
+                
+                
+                
+                                                        $newGlBalance =  $glBalance - $amount;
+                                                        $updateGlBalance = update('acc_gl_account', $glID, 'id', $updateGlDetails);
+                
+                                                        $glTransactionDetails = [
+                                                        'int_id' => $int_id,
+                                                        'branch_id' => $branch_id,
+                                                        'gl_code' => $tellerGlCode,
+                                                        'parent_id' => $glParent,
+                                                        'transaction_id' => $randstring,
+                                                        'description' => 'Vault In  - ROLLOVER(Year)',
+                                                        'transaction_type' => "debit",
+                                                        'transaction_date' => $today,
+                                                        'amount' => $amount,
+                                                        'gl_account_balance_derived' => $newGlBalance,
+                                                        'overdraft_amount_derived' => $amount,
+                                                        'cumulative_balance_derived' => $newGlBalance,
+                                                        'debit' => $amount
+                                                    ];
+                                                    $storeTellerTransaction = insert('gl_account_transaction', $glTransactionDetails);
+                                                    if ($storeTellerTransaction){
+                                                        $updateTellerDetails = ['account_balance_derived' => 0];
+                                                        $updateTellerBalance = update('institution_account', $branch_id, $int_id, $updateTellerDetails);
+                                        if ($updateTellerBalance){
+                $insertendofday = insert('endofday_tb', $data);
+                if($updateTellerBalance){
+                    $intvaultdata = [
+                                                        'int_id' => $int_id,
+                                                        'branch_id' => $branch_id,
+                                                        'teller_id' => $tellerId,
+                                                        'transaction_id' => $randstring,
+                                                        'description' => 'Vault Transaction  - ROLLOVER(Year)',
+                                                        'transaction_type' => "vault in",
+                                                        'transaction_date' => $today,
+                                                        'amount' => $amount,
+                                                        'vault_balance_derived' => $newBalance,
+                                                        'overdraft_amount_derived' => $amount,
+                                                        'cumulative_balance_derived' => $newBalance,
+                                                        'credit' => $amount
+                                                    ];
+                    $insertIntVault = insert('institution_vault_transaction', $intvaultdata);
+                if ($insertIntVault){
+                        $intaccountdata = [
+                                                        'int_id' => $int_id,
+                                                        'branch_id' => $branch_id,
+                                                        'teller_id' => $tellerId,
+                                                        'transaction_id' => $randstring,
+                                                        'description' => 'Vault Transaction  - ROLLOVER(Year)',
+                                                        'transaction_type' => "vault in",
+                                                        'transaction_date' => $today,
+                                                        'amount' => $amount,
+                                                        'is_vault' => 1,
+                                                        'running_balance_derived' => 0,
+                                                        'overdraft_amount_derived' => $amount,
+                                                        'cumulative_balance_derived' => 0,
+                                                        'debit' => $amount
+                                                    ];
+                    $insertAccountTrans = insert('institution_account_transaction', $intaccountdata);
+                    // header("Location: end_of_day.php?response=success");
+                }
+                
+                }
+                                                        }
+                                                    }
+                                                }
+                }
+                }
+                }
+                // ........
+
+            insert('endofyear_tb',$endofyearData);
             $_SESSION['feedback'] = 'Year sucessfully ended';
             header("Location: ../../mfi/end_of_year.php?message=$randms");
-        }
+        // }
     }
-
-
+}
 }
