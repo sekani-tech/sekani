@@ -1,6 +1,9 @@
 <?php
-include("../../connect.php");
+// include("../../connect.php");
+// session_start();
 // get today's date
+function loan_collection($connection) {
+
 $today = date("Y-m-d");
 $todayTime = date("Y-m-d");
 
@@ -14,8 +17,8 @@ $debtorsCondition = [
 $debtorsData =  selectAllGreater('loan', $debtorsCondition);
 // dd($debtorsData);
 if (!$debtorsData) {
-    printf('1-Error: %s\n', mysqli_error($connection)); //checking for errors
-    exit();
+    // printf('1-Error: %s\n', mysqli_error($connection)); //checking for errors
+    // exit();
 }
 // after collecting data for each owing client
 // loop through the loan collection proccess
@@ -30,8 +33,8 @@ foreach ($debtorsData as $key => $debtors) {
     // Loan GL Portfolio and interest GL code
     $loanGl = selectOne("acct_rule", ['int_id' => $institutionId, 'loan_product_id' => $productId]);
     if (!$loanGl) {
-        printf('2-Error: %s\n', mysqli_error($connection)); //checking for errors
-        exit();
+        // printf('2-Error: %s\n', mysqli_error($connection)); //checking for errors
+        // exit();
     }
     $loanPortfolio = $loanGl['asst_loan_port'];
     $loanInterestPortfolio = $loanGl['inc_interest'];
@@ -47,8 +50,8 @@ foreach ($debtorsData as $key => $debtors) {
 
     $debtSchedule = checkLoanDebtor('loan_repayment_schedule', $conditions, $dateConditions);
     if (!$debtSchedule) {
-        printf('3-Error: %s\n', mysqli_error($connection)); //checking for errors
-        exit();
+        // printf('3-Error: %s\n', mysqli_error($connection)); //checking for errors
+        // exit();
     }
     // $scheduleId = $debtSchedule['id'];
     // $principalAmount =  $debtSchedule['principal_amount'];
@@ -59,8 +62,8 @@ foreach ($debtorsData as $key => $debtors) {
     // dd($debtSchedule);
     foreach ($debtSchedule as  $schedule) {
         $scheduleId = $schedule['id'];
-        echo $principalAmount =  $schedule['principal_amount'];
-        echo $interestAmount = $schedule['interest_amount'];
+        $principalAmount =  $schedule['principal_amount'];
+        $interestAmount = $schedule['interest_amount'];
         $amountDue =  $principalAmount + $interestAmount;
         // dd($amountDue);
 
@@ -75,15 +78,16 @@ foreach ($debtorsData as $key => $debtors) {
 
         $checkAccount = checkAccount('account', $accountData, $accountBalance);
         if (!$checkAccount) {
-            printf('4-Error: %s\n', mysqli_error($connection)); //checking for errors
-            exit();
+            // printf('4-Error: %s\n', mysqli_error($connection)); //checking for errors
+            // exit();
         } else {
             //initialize clients account data
             $branchId = $checkAccount['branch_id'];
-            $digits = 10;
+            $digits = 7;
             $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
             $transacionId = $clientId . "_" . $randms . "_" . $branchId;
-            $description = "Loan_Repayment Interest / {$clientId}";
+            $client = selectAll('client', ['id'=>$clientId]);
+            $description = "Loan_Repayment_Principal_Interest / {$client[0]['display_name']}";
             $branchId = $checkAccount['branch_id'];
             $savingsProductID = $checkAccount['product_id'];
             $accountBalance = $checkAccount['account_balance_derived'];
@@ -127,8 +131,8 @@ foreach ($debtorsData as $key => $debtors) {
                     ];
                     $storeTransaction = insert('account_transaction', $transactionDetails);
                     if (!$storeTransaction) {
-                        printf('5-Error: %s\n', mysqli_error($connection)); //checking for errors
-                        exit();
+                        // printf('5-Error: %s\n', mysqli_error($connection)); //checking for errors
+                        // exit();
                     } else {
                         //we've taken the money from client
                         // we settle his loan then
@@ -139,16 +143,16 @@ foreach ($debtorsData as $key => $debtors) {
                         ];
                         $findLoanPortfolio = selectOne('acc_gl_account', $loanPortfolioConditions);
                         if (!$findLoanPortfolio) {
-                            printf('6-Error: %s\n', mysqli_error($connection)); //checking for errors
-                            exit();
+                            // printf('6-Error: %s\n', mysqli_error($connection)); //checking for errors
+                            // exit();
                         }
                         $portfolioBalance = $findLoanPortfolio['organization_running_balance_derived'] - $principalAmount;
                         $portfolioId = $findLoanPortfolio['id'];
                         $portfolioGlParent = $findLoanPortfolio['parent_id'];
                         $updatePortfolio = update('acc_gl_account', $portfolioId, 'id', ['organization_running_balance_derived' => $portfolioBalance]);
                         if (!$updatePortfolio) {
-                            printf('7-Error: %s\n', mysqli_error($connection)); //checking for errors
-                            exit();
+                            // printf('7-Error: %s\n', mysqli_error($connection)); //checking for errors
+                            // exit();
                         } else {
                             // then we store the loan portfolio data
                             $portfolioTransactionDetails = [
@@ -168,8 +172,8 @@ foreach ($debtorsData as $key => $debtors) {
                             ];
                             $storePortfolioTransaction = insert('gl_account_transaction', $portfolioTransactionDetails);
                             if (!$storePortfolioTransaction) {
-                                printf('8-Error: %s\n', mysqli_error($connection)); //checking for errors
-                                exit();
+                                // printf('8-Error: %s\n', mysqli_error($connection)); //checking for errors
+                                // exit();
                             } else {
                                 // secondly we store the loan interest as a credit
                                 $loanInterestConditions = [
@@ -178,16 +182,16 @@ foreach ($debtorsData as $key => $debtors) {
                                 ];
                                 $findInterestPortfolio = selectOne('acc_gl_account', $loanInterestConditions);
                                 if (!$findInterestPortfolio) {
-                                    printf('9-Error: %s\n', mysqli_error($connection)); //checking for errors
-                                    exit();
+                                    // printf('9-Error: %s\n', mysqli_error($connection)); //checking for errors
+                                    // exit();
                                 }
                                 $interetGlBalance = $findInterestPortfolio['organization_running_balance_derived'] + $interestAmount;
                                 $interestGlId = $findInterestPortfolio['id'];
                                 $interestGlParent = $findInterestPortfolio['parent_id'];
                                 $updateInterestPortfolio = update('acc_gl_account', $interestGlId, 'id', ['organization_running_balance_derived' => $interetGlBalance]);
                                 if (!$updateInterestPortfolio) {
-                                    printf('10-Error: %s\n', mysqli_error($connection)); //checking for errors
-                                    exit();
+                                    // printf('10-Error: %s\n', mysqli_error($connection)); //checking for errors
+                                    // exit();
                                 } else {
                                     // then we store the loan portfolio data
                                     $interestTransactionDetails = [
@@ -207,8 +211,8 @@ foreach ($debtorsData as $key => $debtors) {
                                     ];
                                     $storeInterestTransaction = insert('gl_account_transaction', $interestTransactionDetails);
                                     if (!$storeInterestTransaction) {
-                                        printf('11-Error: %s\n', mysqli_error($connection)); //checking for errors
-                                        exit();
+                                        // printf('11-Error: %s\n', mysqli_error($connection)); //checking for errors
+                                        // exit();
                                     } else {
                                         // get loan data to aide in performing loan update
                                         $loanConditions = [
@@ -218,8 +222,8 @@ foreach ($debtorsData as $key => $debtors) {
                                         ];
                                         $findLoan = selectOne('loan', $loanConditions);
                                         if (!$findLoan) {
-                                            printf('12-Error: %s\n', mysqli_error($connection)); //checking for errors
-                                            exit();
+                                            // printf('12-Error: %s\n', mysqli_error($connection)); //checking for errors
+                                            // exit();
                                         }
                                         // dd($findLoan);
                                         # found the loan
@@ -240,8 +244,8 @@ foreach ($debtorsData as $key => $debtors) {
                                         $markCollection = update('loan', $loanId, 'id', $loanCollectionConditions);
                                         // dd($markCollection);
                                         if (!$markCollection) {
-                                            printf('13-Error: %s\n', mysqli_error($connection)); //checking for errors
-                                            exit();
+                                            // printf('13-Error: %s\n', mysqli_error($connection)); //checking for errors
+                                            // exit();
                                         } else {
                                             // firstly store loan collection transaction
                                             $collectionTransactionDetails = [
@@ -279,8 +283,8 @@ foreach ($debtorsData as $key => $debtors) {
                                             // dd($storeLoanTransaction);
                                             // update loan schedule to complete the process
                                             if (!$storeLoanTransaction) {
-                                                printf('14-Error: %s\n', mysqli_error($connection)); //checking for errors
-                                                exit();
+                                                // printf('14-Error: %s\n', mysqli_error($connection)); //checking for errors
+                                                // exit();
                                             } else {
                                                 // loan schedule data to update
                                                 $loanScheduleDetails = [
@@ -293,8 +297,8 @@ foreach ($debtorsData as $key => $debtors) {
                                                 ];
                                                 $updateSchedule = update('loan_repayment_schedule', $scheduleId, 'id', $loanScheduleDetails);
                                                 if (!$updateSchedule) {
-                                                    printf('15-Error: %s\n', mysqli_error($connection)); //checking for errors
-                                                    exit();
+                                                    // printf('15-Error: %s\n', mysqli_error($connection)); //checking for errors
+                                                    // exit();
                                                 } else {
                                                     echo "Current Schedule successfully cleared for " . $accountNo . "<br>";
                                                     if ($totalOutstandingBalance == 0) {
@@ -362,8 +366,8 @@ foreach ($debtorsData as $key => $debtors) {
                     ];
                     $storeTransaction = insert('account_transaction', $transactionDetails);
                     if (!$storeTransaction) {
-                        printf('5b-Error: %s\n', mysqli_error($connection)); //checking for errors
-                        exit();
+                        // printf('5b-Error: %s\n', mysqli_error($connection)); //checking for errors
+                        // exit();
                     } else {
                         //we've taken the money from client
                         // we settle his loan then
@@ -374,8 +378,8 @@ foreach ($debtorsData as $key => $debtors) {
                         ];
                         $findLoanPortfolio = selectOne('acc_gl_account', $loanPortfolioConditions);
                         if (!$findLoanPortfolio) {
-                            printf('6b-Error: %s\n', mysqli_error($connection)); //checking for errors
-                            exit();
+                            // printf('6b-Error: %s\n', mysqli_error($connection)); //checking for errors
+                            // exit();
                         }
                         if ($newBalance > 0) {
                             $portfolioBalance = $findLoanPortfolio['organization_running_balance_derived'] - $newBalance;
@@ -383,8 +387,8 @@ foreach ($debtorsData as $key => $debtors) {
                             $portfolioGlParent = $findLoanPortfolio['parent_id'];
                             $updatePortfolio = update('acc_gl_account', $portfolioId, 'id', ['organization_running_balance_derived' => $portfolioBalance]);
                             if (!$updatePortfolio) {
-                                printf('7b-Error: %s\n', mysqli_error($connection)); //checking for errors
-                                exit();
+                                // printf('7b-Error: %s\n', mysqli_error($connection)); //checking for errors
+                                // exit();
                             } else {
                                 // then we store the loan portfolio data
                                 $portfolioTransactionDetails = [
@@ -404,8 +408,8 @@ foreach ($debtorsData as $key => $debtors) {
                                 ];
                                 $storePortfolioTransaction = insert('gl_account_transaction', $portfolioTransactionDetails);
                                 if (!$storePortfolioTransaction) {
-                                    printf('8b-Error: %s\n', mysqli_error($connection)); //checking for errors
-                                    exit();
+                                    // printf('8b-Error: %s\n', mysqli_error($connection)); //checking for errors
+                                    // exit();
                                 } else {
                                     // secondly we store the loan interest as a credit
                                     $loanInterestConditions = [
@@ -414,16 +418,16 @@ foreach ($debtorsData as $key => $debtors) {
                                     ];
                                     $findInterestPortfolio = selectOne('acc_gl_account', $loanInterestConditions);
                                     if (!$findInterestPortfolio) {
-                                        printf('9b-Error: %s\n', mysqli_error($connection)); //checking for errors
-                                        exit();
+                                        // printf('9b-Error: %s\n', mysqli_error($connection)); //checking for errors
+                                        // exit();
                                     }
                                     $interetGlBalance = $findInterestPortfolio['organization_running_balance_derived'] + $interestAmount;
                                     $interestGlId = $findInterestPortfolio['id'];
                                     $interestGlParent = $findInterestPortfolio['parent_id'];
                                     $updateInterestPortfolio = update('acc_gl_account', $interestGlId, 'id', ['organization_running_balance_derived' => $interetGlBalance]);
                                     if (!$updateInterestPortfolio) {
-                                        printf('10b-Error: %s\n', mysqli_error($connection)); //checking for errors
-                                        exit();
+                                        // printf('10b-Error: %s\n', mysqli_error($connection)); //checking for errors
+                                        // exit();
                                     }
                                 }
                             }
@@ -435,16 +439,16 @@ foreach ($debtorsData as $key => $debtors) {
                             ];
                             $findInterestPortfolio = selectOne('acc_gl_account', $loanInterestConditions);
                             if (!$findInterestPortfolio) {
-                                printf('9b-Error: %s\n', mysqli_error($connection)); //checking for errors
-                                exit();
+                                // printf('9b-Error: %s\n', mysqli_error($connection)); //checking for errors
+                                // exit();
                             }
                             $interetGlBalance = $findInterestPortfolio['organization_running_balance_derived'] + $finalBalance;
                             $interestGlId = $findInterestPortfolio['id'];
                             $interestGlParent = $findInterestPortfolio['parent_id'];
                             $updateInterestPortfolio = update('acc_gl_account', $interestGlId, 'id', ['organization_running_balance_derived' => $interetGlBalance]);
                             if (!$updateInterestPortfolio) {
-                                printf('10b-Error: %s\n', mysqli_error($connection)); //checking for errors
-                                exit();
+                                // printf('10b-Error: %s\n', mysqli_error($connection)); //checking for errors
+                                // exit();
                             }
                         }
                         // get loan data to aide in performing loan update
@@ -455,8 +459,8 @@ foreach ($debtorsData as $key => $debtors) {
                         ];
                         $findLoan = selectOne('loan', $loanConditions);
                         if (!$findLoan) {
-                            printf('12b-Error: %s\n', mysqli_error($connection)); //checking for errors
-                            exit();
+                            // printf('12b-Error: %s\n', mysqli_error($connection)); //checking for errors
+                            // exit();
                         }
                         // dd($findLoan);
                         # found the loan
@@ -483,8 +487,8 @@ foreach ($debtorsData as $key => $debtors) {
                         $markCollection = update('loan', $loanId, 'id', $loanCollectionConditions);
                         // dd($markCollection);
                         if (!$markCollection) {
-                            printf('13b-Error: %s\n', mysqli_error($connection)); //checking for errors
-                            exit();
+                            // printf('13b-Error: %s\n', mysqli_error($connection)); //checking for errors
+                            // exit();
                         } else {
                             // firstly store loan collection transaction
                             $collectionTransactionDetails = [
@@ -522,8 +526,8 @@ foreach ($debtorsData as $key => $debtors) {
                             // dd($storeLoanTransaction);
                             // update loan schedule to complete the process
                             if (!$storeLoanTransaction) {
-                                printf('14b-Error: %s\n', mysqli_error($connection)); //checking for errors
-                                exit();
+                                // printf('14b-Error: %s\n', mysqli_error($connection)); //checking for errors
+                                // exit();
                             } else {
                                 // loan schedule data to update
                                 $loanScheduleDetails = [
@@ -536,8 +540,8 @@ foreach ($debtorsData as $key => $debtors) {
                                 ];
                                 $updateSchedule = update('loan_repayment_schedule', $scheduleId, 'id', $loanScheduleDetails);
                                 if (!$updateSchedule) {
-                                    printf('15b-Error: %s\n', mysqli_error($connection)); //checking for errors
-                                    exit();
+                                    // printf('15b-Error: %s\n', mysqli_error($connection)); //checking for errors
+                                    // exit();
                                 } else {
                                     echo "Current Schedule Partially cleared for " . $accountNo . "<br>";
                                     if ($totalOutstandingBalance == 0) {
@@ -552,9 +556,134 @@ foreach ($debtorsData as $key => $debtors) {
                     }
                 }
             }else{
-                include("../arrears.php");
+                // include("../arrears.php");
+                arrears($connection);
             }
         }
     }
     #loop ends here
+}
+}
+
+
+function arrears($connection) {
+    $sessint_id = $_SESSION['int_id'];
+$currentdate = date('Y-m-d');
+$currentdate_time = date('Y-m-d H:i:s');
+
+// count it
+// check it check if installment is 0 or 1.
+$conditions = [
+    'int_id' => $sessint_id,
+    'installment' => 1
+];
+$dateConditions = [
+    'duedate' => $currentdate
+];
+
+$select_arrears = selectAllLessEq('loan_repayment_schedule', $conditions, $dateConditions);
+
+if ($select_arrears) {
+    for ($i = 0; $i < sizeof($select_arrears); $i++) {
+        // now we need to get it.
+        $lr_schedule_id = $select_arrears[$i]['id'];
+        $lr_int_id = $select_arrears[$i]['int_id'];
+        $lr_loan_id = $select_arrears[$i]['loan_id'];
+        $lr_client_id = $select_arrears[$i]['client_id'];
+        $lr_fromdate = $select_arrears[$i]['fromdate'];
+        $lr_duedate = $select_arrears[$i]['duedate'];
+        $lr_installment = $select_arrears[$i]['installment'];
+        $lr_principal_amount = $select_arrears[$i]['principal_amount'];
+        $lr_principal_completed_derived = $select_arrears[$i]['principal_completed_derived'];
+        $lr_interest_amount = $select_arrears[$i]['interest_amount'];
+        $lr_interest_completed_derived = $select_arrears[$i]['interest_completed_derived'];
+        
+        $arrearConditions = [
+            'loan_id' => $lr_loan_id,
+            'loan_schedule_id' => $lr_schedule_id
+        ];
+    
+        $findArrear = selectAll('loan_arrear', $arrearConditions);
+
+        $currentdate = date('Y-m-d');
+        $cal_start = strtotime($lr_duedate);
+        $cal_end = strtotime($currentdate);
+        $days_between = ceil(abs($cal_end - $cal_start) / 86400);
+    
+        if (!$findArrear) {
+            if(count($findArrear) == 0) {
+                $arrearData = [
+                    'int_id' => $lr_int_id,
+                    'loan_id' => $lr_loan_id,
+                    'loan_schedule_id' => $lr_schedule_id,
+                    'client_id' => $lr_client_id,
+                    'fromdate' => $lr_fromdate,
+                    'duedate' => $lr_duedate,
+                    'installment' => $lr_installment,
+                    'counter' => $days_between,
+                    'principal_amount' => $lr_principal_amount,
+                    'principal_completed_derived' => $lr_principal_completed_derived,
+                    'interest_amount' => $lr_interest_amount,
+                    'interest_completed_derived' => $lr_interest_completed_derived,
+                    'created_date' => $currentdate_time,
+                    'lastmodified_date' => $currentdate_time,
+                    'completed_derived' => 1        // value as 1 means it has not been paid off
+                ];
+    
+                $insertArrears = insert('loan_arrear', $arrearData);
+                if (!$insertArrears) {
+                    // printf('1-Error: %s\n', mysqli_error($connection));
+                    // exit();
+    
+                } else {
+                    // echo 'INSERTED SUCCESSFULLY - Loan ID: ' . $lr_loan_id . '<br>';
+                }
+            }        
+    
+        } else {
+
+            $currentdate = date('Y-m-d');
+            $currentdate_time = date('Y-m-d H:i:s');
+            $cal_start = strtotime($lr_duedate);
+            $cal_end = strtotime($currentdate);
+            $days_between = ceil(abs($cal_end - $cal_start) / 86400);
+
+            if(30 > $days_between && $days_between > 0) {
+                $ffd = $select_arrears[$i]['principal_amount'];
+                $bnk_prov = (0.05 * $ffd);
+            }
+            else if(60 > $days_between && $days_between > 30) {
+                $fdfdf = $select_arrears[$i]['principal_amount'];
+                $bnk_prov = (0.2 * $fdfdf);
+            }
+            else if(90 > $days_between && $days_between > 60) {
+                $dfgd = $select_arrears[$i]['principal_amount'];
+                $bnk_prov = (0.5 * $dfgd) ;
+            }
+            else if($days_between > 90) {
+                $juiui = $select_arrears[$i]['principal_amount'];
+                $bnk_prov = $juiui;
+            } else {
+                $bnk_prov = 0;
+            }
+
+            $prin = $select_arrears[$i]['principal_amount'];
+            $par = ($bnk_prov/$prin) * 100;
+            
+            $arrear_update = mysqli_query($connection, "UPDATE loan_arrear SET principal_amount = {$lr_principal_amount}, interest_amount = {$lr_interest_amount}, counter = {$days_between}, 
+            par = {$par}, bank_provision = {$bnk_prov}, lastmodified_date = '$currentdate_time' WHERE int_id = {$sessint_id} AND loan_id = {$lr_loan_id} AND loan_schedule_id = {$lr_schedule_id}");
+            if (!$arrear_update) {
+                // printf('2-Error: %s\n', mysqli_error($connection)); //checking for errors
+                // exit();
+            } else {
+                echo 'UPDATED SUCCESSFULLY - Loan ID: ' . $lr_loan_id . '<br>';
+            }
+        }
+    } 
+
+} else {
+    // printf('3-Error: %s\n', mysqli_error($connection));
+    // exit();
+}
+
 }

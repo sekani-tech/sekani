@@ -11,7 +11,10 @@ if (isset($_POST["start"]) && isset($_POST["end"]) && isset($_POST["branch"]))
     {
         $glcode = $_POST["glcode"];
       $std = $_POST["start"];
-      $datex= strtotime('-1 day', $std); 
+      // $datex= strtotime('-1 day', $std); 
+      $datex= strtotime($std); 
+      // dd($datex);
+
       $sdate = date("Y-m-d", $datex);
        $start = $sdate;
       //  echo $start;

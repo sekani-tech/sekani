@@ -1,4 +1,7 @@
 <?php
+
+use Mpdf\Tag\P;
+
 include "DbModel/db.php";
 
 //session_start();
@@ -433,8 +436,9 @@ function searchGroup($table1, $int_id, $term)
 // function to insert a new row into an arbitrary table, with the columns filled with the values 
 // from an associative array and completely SQL-injection safe
 
-function insert($table, $record)
-{
+function insert($table, $record) {
+
+
     global $connection;
     $cols = array();
     $vals = array();
@@ -816,4 +820,71 @@ function selectOneWithOr($table, $conditions = [], $orField, $orValue)
         $stmt = executeQuery($sql, $conditions);
         return $stmt->get_result()->fetch_assoc();;
     }
+function getMonthName($monthNum) {
+    $dateObj = DateTime::createFromFormat('!m', $monthNum);
+    return $dateObj->format('F');
+}
+
+function endOfMonth($closedDate,$connection,$_cb) {
+    $month = getMonthName((int)getMonth($closedDate));
+    $year = getYear($closedDate);
+
+    $data = [
+        'int_id' => $_SESSION['int_id'],
+        'branch_id' => $_SESSION['branch_id'],
+        'staff_id' => $_SESSION['staff_id'],
+        'manual_posted' => 1,
+        'closed_date' => $closedDate,
+        'month' => $month,
+        'year' => $year
+    ];
+
+    $existingClosedMonth = selectAll('endofmonth_tb', ['month'=>$month,'year'=>$year,'int_id'=>$_SESSION['int_id']]);
+
+    $arr = array(
+        'connection'=>$connection,
+        'data'=>$data
+    );
+
+    if(count($existingClosedMonth) > 0) {
+        call_user_func($_cb,'End of Month already exists!',1);
+        exit();
+    } else {
+
+        $existingClosedDay = selectAll('endofday_tb', ['transaction_date'=>$closedDate,'int_id'=>$_SESSION['int_id']]);
+
+        // if(count($existingClosedDay) < 1) {
+            // $digits = 7;
+            // $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+
+            // $_SESSION['feedback'] = "Please perform the end of day for {$month}, {$year}";
+            // header("Location: ../../mfi/end_of_day.php?message1=$randms");
+
+        // } else {
+            include('../asset_depreciation.php');
+            include('../charge_collection.php');
+            include("../loans/auto_function/loan_collection.php");
+            asset_depreciation($arr, $_cb, function($_cb,$arr){
+                if($arr['response']==0) {
+                    charge_collection($arr, $_cb, function($_cb,$arr){
+                        if($arr['response']==0) {
+                                insert('endofmonth_tb',$arr['data']);
+                                loan_collection($arr['connection']);
+                                call_user_func($_cb,"Asset Depreciation Successful, Charge Collection Successful, Loan Collection Successful, Month sucessfully ended", 0);
+                                exit();
+                        } else {
+                            call_user_func($_cb,"{$arr['response']}!",1);
+                            exit();
+                        }       
+                    });
+                } else {
+                    call_user_func($_cb,"{$arr['response']}!",1);
+                    exit();
+                }
+            });
+        // }
+       
+    }
+    
+}
 }
