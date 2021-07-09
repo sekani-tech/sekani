@@ -238,9 +238,6 @@ else if (isset($_GET["message11"])) {
 
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-<<<<<<< HEAD
-} 
-=======
 }else if (isset($_GET["response"])){
     $response = $_GET['response'];
     if ($response == 'manual_vault'){
@@ -273,7 +270,6 @@ else if (isset($_GET["message11"])) {
 
   }
  }
->>>>>>> Victor
 ?>
 
 
@@ -363,11 +359,7 @@ else if (isset($_GET["message11"])) {
                             </div>
                             <!-- SELECT TELLER TABLE ENDS -->
                             <div class="col-md-6">
-<<<<<<< HEAD
-                                <form action="./bulkWork/deposit.php" method="post" enctype="multipart/form-data">
-=======
                                 <form action="./bulkWork/bulk_deposit_eod.php" method="post" enctype="multipart/form-data">
->>>>>>> Victor
 
                                     <!-- SELECT BRANCH CARD BEGINS -->
                                     <div class="card">

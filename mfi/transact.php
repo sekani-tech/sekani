@@ -578,16 +578,10 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Transaction Date</label>
-<<<<<<< HEAD
-                                            <input type="date" name="transDate" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" class="form-control" required />
-                                        </div>
-                                    </div>
-=======
                                             <input type="text" id="date" name="transDate" min="<?php echo $minDate; ?>" class="form-control" required style="position: relative; z-index: 1000;"/>
                                         </div>
                                     </div>
                                       
->>>>>>> Victor
                                 </div>
                                 <button type="reset" class="btn btn-danger">Reset</button>
                                 <button type="submit" class="btn btn-primary pull-right">Submit</button>
@@ -596,8 +590,6 @@ if ($trans_post == 1 || $trans_post == "1") {
                         </div>
                     </div>
                 </div>
-<<<<<<< HEAD
-=======
                 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
@@ -614,7 +606,6 @@ $(function() {
      });
 });
     </script>
->>>>>>> Victor
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">

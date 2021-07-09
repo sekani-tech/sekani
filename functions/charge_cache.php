@@ -77,20 +77,11 @@ $newbal = $accbal - $amount;
         $description = "Fee on charges";
         $trans_type ="debit";
         $irvs = "0";
-<<<<<<< HEAD
-        $iat = "INSERT INTO client_charge (int_id, branch_id, client_id, acct_id, transact_id, charge_id, amount, description, date, approved)
-         VALUES ('{$sessint_id}', '{$branch_id}', '{$client}', '{$acct_no}', '{$transid}', '{$charges}', '{$amount}', '{$descrip}', '{$date}', '1')";
-        $res3 = mysqli_query($connection, $iat);
-                   if ($res3) {
-                    $_SESSION["Lack_of_intfund_$randms"] = " was updated successfully!";
-                          // success
-=======
         $iat = "INSERT INTO client_charge (int_id, branch_id, client_id, acct_no, transact_id, charge_id, amount, description, date)
          VALUES ('{$sessint_id}', '{$branch_id}', '{$client}', '{$acct_no}', '{$transid}', '{$charges}', '{$amount}', '{$descrip}', '{$date}')";
         $res3 = mysqli_query($connection, $iat);
                    if ($res3) {
                     $_SESSION["Lack_of_intfund_$randms"] = " was updated successfully!";
->>>>>>> Victor
                           echo header ("Location: ../mfi/transact.php?message1=$randms");
                         } else {
                            $_SESSION["Lack_of_intfund_$randms"] = "Registration Failed";

@@ -251,11 +251,7 @@ if (isset($_GET['approve']) && $_GET['approve'] !== '') {
     $total_early = 100 + 30;
     $total_imm = 100 + 30;
     $total_bad = 100 + 30;
-<<<<<<< HEAD
-
-=======
     
->>>>>>> Victor
     // GENERAL critarial - BASED ON BIG 100
     $mxx = $early_rep != 0 ? ($early_rep / $gen1) * 100 : 0;
     $mxx1 = $imm_rep != 0 ? ($imm_rep / $gen1) * 100 : 0;

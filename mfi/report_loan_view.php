@@ -145,35 +145,13 @@ if (isset($_GET["view15"])) { ?>
                             </div>
 
                             <div class="table-responsive">
-<<<<<<< HEAD
-                                <table id="outstand" class="table table-striped table-bordered" style="width:100%">
-=======
                                 <table id="outstand" class="rtable display nowrap" style="width:100%">
->>>>>>> Victor
                                     <thead class="text-primary">
                                         <?php
                                         $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_outstanding_derived <> 0)";
                                         $result = mysqli_query($connection, $query);
                                         ?>
                                         <th>
-<<<<<<< HEAD
-                                            <small>Client Name</small> 
-                                        </th>
-                                        <th>
-                                        <small>Account No</small> 
-                                        </th>
-                                        <th>
-                                        <small>Principal Amount</small> 
-                                        </th>
-                                        <th>
-                                        <small>Disbursement Date</small> 
-                                        </th>
-                                        <th>
-                                        <small>Maturity Date</small>
-                                        </th>
-                                        <th>
-                                        <small>Outstanding Balances</small>
-=======
                                             Client Name
                                         </th>
                                         <th>
@@ -190,7 +168,6 @@ if (isset($_GET["view15"])) { ?>
                                         </th>
                                         <th>
                                             Outstanding Balances
->>>>>>> Victor
                                         </th>
                                         <th>
                                             

@@ -29,20 +29,6 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
     $accountId = $checkAccount['id'];
     $productID = $checkAccount['product_id'];
     $clientId = $checkAccount['client_id'];
-<<<<<<< HEAD
-    $glConditions = [
-        'int_id' => $institutionId,
-        'gl_code' => $glAccount
-    ];
-    $findGl = selectOne('acc_gl_account', $glConditions);
-    if($findGl['manual_journal_entries_allowed'] != 1){
-        $_SESSION["feedback"] = "Can't post in this GL, Manual entry not allowed!!";
-        $_SESSION["Lack_of_intfund_$randms"] = "10";
-        echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
-        exit();
-    }
-=======
->>>>>>> Victor
     if ($clientBalance >= $amount) {
         // take the money from clients account
         // then update te clients current account balance 
@@ -83,58 +69,6 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
             ];
             $storeTransaction = insert('account_transaction', $transactionDetails);
             if ($storeTransaction) {
-<<<<<<< HEAD
-                $findSmsDetails = selectOne('client', ['id' => $clientId]);
-                $mobileNo = $findSmsDetails['mobile_no'];
-                $smsActive = $findSmsDetails['SMS_ACTIVE'];
-                if ($smsActive == 1) {
-?>
-                    <input type="text" id="s_int_id" value="<?php echo $institutionId; ?>" hidden>
-                    <input type="text" id="s_branch_id" value="<?php echo $branchId; ?>" hidden>
-                    <input type="text" id="s_client_id" value="<?php echo $clientId; ?>" hidden>
-                    <input type="text" id="s_phone" value="<?php echo $mobileNo; ?>" hidden>
-                    <input type="text" id="s_acct_no" value="<?php echo appendAccountNo($clientAccount, 6); ?>" hidden>
-                    <input type="text" id="s_amount" value="<?php echo number_format($amount, 2); ?>" hidden>
-                    <input type="text" id="s_desc" value="<?php echo $description; ?>" hidden>
-                    <input type="text" id="s_date" value="<?php echo $today; ?>" hidden>
-                    <input type="text" id="s_balance" value="<?php echo number_format($newBalance, 2); ?>" hidden>
-                    <script>
-                        $(document).ready(function() {
-                            var int_id = $('#s_int_id').val();
-                            var branch_id = $('#s_branch_id').val();
-                            var phone = $('#s_phone').val();
-                            var client_id = $('#s_client_id').val();
-                            // function
-                            var amount = $('#s_amount').val();
-                            var acct_no = $('#s_acct_no').val();
-                            var desc = $('#s_desc').val();
-                            var date = $('#s_date').val();
-                            var balance = $('#s_balance').val();
-                            // now we work on the body.
-                            // var msg = int_name + " " + trans_type + " \n" + "Amt: NGN " + amount + " \n Acct: " + acct_no + "\nDesc: " + desc + " \nBal: " + balance + " \nAvail: " + balance + "\nDate: " + date + "\nThank you for Banking with Us!";
-                            var msg = "Acct: " + acct_no + "\nAmt: NGN " + amount + " Debit \nDesc: " + desc + "\nAvail Bal: " + balance + "\nDate: " + date;
-                            $.ajax({
-                                url: "../../mfi/ajax_post/sms/sms.php",
-                                method: "POST",
-                                data: {
-                                    int_id: int_id,
-                                    branch_id: branch_id,
-                                    sender_id: sender_id,
-                                    phone: phone,
-                                    msg: msg,
-                                    client_id: client_id,
-                                    account_no: account_no
-                                },
-                                success: function(data) {
-                                    $('#make_display').html(data);
-                                }
-                            });
-                        });
-                    </script>
-<?php
-                }
-=======
->>>>>>> Victor
                 // update gl and record history of transaction
                 // updating savings portfolio
                 $findSavingsGl = selectOne('savings_acct_rule', ['savings_product_id' => $productId, 'int_id' => $institutionId]);
@@ -143,30 +77,17 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
                     'int_id' => $institutionId,
                     'gl_code' => $savingsGlcode
                 ];
-<<<<<<< HEAD
-                $findPortfolioGl = selectOne('acc_gl_account', $savingsGlConditions);
-                $glBalance = $findPortfolioGl['organization_running_balance_derived'];
-                $glSavingsID = $findPortfolioGl['id'];
-                $glSavingsParent = $findPortfolioGl['parent_id'];
-=======
                 $findGl = selectOne('acc_gl_account', $savingsGlConditions);
                 $glBalance = $findGl['organization_running_balance_derived'];
                 $glSavingsID = $findGl['id'];
                 $glSavingsParent = $findGl['parent_id'];
->>>>>>> Victor
                 // $conditionsGlUpdate = [
                 //     'int_id' => $institutionId,
                 //     'gl_code' => $savingsGlcode
                 // ];
-<<<<<<< HEAD
-                $portfolionewGlBalnce = $glBalance - $amount;
-                $updateSavingsGlDetails = [
-                    'organization_running_balance_derived' => $portfolionewGlBalnce
-=======
                 $newGlBalnce = $glBalance - $amount;
                 $updateSavingsGlDetails = [
                     'organization_running_balance_derived' => $newGlBalnce
->>>>>>> Victor
                 ];
                 $updateSavingsGlBalance = update('acc_gl_account', $glSavingsID, 'id', $updateSavingsGlDetails);
                 if ($updateSavingsGlBalance) {
@@ -180,39 +101,25 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
                         'transaction_type' => "debit",
                         'transaction_date' => $today,
                         'amount' => $amount,
-<<<<<<< HEAD
-                        'gl_account_balance_derived' => $portfolionewGlBalnce,
-                        'overdraft_amount_derived' => $amount,
-                        'cumulative_balance_derived' => $portfolionewGlBalnce,
-=======
                         'gl_account_balance_derived' => $newGlBalnce,
                         'overdraft_amount_derived' => $amount,
                         'cumulative_balance_derived' => $newGlBalnce,
->>>>>>> Victor
                         'debit' => $amount
                     ];
                     $storeSavingsGlTransaction = insert('gl_account_transaction', $glSavingsTransactionDetails);
                     if (!$storeSavingsGlTransaction) {
                         printf("<br>1-Error: \n", mysqli_error($connection)); //checking for errors
-<<<<<<< HEAD
-                        // exit();
-=======
                         exit();
->>>>>>> Victor
                     } else {
                         echo "Debit Success <br>";
                     }
                 }
                 // credit gl
-<<<<<<< HEAD
-                
-=======
                 $glConditions = [
                     'int_id' => $institutionId,
                     'gl_code' => $glAccount
                 ];
                 $findGl = selectOne('acc_gl_account', $glConditions);
->>>>>>> Victor
                 $glBalance = $findGl['organization_running_balance_derived'];
                 $glID = $findGl['id'];
                 $glParent = $findGl['parent_id'];
@@ -247,55 +154,16 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
                         if ($storeGlTransaction) {
                             // Everything went fine
                             // Sucess feedback
-<<<<<<< HEAD
-                            $_SESSION["feedback"] = "Income Transaction Successful!";
-                            $_SESSION["Lack_of_intfund_$randms"] = "10";
-                            echo header("Location: ../../mfi/gl_postings.php?message0=$randms");
-                        } else {
-                            // Transaction successful but GL record not saved
-                            $_SESSION["feedback"] = "Transaction successful but GL record not saved!";
-                            $_SESSION["Lack_of_intfund_$randms"] = "10";
-                            echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
-=======
                             $_SESSION["Lack_of_intfund_$randms"] = "Income Transaction Successful!";
                             echo header("Location: ../../mfi/gl_postings.php?income1=$randms");
                         } else {
                             // Transaction successful but GL record not saved
                             $_SESSION["Lack_of_intfund_$randms"] = "Transaction successful but GL record not saved!";
                             echo header("Location: ../../mfi/gl_postings.php?income2=$randms");
->>>>>>> Victor
                         }
                     }
                 } else {
                     // something is wrong with gl account
-<<<<<<< HEAD
-                    $_SESSION["feedback"] = "Sorry could not Find Chosen GL!";
-                    $_SESSION["Lack_of_intfund_$randms"] = "10";
-                    echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
-                }
-            } else {
-                // client transaction not saved
-                $_SESSION["feedback"] = "There was an error Storing Customer's Transaction \n Kindly contact Support!";
-                $_SESSION["Lack_of_intfund_$randms"] = "10";
-                echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
-            }
-        } else {
-            // customer not deducted
-            $_SESSION["feedback"] = "Could not deduct money from customer!";
-            $_SESSION["Lack_of_intfund_$randms"] = "10";
-            echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
-        }
-    } else {
-        // insufficient account balance
-        $_SESSION["feedback"] = "Insufficient Balance in Customers Account!";
-        $_SESSION["Lack_of_intfund_$randms"] = "10";
-        echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
-    }
-} else {
-    $_SESSION["feedback"] = "Provide the Necessary Information!";
-    $_SESSION["Lack_of_intfund_$randms"] = "10";
-    echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
-=======
                     $_SESSION["Lack_of_intfund_$randms"] = "Sorry could not Find Chosen GL!";
                     echo header("Location: ../../mfi/gl_postings.php?income3=$randms");
                 }
@@ -317,5 +185,4 @@ if (isset($_POST['account_no']) && isset($_POST['acct_gl'])) {
 } else {
     $_SESSION["Lack_of_intfund_$randms"] = "Provide the Necessary Information!";
     echo header("Location: ../../mfi/gl_postings.php?income7=$randms");
->>>>>>> Victor
 }
