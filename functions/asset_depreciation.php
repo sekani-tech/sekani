@@ -1,13 +1,9 @@
 <?php
 /////////////////////// AUTO CODE TO CALCULATE THE DEPRECIATION OF ALL ASSETS IN AN INSTITUTION ///////////////////////
-<<<<<<< HEAD
 function asset_depreciation($arr, $_cb, $cb) {
 
     $connection = $arr['connection'];
     $sessint_id = $_SESSION['int_id'];
-=======
-$sessint_id = $_SESSION['int_id'];
->>>>>>> Victor
 
 // Pull all assets
 $ifdo = mysqli_query($connection, "SELECT * FROM assets WHERE int_id = {$sessint_id}");
@@ -28,7 +24,6 @@ while($pd = mysqli_fetch_array($ifdo)){
     $current_month = $pd['current_month_depreciation'];
     $curr_year = date('Y-m-d');
     $curr_month = date('m');
-<<<<<<< HEAD
     $branch_id = $pd['branch_id'];
     $incomeGl = $pd["gl_code"];
     $expenseGl = $pd["expense_gl"];
@@ -37,9 +32,7 @@ while($pd = mysqli_fetch_array($ifdo)){
 
     
     $transactionId = $randms;
-=======
 
->>>>>>> Victor
     // to get difference in years
     $purdate = strtotime($date);
     $currentdate = strtotime($curr_year);
@@ -53,10 +46,7 @@ while($pd = mysqli_fetch_array($ifdo)){
 
     // to get current month depreciation
     $curr_mon = $dom / 12;
-<<<<<<< HEAD
     $amount_2 = $curr_mon;
-=======
->>>>>>> Victor
     // last year plus number of months spent = this month depreciation
 
     $lasty = $unit_price - ($dom * ($datt - 1));
@@ -71,7 +61,6 @@ while($pd = mysqli_fetch_array($ifdo)){
     $idof = "UPDATE assets SET current_year_depreciation = '$currentyear', current_month_depreciation = '$current_month' WHERE int_id = '$int_id' AND id = '$aorp'";
     $dos = mysqli_query($connection, $idof);
     if($dos){
-<<<<<<< HEAD
 
     
         
@@ -183,8 +172,3 @@ while($pd = mysqli_fetch_array($ifdo)){
 }
 } 
 
-=======
-        echo 'Depreciation Value for '.$asset_name.' with int_id '.$int_id.' was calculated</br>';
-    }
-}
->>>>>>> Victor

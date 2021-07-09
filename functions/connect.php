@@ -145,7 +145,7 @@ function selectOne($table, $conditions)
  * 
  
 
-/**
+
  * @param $table
  * @param $conditions
  * @return array|null
@@ -757,6 +757,175 @@ function sumIn($sum, $table, $conditions, $notIn, $table2, $sort, $conditions2)
     return $stmt->get_result()->fetch_assoc();
 }
 
+function selectAllandNot($table, $conditions = [], $notConditions)
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+    if (empty($conditions)) {
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $i = 0;
+        foreach ($conditions as $key => $value) {
+            if ($i === 0) {
+                $sql = $sql . " WHERE $key=?";
+            } else {
+                $sql = $sql . " AND $key=?";
+            }
+            $i++;
+        }
+
+        $sql = $sql . " AND (";
+        $s = 0;
+        foreach ($notConditions as $key => $value) {
+            if ($s === 0) {
+                $sql = $sql . " $key!=?";
+            } else {
+                $sql = $sql . " AND $key!=?";
+            }
+            $s++;
+        }
+        $sql = $sql . " )";
+        $stmt = executeQuery($sql, array_merge($conditions, $notConditions));
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+}
+
+
+function selectOneWithOr($table, $conditions = [], $orField, $orValue)
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+    if (empty($conditions)) {
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $i = 0;
+        foreach ($conditions as $key => $value) {
+            if ($i === 0) {
+                $sql = $sql . " WHERE $key=?";
+            } else {
+                $sql = $sql . " AND $key=?";
+            }
+            $i++;
+        }
+
+        $sql = $sql . " OR " . $orField . "=" . $orValue;
+
+        $stmt = executeQuery($sql, $conditions);
+        return $stmt->get_result()->fetch_assoc();;
+    }
+
+    function getCharges($connection) {
+        $sint_id = $_SESSION["int_id"];
+        $org = "SELECT * FROM charge WHERE int_id = '$sint_id'";
+        $res = mysqli_query($connection, $org);
+        $out = [];
+        $i = 0;
+        while ($row = mysqli_fetch_array($res)) {
+            $out[$i] = $row['id'];
+            $i++;
+        }
+        return $out;
+    }
+    
+    function getClients($connection) {
+        $sint_id = $_SESSION["int_id"];
+        $branc = $_SESSION["branch_id"];
+        $org = "SELECT client.id, client.firstname, client.lastname, client.middlename FROM client JOIN branch ON client.branch_id = branch.id WHERE client.int_id = '$sint_id' AND (branch.id = '$branc' OR branch.parent_id = '$branc') AND status = 'Approved' ORDER BY firstname ASC";
+        $res = mysqli_query($connection, $org);
+        $out = [];
+        $i = 0;
+        while ($row = mysqli_fetch_array($res)) {
+            $out[$i] = $row['id'];
+            $i++;
+        }
+        return $out;
+    }
+    
+    function getAccNumbers($connection, $client_id) {
+        $pen = "SELECT * FROM account WHERE client_id = '$client_id'";
+        $res = mysqli_query($connection, $pen);
+        $out = [];
+        $i = 0;
+        while ($row = mysqli_fetch_array($res))
+        {
+            $out[$i] = $row['account_no'];
+            $i++;
+        }
+        return $out;
+    }
+    
+function getMonthName($monthNum) {
+    $dateObj = DateTime::createFromFormat('!m', $monthNum);
+    return $dateObj->format('F');
+}
+
+function endOfMonth($closedDate,$connection,$_cb) {
+    $month = getMonthName((int)getMonth($closedDate));
+    $year = getYear($closedDate);
+
+    $data = [
+        'int_id' => $_SESSION['int_id'],
+        'branch_id' => $_SESSION['branch_id'],
+        'staff_id' => $_SESSION['staff_id'],
+        'manual_posted' => 1,
+        'closed_date' => $closedDate,
+        'month' => $month,
+        'year' => $year
+    ];
+
+    $existingClosedMonth = selectAll('endofmonth_tb', ['month'=>$month,'year'=>$year,'int_id'=>$_SESSION['int_id']]);
+
+    $arr = array(
+        'connection'=>$connection,
+        'data'=>$data
+    );
+
+    if(count($existingClosedMonth) > 0) {
+        call_user_func($_cb,'End of Month already exists!',1);
+        exit();
+    } else {
+
+        $existingClosedDay = selectAll('endofday_tb', ['transaction_date'=>$closedDate,'int_id'=>$_SESSION['int_id']]);
+
+        // if(count($existingClosedDay) < 1) {
+            // $digits = 7;
+            // $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+
+            // $_SESSION['feedback'] = "Please perform the end of day for {$month}, {$year}";
+            // header("Location: ../../mfi/end_of_day.php?message1=$randms");
+
+        // } else {
+            include('../asset_depreciation.php');
+            include('../charge_collection.php');
+            include("../loans/auto_function/loan_collection.php");
+            asset_depreciation($arr, $_cb, function($_cb,$arr){
+                if($arr['response']==0) {
+                    charge_collection($arr, $_cb, function($_cb,$arr){
+                        if($arr['response']==0) {
+                                insert('endofmonth_tb',$arr['data']);
+                                loan_collection($arr['connection']);
+                                call_user_func($_cb,"Asset Depreciation Successful, Charge Collection Successful, Loan Collection Successful, Month sucessfully ended", 0);
+                                exit();
+                        } else {
+                            call_user_func($_cb,"{$arr['response']}!",1);
+                            exit();
+                        }       
+                    });
+                } else {
+                    call_user_func($_cb,"{$arr['response']}!",1);
+                    exit();
+                }
+            });
+        // }
+       
+    }
+    
+}
+}
 //function to run eod
 function eod($date_data){
     $int_id = $_SESSION['int_id'];
