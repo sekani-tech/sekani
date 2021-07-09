@@ -11,12 +11,7 @@ $fd = "DELETE FROM charges_cache WHERE int_id = '$sint_id'";
 $dos = mysqli_query($connection, $fd);
 $fd = "DELETE FROM prod_acct_cache WHERE int_id = '$sint_id'";
 $dos = mysqli_query($connection, $fd);
-$digits = 6;
-$randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
-$_SESSION["product_temp"] = $randms;
-$tempId = $_SESSION["product_temp"];
 ?>
-<!-- <script src="datatable/table.js"></script> -->
 <!-- Content added here -->
 <div class="content">
   <div class="container-fluid">
@@ -239,113 +234,93 @@ $tempId = $_SESSION["product_temp"];
                     <!-- Second Tab -->
                     <div class="tab">
                       <h3>Charges</h3>
-                      <div class="col-md-2" align="right">
-                        <a href="#addEmp" data-toggle="modal" type="button" name="add" class="btn btn-success">Add Charge</a>
-                      </div>
-                      <table id="empList" class="display table-bordered table-striped" style="width:100%">
-                        <thead>
-                          <tr>
-                            <th>Name</th>
-                            <th>Charge</th>
-                            <th>Collected On</th>
-                            <th></th>
-                          </tr>
-                        </thead>
-                        <tbody id="showCharge">
-
-                        </tbody>
-                      </table>
-
+                      <input type="text" hidden readonly id="int_id" value="<?php echo $sessint_id; ?>">
+                      <input type="text" hidden readonly id="branch_id" value="<?php echo $branch_id; ?>">
                       <script>
-                        empRecords = $('#empList').DataTable({
-                          bFilter: false
-                        });
+                        $(document).ready(function() {
+                          $('#charges').change(function() {
+                            var id = $(this).val();
+                            var int_id = $('#int_id').val();
+                            var branch_id = $('#branch_id').val();
+                            var main_p = $('#main_p').val();
+                            $.ajax({
+                              url: "load_data.php",
+                              method: "POST",
+                              data: {
+                                id: id,
+                                int_id: int_id,
+                                branch_id: branch_id,
+                                main_p: main_p
+                              },
+                              success: function(data) {
+                                $('#show_charges').html(data);
+                                document.getElementById("takeme").setAttribute("hidden", "");
+                                document.getElementById("damn_men").removeAttribute("hidden");
+                              }
+                            })
+                          });
+                        })
                       </script>
-                      <div class="modal fade" id="addEmp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                              <center>
-                                <h4 class="modal-title" id="myModalLabel">Add New</h4>
-                              </center>
+                      <div class="form-group">
+                        <?php
+                        $digits = 6;
+                        $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+                        $_SESSION["product_temp"] = $randms;
+                        $main_p = $_SESSION["product_temp"];
+                        ?>
+                      </div>
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <label>Charges:</label>
+                            <div id="damn_men" hidden>
                             </div>
-                            <div class="modal-body">
-                              <div class="container-fluid">
-                                <form method="POST">
-                                  <input type="text" hidden value="<?php echo $tempId; ?>" id="tempId">
-                                  <div class="form-group" <label for="name" class="control-label">Charge</label>
-                                    <input type="text" hidden value="<?php echo $tempId; ?>" id="main_p">
-                                    <select name="charge_id" class="form-control" id="charge_id">
-                                      <option value="">select an option</option>
-                                      <?php echo fill_charges($connection); ?>
-                                    </select>
-                                  </div>
-                                  <?php
-                                  // load user role data
-                                  function fill_charges($connection)
-                                  {
-                                    $sint_id = $_SESSION["int_id"];
-                                    $tempId = $_SESSION["product_temp"];
-                                    $org = "SELECT * FROM charge WHERE int_id = '$sint_id' AND is_active = '1'";
-                                    $res = mysqli_query($connection, $org);
-                                    $output = '';
-                                    while ($row = mysqli_fetch_array($res)) {
-                                      $output .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
-                                    }
-                                    return $output;
-                                  }
-                                  ?>
-                                  <input type="text" hidden id="int_id" value="<?php echo $sint_id ?>">
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-                                    <button type="submit" id="addCharge" name="add" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
-                                  </div>
-                                </form>
-                              </div>
+                            <div id="takeme">
+                              <input type="text" hidden value="<?php echo $main_p; ?>" id="main_p">
+                              <select name="charge_id" class="form-control" id="charges">
+                                <option value="">select an option</option>
+                                <?php echo fill_charges($connection); ?>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div id="show_charges">
                             </div>
                           </div>
                         </div>
-                        <script>
-                          $(document).ready(function() {
-                            $('#addCharge').on("click", function() {
-                              var id = $(this).val();
-                              var int_id = $('#int_id').val();
-                              var charge_id = $('#charge_id').val();
-                              var tempId = $('#tempId').val();
-                              $.ajax({
-                                url: "ajax_post/products/addCharge.php",
-                                method: "POST",
-                                data: {
-                                  // id: id,
-                                  charge_id: charge_id,
-                                  tempId: tempId
-                                },
-                                success: function(data) {
-                                  var output = data;
-                                  if (output = "Success") {
-                                    $.ajax({
-                                      url: "ajax_post/products/charge_table.php",
-                                      method: "POST",
-                                      data: {
-                                        int_id: int_id,
-                                        // end: end,
-                                        tempId: tempId
-                                      },
-                                      success: function(data) {
-                                        $('#showCharge').html(data);
-                                        alert("Charge Successfully added");
-                                      }
-                                    })
-                                  } else {
-                                    alert("Error adding Charge");
-                                  }
-                                }
-                              })
-                            });
-                          });
-                        </script>
                       </div>
+                      <?php
+                      // load user role data
+                      function fill_charges($connection)
+                      {
+                        $sint_id = $_SESSION["int_id"];
+                        $main_p  = $_SESSION["product_temp"];
+                        $org = "SELECT * FROM charge WHERE int_id = '$sint_id' && is_active = '1'";
+                        $res = mysqli_query($connection, $org);
+                        $output = '';
+                        while ($row = mysqli_fetch_array($res)) {
+                          $output .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
+                        }
+                        return $output;
+                      }
+                      ?>
+                      <script>
+                        $(document).ready(function() {
+                          $('#credit').on("change keyup paste click", function() {
+                            var id = $(this).val();
+                            $.ajax({
+                              url: "credit_check.php",
+                              method: "POST",
+                              data: {
+                                id: id
+                              },
+                              success: function(data) {
+                                $('#show_credit').html(data);
+                              }
+                            })
+                          });
+                        });
+                      </script>
                     </div>
                     <!-- Second Tab -->
                     <!-- Third Tab -->
@@ -657,44 +632,44 @@ $tempId = $_SESSION["product_temp"];
                           </div> -->
                           </div>
                           <!-- next -->
-
+                          
                         </div>
                         <div class="col-md-6">
-                          <h5 class="card-title">Expenses</h5>
-                          <div class="position-relative form-group">
-                            <?php
-                            function fill_exp($connection)
-                            {
-                              $sint_id = $_SESSION["int_id"];
-                              $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '5' ORDER BY name ASC";
-                              $res = mysqli_query($connection, $org);
-                              $output = '';
-                              while ($row = mysqli_fetch_array($res)) {
-                                $output .= '<option value = "' . $row["gl_code"] . '"> ' . $row["name"] . ' </option>';
+                            <h5 class="card-title">Expenses</h5>
+                            <div class="position-relative form-group">
+                              <?php
+                              function fill_exp($connection)
+                              {
+                                $sint_id = $_SESSION["int_id"];
+                                $org = "SELECT * FROM `acc_gl_account` WHERE int_id = '$sint_id' && classification_enum = '5' ORDER BY name ASC";
+                                $res = mysqli_query($connection, $org);
+                                $output = '';
+                                while ($row = mysqli_fetch_array($res)) {
+                                  $output .= '<option value = "' . $row["gl_code"] . '"> ' . $row["name"] . ' </option>';
+                                }
+                                return $output;
                               }
-                              return $output;
-                            }
-                            ?>
-                            <div class="form-group">
-                              <div class="col-md-8">
-                                <label for="charge" class="form-align ">Losses Written Off</label>
-                                <select class="form-control form-control-sm" name="exp_loss_written_off">
-                                  <option value="">--</option>
-                                  <?php echo fill_exp($connection) ?>
-                                </select>
+                              ?>
+                              <div class="form-group">
+                                <div class="col-md-8">
+                                  <label for="charge" class="form-align ">Losses Written Off</label>
+                                  <select class="form-control form-control-sm" name="exp_loss_written_off">
+                                    <option value="">--</option>
+                                    <?php echo fill_exp($connection) ?>
+                                  </select>
+                                </div>
                               </div>
-                            </div>
-                            <div class="form-group">
-                              <div class="col-md-8">
-                                <label for="charge" class="form-align ">Interest Written Off</label>
-                                <select class="form-control form-control-sm" name="exp_interest_written_off">
-                                  <option value="">--</option>
-                                  <?php echo fill_exp($connection) ?>
-                                </select>
+                              <div class="form-group">
+                                <div class="col-md-8">
+                                  <label for="charge" class="form-align ">Interest Written Off</label>
+                                  <select class="form-control form-control-sm" name="exp_interest_written_off">
+                                    <option value="">--</option>
+                                    <?php echo fill_exp($connection) ?>
+                                  </select>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
                       </div>
 
                     </div>

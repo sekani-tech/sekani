@@ -145,13 +145,18 @@ if (isset($_GET["view15"])) { ?>
                             </div>
 
                             <div class="table-responsive">
+<<<<<<< HEAD
                                 <table id="outstand" class="table table-striped table-bordered" style="width:100%">
+=======
+                                <table id="outstand" class="rtable display nowrap" style="width:100%">
+>>>>>>> Victor
                                     <thead class="text-primary">
                                         <?php
                                         $query = "SELECT * FROM loan WHERE int_id = '$sessint_id' AND (total_outstanding_derived <> 0)";
                                         $result = mysqli_query($connection, $query);
                                         ?>
                                         <th>
+<<<<<<< HEAD
                                             <small>Client Name</small> 
                                         </th>
                                         <th>
@@ -168,6 +173,24 @@ if (isset($_GET["view15"])) { ?>
                                         </th>
                                         <th>
                                         <small>Outstanding Balances</small>
+=======
+                                            Client Name
+                                        </th>
+                                        <th>
+                                            Account No
+                                        </th>
+                                        <th>
+                                            Principal Amount
+                                        </th>
+                                        <th>
+                                            Disbursement Date
+                                        </th>
+                                        <th>
+                                            Maturity Date
+                                        </th>
+                                        <th>
+                                            Outstanding Balances
+>>>>>>> Victor
                                         </th>
                                         <th>
                                             
@@ -775,7 +798,7 @@ else if (isset($_GET["view19"])) {
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="ple" class="table table-striped table-bordered" style="width:100%">
+                                <table id="ple" class="rtable display nowrap" style="width:100%">
                                     <thead class="text-primary">
                                         <?php
                                         $query = "SELECT * FROM loan_repayment_schedule WHERE int_id = '$sessint_id' AND duedate = '$main_date' AND completed_derived = '0'";
@@ -1174,37 +1197,37 @@ else if (isset($_GET["view19"])) {
                             <div class="row">
                                 <div class="col-12">
                                     <div class="table-responsive">
-                                        <table id="areas" class="table table-striped table-bordered" style="width:100%">
+                                        <table id="areas" class="rtable display nowrap" style="width:100%">
                                             <thead class="text-primary">
                                                 <?php
                                                 $query = "SELECT * FROM loan_arrear WHERE int_id = '$sessint_id' AND installment >= '1'";
                                                 $result = mysqli_query($connection, $query);
                                                 ?>
                                                 <th>
-                                                  <small>Client Name</small>  
+                                                    Client Name
                                                 </th>
                                                 <th>
-                                                <small>Principal Due</small> 
+                                                    Principal Due
                                                 </th>
                                                 <th>
-                                                <small>Interest Due</small> 
+                                                    Interest Due
                                                 </th>
                                                 <th>
-                                                <small>Days in Arrears</small> 
+                                                    Days in Arrears
                                                 </th>
                                                 <th>
-                                                <small>Loan Term</small> 
+                                                    Loan Term
                                                 </th>
                                                 <th>
-                                                <small>Maturity Date</small>   
+                                                    Maturity Date
                                                     <!-- the due date for a customer to make last repayment of a loan based on disbursement date and loan term values -->
                                                 </th>
                                                 <th>
-                                                <small>Last Repayment Date</small>  
+                                                    Last Repayment Date
                                                     <!-- the date when a customer made his last repayment -->
                                                 </th>
                                                 <th>
-                                                <small>Amount in Arrears</small>   
+                                                    Amount in Arrears
                                                 </th>
                                             </thead>
                                             <tbody>

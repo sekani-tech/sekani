@@ -24,12 +24,15 @@ $incomeGlConditions = [
     'gl_code' => $incomeGl
 ];
 $findIncomeGl = selectOne("acc_gl_account", $incomeGlConditions);
+<<<<<<< HEAD
 if($findIncomeGl['manual_journal_entries_allowed'] != 1){
     $_SESSION["feedback"] = "Can't post in this GL, Manual entry not allowed!!";
     $_SESSION["Lack_of_intfund_$randms"] = "10";
     echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
     exit();
 }
+=======
+>>>>>>> Victor
 $currentIncomeBalance = $findIncomeGl['organization_running_balance_derived'];
 $incomeParentId = $findIncomeGl['parent_id'];
 $incomeGlId = $findIncomeGl['id'];
@@ -61,6 +64,7 @@ if ($findIncomeGl) {
 
         $storeIncomeTransaction = insert('gl_account_transaction', $incomeTransactionDetails);
         if ($storeIncomeTransaction) {
+<<<<<<< HEAD
             $_SESSION["feedback"] = "Transaction Successful!";
             $_SESSION["Lack_of_intfund_$randms"] = "10";
             echo header("Location: ../../mfi/gl_postings.php?message0=$randms");
@@ -82,4 +86,23 @@ if ($findIncomeGl) {
     $_SESSION["feedback"] = "Can't find GL or GL does not exist!";
     $_SESSION["Lack_of_intfund_$randms"] = "10";
     echo header("Location: ../../mfi/gl_postings.php?message1=$randms");
+=======
+            $_SESSION["Lack_of_intfund_$randms"] = "Transaction Successful!";
+            echo header("Location: ../../mfi/gl_postings.php?other_income=$randms");
+        }else{
+            // income transaction not stored for some weird reason
+        $_SESSION["Lack_of_intfund_$randms"] = "Error storing Transaction record income GL!";
+        echo header("Location: ../../mfi/gl_postings.php?other_income2=$randms");
+        }
+    } else {
+            // income transaction not stored for some weird reason
+            $_SESSION["Lack_of_intfund_$randms"] = "Error Funding GL!";
+            echo header("Location: ../../mfi/gl_postings.php?other_income3=$randms");
+    }
+} else {
+    // can't find gl
+        // income transaction not stored for some weird reason
+        $_SESSION["Lack_of_intfund_$randms"] = "Can't find GL or GL does not exist!";
+        echo header("Location: ../../mfi/gl_postings.php?other_income4=$randms");
+>>>>>>> Victor
 }

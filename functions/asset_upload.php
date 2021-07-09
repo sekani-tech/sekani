@@ -9,7 +9,10 @@ echo $branchId = $_POST['branch'];
 $user_id = $_SESSION['user_id'];
 $assname = $_POST['assname'];
 $asstype = $_POST['asstype'];
+<<<<<<< HEAD
 $expense_gl = $_POST['expense_gl'];
+=======
+>>>>>>> Victor
 
 $org = "SELECT * FROM asset_type WHERE int_id = '$institutionId' AND id = '$asstype'";
 $kfdlf = mysqli_query($connection, $org);
@@ -53,9 +56,15 @@ $assetGlId = $findAssetGl['id'];
 $newBalance = $currentAssetBalance + $amount;
 
 $query = "INSERT INTO `assets` (`int_id`, `branch_id`, `asset_name`, `asset_type_id`, `type`, `qty`,
+<<<<<<< HEAD
  `unit_price`, `asset_no`, `location`,  `amount`, `date`, `depreciation_value`, `appuser_id`, `gl_code`, `expense_gl`) 
  VALUES ('{$institutionId}', '{$branchId}', '{$assname}', '{$asstype}', '{$asset_name}', '{$qty}', '{$price}', '{$ass_no}',
   '{$location}', '{$amount}', '{$purdate}', '{$depre}', '{$user_id}', '{$glCode}', '{$expense_gl}')";
+=======
+ `unit_price`, `asset_no`, `location`,  `amount`, `date`, `depreciation_value`, `appuser_id`, `gl_code`) 
+ VALUES ('{$institutionId}', '{$branchId}', '{$assname}', '{$asstype}', '{$asset_name}', '{$qty}', '{$price}', '{$ass_no}',
+  '{$location}', '{$amount}', '{$purdate}', '{$depre}', '{$user_id}', '{$glCode}')";
+>>>>>>> Victor
 $result = mysqli_query($connection, $query);
 
 if (!$result) {

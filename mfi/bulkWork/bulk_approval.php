@@ -153,6 +153,10 @@ if (isset($_POST['submit'])) {
                             $update_instAccountCon = [
                                 'submittedon_userid' => $transactionCacheStaff_id,
                                 'account_balance_derived' => $new_inst_acct_bal,
+<<<<<<< HEAD
+=======
+                                'teller_id' => $transactionCacheTellerId,
+>>>>>>> Victor
                                 'total_deposits_derived' => $new_inst_total_bal_der,
                                 'last_activity_date' => date("Y-m-d H:i:s"),
                                 'chooseDate' => $transactionCacheDate
@@ -316,6 +320,10 @@ if (isset($_POST['submit'])) {
                             $update_instAccountCon = [
                                 'submittedon_userid' => $transactionCacheStaff_id,
                                 'account_balance_derived' => $new_inst_acct_bal,
+<<<<<<< HEAD
+=======
+                                'teller_id' => $transactionCacheTellerId,
+>>>>>>> Victor
                                 'total_deposits_derived' => $new_inst_total_bal_der,
                                 'last_activity_date' => date("Y-m-d H:i:s"),
                                 'chooseDate' => $transactionCacheDate
@@ -554,6 +562,10 @@ if (isset($_POST['submit'])) {
                             $update_instAccountCon = [
                                 'submittedon_userid' => $transactionCacheStaff_id,
                                 'account_balance_derived' => $newInstAcctBal,
+<<<<<<< HEAD
+=======
+                                'teller_id' => $transactionCacheTellerId,
+>>>>>>> Victor
                                 'total_withdrawals_derived' => $newInstTotalBalDer,
                                 'last_activity_date' => date("Y-m-d H:i:s"),
                                 'chooseDate' => $transactionCacheDate
@@ -750,6 +762,10 @@ if (isset($_POST['submit'])) {
                             $update_instAccountCon = [
                                 'submittedon_userid' => $transactionCacheStaff_id,
                                 'account_balance_derived' => $newInstAcctBal,
+<<<<<<< HEAD
+=======
+                                'teller_id' => $transactionCacheTellerId,
+>>>>>>> Victor
                                 'total_withdrawals_derived' => $newInstTotalBalDer,
                                 'last_activity_date' => date("Y-m-d H:i:s"),
                                 'chooseDate' => $transactionCacheDate

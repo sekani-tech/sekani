@@ -98,7 +98,10 @@ if ($repay_start == NULL || $repay_start == "" || $disbursement_date == "" || $l
                     /**
                      *  Upload Guarantor
                      */
+<<<<<<< HEAD
                     echo 1;
+=======
+>>>>>>> Victor
                     $gau_firstname = $_POST['gau_first_name'];
                     $gau_lastname = $_POST['gau_last_name'];
                     $gau_phone = $_POST['gau_phone'];
@@ -107,14 +110,20 @@ if ($repay_start == NULL || $repay_start == "" || $disbursement_date == "" || $l
                     $gau_office_address = $_POST['gau_office_address'];
                     $gau_email = $_POST['gau_email'];
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> Victor
                     $guarantor_upload = mysqli_query($connection, "INSERT INTO loan_gaurantor (int_id, loan_id, client_id, first_name, last_name, 
                                         phone, phone2, home_address, office_address, email) 
                                         VALUES ( '{$sessint_id}', '{$tempLoanId}', '{$client_id}', '{$gau_firstname}', '{$gau_lastname}', 
                                         '{$gau_phone}', '{$gau_phone2}', '{$gau_home_address}', '{$gau_office_address}', '{$gau_email}')");
 
                     if($guarantor_upload) {
+<<<<<<< HEAD
                     echo 2;
+=======
+>>>>>>> Victor
                         // Get collateral id
                         $get_col_id = mysqli_query($connection, "SELECT id FROM collateral WHERE int_id = '$sessint_id' AND loan_id = '$tempLoanId'");
                         $col_id = mysqli_fetch_array($get_col_id)['id'];
@@ -139,9 +148,14 @@ if ($repay_start == NULL || $repay_start == "" || $disbursement_date == "" || $l
                         $res = mysqli_query($connection, $query);
         
                         if ($res) {
+<<<<<<< HEAD
                             echo 3;  
                             $colkt = mysqli_query($connection, "SELECT * FROM loan_disbursement_cache WHERE int_id = '$sessint_id' AND client_id = '$client_id'");
 
+=======
+        
+                            $colkt = mysqli_query($connection, "SELECT * FROM loan_disbursement_cache WHERE int_id = '$sessint_id' AND client_id = '$client_id'");
+>>>>>>> Victor
         
                             if (count([$colkt]) == 1) {
                                 $marital_stat = $_POST["marital_status"];

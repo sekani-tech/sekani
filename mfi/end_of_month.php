@@ -4,6 +4,7 @@ $page_title = "End Of Month";
 $destination = "";
 include("header.php");
 ?>
+<<<<<<< HEAD
 <?php
     $exp_error = "";
     if(isset($_GET['message'])) {
@@ -59,6 +60,8 @@ include("header.php");
         $_SESSION['end_of_month_$key'] = 0;
             }
 ?>
+=======
+>>>>>>> Victor
 
 <script src="../assets/js/bootstrap4-toggle.min.js"></script>
 <link href="../assets/css/bootstrap4-toggle.min.css" rel="stylesheet">
@@ -79,7 +82,11 @@ include("header.php");
                                 <form action="../functions/endofdayaccount/endofmonth.php" method="POST">
                                     <div class="form-group">
                                         <label>Select Date<span style="color: red;">*</span>:</label>
+<<<<<<< HEAD
                                         <input type="date" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" name="closedDate" id="" class="form-control" required>
+=======
+                                        <input type="date" name="dateclosed" id="" class="form-control" required>
+>>>>>>> Victor
                                     </div>
                             </div>
 
@@ -91,6 +98,7 @@ include("header.php");
                                 </div>
 
                                 </form>
+<<<<<<< HEAD
                                 
                             </div>
 
@@ -99,13 +107,22 @@ include("header.php");
                         
                      
 
+=======
+                            </div>
+
+                        </div>
+>>>>>>> Victor
                     </div>
                 </div>
             </div>
         </div>
 
 
+<<<<<<< HEAD
         <div class="row" id = "toShow">
+=======
+        <div class="row">
+>>>>>>> Victor
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
@@ -115,6 +132,7 @@ include("header.php");
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
+<<<<<<< HEAD
                                 <form>
                                     <div class="row">
                                         <div class="form-group col-md-4">
@@ -147,11 +165,29 @@ include("header.php");
                                                     }
                                                 }
                                             ?>
+=======
+                                <form action="">
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label for="">Start Date</label>
+                                            <input type="date" name="" id="" class="form-control">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="">End Date</label>
+                                            <input type="date" name="" id="" class="form-control">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="">Branch</label>
+                                            <select name="" id="" class="form-control">
+
+
+>>>>>>> Victor
                                             </select>
                                         </div>
                                     </div>
 
 
+<<<<<<< HEAD
                                     <button id = "reset" type="reset" class="btn btn-danger">Reset</button>
                                     <button id="runperform" name = "generateReport" type="submit" class="btn btn-primary">Generate Report</button>
                                 </form>
@@ -161,6 +197,17 @@ include("header.php");
                             <div class="col-md-12">
 
                                 <table id="eodr" class="display" style="width:100%">
+=======
+                                    <button type="reset" class="btn btn-danger">Reset</button>
+                                    <span id="runperform" type="submit" class="btn btn-primary">Generate Report</span>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+
+                                <table id="eomr" class="display" style="width:100%">
+>>>>>>> Victor
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -168,6 +215,7 @@ include("header.php");
                                             <th>Closed By</th>
                                             <th>Month</th>
                                             <th>Year</th>
+<<<<<<< HEAD
                                             <!-- <th>Action</th> -->
                                         </tr>
 
@@ -176,16 +224,42 @@ include("header.php");
                                         <!-- <tr>
                                             <input type="hidden" id="toggleID" value="">
                                             <td></td>
+=======
+                                            <th>Action</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+
+                                        <tr>
+                                            <td> </td>
+>>>>>>> Victor
                                             <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
+<<<<<<< HEAD
                                         </tr> -->
                                     </tbody>
 
 
                                 </table>
 
+=======
+                                            <td><input type="checkbox" checked data-toggle="toggle" data-on="Open" data-off="Closed" data-onstyle="success" data-offstyle="danger">
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#eomr').DataTable();
+                                    });
+                                </script>
+>>>>>>> Victor
 
                             </div>
                         </div>
@@ -199,6 +273,7 @@ include("header.php");
     </div>
 
 </div>
+<<<<<<< HEAD
 <script>
     $(document).ready(function() {
         $('#eodr').DataTable();
@@ -264,6 +339,8 @@ include("header.php");
         })
     });
     </script>
+=======
+>>>>>>> Victor
 
 
 <?php

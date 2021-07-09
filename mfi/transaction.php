@@ -122,7 +122,7 @@ include("header.php");
               Disburse Loans to registered Groups
             </p>
             <!-- <a href="group_loan.php" class="btn btn-white btn-round">View</a> -->
-            <a href="group_loan.php" class="btn btn-white btn-round">View</a>
+            <a href="#" class="btn btn-white btn-round">View</a>
           </div>
         </div>
       </div>

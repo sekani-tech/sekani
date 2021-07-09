@@ -8,12 +8,20 @@ $int_id = $_SESSION['int_id'];
 <?php
 if(isset($_POST['name'])){
 $digits = 6;
+<<<<<<< HEAD
 // $id = $_POST['id'];
+=======
+$id = $_POST['id'];
+>>>>>>> Victor
 $randms = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 $sessint_id = $_SESSION["int_id"];
 $ch_id = $_POST['name'];
 $naming = $_POST['name'];
+<<<<<<< HEAD
 // $fio = $_POST['fio'];
+=======
+$fio = $_POST['fio'];
+>>>>>>> Victor
 $charge_type = $_POST['charge_type'];
 $amount = $_POST['amount'];
 $day = $_POST['days'];
@@ -38,7 +46,11 @@ $name = $fi['name'];
 
 // credit checks and accounting rules
 // insertion query for product
+<<<<<<< HEAD
 // if($fio == '1'){
+=======
+if($fio == '1'){
+>>>>>>> Victor
     $query = "INSERT INTO `auto_charge` (`int_id`, `charge_id`, `name`, `currency_code`, `charge_type`, `amount`, `fee_on_day`, `charge_cal`,
  `is_active`, `allow_override`, `gl_code`) VALUES ('$int_id', '$ch_id', '$name', 'NGN', '$charge_type', '$amount', '$day', '$charge_payment', '$is_active', '$allow_over', '$income_gl')";
 
@@ -61,10 +73,17 @@ $res = mysqli_query($connection, $query);
           echo header ("Location: ../mfi/products_config.php?message2=$randms");
             // echo header("location: ../mfi/client.php");
         }
+<<<<<<< HEAD
 // }
 // else if($fio == '2'){
     $query = "UPDATE `auto_charge` SET  `name` = '$naming', `charge_type` = '$charge_type', `amount` = '$amount', `fee_on_day` = '$day', `charge_cal` = '$charge_payment',
  `is_active` = '$is_active', `allow_override` = '$allow_over', `gl_code` = '$income_gl' WHERE int_id = '$int_id'";
+=======
+}
+else if($fio == '2'){
+    $query = "UPDATE `auto_charge` SET  `name` = '$naming', `charge_type` = '$charge_type', `amount` = '$amount', `fee_on_day` = '$day', `charge_cal` = '$charge_payment',
+ `is_active` = '$is_active', `allow_override` = '$allow_over', `gl_code` = '$income_gl' WHERE int_id = '$int_id' AND id = '$id'";
+>>>>>>> Victor
 
 $res = mysqli_query($connection, $query);
 
@@ -85,7 +104,11 @@ $res = mysqli_query($connection, $query);
           echo header ("Location: ../mfi/products_config.php?message2=$randms");
             // echo header("location: ../mfi/client.php");
         }
+<<<<<<< HEAD
 // }
+=======
+}
+>>>>>>> Victor
 
 }
 ?>

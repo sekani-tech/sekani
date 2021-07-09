@@ -78,7 +78,11 @@ if (count([$getacct]) == 1) {
   $pint = date('Y-m-d H:i:s');
   $gends = date('Y-m-d h:i:sa');
   // we will call the institution account
+<<<<<<< HEAD
   $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id' OR submittedon_userid = '$staff_id'");
+=======
+  $damn = mysqli_query($connection, "SELECT * FROM institution_account WHERE int_id = '$sessint_id' && teller_id = '$staff_id'");
+>>>>>>> Victor
   if (mysqli_num_rows($damn) > 0) {
     $x = mysqli_fetch_array($damn);
     $int_acct_bal = $x['account_balance_derived'];

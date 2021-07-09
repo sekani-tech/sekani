@@ -3,6 +3,7 @@
 $page_title = "GL Transactions";
 $destination = "transaction.php";
 include("header.php");
+<<<<<<< HEAD
 // include("ajaxcall.php");
 $exp_error = "";
 $message = $_SESSION['feedback'];
@@ -31,10 +32,34 @@ if (isset($_GET["message0"])) {
       });
       </script>
       ';
+=======
+include("ajaxcall.php");
+?>
+<?php
+$exp_error = "";
+if (isset($_GET["message"])) {
+    $key = $_GET["message"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "success",
+            title: "Success",
+            text: "Transaction Successful",
+            showConfirmButton: True,
+            timer: 7000
+        })
+    });
+    </script>
+    ';
+>>>>>>> Victor
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
 } else if (isset($_GET["message1"])) {
     $key = $_GET["message1"];
+<<<<<<< HEAD
     $tt = 0;
     if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
         echo '<script type="text/javascript">
@@ -53,6 +78,429 @@ if (isset($_GET["message0"])) {
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
 }
+=======
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Error",
+          text: "Transaction Successful - Error storing record for expense GL! Contact Support",
+          showConfirmButton: true,
+          timer: 7000
+      })
+  });
+  </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["message2"])) {
+    $key = $_GET["message2"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "Error",
+            text: "Transaction Successful - Error storing record for Income GL! Contact Support",
+            showConfirmButton: True,
+            timer: 7000
+        })
+    });
+    </script>
+    ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["message3"])) {
+    $key = $_GET["messag3"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "Error",
+          title: "Expense Error",
+          text: "Insufficient Fund in chossen Income GL",
+          showConfirmButton: true,
+          timer: 7000
+      })
+  });
+  </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["message4"])) {
+    $key = $_GET["message4"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "NOT AUTHURIZED",
+          text: "Kindly provide all Neccessary Information",
+          showConfirmButton: true,
+          timer: 7000
+      })
+  });
+  </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["message3p"])) {
+    $key = $_GET["message3p"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "success",
+            title: "Withdrawal",
+            text: "Transaction Successful, Awaiting Approval",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["message4"])) {
+    $key = $_GET["message4"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "Withdrawal Error",
+            text: "Transaction Error",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["message5"])) {
+    $key = $_GET["message5"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "Fund Error",
+            text: "Insufficient Fund in the Till",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["message7"])) {
+    $key = $_GET["message7"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+    $(document).ready(function(){
+        swal({
+            type: "error",
+            title: "Account Number Error",
+            text: "Account Not Found",
+            showConfirmButton: false,
+            timer: 2000
+        })
+    });
+    </script>
+    ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["messagex5"])) {
+    $key = $_GET["messagex5"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Insufficient Fund",
+          text: "Client Has Insufficient Fund",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["message8"])) {
+    $key = $_GET["message8"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Pick",
+          text: "Select Transaction Type",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["loan1"])) {
+    $key = $_GET["loan1"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "EXPENSE POSTING",
+          text: "Expense Posting Successful",
+          showConfirmButton: false,
+          timer: 2000
+      })
+  });
+  </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["income1"])) {
+    $key = $_GET["income1"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "success",
+          title: "INCOME POSTING",
+          text: "Income Transaction Successful",
+          showConfirmButton: true,
+          timer: 7000
+      })
+  });
+  </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["income2"])) {
+    $key = $_GET["income2"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "INCOME RECORD ERROR",
+          text: "Transaction successful but GL record not saved",
+          showConfirmButton: true,
+          timer: 5000
+      })
+  });
+  </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["income3"])) {
+    $key = $_GET["income3"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Loan",
+          text: "Sorry could not Find Chosen GL",
+          showConfirmButton: true,
+          timer: 7000
+      })
+  });
+  </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["income4"])) {
+    $key = $_GET["income4"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "Error",
+                text: "There was an error Storing Transaction on behalf of customer Kindly contact Support",
+                showConfirmButton: true,
+                timer: 7000
+            })
+        });
+    </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["income5"])) {
+    $key = $_GET["income5"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "Error",
+                text: "Could not deduct money from customer",
+                showConfirmButton: true,
+                timer: 7000
+            })
+        });
+    </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["income6"])) {
+    $key = $_GET["income6"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "Error",
+                text: "Insufficient Balance in Customers Account",
+                showConfirmButton: true,
+                timer: 7000
+            })
+        });
+    </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["income7"])) {
+    $key = $_GET["income7"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "error",
+                title: "Error",
+                text: "Provide the Necessary Information!",
+                showConfirmButton: true,
+                timer: 7000
+            })
+        });
+    </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["other_income"])) {
+    $key = $_GET["other_income"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+        $(document).ready(function(){
+            swal({
+                type: "success",
+                title: "Transaction Successul",
+                text: "Income Posted Successfilly",
+                showConfirmButton: true,
+                timer: 7000
+            })
+        });
+  </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["other_income2"])) {
+    $key = $_GET["other_income2"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Account Funded Transaction Error",
+          text: "Error storing Transaction record income GL",
+          showConfirmButton: true,
+          timer: 7000
+      })
+  });
+  </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["other_income3"])) {
+    $key = $_GET["other_income3"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "Transaction Error",
+          text: "Error Funding GL!",
+          showConfirmButton: true,
+          timer: 7000
+      })
+  });
+  </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else if (isset($_GET["other_income4"])) {
+    $key = $_GET["other_income4"];
+    // $out = $_SESSION["lack_of_intfund_$key"];
+    $tt = 0;
+    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
+        echo '<script type="text/javascript">
+  $(document).ready(function(){
+      swal({
+          type: "error",
+          title: "GL Error",
+          text: "GL not Found or GL does not exist!",
+          showConfirmButton: false,
+          timer: 3000
+      })
+  });
+  </script>
+  ';
+        $_SESSION["lack_of_intfund_$key"] = 0;
+    }
+} else {
+    echo "";
+}
+?>
+<?php
+>>>>>>> Victor
 
 if ($trans_post == 1 || $trans_post == "1") {
 ?>
@@ -272,6 +720,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                     </div>
                 </div>
                 <!-- /income posting ends here -->
+<<<<<<< HEAD
                 <!-- gl to client -->
                 <div class="col-md-12">
                     <div class="card">
@@ -512,6 +961,8 @@ if ($trans_post == 1 || $trans_post == "1") {
                     </div>
                 </div>
                 <!-- gl to client ends here -->
+=======
+>>>>>>> Victor
                 <!-- Income To Liabilities/Expense -->
                 <div class="col-md-12">
                     <div class="card">

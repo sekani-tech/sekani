@@ -53,7 +53,11 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
             <div class="row">
                 <div class="col-12">
                     <div class="table-resposive">
+<<<<<<< HEAD
                         <table id="disbursedloan" class="table table-striped table-bordered" style="width:100%">
+=======
+                        <table id="disbursedloan" class="display" style="width:100%">
+>>>>>>> Victor
                             <thead>
                                 <tr>
                                     <th><small>Client Name</small></th>

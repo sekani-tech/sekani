@@ -107,12 +107,20 @@ if (isset($_GET['approve'])) {
     $receiverDepositBalance = $receiverDepositBalance + $amount;
     // find senders' and  recevivers' name
     // create description and pull data for sms notfication
+<<<<<<< HEAD
     $findSendersName = mysqli_query($connection, "SELECT * FROM client WHERE id = '$senderclientId'");
+=======
+    $findSendersName = mysqli_query($connection, "SELECT display_name FROM client WHERE id = '$senderclientId'");
+>>>>>>> Victor
     $sender = mysqli_fetch_array($findSendersName);
     $fromName = $sender['display_name'];
     $fromSMSstatus = $sender['SMS_ACTIVE'];
     $fromPhoneNo = $sender['mobile_no'];
+<<<<<<< HEAD
     $findReceiversName = mysqli_query($connection, "SELECT * FROM client WHERE id = '$receiverclientId'");
+=======
+    $findReceiversName = mysqli_query($connection, "SELECT display_name FROM client WHERE id = '$receiverclientId'");
+>>>>>>> Victor
     $receiver = mysqli_fetch_array($findReceiversName);
     $toName = $receiver['display_name'];
     $toSMSstatus = $receiver['SMS_ACTIVE'];
