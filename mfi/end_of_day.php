@@ -2,25 +2,6 @@
 $page_title = "End Of Day";
 $destination = "";
 include("header.php");
-<<<<<<< HEAD
-
-if(isset($_GET['message1'])) {
-    $key = $_GET['message1'];
-    $tt = 0;
-    // $out = $_SESSION['end_of_month_$key'];
-    echo '<script type="text/javascript">
-            $(document).ready(function(){
-                swal({
-                    type: "error",
-                    title: "Error",
-                    text: "'.$_SESSION['feedback'].'",
-                    showConfirmButton: true,
-                    timer: 7000
-                })
-            });
-            </script>
-    ';
-=======
 if (isset($_GET["response"])) {
 $response = $_GET['response'];
  if ($response == 'success'){
@@ -67,7 +48,6 @@ $response = $_GET['response'];
       ';
  }
 
->>>>>>> Victor
 }
 ?>
 <script src="../assets/js/bootstrap4-toggle.min.js"></script>
@@ -87,16 +67,6 @@ $response = $_GET['response'];
 
 
                             <div class="col-md-6">
-<<<<<<< HEAD
-                                <form action="" method="POST">
-                                    <div class="form-group">
-                                        <label>Select Date<span style="color: red;">*</span>:</label>
-                                        <input type="date" name="dateclosed" id="" class="form-control" required>
-                                    </div>
-                            </div>
-
-
-=======
                                 <form action="../functions/endofdayaccount/end_of_day.php" method="POST">
                                     <div class="form-group">
                                         <label>Select Date<span style="color: red;">*</span>:</label>
@@ -131,7 +101,6 @@ $(function() {
      });
 });
     </script>
->>>>>>> Victor
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label><span style="color: red;"></span></label><br>
@@ -158,23 +127,6 @@ $(function() {
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-<<<<<<< HEAD
-                                <form action="">
-                                    <div class="row">
-                                        <div class="form-group col-md-4">
-                                            <label for="">Start Date</label>
-                                            <input type="date" name="" id="" class="form-control">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="">End Date</label>
-                                            <input type="date" name="" id="" class="form-control">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="">Branch</label>
-                                            <select name="" id="" class="form-control">
-
-
-=======
                                 <form  method="POST">
                                     <div class="row">
                                         <div class="form-group col-md-4">
@@ -202,7 +154,6 @@ $(function() {
                                             <label for="">Branch</label>
                                             <select name="" id="branch" class="form-control">
                                                 <?php echo fill_branch($connection); ?>
->>>>>>> Victor
                                             </select>
                                         </div>
                                     </div>
@@ -213,38 +164,6 @@ $(function() {
                                 </form>
                             </div>
                         </div>
-<<<<<<< HEAD
-
-                        <div class="row mt-4">
-                            <div class="col-md-12">
-
-                                <table id="eodr" class="display" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Date</th>
-                                            <th>Closed By</th>
-                                            <th>Action</th>
-                                        </tr>
-
-                                    </thead>
-                                    <tbody>
-
-                                        <tr>
-                                            <input type="hidden" id="toggleID" value="">
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-
-                                            <td><input type="checkbox" checked data-toggle="toggle" data-on="Open" data-off="Closed" data-onstyle="success" data-offstyle="danger"></td>
-                                        </tr>
-                                    </tbody>
-
-
-                                </table>
-
-
-=======
                         <script>
                         $(document).ready(function() {
                             $('#runperform').on("click", function() {
@@ -281,7 +200,6 @@ $(function() {
                                             
                                           </tbody>
                                 </table>
->>>>>>> Victor
                             </div>
                         </div>
 
@@ -295,17 +213,10 @@ $(function() {
 
 </div>
 <script>
-<<<<<<< HEAD
-                                    $(document).ready(function() {
-                                        $('#eodr').DataTable();
-                                    });
-                                </script>
-=======
     $(document).ready(function() {
     $('#eodr').DataTable();
     });
 </script>
->>>>>>> Victor
 
 <?php
 include("footer.php");

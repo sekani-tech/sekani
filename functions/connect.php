@@ -1,10 +1,4 @@
 <?php
-<<<<<<< HEAD
-
-use Mpdf\Tag\P;
-
-=======
->>>>>>> Victor
 include "DbModel/db.php";
 
 //session_start();
@@ -31,22 +25,14 @@ function ddA($value)
 function executeQuery($sql, $data = [])
 {
     global $connection;
-<<<<<<< HEAD
-    if ($stmt = $connection->prepare($sql)) {
-=======
     if($stmt = $connection->prepare($sql)){
->>>>>>> Victor
         if (!empty($data)) {
             $values = array_values($data);
             $types = str_repeat('s', count($values));
             $stmt->bind_param($types, ...$values);
         }
         $stmt->execute();
-<<<<<<< HEAD
-    } else {
-=======
     }else{
->>>>>>> Victor
         $stmt = var_dump($connection->error);
     }
     return $stmt;
@@ -54,16 +40,6 @@ function executeQuery($sql, $data = [])
 function executeQuery2($sql, $data = [])
 {
     global $connection;
-<<<<<<< HEAD
-    if ($stmt = $connection->prepare($sql)) {
-        if (!empty($data)) {
-            $values = array_values($data);
-            $types = str_repeat('s', count($values) + 1);
-            $stmt->bind_param($types, ...$values);
-        }
-        $stmt->execute();
-    } else {
-=======
     if($stmt = $connection->prepare($sql)){
         if (!empty($data)) {
             $values = array_values($data);
@@ -72,7 +48,6 @@ function executeQuery2($sql, $data = [])
         }
         $stmt->execute();
     }else{
->>>>>>> Victor
         $stmt = var_dump($connection->error);
     }
     return $stmt;
@@ -165,42 +140,16 @@ function selectOne($table, $conditions)
     $stmt = executeQuery($sql, $conditions);
     return $stmt->get_result()->fetch_assoc();
 }
-<<<<<<< HEAD
-=======
 /**
  * 
  * 
  
->>>>>>> Victor
 
 /**
  * @param $table
  * @param $conditions
  * @return array|null
  */
-<<<<<<< HEAD
-function selectOneWithOrder($table, $conditions, $orderCondition, $orderType, $limitNumber)
-{
-    $orderType = strtoupper($orderType);
-    $table = strtolower($table);
-    global $connection;
-    $sql = "SELECT * FROM $table";
-
-    $i = 0;
-    foreach ($conditions as $key => $value) {
-        if ($i === 0) {
-            $sql = $sql . " WHERE $key=?";
-        } else {
-            $sql = $sql . " AND $key=?";
-        }
-        $i++;
-    }
-    $sql = $sql . " ORDER BY $orderCondition $orderType";
-    $stmt = executeQuery($sql, $conditions);
-    return $stmt->get_result()->fetch_assoc();
-}
-
-=======
 function selectOneOrderByDescLimit($table, $column, $order_data)
 {
     global $connection;
@@ -226,7 +175,6 @@ function selectOneByIntID($table, $column, $search_parameter)
 
 
 
->>>>>>> Victor
 
 /**
  * @param $table
@@ -300,11 +248,8 @@ function selectSpecificData($table, $pickConditions, $conditions = [])
 }
 
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> Victor
 /**
  * @param $table
  * @param $pickConditions
@@ -462,11 +407,7 @@ function searchClient($table1, $int_id, $branch_id, $term)
             WHERE c.int_id=?
             AND c.branch_id=? AND (c.firstname LIKE ? OR c.lastname LIKE ? OR c.display_name LIKE ?)";
 
-<<<<<<< HEAD
-    //    dd($sql);
-=======
 //    dd($sql);
->>>>>>> Victor
     $stmt = executeQuery($sql, [
         'int_id' => $int_id,
         'branch_id' => $branch_id,
@@ -491,11 +432,7 @@ function searchGroup($table1, $int_id, $term)
             FROM $table1 AS g 
             WHERE g.int_id=? AND g.g_name LIKE ?";
 
-<<<<<<< HEAD
-    //    dd($sql);
-=======
 //    dd($sql);
->>>>>>> Victor
     $stmt = executeQuery($sql, [
         'int_id' => $int_id,
         'g_name' => $match
@@ -507,11 +444,6 @@ function searchGroup($table1, $int_id, $term)
 // from an associative array and completely SQL-injection safe
 
 function insert($table, $record) {
-<<<<<<< HEAD
-
-
-=======
->>>>>>> Victor
     global $connection;
     $cols = array();
     $vals = array();
@@ -525,65 +457,21 @@ function insert($table, $record) {
 
 // date functions to find individual components of date 
 // and add or subtract from date
-<<<<<<< HEAD
-function getYear($date)
-{
-=======
 function getYear($date){
->>>>>>> Victor
     $date = DateTime::createFromFormat("Y-m-d", $date);
     return $date->format("Y");
 }
 
-<<<<<<< HEAD
-function getMonth($date)
-{
-=======
 function getMonth($date){
->>>>>>> Victor
     $date = DateTime::createFromFormat("Y-m-d", $date);
     return $date->format("m");
 }
 
-<<<<<<< HEAD
-function getDay($date)
-{
-=======
 function getDay($date){
->>>>>>> Victor
     $date = DateTime::createFromFormat("Y-m-d", $date);
     return $date->format("d");
 }
 
-<<<<<<< HEAD
-function addYear($date, $period)
-{
-    $valueDate = date("Y-m-d", strtotime($date . "+$period year"));
-    return $valueDate;
-}
-
-function addMonth($date, $period)
-{
-    $valueDate = date("Y-m-d", strtotime($date . "+$period month"));
-    return $valueDate;
-}
-
-function addWeek($date, $period)
-{
-    $valueDate = date("Y-m-d", strtotime($date . "+$period week"));
-    return $valueDate;
-}
-
-function addDay($date, $period)
-{
-    $valueDate = date("Y-m-d", strtotime($date . "+$period day"));
-    return $valueDate;
-}
-
-function appendAccountNo($accountNo, $length)
-{
-    $appendedAccount = '******' . substr($accountNo, $length);
-=======
 function addYear($date, $period){
     $valueDate = date("Y-m-d", strtotime($date. "+$period year"));
     return $valueDate;
@@ -606,7 +494,6 @@ function addDay($date, $period){
 
 function appendAccountNo($accountNo, $length){
     $appendedAccount = '******'.substr($accountNo, $length);
->>>>>>> Victor
     return $appendedAccount;
 }
 
@@ -630,20 +517,12 @@ function checkLoanDebtor($table, $conditions, $dateConditions)
     foreach ($dateConditions as $keys => $value) {
         if ($s === 0) {
             $sql = $sql . " AND ( $keys<=?";
-<<<<<<< HEAD
-        } else {
-=======
         }else{
->>>>>>> Victor
             $sql = $sql . " AND $keys<=?";
         }
         $s++;
     }
-<<<<<<< HEAD
-    $sql = $sql . ")";
-=======
     $sql = $sql. ")";
->>>>>>> Victor
     $sql = $sql . " AND installment >= '1' ORDER BY id ASC LIMIT 1";
     $stmt = executeQuery($sql, array_merge($conditions, $dateConditions));
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -717,11 +596,7 @@ function selectAllLessEq($table, $conditions, $dateConditions)
     foreach ($dateConditions as $keys => $value) {
         if ($s === 0) {
             $sql = $sql . " AND $keys<=?";
-<<<<<<< HEAD
-        } else {
-=======
         }else{
->>>>>>> Victor
             $sql = $sql . " AND $keys<=?";
         }
         $s++;
@@ -750,11 +625,7 @@ function checkAccount($table, $conditions, $scaleConditions)
     foreach ($scaleConditions as $key => $value) {
         if ($s === 0) {
             $sql = $sql . " AND $key>=?";
-<<<<<<< HEAD
-        }
-=======
         } 
->>>>>>> Victor
         $s++;
     }
 
@@ -886,177 +757,6 @@ function sumIn($sum, $table, $conditions, $notIn, $table2, $sort, $conditions2)
     return $stmt->get_result()->fetch_assoc();
 }
 
-<<<<<<< HEAD
-function selectAllandNot($table, $conditions = [], $notConditions)
-{
-    global $connection;
-    $sql = "SELECT * FROM $table";
-    if (empty($conditions)) {
-        $stmt = $connection->prepare($sql);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    } else {
-        $i = 0;
-        foreach ($conditions as $key => $value) {
-            if ($i === 0) {
-                $sql = $sql . " WHERE $key=?";
-            } else {
-                $sql = $sql . " AND $key=?";
-            }
-            $i++;
-        }
-
-        $sql = $sql . " AND (";
-        $s = 0;
-        foreach ($notConditions as $key => $value) {
-            if ($s === 0) {
-                $sql = $sql . " $key!=?";
-            } else {
-                $sql = $sql . " AND $key!=?";
-            }
-            $s++;
-        }
-        $sql = $sql . " )";
-        $stmt = executeQuery($sql, array_merge($conditions, $notConditions));
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
-}
-
-
-function selectOneWithOr($table, $conditions = [], $orField, $orValue)
-{
-    global $connection;
-    $sql = "SELECT * FROM $table";
-    if (empty($conditions)) {
-        $stmt = $connection->prepare($sql);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    } else {
-        $i = 0;
-        foreach ($conditions as $key => $value) {
-            if ($i === 0) {
-                $sql = $sql . " WHERE $key=?";
-            } else {
-                $sql = $sql . " AND $key=?";
-            }
-            $i++;
-        }
-
-        $sql = $sql . " OR " . $orField . "=" . $orValue;
-
-        $stmt = executeQuery($sql, $conditions);
-        return $stmt->get_result()->fetch_assoc();;
-    }
-
-    function getCharges($connection) {
-        $sint_id = $_SESSION["int_id"];
-        $org = "SELECT * FROM charge WHERE int_id = '$sint_id'";
-        $res = mysqli_query($connection, $org);
-        $out = [];
-        $i = 0;
-        while ($row = mysqli_fetch_array($res)) {
-            $out[$i] = $row['id'];
-            $i++;
-        }
-        return $out;
-    }
-    
-    function getClients($connection) {
-        $sint_id = $_SESSION["int_id"];
-        $branc = $_SESSION["branch_id"];
-        $org = "SELECT client.id, client.firstname, client.lastname, client.middlename FROM client JOIN branch ON client.branch_id = branch.id WHERE client.int_id = '$sint_id' AND (branch.id = '$branc' OR branch.parent_id = '$branc') AND status = 'Approved' ORDER BY firstname ASC";
-        $res = mysqli_query($connection, $org);
-        $out = [];
-        $i = 0;
-        while ($row = mysqli_fetch_array($res)) {
-            $out[$i] = $row['id'];
-            $i++;
-        }
-        return $out;
-    }
-    
-    function getAccNumbers($connection, $client_id) {
-        $pen = "SELECT * FROM account WHERE client_id = '$client_id'";
-        $res = mysqli_query($connection, $pen);
-        $out = [];
-        $i = 0;
-        while ($row = mysqli_fetch_array($res))
-        {
-            $out[$i] = $row['account_no'];
-            $i++;
-        }
-        return $out;
-    }
-    
-function getMonthName($monthNum) {
-    $dateObj = DateTime::createFromFormat('!m', $monthNum);
-    return $dateObj->format('F');
-}
-
-function endOfMonth($closedDate,$connection,$_cb) {
-    $month = getMonthName((int)getMonth($closedDate));
-    $year = getYear($closedDate);
-
-    $data = [
-        'int_id' => $_SESSION['int_id'],
-        'branch_id' => $_SESSION['branch_id'],
-        'staff_id' => $_SESSION['staff_id'],
-        'manual_posted' => 1,
-        'closed_date' => $closedDate,
-        'month' => $month,
-        'year' => $year
-    ];
-
-    $existingClosedMonth = selectAll('endofmonth_tb', ['month'=>$month,'year'=>$year,'int_id'=>$_SESSION['int_id']]);
-
-    $arr = array(
-        'connection'=>$connection,
-        'data'=>$data
-    );
-
-    if(count($existingClosedMonth) > 0) {
-        call_user_func($_cb,'End of Month already exists!',1);
-        exit();
-    } else {
-
-        $existingClosedDay = selectAll('endofday_tb', ['transaction_date'=>$closedDate,'int_id'=>$_SESSION['int_id']]);
-
-        // if(count($existingClosedDay) < 1) {
-            // $digits = 7;
-            // $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
-
-            // $_SESSION['feedback'] = "Please perform the end of day for {$month}, {$year}";
-            // header("Location: ../../mfi/end_of_day.php?message1=$randms");
-
-        // } else {
-            include('../asset_depreciation.php');
-            include('../charge_collection.php');
-            include("../loans/auto_function/loan_collection.php");
-            asset_depreciation($arr, $_cb, function($_cb,$arr){
-                if($arr['response']==0) {
-                    charge_collection($arr, $_cb, function($_cb,$arr){
-                        if($arr['response']==0) {
-                                insert('endofmonth_tb',$arr['data']);
-                                loan_collection($arr['connection']);
-                                call_user_func($_cb,"Asset Depreciation Successful, Charge Collection Successful, Loan Collection Successful, Month sucessfully ended", 0);
-                                exit();
-                        } else {
-                            call_user_func($_cb,"{$arr['response']}!",1);
-                            exit();
-                        }       
-                    });
-                } else {
-                    call_user_func($_cb,"{$arr['response']}!",1);
-                    exit();
-                }
-            });
-        // }
-       
-    }
-    
-}
-}
-=======
 //function to run eod
 function eod($date_data){
     $int_id = $_SESSION['int_id'];
@@ -1075,4 +775,3 @@ function eod($date_data){
     return $eod_check;
 }
 
->>>>>>> Victor

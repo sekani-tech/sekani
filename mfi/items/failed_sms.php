@@ -21,10 +21,6 @@
                     <thead>
                       <th>Transaction Date</th>
                       <th>Time Sent</th>
-<<<<<<< HEAD
-                      <th>Error Message</th>
-=======
->>>>>>> Victor
                       <th>Mobile Number</th>
                       <th>Message</th>
                     </thead>
@@ -37,10 +33,6 @@
                         <tr>
                           <td> <?php echo $rows['transaction_date'] ?> </td>
                           <td> <?php echo $rows['action_stamp'] ?> </td>
-<<<<<<< HEAD
-                          <td> <?php echo $rows['error_message'] ?> </td>
-=======
->>>>>>> Victor
                           <td> <?php echo $rows['mobile_no'] ?> </td>
                           <td> <?php echo $rows["message"] ?> </td>
                         </tr>

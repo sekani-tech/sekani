@@ -137,13 +137,6 @@ $rezz = mysqli_query($connection, $activeq);
     <script src="../assets/js/charts/chart.bundle.js"></script>
     <script src="../assets/js/charts/chart.bundle.min.js"></script>
     <!-- autocomplete -->
-<<<<<<< HEAD
-    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-
-
-=======
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
          rel = "stylesheet">
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -151,7 +144,6 @@ $rezz = mysqli_query($connection, $activeq);
       <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
       
     
->>>>>>> Victor
     <!-- CHAT BOT -->
     <script type="text/javascript">
         (function(w, d, v3) {
@@ -189,15 +181,9 @@ $rezz = mysqli_query($connection, $activeq);
     <link rel="stylesheet" href="../datatable/jquery.dataTables.min.css">
     <link rel="stylesheet" href="../datatable/rowReorder.dataTables.min.css">
     <link rel="stylesheet" href="../datatable/responsive.dataTables.min.css">
-<<<<<<< HEAD
-
-    </script>
-
-=======
     
   </script>
  
->>>>>>> Victor
     <!-- DataTables scripts -->
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
     <!-- <script>
@@ -209,16 +195,6 @@ $rezz = mysqli_query($connection, $activeq);
     <script src="../datatable/dataTables.responsive.min.js"></script>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/materia/bootstrap.min.css"> -->
     <?php
-<<<<<<< HEAD
-    if ($page_title = "Loan Report") {
-    } else {
-    ?>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <?php
-    }
-    ?>
-
-=======
             if($page_title = "Loan Report"){
 
             }else{
@@ -228,7 +204,6 @@ $rezz = mysqli_query($connection, $activeq);
             }
     ?>
     
->>>>>>> Victor
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177058907-1"></script>
     <script>
@@ -452,23 +427,10 @@ $rezz = mysqli_query($connection, $activeq);
                                 ?>
                                 <!-- Notification for institution transactions -->
                                 <?php
-<<<<<<< HEAD
-                                $sfsf = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' AND status = 'Pending' AND branch_id = '$br_id' AND transact_type != 'Expense'";
-                                $sdwr = mysqli_query($connection, $sfsf);
-                                $trans = mysqli_num_rows($sdwr);
-                                ?>
-                                <!-- Notification for expense transactions -->
-                                <?php
-                                $sfsfp = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' AND status = 'Pending' AND branch_id = '$br_id' AND transact_type = 'Expense'";
-                                $sdwr = mysqli_query($connection, $sfsfp);
-                                $expense = mysqli_num_rows($sdwr);
-                                ?>
-=======
                                 $sfsf = "SELECT * FROM transact_cache WHERE int_id = '$sessint_id' AND status = 'Pending' AND branch_id = '$br_id'";
                                 $sdwr = mysqli_query($connection, $sfsf);
                                 $trans = mysqli_num_rows($sdwr);
                                 ?>
->>>>>>> Victor
                                 <!-- notification for client fund transfer -->
                                 <?php
                                 $sdf = "SELECT * FROM transfer_cache WHERE int_id = '$sessint_id' AND status = 'Pending' AND branch_id = '$br_id'";
@@ -532,14 +494,6 @@ $rezz = mysqli_query($connection, $activeq);
                                             <a class="dropdown-item" href="transact_approval.php"><?php echo $trans; ?>
                                                 transaction(s) in need of approval</a>
                                         <?php }
-<<<<<<< HEAD
-                                        if ($expense > 0) {
-                                        ?>
-                                            <a class="dropdown-item" href="expense_approval.php"><?php echo $expense; ?>
-                                                Expense(s) in need of approval</a>
-                                        <?php }
-=======
->>>>>>> Victor
                                         if ($client > 0) {
                                         ?>
                                             <a class="dropdown-item" href="transfer_approval.php"><?php echo $client; ?>
