@@ -435,17 +435,10 @@ if ($can_transact == 1 || $can_transact == "1") {
                                                             ?>
                                                         </td>
                                                         <td><?php echo number_format($row["amount"], 2); ?></td>
-<<<<<<< HEAD
-                                                        <td><?php
-                                                            $dateString = strtotime($row["date"]);
-                                                            echo $date = date('Y/m/d', $dateString);
-                                                            ?></td>
-=======
                                                         <td><?php 
                                                         $dateString = strtotime($row["date"]);
                                                         echo $date = date('Y/m/d', $dateString);
                                                          ?></td>
->>>>>>> Victor
                                                         <td><?php echo $showStaffName; ?></td>
                                                         <td><?php echo $row["client_name"]; ?></td>
                                                         <td><?php echo $row["status"]; ?></td>
