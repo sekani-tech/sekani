@@ -30,23 +30,30 @@ if ($ctype == 'INDIVIDUAL' || $ctype == 'GROUP') {
   $display_name = strtoupper($_POST['display_name']);
 
   // an account number generation
-  $inttest = str_pad($branch, 3, '0', STR_PAD_LEFT);
-  $digit = 4;
-  $randms = str_pad(rand(0, pow(10, $digit) - 1), 7, '0', STR_PAD_LEFT);
-  $account_no = $inttest . "" . $randms;
-  $length = strlen($account_no);
-
-  if ($length == 10) {
-    $account_no = $account_no;
-  } else if ($length > 10) {
-    $di = 6;
-    $randms = str_pad(rand(0, pow(10, $di) - 1), $di, '0', STR_PAD_LEFT);
-    $account_no = "0200" . $randms;
+  $length = strlen($branch);
+  if ($length == 2) {
+    // if branch id is greater than one
+    $digit = 7;
+  } else if ($length == 3) {
+    // greater than 2
+    $digit = 6;
+  } else if ($length == 4) {
+    // greater than 3
+    $digit = 5;
   } else {
-    $di = 6;
-    $randms = str_pad(rand(0, pow(10, $di) - 1), $di, '0', STR_PAD_LEFT);
-    $account_no = "0200" . $randms;
+    $digit = 8;
   }
+
+  $randms = str_pad(rand(0, pow(10, $digit) - 1), $digit, '0', STR_PAD_LEFT);
+  if(strlen($sessint_id) == 2){
+    $institutionId =  substr($sessint_id, 1);
+  }else if(strlen($sessint_id) == 3){
+    $institutionId =  substr($sessint_id, 2);
+  }else{
+    $institutionId =  $sessint_id;
+  }
+  $account_no = $institutionId . "" . $branch . "" . $randms;
+  // add loop to check if account number already exists on the database if yes create account number again. 
 
   // auto calculation for the account number generation
   $first_name = strtoupper($_POST['firstname']);

@@ -368,11 +368,7 @@ if ($can_transact == 1 || $can_transact == "1") {
 
                                         <thead class=" text-primary">
                                             <?php
-<<<<<<< HEAD
-                                            $results = selectAllandNot('transact_cache', ['int_id' => $sessint_id, 'status' => 'Pending'], ['transact_type' => 'Expense']);
-=======
                                             $results = selectAll('transact_cache', ['int_id' => $sessint_id, 'status' => 'Pending']);
->>>>>>> Victor
                                             ?>
                                             <tr>
                                                 <th><input id="selectAllBoxes" type="checkbox"></th>
@@ -439,17 +435,10 @@ if ($can_transact == 1 || $can_transact == "1") {
                                                             ?>
                                                         </td>
                                                         <td><?php echo number_format($row["amount"], 2); ?></td>
-<<<<<<< HEAD
-                                                        <td><?php
-                                                            $dateString = strtotime($row["date"]);
-                                                            echo $date = date('Y/m/d', $dateString);
-                                                            ?></td>
-=======
                                                         <td><?php 
                                                         $dateString = strtotime($row["date"]);
                                                         echo $date = date('Y/m/d', $dateString);
                                                          ?></td>
->>>>>>> Victor
                                                         <td><?php echo $showStaffName; ?></td>
                                                         <td><?php echo $row["client_name"]; ?></td>
                                                         <td><?php echo $row["status"]; ?></td>

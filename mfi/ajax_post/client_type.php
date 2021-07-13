@@ -102,6 +102,32 @@ if (isset($_POST['id'])) {
             </div>
             </div>
         </div>
+        
+            <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Name of Next of Kin:</label>
+                <input type="text"  class="form-control" name="nok">
+            </div>
+            </div>
+            <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Relationship:</label>
+                <input type="text"  class="form-control" name="relationship_Nok">
+            </div>
+            </div>
+            <div class="col-md-2">
+            <div class="form-group">
+                <label for="">Phone Number:</label>
+                <input type="number"  class="form-control" name="numberof_Nok">
+            </div>
+            </div>
+            <div class="col-md-2">
+            <div class="form-group">
+                <label for="">Email Address</label>
+                <input type="number"  class="form-control" name="email_Nok">
+            </div>
+            </div>
+            
 
         <div class="col-md-12">
             <div class="form-group">
@@ -184,6 +210,7 @@ if (isset($_POST['id'])) {
                         </label>
                     </div>
                 </div>
+
                 <div class="col-md-12">
                     <label for="file-upload-a" class="btn btn-fab btn-round btn-primary"><i class="material-icons">attach_file</i></label>
                     <input id ="file-upload-a" name="sig_passport_one" type="file" class="inputFileHidden"/>
@@ -600,6 +627,32 @@ if (isset($_POST['id'])) {
                 </label>
             </div>
             </div>
+            
+            <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Name of Next of Kin:</label>
+                <input type="text"  class="form-control" name="nok">
+            </div>
+            </div>
+            <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Relationship:</label>
+                <input type="text"  class="form-control" name="relationship_Nok">
+            </div>
+            </div>
+            <div class="col-md-2">
+            <div class="form-group">
+                <label for="">Phone Number:</label>
+                <input type="number"  class="form-control" name="numberof_Nok">
+            </div>
+            </div>
+            <div class="col-md-2">
+            <div class="form-group">
+                <label for="">Email Address</label>
+                <input type="number"  class="form-control" name="email_Nok">
+            </div>
+            </div>
+          
             <style>
 
             .fileinput .thumbnail {
