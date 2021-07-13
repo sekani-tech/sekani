@@ -142,7 +142,9 @@ if ($insertIntVault){
                                     ];
     $insertAccountTrans = insert('institution_account_transaction', $intaccountdata);
     if ($insertAccountTrans){
-        header("Location: ../functions/loans/auto_function/loan_collection.php?response=eod_success");
+        include("../functions/loans/auto_function/loan_collection.php");
+        $check_o = loan_collection($connection);
+        header("Location: end_of_day.php?response=success");
     }
           
 }
