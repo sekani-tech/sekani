@@ -53,7 +53,22 @@ $length = strlen($branch);
   }else{
     $institutionId =  $sessint_id;
   }
-  $account_no = $institutionId . "" . $branch . "" . $randms;
+  
+ function account_no_generation($institutionId, $branch, $randms){
+       $account_no = $institutionId . "" . $branch . "" . $randms;
+        return $account_no;
+    }
+  $account_no = account_no_generation($institutionId, $branch, $randms);
+  $condition = [
+            'int_id' => $institutionId,
+        ];
+    $fetch_account_info = selectAll('account', $condition);
+    foreach($fetch_account_info as $account_info){
+    $fetched_account_no = $account_info['account_no'];
+        if ($account_no == $fetched_account_no){
+          $account_no = account_no_generation();
+        }
+    }
   // add loop to check if account number already exists on the database if yes create account number again. 
 // auto calculation for the account number generation
 $first_name = strtoupper($_POST['firstname']);
