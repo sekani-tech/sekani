@@ -165,6 +165,12 @@ if (isset($_POST['id'])) {
                     </div>
                 </div>
                 <div class="col-md-12">
+            <div class="form-group">
+                <label for="">Name of Next of Kin:</label>
+                <input type="text"  class="form-control" name="nok">
+            </div>
+            </div>
+                <div class="col-md-12">
                     <p><label for="">Active Alerts:</label></p>
                     <div class="form-check form-check-inline">
                         <label class="form-check-label">
@@ -278,6 +284,12 @@ if (isset($_POST['id'])) {
                     <input  type="text" style="text-transform: uppercase;" class="form-control" name="sig_bvn_two">
                     </div>
                 </div>
+                <div class="col-md-12">
+            <div class="form-group">
+                <label for="">Relationship:</label>
+                <input type="text"  class="form-control" name="relationship_Nok">
+            </div>
+            </div>
                 <div class="col-md-12">
                     <p><label for="">Active Alerts:</label></p>
                     <div class="form-check form-check-inline">
@@ -393,6 +405,20 @@ if (isset($_POST['id'])) {
                     <input  type="text" style="text-transform: uppercase;" class="form-control" name="sig_bvn_three">
                     </div>
                 </div>
+               <div class="row">
+                <div class="col-md-6">
+            <div class="form-group">
+                <label for="">Phone Number:</label>
+                <input type="number"  class="form-control" name="numberof_Nok">
+            </div>
+            </div>
+            <div class="col-md-6">
+            <div class="form-group">
+                <label for="">Email Address</label>
+                <input type="number"  class="form-control" name="email_Nok">
+            </div>
+            </div>
+            </div>
                 <div class="col-md-12">
                     <p><label for="">Active Alerts:</label></p>
                     <div class="form-check form-check-inline">
@@ -565,7 +591,31 @@ if (isset($_POST['id'])) {
                 <input type="text" style="text-transform: uppercase;" class="form-control" name="occupation">
             </div>
             </div>
-            
+            <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Name of Next of Kin:</label>
+                <input type="text"  class="form-control" name="nok">
+            </div>
+            </div>
+            <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Relationship:</label>
+                <input type="text"  class="form-control" name="relationship_Nok">
+            </div>
+            </div>
+            <div class="col-md-2">
+            <div class="form-group">
+                <label for="">Phone Number:</label>
+                <input type="number"  class="form-control" name="numberof_Nok">
+            </div>
+            </div>
+            <div class="col-md-2">
+            <div class="form-group">
+                <label for="">Email Address</label>
+                <input type="number"  class="form-control" name="email_Nok">
+            </div>
+            </div>
+          
             <div class="col-md-4">
             <p><label for="">Active Alerts:</label></p>
             <div class="form-check form-check-inline">
