@@ -32,10 +32,30 @@ if (count([$acctquery]) == 1) {
     $account_balance_derived = 0;
 }
 
-$inttest = str_pad($branch_id, 3, '0', STR_PAD_LEFT);
-$digit = 4;
-$randms = str_pad(rand(0, pow(10, $digit)-1), 7, '0', STR_PAD_LEFT);
-$account_no = $inttest."".$randms;
+$length = strlen($branch_id);
+  if ($length == 2) {
+    // if branch id is greater than one
+    $digit = 7;
+  } else if ($length == 3) {
+    // greater than 2
+    $digit = 6;
+  } else if ($length == 4) {
+    // greater than 3
+    $digit = 5;
+  } else {
+    $digit = 8;
+  }
+
+  $randms = str_pad(rand(0, pow(10, $digit) - 1), $digit, '0', STR_PAD_LEFT);
+  if(strlen($sessint_id) == 2){
+    $institutionId =  substr($sessint_id, 1);
+  }else if(strlen($sessint_id) == 3){
+    $institutionId =  substr($sessint_id, 2);
+  }else{
+    $institutionId =  $sessint_id;
+  }
+  $account_no = $institutionId . "" . $branch_id . "" . $randms;
+  // add loop to check if account number already exists on the database if yes create account number again. 
 
 $queryd = mysqli_query($connection, "SELECT * FROM savings_product WHERE id='$acct_type'");
 $res = mysqli_fetch_array($queryd);
