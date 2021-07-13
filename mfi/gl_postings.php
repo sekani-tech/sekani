@@ -3,452 +3,56 @@
 $page_title = "GL Transactions";
 $destination = "transaction.php";
 include("header.php");
-include("ajaxcall.php");
-?>
-<?php
+// include("ajaxcall.php");
 $exp_error = "";
-if (isset($_GET["message"])) {
-    $key = $_GET["message"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
+$message = $_SESSION['feedback'];
+if ($message != "") {
+?>
+    <input type="text" value="<?php echo $message ?>" id="feedback" hidden>
+<?php
+}
+// feedback messages 0 for success and 1 for errors
+
+if (isset($_GET["message0"])) {
+    $key = $_GET["message0"];
     $tt = 0;
+
     if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
         echo '<script type="text/javascript">
-    $(document).ready(function(){
-        swal({
-            type: "success",
-            title: "Success",
-            text: "Transaction Successful",
-            showConfirmButton: True,
-            timer: 7000
-        })
-    });
-    </script>
-    ';
+      $(document).ready(function(){
+        let feedback =  document.getElementById("feedback").value;
+          swal({
+              type: "success",
+              title: "Success",
+              text: feedback,
+              showConfirmButton: true,
+              timer: 7000
+          })
+      });
+      </script>
+      ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
 } else if (isset($_GET["message1"])) {
     $key = $_GET["message1"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
     $tt = 0;
     if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
         echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "error",
-          title: "Error",
-          text: "Transaction Successful - Error storing record for expense GL! Contact Support",
-          showConfirmButton: true,
-          timer: 7000
-      })
-  });
-  </script>
-  ';
+      $(document).ready(function(){
+        let feedback =  document.getElementById("feedback").value;
+          swal({
+              type: "error",
+              title: "Error",
+              text: feedback,
+              showConfirmButton: true,
+              timer: 7000
+          })
+      });
+      </script>
+      ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-} else if (isset($_GET["message2"])) {
-    $key = $_GET["message2"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-    $(document).ready(function(){
-        swal({
-            type: "error",
-            title: "Error",
-            text: "Transaction Successful - Error storing record for Income GL! Contact Support",
-            showConfirmButton: True,
-            timer: 7000
-        })
-    });
-    </script>
-    ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["message3"])) {
-    $key = $_GET["messag3"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "Error",
-          title: "Expense Error",
-          text: "Insufficient Fund in chossen Income GL",
-          showConfirmButton: true,
-          timer: 7000
-      })
-  });
-  </script>
-  ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["message4"])) {
-    $key = $_GET["message4"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "error",
-          title: "NOT AUTHURIZED",
-          text: "Kindly provide all Neccessary Information",
-          showConfirmButton: true,
-          timer: 7000
-      })
-  });
-  </script>
-  ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["message3p"])) {
-    $key = $_GET["message3p"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-    $(document).ready(function(){
-        swal({
-            type: "success",
-            title: "Withdrawal",
-            text: "Transaction Successful, Awaiting Approval",
-            showConfirmButton: false,
-            timer: 2000
-        })
-    });
-    </script>
-    ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["message4"])) {
-    $key = $_GET["message4"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-    $(document).ready(function(){
-        swal({
-            type: "error",
-            title: "Withdrawal Error",
-            text: "Transaction Error",
-            showConfirmButton: false,
-            timer: 2000
-        })
-    });
-    </script>
-    ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["message5"])) {
-    $key = $_GET["message5"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-    $(document).ready(function(){
-        swal({
-            type: "error",
-            title: "Fund Error",
-            text: "Insufficient Fund in the Till",
-            showConfirmButton: false,
-            timer: 2000
-        })
-    });
-    </script>
-    ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["message7"])) {
-    $key = $_GET["message7"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-    $(document).ready(function(){
-        swal({
-            type: "error",
-            title: "Account Number Error",
-            text: "Account Not Found",
-            showConfirmButton: false,
-            timer: 2000
-        })
-    });
-    </script>
-    ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["messagex5"])) {
-    $key = $_GET["messagex5"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "error",
-          title: "Insufficient Fund",
-          text: "Client Has Insufficient Fund",
-          showConfirmButton: false,
-          timer: 2000
-      })
-  });
-  </script>
-  ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["message8"])) {
-    $key = $_GET["message8"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "error",
-          title: "Pick",
-          text: "Select Transaction Type",
-          showConfirmButton: false,
-          timer: 2000
-      })
-  });
-  </script>
-  ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["loan1"])) {
-    $key = $_GET["loan1"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "success",
-          title: "EXPENSE POSTING",
-          text: "Expense Posting Successful",
-          showConfirmButton: false,
-          timer: 2000
-      })
-  });
-  </script>
-  ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["income1"])) {
-    $key = $_GET["income1"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "success",
-          title: "INCOME POSTING",
-          text: "Income Transaction Successful",
-          showConfirmButton: true,
-          timer: 7000
-      })
-  });
-  </script>
-  ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["income2"])) {
-    $key = $_GET["income2"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "error",
-          title: "INCOME RECORD ERROR",
-          text: "Transaction successful but GL record not saved",
-          showConfirmButton: true,
-          timer: 5000
-      })
-  });
-  </script>
-  ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["income3"])) {
-    $key = $_GET["income3"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "error",
-          title: "Loan",
-          text: "Sorry could not Find Chosen GL",
-          showConfirmButton: true,
-          timer: 7000
-      })
-  });
-  </script>
-  ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["income4"])) {
-    $key = $_GET["income4"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-        $(document).ready(function(){
-            swal({
-                type: "error",
-                title: "Error",
-                text: "There was an error Storing Transaction on behalf of customer Kindly contact Support",
-                showConfirmButton: true,
-                timer: 7000
-            })
-        });
-    </script>
-  ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["income5"])) {
-    $key = $_GET["income5"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-        $(document).ready(function(){
-            swal({
-                type: "error",
-                title: "Error",
-                text: "Could not deduct money from customer",
-                showConfirmButton: true,
-                timer: 7000
-            })
-        });
-    </script>
-  ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["income6"])) {
-    $key = $_GET["income6"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-        $(document).ready(function(){
-            swal({
-                type: "error",
-                title: "Error",
-                text: "Insufficient Balance in Customers Account",
-                showConfirmButton: true,
-                timer: 7000
-            })
-        });
-    </script>
-  ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["income7"])) {
-    $key = $_GET["income7"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-        $(document).ready(function(){
-            swal({
-                type: "error",
-                title: "Error",
-                text: "Provide the Necessary Information!",
-                showConfirmButton: true,
-                timer: 7000
-            })
-        });
-    </script>
-  ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["other_income"])) {
-    $key = $_GET["other_income"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-        $(document).ready(function(){
-            swal({
-                type: "success",
-                title: "Transaction Successul",
-                text: "Income Posted Successfilly",
-                showConfirmButton: true,
-                timer: 7000
-            })
-        });
-  </script>
-  ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["other_income2"])) {
-    $key = $_GET["other_income2"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "error",
-          title: "Account Funded Transaction Error",
-          text: "Error storing Transaction record income GL",
-          showConfirmButton: true,
-          timer: 7000
-      })
-  });
-  </script>
-  ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["other_income3"])) {
-    $key = $_GET["other_income3"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "error",
-          title: "Transaction Error",
-          text: "Error Funding GL!",
-          showConfirmButton: true,
-          timer: 7000
-      })
-  });
-  </script>
-  ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else if (isset($_GET["other_income4"])) {
-    $key = $_GET["other_income4"];
-    // $out = $_SESSION["lack_of_intfund_$key"];
-    $tt = 0;
-    if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-        echo '<script type="text/javascript">
-  $(document).ready(function(){
-      swal({
-          type: "error",
-          title: "GL Error",
-          text: "GL not Found or GL does not exist!",
-          showConfirmButton: false,
-          timer: 3000
-      })
-  });
-  </script>
-  ';
-        $_SESSION["lack_of_intfund_$key"] = 0;
-    }
-} else {
-    echo "";
 }
-?>
-<?php
 
 if ($trans_post == 1 || $trans_post == "1") {
 ?>
@@ -668,6 +272,246 @@ if ($trans_post == 1 || $trans_post == "1") {
                     </div>
                 </div>
                 <!-- /income posting ends here -->
+                <!-- gl to client -->
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Expense Income</h4>
+                            <p class="card-category">Make deductions from GL accounts and fund a Client (<i>Applies to all expense income scenarios</i>) </p>
+                        </div>
+                        <div class="card-body">
+                            <form action="../functions/gl_transactions/gl_to_client.php" method="post" autocomplete="off">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#accc').on("change keyup paste", function() {
+                                                    var id = $(this).val();
+                                                    var ist = $('#int_id').val();
+                                                    $.ajax({
+                                                        url: "acct_name.php",
+                                                        method: "POST",
+                                                        data: {
+                                                            id: id,
+                                                            ist: ist
+                                                        },
+                                                        success: function(data) {
+                                                            $('#acountName').html(data);
+                                                        }
+                                                    })
+                                                });
+                                            });
+                                        </script>
+
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Amount</label>
+                                            <input type="text" class="form-control" id="amount4" name="amount" value="" required>
+                                        </div>
+
+                                        <div id="acct_name"></div>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#amount4').on("change blur", function() {
+                                                    var amount = $(this).val();
+                                                    $.ajax({
+                                                        url: "ajax_post/function/converter.php",
+                                                        method: "POST",
+                                                        data: {
+                                                            amount: amount
+                                                        },
+                                                        success: function(data) {
+                                                            $('#amount4').val(data);
+                                                        }
+                                                    })
+                                                });
+                                            });
+                                        </script>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Account Number</label>
+                                            <input type="text" class="form-control" name="account_no" id="accc" required>
+                                            <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id">
+                                        </div>
+                                        <div id="acountName"></div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#gl_accounts').on("change keyup paste", function() {
+                                                    var id = $(this).val();
+                                                    var ist = $('#int_id').val();
+                                                    $.ajax({
+                                                        url: "ajax_post/gl/find_income_gl.php",
+                                                        method: "POST",
+                                                        data: {
+                                                            id: id,
+                                                            ist: ist
+                                                        },
+                                                        success: function(data) {
+                                                            $('#accrexs').html(data);
+                                                        }
+                                                    })
+                                                });
+                                            });
+                                        </script>
+                                        <div class="form-group">
+                                            <label for="">GL Number</label>
+                                            <input type="text" class="form-control" name="acct_gl" id="gl_accounts" required>
+                                            <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id">
+                                        </div>
+                                        <div id="accrexs"></div>
+                                    </div>
+                                    <!-- <div id="rd"></div> -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="">Transaction ID:</label>
+                                            <input type="text" value="<?php echo "INCOME_" . $transid1; ?>" name="transid" class="form-control" id="transid" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="">Description</label>
+                                            <input type="text" value="" name="description" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Transaction Date</label>
+                                            <input type="date" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" name="transDate" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- gl to client ends here -->
+                <!-- gl to client -->
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Expense to Client</h4>
+                            <p class="card-category">Make deductions from Expense GL accounts and fund a Client (<i>Applies to expense gls only</i>) </p>
+                        </div>
+                        <div class="card-body">
+                            <form action="../functions/gl_transactions/expensegl_to_client.php" method="post" autocomplete="off">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#accctn').on("change keyup paste", function() {
+                                                    var id = $(this).val();
+                                                    var ist = $('#int_id').val();
+                                                    $.ajax({
+                                                        url: "acct_name.php",
+                                                        method: "POST",
+                                                        data: {
+                                                            id: id,
+                                                            ist: ist
+                                                        },
+                                                        success: function(data) {
+                                                            $('#acountNamen').html(data);
+                                                        }
+                                                    })
+                                                });
+                                            });
+                                        </script>
+
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Amount</label>
+                                            <input type="text" class="form-control" id="amount4" name="amount" value="" required>
+                                        </div>
+
+                                        <div id="acct_name"></div>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#amount4').on("change blur", function() {
+                                                    var amount = $(this).val();
+                                                    $.ajax({
+                                                        url: "ajax_post/function/converter.php",
+                                                        method: "POST",
+                                                        data: {
+                                                            amount: amount
+                                                        },
+                                                        success: function(data) {
+                                                            $('#amount4').val(data);
+                                                        }
+                                                    })
+                                                });
+                                            });
+                                        </script>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Account Number</label>
+                                            <input type="text" class="form-control" name="account_no" id="accctn" required>
+                                            <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id">
+                                        </div>
+                                        <div id="acountNamen"></div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#gl_accountsn').on("change keyup paste", function() {
+                                                    var id = $(this).val();
+                                                    var ist = $('#int_id').val();
+                                                    $.ajax({
+                                                        url: "ajax_post/gl/find_income_gl.php",
+                                                        method: "POST",
+                                                        data: {
+                                                            id: id,
+                                                            ist: ist
+                                                        },
+                                                        success: function(data) {
+                                                            $('#accrexsn').html(data);
+                                                        }
+                                                    })
+                                                });
+                                            });
+                                        </script>
+                                        <div class="form-group">
+                                            <label for="">GL Number</label>
+                                            <input type="text" class="form-control" name="acct_gl" id="gl_accountsn" required>
+                                            <input type="text" class="form-control" hidden name="" value="<?php echo $sessint_id; ?>" id="int_id">
+                                        </div>
+                                        <div id="accrexsn"></div>
+                                    </div>
+                                    <!-- <div id="rd"></div> -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="">Transaction ID:</label>
+                                            <input type="text" value="<?php echo "INCOME_" . $transid1; ?>" name="transid" class="form-control" id="transid" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="">Description</label>
+                                            <input type="text" value="" name="description" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Transaction Date</label>
+                                            <input type="date" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" name="transDate" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- gl to client ends here -->
                 <!-- Income To Liabilities/Expense -->
                 <div class="col-md-12">
                     <div class="card">
