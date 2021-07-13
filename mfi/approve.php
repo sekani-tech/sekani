@@ -375,6 +375,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               }
                             }
                           }
+                ?>
+
+                          <?php
                         }
                         // end it for the SMS POSTING
                         // ENDING OF THE AR
@@ -653,7 +656,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                           },
                                           "sms": {
                                               "dest":"' . $clientPhone . '",
-                                              "src": "' . $sender_id . '",
+                                              "src": "' . $senderId . '",
                                               "text": "' . $escape . '",
                                               "unicode": true
                                           }
@@ -733,6 +736,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 }
                               }
                             }
+                          ?>
+
+                <?php
                           }
                           // institution account
                           if ($is_bank == 1) {
@@ -740,39 +746,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $dbgl = mysqli_query($connection, $upglacct);
                             if ($dbgl) {
                               $gl_acc1 = "INSERT INTO gl_account_transaction (int_id, branch_id, gl_code, transaction_id, description,
-                                    transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
-                                      created_date, debit) VALUES ('{$sessint_id}', '{$branch_id}', '{$bank_gl_code}', '{$transid}', '{$description}', '{$trans_type2}', '{$staff_id}',
-                                      '{$transaction_date}', '{$amount}', '{$new_gl_bal2x}', '{$amount}', '{$gen_date}', '{$amount}')";
+                      transaction_type, teller_id, transaction_date, amount, gl_account_balance_derived, overdraft_amount_derived,
+                        created_date, debit) VALUES ('{$sessint_id}', '{$branch_id}', '{$bank_gl_code}', '{$transid}', '{$description}', '{$trans_type2}', '{$staff_id}',
+                         '{$transaction_date}', '{$amount}', '{$new_gl_bal2x}', '{$amount}', '{$gen_date}', '{$amount}')";
                               $mkl = mysqli_query($connection, $gl_acc1);
                               if ($mkl) {
                                 echo '<script type="text/javascript">
-                                $(document).ready(function(){
-                                    swal({
-                                        type: "success",
-                                        title: "Withdrawal Transaction",
-                                        text: "Transaction Approval Successful",
-                                        showConfirmButton: false,
-                                        timer: 2000
-                                    })
-                                });
-                                </script>
-                                ';
+                          $(document).ready(function(){
+                              swal({
+                                  type: "success",
+                                  title: "Withdrawal Transaction",
+                                  text: "Transaction Approval Successful",
+                                  showConfirmButton: false,
+                                  timer: 2000
+                              })
+                          });
+                          </script>
+                          ';
                                 $URL = "transact_approval.php";
                                 echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
                               } else {
                                 echo "Error at the Bank Withdrawal";
                                 echo '<script type="text/javascript">
-                                $(document).ready(function(){
-                                    swal({
-                                        type: "error",
-                                        title: "Withdrawal Transaction",
-                                        text: "Transaction Approval Error",
-                                        showConfirmButton: false,
-                                        timer: 2000
-                                    })
-                                });
-                                </script>
-                                ';
+                           $(document).ready(function(){
+                               swal({
+                                   type: "error",
+                                   title: "Withdrawal Transaction",
+                                   text: "Transaction Approval Error",
+                                   showConfirmButton: false,
+                                   timer: 2000
+                               })
+                           });
+                           </script>
+                           ';
                               }
                               //    if ($connection->error) {
                               //     try {
@@ -911,54 +917,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $upglacct = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$new_gl_bal' WHERE int_id = '$sessint_id' && gl_code = '$gl_codex'";
                     $dbgl = mysqli_query($connection, $upglacct);
                     if ($dbgl) {
-                      // find if payment method is bank or not
-                      $findIsBank = selectOne("payment_type", ['id' => $pym]);
-                      $isBank = $findIsBank['is_bank'];
-                      $bankGlCode = $findIsBank['gl_code'];
-                      // make deduction from bank
-                      $glQuery = mysqli_query($connection, "SELECT * FROM acc_gl_account WHERE gl_code = '$bankGlCode' && int_id = '$sessint_id'");
-                      $findBankgl = mysqli_fetch_array($glQuery); // dd($findBankgl);
-                      $bankParentId = $findBankgl['parent_id'];
-                      $runningBalance = $findBankgl['organization_running_balance_derived'];
-                      $newBalance = $runningBalance - $gl_amt;
-                      // now update gl balance
-                      $updateGlBalance = "UPDATE `acc_gl_account` SET `organization_running_balance_derived` = '$newBalance' WHERE int_id = '$sessint_id' && gl_code = '$bankGlCode'";
-                      $updated = mysqli_query($connection, $updateGlBalance);
-                      if (!$updated) {
-                        printf("Error: %s\n", mysqli_error($connection));
-                        exit();
-                      } else {
-                        $transactionHistory = [
-                          'int_id' => $sessint_id,
-                          'branch_id' => $branch_id,
-                          'gl_code' => $bankGlCode,
-                          'parent_id' => $bankParentId,
-                          'description' => $description,
-                          'transaction_id' => $trans_id,
-                          'transaction_type' => 'Debit',
-                          'transaction_date' => $gen_date,
-                          'amount' => $gl_amt,
-                          'debit' => $gl_amt,
-                          'gl_account_balance_derived' => $newBalance
-                        ];
-                        $transactionDetail = insert('gl_account_transaction', $transactionHistory);
-                        // dd($transactionDetail);
-                        // var_dump($transactionDetail);
-                        if ($transactionDetail) {
-                          // now we will send a mail
+                      $upinta = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2', total_withdrawals_derived = '$tbd2' WHERE int_id = '$sessint_id' AND teller_id = '$staff_id' OR submittedon_userid = '$teller_id'";
+                      $res1 = mysqli_query($connection, $upinta);
+                      if ($res1) {
+                        $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
+               teller_id, transaction_id, description, transaction_type, is_reversed,
+               transaction_date, amount, running_balance_derived, overdraft_amount_derived,
+               created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_idm}',
+               '{$gl_codex}', '{$trans_id}', '{$description}', 'Debit', '{$irvs}',
+               '{$transaction_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
+               '{$gen_date}', '{$staff_id}', '{$gl_amt}')";
+                        $res4 = mysqli_query($connection, $iat2);
+                        if ($res4) {
+                          // REMEMBER TO SEND A MAIL
                           $v = "Verified";
                           $updateTrans = "UPDATE transact_cache SET `status` = '$v' WHERE int_id = '$sessint_id' && id='$appod'";
                           $resl = mysqli_query($connection, $updateTrans);
-                        } else {
-                          printf("Error: %s\n", mysqli_error($connection));
-                          exit();
-                        }
-                      }
-                      // REMEMBER TO SEND A MAIL
-
-                      // FINAL
-                      if ($resl) {
-                        echo '<script type="text/javascript">
+                          // FINAL
+                          if ($resl) {
+                            echo '<script type="text/javascript">
                                  $(document).ready(function(){
                                      swal({
                                          type: "success",
@@ -970,11 +947,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                  });
                                  </script>
                                  ';
-                        $URL = "transact_approval.php";
-                        echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
-                      } else {
-                        // echo error in transact cache
-                        echo '<script type="text/javascript">
+                            $URL = "transact_approval.php";
+                            echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+                          } else {
+                            // echo error in transact cache
+                            echo '<script type="text/javascript">
                            $(document).ready(function(){
                                swal({
                                    type: "error",
@@ -986,6 +963,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                            });
                            </script>
                            ';
+                          }
+                        } else {
+                          // echo error at institution account transaction
+                          echo '<script type="text/javascript">
+                       $(document).ready(function(){
+                           swal({
+                               type: "error",
+                               title: "Error",
+                               text: "Error in Account Transaction",
+                               showConfirmButton: false,
+                               timer: 2000
+                           })
+                       });
+                       </script>
+                       ';
+                        }
+                      } else {
+                        // echo error institution account
+                        echo '<script type="text/javascript">
+                       $(document).ready(function(){
+                           swal({
+                               type: "error",
+                               title: "Error",
+                               text: "Error in Teller Account",
+                               showConfirmButton: false,
+                               timer: 2000
+                           })
+                       });
+                       </script>
+                       ';
                       }
                     } else {
                       // echo error in account gl
@@ -1068,7 +1075,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="text" id="s_phone" value="<?php echo $client_phone; ?>" hidden>
                 <input type="text" id="s_client_id" value="<?php echo $client_id; ?>" hidden>
                 <div id="make_display"></div>
-<?php
+                <?php
                 //   group account deposit computation
                 if ($transact_type == "Deposit" && $client_id = $id) {
                   $new_abd = $comp;
@@ -1190,7 +1197,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                           },
                                           "sms": {
                                               "dest":"' . $clientPhone . '",
-                                              "src": "' . $sender_id . '",
+                                              "src": "' . $senderId . '",
                                               "text": "' . $message . '",
                                               "unicode": true
                                           }
@@ -1271,6 +1278,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               }
                             }
                           }
+                ?>
+
+                          <?php
                         }
                         // end it for the SMS POSTING
                         // ENDING OF THE AR
@@ -1542,7 +1552,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                           },
                                           "sms": {
                                               "dest":"' . $clientPhone . '",
-                                              "src": "' . $sender_id . '",
+                                              "src": "' . $senderId . '",
                                               "text": "' . $escape . '",
                                               "unicode": true
                                           }
@@ -1621,6 +1631,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 }
                               }
                             }
+                          ?>
+
+<?php
                           }
                           // institution account
                           if ($is_bank == 1) {
@@ -1793,7 +1806,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if ($dbgl) {
                       $upinta = "UPDATE institution_account SET account_balance_derived = '$new_int_bal2', total_withdrawals_derived = '$tbd2' WHERE int_id = '$sessint_id' AND teller_id = '$staff_id' OR submittedon_userid = '$teller_id'";
                       $res1 = mysqli_query($connection, $upinta);
-                      
+                      if ($res1) {
+                        $iat2 = "INSERT INTO institution_account_transaction (int_id, branch_id,
+               teller_id, transaction_id, description, transaction_type, is_reversed,
+               transaction_date, amount, running_balance_derived, overdraft_amount_derived,
+               created_date, appuser_id, debit) VALUES ('{$sessint_id}', '{$branch_idm}',
+               '{$gl_codex}', '{$trans_id}', '{$description}', 'Debit', '{$irvs}',
+               '{$transaction_date}', '{$gl_amt}', '{$new_int_bal2}', '{$gl_amt}',
+               '{$gen_date}', '{$staff_id}', '{$gl_amt}')";
                         $res4 = mysqli_query($connection, $iat2);
                         if ($res4) {
                           // REMEMBER TO SEND A MAIL
@@ -1846,7 +1866,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                        </script>
                        ';
                         }
-                      
+                      } else {
+                        // echo error institution account
+                        echo '<script type="text/javascript">
+                       $(document).ready(function(){
+                           swal({
+                               type: "error",
+                               title: "Error",
+                               text: "Error in Teller Account",
+                               showConfirmButton: false,
+                               timer: 2000
+                           })
+                       });
+                       </script>
+                       ';
+                      }
                     } else {
                       // echo error in account gl
                       echo '<script type="text/javascript">

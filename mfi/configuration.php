@@ -218,6 +218,18 @@ $(document).ready(function(){
 
 
         <div class="row">
+            <div class="col-md-4 ml-auto mr-auto">
+                <div class="card card-pricing bg-primary">
+                    <div class="card-body ">
+
+                        <h4 class="card-title">Loan Reconciliation</h4>
+                        <p class="card-description">
+                            Edit and make sure the loan balances match at the end of a particular accounting period.
+                        </p>
+                        <a href="loan_reconciliation.php" class="btn btn-white btn-round">View</a>
+                    </div>
+                </div>
+            </div>
 
 
             <div class="col-md-4 ml-auto mr-auto">
@@ -274,11 +286,11 @@ $(document).ready(function(){
                     <div class="card card-pricing bg-primary">
                         <div class="card-body ">
 
-                            <h4 class="card-title">Support</h4>
+                            <h4 class="card-title">Create client</h4>
                             <p class="card-description">
-                                Support functions
+                                Create client with BVN
                             </p>
-                            <a href="support.php" class="btn btn-white btn-round">View</a>
+                            <a href="client_create.php" class="btn btn-white btn-round">View</a>
                         </div>
                     </div>
                 </div>

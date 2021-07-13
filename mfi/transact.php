@@ -1,5 +1,4 @@
 <?php
-
 $page_title = "Deposit/ Withdrawal";
 $destination = "transaction.php";
 include("header.php");
@@ -387,7 +386,36 @@ if (isset($_GET["message"])) {
   ';
         $_SESSION["lack_of_intfund_$key"] = 0;
     }
-} else {
+}else if (isset($_GET["response"])){
+    $response = $_GET['response'];
+    if ($response == 'manual_vault'){
+    echo '<script type="text/javascript">
+      $(document).ready(function(){
+          swal({
+              type: "warning",
+              title: "EOD reach!",
+              text: "Today has been marked closed!",
+              showConfirmButton: true,
+              confirmButtonText: "Proceed"
+          })
+      });
+      </script>
+      ';
+  }else if ($response == 'err'){
+    echo '<script type="text/javascript">
+      $(document).ready(function(){
+          swal({
+              type: "error",
+              title: "Not Allowed!",
+              text: "Today has been marked closed",
+              showConfirmButton: true
+          })
+      });
+      </script>
+      ';
+
+  }
+ }else {
     echo "";
 }
 ?>
@@ -416,7 +444,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                             <!-- <p class="card-category">Fill in all important data</p> -->
                         </div>
                         <div class="card-body">
-                            <form action="../functions/transactions/withdep.php" method="post" autocomplete="off">
+                            <form action="../functions/transactions/withdep_eod.php" method="post" autocomplete="off">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <script>
@@ -550,9 +578,10 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Transaction Date</label>
-                                            <input type="date" name="transDate" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" class="form-control" required />
+                                            <input type="text" id="date" name="transDate" min="<?php echo $minDate; ?>" class="form-control" required style="position: relative; z-index: 1000;"/>
                                         </div>
                                     </div>
+                                      
                                 </div>
                                 <button type="reset" class="btn btn-danger">Reset</button>
                                 <button type="submit" class="btn btn-primary pull-right">Submit</button>
@@ -561,6 +590,22 @@ if ($trans_post == 1 || $trans_post == "1") {
                         </div>
                     </div>
                 </div>
+                <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        var dates = ["12/06/2021", "14/06/2021", "20/06/2021", "21/06/2021"];
+
+function DisableDates(date) {
+    var string = jQuery.datepicker.formatDate('dd/mm/yy', date);
+    return [dates.indexOf(string) == -1];
+}
+
+$(function() {
+     $("#date").datepicker({
+         beforeShowDay: DisableDates
+     });
+});
+    </script>
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
@@ -568,7 +613,7 @@ if ($trans_post == 1 || $trans_post == "1") {
                             <!-- <p class="card-category">Fill in all important data</p> -->
                         </div>
                         <div class="card-body">
-                            <form action="../functions/transactions/expense/expense.php" method="post">
+                            <form action="../functions/transactions/expense_eod.php" method="post">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <script>
@@ -634,9 +679,25 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Transaction Date</label>
-                                            <input type="date" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" name="transDate" class="form-control" required />
+                                            <input type="text" min="<?php echo $minDate; ?>" name="transDate" id="expense_date" class="form-control dates" style="position: relative; z-index: 100000;" required />
                                         </div>
                                     </div>
+                                    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        var dates = ["12/06/2021", "14/06/2021", "20/06/2021", "21/06/2021"];
+
+function DisableDates(date) {
+    var string = jQuery.datepicker.formatDate('dd/mm/yy', date);
+    return [dates.indexOf(string) == -1];
+}
+
+$(function() {
+     $("#expense_date").datepicker({
+         beforeShowDay: DisableDates
+     });
+});
+    </script>
                                     <div class="col-md-4">
                                         <div id="transaction_id2"></div>
                                     </div>
@@ -759,8 +820,24 @@ if ($trans_post == 1 || $trans_post == "1") {
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Transaction Date</label>
-                                            <input type="date" min="<?php echo $minDate; ?>" max="<?php echo $today; ?>" name="transDate" class="form-control" required />
+                                            <input type="text" min="<?php echo $minDate; ?>" name="transDate" id="charges_date" class="form-control" style="position: relative; z-index: 100000;" required />
                                         </div>
+                                        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        var dates = ["12/06/2021", "14/06/2021", "20/06/2021", "21/06/2021"];
+
+function DisableDates(date) {
+    var string = jQuery.datepicker.formatDate('dd/mm/yy', date);
+    return [dates.indexOf(string) == -1];
+}
+
+$(function() {
+     $("#charges_date").datepicker({
+         beforeShowDay: DisableDates
+     });
+});
+    </script>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary pull-right">Submit</button>

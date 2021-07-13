@@ -51,7 +51,7 @@ if (isset($_POST["id"])) {
             while ($row = mysqli_fetch_array($findGroup)) {
               $output = '<div class="form-group">
                 <label>Account Name:</label>
-                <input type="text" value="' . strtoupper($row["g_name"]) . '" name="principal_amoun" class="form-control" readonly required>
+                <input type="text" value="' . strtoupper($row["g_name"]) . '" name="principal_amoun" class="form-control" readonly required id="principal_amount">
               </div>
               ';
             }
@@ -61,7 +61,7 @@ if (isset($_POST["id"])) {
       while ($row = mysqli_fetch_array($result)) {
         $output = '<div class="form-group">
           <label>Account Name:</label>
-          <input type="text" value="' . strtoupper($row["firstname"]) . ' ' . strtoupper($row["middlename"]) . ' ' . strtoupper($row["lastname"]) . '" name="principal_amoun" class="form-control" readonly required>
+          <input type="text" value="' . strtoupper($row["firstname"]) . ' ' . strtoupper($row["middlename"]) . ' ' . strtoupper($row["lastname"]) . '" name="principal_amoun" class="form-control" readonly required id="principal_amount">
         </div>
         ';
       }
@@ -76,7 +76,7 @@ if (isset($_POST["id"])) {
       while ($row = mysqli_fetch_array($groupAccount)) {
         $output2 = '<div class="form-group">
           <label>Account Balance:</label>
-          <input type="text" value="' . $row["account_balance_derived"] . '" name="principal_amoun" class="form-control" readonly required >
+          <input type="text" value="' . $row["account_balance_derived"] . '" name="principal_amoun" class="form-control" readonly required id="principal_amount">
         </div>
         ';
       }
@@ -84,7 +84,7 @@ if (isset($_POST["id"])) {
       while ($row = mysqli_fetch_array($result)) {
         $output2 = '<div class="form-group">
           <label>Account Balance:</label>
-          <input type="text" value="' . $row["account_balance_derived"] . '" name="principal_amoun" class="form-control" readonly required>
+          <input type="text" value="' . $row["account_balance_derived"] . '" name="principal_amoun" class="form-control" readonly required id="principal_amount">
         </div>
         ';
       }
@@ -92,7 +92,7 @@ if (isset($_POST["id"])) {
   }
   echo $output;
   echo $output2;
-  echo $output3 = '<input type="text" value="'.$accountNo.'" id="account_no" hidden>';
+  
 }
 // session_start();
 //    $_SESSION['load_term'] = "batman";

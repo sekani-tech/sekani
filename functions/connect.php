@@ -25,14 +25,14 @@ function ddA($value)
 function executeQuery($sql, $data = [])
 {
     global $connection;
-    if ($stmt = $connection->prepare($sql)) {
+    if($stmt = $connection->prepare($sql)){
         if (!empty($data)) {
             $values = array_values($data);
             $types = str_repeat('s', count($values));
             $stmt->bind_param($types, ...$values);
         }
         $stmt->execute();
-    } else {
+    }else{
         $stmt = var_dump($connection->error);
     }
     return $stmt;
@@ -40,14 +40,14 @@ function executeQuery($sql, $data = [])
 function executeQuery2($sql, $data = [])
 {
     global $connection;
-    if ($stmt = $connection->prepare($sql)) {
+    if($stmt = $connection->prepare($sql)){
         if (!empty($data)) {
             $values = array_values($data);
-            $types = str_repeat('s', count($values) + 1);
+            $types = str_repeat('s', count($values)+1);
             $stmt->bind_param($types, ...$values);
         }
         $stmt->execute();
-    } else {
+    }else{
         $stmt = var_dump($connection->error);
     }
     return $stmt;
@@ -140,32 +140,40 @@ function selectOne($table, $conditions)
     $stmt = executeQuery($sql, $conditions);
     return $stmt->get_result()->fetch_assoc();
 }
-
 /**
+ * 
+ * 
+ 
+
+
  * @param $table
  * @param $conditions
  * @return array|null
  */
-function selectOneWithOrder($table, $conditions, $orderCondition, $orderType, $limitNumber)
+function selectOneOrderByDescLimit($table, $column, $order_data)
 {
-    $orderType = strtoupper($orderType);
-    $table = strtolower($table);
     global $connection;
-    $sql = "SELECT * FROM $table";
+    $sql = "SELECT $column FROM $table";
 
-    $i = 0;
-    foreach ($conditions as $key => $value) {
-        if ($i === 0) {
-            $sql = $sql . " WHERE $key=?";
-        } else {
-            $sql = $sql . " AND $key=?";
-        }
-        $i++;
-    }
-    $sql = $sql . " ORDER BY $orderCondition $orderType";
-    $stmt = executeQuery($sql, $conditions);
+    $sql = $sql . " ORDER BY $order_data DESC LIMIT 1";
+
+    $stmt = executeQuery($sql);
     return $stmt->get_result()->fetch_assoc();
 }
+
+function selectOneByIntID($table, $column, $search_parameter)
+{
+    global $connection;
+    $sql = "SELECT $column FROM $table";
+
+    $sql = $sql . " WHERE int_id = $search_parameter";
+
+    $stmt = executeQuery($sql);
+    return $stmt->get_result()->fetch_assoc();
+}
+/**
+
+
 
 
 /**
@@ -238,6 +246,8 @@ function selectSpecificData($table, $pickConditions, $conditions = [])
     $stmt = executeQuery($sql, $conditions);
     return $stmt->get_result()->fetch_assoc();
 }
+
+
 
 
 /**
@@ -397,7 +407,7 @@ function searchClient($table1, $int_id, $branch_id, $term)
             WHERE c.int_id=?
             AND c.branch_id=? AND (c.firstname LIKE ? OR c.lastname LIKE ? OR c.display_name LIKE ?)";
 
-    //    dd($sql);
+//    dd($sql);
     $stmt = executeQuery($sql, [
         'int_id' => $int_id,
         'branch_id' => $branch_id,
@@ -422,7 +432,7 @@ function searchGroup($table1, $int_id, $term)
             FROM $table1 AS g 
             WHERE g.int_id=? AND g.g_name LIKE ?";
 
-    //    dd($sql);
+//    dd($sql);
     $stmt = executeQuery($sql, [
         'int_id' => $int_id,
         'g_name' => $match
@@ -433,8 +443,7 @@ function searchGroup($table1, $int_id, $term)
 // function to insert a new row into an arbitrary table, with the columns filled with the values 
 // from an associative array and completely SQL-injection safe
 
-function insert($table, $record)
-{
+function insert($table, $record) {
     global $connection;
     $cols = array();
     $vals = array();
@@ -448,51 +457,43 @@ function insert($table, $record)
 
 // date functions to find individual components of date 
 // and add or subtract from date
-function getYear($date)
-{
+function getYear($date){
     $date = DateTime::createFromFormat("Y-m-d", $date);
     return $date->format("Y");
 }
 
-function getMonth($date)
-{
+function getMonth($date){
     $date = DateTime::createFromFormat("Y-m-d", $date);
     return $date->format("m");
 }
 
-function getDay($date)
-{
+function getDay($date){
     $date = DateTime::createFromFormat("Y-m-d", $date);
     return $date->format("d");
 }
 
-function addYear($date, $period)
-{
-    $valueDate = date("Y-m-d", strtotime($date . "+$period year"));
+function addYear($date, $period){
+    $valueDate = date("Y-m-d", strtotime($date. "+$period year"));
     return $valueDate;
 }
 
-function addMonth($date, $period)
-{
-    $valueDate = date("Y-m-d", strtotime($date . "+$period month"));
+function addMonth($date, $period){
+    $valueDate = date("Y-m-d", strtotime($date. "+$period month"));
     return $valueDate;
 }
 
-function addWeek($date, $period)
-{
-    $valueDate = date("Y-m-d", strtotime($date . "+$period week"));
+function addWeek($date, $period){
+    $valueDate = date("Y-m-d", strtotime($date. "+$period week"));
     return $valueDate;
 }
 
-function addDay($date, $period)
-{
-    $valueDate = date("Y-m-d", strtotime($date . "+$period day"));
+function addDay($date, $period){
+    $valueDate = date("Y-m-d", strtotime($date. "+$period day"));
     return $valueDate;
 }
 
-function appendAccountNo($accountNo, $length)
-{
-    $appendedAccount = '******' . substr($accountNo, $length);
+function appendAccountNo($accountNo, $length){
+    $appendedAccount = '******'.substr($accountNo, $length);
     return $appendedAccount;
 }
 
@@ -516,12 +517,12 @@ function checkLoanDebtor($table, $conditions, $dateConditions)
     foreach ($dateConditions as $keys => $value) {
         if ($s === 0) {
             $sql = $sql . " AND ( $keys<=?";
-        } else {
+        }else{
             $sql = $sql . " AND $keys<=?";
         }
         $s++;
     }
-    $sql = $sql . ")";
+    $sql = $sql. ")";
     $sql = $sql . " AND installment >= '1' ORDER BY id ASC LIMIT 1";
     $stmt = executeQuery($sql, array_merge($conditions, $dateConditions));
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -595,7 +596,7 @@ function selectAllLessEq($table, $conditions, $dateConditions)
     foreach ($dateConditions as $keys => $value) {
         if ($s === 0) {
             $sql = $sql . " AND $keys<=?";
-        } else {
+        }else{
             $sql = $sql . " AND $keys<=?";
         }
         $s++;
@@ -624,7 +625,7 @@ function checkAccount($table, $conditions, $scaleConditions)
     foreach ($scaleConditions as $key => $value) {
         if ($s === 0) {
             $sql = $sql . " AND $key>=?";
-        }
+        } 
         $s++;
     }
 
@@ -816,4 +817,130 @@ function selectOneWithOr($table, $conditions = [], $orField, $orValue)
         $stmt = executeQuery($sql, $conditions);
         return $stmt->get_result()->fetch_assoc();;
     }
+
+    function getCharges($connection) {
+        $sint_id = $_SESSION["int_id"];
+        $org = "SELECT * FROM charge WHERE int_id = '$sint_id'";
+        $res = mysqli_query($connection, $org);
+        $out = [];
+        $i = 0;
+        while ($row = mysqli_fetch_array($res)) {
+            $out[$i] = $row['id'];
+            $i++;
+        }
+        return $out;
+    }
+    
+    function getClients($connection) {
+        $sint_id = $_SESSION["int_id"];
+        $branc = $_SESSION["branch_id"];
+        $org = "SELECT client.id, client.firstname, client.lastname, client.middlename FROM client JOIN branch ON client.branch_id = branch.id WHERE client.int_id = '$sint_id' AND (branch.id = '$branc' OR branch.parent_id = '$branc') AND status = 'Approved' ORDER BY firstname ASC";
+        $res = mysqli_query($connection, $org);
+        $out = [];
+        $i = 0;
+        while ($row = mysqli_fetch_array($res)) {
+            $out[$i] = $row['id'];
+            $i++;
+        }
+        return $out;
+    }
+    
+    function getAccNumbers($connection, $client_id) {
+        $pen = "SELECT * FROM account WHERE client_id = '$client_id'";
+        $res = mysqli_query($connection, $pen);
+        $out = [];
+        $i = 0;
+        while ($row = mysqli_fetch_array($res))
+        {
+            $out[$i] = $row['account_no'];
+            $i++;
+        }
+        return $out;
+    }
+    
+function getMonthName($monthNum) {
+    $dateObj = DateTime::createFromFormat('!m', $monthNum);
+    return $dateObj->format('F');
 }
+
+function endOfMonth($closedDate,$connection,$_cb) {
+    $month = getMonthName((int)getMonth($closedDate));
+    $year = getYear($closedDate);
+
+    $data = [
+        'int_id' => $_SESSION['int_id'],
+        'branch_id' => $_SESSION['branch_id'],
+        'staff_id' => $_SESSION['staff_id'],
+        'manual_posted' => 1,
+        'closed_date' => $closedDate,
+        'month' => $month,
+        'year' => $year
+    ];
+
+    $existingClosedMonth = selectAll('endofmonth_tb', ['month'=>$month,'year'=>$year,'int_id'=>$_SESSION['int_id']]);
+
+    $arr = array(
+        'connection'=>$connection,
+        'data'=>$data
+    );
+
+    if(count($existingClosedMonth) > 0) {
+        call_user_func($_cb,'End of Month already exists!',1);
+        exit();
+    } else {
+
+        $existingClosedDay = selectAll('endofday_tb', ['transaction_date'=>$closedDate,'int_id'=>$_SESSION['int_id']]);
+
+        // if(count($existingClosedDay) < 1) {
+            // $digits = 7;
+            // $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+
+            // $_SESSION['feedback'] = "Please perform the end of day for {$month}, {$year}";
+            // header("Location: ../../mfi/end_of_day.php?message1=$randms");
+
+        // } else {
+            include('../asset_depreciation.php');
+            include('../charge_collection.php');
+            include("../loans/auto_function/loan_collection.php");
+            asset_depreciation($arr, $_cb, function($_cb,$arr){
+                if($arr['response']==0) {
+                    charge_collection($arr, $_cb, function($_cb,$arr){
+                        if($arr['response']==0) {
+                                insert('endofmonth_tb',$arr['data']);
+                                loan_collection($arr['connection']);
+                                call_user_func($_cb,"Asset Depreciation Successful, Charge Collection Successful, Loan Collection Successful, Month sucessfully ended", 0);
+                                exit();
+                        } else {
+                            call_user_func($_cb,"{$arr['response']}!",1);
+                            exit();
+                        }       
+                    });
+                } else {
+                    call_user_func($_cb,"{$arr['response']}!",1);
+                    exit();
+                }
+            });
+        // }
+       
+    }
+    
+}
+}
+//function to run eod
+function eod($date_data){
+    $int_id = $_SESSION['int_id'];
+    $eod_stored = selectOneOrderByDescLimit('endofday_tb','transaction_date','id',$int_id)['transaction_date'];
+    $eod_stored = date("Y-m-d", strtotime($eod_stored));
+    $eod_day = getDay($eod_stored);
+    $data_day = getDay($date_data);
+
+    if ($data_day == $eod_day){
+        $eod_check = 2;
+    }else if ($data_day > $eod_day){
+        $eod_check = 1;
+    }else if ($data_day < $eod_day){
+        $eod_check = 0;
+    }
+    return $eod_check;
+}
+

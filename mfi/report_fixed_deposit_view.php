@@ -117,12 +117,6 @@ $destination = "report_current.php";
                         ?>
                       </tbody>
                     </table>
-
-                    <script>
-                                            $(document).ready(function() {
-                                                $('#ftd').DataTable();
-                                            });
-                                        </script>
                   </div>
 
                   <div class="form-group mt-4">

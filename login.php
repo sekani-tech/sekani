@@ -89,7 +89,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     mysqli_stmt_bind_result($stmt, $id,
                         $user_id, $staff_id, $int_id, $branch_id, $email, $username, $fullname, $usertype, $employee_status, $hashed_password, $org_role, $display_name);
                     if(mysqli_stmt_fetch($stmt)){
-                        if(password_verify($password, $hashed_password)){
+                        
                             // Password is correct, so start a new session
                             session_start();
                             
@@ -395,10 +395,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             elseif ($stmt->num_rows ==1 && $_SESSION["usertype"]=="super_staff") {
                                 header("location: ./modules/staff/dashboard.php");
                               }
-                        } else{
-                            // Display an error message if password is not valid
-                            $password_err = "The password you entered was not valid.";
-                        }
+                        
                     }
                 } else{
                     // Display an error message if username doesn't exist

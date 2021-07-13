@@ -16,8 +16,7 @@ if ($findMissingTransactions) {
         echo "<br>";
         echo $clientId = $details['client_id'];
         echo "<br>";
-        $findProduct = selectOne('account', ['account_no' => $accountNo, 'client_id' => $clientId, 'int_id' => $institutionId]);
-        echo $productId = $findProduct['product_id'];
+        echo $productId = $details['product_id'];
         echo "<br>";
         // $findProduct = mysqli_query($connection, "SELECT * FROM savings_product WHERE int_id = $institutionId AND $productId");
         // $productInfo = mysqli_fetch_array($findProduct);

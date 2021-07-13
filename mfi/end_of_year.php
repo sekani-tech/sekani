@@ -59,16 +59,29 @@ include("header.php");
                                     <div class="row">
                                         <div class="form-group col-md-4">
                                             <label for="">Start Date</label>
-                                            <input type="date" name="" id="" class="form-control">
+                                            <input type="date" name="" id="start" class="form-control">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="">End Date</label>
-                                            <input type="date" name="" id="" class="form-control">
+                                            <input type="date" name="" id="end" class="form-control">
                                         </div>
+                                        <?php
+                                    function fill_branch($connection)
+                                    {
+                                        $sint_id = $_SESSION["int_id"];
+                                        $org = "SELECT * FROM branch WHERE int_id = '$sint_id'";
+                                        $res = mysqli_query($connection, $org);
+                                        $out = '';
+                                        while ($row = mysqli_fetch_array($res)) {
+                                            $out .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
+                                        }
+                                        return $out;
+                                    }
+                                    ?>
                                         <div class="form-group col-md-4">
                                             <label for="">Branch</label>
-                                            <select name="" id="" class="form-control">
-                                          
+                                            <select name="" id="branch" class="form-control">
+                                                <?php echo fill_branch($connection); ?>
                                             </select>
                                         </div>
                                     </div>
@@ -93,17 +106,29 @@ include("header.php");
                                       
                                     </thead>
                                     <tbody>
-                                        
-                                        <tr>                                            
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><input type="checkbox" checked data-toggle="toggle" data-on="Open" data-off="Closed" data-onstyle="success" data-offstyle="danger"></td>
-                                        </tr>
-
+                                    
                                     </tbody>
-                        
+                                        <script>
+                        $(document).ready(function() {
+                            $('#runperform').on("click", function() {
+                                var start = $('#start').val();
+                                var end = $('#end').val();
+                                var branch_id = $('#branch').val();
+                                $.ajax({
+                                    url: "items/end_of_year_data.php",
+                                    method: "POST",
+                                    data: {
+                                        start: start,
+                                        end: end,
+                                        branch_id: branch_id
+                                    },
+                                    success: function(data) {
+                                        $('#eoyr tbody').html(data);
+                                    }
+                                })
+                            });
+                        });
+                    </script>
                                 </table>
                               
                                 <script>

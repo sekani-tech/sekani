@@ -36,7 +36,7 @@ if(!empty($_POST["start"]) && !empty($_POST["end"])) {
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="mytable" class="table table-striped table-bordered" style="width:100%">
+                    <table id="mytable" class="display" style="width:100%">
                         <thead>
                             <tr>
                                 <th><small>Date</small></th>

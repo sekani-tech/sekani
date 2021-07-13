@@ -1,6 +1,6 @@
 <?php
-include('../connect.php');
-session_start();
+// include('../connect.php');
+// session_start();
 $sessint_id = $_SESSION['int_id'];
 $currentdate = date('Y-m-d');
 $currentdate_time = date('Y-m-d H:i:s');
@@ -66,11 +66,11 @@ if ($select_arrears) {
     
                 $insertArrears = insert('loan_arrear', $arrearData);
                 if (!$insertArrears) {
-                    printf('1-Error: %s\n', mysqli_error($connection));
-                    exit();
+                    // printf('1-Error: %s\n', mysqli_error($connection));
+                    // exit();
     
                 } else {
-                    echo 'INSERTED SUCCESSFULLY - Loan ID: ' . $lr_loan_id . '<br>';
+                    // echo 'INSERTED SUCCESSFULLY - Loan ID: ' . $lr_loan_id . '<br>';
                 }
             }        
     
@@ -107,8 +107,8 @@ if ($select_arrears) {
             $arrear_update = mysqli_query($connection, "UPDATE loan_arrear SET principal_amount = {$lr_principal_amount}, interest_amount = {$lr_interest_amount}, counter = {$days_between}, 
             par = {$par}, bank_provision = {$bnk_prov}, lastmodified_date = '$currentdate_time' WHERE int_id = {$sessint_id} AND loan_id = {$lr_loan_id} AND loan_schedule_id = {$lr_schedule_id}");
             if (!$arrear_update) {
-                printf('2-Error: %s\n', mysqli_error($connection)); //checking for errors
-                exit();
+                // printf('2-Error: %s\n', mysqli_error($connection)); //checking for errors
+                // exit();
             } else {
                 echo 'UPDATED SUCCESSFULLY - Loan ID: ' . $lr_loan_id . '<br>';
             }
@@ -116,8 +116,8 @@ if ($select_arrears) {
     } 
 
 } else {
-    printf('3-Error: %s\n', mysqli_error($connection));
-    exit();
+    // printf('3-Error: %s\n', mysqli_error($connection));
+    // exit();
 }
 
 ?>

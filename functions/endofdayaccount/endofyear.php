@@ -5,12 +5,12 @@ session_start();
 
 if (isset($_POST['endofyear'])) {
      $data = [
-        'dateclosed' => $_POST['dateclosed'],
-        'closed_by' => $_SESSION['staff_id'],
+        'transaction_date' => $_POST['dateclosed'],
+        'staff_id' => $_SESSION['staff_id'],
         'int_id' => $_SESSION['int_id'],
         'branch_id' => $_SESSION['branch_id'],
-        'yearend' => getPieceOfDate($_POST['dateclosed'], "Y"),
-        'status' =>"",
+        'year' => getYear($_POST['dateclosed']),
+        'manual_posted' => 1,
     ];
     
     //Insert into the endofyear table if it is set
@@ -18,4 +18,4 @@ if (isset($_POST['endofyear'])) {
       //Send report header on succesful closing of the month
       header("Location: ../../mfi/end_of_year.php?message1=$randms");
         }
-     ?>   
+     ?> 

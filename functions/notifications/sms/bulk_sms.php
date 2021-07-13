@@ -31,7 +31,7 @@ if (isset($_POST['message'])) {
     }
 
 
-    $lastcustomersData = end($customersData);
+    $lastcustomersData = end($customersData);;
 
     foreach ($customersData as $key => $phoneNumbers) {
         // concatenate customers phone numbers
