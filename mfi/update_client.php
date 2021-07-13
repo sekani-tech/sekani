@@ -293,6 +293,22 @@ if ($acc_update == 1 || $acc_update == "1") {
                       <input type="text" value="<?php echo $bvn; ?>" name="bvn" class="form-control" id="">
                     </div>
                     <div class="col-md-4">
+                      <label for="">Name of Next of Kin</label>
+                      <input type="text" value="" name="bvn" class="form-control" id="">
+                    </div>
+                    <div class="col-md-4">
+                      <label for="">Relationship</label>
+                      <input type="text" value="" name="bvn" class="form-control" id="">
+                    </div>
+                    <div class="col-md-2">
+                      <label for="">Phone Number:</label>
+                      <input type="number" value="" name="bvn" class="form-control" id="">
+                    </div>
+                    <div class="col-md-2">
+                      <label for="">Email Address:</label>
+                      <input type="text" value="" name="bvn" class="form-control" id="">
+                    </div>
+                    <div class="col-md-4">
                       <p><label for="">Active Alerts: </label></p>
                       <input type="text" hidden value="<?php echo $sms_active; ?>" id="opo">
                       <input type="text" hidden value="<?php echo $email_active; ?>" id="opo2">
@@ -1094,6 +1110,22 @@ if ($acc_update == 1 || $acc_update == "1") {
                                 <input value="<?php echo $bvn1; ?>" type="text" style="text-transform: uppercase;" class="form-control" name="sig_bvn_one">
                               </div>
                             </div>
+                            <div class="col-md-4">
+                              <label for="">Name of Next of Kin</label>
+                              <input type="text" value="" name="nok" class="form-control" id="">
+                            </div>
+                            <div class="col-md-4">
+                              <label for="">Relationship</label>
+                              <input type="text" value="" name="rel_nok" class="form-control" id="">
+                            </div>
+                            <div class="col-md-2">
+                              <label for="">Phone Number:</label>
+                              <input type="number" value="" name="number_nok" class="form-control" id="">
+                            </div>
+                            <div class="col-md-2">
+                              <label for="">Email Address:</label>
+                              <input type="text" value="" name="email_nok" class="form-control" id="">
+                            </div>
                             <div class="col-md-12">
                               <p><label for="">Active Alerts: </label></p>
                               <input type="text" hidden value="<?php echo $smsactive1; ?>" id="sms1">
@@ -1431,6 +1463,22 @@ if ($acc_update == 1 || $acc_update == "1") {
                               <div class="form-group">
                                 <label>BVN</label>
                                 <input value="<?php echo $bvn3; ?>" type="text" style="text-transform: uppercase;" class="form-control" name="sig_bvn_three">
+                              </div>
+                              <div class="col-md-4">
+                                <label for="">Name of Next of Kin</label>
+                                <input type="text" value="" name="nok" class="form-control" id="">
+                              </div>
+                              <div class="col-md-4">
+                                <label for="">Relationship</label>
+                                <input type="text" value="" name="relation_nok" class="form-control" id="">
+                              </div>
+                              <div class="col-md-2">
+                                <label for="">Phone Number:</label>
+                                <input type="number" value="" name="number_nok" class="form-control" id="">
+                              </div>
+                              <div class="col-md-2">
+                                <label for="">Email Address:</label>
+                                <input type="text" value="" name="email_nok" class="form-control" id="">
                               </div>
                             </div>
                             <div class="col-md-12">
