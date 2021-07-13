@@ -54,7 +54,22 @@ $length = strlen($branch_id);
   }else{
     $institutionId =  $sessint_id;
   }
-  $account_no = $institutionId . "" . $branch_id . "" . $randms;
+  
+ function account_no_generation($institutionId, $branch, $randms){
+       $account_no = $institutionId . "" . $branch . "" . $randms;
+        return $account_no;
+    }
+  $account_no = account_no_generation($institutionId, $branch, $randms);
+  $condition = [
+            'int_id' => $institutionId,
+        ];
+    $fetch_account_info = selectAll('account', $condition);
+    foreach($fetch_account_info as $account_info){
+    $fetched_account_no = $account_info['account_no'];
+        if ($account_no == $fetched_account_no){
+          $account_no = account_no_generation();sdd
+        }
+    }
   // add loop to check if account number already exists on the database if yes create account number again. 
 
 $queryd = mysqli_query($connection, "SELECT * FROM savings_product WHERE id='$acct_type'");
